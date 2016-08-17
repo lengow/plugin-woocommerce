@@ -53,7 +53,7 @@
 Cloner le repo dans votre espace de travail :
 
     cd /var/www/woocommerce/
-    git clone git@bitbucket.org:lengow-dev/woocommerce-v3.git
+    git clone git@bitbucket.org:lengow-dev/woocommerce-v3.git lengow-woocommerce
 
 ### Installation dans Wordpress ###
 
