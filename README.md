@@ -1,4 +1,4 @@
-Module WooCommerce Lengow
+# Module WooCommerce Lengow #
 
 ## Installation ##
 
@@ -113,7 +113,7 @@ Une fois les traductions terminées, il suffit de lancer le script de mise à jo
     cd /var/www/woocommerce/lengow-woocommerce/tools
     php translate.php
 
-### Mise à jour du fichier d'intégrité des données ###
+## Mise à jour du fichier d'intégrité des données ##
 
 Une fois le développement terminé et avant de publier une version du module, il faut regénérer le fichier checkmd5.csv :
 
