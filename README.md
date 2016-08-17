@@ -77,7 +77,7 @@ Activer l'extension Lengow for WooCommerce 2.x dans le menu Extensions / Extensi
 4 - Exécuter le script suivant pour changer de branche 
 
     cd /var/www/woocommerce/lengow-woocommerce/
-    git checkout "Branch name"
+    git checkout -b "Branch name"
 
 5 - Faire le développement spécifique
 
