@@ -85,8 +85,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         private function _include()
         {
             if (is_admin()) {
-                require_once('includes/admin/class-lengow-admin.php');
                 require_once('includes/class-lengow-install.php');
+	            require_once('includes/admin/class-lengow-admin.php');
+	            require_once('includes/admin/class-lengow-dashboard.php');
             }
         }
 
@@ -115,7 +116,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
         private function _init_hooks()
         {
-            register_activation_hook(__FILE__, array('Lengow_Install', 'install'));
+            register_activation_hook(__FILE__, array('Lengow_install', 'install'));
             add_action('init', array($this, 'init'));
         }
     }
