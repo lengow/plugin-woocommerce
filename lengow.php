@@ -95,9 +95,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
          */
         private function _define_constants()
         {
-            $this->define('LENGOW_PATH', dirname(__FILE__));
-            $this->define('LENGOW_URL', WP_PLUGIN_URL . '/' . $this->name);
-            $this->define('LENGOW_VERSION', $this->version);
+            $this->_define('LENGOW_PATH', dirname(__FILE__));
+            $this->_define('LENGOW_URL', WP_PLUGIN_URL . '/' . $this->name);
+            $this->_define('LENGOW_VERSION', $this->version);
         }
 
         /**
@@ -106,7 +106,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
          * @param  string $name
          * @param  string|bool $value
          */
-        private function define($name, $value)
+        private function _define($name, $value)
         {
             if (!defined($name)) {
                 define($name, $value);
@@ -121,4 +121,5 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
     }
 
     $GLOBALS['lengow'] = new Lengow();
+    
 endif;
