@@ -1,0 +1,33 @@
+========================================================
+Version 1.0.4
+========================================================
+- Add logs and export directory
+
+========================================================
+Version 1.0.3
+========================================================
+- Fix compatibility with 2.4
+- Fix bugs duplicate product
+
+========================================================
+Version 1.0.2
+========================================================
+- Fix compatibility with 2.2
+- Add TagCapsule and SimpleTag support
+- Fix bugs
+
+========================================================
+Version 1.0.1
+========================================================
+- Fix warning in admin
+- Fix wrong product id in export
+- Add internal IP
+
+========================================================
+Version 1.0.0 Beta
+========================================================
+
+- Export product
+- Manage feeds
+- Order import
+- Add compatibility with WP-CLI
