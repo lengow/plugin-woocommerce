@@ -8,25 +8,23 @@
  * @version  2.0.0
  */
 
-if (!defined('ABSPATH')) {
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
 /**
  * Lengow_Admin Class.
  */
-class Lengow_Admin
-{
-    /**
-     * Init Lengow for WooCommerce
-     * Init module administration and action
-     */
-    public function __construct()
-    {
-        global $lengow, $woocommerce;
-	    // Add Menu item
-	    add_action('admin_menu', array($this, 'lengow_admin_menu'));
-    }
+class Lengow_Admin {
+	/**
+	 * Init Lengow for WooCommerce
+	 * Init module administration and action
+	 */
+	public function __construct() {
+		global $lengow, $woocommerce;
+		// Add Menu item
+		add_action( 'admin_menu', array( $this, 'lengow_admin_menu' ) );
+	}
 
 	/**
 	 * Add Lengow admin item menu
@@ -37,7 +35,9 @@ class Lengow_Admin
 			'Lengow',
 			'manage_woocommerce',
 			'lengow',
-			array('Lengow_Dashboard', 'display')
+			array( 'Lengow_Dashboard', 'display' ),
+			null,
+			56
 		);
 	}
 }

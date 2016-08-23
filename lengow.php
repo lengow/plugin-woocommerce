@@ -19,108 +19,118 @@
 /**
  * Prevent direct access
  */
-if (!defined('ABSPATH')) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Check if WooCommerce is active
  **/
-if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) :
+if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 
-    /**
-     * Main Lengow Class.
-     *
-     * @class Lengow
-     * @version    2.0.0
-     */
-    class Lengow
-    {
+	/**
+	 * Main Lengow Class.
+	 *
+	 * @class Lengow
+	 * @version 2.0.0
+	 */
+	class Lengow {
+		/**
+		 * Current version of plugin
+		 * @var string
+		 */
+		public $version = '2.0.0';
 
-        /**
-         * Current version of plugin
-         * @var string
-         */
-        public $version = '2.0.0';
+		/**
+		 * The plugin name
+		 * @var string
+		 */
+		public $name = 'lengow-woocommerce';
 
-        /**
-         * The plugin name
-         * @var string
-         */
-        public $name = 'lengow-woocommerce';
+		/**
+		 * Instance of Lengow Admin
+		 * @var Lengow Admin Object
+		 */
+		public $lengow_admin;
 
-        /**
-         * Instance of Lengow Admin
-         * @var Lengow Admin Object
-         */
-        public $lengow_admin;
+		/**
+		 * Construct module Lengow for WooCommerce
+		 */
+		public function __construct() {
+			$this->_define_constants();
+			$this->includes();
+			$this->_init_hooks();
+		}
 
-        /**
-         * Construct module Lengow for WooCommerce
-         *
-         */
-        public function __construct()
-        {
-            $this->_include();
-            $this->_init_hooks();
-            $this->_define_constants();
-        }
+		/**
+		 * Hook into actions
+		 */
+		private function _init_hooks() {
+			register_activation_hook( __FILE__, array( 'Lengow_Install', 'install' ) );
+			add_action( 'init', array( $this, 'init' ) );
+		}
 
-        /**
-         * Init plugin
-         *
-         * @return void
-         */
-        public function init()
-        {
-            load_plugin_textdomain('lengow', false, dirname(plugin_basename(__FILE__)) . '/languages/');
-            if (is_admin()) {
-                $this->lengow_admin = new Lengow_Admin();
-            }
-        }
+		/**
+		 * Define Lengow Constants
+		 */
+		private function _define_constants() {
+			$this->_define( 'LENGOW_PLUGIN_FILE', __FILE__ );
+			$this->_define( 'LENGOW_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
+			$this->_define( 'LENGOW_PLUGIN_URL', untrailingslashit( WP_PLUGIN_URL . '/' . $this->name ) );
+			$this->_define( 'LENGOW_VERSION', $this->version );
+		}
 
-        /**
-         * Include all dependencies
-         *
-         * @return void
-         */
-        private function _include()
-        {
-            if (is_admin()) {
-                require_once('includes/class-lengow-install.php');
-	            require_once('includes/admin/class-lengow-admin.php');
-	            require_once('includes/admin/class-lengow-dashboard.php');
-            }
-        }
+		/**
+		 * Define constant if not already set
+		 *
+		 * @param  string $name
+		 * @param  string|bool $value
+		 */
+		private function _define( $name, $value ) {
+			if ( ! defined( $name ) ) {
+				define( $name, $value );
+			}
+		}
 
-        /**
-         * Define Lengow Constants.
-         */
-        private function _define_constants()
-        {
-            $this->_define('LENGOW_PATH', dirname(__FILE__));
-            $this->_define('LENGOW_URL', WP_PLUGIN_URL . '/' . $this->name);
-            $this->_define('LENGOW_VERSION', $this->version);
-        }
+		/**
+		 * Include all dependencies
+		 */
+		public function includes() {
+			if ( is_admin() ) {
+				include_once( 'includes/class-lengow-check.php' );
+				include_once( 'includes/class-lengow-configuration.php' );
+				include_once( 'includes/class-lengow-connector.php' );
+				include_once( 'includes/class-lengow-exception.php' );
+				include_once( 'includes/class-lengow-export.php' );
+				include_once( 'includes/class-lengow-feed.php' );
+				include_once( 'includes/class-lengow-file.php' );
+				include_once( 'includes/class-lengow-import.php' );
+				include_once( 'includes/class-lengow-import-order.php' );
+				include_once( 'includes/class-lengow-install.php' );
+				include_once( 'includes/class-lengow-log.php' );
+				include_once( 'includes/class-lengow-main.php' );
+				include_once( 'includes/class-lengow-marketplace.php' );
+				include_once( 'includes/class-lengow-order.php' );
+				include_once( 'includes/class-lengow-product.php' );
+				include_once( 'includes/class-lengow-sync.php' );
+				include_once( 'includes/class-lengow-translation.php' );
+				include_once( 'includes/admin/class-lengow-admin.php' );
+				include_once( 'includes/admin/class-lengow-dashboard.php' );
+			}
+		}
 
-        /**
-         * Define constant if not already set.
-         *
-         * @param  string $name
-         * @param  string|bool $value
-         */
-        private function _define($name, $value)
-        {
-            if (!defined($name)) {
-                define($name, $value);
-            }
-        }
+		/**
+		 * Init Lengow when WordPress Initialises
+		 */
+		public function init() {
+			load_plugin_textdomain( 'lengow', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+			if ( is_admin() ) {
+				$this->lengow_admin = new Lengow_Admin();
+			}
+		}
+	}
 
-        private function _init_hooks()
-        {
-            register_activation_hook(__FILE__, array('Lengow_install', 'install'));
-            add_action('init', array($this, 'init'));
-        }
-    }
+	// Start module
+	$GLOBALS['lengow'] = new Lengow();
+}
 
-    $GLOBALS['lengow'] = new Lengow();
-    
-endif;
