@@ -1,0 +1,6 @@
+en:
+  module:
+    name: "Lengow"
+  dashboard:
+    hello_world: "Bonjour le monde"
+    new_friend: "Vous avez %{nb} nouveaux ami(s)"
