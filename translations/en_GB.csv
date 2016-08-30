@@ -1,4 +1,7 @@
 module.name|Lengow
-dashboard.hello_world|Hello World
-dashboard.new_friend|You have %{nb} new friend(s)
+module.plugin_name|Lengow for Woocommerce 2.x
+module.plugin_uri|http://www.lengow.com
+module.description|Export your catalog and synchronize your stock
+module.version|2.0.0
+module.author|Lengow
 |

@@ -1,6 +1,8 @@
-en:
+fr:
   module:
     name: "Lengow"
-  dashboard:
-    hello_world: "Bonjour le monde"
-    new_friend: "Vous avez %{nb} nouveaux ami(s)"
+    plugin_name: "Lengow pour Woocommerce 2.x"
+    plugin_uri: "http://www.lengow.com"
+    description: "Exportez votre catalogue produit et synchronisez vos stocks"
+    version: "2.0.0"
+    author: "Lengow"
