@@ -1,0 +1,8 @@
+en:
+  module:
+    name: "Lengow"
+    plugin_name: "Lengow for Woocommerce 2.x"
+    plugin_uri: "http://www.lengow.com"
+    description: "Export your catalog and synchronize your stock"
+    version: "2.0.0"
+    author: "Lengow"
