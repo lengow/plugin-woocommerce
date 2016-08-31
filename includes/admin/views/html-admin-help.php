@@ -3,8 +3,8 @@
  * Admin View: Dashboard
  */
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 ?>
-<h2>Dashboard</h2>
+<h2>Help</h2>

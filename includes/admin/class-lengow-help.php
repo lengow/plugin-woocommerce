@@ -9,18 +9,18 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 /**
- * Lengow_Dashboard Class.
+ * Lengow_Help Class.
  */
-class Lengow_Dashboard {
-	/**
-	 * Display dashboard page
-	 */
-	public static function display() {
-        include_once 'views/html-admin-dashboard.php';
+class Lengow_Help {
+    /**
+     * Display help page
+     */
+    public static function display() {
+        include_once 'views/html-admin-help.php';
 
-	}
+    }
 }

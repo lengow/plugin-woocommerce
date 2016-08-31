@@ -52,6 +52,7 @@ class Lengow_Install {
 		dbDelta( $sql );
 
 		add_option( 'lengow_version', LENGOW_VERSION );
+        add_option( 'lengow_import_days', 3);
 
 	}
 }

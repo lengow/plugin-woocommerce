@@ -7,4 +7,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<h2>Dashboard</h2>
+
+<h2>Legals</h2>

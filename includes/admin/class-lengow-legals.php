@@ -1,6 +1,6 @@
 <?php
 /**
- * Get all product data for export feed
+ * Installation related functions and actions.
  *
  * @author   Lengow
  * @category Admin
@@ -9,19 +9,18 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 /**
- * Lengow_Product Class.
+ * Lengow_Legals Class.
  */
-class Lengow_Product {
+class Lengow_Legals {
     /**
-     * Display dashboard page
+     * Display legals page
      */
     public static function display() {
-        echo '<h2>Product</h2>';
+        include_once 'views/html-admin-legals.php';
 
     }
 }
-
