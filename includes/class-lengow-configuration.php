@@ -16,90 +16,176 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Lengow_Configuration Class.
  */
 class Lengow_Configuration {
-    /**
-     * All Lengow Options Path
-     */
-    public $options = array(
-        'token',
-        'store_enable',
-        'account_id' => array(
-            'path'   => 'lengow_global_options/store_credential/global_account_id',
-            'store'  => true,
-        ),
-        'access_token' => array(
-            'path'   => 'lengow_global_options/store_credential/global_access_token',
-            'store'  => true,
-        ),
-        'secret_token' => array(
-            'path'   => 'lengow_global_options/store_credential/global_secret_token',
-            'store'  => true,
-        ),
-        'authorized_ip' => array(
-            'path'   => 'lengow_global_options/advanced/global_authorized_ip',
-        ),
-        'last_order_statistic_update' => array(
-            'path'   => 'lengow_global_options/advanced/last_statistic_update',
-            'export' => false,
-        ),
-        'order_statistic' => array(
-            'path'   => 'lengow_global_options/advanced/order_statistic',
-            'export' => false,
-        ),
-        'lengow_last_option_update',
-        'last_account_status_update' => array(
-            'path'   => 'lengow_global_options/advanced/last_status_update',
-            'export' => false,
-        ),
-        'account_status' => array(
-            'path'   => 'lengow_global_options/advanced/account_status',
-            'export' => false,
-        ),
-        'selection_enable' => array(
-            'path'   => 'lengow_export_options/simple/export_selection_enable',
-            'store'  => true,
-        ),
-        'out_stock' => array(
-            'path'   => 'lengow_export_options/simple/export_out_stock',
-            'store'  => true,
-        ),
-        'product_type' => array(
-            'path'   => 'lengow_export_options/simple/export_product_type',
-            'store'  => true,
-        ),
-        'legacy_enable' => array(
-            'path'   => 'lengow_export_options/advanced/export_legacy_enable',
-        ),
-        'file_enable' => array(
-            'path'   => 'lengow_export_options/advanced/export_file_enable',
-        ),
-        'cron_enable' => array(
-            'path'   => 'lengow_export_options/advanced/export_cron_enable',
-        ),
-        'last_export' => array(
-            'path'   => 'lengow_export_options/advanced/export_last_export',
-        ),
-        'lengow_import_days' => array(
-            'path'   => 'lengow_import_options/simple/import_days',
-            'store'  => true,
-        ),
-        'import_ship_mp_enabled' => array(
-            'path'   =>  'lengow_import_options/advanced/import_ship_mp_enabled',
-        ),
-        'import_stock_ship_mp' => array(
-            'path'   =>  'lengow_import_options/advanced/import_stock_ship_mp',
-        ),
-        'preprod_mode_enable' => array(
-            'path'   => 'lengow_import_options/advanced/import_preprod_mode_enable',
-        ),
-        'import_in_progress' => array(
-            'path'   => 'lengow_import_options/advanced/import_in_progress',
-        ),
-        'last_import_manual' => array(
-            'path'   => 'lengow_import_options/advanced/last_import_manual',
-        ),
-        'last_import_cron' => array(
-            'path'   => 'lengow_import_options/advanced/last_import_cron',
-        ),
-    );
+
+	/**
+	 * Get all Lengow configuration keys
+	 *
+	 * @return array
+	 */
+	public static function getKeys() {
+		static $keys = null;
+		if ( $keys === null ) {
+			$locale = new Lengow_Translation();
+
+			$keys = array(
+				'lengow_token'                       => array(
+					'label' => $locale->t( 'lengow_settings.lengow_token_title' ),
+				),
+				'lengow_store_enabled'                => array(
+					'label' => $locale->t( 'lengow_settings.lengow_store_active_title' ),
+				),
+				'lengow_account_id'                  => array(
+					'label' => $locale->t( 'lengow_settings.lengow_account_id_title' ),
+				),
+				'lengow_access_token'                => array(
+					'label' => $locale->t( 'lengow_settings.lengow_access_token_title' ),
+				),
+				'lengow_secret_token'                => array(
+					'label' => $locale->t( 'lengow_settings.lengow_secret_token_title' ),
+				),
+				'lengow_authorized_ip'               => array(
+					'label'  => $locale->t( 'lengow_settings.lengow_authorized_ip_title' ),
+					'legend' => $locale->t( 'lengow_settings.lengow_authorized_ip_legend' ),
+				),
+				'lengow_last_order_statistic_update' => array(
+					'label' => $locale->t( 'lengow_settings.lengow_last_order_statistic_update_title' ),
+				),
+				'lengow_order_statistic'             => array(
+					'label' => $locale->t( 'lengow_settings.lengow_order_statistic_title' ),
+				),
+				'lengow_last_option_update'          => array(
+					'label' => $locale->t( 'lengow_settings.lengow_last_option_update_title' ),
+				),
+				'lengow_last_account_status_update'  => array(
+					'label' => $locale->t( 'lengow_settings.lengow_last_account_status_update_title' ),
+				),
+				'lengow_account_status'              => array(
+					'label' => $locale->t( 'lengow_settings.lengow_account_status_title' ),
+				),
+				'lengow_selection_enabled'           => array(
+					'label'  => $locale->t( 'lengow_settings.lengow_selection_enabled_title' ),
+					'legend' => $locale->t( 'lengow_settings.lengow_selection_enabled_legend' ),
+					'default_value' => false,
+				),
+				'lengow_out_stock'                   => array(
+					'label' => $locale->t( 'lengow_settings.lengow_out_stock_title' ),
+				),
+				'lengow_product_type'                => array(
+					'label' => $locale->t( 'lengow_settings.lengow_product_type_title' ),
+				),
+				'lengow_legacy_enabled'              => array(
+					'label'  => $locale->t( 'lengow_settings.lengow_legacy_enabled_title' ),
+					'legend' => $locale->t( 'lengow_settings.lengow_legacy_enabled_legend' ),
+					'default_value' => false,
+				),
+				'lengow_file_enabled'                => array(
+					'label'  => $locale->t( 'lengow_settings.lengow_file_enabled_title' ),
+					'legend' => $locale->t( 'lengow_settings.lengow_file_enabled_legend' ),
+				),
+				'lengow_cron_enabled'                => array(
+					'label' => $locale->t( 'lengow_settings.lengow_cron_enabled_title' ),
+					'default_value' => false,
+				),
+				'lengow_last_export'                 => array(
+					'label' => $locale->t( 'lengow_settings.lengow_last_export_title' ),
+				),
+				'lengow_import_days'                 => array(
+					'label' => $locale->t( 'lengow_settings.lengow_import_days_title' ),
+					'legend' => $locale->t( 'lengow_settings.lengow_import_days_legend' ),
+					'default_value' => 5,
+				),
+				'lengow_import_ship_mp_enabled'      => array(
+					'label' => $locale->t( 'lengow_settings.lengow_import_ship_mp_enabled_title' ),
+					'default_value' => false,
+				),
+				'lengow_import_stock_ship_mp'        => array(
+					'label'  => $locale->t( 'lengow_settings.lengow_import_stock_ship_mp_title' ),
+					'legend' => $locale->t( 'lengow_settings.lengow_import_stock_ship_mp_legend' ),
+					'default_value' => false,
+				),
+				'lengow_preprod_enabled'             => array(
+					'label' => $locale->t( 'lengow_settings.lengow_preprod_enabled_title' ),
+				),
+				'lengow_import_in_progress'          => array(
+					'label' => $locale->t( 'lengow_settings.lengow_import_in_progress_title' ),
+				),
+				'lengow_last_import_manual'          => array(
+					'label' => $locale->t( 'lengow_settings.lengow_last_import_manual_title' )
+				),
+				'lengow_last_import_cron'            => array(
+					'label' => $locale->t( 'lengow_settings.lengow_last_import_cron_title' )
+				),
+			);
+		}
+
+		return $keys;
+	}
+
+	/**
+	 * Get Lengow value
+	 *
+	 * @param string $key lengow configuration key
+	 *
+	 * @return mixed
+	 */
+	public static function get( $key ) {
+
+		return get_option( $key );
+	}
+
+	/**
+	 * Update Lengow value by shop
+	 *
+	 * @param string  $key  lengow configuration key
+	 * @param mixed $value  configuration value
+	 */
+	public static function updateValue($key, $value)
+	{
+		update_option($key, $value);
+	}
+
+	/**
+	 * Get Values
+	 *
+	 * @return array
+	 */
+	public static function getAllValues()
+	{
+		$rows = array();
+		$keys = self::getKeys();
+		foreach ($keys as $key => $value) {
+			$rows[$key] = self::get($key);
+
+		}
+		return $rows;
+	}
+
+	/**
+	 * Reset all Lengow settings
+	 *
+	 * @return boolean
+	 */
+	public static function resetAll()
+	{
+		$keys = self::getKeys();
+		foreach ($keys as $key => $value) {
+			if (isset($value['default_value'])) {
+				$val = $value['default_value'];
+			} else {
+				$val = '';
+			}
+
+			$oldValue = self::get($key);
+			if ($oldValue == "") {
+				self::updateValue($key, $val);
+			}
+
+		}
+		//TODO Set lengow log message
+		//Lengow_Main::log('Setting', Lengow_Main::setLogMessage('log.setting.setting_updated'));
+
+		return true;
+	}
+
 }
 

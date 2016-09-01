@@ -20,7 +20,7 @@ class Lengow_Help {
      * Display help page
      */
     public static function display() {
-        include_once 'views/html-admin-help.php';
+        include_once 'views/help/html-admin-help.php';
 
     }
 }

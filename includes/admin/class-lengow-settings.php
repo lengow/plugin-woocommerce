@@ -29,6 +29,7 @@ class Lengow_Settings {
      * Display settings page
      */
     public static function display() {
-        include_once 'views/html-admin-settings.php';
+        Lengow_Settings::post_process();
+        include_once 'views/settings/html-admin-settings.php';
     }
 }

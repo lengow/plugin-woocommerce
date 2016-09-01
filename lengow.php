@@ -126,7 +126,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 * Init Lengow when WordPress Initialises
 		 */
 		public function init() {
-			load_plugin_textdomain( 'lengow', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 			if ( is_admin() ) {
 				$this->lengow_admin = new Lengow_Admin();
 			}

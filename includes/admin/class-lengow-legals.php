@@ -20,7 +20,7 @@ class Lengow_Legals {
      * Display legals page
      */
     public static function display() {
-        include_once 'views/html-admin-legals.php';
+        include_once 'views/legals/html-admin-legals.php';
 
     }
 }

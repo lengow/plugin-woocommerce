@@ -40,16 +40,16 @@ class Lengow_Admin {
 	 * Add Lengow admin item menu
 	 */
 	public function lengow_admin_menu() {
+		$locale = new Lengow_Translation();
 		add_menu_page(
-			'Lengow',
-			'Lengow',
+			$locale->t('module.name'),
+			$locale->t('module.name'),
 			'manage_woocommerce',
 			'lengow',
 			array( $this, 'lengow_display' ),
 			null,
 			56
 		);
-
 	}
 
     /**

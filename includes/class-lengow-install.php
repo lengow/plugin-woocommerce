@@ -52,8 +52,18 @@ class Lengow_Install {
 		dbDelta( $sql );
 
 		add_option( 'lengow_version', LENGOW_VERSION );
-        add_option( 'lengow_import_days', 3);
 
+		$keys = Lengow_Configuration::getKeys();
+		foreach ($keys as $key => $value) {
+			if (isset($value['default_value'])) {
+				$val = $value['default_value'];
+			} else {
+				$val = '';
+			}
+
+			add_option( $key, $val);
+
+		}
 	}
 }
 
