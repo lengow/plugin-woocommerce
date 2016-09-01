@@ -1,1 +1,4 @@
 en:
+  log:
+     export:
+        error_unable_to_create_file: "unable to create file %{file_name} in %{folder_name}"

@@ -19,8 +19,13 @@ class Lengow_Settings {
 
     public static function post_process() {
         if ( ! empty( $_POST ) ) {
-            $option = empty( $_REQUEST['lengow_import_days'] ) ? '' : $_REQUEST['lengow_import_days'];
-            update_option('lengow_import_days', $option);
+            $option = empty( $_REQUEST['lengow_product_type'] ) ? '' : $_REQUEST['lengow_product_type'];
+            $types = array();
+            foreach ($option as $key => $value) {
+                array_push($value, $types);
+            }
+            var_dump($types);die();
+            update_option('lengow_product_type', $option);
 
         }
     }

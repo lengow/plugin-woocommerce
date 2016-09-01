@@ -22,7 +22,7 @@ class Lengow_Configuration {
 	 *
 	 * @return array
 	 */
-	public static function getKeys() {
+	public static function get_keys() {
 		static $keys = null;
 		if ( $keys === null ) {
 			$locale = new Lengow_Translation();
@@ -139,7 +139,7 @@ class Lengow_Configuration {
 	 * @param string  $key  lengow configuration key
 	 * @param mixed $value  configuration value
 	 */
-	public static function updateValue($key, $value)
+	public static function update_value($key, $value)
 	{
 		update_option($key, $value);
 	}
@@ -149,10 +149,10 @@ class Lengow_Configuration {
 	 *
 	 * @return array
 	 */
-	public static function getAllValues()
+	public static function get_all_values()
 	{
 		$rows = array();
-		$keys = self::getKeys();
+		$keys = self::get_keys();
 		foreach ($keys as $key => $value) {
 			$rows[$key] = self::get($key);
 
@@ -165,7 +165,7 @@ class Lengow_Configuration {
 	 *
 	 * @return boolean
 	 */
-	public static function resetAll()
+	public static function reset_all()
 	{
 		$keys = self::getKeys();
 		foreach ($keys as $key => $value) {
@@ -177,7 +177,7 @@ class Lengow_Configuration {
 
 			$oldValue = self::get($key);
 			if ($oldValue == "") {
-				self::updateValue($key, $val);
+				self::update_value($key, $val);
 			}
 
 		}

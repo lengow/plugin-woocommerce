@@ -4,6 +4,7 @@ module.plugin_uri|http://www.lengow.com
 module.description|Export your catalog and synchronize your stock
 module.version|2.0.0
 module.author|Lengow
+log.export.error_unable_to_create_file|unable to create file %{file_name} in %{folder_name}
 menu.preprod_active|Pre-production mode
 global_setting.screen.preprod_mode_title|Pre-production Mode
 global_setting.screen.preprod_mode_description|Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY

@@ -53,7 +53,7 @@ class Lengow_Install {
 
 		add_option( 'lengow_version', LENGOW_VERSION );
 
-		$keys = Lengow_Configuration::getKeys();
+		$keys = Lengow_Configuration::get_keys();
 		foreach ($keys as $key => $value) {
 			if (isset($value['default_value'])) {
 				$val = $value['default_value'];
