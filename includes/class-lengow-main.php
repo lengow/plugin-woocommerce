@@ -44,7 +44,7 @@ class Lengow_Main {
 	 * @param string $marketplace_sku lengow marketplace sku
 	 */
 	public static function log( $category, $txt, $force_output = false, $marketplace_sku = null ) {
-		$log = self::getLogInstance();
+		$log = self::get_log_instance();
 		$log->write( $category, $txt, $force_output, $marketplace_sku );
 	}
 
@@ -53,7 +53,7 @@ class Lengow_Main {
 	 *
 	 * @return LengowLog Lengow log file instance
 	 */
-	public static function getLogInstance() {
+	public static function get_log_instance() {
 		if ( is_null( self::$log ) ) {
 			self::$log = new Lengow_Log();
 		}
@@ -64,8 +64,8 @@ class Lengow_Main {
 	/**
 	 * Suppress log files when too old
 	 */
-	public static function cleanLog() {
-		$log_files = Lengow_Log::getFiles();
+	public static function clean_log() {
+		$log_files = Lengow_Log::get_files();
 		$days      = array();
 		$days[]    = 'logs-' . date( 'Y-m-d' ) . '.txt';
 		for ( $i = 1; $i < self::$LOG_LIFE; $i ++ ) {
@@ -89,7 +89,7 @@ class Lengow_Main {
 	 *
 	 * @return string
 	 */
-	public static function setLogMessage( $key, $params = null ) {
+	public static function set_log_message( $key, $params = null ) {
 		if ( is_null( $params ) || ( is_array( $params ) && count( $params ) == 0 ) ) {
 			return $key;
 		}
@@ -112,7 +112,7 @@ class Lengow_Main {
 	 *
 	 * @return string
 	 */
-	public static function decodeLogMessage( $message, $iso_code = null, $params = null ) {
+	public static function decode_log_message( $message, $iso_code = null, $params = null ) {
 		if ( preg_match( '/^(([a-z\_]*\.){1,3}[a-z\_]*)(\[(.*)\]|)$/', $message, $result ) ) {
 			if ( isset( $result[1] ) ) {
 				$key = $result[1];

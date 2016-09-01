@@ -33,7 +33,7 @@ class Lengow_File {
 	public $link;
 
 	/**
-	 * @var ressource file hande
+	 * @var Lengow_File ressource file hande
 	 */
 	public $instance;
 
@@ -43,10 +43,10 @@ class Lengow_File {
 	public function __construct( $folder_name, $file_name = null, $mode = 'a+' ) {
 		$this->file_name   = $file_name;
 		$this->folder_name = $folder_name;
-		$this->instance    = self::getRessource( $this->getPath(), $mode );
+		$this->instance    = self::get_ressource( $this->get_path(), $mode );
 		if ( ! is_resource( $this->instance ) ) {
 			throw new Lengow_Exception(
-				Lengow_Main::setLogMessage(
+				Lengow_Main::set_log_message(
 					'log/export/error_unable_to_create_file',
 					array(
 						'file_name'   => $file_name,
@@ -71,7 +71,7 @@ class Lengow_File {
 	 */
 	public function write( $txt ) {
 		if ( ! $this->instance ) {
-			$this->instance = fopen( $this->getPath(), 'a+' );
+			$this->instance = fopen( $this->get_path(), 'a+' );
 		}
 		fwrite( $this->instance, $txt );
 	}
@@ -84,7 +84,7 @@ class Lengow_File {
 			if ( $this->instance ) {
 				$this->close();
 			}
-			unlink( $this->getPath() );
+			unlink( $this->get_path() );
 		}
 	}
 
@@ -94,7 +94,7 @@ class Lengow_File {
 	 * @return boolean
 	 */
 	public function rename( $new_name ) {
-		return rename( $this->getPath(), $new_name );
+		return rename( $this->get_path(), $new_name );
 	}
 
 	/**
@@ -114,7 +114,7 @@ class Lengow_File {
 	 *
 	 * @return resource
 	 */
-	public static function getRessource( $path, $mode = 'a+' ) {
+	public static function get_ressource( $path, $mode = 'a+' ) {
 		return fopen( $path, $mode );
 	}
 
@@ -123,7 +123,7 @@ class Lengow_File {
 	 *
 	 * @return string
 	 */
-	public function getLink() {
+	public function get_link() {
 		if ( empty( $this->link ) ) {
 			if ( ! $this->exists() ) {
 				$this->link = null;
@@ -139,7 +139,7 @@ class Lengow_File {
 	 *
 	 * @return string
 	 */
-	public function getPath() {
+	public function get_path() {
 		$sep = DIRECTORY_SEPARATOR;
 		return LENGOW_PLUGIN_PATH . $sep . $this->folder_name . $sep . $this->file_name;
 	}
@@ -149,7 +149,7 @@ class Lengow_File {
 	 *
 	 * @return string
 	 */
-	public function getFolderPath() {
+	public function get_folder_path() {
 		$sep = DIRECTORY_SEPARATOR;
 		return LENGOW_PLUGIN_PATH . $sep . $this->folder_name;
 	}
@@ -160,7 +160,7 @@ class Lengow_File {
 	 * @return bool
 	 */
 	public function exists() {
-		return file_exists( $this->getPath() );
+		return file_exists( $this->get_path() );
 	}
 
 	/**
@@ -168,9 +168,9 @@ class Lengow_File {
 	 *
 	 * @param string $folder folder name
 	 *
-	 * @return array List of files
+	 * @return mixed
 	 */
-	public static function getFilesFromFolder($folder)
+	public static function get_files_from_folder($folder)
 	{
 		$sep = DIRECTORY_SEPARATOR;
 		$folder_path = LENGOW_PLUGIN_PATH . $sep . $folder;

@@ -25,23 +25,23 @@ class Lengow_Translation {
 	/**
 	 * Fallback iso code
 	 */
-	public $fallbackIsoCode = 'en_GB';
+	public $fallback_iso_code = 'en_GB';
 
 	/**
 	 * Iso code
 	 */
-	protected $isoCode = null;
+	protected $iso_code = null;
 
 	/**
 	 * Force iso code for log and toolbox
 	 */
-	public static $forceIsoCode = null;
+	public static $force_iso_code = null;
 
 	/**
 	 * Construct
 	 */
 	public function __construct() {
-		$this->isoCode = get_locale();
+		$this->iso_code = get_locale();
 	}
 
 	/**
@@ -54,23 +54,23 @@ class Lengow_Translation {
 	 * @return mixed
 	 */
 	public function t( $message, $args = array(), $iso_code = null ) {
-		if ( ! is_null( self::$forceIsoCode ) ) {
-			$iso_code = self::$forceIsoCode;
+		if ( ! is_null( self::$force_iso_code ) ) {
+			$iso_code = self::$force_iso_code;
 		}
 		if ( is_null( $iso_code ) ) {
-			$iso_code = $this->isoCode;
+			$iso_code = $this->iso_code;
 		}
 		if ( ! isset( self::$translation[ $iso_code ] ) ) {
-			$this->loadFile( $iso_code );
+			$this->load_file( $iso_code );
 		}
 		if ( isset( self::$translation[ $iso_code ][ $message ] ) ) {
-			return $this->translateFinal( self::$translation[ $iso_code ][ $message ], $args );
+			return $this->translate_final( self::$translation[ $iso_code ][ $message ], $args );
 		} else {
-			if ( ! isset( self::$translation[ $this->fallbackIsoCode ] ) ) {
-				$this->loadFile( $this->fallbackIsoCode );
+			if ( ! isset( self::$translation[ $this->fallback_iso_code ] ) ) {
+				$this->load_file( $this->fallback_iso_code );
 			}
-			if ( isset( self::$translation[ $this->fallbackIsoCode ][ $message ] ) ) {
-				return $this->translateFinal( self::$translation[ $this->fallbackIsoCode ][ $message ], $args );
+			if ( isset( self::$translation[ $this->fallback_iso_code ][ $message ] ) ) {
+				return $this->translate_final( self::$translation[ $this->fallback_iso_code ][ $message ], $args );
 			} else {
 				return 'Missing Translation [' . $message . ']';
 			}
@@ -85,7 +85,7 @@ class Lengow_Translation {
 	 *
 	 * @return string Final Translate string
 	 */
-	protected function translateFinal( $text, $args ) {
+	protected function translate_final( $text, $args ) {
 		if ( $args ) {
 			$params = array();
 			$values = array();
@@ -93,7 +93,6 @@ class Lengow_Translation {
 				$params[] = '%{' . $key . '}';
 				$values[] = $value;
 			}
-
 			return str_replace( $params, $values, $text );
 		} else {
 			return $text;
@@ -108,7 +107,7 @@ class Lengow_Translation {
 	 *
 	 * @return boolean
 	 */
-	public function loadFile( $iso_code, $filename = null ) {
+	public function load_file( $iso_code, $filename = null ) {
 		if ( ! $filename ) {
 			$filename = LENGOW_PLUGIN_PATH . '/translations/' . $iso_code . '.csv';
 		}
@@ -122,9 +121,7 @@ class Lengow_Translation {
 			}
 		}
 		self::$translation[ $iso_code ] = $translation;
-
 		return count( $translation ) > 0;
 	}
-
 }
 

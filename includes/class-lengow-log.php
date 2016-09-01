@@ -45,7 +45,7 @@ class Lengow_Log extends Lengow_File {
 	 * @param string $marketplace_sku lengow order id
 	 */
 	public function write( $category, $message = "", $display = false, $marketplace_sku = null ) {
-		$decoded_message = Lengow_Main::decodeLogMessage( $message, 'en_GB' );
+		$decoded_message = Lengow_Main::decode_log_message( $message, 'en_GB' );
 		$log             = date( 'Y-m-d H:i:s' );
 		$log .= ' - ' . ( empty( $category ) ? '' : '[' . $category . '] ' );
 		$log .= '' . ( empty( $marketplace_sku ) ? '' : 'order ' . $marketplace_sku . ' : ' );
@@ -62,8 +62,8 @@ class Lengow_Log extends Lengow_File {
 	 *
 	 * @return array
 	 */
-	public static function getFiles() {
-		return Lengow_File::getFilesFromFolder( self::$LENGOW_LOGS_FOLDER );
+	public static function get_files() {
+		return Lengow_File::get_files_from_folder( self::$LENGOW_LOGS_FOLDER );
 	}
 }
 
