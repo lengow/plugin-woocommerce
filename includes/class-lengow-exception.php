@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Lengow_Exception Class.
  */
-class Lengow_Exception {
+class Lengow_Exception extends Exception {
 
 }
 
