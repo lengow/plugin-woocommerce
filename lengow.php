@@ -116,6 +116,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/class-lengow-translation.php' );
 				include_once( 'includes/admin/class-lengow-admin.php' );
 				include_once( 'includes/admin/class-lengow-dashboard.php' );
+				include_once( 'includes/admin/class-lengow-settings.php' );
+				include_once( 'includes/admin/class-lengow-help.php' );
+				include_once( 'includes/admin/class-lengow-legals.php' );
 			}
 		}
 
