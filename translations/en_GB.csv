@@ -4,7 +4,6 @@ module.plugin_uri|http://www.lengow.com
 module.description|Export your catalog and synchronize your stock
 module.version|2.0.0
 module.author|Lengow
-log.export.error_unable_to_create_file|unable to create file %{file_name} in %{folder_name}
 menu.preprod_active|Pre-production mode
 global_setting.screen.preprod_mode_title|Pre-production Mode
 global_setting.screen.preprod_mode_description|Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY
@@ -14,6 +13,12 @@ global_setting.screen.button_download_file|Download log files
 global_setting.screen.button_save|Save changes
 global_setting.screen.setting_saving|Saving...
 global_setting.screen.setting_saved|Saved!
+global_setting.screen.import_setting_title|Order import
+global_setting.screen.import_setting_description|Manage your import settings for marketplace orders here
+global_setting.screen.nb_days|days
+global_setting.screen.export_title|Export Setting
+global_setting.screen.product_type_title|Product type to export
+global_setting.screen.product_type_legend|Product type legend
 lengow_settings.lengow_token_title|Token
 lengow_settings.lengow_store_active_title|Activate Store
 lengow_settings.lengow_account_id_title|Account ID
@@ -45,4 +50,4 @@ lengow_settings.lengow_preprod_enabled_title|Activate Pre-production Mode
 lengow_settings.lengow_import_in_progress_title|Import in progress
 lengow_settings.lengow_last_import_manual_title|Last manual import
 lengow_settings.lengow_last_import_cron_title|Last Cron import
-|
+log.export.error_unable_to_create_file|unable to create file %{file_name} in %{folder_name}

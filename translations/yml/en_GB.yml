@@ -18,6 +18,12 @@ en:
       button_save: "Save changes"
       setting_saving: "Saving..."
       setting_saved: "Saved!"
+      import_setting_title: "Order import"
+      import_setting_description: "Manage your import settings for marketplace orders here"
+      nb_days: "days"
+      export_title: "Export Setting"
+      product_type_title: "Product type to export"
+      product_type_legend: "Product type legend"
   lengow_settings:
     lengow_token_title: "Token"
     lengow_store_active_title: "Activate Store"

@@ -19,14 +19,16 @@ class Lengow_Settings {
 
     public static function post_process() {
         if ( ! empty( $_POST ) ) {
-            $option = empty( $_REQUEST['lengow_product_type'] ) ? '' : $_REQUEST['lengow_product_type'];
-            $types = array();
-            foreach ($option as $key => $value) {
-                array_push($value, $types);
-            }
-            var_dump($types);die();
-            update_option('lengow_product_type', $option);
+            foreach ($_POST as $key => $value)
+            {
+                if ($value == "on") {
+                    $value = 1;
+                }
 
+                if (Lengow_Configuration::get($key) != $value) {
+                    Lengow_Configuration::update_value($key, $value);
+                }
+            }
         }
     }
 
