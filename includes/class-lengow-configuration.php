@@ -188,6 +188,6 @@ class Lengow_Configuration
 
         return true;
     }
-
+    
 }
 
