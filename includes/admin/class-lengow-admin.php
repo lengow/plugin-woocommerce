@@ -56,6 +56,8 @@ class Lengow_Admin {
      * Routing
      */
     public function lengow_display() {
+        $current_page = $_GET['tab'];
+        $locale = new Lengow_Translation();
         //TODO Add condition for dashboard
         //if ($this->current_tab != $this->_default_tab) {
             include_once 'views/html-admin-header.php';

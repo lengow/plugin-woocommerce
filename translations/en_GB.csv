@@ -4,6 +4,8 @@ module.plugin_uri|http://www.lengow.com
 module.description|Export your catalog and synchronize your stock
 module.version|2.0.0
 module.author|Lengow
+menu.product|Products
+menu.jump_to_lengow|Jump to Lengow
 menu.preprod_active|Pre-production mode
 global_setting.screen.preprod_mode_title|Pre-production Mode
 global_setting.screen.preprod_mode_description|Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY
@@ -28,6 +30,14 @@ help.screen.need_some_help|Need some help?
 help.screen.contain_text_support_hour|We’ll do our best to get back to you during regular business hours (Monday to Friday – 9am to 6pm GMT+1).
 help.screen.find_answer|You can also find answers in our 
 help.screen.link_prestashop_guide|PrestaShop dedicated guide
+legals.screen.simplified_company|Simplified limited liability company
+legals.screen.social_capital|Social capital:
+legals.screen.cnil_declaration|CNIL declaration:
+legals.screen.company_registration_number|Company Registration Number, Nantes:
+legals.screen.vat_identification_number|VAT identification number:
+legals.screen.address|Address
+legals.screen.contact|Contact
+legals.screen.hosting|Hosting
 lengow_settings.lengow_token_title|Token
 lengow_settings.lengow_store_active_title|Activate Store
 lengow_settings.lengow_account_id_title|Account ID
@@ -59,4 +69,6 @@ lengow_settings.lengow_preprod_enabled_title|Activate Pre-production Mode
 lengow_settings.lengow_import_in_progress_title|Import in progress
 lengow_settings.lengow_last_import_manual_title|Last manual import
 lengow_settings.lengow_last_import_cron_title|Last Cron import
+log.setting.setting_reset|All Lengow settings were reset
+log.setting.setting_updated|All Lengow settings were updated
 log.export.error_unable_to_create_file|unable to create file %{file_name} in %{folder_name}

@@ -39,7 +39,7 @@ class Lengow_Help {
         //TODO - get sync data function
         $mail_to = Lengow_Sync::get_sync_data();
 
-        $mail = 'support.lengow.zendesk@lengow.com';
+        $mail = 'support@supportlengow.zendesk.com';
         $subject = $locale->t('help.screen.mailto_subject');
 
         //TODO - query api function
@@ -71,6 +71,7 @@ class Lengow_Help {
 //            }
 //            $i++;
 //        }
+
         $html = ' <a href="mailto:'. $mail;
         $html.= '?subject='. $subject;
         $html.= '&body='. $body .'" ';
