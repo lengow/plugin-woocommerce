@@ -19,6 +19,15 @@ global_setting.screen.nb_days|days
 global_setting.screen.export_title|Export Setting
 global_setting.screen.product_type_title|Product type to export
 global_setting.screen.product_type_legend|Product type legend
+help.screen.title|Get a little help from your support team!
+help.screen.contain_text_support|Ask us anything about Lengow or share feedback at
+help.screen.mail_lengow_support|support.lengow.zendesk@lengow.com.
+help.screen.mail_lengow_support_title|Account Information:
+help.screen.mailto_subject|Prestashop Lengow Plugin #Need assistance
+help.screen.need_some_help|Need some help?
+help.screen.contain_text_support_hour|We’ll do our best to get back to you during regular business hours (Monday to Friday – 9am to 6pm GMT+1).
+help.screen.find_answer|You can also find answers in our 
+help.screen.link_prestashop_guide|PrestaShop dedicated guide
 lengow_settings.lengow_token_title|Token
 lengow_settings.lengow_store_active_title|Activate Store
 lengow_settings.lengow_account_id_title|Account ID
