@@ -68,7 +68,9 @@ class Lengow_Main {
 	 */
 	public static $LOG_LIFE = 20;
 
-
+	/**
+	 * @var array WooCommerce product types
+	 */
 	public static $PRODUCT_TYPES = array(
 		'external' => 'External Product',
 		'grouped'  => 'Grouped Product',
@@ -82,8 +84,7 @@ class Lengow_Main {
 	 * @return boolean
 	 */
 	public static function check_ip() {
-		/*$ips = Lengow_Configuration::get('lengow_authorized_ip');*/
-		$ips              = '';
+		$ips              = Lengow_Configuration::get( 'lengow_authorized_ip' );
 		$ips              = trim( str_replace( array( "\r\n", ',', '-', '|', ' ' ), ';', $ips ), ';' );
 		$ips              = array_filter( explode( ';', $ips ) );
 		$authorized_ips   = count( $ips ) > 0 ? array_merge( $ips, self::$IPS_LENGOW ) : self::$IPS_LENGOW;
@@ -92,6 +93,7 @@ class Lengow_Main {
 		if ( in_array( $hostname_ip, $authorized_ips ) ) {
 			return true;
 		}
+
 		return false;
 	}
 

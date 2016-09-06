@@ -72,8 +72,9 @@ class Lengow_Configuration
                 'lengow_out_stock' => array(
                     'label' => $locale->t('lengow_settings.lengow_out_stock_title'),
                 ),
-                'lengow_product_type' => array(
-                    'label' => $locale->t('lengow_settings.lengow_product_type_title'),
+                'lengow_product_types' => array(
+                    'label' => $locale->t('lengow_settings.lengow_product_types_title'),
+                    'default_value' => array('simple', 'variable'),
                 ),
                 'lengow_legacy_enabled' => array(
                     'label' => $locale->t('lengow_settings.lengow_legacy_enabled_title'),

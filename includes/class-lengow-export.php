@@ -50,12 +50,12 @@ class Lengow_Export {
 	/**
 	 * @var array List of product id separate with comma
 	 */
-	private $_product_ids;
+	private $_product_ids = array();
 
 	/**
-	 * @var boolean Product type separate with comma
+	 * @var array Product types separate with comma
 	 */
-	private $_product_type;
+	private $_product_types = array();
 
 	/**
 	 * @var boolean Export unpublished products
@@ -92,8 +92,8 @@ class Lengow_Export {
 	 * integer limit              Limit number of exported product
 	 * boolean selection          Export product selection (1) or all products (0)
 	 * boolean out_of_stock       Export out of stock product (1) Export only product in stock (0)
-	 * string  product_ids        List of product id separate with comma (1,2,3)
-	 * string  product_type       Product type separate with comma (external,grouped,simple,variable)
+	 * string  product_ids        List of product ids separate with comma (1,2,3)
+	 * string  product_types      Product types separate with comma (external,grouped,simple,variable)
 	 * boolean inactive           Export unpublished products (1) or only published product (0)
 	 * boolean variation          Export product Variation (1) Export parent product only (0)
 	 * boolean legacy_fields      Export feed with v2 fields (1) or v3 fields (0)
@@ -101,13 +101,15 @@ class Lengow_Export {
 	 * boolean update_export_date Change last export date in data base (1) or not (0)
 	 */
 	public function __construct( $params = array() ) {
-		$this->_stream = ! is_null( $params['stream'] ) ? $params['stream'] : false;
+		$this->_stream = ! is_null( $params['stream'] ) ? $params['stream'] : true;
 		$this->_offset = ! is_null( $params['offset'] ) ? $params['offset'] : 0;
 		$this->_limit  = ! is_null( $params['limit'] ) ? $params['limit'] : 0;
-		// TODO get Lengow Configuration for selection and out of stock options
-		$this->_selection          = ! is_null( $params['selection'] ) ? $params['selection'] : false;
-		$this->_out_of_stock       = ! is_null( $params['out_of_stock'] ) ? $params['out_of_stock'] : false;
-		$this->_product_ids        = ! is_null( $params['product_ids'] ) ? $params['product_ids'] : false;
+		$this->_selection          = ! is_null( $params['selection'] )
+			? $params['selection']
+			: (bool) Lengow_Configuration::get( 'lengow_selection_enabled' );
+		$this->_out_of_stock       = ! is_null( $params['out_of_stock'] )
+			? $params['out_of_stock']
+			: (bool) Lengow_Configuration::get( 'lengow_out_stock' );
 		$this->_inactive           = ! is_null( $params['inactive'] ) ? $params['inactive'] : false;
 		$this->_variation          = ! is_null( $params['variation'] ) ? $params['variation'] : true;
 		$this->_legacy_fields      = ! is_null( $params['legacy_fields'] ) ? $params['legacy_fields'] : false;
@@ -115,7 +117,8 @@ class Lengow_Export {
 			? (bool) $params['update_export_date']
 			: true;
 		$this->_set_format( ! is_null( $params['format'] ) ? $params['format'] : 'csv' );
-		$this->_set_product_type( ! is_null( $params['product_type'] ) ? $params['product_type'] : false );
+		$this->_set_product_ids( ! is_null( $params['product_ids'] ) ? $params['product_ids'] : false );
+		$this->_set_product_types( ! is_null( $params['product_types'] ) ? $params['product_types'] : false );
 		$this->_set_log_output( ! is_null( $params['log_output'] ) ? $params['log_output'] : true );
 	}
 
@@ -129,13 +132,38 @@ class Lengow_Export {
 	}
 
 	/**
+	 * Set product ids to export
+	 *
+	 * @param string $product_ids The product ids to export
+	 */
+	private function _set_product_ids( $product_ids ) {
+		if ( $product_ids ) {
+			$exported_ids = explode( ',', $product_ids );
+			foreach ( $exported_ids as $id ) {
+				if ( is_numeric($id) && $id > 0) {
+					$this->_product_ids[] = (int)$id;
+				}
+			}
+		}
+	}
+
+	/**
 	 * Set product types to export
 	 *
 	 * @param string $product_type The product types to export
 	 */
-	private function _set_product_type( $product_type ) {
-		// TODO verify and get product types
-		$this->_product_type = $product_type;
+	private function _set_product_types( $product_types ) {
+		if ( $product_types ) {
+			$exported_types = explode( ',', $product_types );
+			foreach ( $exported_types as $type ) {
+				if ( array_key_exists( $type, Lengow_Main::$PRODUCT_TYPES ) ) {
+					$this->_product_types[] = $type;
+				}
+			}
+		}
+		if ( count( $this->_product_types ) == 0 ) {
+			$this->_product_types = Lengow_Configuration::get('lengow_product_types');
+		}
 	}
 
 	/**
@@ -150,8 +178,7 @@ class Lengow_Export {
 	/**
 	 * Execute the export
 	 */
-	public function exec()
-	{
+	public function exec() {
 
 	}
 
@@ -160,8 +187,7 @@ class Lengow_Export {
 	 *
 	 * @return integer
 	 */
-	public function get_total_export_product()
-	{
+	public function get_total_export_product() {
 
 	}
 }

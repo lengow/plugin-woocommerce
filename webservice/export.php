@@ -29,7 +29,7 @@
  * boolean selection          Export product selection (1) or all products (0)
  * boolean out_of_stock       Export out of stock product (1) Export only product in stock (0)
  * string  product_ids        List of product id separate with comma (1,2,3)
- * string  product_type       Product type separate with comma (external,grouped,simple,variable)
+ * string  product_types      Product type separate with comma (external,grouped,simple,variable)
  * boolean inactive           Export unpublished products (1) or only published product (0)
  * boolean variation          Export product Variation (1) Export parent product only (0)
  * boolean legacy_fields      Export feed with v2 fields (1) or v3 fields (0)
@@ -83,7 +83,10 @@ $selection          = isset( $_GET['all_products'] ) ? ! (bool) $_GET['all_produ
 $selection          = is_null( $selection ) && isset( $_GET['selection'] ) ? (bool) $_GET['selection'] : $selection;
 $out_of_stock       = isset( $_GET['out_of_stock'] ) ? (bool) $_GET['out_of_stock'] : null;
 $product_ids        = isset( $_GET['product_ids'] ) ? $_GET['product_ids'] : null;
-$product_type       = isset( $_GET['product_type'] ) ? $_GET['product_type'] : null;
+$product_types      = isset( $_GET['product_type'] ) ? $_GET['product_type'] : null;
+$product_types      = is_null( $product_types ) && isset( $_GET['product_types'] )
+	? $_GET['product_types']
+	: $product_types;
 $inactive           = isset( $_GET['inactive'] ) ? (bool) $_GET['inactive'] : null;
 $variation          = isset( $_GET['variation'] ) ? (bool) $_GET['variation'] : null;
 $legacy_fields      = isset( $_GET['legacy_fields'] ) ? (bool) $_GET['legacy_fields'] : null;
@@ -98,7 +101,7 @@ $export = new Lengow_Export( array(
 	'selection'          => $selection,
 	'out_of_stock'       => $out_of_stock,
 	'product_ids'        => $product_ids,
-	'product_type'       => $product_type,
+	'product_types'      => $product_types,
 	'inactive'           => $inactive,
 	'variation'          => $variation,
 	'legacy_fields'      => $legacy_fields,
