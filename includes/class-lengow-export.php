@@ -150,7 +150,7 @@ class Lengow_Export {
 	/**
 	 * Set product types to export
 	 *
-	 * @param string $product_type The product types to export
+	 * @param string $product_types The product types to export
 	 */
 	private function _set_product_types( $product_types ) {
 		if ( $product_types ) {
