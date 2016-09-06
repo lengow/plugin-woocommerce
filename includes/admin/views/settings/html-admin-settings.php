@@ -27,6 +27,7 @@ $values = Lengow_Configuration::get_all_values();
 			<div class="lgw-switch">
 				<label>
 					<div>
+						<span></span>
 						<input type="hidden" name="lengow_preprod_enabled" value="0">
 						<input name="lengow_preprod_enabled"
 						       type="checkbox"
@@ -35,11 +36,12 @@ $values = Lengow_Configuration::get_all_values();
 					<?= $keys['lengow_preprod_enabled']['label'] ?>
 				</label>
 			</div>
-			<div id="lengow_wrapper_preprod" <!--style="display:none;-->">
+			<div id="lengow_wrapper_preprod">
 				<div class="grey-frame">
 					<div class="lgw-switch">
 						<label>
 							<div>
+								<span></span>
 								<input type="hidden" name="lengow_store_enabled" value="0">
 								<input name="lengow_store_enabled"
 									   type="checkbox"
@@ -92,6 +94,7 @@ $values = Lengow_Configuration::get_all_values();
 			<div class="lgw-switch">
 				<label>
 					<div>
+						<span></span>
 						<input type="hidden" name="lengow_import_ship_mp_enabled" value="0">
 						<input name="lengow_import_ship_mp_enabled"
 							   type="checkbox"
@@ -105,6 +108,7 @@ $values = Lengow_Configuration::get_all_values();
 					<div class="lgw-switch">
 						<label>
 							<div>
+								<span></span>
 								<input type="hidden" name="lengow_import_stock_ship_mp" value="0">
 								<input type="checkbox" name="lengow_import_stock_ship_mp" <?= $values['lengow_import_stock_ship_mp'] == 1 ? 'checked' : '' ?> />
 							</div>
