@@ -24,6 +24,8 @@ en:
       export_title: "Export Setting"
       product_type_title: "Product type to export"
       product_type_legend: "Product type legend"
+      please_choose_log: "Please choose a log file..."
+      download_all_files: "Download all files"
   lengow_settings:
     lengow_token_title: "Token"
     lengow_store_active_title: "Activate Store"

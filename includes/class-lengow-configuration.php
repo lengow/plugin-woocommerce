@@ -33,6 +33,7 @@ class Lengow_Configuration {
 				),
 				'lengow_store_enabled'                => array(
 					'label' => $locale->t( 'lengow_settings.lengow_store_active_title' ),
+                    'type' => 'checkbox'
 				),
 				'lengow_account_id'                  => array(
 					'label' => $locale->t( 'lengow_settings.lengow_account_id_title' ),
@@ -66,9 +67,11 @@ class Lengow_Configuration {
 					'label'  => $locale->t( 'lengow_settings.lengow_selection_enabled_title' ),
 					'legend' => $locale->t( 'lengow_settings.lengow_selection_enabled_legend' ),
 					'default_value' => false,
+                    'type' => 'checkbox'
 				),
 				'lengow_out_stock'                   => array(
 					'label' => $locale->t( 'lengow_settings.lengow_out_stock_title' ),
+                    'type' => 'checkbox'
 				),
 				'lengow_product_type'                => array(
 					'label' => $locale->t( 'lengow_settings.lengow_product_type_title' ),
@@ -77,14 +80,17 @@ class Lengow_Configuration {
 					'label'  => $locale->t( 'lengow_settings.lengow_legacy_enabled_title' ),
 					'legend' => $locale->t( 'lengow_settings.lengow_legacy_enabled_legend' ),
 					'default_value' => false,
+                    'type' => 'checkbox'
 				),
 				'lengow_file_enabled'                => array(
 					'label'  => $locale->t( 'lengow_settings.lengow_file_enabled_title' ),
 					'legend' => $locale->t( 'lengow_settings.lengow_file_enabled_legend' ),
+                    'type' => 'checkbox'
 				),
 				'lengow_cron_enabled'                => array(
 					'label' => $locale->t( 'lengow_settings.lengow_cron_enabled_title' ),
 					'default_value' => false,
+                    'type' => 'checkbox'
 				),
 				'lengow_last_export'                 => array(
 					'label' => $locale->t( 'lengow_settings.lengow_last_export_title' ),
@@ -97,14 +103,17 @@ class Lengow_Configuration {
 				'lengow_import_ship_mp_enabled'      => array(
 					'label' => $locale->t( 'lengow_settings.lengow_import_ship_mp_enabled_title' ),
 					'default_value' => false,
+                    'type' => 'checkbox'
 				),
 				'lengow_import_stock_ship_mp'        => array(
 					'label'  => $locale->t( 'lengow_settings.lengow_import_stock_ship_mp_title' ),
 					'legend' => $locale->t( 'lengow_settings.lengow_import_stock_ship_mp_legend' ),
 					'default_value' => false,
+                    'type' => 'checkbox'
 				),
 				'lengow_preprod_enabled'             => array(
 					'label' => $locale->t( 'lengow_settings.lengow_preprod_enabled_title' ),
+                    'type' => 'checkbox'
 				),
 				'lengow_import_in_progress'          => array(
 					'label' => $locale->t( 'lengow_settings.lengow_import_in_progress_title' ),
@@ -180,12 +189,37 @@ class Lengow_Configuration {
 				self::update_value($key, $val);
 			}
 
-		}
-		//TODO Set lengow log message
-		//Lengow_Main::log('Setting', Lengow_Main::setLogMessage('log.setting.setting_updated'));
+        }
+        Lengow_Main::log('Setting', Lengow_Main::set_log_message('log.setting.setting_reset'));
 
-		return true;
-	}
+        return true;
+    }
+
+    /**
+     * Check value and create a log if necessary
+     *
+     * @param string  $key     name of lengow setting
+     * @param mixed   $value   setting value
+     */
+    public static function check_and_log($key, $value)
+    {
+        $old_value = self::get($key);
+
+        if ($key == 'lengow_access_token' || $key == 'lengow_secret_token') {
+            $value = preg_replace("/[a-zA-Z0-9]/", '*', $value);
+            $old_value = preg_replace("/[a-zA-Z0-9]/", '*', $old_value);
+        }
+        if ($old_value != $value) {
+            Lengow_Main::log(
+                'Setting',
+                Lengow_Main::set_log_message('log.setting.setting_change', array(
+                    'key'       => $key,
+                    'old_value' => $old_value,
+                    'value'     => $value
+                ))
+            );
+        }
+    }
 
 }
 

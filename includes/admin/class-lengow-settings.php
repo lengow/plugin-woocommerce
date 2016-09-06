@@ -26,6 +26,7 @@ class Lengow_Settings {
                 }
 
                 if (Lengow_Configuration::get($key) != $value) {
+                    Lengow_Configuration::check_and_log($key, $value);
                     Lengow_Configuration::update_value($key, $value);
                 }
             }
@@ -36,6 +37,9 @@ class Lengow_Settings {
      * Display settings page
      */
     public static function display() {
+        $locale = new Lengow_Translation();
+        $keys   = Lengow_Configuration::get_keys();
+        $values = Lengow_Configuration::get_all_values();
         Lengow_Settings::post_process();
         include_once 'views/settings/html-admin-settings.php';
     }

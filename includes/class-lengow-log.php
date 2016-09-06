@@ -65,5 +65,28 @@ class Lengow_Log extends Lengow_File {
 	public static function get_files() {
 		return Lengow_File::get_files_from_folder( self::$LENGOW_LOGS_FOLDER );
 	}
+
+    /**
+     * Get log files path
+     *
+     * @return mixed
+     */
+    public static function get_paths()
+    {
+        $files = self::get_files();
+        if (empty($files)) {
+            return false;
+        }
+        $logs = array();
+        foreach ($files as $file) {
+            preg_match('/\/lengow\/logs\/logs-([0-9]{4}-[0-9]{2}-[0-9]{2})\.txt/', $file->get_path(), $match);
+            $logs[] = array(
+                'full_path' => $file->get_path(),
+                'short_path' => 'logs-'.$match[1].'.txt',
+                'name' => $match[1].'.txt'
+            );
+        }
+        return $logs;
+    }
 }
 
