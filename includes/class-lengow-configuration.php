@@ -169,25 +169,25 @@ class Lengow_Configuration {
 		return $rows;
 	}
 
-	/**
-	 * Reset all Lengow settings
-	 *
-	 * @return boolean
-	 */
-	public static function reset_all()
-	{
-		$keys = self::getKeys();
-		foreach ($keys as $key => $value) {
-			if (isset($value['default_value'])) {
-				$val = $value['default_value'];
-			} else {
-				$val = '';
-			}
+    /**
+     * Reset all Lengow settings
+     *
+     * @return boolean
+     */
+    public static function reset_all()
+    {
+        $keys = self::get_keys();
+        foreach ($keys as $key => $value) {
+            if (isset($value['default_value'])) {
+                $val = $value['default_value'];
+            } else {
+                $val = '';
+            }
 
-			$oldValue = self::get($key);
-			if ($oldValue == "") {
-				self::update_value($key, $val);
-			}
+            $oldValue = self::get($key);
+            if ($oldValue == "") {
+                self::update_value($key, $val);
+            }
 
         }
         Lengow_Main::log('Setting', Lengow_Main::set_log_message('log.setting.setting_reset'));

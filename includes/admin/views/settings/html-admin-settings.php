@@ -5,6 +5,9 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+Lengow_Settings::post_process();
+$keys   = Lengow_Configuration::get_keys();
+$values = Lengow_Configuration::get_all_values();
 $list_file = Lengow_Log::get_paths();
 ?>
 <div class="lgw-container" id="lengow_mainsettings_wrapper" xmlns="http://www.w3.org/1999/html">
@@ -117,13 +120,13 @@ $list_file = Lengow_Log::get_paths();
 			<h2><?= $locale->t( 'global_setting.screen.log_file_title' ); ?></h2>
 			<p><?= $locale->t( 'global_setting.screen.log_file_description' ); ?></p>
 			<select id="select_log" class="lengow_select">
-				<option value="" disabled selected hidden>
+				<option value="" disabled selected>
 					<?= $locale->t('global_setting.screen.please_choose_log')?>
 				</option>
 				<?php foreach ($list_file as $file) : ?>
 				<option value="<?= admin_url('admin.php?page=lengow&tab=lengow_settings');?>&action=download&file=<?= $file['short_path']?>">
 					<?php $file_name = explode(".", $file['name']); ?>
-					<?= date_format($file_name[0], "%A %e %B %Y");?></option>
+					<?= date_format(date_create($file_name[0]), 'd-m-Y');?></option>
 				<?php endforeach; ?>
 				<option value="<?= admin_url('admin.php?page=lengow&tab=lengow_settings');?>&action=download_all" >
 					<?= $locale->t('global_setting.screen.download_all_files')?>

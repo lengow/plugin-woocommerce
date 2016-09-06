@@ -38,9 +38,6 @@ class Lengow_Settings {
      */
     public static function display() {
         $locale = new Lengow_Translation();
-        $keys   = Lengow_Configuration::get_keys();
-        $values = Lengow_Configuration::get_all_values();
-        Lengow_Settings::post_process();
         include_once 'views/settings/html-admin-settings.php';
     }
 }
