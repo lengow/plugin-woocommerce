@@ -73,8 +73,9 @@ class Lengow_Configuration {
 					'label' => $locale->t( 'lengow_settings.lengow_out_stock_title' ),
                     'type' => 'checkbox'
 				),
-				'lengow_product_type'                => array(
+				'lengow_product_types'                => array(
 					'label' => $locale->t( 'lengow_settings.lengow_product_type_title' ),
+                    'default_value' => array('simple', 'variable'),
 				),
 				'lengow_legacy_enabled'              => array(
 					'label'  => $locale->t( 'lengow_settings.lengow_legacy_enabled_title' ),

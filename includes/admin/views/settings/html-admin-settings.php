@@ -63,11 +63,11 @@ $list_file = Lengow_Log::get_paths();
 		</div>
 		<div class="lgw-box">
 			<h2><?= $locale->t('global_setting.screen.export_title'); ?></h2>
-			<label class="control-label"><?= $locale->t('global_setting.screen.product_type_title'); ?></label>
-			<select class="form-control lengow_select" name="lengow_product_type[]" multiple="multiple">
+			<label class="control-label"><?= $locale->t('global_setting.screen.product_types_title'); ?></label>
+			<select class="form-control lengow_select" name="lengow_product_types[]" multiple="multiple">
 				<?php foreach ( Lengow_Main::$PRODUCT_TYPES as $row => $value ) :
 					$selected = false;
-					foreach ( $values['lengow_product_type'] as $key => $type ) {
+					foreach ( $values['lengow_product_types'] as $key => $type ) {
 						if ( $type == $row ) {
 							$selected = 'selected';
 							continue;
@@ -77,7 +77,7 @@ $list_file = Lengow_Log::get_paths();
 					<option value="<?= $row ?>" <?= $selected ?>><?= $value ?></option>
 				<?php endforeach; ?>
 			</select>
-			<span class="legend" style="display:block;"><?= $locale->t('global_setting.screen.product_type_legend'); ?></span>
+			<span class="legend" style="display:block;"><?= $locale->t('global_setting.screen.product_types_legend'); ?></span>
 		</div>
 		<div class="lgw-box">
 			<h2><?= $locale->t('global_setting.screen.import_setting_title'); ?></h2>
@@ -126,7 +126,7 @@ $list_file = Lengow_Log::get_paths();
 				<?php foreach ($list_file as $file) : ?>
 				<option value="<?= admin_url('admin.php?page=lengow&tab=lengow_settings');?>&action=download&file=<?= $file['short_path']?>">
 					<?php $file_name = explode(".", $file['name']); ?>
-					<?= date_format(date_create($file_name[0]), 'd-m-Y');?></option>
+					<?= date_format(date_create($file_name[0]), "d F Y");?></option>
 				<?php endforeach; ?>
 				<option value="<?= admin_url('admin.php?page=lengow&tab=lengow_settings');?>&action=download_all" >
 					<?= $locale->t('global_setting.screen.download_all_files')?>
