@@ -18,6 +18,47 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Main {
 
 	/**
+	 * Lengow Authorized IPs
+	 */
+	protected static $IPS_LENGOW = array(
+		'46.19.183.204',
+		'46.19.183.218',
+		'46.19.183.222',
+		'89.107.175.172',
+		'89.107.175.186',
+		'185.61.176.129',
+		'185.61.176.130',
+		'185.61.176.131',
+		'185.61.176.132',
+		'185.61.176.133',
+		'185.61.176.134',
+		'185.61.176.137',
+		'185.61.176.138',
+		'185.61.176.139',
+		'185.61.176.140',
+		'185.61.176.141',
+		'185.61.176.142',
+		'95.131.137.18',
+		'95.131.137.19',
+		'95.131.137.21',
+		'95.131.137.26',
+		'95.131.137.27',
+		'88.164.17.227',
+		'88.164.17.216',
+		'109.190.78.5',
+		'95.131.141.168',
+		'95.131.141.169',
+		'95.131.141.170',
+		'95.131.141.171',
+		'82.127.207.67',
+		'80.14.226.127',
+		'80.236.15.223',
+		'92.135.36.234',
+		'81.64.72.170',
+		'80.11.36.123'
+	);
+
+	/**
 	 * @var LengowLog Lengow log file instance
 	 */
 	public static $log;
@@ -27,13 +68,34 @@ class Lengow_Main {
 	 */
 	public static $LOG_LIFE = 20;
 
-
+	/**
+	 * @var array WooCommerce product types
+	 */
 	public static $PRODUCT_TYPES = array(
 		'external' => 'External Product',
 		'grouped'  => 'Grouped Product',
 		'simple'   => 'Simple Product',
 		'variable' => 'Variable Product'
 	);
+
+	/**
+	 * Check if current IP is authorized
+	 *
+	 * @return boolean
+	 */
+	public static function check_ip() {
+		$ips              = Lengow_Configuration::get( 'lengow_authorized_ip' );
+		$ips              = trim( str_replace( array( "\r\n", ',', '-', '|', ' ' ), ';', $ips ), ';' );
+		$ips              = array_filter( explode( ';', $ips ) );
+		$authorized_ips   = count( $ips ) > 0 ? array_merge( $ips, self::$IPS_LENGOW ) : self::$IPS_LENGOW;
+		$authorized_ips[] = $_SERVER['SERVER_ADDR'];
+		$hostname_ip      = $_SERVER['REMOTE_ADDR'];
+		if ( in_array( $hostname_ip, $authorized_ips ) ) {
+			return true;
+		}
+
+		return false;
+	}
 
 	/**
 	 * Writes log

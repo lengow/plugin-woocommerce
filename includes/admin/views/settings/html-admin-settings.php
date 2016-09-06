@@ -59,11 +59,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 		<div class="lgw-box">
 			<h2><?= $locale->t('global_setting.screen.export_title'); ?></h2>
-			<label class="control-label"><?= $locale->t('global_setting.screen.product_type_title'); ?></label>
-			<select class="form-control lengow_select" name="lengow_product_type[]" multiple="multiple">
+			<label class="control-label"><?= $locale->t('global_setting.screen.product_types_title'); ?></label>
+			<select class="form-control lengow_select" name="lengow_product_types[]" multiple="multiple">
 				<?php foreach ( Lengow_Main::$PRODUCT_TYPES as $row => $value ) :
 					$selected = false;
-					foreach ( $values['lengow_product_type'] as $key => $type ) {
+					foreach ( $values['lengow_product_types'] as $key => $type ) {
 						if ( $type == $row ) {
 							$selected = 'selected';
 							continue;
@@ -73,7 +73,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<option value="<?= $row ?>" <?= $selected ?>><?= $value ?></option>
 				<?php endforeach; ?>
 			</select>
-			<span class="legend" style="display:block;"><?= $locale->t('global_setting.screen.product_type_legend'); ?></span>
+			<span class="legend" style="display:block;"><?= $locale->t('global_setting.screen.product_types_legend'); ?></span>
 		</div>
 		<div class="lgw-box">
 			<h2><?= $locale->t('global_setting.screen.import_setting_title'); ?></h2>
