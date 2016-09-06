@@ -17,5 +17,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Lengow_Sync {
 
+    /**
+     * Get Sync Data (Inscription / Update)
+     *
+     * @return array
+     */
+    public static function get_sync_data()
+    {
+        return true;
+    }
+
 }
 

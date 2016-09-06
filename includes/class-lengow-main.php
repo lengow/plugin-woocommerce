@@ -68,6 +68,14 @@ class Lengow_Main {
 	 */
 	public static $LOG_LIFE = 20;
 
+
+	public static $PRODUCT_TYPES = array(
+		'external' => 'External Product',
+		'grouped'  => 'Grouped Product',
+		'simple'   => 'Simple Product',
+		'variable' => 'Variable Product'
+	);
+
 	/**
 	 * Check if current IP is authorized
 	 *
@@ -109,6 +117,7 @@ class Lengow_Main {
 		if ( is_null( self::$log ) ) {
 			self::$log = new Lengow_Log();
 		}
+
 		return self::$log;
 	}
 
@@ -150,6 +159,7 @@ class Lengow_Main {
 			$all_params[] = $param . '==' . $value;
 		}
 		$message = $key . '[' . join( '|', $all_params ) . ']';
+
 		return $message;
 	}
 
@@ -178,6 +188,7 @@ class Lengow_Main {
 			$locale  = new Lengow_Translation();
 			$message = $locale->t( $key, $params, $iso_code );
 		}
+
 		return $message;
 	}
 }

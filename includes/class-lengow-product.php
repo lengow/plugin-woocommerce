@@ -16,6 +16,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Lengow_Product Class.
  */
 class Lengow_Product {
+    /**
+     * Display dashboard page
+     */
+    public static function display() {
+        echo '<h2>Product</h2>';
 
+    }
 }
 

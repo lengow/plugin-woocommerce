@@ -20,7 +20,7 @@ class Lengow_Dashboard {
 	 * Display dashboard page
 	 */
 	public static function display() {
-		include 'views/html-admin-dashboard.php';
+        include_once 'views/dashboard/html-admin-dashboard.php';
+
 	}
 }
-
