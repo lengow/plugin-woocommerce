@@ -17,5 +17,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Lengow_Feed {
 
+	/**
+	 * @var array formats available for export
+	 */
+	public static $AVAILABLE_FORMATS = array(
+		'csv',
+		'yaml',
+		'xml',
+		'json',
+	);
 }
 

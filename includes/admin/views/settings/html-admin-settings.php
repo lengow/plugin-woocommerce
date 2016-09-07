@@ -5,9 +5,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-$locale = new Lengow_Translation();
-$keys   = Lengow_Configuration::get_keys();
-$values = Lengow_Configuration::get_all_values();
 ?>
 <div class="lgw-container" id="lengow_mainsettings_wrapper" xmlns="http://www.w3.org/1999/html">
 	<?php if ( $values['lengow_preprod_enabled'] == 1 ) : ?>

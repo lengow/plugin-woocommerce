@@ -20,6 +20,8 @@ class Lengow_Legals {
      * Display legals page
      */
     public static function display() {
+        $locale = new Lengow_Translation();
+        $keys   = Lengow_Configuration::get_keys();
         include_once 'views/legals/html-admin-legals.php';
 
     }

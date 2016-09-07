@@ -5,8 +5,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-$current_page = $_GET['page'];
-//if ($isNewMerchant) : ?>
+//TODO - Check if new merchant
+//if (!$is_new_merchant) : ?>
 <ul class="nav nav-pills lengow-nav lengow-nav-top">
 	<li role="presentation" id="lengow_logo">
 		<a href="<?= admin_url('admin.php?page=lengow'); ?>">
@@ -15,7 +15,7 @@ $current_page = $_GET['page'];
 	</li>
 	<li role="presentation" class="<?= ($current_page == 'lengow_product') ? "active" : "" ?>"><a href="
             <?= admin_url('admin.php?page=lengow&tab=lengow_product'); ?>">
-			Product
+			<?= $locale->t('menu.product') ?>
 		</a>
 	</li>
 	<li class="lengow_float_right <?= ($current_page == 'lengow_settings') ? "active" : "" ?>" id="menugotosetting">
@@ -34,7 +34,7 @@ $current_page = $_GET['page'];
 	</li>
 	<li class="lengow_float_right" id="menugotosolution">
 		<a href="http://solution.lengow.com" target="_blank">
-			Solution Lengow
+			<?= $locale->t('menu.jump_to_lengow') ?>
 		</a>
 	</li>
 </ul>
