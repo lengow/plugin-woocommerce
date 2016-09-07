@@ -10,9 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <ul class="nav nav-pills lengow-nav lengow-nav-top">
 	<li role="presentation" id="lengow_logo">
 		<a href="<?= admin_url('admin.php?page=lengow'); ?>">
-<!--			TODO - add icons -->
-<!--			<img src="/modules/lengow/views/img/lengow-white.png" alt="lengow">-->
-			DASHBOARD
+			<img src="<?= LENGOW_PLUGIN_URL.'/assets/images/lengow-white.png'; ?>" alt="lengow">
 		</a>
 	</li>
 	<li role="presentation" class="<?= ($current_page == 'lengow_product') ? "active" : "" ?>"><a href="
@@ -23,17 +21,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<li class="lengow_float_right <?= ($current_page == 'lengow_settings') ? "active" : "" ?>" id="menugotosetting">
 		<a href="<?= admin_url('admin.php?page=lengow&tab=lengow_settings'); ?>"
 		   class="lengow_link_tooltip"
-		   data-placement="bottom">
-<!--			<i class="fa fa-cog fa-2x"></i>-->
-			SETTINGS
+		   data-placement="bottom" data-original-title="Paramètres principaux">
+			<i class="fa fa-cog fa-2x"></i>
 		</a>
 	</li>
 	<li class="lengow_float_right <?= ($current_page == 'lengow_help') ? "active" : "" ?>" id="menugotohelp">
 		<a href="<?= admin_url('admin.php?page=lengow&tab=lengow_help'); ?>"
 		   class="lengow_link_tooltip"
-		   data-placement="bottom">
-<!--			<i class="fa fa-life-ring fa-2x"></i>-->
-			HELP
+		   data-placement="bottom" data-original-title="Aide">
+			<i class="fa fa-life-ring fa-2x"></i>
 		</a>
 	</li>
 	<li class="lengow_float_right" id="menugotosolution">
