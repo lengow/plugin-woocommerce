@@ -215,8 +215,8 @@ class Lengow_Configuration {
                 'Setting',
                 Lengow_Main::set_log_message('log.setting.setting_change', array(
                     'key'       => $key,
-                    'old_value' => $old_value,
-                    'value'     => $value
+                    'old_value' => is_array($old_value) ? implode(",", $old_value) : $old_value,
+                    'value'     => is_array($value) ? implode(",", $value) : $value,
                 ))
             );
         }
