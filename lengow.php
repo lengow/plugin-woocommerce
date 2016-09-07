@@ -67,8 +67,14 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 */
 		private function _init_hooks() {
 			register_activation_hook( __FILE__, array( 'Lengow_Install', 'install' ) );
-			add_action( 'admin_enqueue_scripts', array( $this, 'add_scripts' ) );
 			add_action( 'init', array( $this, 'init' ) );
+
+			if ( $_GET['page'] == 'lengow' ) {
+				add_action( 'admin_enqueue_scripts', array( $this, 'add_scripts' ) );
+				add_filter( 'pre_site_transient_update_core', array( $this, 'remove_core_updates' ) );
+				add_filter( 'pre_site_transient_update_plugins', array( $this, 'remove_core_updates' ) );
+				add_filter( 'pre_site_transient_update_themes', array( $this, 'remove_core_updates' ) );
+			}
 		}
 
 		/**
@@ -132,6 +138,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			}
 		}
 
+		/**
+		 * Add CSS and JS
+		 */
 		public function add_scripts() {
 			wp_register_style( 'lengow_component_css', plugins_url( '/assets/css/lengow-components.css', __FILE__) );
 			wp_register_style( 'lengow_font_awesome', plugins_url( '/assets/css/font-awesome.css', __FILE__) );
@@ -144,6 +153,14 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			wp_register_script( 'lengow_select2', plugins_url( '/assets/js/select2.js', __FILE__) );
 			wp_register_script( 'lengow_admin_js', plugins_url( '/assets/js/lengow/admin.js', __FILE__), array('jquery', 'lengow_boostrap_js', 'lengow_select2', 'lengow_settings_js') );
 			wp_enqueue_script('lengow_admin_js');
+		}
+
+		/**
+		 * Remove Wordpress's updates messages
+		 * @return object
+		 */
+		private function remove_core_updates(){
+			global $wp_version;return(object) array('last_checked'=> time(),'version_checked'=> $wp_version,);
 		}
 	}
 
