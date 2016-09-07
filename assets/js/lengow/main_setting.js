@@ -20,6 +20,10 @@
 
 (function ($) {
     $(document).ready(function () {
+        // Multibox selection
+        $(".js-multiple-select").select2({
+            closeOnSelect: false
+        });
 
         // SUMBIT FORM
         $( ".lengow_form" ).submit(function( event ) {

@@ -34,11 +34,11 @@ en:
       contain_text_support: "Ask us anything about Lengow or share feedback at"
       mail_lengow_support: "support.lengow.zendesk@lengow.com."
       mail_lengow_support_title: "Account Information:"
-      mailto_subject: "Prestashop Lengow Plugin #Need assistance"
+      mailto_subject: "Woocommerce Lengow Plugin #Need assistance"
       need_some_help: "Need some help?"
       contain_text_support_hour: "We’ll do our best to get back to you during regular business hours (Monday to Friday – 9am to 6pm GMT+1)."
       find_answer: "You can also find answers in our "
-      link_prestashop_guide: "PrestaShop dedicated guide"
+      link_woocommerce_guide: "Woocommerce dedicated guide"
   legals:
     screen:
       simplified_company: "Simplified limited liability company"
@@ -76,7 +76,7 @@ en:
     lengow_import_days_legend: "Activate this option if you have incorrect pending orders. It lets you re-import all orders that have been processed during this faulty period"
     lengow_import_ship_mp_enabled_title: "Import orders shipped by marketplaces"
     lengow_import_stock_ship_mp_title: "I want to decrease my stock"
-    lengow_import_stock_ship_mp_legend: "Use this option to take marketplaces orders into account for your PrestaShop backoffice"
+    lengow_import_stock_ship_mp_legend: "Use this option to take marketplaces orders into account for your Woocommerce backoffice"
     lengow_preprod_enabled_title: "Activate Pre-production Mode"
     lengow_import_in_progress_title: "Import in progress"
     lengow_last_import_manual_title: "Last manual import"

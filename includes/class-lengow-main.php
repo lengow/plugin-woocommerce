@@ -72,10 +72,10 @@ class Lengow_Main {
 	 * @var array WooCommerce product types
 	 */
 	public static $PRODUCT_TYPES = array(
+		'simple'   => 'Simple Product',
+		'variable' => 'Variable Product',
 		'external' => 'External Product',
 		'grouped'  => 'Grouped Product',
-		'simple'   => 'Simple Product',
-		'variable' => 'Variable Product'
 	);
 
 	/**

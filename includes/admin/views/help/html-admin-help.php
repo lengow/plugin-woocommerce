@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <a href="https://en.knowledgeowl.com/help/article/link/prestashopv2"
                target="_blank"
                title="Help Center">
-                <?= $locale->t('help.screen.link_prestashop_guide')?>
+                <?= $locale->t('help.screen.link_woocommerce_guide')?>
             </a>
         </p>
     </div>

@@ -60,7 +60,7 @@
         //$('.lengow_select').select2({ minimumResultsForSearch: 16});
 
         init_tooltip();
-        var clipboard = new Clipboard('.lengow_copy');
+        //var clipboard = new Clipboard('.lengow_copy');
 
         var preprod_exist=$('#lgw-preprod').length;
         if (preprod_exist>0){
