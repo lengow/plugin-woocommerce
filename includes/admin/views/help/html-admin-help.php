@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <p><?= $locale->t('help.screen.contain_text_support_hour')?></p>
         <p>
             <?= $locale->t('help.screen.find_answer')?>
-            <a href="https://en.knowledgeowl.com/help/article/link/prestashopv2"
+            <a href="https://en.knowledgeowl.com/help/woocommerce-plugin"
                target="_blank"
                title="Help Center">
                 <?= $locale->t('help.screen.link_woocommerce_guide')?>

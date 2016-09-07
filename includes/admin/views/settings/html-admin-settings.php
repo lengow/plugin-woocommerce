@@ -73,12 +73,12 @@ $list_file = Lengow_Log::get_paths();
 		</div>
 		<div class="lgw-box">
 			<h2><?= $locale->t('global_setting.screen.export_title'); ?></h2>
-			<label class="control-label"><?= $locale->t('global_setting.screen.product_type_title'); ?></label>
+			<label class="control-label"><?= $locale->t('global_setting.screen.product_types_title'); ?></label>
 			<div class="form-group">
-				<select class="form-control js-multiple-select" name="lengow_product_type[]" multiple>
+				<select class="form-control js-multiple-select" name="lengow_product_types[]" multiple>
 					<?php foreach ( Lengow_Main::$PRODUCT_TYPES as $row => $value ) :
 						$selected = false;
-						foreach ( $values['lengow_product_type'] as $key => $type ) {
+						foreach ( $values['lengow_product_types'] as $key => $type ) {
 							if ( $type == $row ) {
 								$selected = 'selected';
 								continue;
@@ -89,52 +89,69 @@ $list_file = Lengow_Log::get_paths();
 					<?php endforeach; ?>
 				</select>
 			</div>
-			<span class="legend" style="display:block;"><?= $locale->t('global_setting.screen.product_type_legend'); ?></span>
+			<span class="legend" style="display:block;"><?= $locale->t('global_setting.screen.product_types_legend'); ?></span>
 		</div>
 		<div class="lgw-box">
 			<h2><?= $locale->t('global_setting.screen.import_setting_title'); ?></h2>
 			<p><?= $locale->t('global_setting.screen.import_setting_description'); ?></p>
-			<div class="form-group">
-				<div class="input-group">
-					<input type="number" name="lengow_import_days" class="form-control" value="<?= $values['lengow_import_days'] ?>" min="1" max="99" />
-					<div class="input-group-addon">
-						<div class="unit"><?= $locale->t('global_setting.screen.nb_days'); ?></div>
+			<div class="lgw-switch <?= $values['lengow_import_enabled'] == 1 ? 'checked' : '' ;?>">
+				<label>
+					<div>
+						<span></span>
+						<input type="hidden" name="lengow_import_enabled" value="0">
+						<input name="lengow_import_enabled"
+							   type="checkbox"
+							<?= $values['lengow_import_enabled'] == 1 ? 'checked' : '' ;?> />
 					</div>
-					<div class="clearfix"></div>
-				</div>
-				<span class="legend" style="display:block;"><?= $keys['lengow_import_days']['legend']?></span>
+					<?= $keys['lengow_import_enabled']['label'] ?>
+				</label>
 			</div>
-			<div class="form-group">
-				<div class="lgw-switch <?= $values['lengow_import_ship_mp_enabled'] == 1 ? 'checked' : '' ;?>">
-					<label>
-						<div>
-							<span></span>
-							<input type="hidden" name="lengow_import_ship_mp_enabled" value="0">
-							<input name="lengow_import_ship_mp_enabled"
-								   type="checkbox"
-								<?= $values['lengow_import_ship_mp_enabled'] == 1 ? 'checked' : '' ;?>/>
-						</div>
-						<?= $keys['lengow_import_ship_mp_enabled']['label'] ?>
-					</label>
-				</div>
-			</div>
-			<div id="lengow_wrapper_import_ship_mp_enabled">
+			<div id="lengow_wrapper_import">
 				<div class="grey-frame">
 					<div class="form-group">
-						<div class="lgw-switch <?= $values['lengow_import_stock_ship_mp'] == 1 ? 'checked' : '' ?>">
+						<div class="input-group">
+							<input type="number" name="lengow_import_days" class="form-control" value="<?= $values['lengow_import_days'] ?>" min="1" max="99" />
+							<div class="input-group-addon">
+								<div class="unit"><?= $locale->t('global_setting.screen.nb_days'); ?></div>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<span class="legend" style="display:block;"><?= $keys['lengow_import_days']['legend']?></span>
+					</div>
+					<div class="form-group">
+						<div class="lgw-switch <?= $values['lengow_import_ship_mp_enabled'] == 1 ? 'checked' : '' ;?>">
 							<label>
 								<div>
 									<span></span>
-									<input type="hidden" name="lengow_import_stock_ship_mp" value="0">
-									<input type="checkbox" name="lengow_import_stock_ship_mp" <?= $values['lengow_import_stock_ship_mp'] == 1 ? 'checked' : '' ?> />
+									<input type="hidden" name="lengow_import_ship_mp_enabled" value="0">
+									<input name="lengow_import_ship_mp_enabled"
+										   type="checkbox"
+										<?= $values['lengow_import_ship_mp_enabled'] == 1 ? 'checked' : '' ;?>/>
 								</div>
-								<?= $keys['lengow_import_stock_ship_mp']['label'] ?>
+								<?= $keys['lengow_import_ship_mp_enabled']['label'] ?>
 							</label>
 						</div>
 					</div>
-					<span class="legend" style="display:block;"><?= $keys['lengow_import_stock_ship_mp']['legend'] ?></span>
+					<div id="lengow_wrapper_import_ship_mp_enabled">
+						<div class="grey-frame">
+							<div class="form-group">
+								<div class="lgw-switch <?= $values['lengow_import_stock_ship_mp'] == 1 ? 'checked' : '' ?>">
+									<label>
+										<div>
+											<span></span>
+											<input type="hidden" name="lengow_import_stock_ship_mp" value="0">
+											<input type="checkbox" name="lengow_import_stock_ship_mp" <?= $values['lengow_import_stock_ship_mp'] == 1 ? 'checked' : '' ?> />
+										</div>
+										<?= $keys['lengow_import_stock_ship_mp']['label'] ?>
+									</label>
+								</div>
+							</div>
+							<span class="legend" style="display:block;"><?= $keys['lengow_import_stock_ship_mp']['legend'] ?></span>
+						</div>
+					</div>
 				</div>
 			</div>
+			<span class="legend" style="display:block;"><?= $locale->t('lengow_settings.lengow_import_enabled_legend'); ?></span>
 		</div>
 		<div class="lgw-box">
 			<h2><?= $locale->t( 'global_setting.screen.log_file_title' ); ?></h2>

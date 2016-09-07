@@ -125,6 +125,11 @@ class Lengow_Configuration {
 				'lengow_last_import_cron'            => array(
 					'label' => $locale->t( 'lengow_settings.lengow_last_import_cron_title' )
 				),
+                'lengow_import_enabled'             => array(
+                    'label' => $locale->t( 'lengow_settings.lengow_import_enabled_title' ),
+                    'legend' => $locale->t( 'lengow_settings.lengow_import_enabled_legend' ),
+                    'type' => 'checkbox'
+                ),
 			);
 		}
 

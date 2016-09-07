@@ -161,7 +161,10 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 */
 		public function remove_core_updates(){
 			global $wp_version;
-            return(object) array('last_checked'=> time(),'version_checked'=> $wp_version);
+			return (object) array(
+				'last_checked'=> time(),
+				'version_checked'=> $wp_version
+			);
 		}
 	}
 

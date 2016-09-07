@@ -21,14 +21,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<li class="lengow_float_right <?= ($current_page == 'lengow_settings') ? "active" : "" ?>" id="menugotosetting">
 		<a href="<?= admin_url('admin.php?page=lengow&tab=lengow_settings'); ?>"
 		   class="lengow_link_tooltip"
-		   data-placement="bottom" data-original-title="Paramètres principaux">
+		   data-placement="bottom" data-original-title="<?= $locale->t('menu.global_parameter') ?>">
 			<i class="fa fa-cog fa-2x"></i>
 		</a>
 	</li>
 	<li class="lengow_float_right <?= ($current_page == 'lengow_help') ? "active" : "" ?>" id="menugotohelp">
 		<a href="<?= admin_url('admin.php?page=lengow&tab=lengow_help'); ?>"
 		   class="lengow_link_tooltip"
-		   data-placement="bottom" data-original-title="Aide">
+		   data-placement="bottom" data-original-title="<?= $locale->t('menu.help') ?>">
 			<i class="fa fa-life-ring fa-2x"></i>
 		</a>
 	</li>

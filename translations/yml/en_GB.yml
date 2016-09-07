@@ -10,6 +10,8 @@ en:
     product: "Products"
     jump_to_lengow: "Jump to Lengow"
     preprod_active: "Pre-production mode"
+    help: "Help"
+    global_parameter: "General settings"
   global_setting:
     screen:
       preprod_mode_title: "Pre-production Mode"
@@ -81,3 +83,5 @@ en:
     lengow_import_in_progress_title: "Import in progress"
     lengow_last_import_manual_title: "Last manual import"
     lengow_last_import_cron_title: "Last Cron import"
+    lengow_import_enabled_title: "Activate orders synchronisation"
+    lengow_import_enabled_legend: "Use this option to decrease stocks in your Woocommerce backoffice"
