@@ -202,7 +202,7 @@ class Lengow_Export {
 		$query               = $this->build_total_query();
 		$exported_products   = $wpdb->get_results( $query );
 		$nb_exported_product = count( $exported_products );
-		if ( $this->_variation ) {
+		if ( $this->_variation && in_array( 'variable', $this->_product_types ) ) {
 			$variation_query     = $this->build_total_query( true );
 			$exported_variations = $wpdb->get_results( $variation_query );
 			$nb_exported_product += count( $exported_variations );
@@ -233,7 +233,7 @@ class Lengow_Export {
 	/**
 	 * Get Count export product
 	 *
-	 * @param boolean $variation (count variation product)
+	 * @param boolean $variation count variation product
 	 *
 	 * @return string
 	 */
