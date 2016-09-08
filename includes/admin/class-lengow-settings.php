@@ -38,13 +38,6 @@ class Lengow_Settings {
                     }
                 }
                 break;
-            case 'download':
-                $file = isset($_GET['file']) ?  $_GET['file'] : null;
-                Lengow_Log::download($file);
-                break;
-            case 'download_all':
-                Lengow_Log::download();
-                break;
         }
 
     }

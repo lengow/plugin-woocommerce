@@ -5,6 +5,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+$current_page = $_GET['tab'];
 //TODO - Check if new merchant
 //if (!$is_new_merchant) : ?>
 <ul class="nav nav-pills lengow-nav lengow-nav-top">
