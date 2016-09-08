@@ -69,7 +69,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			register_activation_hook( __FILE__, array( 'Lengow_Install', 'install' ) );
 			add_action( 'init', array( $this, 'init' ) );
 
-			if ( $_GET['page'] == 'lengow' ) {
+			if ( isset( $_GET['page'] ) && $_GET['page'] == 'lengow' ) {
 				add_action( 'admin_enqueue_scripts', array( $this, 'add_scripts' ) );
 				add_filter( 'pre_site_transient_update_core', array( $this, 'remove_core_updates' ) );
 				add_filter( 'pre_site_transient_update_plugins', array( $this, 'remove_core_updates' ) );
