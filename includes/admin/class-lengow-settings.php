@@ -18,19 +18,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Settings {
 
     public static function post_process() {
-        if ( ! empty( $_POST ) ) {
-            foreach ($_POST as $key => $value)
-            {
-                if ($value == "on") {
-                    $value = 1;
-                }
-
-                if (Lengow_Configuration::get($key) != $value) {
-                    Lengow_Configuration::check_and_log($key, $value);
-                    Lengow_Configuration::update_value($key, $value);
-                }
-            }
+        $action = null;
+        if ($_POST) {
+            $action = $_POST['action'];
+        } elseif (isset($_GET['action'])) {
+            $action = $_GET['action'];
         }
+        switch ($action) {
+            case 'process':
+                foreach ($_POST as $key => $value)
+                {
+                    if ($value == "on") {
+                        $value = 1;
+                    }
+
+                    if (Lengow_Configuration::get($key) != $value) {
+                        Lengow_Configuration::check_and_log($key, $value);
+                        Lengow_Configuration::update_value($key, $value);
+                    }
+                }
+                break;
+            case 'download':
+                $file = isset($_GET['file']) ?  $_GET['file'] : null;
+                Lengow_Log::download($file);
+                break;
+            case 'download_all':
+                Lengow_Log::download();
+                break;
+        }
+
     }
 
     /**

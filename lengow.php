@@ -134,6 +134,20 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 */
 		public function init() {
 			if ( is_admin() ) {
+			    //check logs download to prevent the occurrence of the wordpress html header
+			    $action = null;
+                if (isset($_GET['action'])) {
+                    $action = $_GET['action'];
+                }
+                switch ($action) {
+                    case 'download':
+                        $file = isset($_GET['file']) ?  $_GET['file'] : null;
+                        Lengow_Log::download($file);
+                        break;
+                    case 'download_all':
+                        Lengow_Log::download();
+                        break;
+                }
 				$this->lengow_admin = new Lengow_Admin();
 			}
 		}

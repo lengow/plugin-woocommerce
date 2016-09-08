@@ -165,6 +165,7 @@
             }
         }
 
+        // DOWNLOAD LOGS
         $('#select_log').change(function(){
             if ($('#select_log').val() !== null) {
                 $("#download_log" ).show();

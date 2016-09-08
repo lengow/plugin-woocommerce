@@ -17,7 +17,7 @@ $list_file = Lengow_Log::get_paths();
 		</div>
 	<?php endif; ?>
 	<form class="lengow_form" method="POST">
-		<!--        <input type="hidden" name="action" value="process">-->
+		<input type="hidden" name="action" value="process">
 		<div class="lgw-box">
 			<h2>Authorised IP</h2>
 			<label class="control-label"><?= $keys['lengow_authorized_ip']['label'] ?></label>
