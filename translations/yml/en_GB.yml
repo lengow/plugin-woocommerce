@@ -12,6 +12,9 @@ en:
     preprod_active: "Pre-production mode"
     help: "Help"
     global_parameter: "General settings"
+  footer:
+    legals: "Legal notices"
+    plugin_lengow: "Lengow Woocommerce Plugin"
   global_setting:
     screen:
       preprod_mode_title: "Pre-production Mode"

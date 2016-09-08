@@ -13,9 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Lengow_Settings Class.
+ * Lengow_Admin_Settings Class.
  */
-class Lengow_Settings {
+class Lengow_Admin_Settings {
 
     public static function post_process() {
         $action = null;

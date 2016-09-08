@@ -63,20 +63,20 @@ class Lengow_Admin {
         //}
 
         switch ($this->current_tab) {
-            case 'lengow_product':
-                Lengow_Product::display();
+            case 'lengow_admin_products':
+                Lengow_Admin_Products::display();
                 break;
-            case 'lengow_help':
-                Lengow_Help::display();
+            case 'lengow_admin_help':
+                Lengow_Admin_Help::display();
                 break;
-            case 'lengow_settings':
-                Lengow_Settings::display();
+            case 'lengow_admin_settings':
+                Lengow_Admin_Settings::display();
                 break;
-            case 'lengow_legals':
-                Lengow_Legals::display();
+            case 'lengow_admin_legals':
+                Lengow_Admin_Legals::display();
                 break;
             default:
-                Lengow_Dashboard::display();
+                Lengow_Admin_Dashboard::display();
                 break;
         }
         include_once 'views/html-admin-footer.php';

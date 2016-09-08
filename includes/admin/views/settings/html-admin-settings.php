@@ -1,11 +1,11 @@
 <?php
 /**
- * Admin View: Dashboard
+ * Admin View: Settings
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-Lengow_Settings::post_process();
+Lengow_Admin_Settings::post_process();
 $keys   = Lengow_Configuration::get_keys();
 $values = Lengow_Configuration::get_all_values();
 $list_file = Lengow_Log::get_paths();
