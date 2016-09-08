@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin View: Dashboard
+ * Admin View: Legals
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

@@ -1,10 +1,14 @@
 <?php
 /**
- * Admin View: Dashboard
+ * Admin View: Settings
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+Lengow_Admin_Settings::post_process();
+$keys   = Lengow_Configuration::get_keys();
+$values = Lengow_Configuration::get_all_values();
+$list_file = Lengow_Log::get_paths();
 ?>
 <div class="lgw-container" id="lengow_mainsettings_wrapper" xmlns="http://www.w3.org/1999/html">
 	<?php if ( $values['lengow_preprod_enabled'] == 1 ) : ?>
@@ -13,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	<?php endif; ?>
 	<form class="lengow_form" method="POST">
-		<!--        <input type="hidden" name="action" value="process">-->
+		<input type="hidden" name="action" value="process">
 		<div class="lgw-box">
 			<h2>Authorised IP</h2>
 			<label class="control-label"><?= $keys['lengow_authorized_ip']['label'] ?></label>
@@ -90,52 +94,81 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="lgw-box">
 			<h2><?= $locale->t('global_setting.screen.import_setting_title'); ?></h2>
 			<p><?= $locale->t('global_setting.screen.import_setting_description'); ?></p>
-			<div class="form-group">
-				<div class="input-group">
-					<input type="number" name="lengow_import_days" class="form-control" value="<?= $values['lengow_import_days'] ?>" min="1" max="99" />
-					<div class="input-group-addon">
-						<div class="unit"><?= $locale->t('global_setting.screen.nb_days'); ?></div>
+			<div class="lgw-switch <?= $values['lengow_import_enabled'] == 1 ? 'checked' : '' ;?>">
+				<label>
+					<div>
+						<span></span>
+						<input type="hidden" name="lengow_import_enabled" value="0">
+						<input name="lengow_import_enabled"
+							   type="checkbox"
+							<?= $values['lengow_import_enabled'] == 1 ? 'checked' : '' ;?> />
 					</div>
-					<div class="clearfix"></div>
-				</div>
-				<span class="legend" style="display:block;"><?= $keys['lengow_import_days']['legend']?></span>
+					<?= $keys['lengow_import_enabled']['label'] ?>
+				</label>
 			</div>
-			<div class="form-group">
-				<div class="lgw-switch <?= $values['lengow_import_ship_mp_enabled'] == 1 ? 'checked' : '' ;?>">
-					<label>
-						<div>
-							<span></span>
-							<input type="hidden" name="lengow_import_ship_mp_enabled" value="0">
-							<input name="lengow_import_ship_mp_enabled"
-								   type="checkbox"
-								<?= $values['lengow_import_ship_mp_enabled'] == 1 ? 'checked' : '' ;?>/>
-						</div>
-						<?= $keys['lengow_import_ship_mp_enabled']['label'] ?>
-					</label>
-				</div>
-			</div>
-			<div id="lengow_wrapper_import_ship_mp_enabled">
+			<div id="lengow_wrapper_import">
 				<div class="grey-frame">
 					<div class="form-group">
-						<div class="lgw-switch <?= $values['lengow_import_stock_ship_mp'] == 1 ? 'checked' : '' ?>">
+						<div class="input-group">
+							<input type="number" name="lengow_import_days" class="form-control" value="<?= $values['lengow_import_days'] ?>" min="1" max="99" />
+							<div class="input-group-addon">
+								<div class="unit"><?= $locale->t('global_setting.screen.nb_days'); ?></div>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<span class="legend" style="display:block;"><?= $keys['lengow_import_days']['legend']?></span>
+					</div>
+					<div class="form-group">
+						<div class="lgw-switch <?= $values['lengow_import_ship_mp_enabled'] == 1 ? 'checked' : '' ;?>">
 							<label>
 								<div>
 									<span></span>
-									<input type="hidden" name="lengow_import_stock_ship_mp" value="0">
-									<input type="checkbox" name="lengow_import_stock_ship_mp" <?= $values['lengow_import_stock_ship_mp'] == 1 ? 'checked' : '' ?> />
+									<input type="hidden" name="lengow_import_ship_mp_enabled" value="0">
+									<input name="lengow_import_ship_mp_enabled"
+										   type="checkbox"
+										<?= $values['lengow_import_ship_mp_enabled'] == 1 ? 'checked' : '' ;?>/>
 								</div>
-								<?= $keys['lengow_import_stock_ship_mp']['label'] ?>
+								<?= $keys['lengow_import_ship_mp_enabled']['label'] ?>
 							</label>
 						</div>
 					</div>
-					<span class="legend" style="display:block;"><?= $keys['lengow_import_stock_ship_mp']['legend'] ?></span>
+					<div id="lengow_wrapper_import_ship_mp_enabled">
+						<div class="grey-frame">
+							<div class="form-group">
+								<div class="lgw-switch <?= $values['lengow_import_stock_ship_mp'] == 1 ? 'checked' : '' ?>">
+									<label>
+										<div>
+											<span></span>
+											<input type="hidden" name="lengow_import_stock_ship_mp" value="0">
+											<input type="checkbox" name="lengow_import_stock_ship_mp" <?= $values['lengow_import_stock_ship_mp'] == 1 ? 'checked' : '' ?> />
+										</div>
+										<?= $keys['lengow_import_stock_ship_mp']['label'] ?>
+									</label>
+								</div>
+							</div>
+							<span class="legend" style="display:block;"><?= $keys['lengow_import_stock_ship_mp']['legend'] ?></span>
+						</div>
+					</div>
 				</div>
 			</div>
+			<span class="legend" style="display:block;"><?= $locale->t('lengow_settings.lengow_import_enabled_legend'); ?></span>
 		</div>
 		<div class="lgw-box">
 			<h2><?= $locale->t( 'global_setting.screen.log_file_title' ); ?></h2>
 			<p><?= $locale->t( 'global_setting.screen.log_file_description' ); ?></p>
-			<!--            TODO - select for all logs-->
+			<select id="select_log" class="lengow_select">
+				<option value="" disabled selected>
+					<?= $locale->t('global_setting.screen.please_choose_log')?>
+				</option>
+				<?php foreach ($list_file as $file) : ?>
+				<option value="<?= admin_url('admin.php?page=lengow&tab=lengow_settings');?>&action=download&file=<?= $file['short_path']?>">
+					<?php $file_name = explode(".", $file['name']); ?>
+					<?= date_format(date_create($file_name[0]), "d F Y");?></option>
+				<?php endforeach; ?>
+				<option value="<?= admin_url('admin.php?page=lengow&tab=lengow_settings');?>&action=download_all" >
+					<?= $locale->t('global_setting.screen.download_all_files')?>
+				</option>
+			</select>
 			<button type="button" id="download_log" class="lgw-btn lgw-btn-white">
 				<i class="fa fa-download"></i> <?= $locale->t( 'global_setting.screen.button_download_file' ); ?>
 			</button>

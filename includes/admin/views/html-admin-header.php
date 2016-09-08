@@ -1,9 +1,12 @@
 <?php
 /**
- * Admin View: Dashboard
+ * Admin View: Header
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
+}
+if (isset($_GET['tab'])) {
+	$current_page = $_GET['tab'];
 }
 //TODO - Check if new merchant
 //if (!$is_new_merchant) : ?>
@@ -13,22 +16,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<img src="<?= LENGOW_PLUGIN_URL.'/assets/images/lengow-white.png'; ?>" alt="lengow">
 		</a>
 	</li>
-	<li role="presentation" class="<?= ($current_page == 'lengow_product') ? "active" : "" ?>"><a href="
-            <?= admin_url('admin.php?page=lengow&tab=lengow_product'); ?>">
+	<li role="presentation" class="<?= (isset($current_page) && $current_page == 'lengow_admin_products') ? "active" : "" ?>"><a href="
+            <?= admin_url('admin.php?page=lengow&tab=lengow_admin_products'); ?>">
 			<?= $locale->t('menu.product') ?>
 		</a>
 	</li>
-	<li class="lengow_float_right <?= ($current_page == 'lengow_settings') ? "active" : "" ?>" id="menugotosetting">
-		<a href="<?= admin_url('admin.php?page=lengow&tab=lengow_settings'); ?>"
+	<li class="lengow_float_right <?= (isset($current_page) && $current_page == 'lengow_admin_settings') ? "active" : "" ?>" id="menugotosetting">
+		<a href="<?= admin_url('admin.php?page=lengow&tab=lengow_admin_settings'); ?>"
 		   class="lengow_link_tooltip"
-		   data-placement="bottom" data-original-title="Paramètres principaux">
+		   data-placement="bottom" data-original-title="<?= $locale->t('menu.global_parameter') ?>">
 			<i class="fa fa-cog fa-2x"></i>
 		</a>
 	</li>
-	<li class="lengow_float_right <?= ($current_page == 'lengow_help') ? "active" : "" ?>" id="menugotohelp">
-		<a href="<?= admin_url('admin.php?page=lengow&tab=lengow_help'); ?>"
+	<li class="lengow_float_right <?= (isset($current_page) && $current_page == 'lengow_admin_help') ? "active" : "" ?>" id="menugotohelp">
+		<a href="<?= admin_url('admin.php?page=lengow&tab=lengow_admin_help'); ?>"
 		   class="lengow_link_tooltip"
-		   data-placement="bottom" data-original-title="Aide">
+		   data-placement="bottom" data-original-title="<?= $locale->t('menu.help') ?>">
 			<i class="fa fa-life-ring fa-2x"></i>
 		</a>
 	</li>
