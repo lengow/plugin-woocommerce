@@ -7,3 +7,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <h2>Products</h2>
+<h2>Products</h2>
+<?php Lengow_Admin_Products::my_render_list_page(); ?>
