@@ -122,11 +122,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/class-lengow-sync.php' );
 				include_once( 'includes/class-lengow-translation.php' );
 				include_once( 'includes/admin/class-lengow-admin.php' );
-				include_once('includes/admin/class-lengow-admin-dashboard.php');
-				include_once('includes/admin/class-lengow-admin-settings.php');
-				include_once('includes/admin/class-lengow-admin-help.php');
-				include_once('includes/admin/class-lengow-admin-legals.php');
-				include_once('includes/admin/class-lengow-admin-products.php');
+				include_once( 'includes/admin/class-lengow-admin-dashboard.php' );
+				include_once( 'includes/admin/class-lengow-admin-settings.php' );
+				include_once( 'includes/admin/class-lengow-admin-help.php' );
+				include_once( 'includes/admin/class-lengow-admin-legals.php' );
+				include_once( 'includes/admin/class-lengow-admin-products.php' );
 			}
 		}
 
@@ -135,20 +135,20 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 */
 		public function init() {
 			if ( is_admin() ) {
-			    //check logs download to prevent the occurrence of the wordpress html header
-			    $action = null;
-                if (isset($_GET['action'])) {
-                    $action = $_GET['action'];
-                }
-                switch ($action) {
-                    case 'download':
-                        $file = isset($_GET['file']) ?  $_GET['file'] : null;
-                        Lengow_Log::download($file);
-                        break;
-                    case 'download_all':
-                        Lengow_Log::download();
-                        break;
-                }
+				//check logs download to prevent the occurrence of the wordpress html header
+				$action = null;
+				if ( isset( $_GET['action'] ) ) {
+					$action = $_GET['action'];
+				}
+				switch ( $action ) {
+					case 'download':
+						$file = isset( $_GET['file'] ) ? $_GET['file'] : null;
+						Lengow_Log::download( $file );
+						break;
+					case 'download_all':
+						Lengow_Log::download();
+						break;
+				}
 				$this->lengow_admin = new Lengow_Admin();
 			}
 		}
@@ -157,28 +157,38 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 * Add CSS and JS
 		 */
 		public function add_scripts() {
-			wp_register_style( 'lengow_component_css', plugins_url( '/assets/css/lengow-components.css', __FILE__) );
-			wp_register_style( 'lengow_font_awesome', plugins_url( '/assets/css/font-awesome.css', __FILE__) );
-			wp_register_style( 'lengow_select2_css', plugins_url( '/assets/css/select2.css', __FILE__) );
-			wp_register_style( 'lengow_admin_css', plugins_url( '/assets/css/lengow-layout.css', __FILE__), array('lengow_font_awesome', 'lengow_select2_css', 'lengow_component_css') );
+			wp_register_style( 'lengow_component_css', plugins_url( '/assets/css/lengow-components.css', __FILE__ ) );
+			wp_register_style( 'lengow_font_awesome', plugins_url( '/assets/css/font-awesome.css', __FILE__ ) );
+			wp_register_style( 'lengow_select2_css', plugins_url( '/assets/css/select2.css', __FILE__ ) );
+			wp_register_style( 'lengow_admin_css', plugins_url( '/assets/css/lengow-layout.css', __FILE__ ), array(
+				'lengow_font_awesome',
+				'lengow_select2_css',
+				'lengow_component_css'
+			) );
 			wp_enqueue_style( 'lengow_admin_css' );
 
-			wp_register_script( 'lengow_boostrap_js', plugins_url( '/assets/js/bootstrap.min.js', __FILE__) );
-			wp_register_script( 'lengow_settings_js', plugins_url( '/assets/js/lengow/main_setting.js', __FILE__) );
-			wp_register_script( 'lengow_select2', plugins_url( '/assets/js/select2.js', __FILE__) );
-			wp_register_script( 'lengow_admin_js', plugins_url( '/assets/js/lengow/admin.js', __FILE__), array('jquery', 'lengow_boostrap_js', 'lengow_select2', 'lengow_settings_js') );
-			wp_enqueue_script('lengow_admin_js');
+			wp_register_script( 'lengow_boostrap_js', plugins_url( '/assets/js/bootstrap.min.js', __FILE__ ) );
+			wp_register_script( 'lengow_settings_js', plugins_url( '/assets/js/lengow/main_setting.js', __FILE__ ) );
+			wp_register_script( 'lengow_select2', plugins_url( '/assets/js/select2.js', __FILE__ ) );
+			wp_register_script( 'lengow_admin_js', plugins_url( '/assets/js/lengow/admin.js', __FILE__ ), array(
+				'jquery',
+				'lengow_boostrap_js',
+				'lengow_select2',
+				'lengow_settings_js'
+			) );
+			wp_enqueue_script( 'lengow_admin_js' );
 		}
 
 		/**
 		 * Remove Wordpress's updates messages
 		 * @return object
 		 */
-		public function remove_core_updates(){
+		public function remove_core_updates() {
 			global $wp_version;
+
 			return (object) array(
-				'last_checked'=> time(),
-				'version_checked'=> $wp_version
+				'last_checked' => time(),
+				'version_checked' => $wp_version
 			);
 		}
 	}
