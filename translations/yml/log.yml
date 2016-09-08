@@ -3,5 +3,6 @@ en:
      setting:
         setting_reset: "All Lengow settings were reset"
         setting_updated: "All Lengow settings were updated"
+        setting_change: "%{key} - old value %{old_value} replaced with %{value}"
      export:
         error_unable_to_create_file: "unable to create file %{file_name} in %{folder_name}"

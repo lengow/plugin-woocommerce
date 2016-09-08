@@ -13,9 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Lengow_Dashboard Class.
+ * Lengow_Admin_Dashboard Class.
  */
-class Lengow_Dashboard {
+class Lengow_Admin_Dashboard {
 	/**
 	 * Display dashboard page
 	 */

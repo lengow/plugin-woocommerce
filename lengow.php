@@ -69,7 +69,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			register_activation_hook( __FILE__, array( 'Lengow_Install', 'install' ) );
 			add_action( 'init', array( $this, 'init' ) );
 
-			if ( $_GET['page'] == 'lengow' ) {
+			if ( isset($_GET['page']) && $_GET['page'] == 'lengow' ) {
 				add_action( 'admin_enqueue_scripts', array( $this, 'add_scripts' ) );
 				add_filter( 'pre_site_transient_update_core', array( $this, 'remove_core_updates' ) );
 				add_filter( 'pre_site_transient_update_plugins', array( $this, 'remove_core_updates' ) );
@@ -122,10 +122,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/class-lengow-sync.php' );
 				include_once( 'includes/class-lengow-translation.php' );
 				include_once( 'includes/admin/class-lengow-admin.php' );
-				include_once( 'includes/admin/class-lengow-dashboard.php' );
-				include_once( 'includes/admin/class-lengow-settings.php' );
-				include_once( 'includes/admin/class-lengow-help.php' );
-				include_once('includes/admin/class-lengow-legals.php');
+				include_once('includes/admin/class-lengow-admin-dashboard.php');
+				include_once('includes/admin/class-lengow-admin-settings.php');
+				include_once('includes/admin/class-lengow-admin-help.php');
+				include_once('includes/admin/class-lengow-admin-legals.php');
+				include_once('includes/admin/class-lengow-admin-products.php');
 			}
 		}
 
@@ -134,6 +135,20 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 */
 		public function init() {
 			if ( is_admin() ) {
+			    //check logs download to prevent the occurrence of the wordpress html header
+			    $action = null;
+                if (isset($_GET['action'])) {
+                    $action = $_GET['action'];
+                }
+                switch ($action) {
+                    case 'download':
+                        $file = isset($_GET['file']) ?  $_GET['file'] : null;
+                        Lengow_Log::download($file);
+                        break;
+                    case 'download_all':
+                        Lengow_Log::download();
+                        break;
+                }
 				$this->lengow_admin = new Lengow_Admin();
 			}
 		}

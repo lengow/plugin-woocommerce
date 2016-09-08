@@ -13,9 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Lengow_Legals Class.
+ * Lengow_Admin_Legals Class.
  */
-class Lengow_Legals {
+class Lengow_Admin_Legals {
     /**
      * Display legals page
      */

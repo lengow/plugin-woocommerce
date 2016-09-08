@@ -13,9 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Lengow_Help Class.
+ * Lengow_Admin_Help Class.
  */
-class Lengow_Help {
+class Lengow_Admin_Help {
 
     /**
      * Display help page

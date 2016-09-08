@@ -140,11 +140,24 @@
 
         // ORDER IMPORT
         displayOrderImportMode();
-        $("input[name='lengow_import_ship_mp_enabled']").on('change', function () {
+        $("input[name='lengow_import_enabled']").on('change', function () {
             displayOrderImportMode();
         });
 
         function displayOrderImportMode() {
+            if ($("input[name='lengow_import_enabled'][type='checkbox']").prop('checked')) {
+                $('#lengow_wrapper_import').slideDown(150);
+            } else {
+                $('#lengow_wrapper_import').slideUp(150);
+            }
+        }
+
+        displayOrderMpMode();
+        $("input[name='lengow_import_ship_mp_enabled']").on('change', function () {
+            displayOrderMpMode();
+        });
+
+        function displayOrderMpMode() {
             if ($("input[name='lengow_import_ship_mp_enabled'][type='checkbox']").prop('checked')) {
                 $('#lengow_wrapper_import_ship_mp_enabled').slideDown(150);
             } else {
@@ -152,6 +165,7 @@
             }
         }
 
+        // DOWNLOAD LOGS
         $('#select_log').change(function(){
             if ($('#select_log').val() !== null) {
                 $("#download_log" ).show();
