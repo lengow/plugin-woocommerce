@@ -30,7 +30,6 @@
  * boolean out_of_stock       Export out of stock product (1) Export only product in stock (0)
  * string  product_ids        List of product id separate with comma (1,2,3)
  * string  product_types      Product type separate with comma (external,grouped,simple,variable)
- * boolean inactive           Export unpublished products (1) or only published product (0)
  * boolean variation          Export product Variation (1) Export parent product only (0)
  * boolean legacy_fields      Export feed with v2 fields (1) or v3 fields (0)
  * boolean log_output         See logs (1) or not (0)
@@ -87,7 +86,6 @@ $product_types      = isset( $_GET['product_type'] ) ? $_GET['product_type'] : n
 $product_types      = is_null( $product_types ) && isset( $_GET['product_types'] )
 	? $_GET['product_types']
 	: $product_types;
-$inactive           = isset( $_GET['inactive'] ) ? (bool) $_GET['inactive'] : null;
 $variation          = isset( $_GET['variation'] ) ? (bool) $_GET['variation'] : null;
 $legacy_fields      = isset( $_GET['legacy_fields'] ) ? (bool) $_GET['legacy_fields'] : null;
 $log_output         = isset( $_GET['log_output'] ) ? (bool) $_GET['log_output'] : null;
@@ -102,7 +100,6 @@ $export = new Lengow_Export( array(
 	'out_of_stock'       => $out_of_stock,
 	'product_ids'        => $product_ids,
 	'product_types'      => $product_types,
-	'inactive'           => $inactive,
 	'variation'          => $variation,
 	'legacy_fields'      => $legacy_fields,
 	'log_output'         => $log_output,
@@ -111,6 +108,8 @@ $export = new Lengow_Export( array(
 
 if ( $mode == 'size' ) {
 	echo $export->get_total_export_product();
+} elseif ( $mode == 'total' ) {
+    echo $export->get_total_product();
 } else {
 	$export->exec();
 }
