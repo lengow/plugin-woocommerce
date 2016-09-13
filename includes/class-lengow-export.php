@@ -330,12 +330,7 @@ class Lengow_Export {
 	 */
 	private function _export( $products, $fields ) {
 		$product_count = 0;
-		$file_feed     = null;
-		$feed          = new Lengow_Feed(
-			$this->_stream,
-			$this->_format,
-			$file_feed
-		);
+		$feed          = new Lengow_Feed( $this->_stream, $this->_format );
 		$feed->write( 'header', $fields );
 		$is_first = true;
 		// Get the maximum of character for yaml format

@@ -33,19 +33,9 @@ class Lengow_Feed {
 	const EOL = "\r\n";
 
 	/**
-	 * @var string name of file containing part of export (in cas of timeout)
-	 */
-	public $part_file_name;
-
-	/**
 	 * @var Lengow_File temporary export file
 	 */
 	private $_file;
-
-	/**
-	 * @var string feed content
-	 */
-	private $_content = '';
 
 	/**
 	 * @var string feed format
@@ -82,12 +72,10 @@ class Lengow_Feed {
 	 *
 	 * @param boolean $stream feed in file or not
 	 * @param string $format feed format
-	 * @param string $part_file_name file temporary name
 	 */
-	public function __construct( $stream, $format, $part_file_name = null ) {
-		$this->_stream        = $stream;
-		$this->_format        = $format;
-		$this->part_file_name = $part_file_name;
+	public function __construct( $stream, $format ) {
+		$this->_stream = $stream;
+		$this->_format = $format;
 		if ( ! $this->_stream ) {
 			$this->_init_export_file();
 		}
@@ -111,11 +99,7 @@ class Lengow_Feed {
 				);
 			}
 		}
-		if ( $this->part_file_name ) {
-			$file_name = $this->part_file_name;
-		} else {
-			$file_name = 'flux-' . time() . '.' . $this->_format;
-		}
+		$file_name   = 'flux-' . time() . '.' . $this->_format;
 		$this->_file = new Lengow_File( $this->_export_folder, $file_name );
 	}
 
@@ -300,7 +284,9 @@ class Lengow_Feed {
 				$this->_file->file_name = $old_file_name;
 			} else {
 				$sep                    = DIRECTORY_SEPARATOR;
-				$rename                 = $this->_file->rename( $this->_file->get_folder_path() . $sep . $old_file_name );
+				$rename                 = $this->_file->rename(
+					$this->_file->get_folder_path() . $sep . $old_file_name
+				);
 				$this->_file->file_name = $old_file_name;
 			}
 
