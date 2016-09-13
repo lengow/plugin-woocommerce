@@ -27,6 +27,11 @@ class Lengow_Log extends Lengow_File {
 	 */
 	protected $file;
 
+	/**
+	 * Construct a new Lengow log
+	 *
+	 * @param string $file_name log file name
+	 */
 	public function __construct( $file_name = null ) {
 		if ( empty( $file_name ) ) {
 			$this->file_name = 'logs-' . date( 'Y-m-d' ) . '.txt';
@@ -91,6 +96,8 @@ class Lengow_Log extends Lengow_File {
 
 	/**
 	 * Download log file
+	 *
+	 * @param string $file log file name
 	 */
 	public static function download( $file = null ) {
 		if ( $file && preg_match( '/^logs-([0-9]{4}-[0-9]{2}-[0-9]{2})\.txt$/', $file, $match ) ) {

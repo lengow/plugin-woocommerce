@@ -38,7 +38,7 @@ class Lengow_Translation {
 	public static $force_iso_code = null;
 
 	/**
-	 * Construct
+	 * Construct a new Lengow translation
 	 */
 	public function __construct() {
 		$this->iso_code = get_locale();
