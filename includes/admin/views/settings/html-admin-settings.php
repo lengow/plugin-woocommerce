@@ -23,6 +23,8 @@ $list_file = Lengow_Log::get_paths();
 			<label class="control-label"><?= $keys['lengow_authorized_ip']['label'] ?></label>
 			<input type="text" name="lengow_authorized_ip" class="form-control"
 			       value="<?= $values['lengow_authorized_ip'] ?>"/>
+			<span class="legend" style="display:block;"><?= $keys['lengow_authorized_ip']['legend'] ?></span>
+			<br />
 			<h2><?= $locale->t( 'global_setting.screen.preprod_mode_title' ); ?></h2>
 			<p><?= $locale->t( 'global_setting.screen.preprod_mode_description' ); ?></p>
 			<div class="lgw-switch <?= $values['lengow_preprod_enabled'] == 1 ? 'checked' : '' ;?>">
@@ -73,7 +75,7 @@ $list_file = Lengow_Log::get_paths();
 		</div>
 		<div class="lgw-box">
 			<h2><?= $locale->t('global_setting.screen.export_title'); ?></h2>
-			<label class="control-label"><?= $locale->t('global_setting.screen.product_types_title'); ?></label>
+			<label class="control-label"><?= $keys['lengow_product_types']['label'] ?></label>
 			<div class="form-group">
 				<select class="form-control js-multiple-select" name="lengow_product_types[]" multiple>
 					<?php foreach ( Lengow_Main::$PRODUCT_TYPES as $row => $value ) :
@@ -89,7 +91,7 @@ $list_file = Lengow_Log::get_paths();
 					<?php endforeach; ?>
 				</select>
 			</div>
-			<span class="legend" style="display:block;"><?= $locale->t('global_setting.screen.product_types_legend'); ?></span>
+			<span class="legend" style="display:block;"><?= $keys['lengow_product_types']['legend'] ?></span>
 		</div>
 		<div class="lgw-box">
 			<h2><?= $locale->t('global_setting.screen.import_setting_title'); ?></h2>
@@ -151,7 +153,7 @@ $list_file = Lengow_Log::get_paths();
 					</div>
 				</div>
 			</div>
-			<span class="legend" style="display:block;"><?= $locale->t('lengow_settings.lengow_import_enabled_legend'); ?></span>
+			<span class="legend" style="display:block;"><?= $keys['lengow_import_enabled']['legend'] ?></span>
 		</div>
 		<div class="lgw-box">
 			<h2><?= $locale->t( 'global_setting.screen.log_file_title' ); ?></h2>
