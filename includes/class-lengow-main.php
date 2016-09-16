@@ -261,6 +261,36 @@ class Lengow_Main {
 	}
 
 	/**
+	 * Clean html
+	 *
+	 * @param string $str The html content
+	 *
+	 * @return string
+	 */
+	public static function clean_html( $str ) {
+		$str     = str_replace( '<br />', '', nl2br( $str ) );
+		$str     = trim( strip_tags( htmlspecialchars_decode( $str ) ) );
+		$str     = preg_replace( '`[\s]+`sim', ' ', $str );
+		$str     = preg_replace( '`"`sim', '', $str );
+		$str     = nl2br( $str );
+		$pattern = '@<[\/\!]*?[^<>]*?>@si';
+		$str     = preg_replace( $pattern, ' ', $str );
+		$str     = preg_replace( '/[\s]+/', ' ', $str );
+		$str     = trim( $str );
+		$str     = str_replace( '&nbsp;', ' ', $str );
+		$str     = str_replace( '|', ' ', $str );
+		$str     = str_replace( '"', '\'', $str );
+		$str     = str_replace( '’', '\'', $str );
+		$str     = str_replace( '&#39;', '\' ', $str );
+		$str     = str_replace( '&#150;', '-', $str );
+		$str     = str_replace( chr( 9 ), ' ', $str );
+		$str     = str_replace( chr( 10 ), ' ', $str );
+		$str     = str_replace( chr( 13 ), ' ', $str );
+
+		return $str;
+	}
+
+	/**
 	 * Replace all accented chars by their equivalent non accented chars.
 	 *
 	 * @param string $str The content
