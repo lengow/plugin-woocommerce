@@ -74,7 +74,7 @@ class Lengow_Product {
 		     || ! in_array( $this->product->post->post_type, array( 'product', 'product_variation' ) )
 		) {
 			throw new Lengow_Exception(
-				Lengow_Main::set_log_message( 'log.export.unable_to_find_product', array(
+				Lengow_Main::set_log_message( 'log.export.error_unable_to_find_product', array(
 					'product_id' => $product_id
 				) )
 			);
