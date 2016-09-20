@@ -27,7 +27,12 @@ class Lengow_Log extends Lengow_File {
 	 */
 	protected $file;
 
-	public function __construct($file_name = null) {
+	/**
+	 * Construct a new Lengow log
+	 *
+	 * @param string $file_name log file name
+	 */
+	public function __construct( $file_name = null ) {
 		if ( empty( $file_name ) ) {
 			$this->file_name = 'logs-' . date( 'Y-m-d' ) . '.txt';
 		} else {
@@ -66,53 +71,54 @@ class Lengow_Log extends Lengow_File {
 		return Lengow_File::get_files_from_folder( self::$LENGOW_LOGS_FOLDER );
 	}
 
-    /**
-     * Get log files path
-     *
-     * @return mixed
-     */
-    public static function get_paths()
-    {
-        $files = self::get_files();
-        if (empty($files)) {
-            return false;
-        }
-        $logs = array();
-        foreach ($files as $file) {
-            preg_match('/\/lengow-woocommerce\/logs\/logs-([0-9]{4}-[0-9]{2}-[0-9]{2})\.txt/', $file->get_path(), $match);
-            $logs[] = array(
-                'full_path' => $file->get_path(),
-                'short_path' => 'logs-'.$match[1].'.txt',
-                'name' => $match[1].'.txt'
-            );
-        }
-        return $logs;
-    }
+	/**
+	 * Get log files path
+	 *
+	 * @return mixed
+	 */
+	public static function get_paths() {
+		$files = self::get_files();
+		if ( empty( $files ) ) {
+			return false;
+		}
+		$logs = array();
+		foreach ( $files as $file ) {
+			preg_match( '/\/lengow-woocommerce\/logs\/logs-([0-9]{4}-[0-9]{2}-[0-9]{2})\.txt/', $file->get_path(), $match );
+			$logs[] = array(
+				'full_path'  => $file->get_path(),
+				'short_path' => 'logs-' . $match[1] . '.txt',
+				'name'       => $match[1] . '.txt'
+			);
+		}
 
-    /**
-     * Download log file
-     */
-    public static function download($file = null)
-    {
-        if ($file && preg_match('/^logs-([0-9]{4}-[0-9]{2}-[0-9]{2})\.txt$/', $file, $match)) {
-            $filename = LENGOW_PLUGIN_PATH . '/' . self::$LENGOW_LOGS_FOLDER . '/' . $file;
-            $handle = fopen($filename, "r");
-            $contents = fread($handle, filesize($filename));
-            header('Content-type: text/plain');
-            header('Content-Disposition: attachment; filename="'.$match[1].'.txt"');
-            echo $contents;
-            exit();
-        } else {
-            $files = self::get_paths();
-            header('Content-type: text/plain; charset=UTF-8');
-            header('Content-Disposition: attachment; filename="logs.txt"');
-            foreach ($files as $file) {
-                $handle = fopen($file['full_path'], "r");
-                $contents = fread($handle, filesize($file['full_path']));
-                echo $contents;
-            }
-            exit();
-        }
-    }
+		return $logs;
+	}
+
+	/**
+	 * Download log file
+	 *
+	 * @param string $file log file name
+	 */
+	public static function download( $file = null ) {
+		if ( $file && preg_match( '/^logs-([0-9]{4}-[0-9]{2}-[0-9]{2})\.txt$/', $file, $match ) ) {
+			$filename = LENGOW_PLUGIN_PATH . '/' . self::$LENGOW_LOGS_FOLDER . '/' . $file;
+			$handle   = fopen( $filename, "r" );
+			$contents = fread( $handle, filesize( $filename ) );
+			header( 'Content-type: text/plain' );
+			header( 'Content-Disposition: attachment; filename="' . $match[1] . '.txt"' );
+			echo $contents;
+			exit();
+		} else {
+			$files = self::get_paths();
+			header( 'Content-type: text/plain; charset=UTF-8' );
+			header( 'Content-Disposition: attachment; filename="logs.txt"' );
+			foreach ( $files as $file ) {
+				$handle   = fopen( $file['full_path'], "r" );
+				$contents = fread( $handle, filesize( $file['full_path'] ) );
+				echo $contents;
+			}
+			exit();
+		}
+	}
 }
 

@@ -38,7 +38,13 @@ class Lengow_File {
 	public $instance;
 
 	/**
-	 * Construct
+	 * Construct a new Lengow File
+	 *
+	 * @param string $folder_name Folder name
+	 * @param string $file_name File name
+	 * @param string $mode Mode to manage file
+	 *
+	 * @throws Lengow_Exception Unable to create file
 	 */
 	public function __construct( $folder_name, $file_name = null, $mode = 'a+' ) {
 		$this->file_name   = $file_name;
@@ -47,7 +53,7 @@ class Lengow_File {
 		if ( ! is_resource( $this->instance ) ) {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message(
-					'log/export/error_unable_to_create_file',
+					'log.export.error_unable_to_create_file',
 					array(
 						'file_name'   => $file_name,
 						'folder_name' => $folder_name
@@ -91,6 +97,8 @@ class Lengow_File {
 	/**
 	 * Rename file
 	 *
+	 * @param string $new_name new name for file
+	 *
 	 * @return boolean
 	 */
 	public function rename( $new_name ) {
@@ -128,9 +136,10 @@ class Lengow_File {
 			if ( ! $this->exists() ) {
 				$this->link = null;
 			}
-			$sep = DIRECTORY_SEPARATOR;
+			$sep        = DIRECTORY_SEPARATOR;
 			$this->link = LENGOW_PLUGIN_URL . $sep . $this->folder_name . $sep . $this->file_name;
 		}
+
 		return $this->link;
 	}
 
@@ -141,6 +150,7 @@ class Lengow_File {
 	 */
 	public function get_path() {
 		$sep = DIRECTORY_SEPARATOR;
+
 		return LENGOW_PLUGIN_PATH . $sep . $this->folder_name . $sep . $this->file_name;
 	}
 
@@ -151,6 +161,7 @@ class Lengow_File {
 	 */
 	public function get_folder_path() {
 		$sep = DIRECTORY_SEPARATOR;
+
 		return LENGOW_PLUGIN_PATH . $sep . $this->folder_name;
 	}
 
@@ -170,20 +181,20 @@ class Lengow_File {
 	 *
 	 * @return mixed
 	 */
-	public static function get_files_from_folder($folder)
-	{
-		$sep = DIRECTORY_SEPARATOR;
+	public static function get_files_from_folder( $folder ) {
+		$sep         = DIRECTORY_SEPARATOR;
 		$folder_path = LENGOW_PLUGIN_PATH . $sep . $folder;
-		if (!file_exists($folder_path)) {
+		if ( ! file_exists( $folder_path ) ) {
 			return false;
 		}
-		$folder_content = scandir($folder_path);
-		$files = array();
-		foreach ($folder_content as $file) {
-			if (!preg_match('/^\.[a-zA-Z\.]+$|^\.$|index\.php/', $file)) {
-				$files[] = new Lengow_File($folder, $file);
+		$folder_content = scandir( $folder_path );
+		$files          = array();
+		foreach ( $folder_content as $file ) {
+			if ( ! preg_match( '/^\.[a-zA-Z\.]+$|^\.$|index\.php/', $file ) ) {
+				$files[] = new Lengow_File( $folder, $file );
 			}
 		}
+
 		return $files;
 	}
 }

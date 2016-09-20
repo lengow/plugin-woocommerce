@@ -24,7 +24,6 @@ global_setting.screen.import_setting_description|Manage your import settings for
 global_setting.screen.nb_days|days
 global_setting.screen.export_title|Export Setting
 global_setting.screen.product_types_title|Product type to export
-global_setting.screen.product_types_legend|Product type legend
 global_setting.screen.please_choose_log|Please choose a log file...
 global_setting.screen.download_all_files|Download all files
 help.screen.title|Get a little help from your support team!
@@ -60,6 +59,7 @@ lengow_settings.lengow_selection_enabled_title|Export the selection only
 lengow_settings.lengow_selection_enabled_legend|Activate this option if you do not want to export all available products. Then, select only the products you want to export
 lengow_settings.lengow_out_stock_title|Include out of stock products
 lengow_settings.lengow_product_types_title|Product type to export
+lengow_settings.lengow_product_types_legend|Product type legend
 lengow_settings.lengow_legacy_enabled_title|Export with legacy feed
 lengow_settings.lengow_legacy_enabled_legend|Compatibility with old Lengow versions
 lengow_settings.lengow_file_enabled_title|Export in a file
@@ -80,4 +80,13 @@ lengow_settings.lengow_import_enabled_legend|Use this option to decrease stocks 
 log.setting.setting_reset|All Lengow settings were reset
 log.setting.setting_updated|All Lengow settings were updated
 log.setting.setting_change|%{key} - old value %{old_value} replaced with %{value}
+log.export.start|## start export ##
+log.export.end|## end export ##
+log.export.nb_product_found|%{nb_product} product(s) found
+log.export.count_product|%{product_count} product(s) exported
+log.export.export_failed|export failed - %{decoded_message}
+log.export.your_feed_available_here|your feed is available here: %{feed_url}
+log.export.error_unable_to_find_product|unable to find product (ID %{product_id})
+log.export.error_unable_to_create_folder|unable to create folder %{folder_path}. Make sure it is writable
 log.export.error_unable_to_create_file|unable to create file %{file_name} in %{folder_name}
+log.export.error_folder_not_writable|export file generation did not end properly. Please make sure the export folder is writable

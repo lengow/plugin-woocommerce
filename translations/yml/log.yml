@@ -5,4 +5,13 @@ en:
         setting_updated: "All Lengow settings were updated"
         setting_change: "%{key} - old value %{old_value} replaced with %{value}"
      export:
+        start: "## start export ##"
+        end: "## end export ##"
+        nb_product_found: "%{nb_product} product(s) found"
+        count_product: "%{product_count} product(s) exported"
+        export_failed: "export failed - %{decoded_message}"
+        your_feed_available_here: "your feed is available here: %{feed_url}"
+        error_unable_to_find_product: "unable to find product (ID %{product_id})"
+        error_unable_to_create_folder: "unable to create folder %{folder_path}. Make sure it is writable"
         error_unable_to_create_file: "unable to create file %{file_name} in %{folder_name}"
+        error_folder_not_writable: "export file generation did not end properly. Please make sure the export folder is writable"
