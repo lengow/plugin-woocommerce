@@ -6,3 +6,6 @@ fr:
     description: "Exportez votre catalogue produit et synchronisez vos stocks"
     version: "2.0.0"
     author: "Lengow"
+  help:
+    screen:
+      link_lengow_support: "https://supportlengow.zendesk.com/hc/fr/requests/new"

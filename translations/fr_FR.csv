@@ -4,3 +4,4 @@ module.plugin_uri|http://www.lengow.com
 module.description|Exportez votre catalogue produit et synchronisez vos stocks
 module.version|2.0.0
 module.author|Lengow
+help.screen.link_lengow_support|https://supportlengow.zendesk.com/hc/fr/requests/new

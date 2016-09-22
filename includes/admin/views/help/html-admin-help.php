@@ -17,8 +17,12 @@ if ( ! defined( 'ABSPATH' ) ) {
         <h2><?php echo $locale->t('help.screen.title')?></h2>
         <p>
             <?php echo $locale->t('help.screen.contain_text_support');
-            echo $mail_to; ?>
-
+//            echo $mail_to; ?>
+            <a href="<?php echo $locale->t('help.screen.link_lengow_support')?>"
+               target="_blank"
+               title="Support Lengow">
+                <?php echo $locale->t('help.screen.title_lengow_support')?>
+            </a>
         </p>
         <p><?php echo $locale->t('help.screen.contain_text_support_hour')?></p>
         <p>
