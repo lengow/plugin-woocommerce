@@ -11,6 +11,23 @@ menu.help|Help
 menu.global_parameter|General settings
 footer.legals|Legal notices
 footer.plugin_lengow|Lengow Woocommerce Plugin
+product.screen.button_search|Search
+product.table.id_product|ID
+product.table.image|Image
+product.table.name|Name
+product.table.reference|UGS(Sku)
+product.table.stock|Stock
+product.table.category_name|Category
+product.table.type|Type
+product.table.price|Original price
+product.table.lengow_status|Include in export?
+product.table.edit|Edit
+product.table.publish_on_lengow|Include in export
+product.table.unpublish_on_lengow|Exclude in export
+product.table.in_stock|In Sotck
+product.table.out_of_stock|Out of Stock
+product.table.type_downloadable|Downloadable
+product.table.type_virtual|Virtual
 global_setting.screen.preprod_mode_title|Pre-production Mode
 global_setting.screen.preprod_mode_description|Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY
 global_setting.screen.log_file_title|Log Files

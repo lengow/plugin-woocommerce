@@ -15,6 +15,26 @@ en:
   footer:
     legals: "Legal notices"
     plugin_lengow: "Lengow Woocommerce Plugin"
+  product:
+    screen:
+      button_search: "Search"
+    table:
+      id_product: "ID"
+      image: "Image"
+      name: "Name"
+      reference: "UGS(Sku)"
+      stock: "Stock"
+      category_name: "Category"
+      type: "Type"
+      price: "Original price"
+      lengow_status: "Include in export?"
+      edit: "Edit"
+      publish_on_lengow: "Include in export"
+      unpublish_on_lengow: "Exclude in export"
+      in_stock: "In Sotck"
+      out_of_stock: "Out of Stock"
+      type_downloadable: "Downloadable"
+      type_virtual: "Virtual"
   global_setting:
     screen:
       preprod_mode_title: "Pre-production Mode"

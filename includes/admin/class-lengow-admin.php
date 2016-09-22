@@ -64,7 +64,7 @@ class Lengow_Admin {
 
         switch ($this->current_tab) {
             case 'lengow_admin_products':
-                Lengow_Admin_Products::display();
+                Lengow_Admin_Products::html_display();
                 break;
             case 'lengow_admin_help':
                 Lengow_Admin_Help::display();

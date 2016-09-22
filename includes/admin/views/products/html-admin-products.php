@@ -6,4 +6,10 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 ?>
-<h2>Products</h2>
+<br>
+<br>
+<br>
+<br>
+<div id="lengow_product_table">
+    <?php Lengow_Admin_Products::render_lengow_list();?>
+</div>
