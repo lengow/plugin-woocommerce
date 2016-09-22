@@ -29,8 +29,7 @@ class Lengow_Admin_Products extends WP_List_Table {
         $lengow_table = new Lengow_Admin_Products();
         $lengow_table->locale = new Lengow_Translation();
         $lengow_table->prepare_items();
-        //TODO - trad
-        $lengow_table->search('Search', 'search_id');
+        $lengow_table->search($lengow_table->locale->t('product.screen.button_search'), 'search_id');
         $lengow_table->display();
     }
 
@@ -70,17 +69,16 @@ class Lengow_Admin_Products extends WP_List_Table {
     function get_columns(){
         // columns label on the top and bottom of the table.
         $columns = array(
-            //TODO - trad
             'cb'        => '<input type="checkbox" />',
-            'ID'            => 'ID',
-            'image'         => 'Image',
-            'post_title'    => 'Name',
-            '_sku'          => 'Sku',
-            '_stock_status' => 'Stock',
-            '_price'        => 'Price',
-            'categories'    => 'Categories',
-            'product_type'  => 'Type',
-            'lengow'        => 'Include to lengow ?',
+            'ID'            => $this->locale->t('product.table.id_product'),
+            'image'         => $this->locale->t('product.table.image'),
+            'post_title'    => $this->locale->t('product.table.name'),
+            '_sku'          => $this->locale->t('product.table.reference'),
+            '_stock_status' => $this->locale->t('product.table.stock'),
+            '_price'        => $this->locale->t('product.table.price'),
+            'categories'    => $this->locale->t('product.table.category_name'),
+            'product_type'  => $this->locale->t('product.table.type'),
+            'lengow'        => $this->locale->t('product.table.lengow_status'),
         );
         return $columns;
     }
@@ -165,9 +163,8 @@ class Lengow_Admin_Products extends WP_List_Table {
      * @return mixed
      */
     function column_ID($product) {
-        //TODO - trad Edit
         $actions = array(
-            'edit'      => sprintf('<a href="post.php?post=%s&action=%s">Edit</a>',$product['ID'],'edit'),
+            $this->locale->t('product.table.edit') => sprintf('<a href="post.php?post=%s&action=%s" target="_blank">Edit</a>',$product['ID'],'edit'),
         );
 
         return sprintf('%1$s %2$s', $product['ID'], $this->row_actions($actions) );
@@ -203,8 +200,8 @@ class Lengow_Admin_Products extends WP_List_Table {
      */
     function get_bulk_actions() {
         $actions = array(
-            'publish_on_lengow'     => 'Publish on Lengow',
-            'unpublish_on_lengow'   => 'Unpublish on Lengow',
+            'publish_on_lengow'     => $this->locale->t('product.table.publish_on_lengow'),
+            'unpublish_on_lengow'   => $this->locale->t('product.table.unpublish_on_lengow')
         );
         return $actions;
     }
@@ -220,7 +217,6 @@ class Lengow_Admin_Products extends WP_List_Table {
             'image',
             'post_title',
             'categories',
-            //TODO - trad
             '_stock_status',
             '_sku',
             '_price',
@@ -261,20 +257,21 @@ class Lengow_Admin_Products extends WP_List_Table {
                         }
                         $products_data = implode(",", $products_categories);
                         break;
+                    case '_stock_status':
+                        $products_data = get_post_meta($product->ID, $key, true) == 'instock' ? $this->locale->t('product.table.in_stock') : $this->locale->t('product.table.out_of_stock');
+                        break;
                     case '_price':
                         $price = get_post_meta($product->ID, $key, true);
                         $products_data = $price.' '.get_woocommerce_currency_symbol();
                         break;
                     case 'product_type':
                         if (get_post_meta($product->ID, '_downloadable', true) == 'yes') {
-                            //TODO - trad
-                            $products_data = 'downloadable';
+                            $products_data = $this->locale->t('product.table.type_downloadable');
                         } elseif (get_post_meta($product->ID, '_virtual', true) == 'yes') {
-                            //TODO - trad
-                            $products_data = 'virtual';
+                            $products_data = $this->locale->t('product.table.type_virtual');
                         } else {
                             $product_type = wc_get_product($product->ID);
-                            $products_data = $product_type->product_type;
+                            $products_data = ucfirst($product_type->product_type);
                         }
                         break;
                     default : $products_data = get_post_meta($product->ID, $key, true);

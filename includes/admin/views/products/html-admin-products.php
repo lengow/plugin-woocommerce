@@ -10,4 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 <br>
 <br>
 <br>
-<?php Lengow_Admin_Products::render_lengow_list();?>
+<div id="lengow_product_table">
+    <?php Lengow_Admin_Products::render_lengow_list();?>
+</div>
