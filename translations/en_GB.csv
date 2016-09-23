@@ -11,11 +11,20 @@ menu.help|Help
 menu.global_parameter|General settings
 footer.legals|Legal notices
 footer.plugin_lengow|Lengow Woocommerce Plugin
-product.screen.button_search|Search
+product.screen.nb_exported|products exported
+product.screen.nb_available|products available
+product.screen.button_yes|Yes
+product.screen.button_no|No
+product.screen.include_out_of_stock|Include out of stock products
+product.screen.include_out_of_stock_support|Use this option if you want to export out of stock products
+product.screen.include_specific_product|Include specific products
+product.screen.include_specific_product_support|Use this option to select your products one by one
+product.screen.button_download|Download
+product.table.button_search|Search
 product.table.id_product|ID
 product.table.image|Image
 product.table.name|Name
-product.table.reference|UGS(Sku)
+product.table.reference|UGS (Sku)
 product.table.stock|Stock
 product.table.category_name|Category
 product.table.type|Type

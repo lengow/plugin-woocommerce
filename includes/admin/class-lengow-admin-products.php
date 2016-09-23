@@ -25,19 +25,20 @@ class Lengow_Admin_Products extends WP_List_Table {
      * Display lengow product table
      *
      */
-    static function render_lengow_list(){
-        $lengow_table = new Lengow_Admin_Products();
-        $lengow_table->locale = new Lengow_Translation();
-        $lengow_table->prepare_items();
-        $lengow_table->search($lengow_table->locale->t('product.screen.button_search'), 'search_id');
-        $lengow_table->display();
+    public static function render_lengow_list(){
+        //Need to instantiate a class because this method must be static
+        $lengow_admin_products = new Lengow_Admin_Products();
+        $lengow_admin_products->locale = new Lengow_Translation();
+        $lengow_admin_products->prepare_items();
+        $lengow_admin_products->search($lengow_admin_products->locale->t('product.table.button_search'), 'search_id');
+        $lengow_admin_products->display();
     }
 
     /**
      * Display lengow product data
      *
      */
-    function prepare_items() {
+    public function prepare_items() {
         $columns = $this->get_columns();
         // $hidden defines the hidden columns
         $hidden = array();
@@ -66,7 +67,7 @@ class Lengow_Admin_Products extends WP_List_Table {
      *
      * @return array
      */
-    function get_columns(){
+    public function get_columns(){
         // columns label on the top and bottom of the table.
         $columns = array(
             'cb'        => '<input type="checkbox" />',
@@ -89,7 +90,7 @@ class Lengow_Admin_Products extends WP_List_Table {
      * @param $column_name
      * @return array
      */
-    function column_default( $item, $column_name ) {
+    public function column_default( $item, $column_name ) {
         // To avoid the need to create a method for each column there is column_default
         // that will process any column for which no special method is defined
         switch( $column_name ) {
@@ -116,7 +117,7 @@ class Lengow_Admin_Products extends WP_List_Table {
      *
      * @return array
      */
-    function get_sortable_columns() {
+    public function get_sortable_columns() {
         $sortable_columns = array(
             // The second parameter in the value array takes care of a possible pre-ordered column.
             // If the value is true the column is assumed to be ordered ascending,
@@ -141,7 +142,7 @@ class Lengow_Admin_Products extends WP_List_Table {
      * @param $b
      * @return mixed
      */
-    function usort_reorder( $a, $b ) {
+    private function usort_reorder( $a, $b ) {
         // If no sort, default to ID
         $order_by = ( ! empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'ID';
 
@@ -162,7 +163,7 @@ class Lengow_Admin_Products extends WP_List_Table {
      * @param $product
      * @return mixed
      */
-    function column_ID($product) {
+    public function column_ID($product) {
         $actions = array(
             $this->locale->t('product.table.edit') => sprintf('<a href="post.php?post=%s&action=%s" target="_blank">Edit</a>',$product['ID'],'edit'),
         );
@@ -176,7 +177,7 @@ class Lengow_Admin_Products extends WP_List_Table {
      * @param $product
      * @return mixed
      */
-    function column_cb($product) {
+    public function column_cb($product) {
         return sprintf(
             '<input type="checkbox" name="product[]" value="%s" />', $product['ID']
         );
@@ -188,9 +189,23 @@ class Lengow_Admin_Products extends WP_List_Table {
      * @param $product
      * @return mixed
      */
-    function column_lengow($product) {
+    public function column_lengow($product) {
         return sprintf(
-            '<input type="checkbox" name="product[]" value="%s" />', $product['ID']
+            '<div class="lgw-switch">
+                <label>
+                    <div><span></span>
+                        <input
+                            type="checkbox"
+                            data-size="mini"
+                            data-on-text=""
+                            data-off-text=""
+                            name="product[]"
+                            class="lengow_switch_option"
+                            data-action="change_option_product_out_of_stock"
+                            value="%s"">
+                    </div> 
+                 </label>
+            </div>', $product['ID']
         );
     }
 
@@ -198,7 +213,7 @@ class Lengow_Admin_Products extends WP_List_Table {
      * Display lengow bulk actions
      * @return array
      */
-    function get_bulk_actions() {
+    public function get_bulk_actions() {
         $actions = array(
             'publish_on_lengow'     => $this->locale->t('product.table.publish_on_lengow'),
             'unpublish_on_lengow'   => $this->locale->t('product.table.unpublish_on_lengow')
@@ -210,7 +225,7 @@ class Lengow_Admin_Products extends WP_List_Table {
      * Get all products meta
      * @return array
      */
-    function get_products(){
+    private function get_products(){
         $results = array();
         $keys =  array(
             'ID',
@@ -289,7 +304,7 @@ class Lengow_Admin_Products extends WP_List_Table {
      * @param $text
      * @param $input_id
      */
-    function search($text, $input_id)
+    private function search($text, $input_id)
     {
         echo '<form id="post-filter" method="post">';
         //The hidden element is needed to load the right page
@@ -299,9 +314,45 @@ class Lengow_Admin_Products extends WP_List_Table {
     }
 
     /**
+     * Reload Total product / Exported product
+     *
+     * @return array Number of product exported/total for this shop
+     */
+    public function reload_total()
+    {
+        $lengow_export = new Lengow_Export(null);
+
+        $result = array();
+        $result['total_export_product'] = $lengow_export->get_total_export_product();
+        $result['total_product'] = $lengow_export->get_total_product();
+
+        return $result;
+    }
+
+    /**
      * Display products page
      */
     public static function html_display() {
+        //Need to instantiate a class because this method must be static
+        $lengow_admin_products = new Lengow_Admin_Products();
+        $lengow_admin_products->locale = new Lengow_Translation();
+        $locale = $lengow_admin_products->locale;
+
+        $keys   = Lengow_Configuration::get_keys();
+
+        $lengow_export = new Lengow_Export(null);
+
+        $shop = array(
+            'shop' => Lengow_Configuration::get('blogname'),
+            'domain' => Lengow_Configuration::get('siteurl'),
+            'link' => Lengow_Main::get_export_url(),
+            'total_product' => $lengow_export->get_total_product(),
+            'total_export_product' => $lengow_export->get_total_export_product(),
+            'last_export' => Lengow_Configuration::get('lengow_last_export'),
+            'option_selected' => Lengow_Configuration::get('lengow_selection_enabled'),
+            'option_product_out_of_stock' => Lengow_Configuration::get('lengow_out_stock'),
+        );
+
         include_once 'views/products/html-admin-products.php';
 
     }

@@ -78,6 +78,17 @@ class Lengow_Main {
 		'grouped'  => 'Grouped Product',
 	);
 
+    /**
+     * Get webservices links
+     *
+     * @return array
+     */
+    public static function get_export_url()
+    {
+        $base = Lengow_Configuration::get('siteurl');
+        return $base.'/wp-content/plugins/lengow-woocommerce/webservice/export.php';
+    }
+
 	/**
 	 * Check if current IP is authorized
 	 *
