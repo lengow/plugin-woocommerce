@@ -158,7 +158,7 @@ $list_file = Lengow_Log::get_paths();
 		<div class="lgw-box">
 			<h2><?php echo $locale->t( 'global_setting.screen.log_file_title' ); ?></h2>
 			<p><?php echo $locale->t( 'global_setting.screen.log_file_description' ); ?></p>
-			<select id="select_log" class="lengow_select">
+			<select class="js-log-select js-select lengow_select">
 				<option value="" disabled selected>
 					<?php echo $locale->t('global_setting.screen.please_choose_log')?>
 				</option>
@@ -171,7 +171,7 @@ $list_file = Lengow_Log::get_paths();
 					<?php echo $locale->t('global_setting.screen.download_all_files')?>
 				</option>
 			</select>
-			<button type="button" id="download_log" class="lgw-btn lgw-btn-white">
+			<button type="button" class="js-log-btn-download lgw-btn lgw-btn-white" style="display: none;">
 				<i class="fa fa-download"></i> <?php echo $locale->t( 'global_setting.screen.button_download_file' ); ?>
 			</button>
 		</div>

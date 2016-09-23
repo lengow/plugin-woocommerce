@@ -153,7 +153,7 @@ ul,li {
 /*************************************************/
 
 
-.lgw-container {
+.lgw-container, .lgw-container p {
   font-family: 'Open Sans', sans-serif;
   font-size: 15px;
   color: #464646;
