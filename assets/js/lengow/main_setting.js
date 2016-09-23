@@ -24,6 +24,8 @@
         $(".js-multiple-select").select2({
             closeOnSelect: false
         });
+        $(".js-select").select2();
+
 
         // SUMBIT FORM
         $( ".lengow_form" ).submit(function( event ) {
@@ -166,15 +168,15 @@
         }
 
         // DOWNLOAD LOGS
-        $('#select_log').change(function(){
-            if ($('#select_log').val() !== null) {
-                $("#download_log" ).show();
+        $('.js-log-select').change(function(){
+            if ($('.js-log-select').val() !== null) {
+                $(".js-log-btn-download" ).show();
             }
         });
 
-        $('#download_log').on('click', function() {
-            if ($('#select_log').val() !== null) {
-                window.location.href = $('#select_log').val();
+        $('.js-log-btn-download').on('click', function() {
+            if ($('.js-log-select').val() !== null) {
+                window.location.href = $('.js-log-select').val();
             }
         });
 

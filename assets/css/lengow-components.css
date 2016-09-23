@@ -465,10 +465,6 @@ select.multiple-select option {
   padding: 12px 25px;
   background: white;
 }
-select.multiple-select option:checked,
-select.multiple-select:focus option:checked {
-
-}
 
 /*************************************************/
 /*                    SWITCH                     */
