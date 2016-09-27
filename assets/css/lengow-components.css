@@ -420,6 +420,20 @@ margin-bottom: 15px;
   color: #555;
 }
 
+.select2-selection.select2-selection--multiple {
+  background: #fafafa;
+  height: 46px;
+  line-height: 46px;
+  border: 1px solid #d7d7d7;
+}
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+  border: 1px solid #d7d7d7;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  line-height: 32px;
+  height: 32px;
+}
+
 .deleteModalDialog {
   position: fixed;
   top: 0;

@@ -160,6 +160,11 @@ class Lengow_Export {
 	private $_out_of_stock;
 
 	/**
+	 * @var boolean Use legacy fields
+	 */
+	private $_legacy;
+
+	/**
 	 * @var array List of product id separate with comma
 	 */
 	private $_product_ids = array();
@@ -212,15 +217,29 @@ class Lengow_Export {
 			? $params['out_of_stock']
 			: (bool) Lengow_Configuration::get( 'lengow_out_stock' );
 		$this->_variation          = ! is_null( $params['variation'] ) ? $params['variation'] : true;
-		$legacy_fields             = ! is_null( $params['legacy_fields'] ) ? $params['legacy_fields'] : false;
-		self::$DEFAULT_FIELDS      = $legacy_fields ? $this->_legacy_fields : $this->_new_fields;
 		$this->_update_export_date = ! is_null( $params['update_export_date'] )
 			? (bool) $params['update_export_date']
 			: true;
+		$this->_set_legacy_fields( $params['legacy_fields'] );
 		$this->_set_format( ! is_null( $params['format'] ) ? $params['format'] : 'csv' );
 		$this->_set_product_ids( ! is_null( $params['product_ids'] ) ? $params['product_ids'] : false );
 		$this->_set_product_types( ! is_null( $params['product_types'] ) ? $params['product_types'] : false );
 		$this->_set_log_output( ! is_null( $params['log_output'] ) ? $params['log_output'] : true );
+	}
+
+	/**
+	 * Set legacy fields or not
+	 *
+	 * @param boolean $legacy_fields use legacy fields
+	 */
+	private function _set_legacy_fields( $legacy_fields ) {
+		if ( ! is_null( $legacy_fields ) ) {
+			$this->_legacy = $legacy_fields;
+		} else {
+			// TODO get legacy with subscriptions API
+			$this->_legacy = false;
+		}
+		self::$DEFAULT_FIELDS = $this->_legacy ? $this->_legacy_fields : $this->_new_fields;
 	}
 
 	/**
@@ -331,7 +350,7 @@ class Lengow_Export {
 	 */
 	private function _export( $products, $fields ) {
 		$product_count = 0;
-		$feed          = new Lengow_Feed( $this->_stream, $this->_format );
+		$feed          = new Lengow_Feed( $this->_stream, $this->_format, $this->_legacy );
 		$feed->write( 'header', $fields );
 		$is_first = true;
 		// Get the maximum of character for yaml format
