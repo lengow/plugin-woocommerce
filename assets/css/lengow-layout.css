@@ -176,7 +176,11 @@ ul,li {
 
 .lgw-container h2 {
   font-size: 23px;
-  margin:15px 0 30px;
+  margin: 15px 0 30px;
+}
+.lgw-container h2.margin-s {
+  margin-top: 30px;
+  margin-bottom: 10px;
 }
 
 .lgw-container h3 {
