@@ -21,8 +21,6 @@
 (function ($) {
     $(document).ready(function () {
 
-
-
         function checkShop() {
             var status = $('.lengow_check_shop');
             var data = {
@@ -32,24 +30,25 @@
 
             status.html('<i class="fa fa-circle-o-notch fa-spin"></i>');
 
+
             $.ajax({
                 url: ajaxurl,
                 method: "POST",
                 dataType: "JSON",
+                data: data,
                 success: function (shop) {
-
                     var selector = $(".lengow_check_shop");
-                    selector.attr("data-original-title", shop['tooltip']);
+                    selector.attr("data-original-title", shop[0]['tooltip']);
 
-                    var title = shop['original_title'];
+                    var title = shop[0]['original_title'];
 
-                    if (shop['check_shop'] === true) {
+                    if (shop[0]['check_shop'] === true) {
                         selector.removeClass('lengow_check_shop_no_sync').addClass('lengow_check_shop_sync');
                         selector.attr("id", "lengow_shop_sync");
                     } else {
                         selector.attr("id", "lengow_shop_no_sync");
                         $(".lengow_feed_block_header_title").append(shop['header_title']);
-                        title = shop['header_title'];
+                        title = shop[0]['header_title'];
                     }
                     selector.html("");
 
@@ -60,6 +59,8 @@
             });
         }
 
+        checkShop();
+
         /**
          * Refresh total product/product exported
          * @param data Number of products exported and total products
@@ -68,8 +69,6 @@
             $(".js-lengow_exported").html(data['total_export_product']);
             $(".js-lengow_total").html(data['total_product']);
         }
-
-        checkShop();
 
         $('.js-lengow_switch_option').on('change', function (e) {
             e.preventDefault();

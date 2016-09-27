@@ -5,7 +5,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
-//Lengow_Admin_Products::post_process();
 ?>
 <div class="lgw-container" id="lengow_feed_wrapper">
     <?php if ( $keys['lengow_preprod_enabled'] == 1 ) : ?>

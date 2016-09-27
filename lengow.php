@@ -138,11 +138,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			    // init ajax actions
                 add_action('wp_ajax_post_process', array('Lengow_Admin_Products', 'post_process') );
 				//check logs download to prevent the occurrence of the wordpress html header
-				$action = null;
+				$download = null;
 				if ( isset( $_GET['action'] ) ) {
-					$action = $_GET['action'];
+                    $download = $_GET['action'];
 				}
-				switch ( $action ) {
+				switch ( $download ) {
 					case 'download':
 						$file = isset( $_GET['file'] ) ? $_GET['file'] : null;
 						Lengow_Log::download( $file );

@@ -1003,3 +1003,82 @@ select.multiple-select option {
 .lgw-container .accordion  .fa-chevron-up {
   background: url('../img/carret-up.png') no-repeat right center;
 }
+
+/*************************************************/
+/*                   CHECK SHOP                  */
+/*************************************************/
+
+.lengow_feed_block_header_title {
+  border-bottom: 1px solid #e1e1e1;
+  padding: 15px 15px;
+  box-sizing: border-box;
+  margin-bottom: 0px;
+}
+
+.lengow_feed_block_header_title a {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 2;
+}
+
+.lengow_feed_block_header_title a:hover {
+  color: #464646;
+}
+
+.lengow_check_shop span {
+  color: #464646;
+  position: relative;
+  padding-right: 25px;
+}
+
+.lengow_check_shop_no_sync:after {
+  cursor: default;
+  content: "\25cf";
+  font-size: 28px;
+  color: #da493b;
+  position: absolute;
+  top: -10px;
+  right: -3px;
+}
+
+.lengow_shop_status_label span {
+  color: #555;
+  font-weight: normal;
+  font: 400 12px/1.42857 "Open Sans",Helvetica,Arial,sans-serif;
+  text-decoration: underline;
+}
+
+.lengow_shop_status_label span:hover {
+  color: #00aeef;
+}
+
+.lengow_check_shop_sync:after {
+  cursor: default;
+  content: "\25cf";
+  font-size: 28px;
+  color: #45bf7b;
+  position: absolute;
+  top: -10px;
+  right: -3px;
+}
+
+.lengow_shop_status_label {
+  margin-top: -17px;
+}
+
+.lengow_shop_status_label a:hover {
+  text-decoration: none;
+}
+
+.lengow_check_shop {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+
+.lengow_export_feed {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+}

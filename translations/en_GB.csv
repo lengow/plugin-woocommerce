@@ -19,6 +19,11 @@ product.screen.include_out_of_stock|Include out of stock products
 product.screen.include_out_of_stock_support|Use this option if you want to export out of stock products
 product.screen.include_specific_product|Include specific products
 product.screen.include_specific_product_support|Use this option to select your products one by one
+product.screen.lengow_shop_sync|Shop synchronized
+product.screen.lengow_shop_no_sync|Shop not synchronized
+product.screen.sync_your_shop|Synchronize my shop with Lengow
+product.screen.shop_last_indexation|Last indexation
+product.screen.shop_not_index|Not indexed yet
 product.screen.button_download|Download
 product.table.button_search|Search
 product.table.id_product|ID
