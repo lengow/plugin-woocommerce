@@ -16,8 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="lgw-box" id="block">
         <div class="lengow_shop_status">
             <a href="#" class="lengow_check_shop lengow_check_shop_no_sync lengow_link_tooltip"
-               data-original-title=""
-               data-href="#">
+               data-original-title="">
             </a>
             <label class="lengow_shop_status_label">
             </label>

@@ -23,37 +23,42 @@
 
 
 
-        // function checkShop() {
-        //     var status = $('.lengow_check_shop');
-        //     var href = status.attr('data-href');
-        //     var data = {
-        //         action: 'check_shop'
-        //     };
-        //
-        //     status.html('<i class="fa fa-circle-o-notch fa-spin"></i>');
-        //
-        //     $.getJSON(href, data, function(content) {
-        //             var selector = lengow_jquery("#block_" + shop['shop_id'] + " .lengow_check_shop");
-        //             selector.attr("data-original-title", shop['tooltip']);
-        //
-        //             var title = shop['original_title'];
-        //
-        //             if (shop['check_shop'] === true) {
-        //                 selector.removeClass('lengow_check_shop_no_sync').addClass('lengow_check_shop_sync');
-        //                 selector.attr("id", "lengow_shop_sync");
-        //             } else {
-        //                 selector.attr("id", "lengow_shop_no_sync");
-        //                 lengow_jquery("#block_" + shop['shop_id']
-        //                     +  " .lengow_feed_block_header_title").append(shop['header_title']);
-        //                 title = shop['header_title'];
-        //             }
-        //             selector.html("");
-        //
-        //             lengow_jquery("#block_" + shop['shop_id'] + ' .lengow_shop_status_label').html(title);
-        //
-        //             init_tooltip()
-        //     });
-        // }
+        function checkShop() {
+            var status = $('.lengow_check_shop');
+            var data = {
+                action: 'post_process',
+                do_action: 'check_shop'
+            };
+
+            status.html('<i class="fa fa-circle-o-notch fa-spin"></i>');
+
+            $.ajax({
+                url: ajaxurl,
+                method: "POST",
+                dataType: "JSON",
+                success: function (shop) {
+
+                    var selector = $(".lengow_check_shop");
+                    selector.attr("data-original-title", shop['tooltip']);
+
+                    var title = shop['original_title'];
+
+                    if (shop['check_shop'] === true) {
+                        selector.removeClass('lengow_check_shop_no_sync').addClass('lengow_check_shop_sync');
+                        selector.attr("id", "lengow_shop_sync");
+                    } else {
+                        selector.attr("id", "lengow_shop_no_sync");
+                        $(".lengow_feed_block_header_title").append(shop['header_title']);
+                        title = shop['header_title'];
+                    }
+                    selector.html("");
+
+                    $(".lengow_shop_status_label").html(title);
+
+                    init_tooltip();
+                }
+            });
+        }
 
         /**
          * Refresh total product/product exported
@@ -64,7 +69,7 @@
             $(".js-lengow_total").html(data['total_product']);
         }
 
-        // checkShop();
+        checkShop();
 
         $('.js-lengow_switch_option').on('change', function (e) {
             e.preventDefault();

@@ -56,7 +56,7 @@ class Lengow_Admin_Products extends WP_List_Table {
                     $state = isset($_POST['state']) ? $_POST['state'] : null;
                     if ($state !== null) {
                         Lengow_Configuration::update_value('lengow_out_stock', $state);
-                        echo wp_json_encode($lengow_admin_products->reload_total());
+                        echo json_encode($lengow_admin_products->reload_total());
                     }
                     break;
 //                case 'select_product':
@@ -142,41 +142,37 @@ class Lengow_Admin_Products extends WP_List_Table {
 //                    }
 //                    echo Tools::jsonEncode($data);
 //                    break;
-//                case 'check_shop':
-//                    $shops = LengowShop::findAll(true);
-//                    $link = new LengowLink();
-//                    $result = array();
-//                    foreach ($shops as $shopId) {
-//                        $checkShop = LengowSync::checkSyncShop($shopId['id_shop']);
-//                        $data = array();
-//                        $data['shop_id'] = $shopId['id_shop'];
-//                        if ($checkShop) {
-//                            $data['check_shop'] = true;
-//                            $sync_date = LengowConfiguration::get('LENGOW_LAST_EXPORT', null, null, $data['shop_id']);
-//                            if ($sync_date == null) {
-//                                $data['tooltip'] = $this->locale->t('product.screen.shop_not_index');
-//                            } else {
-//                                $data['tooltip'] = $this->locale->t('product.screen.shop_last_indexation') .
-//                                    ' : ' . strftime("%A %e %B %Y @ %R", strtotime($sync_date));
-//                            }
-//                            $data['original_title'] = $this->locale->t('product.screen.lengow_shop_sync');
+                case 'check_shop':
+                    $result = array();
+                    $checkShop = Lengow_Sync::check_sync_shop();
+                    $data = array();
+                    if ($checkShop) {
+                        $data['check_shop'] = true;
+                        $sync_date = Lengow_Configuration::get('lengow_last_export');
+                        if ($sync_date == null) {
+                            $data['tooltip'] = $lengow_admin_products->locale->t('product.screen.shop_not_index');
+                        } else {
+                            $data['tooltip'] = $lengow_admin_products->locale->t('product.screen.shop_last_indexation') .
+                                ' : ' . strftime("%A %e %B %Y @ %R", strtotime($sync_date));
+                        }
+                        $data['original_title'] = $lengow_admin_products->locale->t('product.screen.lengow_shop_sync');
+                    } else {
+                        $data['check_shop'] = false;
+                        //TODO - Check if toolbox
+//                        if (!$lengow_admin_products->toolbox) {
+                            $data['tooltip'] = $lengow_admin_products->locale->t('product.screen.lengow_shop_no_sync');
+                            $data['original_title'] = $lengow_admin_products->locale->t('product.screen.sync_your_shop');
+                            $data['header_title'] = '<a href="'
+                                . admin_url('admin.php?page=lengow')
+                                . '&isSync=true">
+                                <span>' . $lengow_admin_products->locale->t('product.screen.sync_your_shop') . '</span></a>';
 //                        } else {
-//                            $data['check_shop'] = false;
-//                            if (!$this->toolbox) {
-//                                $data['tooltip'] = $this->locale->t('product.screen.lengow_shop_no_sync');
-//                                $data['original_title'] = $this->locale->t('product.screen.sync_your_shop');
-//                                $data['header_title'] = '<a href="'
-//                                    . $link->getAbsoluteAdminLink('AdminLengowHome')
-//                                    . '&isSync=true">
-//                                    <span>' . $this->locale->t('product.screen.sync_your_shop') . '</span></a>';
-//                            } else {
-//                                $data['header_title'] = $this->locale->t('product.screen.lengow_shop_no_sync');
-//                            }
+//                            $data['header_title'] = $lengow_admin_products->locale->t('product.screen.lengow_shop_no_sync');
 //                        }
-//                        $result[] = $data;
-//                    }
-//                    echo Tools::jsonEncode($result);
-//                    break;
+                    }
+                    $result[] = $data;
+                    echo json_encode($result);
+                    break;
             }
             exit();
         }

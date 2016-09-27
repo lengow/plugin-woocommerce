@@ -17,5 +17,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Lengow_Check {
 
+    /**
+     * Check API Authentification
+     *
+     * @return boolean
+     */
+    public static function is_valid_auth()
+    {
+       //TODO - Check API Authentification
+        return true;
+    }
 }
 
