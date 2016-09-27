@@ -85,8 +85,8 @@ class Lengow_Main {
      */
     public static function get_export_url()
     {
-        $base = Lengow_Configuration::get('siteurl');
-        return $base.'/wp-content/plugins/lengow-woocommerce/webservice/export.php';
+        $sep = DIRECTORY_SEPARATOR;
+        return LENGOW_PLUGIN_URL . $sep . 'webservice' . $sep . 'export.php';
     }
 
 	/**

@@ -60,7 +60,6 @@ class Lengow_Admin_Products extends WP_List_Table {
                     }
                     break;
                 case 'check_shop':
-                    $result = array();
                     $checkShop = Lengow_Sync::check_sync_shop();
                     $data = array();
                     if ($checkShop) {
@@ -87,8 +86,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 //                            $data['header_title'] = $lengow_admin_products->locale->t('product.screen.lengow_shop_no_sync');
 //                        }
                     }
-                    array_push($result,$data);
-                    echo json_encode($result);
+                    echo json_encode($data);
                     break;
             }
             exit();

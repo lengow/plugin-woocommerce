@@ -24,12 +24,12 @@
         function checkShop() {
             var status = $('.lengow_check_shop');
             var data = {
+                //action call php function
                 action: 'post_process',
                 do_action: 'check_shop'
             };
 
             status.html('<i class="fa fa-circle-o-notch fa-spin"></i>');
-
 
             $.ajax({
                 url: ajaxurl,
@@ -38,17 +38,17 @@
                 data: data,
                 success: function (shop) {
                     var selector = $(".lengow_check_shop");
-                    selector.attr("data-original-title", shop[0]['tooltip']);
+                    selector.attr("data-original-title", shop['tooltip']);
 
-                    var title = shop[0]['original_title'];
+                    var title = shop['original_title'];
 
-                    if (shop[0]['check_shop'] === true) {
+                    if (shop['check_shop'] === true) {
                         selector.removeClass('lengow_check_shop_no_sync').addClass('lengow_check_shop_sync');
                         selector.attr("id", "lengow_shop_sync");
                     } else {
                         selector.attr("id", "lengow_shop_no_sync");
                         $(".lengow_feed_block_header_title").append(shop['header_title']);
-                        title = shop[0]['header_title'];
+                        title = shop['header_title'];
                     }
                     selector.html("");
 
