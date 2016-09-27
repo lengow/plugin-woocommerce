@@ -48,6 +48,12 @@ class Lengow_Feed {
 	private $_stream;
 
 	/**
+	 * @var boolean use legacy fields
+	 */
+	private $_legacy;
+
+
+	/**
 	 * @var string full export folder
 	 */
 	private $_export_folder;
@@ -72,10 +78,12 @@ class Lengow_Feed {
 	 *
 	 * @param boolean $stream feed in file or not
 	 * @param string $format feed format
+	 * @param boolean $legacy use legacy fields
 	 */
-	public function __construct( $stream, $format ) {
+	public function __construct( $stream, $format, $legacy ) {
 		$this->_stream = $stream;
 		$this->_format = $format;
+		$this->_legacy = $legacy;
 		if ( ! $this->_stream ) {
 			$this->_init_export_file();
 		}
@@ -306,17 +314,32 @@ class Lengow_Feed {
 	private function _format_fields( $str ) {
 		switch ( $this->_format ) {
 			case 'csv':
-				return substr(
-					strtoupper(
-						preg_replace(
-							'/[^a-zA-Z0-9_]+/',
-							'',
-							str_replace( array( ' ', '\'' ), '_', Lengow_Main::replace_accented_chars( $str ) )
-						)
-					),
-					0,
-					58
-				);
+				if ( $this->_legacy ) {
+					return substr(
+						strtoupper(
+							preg_replace(
+								'/[^a-zA-Z0-9_]+/',
+								'',
+								str_replace( array( ' ', '\'' ), '_', Lengow_Main::replace_accented_chars( $str ) )
+							)
+						),
+						0,
+						58
+					);
+				} else {
+					return substr(
+						strtolower(
+							preg_replace(
+								'/[^a-zA-Z0-9_]+/',
+								'',
+								str_replace( array( ' ', '\'' ), '_', Lengow_Main::replace_accented_chars( $str ) )
+							)
+						),
+						0,
+						58
+					);
+				}
+				break;
 			default:
 				return strtolower(
 					preg_replace(
