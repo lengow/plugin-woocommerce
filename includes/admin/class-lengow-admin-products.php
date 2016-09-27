@@ -18,8 +18,170 @@ if( ! class_exists( 'WP_List_Table' ) ) {
  * Lengow_Admin_Products Class.
  */
 class Lengow_Admin_Products extends WP_List_Table {
+
     private $data;
     private $locale;
+
+
+    /**
+     * Process Post Parameters
+     */
+    public static function post_process()
+    {
+        global $lengow_admin_products;
+
+        $lengow_admin_products = new Lengow_Admin_Products();
+        $action = isset( $_POST['do_action']) ?  $_POST['do_action']: false;
+        if ($action) {
+            switch ($action) {
+                case 'change_option_selected':
+                    $state = isset($_POST['state']) ? $_POST['state'] : null;
+                    if ($state !== null) {
+                        Lengow_Configuration::update_value(
+                            'lengow_selection_enabled',
+                            $state
+                        );
+                        $state = Lengow_Configuration::get('lengow_selection_enabled');
+                        $data = array();
+                        if ($state) {
+                            $data["state"] = true;
+                        } else {
+                            $data["state"] = false;
+                        }
+                        $result = array_merge($data, $lengow_admin_products->reload_total());
+                        echo json_encode($result);
+                    }
+                    break;
+                case 'change_option_product_out_of_stock':
+                    $state = isset($_POST['state']) ? $_POST['state'] : null;
+                    if ($state !== null) {
+                        Lengow_Configuration::update_value('lengow_out_stock', $state);
+                        echo wp_json_encode($lengow_admin_products->reload_total());
+                    }
+                    break;
+//                case 'select_product':
+//                    $state = isset($_REQUEST['state']) ? $_REQUEST['state'] : null;
+//                    $shopId = isset($_REQUEST['id_shop']) ? (int)$_REQUEST['id_shop'] : null;
+//                    $productId = isset($_REQUEST['id_product']) ? $_REQUEST['id_product'] : null;
+//                    if ($state !== null) {
+//                        LengowProduct::publish($productId, $state, $shopId);
+//                        echo Tools::jsonEncode($this->reloadTotal($shopId));
+//                    }
+//                    break;
+//                case 'load_table':
+//                    $shopId = isset($_REQUEST['id_shop']) ? (int)$_REQUEST['id_shop'] : null;
+//                    $data = array();
+//                    $data['shop_id'] = $shopId;
+//                    $data['footer_content'] = preg_replace('/\r|\n/', '', $this->buildTable($shopId));
+//                    if ($this->toolbox) {
+//                        $data['bootstrap_switch_readonly'] = true;
+//                    }
+//                    echo Tools::jsonEncode($data);
+//                    break;
+//                case 'add_to_export':
+//                    $shopId = isset($_REQUEST['id_shop']) ? (int)$_REQUEST['id_shop'] : null;
+//                    $selection = isset($_REQUEST['selection']) ? $_REQUEST['selection'] : null;
+//                    $select_all = isset($_REQUEST['select_all']) ? $_REQUEST['select_all'] : null;
+//                    $data = array();
+//                    if ($select_all == "true") {
+//                        $this->buildTable($shopId);
+//                        $sql = $this->list->buildQuery(false, true);
+//                        $db = Db::getInstance()->executeS($sql);
+//                        $all = array();
+//                        foreach ($db as $value) {
+//                            $all[] = $value['id_product'];
+//                        }
+//                        foreach ($all as $id) {
+//                            LengowProduct::publish($id, 1, $shopId);
+//                            foreach ($selection as $id => $v) {
+//                                $data['product_id'][] = $id;
+//                            }
+//                        }
+//                        $data = array_merge($data, $this->reloadTotal($shopId));
+//                    } elseif ($selection) {
+//                        foreach ($selection as $id => $v) {
+//                            // This line is useless, but Prestashop validator require it
+//                            $v = $v;
+//                            LengowProduct::publish($id, 1, $shopId);
+//                            $data['product_id'][] = $id;
+//                        }
+//                        $data = array_merge($data, $this->reloadTotal($shopId));
+//                    } else {
+//                        $data['message'] = $this->locale->t('product.screen.no_product_selected');
+//                    }
+//                    echo Tools::jsonEncode($data);
+//                    break;
+//                case 'remove_from_export':
+//                    $shopId = isset($_REQUEST['id_shop']) ? (int)$_REQUEST['id_shop'] : null;
+//                    $selection = isset($_REQUEST['selection']) ? $_REQUEST['selection'] : null;
+//                    $select_all = isset($_REQUEST['select_all']) ? $_REQUEST['select_all'] : null;
+//                    $data = array();
+//                    if ($select_all == "true") {
+//                        $this->buildTable($shopId);
+//                        $sql = $this->list->buildQuery(false, true);
+//                        $db = Db::getInstance()->executeS($sql);
+//                        $all = array();
+//                        foreach ($db as $value) {
+//                            $all[] = $value['id_product'];
+//                        }
+//                        foreach ($all as $id) {
+//                            LengowProduct::publish($id, 0, $shopId);
+//                            foreach ($selection as $id => $v) {
+//                                $data['product_id'][] = $id;
+//                            }
+//                        }
+//                        $data = array_merge($data, $this->reloadTotal($shopId));
+//                    } elseif ($selection) {
+//                        foreach ($selection as $id => $v) {
+//                            LengowProduct::publish($id, 0, $shopId);
+//                            $data['product_id'][] = $id;
+//                        }
+//                        $data = array_merge($data, $this->reloadTotal($shopId));
+//                    } else {
+//                        $data['message'] = $this->locale->t('product.screen.no_product_selected');
+//                    }
+//                    echo Tools::jsonEncode($data);
+//                    break;
+//                case 'check_shop':
+//                    $shops = LengowShop::findAll(true);
+//                    $link = new LengowLink();
+//                    $result = array();
+//                    foreach ($shops as $shopId) {
+//                        $checkShop = LengowSync::checkSyncShop($shopId['id_shop']);
+//                        $data = array();
+//                        $data['shop_id'] = $shopId['id_shop'];
+//                        if ($checkShop) {
+//                            $data['check_shop'] = true;
+//                            $sync_date = LengowConfiguration::get('LENGOW_LAST_EXPORT', null, null, $data['shop_id']);
+//                            if ($sync_date == null) {
+//                                $data['tooltip'] = $this->locale->t('product.screen.shop_not_index');
+//                            } else {
+//                                $data['tooltip'] = $this->locale->t('product.screen.shop_last_indexation') .
+//                                    ' : ' . strftime("%A %e %B %Y @ %R", strtotime($sync_date));
+//                            }
+//                            $data['original_title'] = $this->locale->t('product.screen.lengow_shop_sync');
+//                        } else {
+//                            $data['check_shop'] = false;
+//                            if (!$this->toolbox) {
+//                                $data['tooltip'] = $this->locale->t('product.screen.lengow_shop_no_sync');
+//                                $data['original_title'] = $this->locale->t('product.screen.sync_your_shop');
+//                                $data['header_title'] = '<a href="'
+//                                    . $link->getAbsoluteAdminLink('AdminLengowHome')
+//                                    . '&isSync=true">
+//                                    <span>' . $this->locale->t('product.screen.sync_your_shop') . '</span></a>';
+//                            } else {
+//                                $data['header_title'] = $this->locale->t('product.screen.lengow_shop_no_sync');
+//                            }
+//                        }
+//                        $result[] = $data;
+//                    }
+//                    echo Tools::jsonEncode($result);
+//                    break;
+            }
+            exit();
+        }
+    }
+
 
     /**
      * Display lengow product table
@@ -200,7 +362,7 @@ class Lengow_Admin_Products extends WP_List_Table {
                             data-on-text=""
                             data-off-text=""
                             name="product[]"
-                            class="lengow_switch_option"
+                            class="lengow_switch_product"
                             data-action="change_option_product_out_of_stock"
                             value="%s"">
                     </div> 

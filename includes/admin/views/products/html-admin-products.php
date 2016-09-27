@@ -5,6 +5,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
+//Lengow_Admin_Products::post_process();
 ?>
 <div class="lgw-container" id="lengow_feed_wrapper">
     <?php if ( $keys['lengow_preprod_enabled'] == 1 ) : ?>
@@ -32,11 +33,11 @@ if ( ! defined( 'ABSPATH' ) ) {
         <div class="text-center">
             <div class="margin-standard text-center">
                 <p class="products-exported">
-                    <span class="lengow_exported stats-big-value"><?php echo $shop['total_export_product'] ?></span>
+                    <span class="js-lengow_exported stats-big-value"><?php echo $shop['total_export_product'] ?></span>
                     <?php echo $locale->t('product.screen.nb_exported') ?>
                 </p>
                 <p class="products-available small light">
-                    <span class="lengow_total stats-big-value"><?php echo $shop['total_product'] ?></span>
+                    <span class="js-lengow_total stats-big-value"><?php echo $shop['total_product'] ?></span>
                     <?php echo $locale->t('product.screen.nb_available') ?>
                 </p>
             </div>
@@ -47,10 +48,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <input
                             type="checkbox"
                             data-size="mini"
-                            data-on-text="<? echo $locale->t('product.screen.button_yes') ?>"
-                            data-off-text="<? echo $locale->t('product.screen.button_no')?>"
+                            data-on-text="<?php echo $locale->t('product.screen.button_yes') ?>"
+                            data-off-text="<?php echo $locale->t('product.screen.button_no')?>"
                             name="lengow_export_out_of_stock"
-                            class="lengow_switch_option"
+                            class="js-lengow_switch_option"
                             data-action="change_option_product_out_of_stock"
                             value="1" <?php if ($shop['option_product_out_of_stock'] == 1) : ?> checked="checked" <?php endif; ?>>
 <!--                        {if isset($toolbox) && $toolbox} disabled {/if}-->
@@ -66,12 +67,11 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <input
                             type="checkbox"
                             data-size="mini"
-                            data-on-text="<? echo $locale->t('product.screen.button_yes') ?>"
-                            data-off-text="<? echo $locale->t('product.screen.button_no')?>"
+                            data-on-text="<?php echo $locale->t('product.screen.button_yes') ?>"
+                            data-off-text="<?php echo $locale->t('product.screen.button_no')?>"
                             name="lengow_export_selection"
-                            class="lengow_switch_option"
+                            class="js-lengow_switch_option"
                             data-action="change_option_selected"
-                            data-id_shop="{$shop['shop']->id|escape:'htmlall':'UTF-8'}"
                             value="1" <?php if ($shop['option_selected'] == 1) : ?> checked="checked" <?php endif; ?>>
 <!--                        {if isset($toolbox) && $toolbox} disabled {/if}-->
 
@@ -82,7 +82,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                title="<?php echo $locale->t('product.screen.include_specific_product_support')?>"></i>
         </div>
         <div class="lengow_feed_block_footer">
-            <div class="lengow_feed_block_footer_content" style="<?php if (!$shop['option_selected']): ?>/*display:none*/;<?php endif;?>">
+            <div class="js-lengow_feed_block_footer_content" style="<?php if (!$shop['option_selected']): ?>display:none;<?php endif;?>">
                 <?php Lengow_Admin_Products::render_lengow_list();?>
             </div>
         </div>
