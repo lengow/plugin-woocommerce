@@ -149,6 +149,17 @@ class Lengow_Configuration {
 		return get_option( $key );
 	}
 
+    /**
+     * Update Lengow value by shop
+     *
+     * @param string  $key  lengow configuration key
+     * @param mixed $value  configuration value
+     */
+    public static function add_value($key, $value)
+    {
+        add_option($key, $value);
+    }
+
 	/**
 	 * Update Lengow value by shop
 	 *

@@ -42,10 +42,12 @@ class Lengow_Install {
         $upgrade_files = array_diff(scandir(LENGOW_PLUGIN_PATH . '/upgrade'), array('..', '.'));
         foreach ($upgrade_files as $file) {
             $number_version = preg_replace('/update_|\.php$/', '', $file);
-            if ( version_compare( get_option('lengow_version'), $number_version, '>=' ) ) continue;
+            if ( version_compare( get_option('lengow_version'), $number_version, '>=' ) ) {
+                continue;
+            }
             include LENGOW_PLUGIN_PATH . '/upgrade/' . $file;
         }
-        update_option('lengow_version', $number_version);
+        Lengow_Configuration::update_value('lengow_version', $number_version);
         self::set_installation_status(false);
         return true;
     }

@@ -71,12 +71,22 @@ if ($wpdb->get_var('SHOW TABLES LIKE \''.$table_name.'\'')) {
             'ALTER TABLE  ' . $table_name . ' DROP COLUMN `date_add`'
         );
     }
-    Lengow_Install::check_field_and_drop('lengow_orders', 'id_flux');
-    Lengow_Install::check_field_and_drop('lengow_orders', 'id_order');
-    Lengow_Install::check_field_and_drop('lengow_orders', 'total_paid');
-    Lengow_Install::check_field_and_drop('lengow_orders', 'message');
-    Lengow_Install::check_field_and_drop('lengow_orders', 'carrier');
-    Lengow_Install::check_field_and_drop('lengow_orders', 'tracking');
+    // Keep and change old columns
+    if (Lengow_Install::check_field_exists('lengow_orders', 'id_flux')) {
+        $wpdb->query(
+            'ALTER TABLE  '.$table_name.' CHANGE `id_flux` `id_flux` INTEGER(11) UNSIGNED NULL'
+        );
+    }
+    if (Lengow_Install::check_field_exists('lengow_orders', 'id_order')) {
+        $wpdb->query(
+            'ALTER TABLE  '.$table_name.' CHANGE `id_order` `id_order` INTEGER(11) UNSIGNED NULL'
+        );
+    }
+    if (Lengow_Install::check_field_exists('lengow_orders', 'total_paid')) {
+        $wpdb->query(
+            'ALTER TABLE  '.$table_name.' CHANGE `total_paid` `total_paid` DECIMAL(17,2) UNSIGNED NULL'
+        );
+    }
 }
 
 $sql        = 'CREATE TABLE IF NOT EXISTS ' . $table_name . ' ('
@@ -87,10 +97,14 @@ $sql        = 'CREATE TABLE IF NOT EXISTS ' . $table_name . ' ('
     . ' `order_date` datetime NOT NULL,'
     . ' `created_at` datetime NOT NULL,'
     . ' `extra` longtext COLLATE utf8_unicode_ci,'
+    . ' `id_flux` INTEGER(11) UNSIGNED NULL,'
+    . ' `id_order` INTEGER(11) UNSIGNED NULL,'
+    . ' `total_paid` DECIMAL(17,2) UNSIGNED NULL,'
+    . ' `message` TEXT,'
+    . ' `carrier` VARCHAR(100),'
+    . ' `tracking` VARCHAR(100),'
     . ' PRIMARY KEY (`id`)) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 dbDelta( $sql );
-
-update_option( 'lengow_version', LENGOW_VERSION );
 
 // Rename old settings
 Lengow_Install::rename_configuration_key('lengow_debug', 'lengow_preprod_enabled');
@@ -101,13 +115,15 @@ Lengow_Install::rename_configuration_key('is_import_processing', 'lengow_import_
 // Add new settings
 $keys = Lengow_Configuration::get_keys();
 foreach ($keys as $key => $value) {
-    if(get_option($key)) continue;
+    if(Lengow_Configuration::get($key)) {
+        continue;
+    }
     if (isset($value['default_value'])) {
         $val = $value['default_value'];
     } else {
         $val = '';
     }
-    add_option( $key, $val);
+    Lengow_Configuration::add_value( $key, $val);
 }
 
 // Delete old settings
