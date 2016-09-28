@@ -40,7 +40,9 @@ class Lengow_Admin {
 	 * Add Lengow admin item menu
 	 */
 	public function lengow_admin_menu() {
+
 		$locale = new Lengow_Translation();
+
 		add_menu_page(
 			$locale->t('module.name'),
 			$locale->t('module.name'),
@@ -61,7 +63,6 @@ class Lengow_Admin {
         //if ($this->current_tab != $this->_default_tab) {
             include_once 'views/html-admin-header.php';
         //}
-
         switch ($this->current_tab) {
             case 'lengow_admin_products':
                 Lengow_Admin_Products::html_display();

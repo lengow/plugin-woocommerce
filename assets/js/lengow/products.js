@@ -33,7 +33,8 @@
 
             $.ajax({
                 url: ajaxurl,
-                method: "POST",
+                //use 'type' not 'method' for Wordpress compatibility
+                type: "POST",
                 dataType: "JSON",
                 data: data,
                 success: function (shop) {
@@ -83,7 +84,7 @@
 
             $.ajax({
                 url: ajaxurl,
-                method: "POST",
+                type: "POST",
                 dataType: "JSON",
                 data: data,
                 success: function (content) {

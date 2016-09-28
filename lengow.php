@@ -22,7 +22,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
+global $wp_version;
 /**
  * Check if WooCommerce is active
  **/
@@ -201,5 +201,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 	// Start module
 	$GLOBALS['lengow'] = new Lengow();
+	if ($wp_version <= '4.0.0' ){
+		$GLOBALS['hook_suffix'] = 'toplevel_page_lengow';
+	}
 }
 
