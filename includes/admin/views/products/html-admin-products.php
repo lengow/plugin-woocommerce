@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <?php echo $locale->t('menu.preprod_active') ?>
         </div>
     <?php endif; ?>
-    <div class="lgw-box" id="block">
+    <div class="lgw-box no-margin" id="block">
         <div class="lengow_shop_status">
             <a href="#" class="lengow_check_shop lengow_check_shop_no_sync lengow_link_tooltip"
                data-original-title="">
@@ -79,6 +79,10 @@ if ( ! defined( 'ABSPATH' ) ) {
             <i class="fa fa-info-circle lengow_link_tooltip"
                title="<?php echo $locale->t('product.screen.include_specific_product_support')?>"></i>
         </div>
+    </div>
+</div>
+<div class="lgw-table">
+    <div class="lgw-box">
         <div class="lengow_feed_block_footer">
             <div class="js-lengow_feed_block_footer_content" style="<?php if (!$shop['option_selected']): ?>display:none;<?php endif;?>">
                 <?php Lengow_Admin_Products::render_lengow_list();?>
