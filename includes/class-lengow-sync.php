@@ -27,5 +27,15 @@ class Lengow_Sync {
         return true;
     }
 
+    /**
+     * Check Synchronisation shop
+     *
+     * @return boolean
+     */
+    public static function check_sync_shop()
+    {
+        return Lengow_Configuration::get('lengow_store_enabled')
+        && Lengow_Check::is_valid_auth();
+    }
 }
 

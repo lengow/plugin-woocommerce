@@ -78,6 +78,17 @@ class Lengow_Main {
 		'grouped'  => 'Grouped Product',
 	);
 
+    /**
+     * Get webservices links
+     *
+     * @return array
+     */
+    public static function get_export_url()
+    {
+        $sep = DIRECTORY_SEPARATOR;
+        return LENGOW_PLUGIN_URL . $sep . 'webservice' . $sep . 'export.php';
+    }
+
 	/**
 	 * Check if current IP is authorized
 	 *
