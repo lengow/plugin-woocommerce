@@ -160,6 +160,16 @@ class Lengow_Configuration {
 		update_option($key, $value);
 	}
 
+    /**
+     * Delete Lengow value by shop
+     *
+     * @param string  $key  lengow configuration key
+     */
+    public static function delete( $key )
+    {
+        delete_option( $key );
+    }
+
 	/**
 	 * Get Values
 	 *

@@ -66,7 +66,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 * Hook into actions
 		 */
 		private function _init_hooks() {
-			register_activation_hook( __FILE__, array( 'Lengow_Install', 'install' ) );
+            register_activation_hook( __FILE__, array( 'Lengow_Install', 'install' ) );
 			add_action( 'init', array( $this, 'init' ) );
 
 			if ( isset( $_GET['page'] ) && $_GET['page'] == 'lengow' ) {
