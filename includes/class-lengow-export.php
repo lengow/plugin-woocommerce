@@ -220,7 +220,7 @@ class Lengow_Export {
 		$this->_update_export_date = ! is_null( $params['update_export_date'] )
 			? (bool) $params['update_export_date']
 			: true;
-		$this->_set_legacy_fields( $params['legacy_fields'] );
+        $this->_legacy = ! is_null( $params['legacy_fields'] ) ? $params['legacy_fields'] : null;
 		$this->_set_format( ! is_null( $params['format'] ) ? $params['format'] : 'csv' );
 		$this->_set_product_ids( ! is_null( $params['product_ids'] ) ? $params['product_ids'] : false );
 		$this->_set_product_types( ! is_null( $params['product_types'] ) ? $params['product_types'] : false );
@@ -229,15 +229,10 @@ class Lengow_Export {
 
 	/**
 	 * Set legacy fields or not
-	 *
-	 * @param boolean $legacy_fields use legacy fields
 	 */
-	private function _set_legacy_fields( $legacy_fields ) {
-		if ( ! is_null( $legacy_fields ) ) {
-			$this->_legacy = $legacy_fields;
-		} else {
-			// TODO get legacy with subscriptions API
-			$this->_legacy = false;
+	private function _set_legacy_fields() {
+		if ( is_null( $this->_legacy ) ) {
+            // TODO get legacy with subscriptions API
 		}
 		self::$DEFAULT_FIELDS = $this->_legacy ? $this->_legacy_fields : $this->_new_fields;
 	}
@@ -303,6 +298,8 @@ class Lengow_Export {
 			// clean logs
 			Lengow_Main::clean_log();
 			Lengow_Main::log( 'Export', Lengow_Main::set_log_message( 'log.export.start' ), $this->_log_output );
+            // set legacy fields option
+            $this->_set_legacy_fields();
 			// get fields to export
 			$fields = $this->_get_fields();
 			// get products to be exported
