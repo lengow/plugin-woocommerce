@@ -14,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if( ! class_exists( 'WP_List_Table' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
+
 /**
  * Lengow_Admin_Products Class.
  */
@@ -32,6 +33,7 @@ class Lengow_Admin_Products extends WP_List_Table {
         $lengow_admin_products = new Lengow_Admin_Products();
         $locale = new Lengow_Translation();
         $action = isset( $_POST['do_action']) ?  $_POST['do_action']: false;
+
         if ($action) {
             switch ($action) {
                 case 'change_option_selected':
@@ -74,17 +76,12 @@ class Lengow_Admin_Products extends WP_List_Table {
                         $data['original_title'] = $locale->t('product.screen.lengow_shop_sync');
                     } else {
                         $data['check_shop'] = false;
-                        //TODO - Check if toolbox
-//                        if (!$lengow_admin_products->toolbox) {
                             $data['tooltip'] = $locale->t('product.screen.lengow_shop_no_sync');
                             $data['original_title'] = $locale->t('product.screen.sync_your_shop');
                             $data['header_title'] = '<a href="'
                                 . admin_url('admin.php?page=lengow')
                                 . '&isSync=true">
                                 <span>' . $locale->t('product.screen.sync_your_shop') . '</span></a>';
-//                        } else {
-//                            $data['header_title'] = $lengow_admin_products->locale->t('product.screen.lengow_shop_no_sync');
-//                        }
                     }
                     echo json_encode($data);
                     break;
@@ -355,7 +352,8 @@ class Lengow_Admin_Products extends WP_List_Table {
                         $products_data = $price . ' ' . get_woocommerce_currency_symbol();
                         break;
                     case 'product_type':
-                        $product_type = wc_get_product($product->ID);
+                    	//Use woocommerce 2.0.0 function get_product(ID) to check type
+                        $product_type = get_product($product->ID);
                         $downloadable = get_post_meta($product->ID, '_downloadable', true) == 'yes' ? $this->locale->t('product.table.type_downloadable') : false;
                         $virtual = get_post_meta($product->ID, '_virtual', true) == 'yes' ? $this->locale->t('product.table.type_virtual') : false;
                         $sub_product_type = false;
