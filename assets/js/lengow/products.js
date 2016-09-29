@@ -100,25 +100,31 @@
                         }
                     }
                 }
-            })
+            });
         });
 
-        // $('.lgw-container').on('change', '.lengow_switch_product', function () {
-        //     var href = $(this).attr('data-href');
-        //     var action = $(this).attr('data-action');
-        //     var id_product = $(this).attr('data-id_product');
-        //     var state = $(this).prop('checked');
-        //     var data = {
-        //         state: state ? 1 : 0,
-        //         action: action,
-        //         id_shop: id_shop,
-        //         id_product: id_product
-        //     };
-        //
-        //     $.getJSON(href, data, function(content) {
-        //         reloadTotal(content);
-        //     });
-        // });
+        $('.lgw-container').on('change', '.lengow_switch_product', function (e) {
+            e.preventDefault();
+            var action = $(this).attr('data-action');
+            var id_product = $(this).attr('data-id_product');
+            var state = $(this).prop('checked');
+            var data = {
+                action: 'post_process',
+                state: state ? 1 : 0,
+                do_action: action,
+                id_product: id_product
+            };
+
+            $.ajax({
+                url: ajaxurl,
+                type: "POST",
+                dataType: "JSON",
+                data: data,
+                success: function(content) {
+                    reloadTotal(content);
+                }
+            });
+        });
 
 
         // $('#lengow_feed_wrapper').on('click', '.lengow_select_all', function () {

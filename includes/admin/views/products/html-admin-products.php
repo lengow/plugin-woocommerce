@@ -52,8 +52,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                             class="js-lengow_switch_option"
                             data-action="change_option_product_out_of_stock"
                             value="1" <?php if ($shop['option_product_out_of_stock'] == 1) : ?> checked="checked" <?php endif; ?>>
-<!--                        {if isset($toolbox) && $toolbox} disabled {/if}-->
-
                     </div> <?php echo $locale->t('product.screen.include_out_of_stock') ?>
                 </label>
             </div>
@@ -71,8 +69,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                             class="js-lengow_switch_option"
                             data-action="change_option_selected"
                             value="1" <?php if ($shop['option_selected'] == 1) : ?> checked="checked" <?php endif; ?>>
-<!--                        {if isset($toolbox) && $toolbox} disabled {/if}-->
-
                     </div> <?php echo $locale->t('product.screen.include_specific_product') ?>
                 </label>
             </div>

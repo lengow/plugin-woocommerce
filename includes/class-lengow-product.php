@@ -576,5 +576,50 @@ class Lengow_Product {
 
 		return $return;
 	}
+
+    /**
+     * Publish or Un-publish to Lengow.
+     *
+     * @param integer $productId the id product
+     * @param integer $value     1 : publish, 0 : unpublish
+     *
+     * @return boolean.
+     */
+    public static function publish($product_id, $value)
+    {
+        global $wpdb;
+        if (!$value) {
+            wpdb::delete($wpdb->prefix.'lengow_product', array(''))
+            $sql = "
+                DELETE FROM {$wpdb->prefix}lengow_product
+                WHERE id_product = ".(int)$product_id;
+            Db::getInstance()->Execute($sql);
+        } else {
+            $sql = 'SELECT id_product FROM '._DB_PREFIX_.'lengow_product
+            WHERE id_product = '.(int)$productId.' AND id_shop = '.(int)$shopId;
+            $results = Db::getInstance()->ExecuteS($sql);
+            if (count($results) == 0) {
+                if (_PS_VERSION_ < '1.5') {
+                    Db::getInstance()->autoExecute(
+                        _DB_PREFIX_.'lengow_product',
+                        array(
+                            'id_product' => (int)$productId,
+                            'id_shop'    => (int)$shopId
+                        ),
+                        'INSERT'
+                    );
+                } else {
+                    Db::getInstance()->insert(
+                        'lengow_product',
+                        array(
+                            'id_product' => (int)$productId,
+                            'id_shop'    => (int)$shopId
+                        )
+                    );
+                }
+            }
+        }
+        return true;
+    }
 }
 

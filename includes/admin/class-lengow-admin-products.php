@@ -85,6 +85,14 @@ class Lengow_Admin_Products extends WP_List_Table {
                     }
                     echo json_encode($data);
                     break;
+                case 'select_product':
+                    $state = isset($_POST['state']) ? $_POST['state'] : null;
+                    $productId = isset($_POST['id_product']) ? $_POST['id_product'] : null;
+                    if ($state !== null) {
+                        LengowProduct::publish($productId, $state, $shopId);
+                        echo Tools::jsonEncode($this->reloadTotal($shopId));
+                    }
+                    break;
             }
             exit();
         }
@@ -261,21 +269,20 @@ class Lengow_Admin_Products extends WP_List_Table {
      */
     public function column_lengow($product) {
         return sprintf(
-            '<div class="lgw-switch">
-                <label>
-                    <div><span></span>
-                        <input
-                            type="checkbox"
-                            data-size="mini"
-                            data-on-text=""
-                            data-off-text=""
-                            name="product[]"
-                            class="lengow_switch_product"
-                            data-action="change_option_product_out_of_stock"
-                            value="%s"">
-                    </div> 
-                 </label>
-            </div>', $product['ID']
+            '<div class="lgw-switch '.($item[$key] ? 'checked' : '')
+            .'"><label><div><span></span><input type="checkbox"
+            data-size="mini"
+            class="lengow_switch_product"
+            data-on-text="'.$this->locale->t('product.screen.button_yes').'"
+            data-off-text="'.$this->locale->t('product.screen.button_no').'"
+            name="lengow_product_selection['.$item[$this->identifier].']"
+            lengow_product_selection_'.$item[$this->identifier].'"
+            data-href="'.$lengow_link->getAbsoluteAdminLink($this->controller, $this->ajax).'"
+            data-action="select_product"
+            data-id_shop="'.$this->shopId.'"
+            data-id_product="'.$item[$this->identifier].'" ' .
+            $status . ' ' .
+            'value="1" '.($item[$key] ? 'checked="checked"' : '').'/></div></label></div>', $product['ID']
         );
     }
 
