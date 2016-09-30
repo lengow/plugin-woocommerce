@@ -580,7 +580,7 @@ class Lengow_Product {
     /**
      * Publish or Un-publish to Lengow.
      *
-     * @param integer $productId the id product
+     * @param integer $product_id the id product
      * @param integer $value     1 : publish, 0 : unpublish
      *
      * @return boolean.
@@ -589,37 +589,35 @@ class Lengow_Product {
     {
         global $wpdb;
         if (!$value) {
-            wpdb::delete($wpdb->prefix.'lengow_product', array(''))
-            $sql = "
-                DELETE FROM {$wpdb->prefix}lengow_product
-                WHERE id_product = ".(int)$product_id;
-            Db::getInstance()->Execute($sql);
+            $wpdb->delete($wpdb->prefix.'lengow_product', array('product_id' => ((int)$product_id)));
         } else {
-            $sql = 'SELECT id_product FROM '._DB_PREFIX_.'lengow_product
-            WHERE id_product = '.(int)$productId.' AND id_shop = '.(int)$shopId;
-            $results = Db::getInstance()->ExecuteS($sql);
+            $sql = "
+            SELECT product_id FROM {$wpdb->prefix}lengow_product
+            WHERE product_id = ".(int)$product_id;
+            $results = $wpdb->get_results($sql);
             if (count($results) == 0) {
-                if (_PS_VERSION_ < '1.5') {
-                    Db::getInstance()->autoExecute(
-                        _DB_PREFIX_.'lengow_product',
-                        array(
-                            'id_product' => (int)$productId,
-                            'id_shop'    => (int)$shopId
-                        ),
-                        'INSERT'
-                    );
-                } else {
-                    Db::getInstance()->insert(
-                        'lengow_product',
-                        array(
-                            'id_product' => (int)$productId,
-                            'id_shop'    => (int)$shopId
-                        )
-                    );
-                }
+                $wpdb->insert($wpdb->prefix . 'lengow_product', array('product_id' => ((int)$product_id)));
             }
         }
         return true;
     }
+
+    /**
+     * Get Lengow products.
+     *
+     * @return array.
+     */
+    public static function get_lengow_products()
+    {
+        global $wpdb;
+        $sql = "SELECT * FROM {$wpdb->prefix}lengow_product";
+        $results = $wpdb->get_results($sql);
+        $products = array();
+        foreach ($results as  $value) {
+            $products[$value->product_id] = $value->product_id;
+        }
+        return $products;
+    }
+
 }
 

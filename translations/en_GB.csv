@@ -15,6 +15,8 @@ product.screen.nb_exported|products exported
 product.screen.nb_available|products available
 product.screen.button_yes|Yes
 product.screen.button_no|No
+product.screen.include_variation|Include product variations
+product.screen.include_variation_support|Use this option if you want to export all of your catalogue with variations
 product.screen.include_out_of_stock|Include out of stock products
 product.screen.include_out_of_stock_support|Use this option if you want to export out of stock products
 product.screen.include_specific_product|Include specific products
@@ -107,6 +109,8 @@ lengow_settings.lengow_last_import_manual_title|Last manual import
 lengow_settings.lengow_last_import_cron_title|Last Cron import
 lengow_settings.lengow_import_enabled_title|Activate orders synchronisation
 lengow_settings.lengow_import_enabled_legend|Use this option to decrease stocks in your Woocommerce backoffice
+lengow_settings.lengow_variation_enabled_title|Export product variations
+lengow_settings.lengow_variation_enabled_legend|If you don't want to export all of your products' variations, disable this option
 log.setting.setting_reset|All Lengow settings were reset
 log.setting.setting_updated|All Lengow settings were updated
 log.setting.setting_change|%{key} - old value %{old_value} replaced with %{value}

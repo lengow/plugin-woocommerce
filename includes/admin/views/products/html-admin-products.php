@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 ?>
+
 <div class="lgw-container" id="lengow_feed_wrapper">
     <?php if ( $keys['lengow_preprod_enabled'] == 1 ) : ?>
         <div id="lgw-preprod" class="adminlengowlegals">
@@ -31,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <div class="text-center">
             <div class="margin-standard text-center">
                 <p class="products-exported">
-                    <span class="js-lengow_exported stats-big-value"><?php echo $shop['total_export_product'] ?></span>
+                    <span class="js-lengow_exported stats-big-value" id="js-lengow_exported"><?php echo $shop['total_export_product'] ?></span>
                     <?php echo $locale->t('product.screen.nb_exported') ?>
                 </p>
                 <p class="products-available small light">
@@ -40,6 +41,24 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </p>
             </div>
             <hr>
+            <div class="lgw-switch <?php echo $shop['option_variation'] == 1 ? 'checked' : '' ;?>">
+                <label>
+                    <div><span></span>
+                        <input
+                            type="checkbox"
+                            data-size="mini"
+                            data-on-text="<?php echo $locale->t('product.screen.button_yes')?>"
+                            data-off-text="<?php echo $locale->t('product.screen.button_no')?>"
+                            name="lengow_export_selection"
+                            class="js-lengow_switch_option"
+                            data-action="change_option_product_variation"
+                            value="1" <?php if ($shop['option_variation'] == 1) : ?> checked="checked" <?php endif; ?>>
+                    </div> <?php echo $locale->t('product.screen.include_variation')?>
+                </label>
+            </div>
+            <i
+                class="fa fa-info-circle lengow_link_tooltip"
+                title="<?php echo $locale->t('product.screen.include_variation_support')?>"></i><br>
             <div class="lgw-switch <?php echo $shop['option_product_out_of_stock'] == 1 ? 'checked' : '' ;?>">
                 <label>
                     <div><span></span>
@@ -77,6 +96,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         </div>
     </div>
 </div>
+<form id="lengow-list-table-form" method="post">
 <div class="lgw-table">
     <div class="lgw-box">
         <div class="lengow_feed_block_footer">
@@ -86,3 +106,4 @@ if ( ! defined( 'ABSPATH' ) ) {
         </div>
     </div>
 </div>
+</form>
