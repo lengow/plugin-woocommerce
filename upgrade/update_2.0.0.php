@@ -12,9 +12,18 @@ if ( ! defined( 'ABSPATH' ) || !Lengow_Install::is_installation_in_progress()) {
 
 $table_name = $wpdb->prefix . 'lengow_product';
 
+if ($wpdb->get_var('SHOW TABLES LIKE \''.$table_name.'\'')) {
+    if (!Lengow_Install::check_field_exists('lengow_product', 'id')) {
+        $wpdb->query(
+            'ALTER TABLE '.$table_name.' ADD `id` INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST'
+        );
+    }
+}
+
 $sql        = 'CREATE TABLE IF NOT EXISTS ' . $table_name . ' ('
+    . ' `id` INTEGER(11) NOT NULL AUTO_INCREMENT,'
     . ' `product_id` bigint(20) NOT NULL,'
-    . ' UNIQUE KEY `product_id` (`product_id`)) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+    . ' PRIMARY KEY (`id`)) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 dbDelta( $sql );
 
 $table_name = $wpdb->prefix . 'lengow_orders';
