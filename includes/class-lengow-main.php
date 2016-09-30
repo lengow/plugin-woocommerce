@@ -81,7 +81,7 @@ class Lengow_Main {
     /**
      * Get export webservice links
      *
-     * @return array
+     * @return string
      */
     public static function get_export_url()
     {
@@ -92,7 +92,7 @@ class Lengow_Main {
 	/**
 	 * Get cron webservice links
 	 *
-	 * @return array
+	 * @return string
 	 */
 	public static function get_cron_url()
 	{
