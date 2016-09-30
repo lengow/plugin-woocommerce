@@ -68,7 +68,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</a>
 		</p>
 		<p>
-			<a href="<?php echo $locale->t('help.screen.knowledge_link_url')?>" target="_blank"><?php echo $locale->t('help.screen.knowledge_link_url')?></a>
+			<a href="<?php echo $locale->t('help.screen.knowledge_link_url')?>" target="_blank"><?php echo $locale->t('dashboard.screen.visit_help_center')?></a>
 			<?php echo $locale->t('dashboard.screen.configure_plugin')?>
 		</p>
 	</div>
