@@ -576,5 +576,48 @@ class Lengow_Product {
 
 		return $return;
 	}
+
+    /**
+     * Publish or Un-publish to Lengow.
+     *
+     * @param integer $product_id the id product
+     * @param integer $value     1 : publish, 0 : unpublish
+     *
+     * @return boolean.
+     */
+    public static function publish($product_id, $value)
+    {
+        global $wpdb;
+        if (!$value) {
+            $wpdb->delete($wpdb->prefix.'lengow_product', array('product_id' => ((int)$product_id)));
+        } else {
+            $sql = "
+            SELECT product_id FROM {$wpdb->prefix}lengow_product
+            WHERE product_id = ".(int)$product_id;
+            $results = $wpdb->get_results($sql);
+            if (count($results) == 0) {
+                $wpdb->insert($wpdb->prefix . 'lengow_product', array('product_id' => ((int)$product_id)));
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Get Lengow products.
+     *
+     * @return array.
+     */
+    public static function get_lengow_products()
+    {
+        global $wpdb;
+        $sql = "SELECT * FROM {$wpdb->prefix}lengow_product";
+        $results = $wpdb->get_results($sql);
+        $products = array();
+        foreach ($results as  $value) {
+            $products[$value->product_id] = $value->product_id;
+        }
+        return $products;
+    }
+
 }
 

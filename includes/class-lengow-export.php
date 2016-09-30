@@ -216,7 +216,9 @@ class Lengow_Export {
 		$this->_out_of_stock       = ! is_null( $params['out_of_stock'] )
 			? $params['out_of_stock']
 			: (bool) Lengow_Configuration::get( 'lengow_out_stock' );
-		$this->_variation          = ! is_null( $params['variation'] ) ? $params['variation'] : true;
+		$this->_variation          = ! is_null( $params['variation'] )
+            ? $params['variation']
+            : (bool) Lengow_Configuration::get( 'lengow_variation_enabled' );
 		$this->_update_export_date = ! is_null( $params['update_export_date'] )
 			? (bool) $params['update_export_date']
 			: true;
