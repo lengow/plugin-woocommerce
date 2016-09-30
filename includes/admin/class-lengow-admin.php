@@ -59,10 +59,9 @@ class Lengow_Admin {
      */
     public function lengow_display() {
         $locale = new Lengow_Translation();
-        //TODO Add condition for dashboard
-        //if ($this->current_tab != $this->_default_tab) {
+        if ($this->current_tab != $this->_default_tab) {
             include_once 'views/html-admin-header.php';
-        //}
+        }
         switch ($this->current_tab) {
             case 'lengow_admin_products':
                 Lengow_Admin_Products::html_display();
