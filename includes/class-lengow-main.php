@@ -79,7 +79,7 @@ class Lengow_Main {
 	);
 
     /**
-     * Get webservices links
+     * Get export webservice links
      *
      * @return array
      */
@@ -88,6 +88,17 @@ class Lengow_Main {
         $sep = DIRECTORY_SEPARATOR;
         return LENGOW_PLUGIN_URL . $sep . 'webservice' . $sep . 'export.php';
     }
+
+	/**
+	 * Get cron webservice links
+	 *
+	 * @return array
+	 */
+	public static function get_cron_url()
+	{
+		$sep = DIRECTORY_SEPARATOR;
+		return LENGOW_PLUGIN_URL . $sep . 'webservice' . $sep . 'cron.php';
+	}
 
 	/**
 	 * Check if current IP is authorized
