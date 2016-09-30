@@ -53,9 +53,11 @@ class Lengow_Configuration {
 				),
 				'lengow_order_statistic'             => array(
 					'label' => $locale->t( 'lengow_settings.lengow_order_statistic_title' ),
+                    'type' => 'json',
 				),
 				'lengow_last_option_update'          => array(
 					'label' => $locale->t( 'lengow_settings.lengow_last_option_update_title' ),
+                    'type' => 'datetime',
 				),
 				'lengow_last_account_status_update'  => array(
 					'label' => $locale->t( 'lengow_settings.lengow_last_account_status_update_title' ),
