@@ -78,17 +78,6 @@ class Lengow_Configuration {
 					'legend' => $locale->t( 'lengow_settings.lengow_product_types_legend' ),
                     'default_value' => array('simple', 'variable'),
 				),
-				'lengow_legacy_enabled'              => array(
-					'label'  => $locale->t( 'lengow_settings.lengow_legacy_enabled_title' ),
-					'legend' => $locale->t( 'lengow_settings.lengow_legacy_enabled_legend' ),
-					'default_value' => false,
-                    'type' => 'checkbox'
-				),
-				'lengow_file_enabled'                => array(
-					'label'  => $locale->t( 'lengow_settings.lengow_file_enabled_title' ),
-					'legend' => $locale->t( 'lengow_settings.lengow_file_enabled_legend' ),
-                    'type' => 'checkbox'
-				),
 				'lengow_cron_enabled'                => array(
 					'label' => $locale->t( 'lengow_settings.lengow_cron_enabled_title' ),
 					'default_value' => false,
@@ -96,6 +85,12 @@ class Lengow_Configuration {
 				),
 				'lengow_last_export'                 => array(
 					'label' => $locale->t( 'lengow_settings.lengow_last_export_title' ),
+				),
+				'lengow_import_enabled'             => array(
+					'label' => $locale->t( 'lengow_settings.lengow_import_enabled_title' ),
+					'legend' => $locale->t( 'lengow_settings.lengow_import_enabled_legend' ),
+					'default_value' => false,
+					'type' => 'checkbox'
 				),
 				'lengow_import_days'                 => array(
 					'label' => $locale->t( 'lengow_settings.lengow_import_days_title' ),
@@ -115,6 +110,7 @@ class Lengow_Configuration {
 				),
 				'lengow_preprod_enabled'             => array(
 					'label' => $locale->t( 'lengow_settings.lengow_preprod_enabled_title' ),
+					'default_value' => false,
                     'type' => 'checkbox'
 				),
 				'lengow_import_in_progress'          => array(
@@ -126,11 +122,6 @@ class Lengow_Configuration {
 				'lengow_last_import_cron'            => array(
 					'label' => $locale->t( 'lengow_settings.lengow_last_import_cron_title' )
 				),
-                'lengow_import_enabled'             => array(
-                    'label' => $locale->t( 'lengow_settings.lengow_import_enabled_title' ),
-                    'legend' => $locale->t( 'lengow_settings.lengow_import_enabled_legend' ),
-                    'type' => 'checkbox'
-                ),
 			);
 		}
 
