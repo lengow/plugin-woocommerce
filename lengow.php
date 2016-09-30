@@ -162,10 +162,12 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			wp_register_style( 'lengow_component_css', plugins_url( '/assets/css/lengow-components.css', __FILE__ ) );
 			wp_register_style( 'lengow_font_awesome', plugins_url( '/assets/css/font-awesome.css', __FILE__ ) );
 			wp_register_style( 'lengow_select2_css', plugins_url( '/assets/css/select2.css', __FILE__ ) );
+            wp_register_style( 'lengow_pages_css', plugins_url( '/assets/css/lengow-pages.css', __FILE__ ) );
 			wp_register_style( 'lengow_admin_css', plugins_url( '/assets/css/lengow-layout.css', __FILE__ ), array(
 				'lengow_font_awesome',
 				'lengow_select2_css',
-				'lengow_component_css'
+				'lengow_component_css',
+                'lengow_pages_css'
 			) );
 			wp_enqueue_style( 'lengow_admin_css' );
 
