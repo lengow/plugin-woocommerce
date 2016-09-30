@@ -17,17 +17,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Lengow_Admin_Dashboard {
 
-    private $locale;
-
 	/**
 	 * Display dashboard page
 	 */
 	public static function display() {
 
         $keys   = Lengow_Configuration::get_keys();
-        $lengow_admin_dashboard = new Lengow_Admin_Dashboard();
-        $lengow_admin_dashboard->locale = new Lengow_Translation();
-        $locale = $lengow_admin_dashboard->locale;
+        $locale = new Lengow_Translation();
         $stats = Lengow_Sync::get_statistic();
 
         //TODO

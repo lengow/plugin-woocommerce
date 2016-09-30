@@ -336,7 +336,7 @@ class Lengow_Connector
         if (in_array($error, array(CURLE_OPERATION_TIMEDOUT, CURLE_OPERATION_TIMEOUTED))) {
             $timeout = Lengow_Main::set_log_message('lengow_log.exception.timeout_api');
             $error_message = Lengow_Main::set_log_message('log.connector.error_api', array(
-                'error_code' => Lengow_Main::decode_log_message($timeout, 'en')
+                'error_code' => Lengow_Main::decode_log_message($timeout, 'en_GB')
             ));
             Lengow_Main::log('Connector', $error_message);
             throw new Lengow_Exception($timeout);

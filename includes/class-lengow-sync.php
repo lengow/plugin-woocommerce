@@ -44,7 +44,7 @@ class Lengow_Sync {
     }
 
     /**
-     * Get Statistic with all shop
+     * Get Statistic
      *
      * @param boolean $force Force cache Update
      *
@@ -74,8 +74,8 @@ class Lengow_Sync {
         );
         if (isset($result->level0)) {
             $stats = $result->level0[0];
-            $return['total_order'] += $stats->revenue;
-            $return['nb_order'] += $stats->transactions;
+            $return['total_order'] = $stats->revenue;
+            $return['nb_order'] = (int)$stats->transactions;
             $return['currency'] = $result->currency->iso_a3;
         }
         if ($return['currency'] && get_woocommerce_currency_symbol($return['currency'])) {
@@ -83,7 +83,6 @@ class Lengow_Sync {
         } else {
             $return['total_order'] = number_format($return['total_order'], 2, ',', ' ');
         }
-        $return['nb_order'] = (int)$return['nb_order'];
         Lengow_Configuration::update_value('lengow_order_statistic', json_encode($return));
         Lengow_Configuration::update_value('lengow_last_order_statistic_update', date('Y-m-d H:i:s'));
         return $return;
