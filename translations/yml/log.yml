@@ -17,3 +17,7 @@ en:
       error_folder_not_writable: "export file generation did not end properly. Please make sure the export folder is writable"
     import:
       import_not_active: "Order synchronisation is not activated in Lengow's settings"
+    connector:
+      call_api: "call %{curl_url}"
+      error_api: "API call failed - %{error_code}"
+      timeout_api: "API call has been blocked by a timeout"

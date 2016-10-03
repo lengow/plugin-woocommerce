@@ -151,3 +151,6 @@ log.export.error_unable_to_create_folder|unable to create folder %{folder_path}.
 log.export.error_unable_to_create_file|unable to create file %{file_name} in %{folder_name}
 log.export.error_folder_not_writable|export file generation did not end properly. Please make sure the export folder is writable
 log.import.import_not_active|Order synchronisation is not activated in Lengow's settings
+log.connector.call_api|call %{curl_url}
+log.connector.error_api|API call failed - %{error_code}
+log.connector.timeout_api|API call has been blocked by a timeout
