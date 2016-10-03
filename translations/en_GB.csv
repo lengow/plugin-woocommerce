@@ -7,6 +7,8 @@ module.author|Lengow
 menu.product|Products
 menu.jump_to_lengow|Jump to Lengow
 menu.preprod_active|Pre-production mode
+menu.counter|Trial period: %{counter} day(s) left.
+menu.upgrade_account|Subscribe
 menu.help|Help
 menu.global_parameter|General settings
 footer.legals|Legal notices
@@ -25,6 +27,19 @@ dashboard.screen.some_help_title|Need some help?
 dashboard.screen.get_in_touch|Get in touch with Lengow.
 dashboard.screen.visit_help_center|Visit our Help Center
 dashboard.screen.configure_plugin|for detailed information on how to configure your Woocommerce plugin properly
+status.screen.title_end_free_trial|All good things come to an end
+status.screen.subtitle_end_free_trial|You've reached the end of your trial!
+status.screen.first_description_end_free_trial|Your free 15-day trial period on Lengow has now expired. We know that it is sad news, but the best is yet to come! We sincerely hope Lengow has helped you improve your business.
+status.screen.second_description_end_free_trial|Your account will be suspended until you purchase a new subscription. All existing distributions and importations will also be suspended.
+status.screen.third_description_end_free_trial|Don't forget that trial accounts are deleted 30 days after the end of the trial period. Make sure to subscribe so you do not lose the work you've done building channels.
+status.screen.subtitle_bad_payer|Your account has been temporarily shut down
+status.screen.first_description_bad_payer|We are sorry to inform you that we have had to limit access to your account temporarily because the automatic payment of your subscription failed.
+status.screen.second_description_bad_payer|The posting of your catalogue has been suspended. We strongly suggest that you get in touch with us at
+status.screen.phone_bad_payer|or by phone at +44 203 318 2632
+status.screen.third_description_bad_payer|We hope to work with you again in the near future.
+status.screen.facturation_button|View my billing information
+status.screen.upgrade_account_button|It's ok, I'm ready to subscribe!
+status.screen.refresh_action|Refresh my account
 product.screen.nb_exported|products exported
 product.screen.nb_available|products available
 product.screen.button_yes|Yes

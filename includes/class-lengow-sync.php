@@ -199,5 +199,56 @@ class Lengow_Sync {
 		return $return;
 
 	}
+
+	/**
+	 * Get Status Account
+	 *
+	 * @param boolean $force Force cache Update
+	 *
+	 * @return mixed
+	 */
+	public static function get_status_account( $force = false ) {
+		if ( ! $force ) {
+			$updated_at = Lengow_Configuration::get(
+				'lengow_last_account_status_update'
+			);
+			if ( ! is_null( $updated_at ) && ( time() - strtotime( $updated_at ) ) < self::$cacheTime ) {
+				$config = Lengow_Configuration::get(
+					'lengow_account_status'
+				);
+
+				return json_decode( $config, true );
+			}
+		}
+
+		$result = Lengow_Connector::query_api(
+			'get',
+			'/v3.0/subscriptions'
+		);
+		if ( $result ) {
+			$status         = array();
+			$status['type'] = $result->subscription->billing_offer->type;
+			$status['day']  = - round( ( strtotime( date( "c" ) ) - strtotime( $result->subscription->renewal ) ) / 86400 );
+			if ( $status['day'] < 0 ) {
+				$status['day'] = "0";
+			}
+			if ( $status ) {
+				$jsonStatus = json_encode( $status );
+				$date       = date( 'Y-m-d H:i:s' );
+				Lengow_Configuration::update_value(
+					'lengow_account_status',
+					$jsonStatus
+				);
+				Lengow_Configuration::update_value(
+					'lengow_last_account_status_update',
+					$date
+				);
+
+				return $status;
+			}
+		}
+
+		return false;
+	}
 }
 
