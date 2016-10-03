@@ -43,11 +43,12 @@ class Lengow_Export {
 		'limit',
 		'selection',
 		'product_ids',
-		'product_type',
+		'product_types',
 		'variation',
 		'legacy_fields',
 		'log_output',
-		'update_export_date'
+		'update_export_date',
+		'get_params'
 	);
 
 	/**
@@ -603,16 +604,58 @@ class Lengow_Export {
 	}
 
 	/**
-	 * Get all export available params
+	 * Get all export available parameters
 	 *
 	 * @return string
 	 */
 	public static function get_export_params() {
 		$params = array();
 		foreach ( self::$EXPORT_PARAMS as $param ) {
-			$params[$param] = array();
+			switch ( $param ) {
+				case 'mode':
+					$authorized_value = array( 'size', 'total' );
+					$type             = 'string';
+					$example          = 'size';
+					break;
+				case 'format':
+					$authorized_value = Lengow_Feed::$AVAILABLE_FORMATS;
+					$type             = 'string';
+					$example          = 'csv';
+					break;
+				case 'offset':
+				case 'limit':
+					$authorized_value = 'all integers';
+					$type             = 'integer';
+					$example          = 100;
+					break;
+				case 'product_ids':
+					$authorized_value = 'all integers';
+					$type             = 'string';
+					$example          = '101,108,215';
+					break;
+				case 'product_types':
+					$types = array();
+					foreach ( Lengow_Main::$PRODUCT_TYPES as $key => $value ) {
+						$types[] = $key;
+					}
+					$authorized_value = $types;
+					$type             = 'string';
+					$example          = 'simple,variable,external,grouped';
+					break;
+				default:
+					$authorized_value = array( 0, 1 );
+					$type             = 'integer';
+					$example          = 1;
+					break;
+			}
+			$params[ $param ] = array(
+				'authorized_values' => $authorized_value,
+				'type'              => $type,
+				'example'           => $example
+			);
 		}
-		return json_encode($params);
+
+		return json_encode( $params );
 	}
 }
 
