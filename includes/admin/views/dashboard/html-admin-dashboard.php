@@ -12,6 +12,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php echo $locale->t('menu.preprod_active')?>
 	</div>
 	<?php endif; ?>
+	<?php if ($merchant_status['type'] == 'free_trial' && $merchant_status['day'] != 0) : ?>
+	<p class="text-right" id="menucountertrial">
+		<?php echo $locale->t('menu.counter', ['counter' => $merchant_status['day']]) ?>
+		<a href="http://my.lengow.io/" target="_blank">
+			<?php echo $locale->t('menu.upgrade_account') ?>
+		</a>
+	</p>
+	<?php endif; ?>
 	<div class="lgw-box lgw-home-header text-center">
 		<img src="/wp-content/plugins/lengow-woocommerce/assets/images/lengow-white-big.png" alt="lengow">
 		<h1><?php echo $locale->t('dashboard.screen.welcome_back')?></h1>
