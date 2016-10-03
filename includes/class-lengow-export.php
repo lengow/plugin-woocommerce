@@ -33,6 +33,24 @@ class Lengow_Export {
 	public static $POST_METAS = null;
 
 	/**
+	 * All available params for export
+	 */
+	public static $EXPORT_PARAMS = array(
+		'mode',
+		'format',
+		'stream',
+		'offset',
+		'limit',
+		'selection',
+		'product_ids',
+		'product_type',
+		'variation',
+		'legacy_fields',
+		'log_output',
+		'update_export_date'
+	);
+
+	/**
 	 * New fields for v3
 	 */
 	private $_new_fields = array(
@@ -582,6 +600,19 @@ class Lengow_Export {
 		$query .= " ORDER BY id_product ASC";
 
 		return $query;
+	}
+
+	/**
+	 * Get all export available params
+	 *
+	 * @return string
+	 */
+	public static function get_export_params() {
+		$params = array();
+		foreach ( self::$EXPORT_PARAMS as $param ) {
+			$params[$param] = array();
+		}
+		return json_encode($params);
 	}
 }
 
