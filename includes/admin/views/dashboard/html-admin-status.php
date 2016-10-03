@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</a>
 				</div>
 				<div class="text-center">
-					<a href="<?php //echo $refresh_status?>"
+					<a href="<?php echo admin_url( 'admin.php?action=dashboard_get_process&do_action=refresh_status' )?>"
 					   class="lgw-box-link">
 						<?php echo $locale->t('status.screen.refresh_action')?>
 					</a>
@@ -48,7 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</a>
 				</div>
 				<div class="text-center">
-					<a href="<?php //echo $refresh_status?>"
+					<a href="<?php echo admin_url( 'admin.php?action=dashboard_get_process&do_action=refresh_status' )?>"
 					   class="lgw-box-link">
 						<?php echo $locale->t('status.screen.refresh_action')?>
 					</a>

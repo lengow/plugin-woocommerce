@@ -7,9 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 if (isset($_GET['tab'])) {
 	$current_page = $_GET['tab'];
-}
-//TODO - Check if new merchant
-//if (!$is_new_merchant) : ?>
+} ?>
 <ul class="nav nav-pills lengow-nav lengow-nav-top">
 	<li role="presentation" id="lengow_logo">
 		<a href="<?php echo admin_url('admin.php?page=lengow'); ?>">
@@ -51,4 +49,3 @@ if (isset($_GET['tab'])) {
 	</li>
 	<?php endif; ?>
 </ul>
-<? //endif; ?>
