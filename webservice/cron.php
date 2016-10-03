@@ -39,6 +39,8 @@ require( $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );
 
 // Dependencies
 require_once( '../includes/class-lengow-main.php' );
+require_once( '../includes/class-lengow-sync.php' );
+require_once( '../includes/class-lengow-export.php' );
 require_once( '../includes/class-lengow-import.php' );
 require_once( '../includes/class-lengow-import-order.php' );
 require_once( '../includes/class-lengow-connector.php' );
@@ -46,6 +48,7 @@ require_once( '../includes/class-lengow-marketplace.php' );
 require_once( '../includes/class-lengow-order.php' );
 require_once( '../includes/class-lengow-product.php' );
 require_once( '../includes/class-lengow-file.php' );
+require_once( '../includes/class-lengow-feed.php' );
 require_once( '../includes/class-lengow-log.php' );
 require_once( '../includes/class-lengow-translation.php' );
 require_once( '../includes/class-lengow-configuration.php' );
@@ -103,7 +106,7 @@ if ( ! $sync || $sync === 'order' ) {
 }
 // sync options between Lengow and WooCommerce
 if ( ! $sync || $sync === 'option' ) {
-	// TODO setCmsOption()
+	Lengow_Sync::set_cms_option();
 }
 // sync option is not valid
 if ( $sync && ( $sync !== 'order' && $sync !== 'option' ) ) {

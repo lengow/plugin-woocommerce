@@ -120,6 +120,53 @@ class Lengow_Main {
 	}
 
 	/**
+	 * Check if is a new marchant
+	 *
+	 * @return boolean
+	 */
+	public static function is_new_merchant()
+	{
+		$account_id = $token = Lengow_Configuration::get( 'lengow_account_id' );
+		if (strlen($account_id) > 0) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Generate token
+	 *
+	 * @return string
+	 */
+	public static function get_token()
+	{
+		$token = Lengow_Configuration::get( 'lengow_token' );
+		if ($token && strlen($token) > 0) {
+			return $token;
+		} else {
+			$token =  bin2hex(openssl_random_pseudo_bytes(16));
+			Lengow_Configuration::update_value( 'lengow_token' , $token);
+		}
+		return $token;
+	}
+
+	/**
+	 * Check if shop is already synchronised
+	 *
+	 * @param $token mixed Token
+	 *
+	 * @return bool
+	 */
+	public static function find_by_token($token)
+	{
+		$lengow_token = Lengow_Configuration::get( 'lengow_token' );
+		if ($lengow_token == $token) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Writes log
 	 *
 	 * @param string $category Category log

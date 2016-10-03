@@ -207,26 +207,26 @@ class Lengow_Export {
 	 * boolean update_export_date Change last export date in data base (1) or not (0)
 	 */
 	public function __construct( $params = array() ) {
-		$this->_stream             = ! is_null( $params['stream'] ) ? $params['stream'] : true;
-		$this->_offset             = ! is_null( $params['offset'] ) ? $params['offset'] : 0;
-		$this->_limit              = ! is_null( $params['limit'] ) ? $params['limit'] : 0;
-		$this->_selection          = ! is_null( $params['selection'] )
+		$this->_stream             = isset( $params['stream'] ) ? $params['stream'] : true;
+		$this->_offset             = isset( $params['offset'] ) ? $params['offset'] : 0;
+		$this->_limit              = isset( $params['limit'] ) ? $params['limit'] : 0;
+		$this->_selection          = isset( $params['selection'] )
 			? $params['selection']
 			: (bool) Lengow_Configuration::get( 'lengow_selection_enabled' );
-		$this->_out_of_stock       = ! is_null( $params['out_of_stock'] )
+		$this->_out_of_stock       = isset( $params['out_of_stock'] )
 			? $params['out_of_stock']
 			: (bool) Lengow_Configuration::get( 'lengow_out_stock' );
-		$this->_variation          = ! is_null( $params['variation'] )
-            ? $params['variation']
-            : (bool) Lengow_Configuration::get( 'lengow_variation_enabled' );
-		$this->_update_export_date = ! is_null( $params['update_export_date'] )
+		$this->_variation          = isset( $params['variation'] )
+			? $params['variation']
+			: (bool) Lengow_Configuration::get( 'lengow_variation_enabled' );
+		$this->_update_export_date = isset( $params['update_export_date'] )
 			? (bool) $params['update_export_date']
 			: true;
-        $this->_legacy = ! is_null( $params['legacy_fields'] ) ? $params['legacy_fields'] : null;
-		$this->_set_format( ! is_null( $params['format'] ) ? $params['format'] : 'csv' );
-		$this->_set_product_ids( ! is_null( $params['product_ids'] ) ? $params['product_ids'] : false );
-		$this->_set_product_types( ! is_null( $params['product_types'] ) ? $params['product_types'] : false );
-		$this->_set_log_output( ! is_null( $params['log_output'] ) ? $params['log_output'] : true );
+		$this->_legacy             = isset( $params['legacy_fields'] ) ? $params['legacy_fields'] : null;
+		$this->_set_format( isset( $params['format'] ) ? $params['format'] : 'csv' );
+		$this->_set_product_ids( isset( $params['product_ids'] ) ? $params['product_ids'] : false );
+		$this->_set_product_types( isset( $params['product_types'] ) ? $params['product_types'] : false );
+		$this->_set_log_output( isset( $params['log_output'] ) ? $params['log_output'] : true );
 	}
 
 	/**
@@ -234,7 +234,12 @@ class Lengow_Export {
 	 */
 	private function _set_legacy_fields() {
 		if ( is_null( $this->_legacy ) ) {
-            // TODO get legacy with subscriptions API
+			$result = Lengow_Connector::query_api( 'get', '/v3.0/subscriptions' );
+			if ( isset( $result->legacy ) ) {
+				$this->_legacy = (bool) $result->legacy;
+			} else {
+				$this->_legacy = false;
+			}
 		}
 		self::$DEFAULT_FIELDS = $this->_legacy ? $this->_legacy_fields : $this->_new_fields;
 	}
@@ -300,8 +305,8 @@ class Lengow_Export {
 			// clean logs
 			Lengow_Main::clean_log();
 			Lengow_Main::log( 'Export', Lengow_Main::set_log_message( 'log.export.start' ), $this->_log_output );
-            // set legacy fields option
-            $this->_set_legacy_fields();
+			// set legacy fields option
+			$this->_set_legacy_fields();
 			// get fields to export
 			$fields = $this->_get_fields();
 			// get products to be exported
