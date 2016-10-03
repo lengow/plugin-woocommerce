@@ -40,5 +40,15 @@ if (isset($_GET['tab'])) {
 			<?php echo $locale->t('menu.jump_to_lengow') ?>
 		</a>
 	</li>
+	<?php if ($merchant_status['type'] == 'free_trial' && $merchant_status['day'] != 0) : ?>
+	<li class="lengow_float_right" id="menucountertrial">
+		<div class="lgw-block">
+			<?php echo $locale->t('menu.counter', ['counter' => $merchant_status['day']]) ?>
+			<a href="http://my.lengow.io/" target="_blank">
+				<?php echo $locale->t('menu.upgrade_account') ?>
+			</a>
+		</div>
+	</li>
+	<?php endif; ?>
 </ul>
 <? //endif; ?>

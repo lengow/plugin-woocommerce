@@ -59,6 +59,7 @@ class Lengow_Admin {
      */
     public function lengow_display() {
         $locale = new Lengow_Translation();
+        $merchant_status = Lengow_Sync::get_status_account();
         if ($this->current_tab != $this->_default_tab) {
             include_once 'views/html-admin-header.php';
         }

@@ -25,18 +25,16 @@ class Lengow_Admin_Dashboard {
         $keys   = Lengow_Configuration::get_keys();
         $locale = new Lengow_Translation();
         $stats = Lengow_Sync::get_statistic();
+        $merchant_status = Lengow_Sync::get_status_account();
 
         //TODO
-        //$merchantStatus = Lengow_Sync::getStatusAccount();
         /*if($isNewMerchant || $isSync){
             include_once 'views/dashboard/html-admin-new.php';
         }elseif (($merchantStatus['type'] == 'free_trial' && $merchantStatus['day'] != 0) || $merchantStatus['type'] == 'bad_payer'){
             include_once 'views/dashboard/html-admin-status.php';
-        }else{
+        }else{*/
             include_once 'views/dashboard/html-admin-dashboard.php';
-        }*/
-
-        include_once 'views/dashboard/html-admin-dashboard.php';
+        //}
 
 	}
 }
