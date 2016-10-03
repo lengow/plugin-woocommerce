@@ -24,7 +24,7 @@
               box-shadow 100ms ease;
 }
 
-a.lgw-box-link:hover {
+.lgw-container a.lgw-box-link:hover {
   text-decoration: none;
 }
 
@@ -425,8 +425,7 @@ margin-bottom: 15px;
 
 .select2-selection.select2-selection--multiple {
   background: #fafafa;
-  height: 46px;
-  line-height: 46px;
+  min-height: 46px;
   border: 1px solid #d7d7d7;
 }
 .select2-container--default.select2-container--focus .select2-selection--multiple {

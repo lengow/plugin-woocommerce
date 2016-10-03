@@ -199,7 +199,6 @@ ul,li {
 .lgw-container h5,
 .lgw-container h6 {
   font-size: 17px;
-  font-style: italic;
 }
 
 .lgw-container p {
@@ -330,6 +329,15 @@ hr {
   list-style: none;
   z-index: 300;
 }
+.lengow-nav .active:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #00aeef;
+}
 
 body.page-sidebar-closed .lengow-nav,
 body.page-sidebar-closed .lengow-nav-bottom {
@@ -394,16 +402,6 @@ body.page-sidebar-closed .lengow-nav-bottom {
 
 .lengow-nav .active a {
   background: #2e3340;
-}
-
-.lengow-nav .active:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #00aeef;
 }
 
 /* SUB NAV */
