@@ -24,7 +24,7 @@
               box-shadow 100ms ease;
 }
 
-a.lgw-box-link:hover {
+.lgw-container a.lgw-box-link:hover {
   text-decoration: none;
 }
 

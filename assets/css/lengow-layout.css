@@ -329,6 +329,15 @@ hr {
   list-style: none;
   z-index: 300;
 }
+.lengow-nav .active:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #00aeef;
+}
 
 body.page-sidebar-closed .lengow-nav,
 body.page-sidebar-closed .lengow-nav-bottom {
