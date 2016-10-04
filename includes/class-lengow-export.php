@@ -42,6 +42,7 @@ class Lengow_Export {
 		'offset',
 		'limit',
 		'selection',
+        'out_of_stock',
 		'product_ids',
 		'product_types',
 		'variation',
