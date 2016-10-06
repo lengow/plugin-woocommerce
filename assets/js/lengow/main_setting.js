@@ -154,19 +154,6 @@
             }
         }
 
-        displayOrderMpMode();
-        $("input[name='lengow_import_ship_mp_enabled']").on('change', function () {
-            displayOrderMpMode();
-        });
-
-        function displayOrderMpMode() {
-            if ($("input[name='lengow_import_ship_mp_enabled'][type='checkbox']").prop('checked')) {
-                $('#lengow_wrapper_import_ship_mp_enabled').slideDown(150);
-            } else {
-                $('#lengow_wrapper_import_ship_mp_enabled').slideUp(150);
-            }
-        }
-
         // DOWNLOAD LOGS
         $('.js-log-select').change(function(){
             if ($('.js-log-select').val() !== null) {

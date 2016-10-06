@@ -20,7 +20,7 @@ class Lengow_Main {
 	/**
 	 * Lengow Authorized IPs
 	 */
-	protected static $IPS_LENGOW = array(
+	private static $IPS_LENGOW = array(
 		'46.19.183.204',
 		'46.19.183.218',
 		'46.19.183.222',
@@ -59,9 +59,14 @@ class Lengow_Main {
 	);
 
 	/**
-	 * @var LengowLog Lengow log file instance
+	 * @var mixed Marketplaces collection
 	 */
-	public static $log;
+	public static $REGISTERS = array();
+
+	/**
+	 * @var Lengow_Log Lengow log file instance
+	 */
+	public static $LOG;
 
 	/**
 	 * @var integer life of log files in days
@@ -78,25 +83,25 @@ class Lengow_Main {
 		'grouped'  => 'Grouped Product',
 	);
 
-    /**
-     * Get export webservice links
-     *
-     * @return string
-     */
-    public static function get_export_url()
-    {
-        $sep = DIRECTORY_SEPARATOR;
-        return LENGOW_PLUGIN_URL . $sep . 'webservice' . $sep . 'export.php';
-    }
+	/**
+	 * Get export webservice links
+	 *
+	 * @return string
+	 */
+	public static function get_export_url() {
+		$sep = DIRECTORY_SEPARATOR;
+
+		return LENGOW_PLUGIN_URL . $sep . 'webservice' . $sep . 'export.php';
+	}
 
 	/**
 	 * Get cron webservice links
 	 *
 	 * @return string
 	 */
-	public static function get_cron_url()
-	{
+	public static function get_cron_url() {
 		$sep = DIRECTORY_SEPARATOR;
+
 		return LENGOW_PLUGIN_URL . $sep . 'webservice' . $sep . 'cron.php';
 	}
 
@@ -124,12 +129,12 @@ class Lengow_Main {
 	 *
 	 * @return boolean
 	 */
-	public static function is_new_merchant()
-	{
+	public static function is_new_merchant() {
 		$account_id = $token = Lengow_Configuration::get( 'lengow_account_id' );
-		if (strlen($account_id) > 0) {
+		if ( strlen( $account_id ) > 0 ) {
 			return false;
 		}
+
 		return true;
 	}
 
@@ -138,15 +143,15 @@ class Lengow_Main {
 	 *
 	 * @return string
 	 */
-	public static function get_token()
-	{
+	public static function get_token() {
 		$token = Lengow_Configuration::get( 'lengow_token' );
-		if ($token && strlen($token) > 0) {
+		if ( $token && strlen( $token ) > 0 ) {
 			return $token;
 		} else {
-			$token =  bin2hex(openssl_random_pseudo_bytes(16));
-			Lengow_Configuration::update_value( 'lengow_token' , $token);
+			$token = bin2hex( openssl_random_pseudo_bytes( 16 ) );
+			Lengow_Configuration::update_value( 'lengow_token', $token );
 		}
+
 		return $token;
 	}
 
@@ -157,13 +162,28 @@ class Lengow_Main {
 	 *
 	 * @return bool
 	 */
-	public static function find_by_token($token)
-	{
+	public static function find_by_token( $token ) {
 		$lengow_token = Lengow_Configuration::get( 'lengow_token' );
-		if ($lengow_token == $token) {
+		if ( $lengow_token == $token ) {
 			return true;
 		}
+
 		return false;
+	}
+
+	/**
+	 * Get Marketplace singleton
+	 *
+	 * @param string $name Marketplace name
+	 *
+	 * @return Lengow_Marketplace Lengow shipping names option
+	 */
+	public static function get_marketplace_singleton( $name ) {
+		if ( ! isset( self::$REGISTERS[ $name ] ) ) {
+			self::$REGISTERS[ $name ] = new Lengow_Marketplace( $name );
+		}
+
+		return self::$REGISTERS[ $name ];
 	}
 
 	/**
@@ -185,11 +205,11 @@ class Lengow_Main {
 	 * @return Lengow_Log Lengow log file instance
 	 */
 	public static function get_log_instance() {
-		if ( is_null( self::$log ) ) {
-			self::$log = new Lengow_Log();
+		if ( is_null( self::$LOG ) ) {
+			self::$LOG = new Lengow_Log();
 		}
 
-		return self::$log;
+		return self::$LOG;
 	}
 
 	/**
@@ -261,6 +281,44 @@ class Lengow_Main {
 		}
 
 		return $message;
+	}
+
+	/**
+	 * Record the date of the last import
+	 *
+	 * @param string $type (cron or manual)
+	 *
+	 * @return boolean
+	 */
+	public static function update_date_import( $type ) {
+		if ( $type === 'cron' ) {
+			Lengow_Configuration::update_value( 'lengow_last_import_cron', time() );
+		} else {
+			Lengow_Configuration::update_value( 'lengow_last_import_manual', time() );
+		}
+	}
+
+	/**
+	 * Get last import (type and timestamp)
+	 *
+	 * @return mixed
+	 */
+	public static function get_last_import() {
+		$timestamp_cron   = Lengow_Configuration::get( 'lengow_last_import_cron' );
+		$timestamp_manual = Lengow_Configuration::get( 'lengow_last_import_manual' );
+		if ( $timestamp_cron && $timestamp_manual ) {
+			if ( (int) $timestamp_cron > (int) $timestamp_manual ) {
+				return array( 'type' => 'cron', 'timestamp' => (int) $timestamp_cron );
+			} else {
+				return array( 'type' => 'manual', 'timestamp' => (int) $timestamp_manual );
+			}
+		} elseif ( $timestamp_cron && ! $timestamp_manual ) {
+			return array( 'type' => 'cron', 'timestamp' => (int) $timestamp_cron );
+		} elseif ( $timestamp_manual && ! $timestamp_cron ) {
+			return array( 'type' => 'manual', 'timestamp' => (int) $timestamp_manual );
+		}
+
+		return array( 'type' => 'none', 'timestamp' => 'none' );
 	}
 
 	/**

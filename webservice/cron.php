@@ -52,6 +52,7 @@ require_once( '../includes/class-lengow-feed.php' );
 require_once( '../includes/class-lengow-log.php' );
 require_once( '../includes/class-lengow-translation.php' );
 require_once( '../includes/class-lengow-configuration.php' );
+require_once( '../includes/class-lengow-check.php' );
 require_once( '../includes/class-lengow-exception.php' );
 
 // check if WooCommerce plugin is activated
