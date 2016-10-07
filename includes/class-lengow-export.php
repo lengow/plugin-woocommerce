@@ -33,6 +33,26 @@ class Lengow_Export {
 	public static $POST_METAS = null;
 
 	/**
+	 * All available params for export
+	 */
+	public static $EXPORT_PARAMS = array(
+		'mode',
+		'format',
+		'stream',
+		'offset',
+		'limit',
+		'selection',
+        'out_of_stock',
+		'product_ids',
+		'product_types',
+		'variation',
+		'legacy_fields',
+		'log_output',
+		'update_export_date',
+		'get_params'
+	);
+
+	/**
 	 * New fields for v3
 	 */
 	private $_new_fields = array(
@@ -582,6 +602,61 @@ class Lengow_Export {
 		$query .= " ORDER BY id_product ASC";
 
 		return $query;
+	}
+
+	/**
+	 * Get all export available parameters
+	 *
+	 * @return string
+	 */
+	public static function get_export_params() {
+		$params = array();
+		foreach ( self::$EXPORT_PARAMS as $param ) {
+			switch ( $param ) {
+				case 'mode':
+					$authorized_value = array( 'size', 'total' );
+					$type             = 'string';
+					$example          = 'size';
+					break;
+				case 'format':
+					$authorized_value = Lengow_Feed::$AVAILABLE_FORMATS;
+					$type             = 'string';
+					$example          = 'csv';
+					break;
+				case 'offset':
+				case 'limit':
+					$authorized_value = 'all integers';
+					$type             = 'integer';
+					$example          = 100;
+					break;
+				case 'product_ids':
+					$authorized_value = 'all integers';
+					$type             = 'string';
+					$example          = '101,108,215';
+					break;
+				case 'product_types':
+					$types = array();
+					foreach ( Lengow_Main::$PRODUCT_TYPES as $key => $value ) {
+						$types[] = $key;
+					}
+					$authorized_value = $types;
+					$type             = 'string';
+					$example          = 'simple,variable,external,grouped';
+					break;
+				default:
+					$authorized_value = array( 0, 1 );
+					$type             = 'integer';
+					$example          = 1;
+					break;
+			}
+			$params[ $param ] = array(
+				'authorized_values' => $authorized_value,
+				'type'              => $type,
+				'example'           => $example
+			);
+		}
+
+		return json_encode( $params );
 	}
 }
 

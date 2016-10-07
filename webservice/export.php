@@ -74,6 +74,7 @@ if ( ! Lengow_Main::check_ip() ) {
 }
 
 // get params data
+$get_params         = isset( $_GET['get_params'] ) ? (bool) $_GET['get_params'] : false;
 $mode               = isset( $_GET['mode'] ) ? $_GET['mode'] : null;
 $format             = isset( $_GET['format'] ) ? $_GET['format'] : null;
 $stream             = isset( $_GET['stream'] ) ? (bool) $_GET['stream'] : null;
@@ -107,10 +108,12 @@ $export = new Lengow_Export( array(
 	'update_export_date' => $update_export_date,
 ) );
 
-if ( $mode == 'size' ) {
-	echo $export->get_total_export_product();
+if ( $get_params ) {
+	echo $export->get_export_params();
+} elseif ( $mode == 'size' ) {
+    echo $export->get_total_export_product();
 } elseif ( $mode == 'total' ) {
-    echo $export->get_total_product();
+	echo $export->get_total_product();
 } else {
 	$export->exec();
 }
