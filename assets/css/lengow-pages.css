@@ -20,6 +20,44 @@
 }
 
 /*************************************************/
+/*                     CONNECT                   */
+/*************************************************/
+
+#lengow_iframe {
+  width: 100%;
+  height: 900px;
+  margin: 0 auto;
+}
+
+.lgw-connect {
+  margin: 0 auto;
+  float: none;
+}
+
+body.lgw-home-iframe{
+  background: #fff;
+}
+
+body.lgw-home-iframe button {
+  margin: 15px auto!important;
+  display: block!important;
+  font-size: inherit;
+}
+
+body.lgw-home-iframe .lgw-container {
+  /*width: inherit;*/
+}
+
+body.lgw-home-iframe .lgw-content-section img {
+  margin-bottom: 60px;
+}
+
+
+body.lgw-home-iframe .lgw-content-section p {
+  margin: 25px 0;
+}
+
+/*************************************************/
 /*                      HOME                     */
 /*************************************************/
 

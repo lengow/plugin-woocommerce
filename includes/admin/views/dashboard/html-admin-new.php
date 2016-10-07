@@ -14,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<iframe id="lengow_iframe" scrolling="no" style="display: none; overflow-y: hidden;' width='580' height='400' frameborder='0' seamless='seamless'" frameBorder="0"></iframe>
 	</div>
 </div>
-<input type="hidden" id="lengow_ajax_link" value="{$lengow_ajax_link|escape:'htmlall':'UTF-8'}">
-<input type="hidden" id="lengow_sync_link" value="{$isSync|escape:'htmlall':'UTF-8'}">
-<script type="text/javascript" src="/modules/lengow/views/js/lengow/home.js"></script>
+<input type="hidden" id="lengow_ajax_link" value="<?php echo $lengow_ajax_link; ?>">
+<input type="hidden" id="lengow_sync_link" value="<?php echo $isSync; ?>">
+<script type="text/javascript">jQuery('body').addClass('lgw-home-iframe');</script>
+<script type="text/javascript" src="/wp-content/plugins/lengow-woocommerce/assets/js/lengow/home.js"></script>
