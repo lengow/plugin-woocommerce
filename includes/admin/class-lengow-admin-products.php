@@ -101,6 +101,36 @@ class Lengow_Admin_Products extends WP_List_Table {
                         echo json_encode(Lengow_Admin_Products::reload_total());
                     }
                     break;
+                case 'add_to_export':
+                    $selection = isset($_POST['product']) ? $_POST['product'] : false;
+                    $select_all = isset($_REQUEST['select_all']) ? $_REQUEST['select_all'] : null;
+                    $data = array();
+                    /*if ($select_all == "true") {
+                        $this->buildTable($shopId);
+                        $sql = $this->list->buildQuery(false, true);
+                        $db = Db::getInstance()->executeS($sql);
+                        $all = array();
+                        foreach ($db as $value) {
+                            $all[] = $value['id_product'];
+                        }
+                        foreach ($all as $id) {
+                            LengowProduct::publish($id, 1, $shopId);
+                            foreach ($selection as $id => $v) {
+                                $data['product_id'][] = $id;
+                            }
+                        }
+                        $data = array_merge($data, Lengow_Admin_Products::reload_total());
+                    } else*/if ($selection) {
+                        foreach( $selection as $product ) {
+                            Lengow_Product::publish($product, 1);
+                            $data['product_id'][] = $product;
+                        }
+                        $data = array_merge($data, Lengow_Admin_Products::reload_total());
+                    } else {
+                        $data['message'] = $locale->t('product.screen.no_product_selected');
+                    }
+                    echo json_encode($data);
+                    break;
             }
             exit();
         }
@@ -265,7 +295,7 @@ class Lengow_Admin_Products extends WP_List_Table {
      */
     public function column_cb($product) {
         return sprintf(
-            '<input type="checkbox" name="product[]" value="%s" />', $product['ID']
+            '<input type="checkbox" id="js-lengow_product_checkbox" name="product[]" value="%s" />', $product['ID']
         );
     }
 
@@ -290,46 +320,47 @@ class Lengow_Admin_Products extends WP_List_Table {
                         name="lengow_product_selection[%s]"
                         data-action="select_product"
                         data-id_product="%s"
+                        id="lengow_product_%s"
                         value="1" '.$check.'/>
-                        </div></label></div>', $product['ID'], $product['ID']);
+                        </div></label></div>', $product['ID'], $product['ID'], $product['ID']);
     }
 
-    /**
-     * Display lengow bulk actions
-     * @return array
-     */
-    public function get_bulk_actions() {
-        $actions = array(
-            'publish_on_lengow'     => $this->locale->t('product.table.publish_on_lengow'),
-            'unpublish_on_lengow'   => $this->locale->t('product.table.unpublish_on_lengow')
-        );
-        return $actions;
-    }
-
-    /**
-     * Lengow mass action
-     *
-     * @return array
-     */
-    public function process_bulk_action() {
-        $action = $this->current_action();
-        $products = isset($_POST['product']) ? $_POST['product'] : false;
-        if ($action !== false) {
-            switch ( $action ) {
-                case 'publish_on_lengow':
-                    foreach( $products as $product ) {
-                        Lengow_Product::publish($product, 1);
-                    }
-                    break;
-                case 'unpublish_on_lengow':
-                    foreach( $products as $product ) {
-                        Lengow_Product::publish($product, 0);
-                    }
-                    break;
-            }
-
-        }
-    }
+//    /**
+//     * Display lengow bulk actions
+//     * @return array
+//     */
+//    public function get_bulk_actions() {
+//        $actions = array(
+//            'publish_on_lengow'     => $this->locale->t('product.table.publish_on_lengow'),
+//            'unpublish_on_lengow'   => $this->locale->t('product.table.unpublish_on_lengow')
+//        );
+//        return $actions;
+//    }
+//
+//    /**
+//     * Lengow mass action
+//     *
+//     * @return array
+//     */
+//    public function process_bulk_action() {
+//        $action = $this->current_action();
+//        $products = isset($_POST['product']) ? $_POST['product'] : false;
+//        if ($action !== false) {
+//            switch ( $action ) {
+//                case 'publish_on_lengow':
+//                    foreach( $products as $product ) {
+//                        Lengow_Product::publish($product, 1);
+//                    }
+//                    break;
+//                case 'unpublish_on_lengow':
+//                    foreach( $products as $product ) {
+//                        Lengow_Product::publish($product, 0);
+//                    }
+//                    break;
+//            }
+//
+//        }
+//    }
 
     /**
      * Get all products meta
