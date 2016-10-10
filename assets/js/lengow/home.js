@@ -21,15 +21,14 @@
 
 (function ($) {
     $(document).ready(function () {
-        var href = $('#lengow_ajax_link').val();
         var sync_link = $('#lengow_sync_link').val();
         var sync_iframe = document.getElementById('lengow_iframe');
         if (sync_iframe) {
             sync_iframe.onload = function () {
                 $.ajax({
-                    url: href,
-                    method: 'POST',
-                    data: {do_action: 'get_sync_data'},
+                    url: ajaxurl,
+                    type: "POST",
+                    data: {do_action: 'get_sync_data', action: 'post_process_dashboard'},
                     dataType: 'json',
                     success: function (data) {
                         var targetFrame = document.getElementById("lengow_iframe").contentWindow;
@@ -56,17 +55,17 @@
             switch (event.data.function) {
                 case 'sync':
                     $.ajax({
-                        url: href,
-                        method: 'POST',
-                        data: {do_action: 'sync', data: event.data.parameters},
+                        url: ajaxurl,
+                        type: "POST",
+                        data: {do_action: 'sync', data: event.data.parameters, action: 'post_process_dashboard'},
                         dataType: 'script'
                     });
                     break;
                 case 'sync_and_reload':
                     $.ajax({
-                        url: href,
-                        method: 'POST',
-                        data: {do_action: 'sync', data: event.data.parameters},
+                        url: ajaxurl,
+                        type: "POST",
+                        data: {do_action: 'sync', data: event.data.parameters, action: 'post_process_dashboard'},
                         dataType: 'script',
                         success: function() {
                             location.reload();

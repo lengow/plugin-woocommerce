@@ -22,8 +22,8 @@ class Lengow_Admin_Dashboard {
      */
     public static function post_process()
     {
-        $isSync = isset($_REQUEST['isSync']) ? $_REQUEST['isSync'] : false;
-        $action = isset( $_REQUEST['do_action']) ?  $_REQUEST['do_action']: false;
+        $isSync = isset($_POST['isSync']) ? $_POST['isSync'] : false;
+        $action = isset( $_POST['do_action']) ?  $_POST['do_action']: false;
         if ($action) {
             switch ($action) {
                 case 'get_sync_data':
@@ -33,7 +33,7 @@ class Lengow_Admin_Dashboard {
                     echo json_encode($data);
                     break;
                 case 'sync':
-                    $data = isset($_REQUEST['data']) ?$_REQUEST['data'] : false;
+                    $data = isset($_POST['data']) ?$_POST['data'] : false;
                     Lengow_Sync::sync($data);
                     break;
             }
@@ -68,9 +68,8 @@ class Lengow_Admin_Dashboard {
         $stats = Lengow_Sync::get_statistic();
         $merchant_status = Lengow_Sync::get_status_account();
         $is_new_merchant = Lengow_Main::is_new_merchant();
-        $isSync = isset($_REQUEST['isSync']) ? $_REQUEST['isSync'] : false;
+        $isSync = isset($_GET['isSync']) ? $_GET['isSync'] : false;
 
-        $lengow_ajax_link = admin_url( 'admin.php?action=dashboard_post_process' );
         $refresh_status = admin_url( 'admin.php?action=dashboard_get_process&do_action=refresh_status' );
 
         if($is_new_merchant || $isSync){
