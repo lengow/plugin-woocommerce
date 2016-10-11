@@ -139,19 +139,21 @@ lengow_settings.lengow_variation_enabled_legend|If you don't want to export all 
 lengow_log.error.import_in_progress|Import in progress
 lengow_log.error.rest_time_to_import|Please wait %{rest_time} seconds before re-importing orders
 lengow_log.error.account_id_empty|Account ID, Access Token or Secret is empty
-lengow_log.error.nb_order_imported|%{nb_order} order(s) imported
+lengow_log.error.nb_order_imported|%{nb_order} order(s) decremented
 lengow_log.error.nb_order_with_error|%{nb_order} order(s) with errors
 lengow_log.error.no_notification|No new notification on order
 lengow_log.error.no_country_for_billing_address|Lengow error: billing address does not contain the country
-lengow_log.error.no_billing_address|no billing address in the order
+lengow_log.error.no_billing_address|Lengow error: no billing address in the order
 lengow_log.error.no_country_for_delivery_address|Lengow error: delivery address does not contain the country
-lengow_log.error.no_product|Lengow error: no article in the order
+lengow_log.error.no_product|Lengow error: no product in the order
 lengow_log.exception.no_connection_webservice|connection didn't work with the Lengow webservice
-lengow_log.exception.crendentials_not_valid|account ID, token access or secret token are not valid
+lengow_log.exception.credentials_not_valid|account ID, token access or secret token are not valid
 lengow_log.exception.error_lengow_webservice|Lengow webservice: %{error_code} - %{error_message}
 lengow_log.exception.order_not_found|Lengow error: order cannot be found in Lengow feed
 lengow_log.exception.marketplace_not_present|Lengow error: %{marketplace_name} does not feature in the marketplace list
 lengow_log.exception.product_list_is_empty|order could not be saved
+lengow_log.exception.product_not_be_found|product ID %{product_id} could not be found
+lengow_log.exception.product_is_a_parent|product ID %{product_id} is variable. Product variation is needed
 log.setting.setting_reset|All Lengow settings were reset
 log.setting.setting_updated|All Lengow settings were updated
 log.setting.setting_change|%{key} - old value %{old_value} replaced with %{value}
@@ -179,11 +181,15 @@ log.import.current_order_state_unavailable|current order's status [%{order_state
 log.import.order_successfully_decremented|order successfully decremented
 log.import.import_failed|import failed - %{decoded_message}
 log.import.order_import_failed|import order failed - %{decoded_message}
-log.import.error_no_package|import order failed - no package in the order
+log.import.error_no_package|import order failed - Lengow error: no package in the order
 log.import.error_wrong_package_number|import order failed - wrong package number
-log.import.error_no_delivery_address|import order failed - no delivery address in the order
+log.import.error_no_delivery_address|import order failed - Lengow error: no delivery address in the order
+log.import.product_be_found|product ID %{product_id} found with field %{attribute_name} (%{attribute_value})
+log.import.product_state_canceled|product ID %{product_id} could not be added to cart - status: %{state_product}
 log.import.lengow_order_saved|order saved in Lengow orders table
 log.import.lengow_order_not_saved|warning ! Order could NOT be saved in Lengow orders table
+log.import.stock_decreased|stock updated for product ID %{product_id} from %{initial_stock} to %{new_stock}
+log.import.stock_no_managed|product ID %{product_id} not managed in stock
 log.connector.call_api|call %{curl_url}
 log.connector.error_api|API call failed - %{error_code}
 log.connector.timeout_api|API call has been blocked by a timeout

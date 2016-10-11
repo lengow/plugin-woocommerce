@@ -395,7 +395,7 @@ class Lengow_Main {
 	 * @return string
 	 */
 	public static function clean_html( $str ) {
-		$str     = str_replace( '<br />', '', nl2br( $str ) );
+		$str     = str_replace( '<br />', ' ', nl2br( $str ) );
 		$str     = trim( strip_tags( htmlspecialchars_decode( $str ) ) );
 		$str     = preg_replace( '`[\s]+`sim', ' ', $str );
 		$str     = preg_replace( '`"`sim', '', $str );

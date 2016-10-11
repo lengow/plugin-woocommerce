@@ -57,6 +57,18 @@ class Lengow_Product {
 	);
 
 	/**
+	 * array API nodes containing relevant data
+	 */
+	public static $PRODUCT_API_NODES = array(
+		'marketplace_product_id',
+		'marketplace_status',
+		'merchant_product_id',
+		'marketplace_order_line_id',
+		'quantity',
+		'amount'
+	);
+
+	/**
 	 * Instance of WC_Product_Simple, WC_Product_External, WC_Product_Grouped, WC_Product_Variable
 	 */
 	public $product;
@@ -577,47 +589,182 @@ class Lengow_Product {
 		return $return;
 	}
 
-    /**
-     * Publish or Un-publish to Lengow.
-     *
-     * @param integer $product_id the id product
-     * @param integer $value     1 : publish, 0 : unpublish
-     *
-     * @return boolean.
-     */
-    public static function publish($product_id, $value)
-    {
-        global $wpdb;
-        if (!$value) {
-            $wpdb->delete($wpdb->prefix.'lengow_product', array('product_id' => ((int)$product_id)));
-        } else {
-            $sql = "
-            SELECT product_id FROM {$wpdb->prefix}lengow_product
-            WHERE product_id = ".(int)$product_id;
-            $results = $wpdb->get_results($sql);
-            if (count($results) == 0) {
-                $wpdb->insert($wpdb->prefix . 'lengow_product', array('product_id' => ((int)$product_id)));
-            }
-        }
-        return true;
-    }
+	/**
+	 * Extract cart data from API
+	 *
+	 * @param mixed $product
+	 *
+	 * @return array
+	 */
+	public static function extract_product_data_from_api( $product ) {
+		$temp = array();
+		foreach ( self::$PRODUCT_API_NODES as $node ) {
+			$temp[ $node ] = $product->{$node};
+		}
+		$temp['price_unit'] = (float) $temp['amount'] / (float) $temp['quantity'];
 
-    /**
-     * Get Lengow products.
-     *
-     * @return array.
-     */
-    public static function get_lengow_products()
-    {
-        global $wpdb;
-        $sql = "SELECT * FROM {$wpdb->prefix}lengow_product";
-        $results = $wpdb->get_results($sql);
-        $products = array();
-        foreach ($results as  $value) {
-            $products[$value->product_id] = $value->product_id;
-        }
-        return $products;
-    }
+		return $temp;
+	}
+
+	/**
+	 * Match product with api datas
+	 *
+	 * @param mixed $product_datas all product datas
+	 * @param string $marketplace_sku id lengow of current order
+	 * @param boolean $log_output see log or not
+	 *
+	 * @throws Lengow_Exception If product is a variable
+	 *
+	 * @return mixed
+	 */
+	public static function match_product( $product_datas, $marketplace_sku, $log_output ) {
+		$product_id      = false;
+		$api_product_ids = array(
+			'merchant_product_id'    => $product_datas['merchant_product_id']->id,
+			'marketplace_product_id' => $product_datas['marketplace_product_id']
+		);
+		$product_field   = $product_datas['merchant_product_id']->field != null
+			? strtolower( (string) $product_datas['merchant_product_id']->field )
+			: false;
+		// search product foreach value
+		foreach ( $api_product_ids as $attribute_name => $attribute_value ) {
+			// remove _FBA from product id
+			$attribute_value = preg_replace( '/_FBA$/', '', $attribute_value );
+			if ( empty( $attribute_value ) ) {
+				continue;
+			}
+			// search by field if exists
+			if ( $product_field ) {
+				$product_id = self::search_product( $attribute_value, $product_field );
+			}
+			// search by id or sku
+			if ( ! $product_id ) {
+				$product_id = self::search_product( $attribute_value );
+				if ( ! $product_id ) {
+					$product_id = self::search_product( $attribute_value, 'sku' );
+				}
+			}
+			if ( $product_id ) {
+				$lengow_product = get_product( $product_id );
+				if ( $lengow_product->product_type === 'variable' ) {
+					throw new Lengow_Exception(
+						Lengow_Main::set_log_message( 'lengow_log.exception.product_is_a_parent', array(
+							'product_id' => $product_id
+						) )
+					);
+				}
+				Lengow_Main::log(
+					'Import',
+					Lengow_Main::set_log_message( 'log.import.product_be_found', array(
+						'product_id'      => $product_id,
+						'attribute_name'  => $attribute_name,
+						'attribute_value' => $attribute_value
+					) ),
+					$log_output,
+					$marketplace_sku
+				);
+				unset( $lengow_product );
+				break;
+			}
+		}
+
+		return $product_id;
+	}
+
+	/**
+	 * Search product
+	 *
+	 * @param string $attribute_value value for search
+	 * @param string $type id to search product (id, sku or other field)
+	 *
+	 * @return mixed
+	 */
+	public static function search_product( $attribute_value, $type = 'id' ) {
+		global $wpdb;
+		$product_id = false;
+		switch ( $type ) {
+			case 'id':
+				$attribute_value = str_replace( '\_', '_', $attribute_value );
+				$attribute_value = str_replace( 'X', '_', $attribute_value );
+				$ids             = explode( '_', $attribute_value );
+				// if a product variation -> search with product variation id
+				$id = isset( $ids[1] ) ? $ids[1] : $ids[0];
+				if ( preg_match( '/^[0-9]*$/', $id ) ) {
+					$product_id = $id;
+				}
+				break;
+			case 'sku':
+				$sql        = "
+                  SELECT post_id FROM $wpdb->postmeta 
+                  WHERE meta_key = '_sku' AND meta_value = '%s' LIMIT 1
+                ";
+				$product_id = $wpdb->get_var( $wpdb->prepare( $sql, $attribute_value ) );
+				break;
+			default:
+				$sql        = "
+					SELECT post_id FROM $wpdb->postmeta 
+                    WHERE meta_key = '%s' AND meta_value = '%s' LIMIT 1
+                ";
+				$product_id = $wpdb->get_var( $wpdb->prepare( $sql, array( $type, $attribute_value ) ) );
+				break;
+		}
+		if ( $product_id ) {
+			$product = get_product( $product_id );
+			if ( $product ) {
+				if ( in_array( $product->post->post_type, array( 'product', 'product_variation' ) ) ) {
+					if ( $product->product_type === 'variation' ) {
+						return (int) $product->variation_id;
+					} else {
+						return (int) $product->id;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Publish or Un-publish to Lengow.
+	 *
+	 * @param integer $product_id the id product
+	 * @param integer $value 1 : publish, 0 : unpublish
+	 *
+	 * @return boolean.
+	 */
+	public static function publish( $product_id, $value ) {
+		global $wpdb;
+		if ( ! $value ) {
+			$wpdb->delete( $wpdb->prefix . 'lengow_product', array( 'product_id' => ( (int) $product_id ) ) );
+		} else {
+			$sql     = "
+            SELECT product_id FROM {$wpdb->prefix}lengow_product
+            WHERE product_id = " . (int) $product_id;
+			$results = $wpdb->get_results( $sql );
+			if ( count( $results ) == 0 ) {
+				$wpdb->insert( $wpdb->prefix . 'lengow_product', array( 'product_id' => ( (int) $product_id ) ) );
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Get Lengow products.
+	 *
+	 * @return array.
+	 */
+	public static function get_lengow_products() {
+		global $wpdb;
+		$sql      = "SELECT * FROM {$wpdb->prefix}lengow_product";
+		$results  = $wpdb->get_results( $sql );
+		$products = array();
+		foreach ( $results as $value ) {
+			$products[ $value->product_id ] = $value->product_id;
+		}
+
+		return $products;
+	}
 
 }
 

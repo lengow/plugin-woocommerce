@@ -168,13 +168,14 @@ class Lengow_Import_Order {
 			}
 			// get products
 			$products = $this->_get_products();
-			$this->_decrease_stock( $products );
-			// created a record in the lengow order table
-			if ( empty( $products ) ) {
+			if ( count( $products ) == 0 ) {
 				throw new Lengow_Exception(
 					Lengow_Main::set_log_message( 'lengow_log.exception.product_list_is_empty' )
 				);
 			} else {
+				// decrement product stock
+				$this->_decrease_stock( $products );
+				// created a record in the lengow order table
 				if ( ! $this->_create_lengow_order() ) {
 					Lengow_Main::log(
 						'Import',
@@ -298,10 +299,56 @@ class Lengow_Import_Order {
 	 *
 	 * @return array List of products found in WooCommerce
 	 *
-	 * @throws Lengow_Exception If product : not found|canceled|refused|is parent|
+	 * @throws Lengow_Exception If product is not found
 	 */
 	private function _get_products() {
+		$products = array();
+		foreach ( $this->_package_data->cart as $product ) {
+			$found         = false;
+			$product_datas = Lengow_Product::extract_product_data_from_api( $product );
+			if ( ! is_null( $product_datas['marketplace_status'] ) ) {
+				$state_product = $this->_marketplace->get_state_lengow( (string) $product_datas['marketplace_status'] );
+				if ( $state_product == 'canceled' || $state_product == 'refused' ) {
+					$api_product_id = ( ! is_null( $product_datas['merchant_product_id']->id )
+						? (string) $product_datas['merchant_product_id']->id
+						: (string) $product_datas['marketplace_product_id']
+					);
+					Lengow_Main::log(
+						'Import',
+						Lengow_Main::set_log_message( 'log.import.product_state_canceled', array(
+							'product_id'    => $api_product_id,
+							'state_product' => $state_product
+						) ),
+						$this->_log_output,
+						$this->_marketplace_sku
+					);
+					continue;
+				}
+			}
+			$product_id = Lengow_Product::match_product( $product_datas, $this->_marketplace_sku, $this->_log_output );
+			if ( $product_id ) {
+				if ( array_key_exists( $product_id, $products ) ) {
+					$products[ $product_id ]['quantity'] += (integer) $product_datas['quantity'];
+					$products[ $product_id ]['amount'] += (float) $product_datas['amount'];
+				} else {
+					$products[ $product_id ] = $product_datas;
+				}
+				$found = true;
+			}
+			if ( ! $found ) {
+				$api_product_id    = ( ! is_null( $product_datas['merchant_product_id']->id )
+					? (string) $product_datas['merchant_product_id']->id
+					: (string) $product_datas['marketplace_product_id']
+				);
+				throw new Lengow_Exception(
+					Lengow_Main::set_log_message( 'lengow_log.exception.product_not_be_found', array(
+						'product_id' => $api_product_id
+					) )
+				);
+			}
+		}
 
+		return $products;
 	}
 
 	/**
@@ -309,8 +356,37 @@ class Lengow_Import_Order {
 	 *
 	 * @param $products array Product which needs stocks to be decreased
 	 */
-	private function _decrease_stock($products) {
-
+	private function _decrease_stock( $products ) {
+		if ( get_option( 'woocommerce_manage_stock' ) === 'yes' ) {
+			foreach ( $products as $product_id => $product ) {
+				$lengow_product = get_product( $product_id );
+				// Decrement stock product only if product managed in stock
+				if ($lengow_product->managing_stock()) {
+					$initial_stock  = $lengow_product->get_stock_quantity();
+					$new_stock      = $lengow_product->reduce_stock( $product['quantity'] );
+					Lengow_Main::log(
+						'Import',
+						Lengow_Main::set_log_message( 'log.import.stock_decreased', array(
+							'product_id'    => $product_id,
+							'initial_stock' => $initial_stock,
+							'new_stock'     => $new_stock
+						) ),
+						$this->_log_output,
+						$this->_marketplace_sku
+					);
+				} else {
+					Lengow_Main::log(
+						'Import',
+						Lengow_Main::set_log_message( 'log.import.stock_no_managed', array(
+							'product_id' => $product_id
+						) ),
+						$this->_log_output,
+						$this->_marketplace_sku
+					);
+				}
+				unset( $lengow_product );
+			}
+		}
 	}
 
 	/**

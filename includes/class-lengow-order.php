@@ -42,7 +42,7 @@ class Lengow_Order {
 			SELECT id_order, delivery_address_id, id_flux
 			FROM " . $wpdb->prefix . "lengow_orders 
 			WHERE marketplace_sku = %s
-			AND marketplace IN (%s, %s)
+			AND marketplace_name IN (%s, %s)
 		";
 
 		$results = $wpdb->get_results(
