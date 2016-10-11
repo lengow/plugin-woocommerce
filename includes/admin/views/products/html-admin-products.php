@@ -104,6 +104,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <div class="lengow_table_top">
                     <div class="js-lengow_toolbar">
                         <a href="#" style="display:none;"
+                           data-export-action="remove_to_export"
+                           data-action="export_mass_action"
                            data-message="<?php echo $locale->t('product.screen.remove_confirmation', array(
                             'nb' => $shop['select_all']
                             )) ?>"
@@ -111,6 +113,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <i class="fa fa-minus"></i><?php echo $locale->t('product.screen.remove_from_export')?>
                         </a>
                         <a href="#" style="display:none;"
+                           data-export-action="add_to_export"
+                           data-action="export_mass_action"
                            data-message="<?php echo $locale->t('product.screen.add_confirmation', array(
                             'nb' => $shop['select_all']
                             )) ?>"

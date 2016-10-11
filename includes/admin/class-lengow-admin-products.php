@@ -101,9 +101,10 @@ class Lengow_Admin_Products extends WP_List_Table {
                         echo json_encode(Lengow_Admin_Products::reload_total());
                     }
                     break;
-                case 'add_to_export':
+                case 'export_mass_action':
                     $selection = isset($_POST['product']) ? $_POST['product'] : false;
                     $select_all = isset($_POST['select_all']) ? $_POST['select_all'] : null;
+                    $export_action = isset($_POST['export_action']) ? $_POST['export_action'] : null;
                     $data = array();
                     if ($select_all == "true") {
                         $all_products = get_posts(
@@ -116,7 +117,11 @@ class Lengow_Admin_Products extends WP_List_Table {
                             $all[] = $value->ID;
                         }
                         foreach ($all as $id) {
+                            if ($export_action == 'add_to_export') {
                             Lengow_Product::publish($id, 1);
+                            } else {
+                                Lengow_Product::publish($id, 0);
+                            }
                             foreach ($selection as $id ) {
                                 $data['product_id'][] = $id;
                             }
@@ -124,42 +129,14 @@ class Lengow_Admin_Products extends WP_List_Table {
                         $data = array_merge($data, Lengow_Admin_Products::reload_total());
                     } elseif ($selection) {
                         foreach( $selection as $product ) {
-                            Lengow_Product::publish($product, 1);
-                            $data['product_id'][] = $product;
-                        }
-                        $data = array_merge($data, Lengow_Admin_Products::reload_total());
-                    } else {
-                        $data['message'] = $locale->t('product.screen.no_product_selected');
-                    }
-                    echo json_encode($data);
-                    break;
-                case 'remove_to_export':
-                    $selection = isset($_POST['product']) ? $_POST['product'] : false;
-                    $select_all = isset($_POST['select_all']) ? $_POST['select_all'] : null;
-                    $data = array();
-                    if ($select_all == "true") {
-                        $all_products = get_posts(
-                            array(
-                                'numberposts' => -1,
-                                'post_type' => 'product'
-                            ));
-                        $all = array();
-                        foreach ($all_products as $value) {
-                            $all[] = $value->ID;
-                        }
-                        foreach ($all as $id) {
-                            Lengow_Product::publish($id, 0);
-                            foreach ($selection as $id) {
-                                $data['product_id'][] = $id;
+                            if ($export_action == 'add_to_export') {
+                                Lengow_Product::publish($product, 1);
+                            } else {
+                                Lengow_Product::publish($product, 0);
                             }
-                        }
-                        $data = array_merge($data, Lengow_Admin_Products::reload_total());
-                    } elseif ($selection) {
-                        foreach( $selection as $product ) {
-                            Lengow_Product::publish($product, 0);
                             $data['product_id'][] = $product;
                         }
-                    $data = array_merge($data, Lengow_Admin_Products::reload_total());
+                        $data = array_merge($data, Lengow_Admin_Products::reload_total());
                     } else {
                         $data['message'] = $locale->t('product.screen.no_product_selected');
                     }

@@ -150,12 +150,15 @@
         });
 
         /**
-         * Mass action to export products
+         * Mass action to export products or not
          */
-        $('.js-lengow_add_to_export').on('click', function () {
+        $('.js-lengow_add_to_export , .js-lengow_remove_from_export').on('click', function () {
             var message = $(this).attr('data-message'),
+                do_action = $(this).attr('data-action'),
+                export_action = $(this).attr('data-export-action'),
                 check = $('#js-select_all_shop').prop('checked'),
                 products = [];
+
             //find all checked products
             $('#js-lengow_product_checkbox:checked').each(function() {
                 products.push($(this).attr('value'));
@@ -163,7 +166,8 @@
 
             var data = {
                 action: 'post_process',
-                do_action: 'add_to_export',
+                do_action: do_action,
+                export_action : export_action,
                 select_all: check,
                 product: products
             };
@@ -178,47 +182,11 @@
                             alert(data.message);
                         } else {
                             $.each(data.product_id, function (idx, p_id) {
-                                $("#js-lengow_product_" + p_id + "").parents(".lgw-switch").addClass("checked");
-                            });
-                            reloadTotal(data);
-                        }
-                    }
-                });
-            }
-            return false;
-        });
-
-        /**
-         * Mass action to exclude products in export
-         */
-        $('.js-lengow_remove_from_export').on('click', function () {
-            var message = $(this).attr('data-message'),
-                check = $('#js-select_all_shop').prop('checked'),
-                products = [];
-            //find all checked products
-            $('#js-lengow_product_checkbox:checked').each(function() {
-                products.push($(this).attr('value'));
-            });
-
-            var data = {
-                action: 'post_process',
-                do_action: 'remove_to_export',
-                select_all: check,
-                product: products
-            };
-
-            if (!check || (check && confirm(message))) {
-                $.ajax({
-                    url: ajaxurl,
-                    type: "POST",
-                    data: data,
-                    success: function(content) {
-                        var data = JSON.parse(content);
-                        if (data.message) {
-                            alert(data.message);
-                        } else {
-                            $.each(data.product_id, function (idx, p_id) {
-                                $("#js-lengow_product_" + p_id + "").parents(".lgw-switch").removeClass("checked");
+                                if (export_action == 'add_to_export'){
+                                    $("#js-lengow_product_" + p_id + "").parents(".lgw-switch").addClass("checked");
+                                } else {
+                                    $("#js-lengow_product_" + p_id + "").parents(".lgw-switch").removeClass("checked");
+                                }
                             });
                             reloadTotal(data);
                         }
@@ -248,5 +216,13 @@
                 $('.js-lengow_toolbar a').hide();
             }
         });
+
+        /**
+         * Check all checkbox when check lengow select all table
+         */
+        $('#js-select_all_shop').on('click', function () {
+            $('.js-lengow_selection').attr('checked', true);
+        });
+
     });
 })(jQuery);
