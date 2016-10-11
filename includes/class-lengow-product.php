@@ -738,9 +738,10 @@ class Lengow_Product {
 			$wpdb->delete( $wpdb->prefix . 'lengow_product', array( 'product_id' => ( (int) $product_id ) ) );
 		} else {
 			$sql     = "
-            SELECT product_id FROM {$wpdb->prefix}lengow_product
-            WHERE product_id = " . (int) $product_id;
-			$results = $wpdb->get_results( $sql );
+            	SELECT product_id FROM {$wpdb->prefix}lengow_product
+            	WHERE product_id = %d
+            ";
+			$results = $wpdb->get_results( $wpdb->prepare( $sql, (int) $product_id ) );
 			if ( count( $results ) == 0 ) {
 				$wpdb->insert( $wpdb->prefix . 'lengow_product', array( 'product_id' => ( (int) $product_id ) ) );
 			}
