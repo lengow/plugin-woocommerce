@@ -30,8 +30,8 @@ class Lengow_Admin_Products extends WP_List_Table {
     public static function post_process()
     {
         $locale = new Lengow_Translation();
+        $lengow_admin_products = new Lengow_Admin_Products();
         $action = isset( $_POST['do_action']) ?  $_POST['do_action']: false;
-
         if ($action) {
             switch ($action) {
                 case 'change_option_product_variation':
@@ -101,6 +101,47 @@ class Lengow_Admin_Products extends WP_List_Table {
                         echo json_encode(Lengow_Admin_Products::reload_total());
                     }
                     break;
+                case 'export_mass_action':
+                    $selection = isset($_POST['product']) ? $_POST['product'] : false;
+                    $select_all = isset($_POST['select_all']) ? $_POST['select_all'] : null;
+                    $export_action = isset($_POST['export_action']) ? $_POST['export_action'] : null;
+                    $data = array();
+                    if ($select_all == "true") {
+                        $all_products = get_posts(
+                            array(
+                                'numberposts' => -1,
+                                'post_type' => 'product'
+                            ));
+                        $all = array();
+                        foreach ($all_products as $value) {
+                            $all[] = $value->ID;
+                        }
+                        foreach ($all as $id) {
+                            if ($export_action == 'add_to_export') {
+                            Lengow_Product::publish($id, 1);
+                            } else {
+                                Lengow_Product::publish($id, 0);
+                            }
+                            foreach ($selection as $id ) {
+                                $data['product_id'][] = $id;
+                            }
+                        }
+                        $data = array_merge($data, Lengow_Admin_Products::reload_total());
+                    } elseif ($selection) {
+                        foreach( $selection as $product ) {
+                            if ($export_action == 'add_to_export') {
+                                Lengow_Product::publish($product, 1);
+                            } else {
+                                Lengow_Product::publish($product, 0);
+                            }
+                            $data['product_id'][] = $product;
+                        }
+                        $data = array_merge($data, Lengow_Admin_Products::reload_total());
+                    } else {
+                        $data['message'] = $locale->t('product.screen.no_product_selected');
+                    }
+                    echo json_encode($data);
+                    break;
             }
             exit();
         }
@@ -116,7 +157,6 @@ class Lengow_Admin_Products extends WP_List_Table {
         $lengow_admin_products = new Lengow_Admin_Products();
         $lengow_admin_products->locale = new Lengow_Translation();
         $lengow_admin_products->prepare_items();
-        $lengow_admin_products->process_bulk_action();
         $lengow_admin_products->search($lengow_admin_products->locale->t('product.table.button_search'), 'search_id');
         $lengow_admin_products->display();
     }
@@ -265,7 +305,12 @@ class Lengow_Admin_Products extends WP_List_Table {
      */
     public function column_cb($product) {
         return sprintf(
-            '<input type="checkbox" name="product[]" value="%s" />', $product['ID']
+            '<input type="checkbox" 
+            id="js-lengow_product_checkbox" 
+            name="product[]" 
+            value="%s"
+            class="js-lengow_selection"
+            />', $product['ID']
         );
     }
 
@@ -290,45 +335,9 @@ class Lengow_Admin_Products extends WP_List_Table {
                         name="lengow_product_selection[%s]"
                         data-action="select_product"
                         data-id_product="%s"
+                        id="js-lengow_product_%s"
                         value="1" '.$check.'/>
-                        </div></label></div>', $product['ID'], $product['ID']);
-    }
-
-    /**
-     * Display lengow bulk actions
-     * @return array
-     */
-    public function get_bulk_actions() {
-        $actions = array(
-            'publish_on_lengow'     => $this->locale->t('product.table.publish_on_lengow'),
-            'unpublish_on_lengow'   => $this->locale->t('product.table.unpublish_on_lengow')
-        );
-        return $actions;
-    }
-
-    /**
-     * Lengow mass action
-     *
-     * @return array
-     */
-    public function process_bulk_action() {
-        $action = $this->current_action();
-        $products = isset($_POST['product']) ? $_POST['product'] : false;
-        if ($action !== false) {
-            switch ( $action ) {
-                case 'publish_on_lengow':
-                    foreach( $products as $product ) {
-                        Lengow_Product::publish($product, 1);
-                    }
-                    break;
-                case 'unpublish_on_lengow':
-                    foreach( $products as $product ) {
-                        Lengow_Product::publish($product, 0);
-                    }
-                    break;
-            }
-
-        }
+                        </div></label></div>', $product['ID'], $product['ID'], $product['ID']);
     }
 
     /**
@@ -475,6 +484,7 @@ class Lengow_Admin_Products extends WP_List_Table {
             'option_selected' => Lengow_Configuration::get('lengow_selection_enabled'),
             'option_product_out_of_stock' => Lengow_Configuration::get('lengow_out_stock'),
             'option_variation' => Lengow_Configuration::get('lengow_variation_enabled'),
+            'select_all' => count($lengow_admin_products->get_products())
         );
         include_once 'views/products/html-admin-products.php';
 
