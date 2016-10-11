@@ -102,25 +102,25 @@ if ( ! defined( 'ABSPATH' ) ) {
         <div class="lengow_feed_block_footer">
             <div class="js-lengow_feed_block_footer_content" style="<?php if (!$shop['option_selected']): ?>display:none;<?php endif;?>">
                 <div class="lengow_table_top">
-                    <div class="lengow_toolbar">
+                    <div class="js-lengow_toolbar">
                         <a href="#" style="display:none;"
                            data-message="<?php echo $locale->t('product.screen.remove_confirmation', array(
-                            'nb' => $shop['total_product']
+                            'nb' => $shop['select_all']
                             )) ?>"
-                           class="lgw-btn lgw-btn-red lengow_remove_from_export">
+                           class="lgw-btn lgw-btn-red js-lengow_remove_from_export">
                             <i class="fa fa-minus"></i><?php echo $locale->t('product.screen.remove_from_export')?>
                         </a>
                         <a href="#" style="display:none;"
                            data-message="<?php echo $locale->t('product.screen.add_confirmation', array(
-                            'nb' => $shop['total_product']
+                            'nb' => $shop['select_all']
                             )) ?>"
-                           class="lgw-btn lengow_add_to_export">
+                           class="lgw-btn js-lengow_add_to_export">
                             <i class="fa fa-plus"></i><?php echo $locale->t('product.screen.add_from_export')?>
                         </a>
                         <div class="js-lengow_select_all lgw-container" style="display:none;">
-                            <input type="checkbox" id="select_all_shop">
+                            <input type="checkbox" id="js-select_all_shop">
                             <span><?php echo $locale->t('product.screen.select_all_products', array(
-                                'nb' => $shop['total_product']
+                                'nb' => $shop['select_all']
                                 ));?></span>
                         </div>
                     </div>

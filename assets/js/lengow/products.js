@@ -21,7 +21,9 @@
 (function ($) {
     $(document).ready(function () {
 
-
+        /**
+         * Ajax for check synchronization with Lengow Solution
+         */
         function checkShop() {
             var status = $('.lengow_check_shop'),
             data = {
@@ -72,6 +74,9 @@
             $(".js-lengow_total").html(data['total_product']);
         }
 
+        /**
+         * Ajax for switch options (product variations / out of stock / specific product)
+         */
         $('.js-lengow_switch_option').on('change', function (e) {
             e.preventDefault();
             var action = $(this).attr('data-action'),
@@ -104,17 +109,9 @@
             });
         });
 
-        $('#doaction').on('click', function () {
-            $.ajax({
-                url: ajaxurl,
-                type: "POST",
-                dataType: "JSON",
-                complete: function() {
-                    $(".products-exported").load(location.href + ' #js-lengow_exported');
-                }
-            });
-        });
-
+        /**
+         * Checkbox to include a product in export (lengow column)
+         */
         $('.js-lengow_switch_product').on('change', function (e) {
             e.preventDefault();
             var action = $(this).attr('data-action'),
@@ -138,19 +135,26 @@
             });
         });
 
-        $('#cb-select-all-1').on('click', function () {
+        /**
+         * Check select all checkbox to display lengow toolbar and lengow select all products
+         */
+        $('#cb-select-all-1 ,#cb-select-all-2').on('click', function () {
             if ($(this).prop('checked')) {
-                $('.lengow_toolbar a').show();
+                $('.js-lengow_toolbar a').show();
                 $('.js-lengow_select_all').show();
             } else {
-                $('.lengow_toolbar a').hide();
+                $('.js-lengow_toolbar a').hide();
                 $('.js-lengow_select_all').hide();
+                $('#js-select_all_shop').attr('checked', false);
             }
         });
 
-        $('.lengow_add_to_export').on('click', function () {
+        /**
+         * Mass action to export products
+         */
+        $('.js-lengow_add_to_export').on('click', function () {
             var message = $(this).attr('data-message'),
-                check = $('#select_all_shop').prop('checked'),
+                check = $('#js-select_all_shop').prop('checked'),
                 products = [];
             //find all checked products
             $('#js-lengow_product_checkbox:checked').each(function() {
@@ -174,7 +178,7 @@
                             alert(data.message);
                         } else {
                             $.each(data.product_id, function (idx, p_id) {
-                                $("#lengow_product_" + p_id + "").parents(".lgw-switch").addClass("checked");
+                                $("#js-lengow_product_" + p_id + "").parents(".lgw-switch").addClass("checked");
                             });
                             reloadTotal(data);
                         }
@@ -182,6 +186,67 @@
                 });
             }
             return false;
+        });
+
+        /**
+         * Mass action to exclude products in export
+         */
+        $('.js-lengow_remove_from_export').on('click', function () {
+            var message = $(this).attr('data-message'),
+                check = $('#js-select_all_shop').prop('checked'),
+                products = [];
+            //find all checked products
+            $('#js-lengow_product_checkbox:checked').each(function() {
+                products.push($(this).attr('value'));
+            });
+
+            var data = {
+                action: 'post_process',
+                do_action: 'remove_to_export',
+                select_all: check,
+                product: products
+            };
+
+            if (!check || (check && confirm(message))) {
+                $.ajax({
+                    url: ajaxurl,
+                    type: "POST",
+                    data: data,
+                    success: function(content) {
+                        var data = JSON.parse(content);
+                        if (data.message) {
+                            alert(data.message);
+                        } else {
+                            $.each(data.product_id, function (idx, p_id) {
+                                $("#js-lengow_product_" + p_id + "").parents(".lgw-switch").removeClass("checked");
+                            });
+                            reloadTotal(data);
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+
+        /**
+         * Check for display mass actions
+         */
+        $('.js-lengow_selection').on('click', function () {
+
+            if ($(this).prop('checked') == false) {
+                $('#js-select_all_shop').attr('checked', false);
+            }
+
+            var findProductSelected = false;
+
+            $('.js-lengow_selection:checked').each(function() {
+                findProductSelected = true;
+                $('.js-lengow_toolbar a').show();
+            });
+
+            if (!findProductSelected) {
+                $('.js-lengow_toolbar a').hide();
+            }
         });
     });
 })(jQuery);
