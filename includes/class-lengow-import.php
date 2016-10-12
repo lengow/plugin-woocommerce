@@ -18,6 +18,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Import {
 
 	/**
+	 * @var array valid states lengow to create a Lengow order
+	 */
+	public static $LENGOW_STATES = array(
+		'accepted',
+		'waiting_shipment',
+		'shipped',
+		'closed'
+	);
+
+	/**
+	 * @var boolean import is processing
+	 */
+	public static $PROCESSING;
+
+	/**
 	 * @var string marketplace order sku
 	 */
 	private $_marketplace_sku = null;
@@ -66,6 +81,21 @@ class Lengow_Import {
 	 * @var string type import (manual or cron)
 	 */
 	private $_type;
+
+	/**
+	 * @var string account ID
+	 */
+	private $_account_id;
+
+	/**
+	 * @var string access token
+	 */
+	private $_access_token;
+
+	/**
+	 * @var string secret
+	 */
+	private $_secret;
 
 	/**
 	 * Construct the import manager
@@ -127,6 +157,462 @@ class Lengow_Import {
 
 			return false;
 		}
+
+		$order_new   = 0;
+		$order_error = 0;
+		$error       = false;
+
+		// clean logs
+		Lengow_Main::clean_log();
+		if ( self::is_in_process() && ! $this->_preprod_mode && ! $this->_import_one_order ) {
+			Lengow_Main::log(
+				'Import',
+				Lengow_Main::set_log_message( 'lengow_log.error.import_in_progress' ),
+				$this->_log_output
+			);
+			Lengow_Main::log(
+				'Import',
+				Lengow_Main::set_log_message(
+					'lengow_log.error.rest_time_to_import',
+					array( 'rest_time' => self::rest_time_to_import() )
+				),
+				$this->_log_output
+			);
+		} else {
+			Lengow_Main::log(
+				'Import',
+				Lengow_Main::set_log_message( 'log.import.start', array( 'type' => $this->_type ) ),
+				$this->_log_output
+			);
+			if ( $this->_preprod_mode ) {
+				Lengow_Main::log(
+					'Import',
+					Lengow_Main::set_log_message( 'log.import.preprod_mode_active' ),
+					$this->_log_output
+				);
+			}
+			if ( ! $this->_import_one_order ) {
+				self::set_in_process();
+				// update last import date
+				Lengow_Main::update_date_import( $this->_type );
+			}
+
+			if ( Lengow_Configuration::get( 'lengow_store_enabled' ) ) {
+				try {
+					// check account ID, Access Token and Secret
+					$error_credential = $this->_check_credentials();
+					if ( $error_credential !== true ) {
+						Lengow_Main::log( 'Import', $error_credential, $this->_log_output );
+						$error = $error_credential;
+					} else {
+						// get orders from Lengow API
+						$orders       = $this->_get_orders_from_api();
+						$total_orders = count( $orders );
+						if ( $this->_import_one_order ) {
+							Lengow_Main::log(
+								'Import',
+								Lengow_Main::set_log_message(
+									'log.import.find_one_order',
+									array(
+										'nb_order'         => $total_orders,
+										'marketplace_sku'  => $this->_marketplace_sku,
+										'marketplace_name' => $this->_marketplace_name,
+										'account_id'       => $this->_account_id
+									)
+								),
+								$this->_log_output
+							);
+						} else {
+							Lengow_Main::log(
+								'Import',
+								Lengow_Main::set_log_message(
+									'log.import.find_all_orders',
+									array(
+										'nb_order'   => $total_orders,
+										'account_id' => $this->_account_id
+									)
+								),
+								$this->_log_output
+							);
+						}
+						if ( $total_orders <= 0 && $this->_import_one_order ) {
+							throw new Lengow_Exception( 'lengow_log.exception.order_not_found' );
+						} elseif ( $total_orders > 0 ) {
+							$result = $this->_import_orders( $orders );
+							if ( ! $this->_import_one_order ) {
+								$order_new += $result['order_new'];
+								$order_error += $result['order_error'];
+							}
+						}
+					}
+				} catch ( Lengow_Exception $e ) {
+					$error_message = $e->getMessage();
+				} catch ( Exception $e ) {
+					$error_message = '[WooCommerce error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
+				}
+				if ( isset( $error_message ) ) {
+					$decoded_message = Lengow_Main::decode_log_message( $error_message );
+					Lengow_Main::log(
+						'Import',
+						Lengow_Main::set_log_message(
+							'log.import.import_failed',
+							array( 'decoded_message' => $decoded_message )
+						),
+						$this->_log_output
+					);
+					$error = $error_message;
+					unset( $error_message );
+				}
+				if ( ! $this->_import_one_order ) {
+					Lengow_Main::log(
+						'Import',
+						Lengow_Main::set_log_message(
+							'lengow_log.error.nb_order_imported',
+							array( 'nb_order' => $order_new )
+						),
+						$this->_log_output
+					);
+					Lengow_Main::log(
+						'Import',
+						Lengow_Main::set_log_message(
+							'lengow_log.error.nb_order_with_error',
+							array( 'nb_order' => $order_error )
+						),
+						$this->_log_output
+					);
+				}
+			}
+
+			// finish import process
+			self::set_end();
+			Lengow_Main::log(
+				'Import',
+				Lengow_Main::set_log_message( 'log.import.end', array( 'type' => $this->_type ) ),
+				$this->_log_output
+			);
+			if ( $this->_import_one_order ) {
+				$result['error'] = $error;
+
+				return $result;
+			} else {
+				return array(
+					'order_new'   => $order_new,
+					'order_error' => $order_error,
+					'error'       => $error
+				);
+			}
+		}
+	}
+
+	/**
+	 * Check credentials
+	 *
+	 * @return boolean
+	 */
+	private function _check_credentials() {
+		list( $this->_account_id, $this->_access_token, $this->_secret ) = Lengow_Connector::get_access_id();
+		if ( is_null( $this->_account_id ) || is_null( $this->_access_token ) || is_null( $this->_secret ) ) {
+			$message = Lengow_Main::set_log_message( 'lengow_log.error.account_id_empty' );
+
+			return $message;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Call Lengow order API
+	 *
+	 * @throws Lengow_Exception If error while connect to the API
+	 *
+	 * @return mixed List of orders found by the API for this shop
+	 */
+	private function _get_orders_from_api() {
+		$page     = 1;
+		$orders   = array();
+		$is_valid = Lengow_Check::is_valid_auth();
+
+		if ( $is_valid ) {
+			$connector = new Lengow_Connector( $this->_access_token, $this->_secret );
+			if ( $this->_import_one_order ) {
+				Lengow_Main::log(
+					'Import',
+					Lengow_Main::set_log_message(
+						'log.import.connector_get_order',
+						array(
+							'marketplace_sku'  => $this->_marketplace_sku,
+							'marketplace_name' => $this->_marketplace_name
+						)
+					),
+					$this->_log_output
+				);
+			} else {
+				Lengow_Main::log(
+					'Import',
+					Lengow_Main::set_log_message(
+						'log.import.connector_get_all_order',
+						array(
+							'date_from'  => date( 'Y-m-d', strtotime( (string) $this->_date_from ) ),
+							'date_to'    => date( 'Y-m-d', strtotime( (string) $this->_date_to ) ),
+							'account_id' => $this->_account_id
+						)
+					),
+					$this->_log_output
+				);
+			}
+			do {
+				if ( $this->_import_one_order ) {
+					$results = $connector->get(
+						'/v3.0/orders',
+						array(
+							'marketplace_order_id' => $this->_marketplace_sku,
+							'marketplace'          => $this->_marketplace_name,
+							'account_id'           => $this->_account_id,
+							'page'                 => $page
+						),
+						'stream'
+					);
+				} else {
+					$results = $connector->get(
+						'/v3.0/orders',
+						array(
+							'updated_from' => $this->_date_from,
+							'updated_to'   => $this->_date_to,
+							'account_id'   => $this->_account_id,
+							'page'         => $page
+						),
+						'stream'
+					);
+				}
+				if ( is_null( $results ) ) {
+					throw new Lengow_Exception(
+						Lengow_Main::set_log_message( 'lengow_log.exception.no_connection_webservice' )
+					);
+				}
+				$results = json_decode( $results );
+				if ( ! is_object( $results ) ) {
+					throw new Lengow_Exception(
+						Lengow_Main::set_log_message( 'lengow_log.exception.no_connection_webservice' )
+					);
+				}
+				if ( isset( $results->error ) ) {
+					throw new Lengow_Exception(
+						Lengow_Main::set_log_message(
+							'lengow_log.exception.error_lengow_webservice',
+							array(
+								'error_code'    => $results->error->code,
+								'error_message' => $results->error->message
+							)
+						)
+					);
+				}
+				// Construct array orders
+				foreach ( $results->results as $order ) {
+					$orders[] = $order;
+				}
+				$page ++;
+			} while ( $results->next != null );
+		} else {
+			throw new Lengow_Exception(
+				Lengow_Main::set_log_message( 'lengow_log.exception.credentials_not_valid' )
+			);
+		}
+
+		return $orders;
+	}
+
+	/**
+	 * Create or update order in WooCommerce
+	 *
+	 * @param mixed $orders API orders
+	 *
+	 * @return mixed
+	 */
+	protected function _import_orders( $orders ) {
+		$order_new       = 0;
+		$order_error     = 0;
+		$import_finished = false;
+
+		foreach ( $orders as $order_data ) {
+			if ( ! $this->_import_one_order ) {
+				self::set_in_process();
+			}
+			$nb_package      = 0;
+			$marketplace_sku = (string) $order_data->marketplace_order_id;
+			if ( $this->_preprod_mode ) {
+				$marketplace_sku .= '--' . time();
+			}
+			// if order contains no package
+			if ( count( $order_data->packages ) == 0 ) {
+				Lengow_Main::log(
+					'Import',
+					Lengow_Main::set_log_message( 'log.import.error_no_package' ),
+					$this->_log_output,
+					$marketplace_sku
+				);
+				continue;
+			}
+			// start import
+			foreach ( $order_data->packages as $package_data ) {
+				$nb_package ++;
+				// check whether the package contains a shipping address
+				if ( ! isset( $package_data->delivery->id ) ) {
+					Lengow_Main::log(
+						'Import',
+						Lengow_Main::set_log_message( 'log.import.error_no_delivery_address' ),
+						$this->_log_output,
+						$marketplace_sku
+					);
+					continue;
+				}
+				$package_delivery_address_id = (int) $package_data->delivery->id;
+				$first_package               = ( $nb_package > 1 ? false : true );
+				// check the package for re-import order
+				if ( $this->_import_one_order ) {
+					if ( ! is_null( $this->_delivery_address_id )
+					     && $this->_delivery_address_id != $package_delivery_address_id
+					) {
+						Lengow_Main::log(
+							'Import',
+							Lengow_Main::set_log_message( 'log.import.error_wrong_package_number' ),
+							$this->_log_output,
+							$marketplace_sku
+						);
+						continue;
+					}
+				}
+				try {
+					// try to import or update order
+					$import_order = new Lengow_Import_Order(
+						array(
+							'preprod_mode'        => $this->_preprod_mode,
+							'log_output'          => $this->_log_output,
+							'marketplace_sku'     => $marketplace_sku,
+							'delivery_address_id' => $package_delivery_address_id,
+							'order_data'          => $order_data,
+							'package_data'        => $package_data,
+							'first_package'       => $first_package
+						)
+					);
+					$order        = $import_order->import_order();
+				} catch ( Lengow_Exception $e ) {
+					$error_message = $e->getMessage();
+				} catch ( Exception $e ) {
+					$error_message = '[WooCommerce error]: "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
+				}
+				if ( isset( $error_message ) ) {
+					$decoded_message = Lengow_Main::decode_log_message( $error_message );
+					Lengow_Main::log(
+						'Import',
+						Lengow_Main::set_log_message(
+							'log.import.order_import_failed',
+							array( 'decoded_message' => $decoded_message )
+						),
+						$this->_log_output,
+						$marketplace_sku
+					);
+					unset( $error_message );
+					continue;
+				}
+				// if re-import order -> return order information
+				if ( isset( $order ) && $this->_import_one_order ) {
+					return $order;
+				}
+				if ( isset( $order ) ) {
+					if ( $order['order_new'] == true ) {
+						$order_new ++;
+					} elseif ( $order['order_error'] == true ) {
+						$order_error ++;
+					}
+				}
+				// clean process
+				unset( $import_order );
+				unset( $order );
+				// if limit is set
+				if ( $this->_limit > 0 && $order_new == $this->_limit ) {
+					$import_finished = true;
+					break;
+				}
+			}
+			if ( $import_finished ) {
+				break;
+			}
+		}
+
+		return array(
+			'order_new'   => $order_new,
+			'order_error' => $order_error
+		);
+	}
+
+	/**
+	 * Check if import is already in process
+	 *
+	 * @return boolean
+	 */
+	public static function is_in_process() {
+		$timestamp = (int) Lengow_Configuration::get( 'lengow_import_in_progress' );
+		if ( $timestamp > 0 ) {
+			// security check : if last import is more than 60 seconds old => authorize new import to be launched
+			if ( ( $timestamp + ( 60 * 1 ) ) < time() ) {
+				self::set_end();
+
+				return false;
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get Rest time to make re import order
+	 *
+	 * @return boolean
+	 */
+	public static function rest_time_to_import() {
+		$timestamp = (int) Lengow_Configuration::get( 'lengow_import_in_progress' );
+		if ( $timestamp > 0 ) {
+			return $timestamp + ( 60 * 1 ) - time();
+		}
+
+		return false;
+	}
+
+	/**
+	 * Set import to "in process" state
+	 */
+	public static function set_in_process() {
+		self::$PROCESSING = true;
+		Lengow_Configuration::update_value( 'lengow_import_in_progress', time() );
+	}
+
+	/**
+	 * Set import to finished
+	 */
+	public static function set_end() {
+		self::$PROCESSING = false;
+		Lengow_Configuration::update_value( 'lengow_import_in_progress', - 1 );
+	}
+
+	/**
+	 * Check if order status is valid for import
+	 *
+	 * @param string $order_state_marketplace order state
+	 * @param Lengow_Marketplace $marketplace order marketplace
+	 *
+	 * @return boolean
+	 */
+	public static function check_state( $order_state_marketplace, $marketplace ) {
+		if ( empty( $order_state_marketplace ) ) {
+			return false;
+		}
+		if ( ! in_array( $marketplace->get_state_lengow( $order_state_marketplace ), self::$LENGOW_STATES ) ) {
+			return false;
+		}
+
+		return true;
 	}
 }
 
