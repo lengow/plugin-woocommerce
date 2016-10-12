@@ -20,7 +20,6 @@
 
 (function ($) {
     $(document).ready(function () {
-
         /**
          * Ajax for check synchronization with Lengow Solution
          */
@@ -115,15 +114,14 @@
         $('.js-lengow_switch_product').on('change', function (e) {
             e.preventDefault();
             var action = $(this).attr('data-action'),
-            id_product = $(this).attr('data-id_product'),
-            state = $(this).prop('checked'),
-            data = {
-                action: 'post_process',
-                state: state ? 1 : 0,
-                do_action: action,
-                id_product: id_product
-            };
-
+                state = $(this).prop('checked'),
+                id_product = $(this).attr('data-id_product'),
+                data = {
+                    action: 'post_process',
+                    state: state ? 1 : 0,
+                    do_action: action,
+                    id_product: id_product
+                };
             $.ajax({
                 url: ajaxurl,
                 type: "POST",
@@ -184,8 +182,10 @@
                             $.each(data.product_id, function (idx, p_id) {
                                 if (export_action == 'add_to_export'){
                                     $("#js-lengow_product_" + p_id + "").parents(".lgw-switch").addClass("checked");
+                                    $('.js-lengow_switch_product').prop("checked", true);
                                 } else {
                                     $("#js-lengow_product_" + p_id + "").parents(".lgw-switch").removeClass("checked");
+                                    $('.js-lengow_switch_product').prop("checked", false);
                                 }
                             });
                             reloadTotal(data);
