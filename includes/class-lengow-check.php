@@ -29,29 +29,6 @@ class Lengow_Check {
     }
 
     /**
-     * Check API Authentification
-     *
-     * @return boolean
-     */
-    public static function is_valid_auth()
-    {
-        if (!self::is_curl_activated()) {
-            return false;
-        }
-        $account_id = (integer)Lengow_Configuration::get( 'lengow_account_id' );
-        $connector  = new Lengow_Connector(
-            Lengow_Configuration::get( 'lengow_access_token' ),
-            Lengow_Configuration::get( 'lengow_secret_token' )
-        );
-        $result = $connector->connect();
-        if (isset($result['token']) && $account_id != 0 && is_integer($account_id)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Get array of requirements and their status
      *
      * @return mixed
@@ -83,7 +60,7 @@ class Lengow_Check {
         $checklist[] = array(
             'title'      => $this->locale->t('toolbox.index.checksum_message'),
             'help'       => $this->locale->t('toolbox.index.checksum_help'),
-            'help_link'  => '/modules/lengow/toolbox/checksum.php',
+            'help_link'  => '/wp-content/plugins/lengow-woocommerce/toolbox/checksum.php',
             'help_label' => $this->locale->t('toolbox.index.checksum_help_label'),
             'state'      => (int)self::get_file_modified()
         );
@@ -326,36 +303,6 @@ class Lengow_Check {
     }
 
     /**
-     * Check if PHP Curl is activated
-     *
-     * @return boolean
-     */
-    public static function is_curl_activated()
-    {
-        return function_exists('curl_version');
-    }
-
-    /**
-     * Check if SimpleXML Extension is activated
-     *
-     * @return boolean
-     */
-    public static function is_simple_xml_activated()
-    {
-        return function_exists('simplexml_load_file');
-    }
-
-    /**
-     * Check if SimpleXML Extension is activated
-     *
-     * @return boolean
-     */
-    public static function is_json_activated()
-    {
-        return function_exists('json_decode');
-    }
-
-    /**
      * Get HTML Table content of checklist
      *
      * @param array $checklist
@@ -399,5 +346,54 @@ class Lengow_Check {
         $out.= '</table>';
         return $out;
     }
+
+	/**
+	 * Check API Authentification
+	 *
+	 * @return boolean
+	 */
+	public static function is_valid_auth() {
+		if ( ! self::is_curl_activated() ) {
+			return false;
+		}
+		list( $account_id, $access_token, $secret ) = Lengow_Connector::get_access_id();
+		if ( is_null( $account_id ) || is_null( $access_token ) || is_null( $secret ) ) {
+			return false;
+		}
+		$connector = new Lengow_Connector( $access_token, $secret );
+		$result    = $connector->connect();
+		if ( isset( $result['token'] ) && $account_id != 0 ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check if PHP Curl is activated
+	 *
+	 * @return boolean
+	 */
+	public static function is_curl_activated() {
+		return function_exists( 'curl_version' );
+	}
+
+	/**
+	 * Check if SimpleXML Extension is activated
+	 *
+	 * @return boolean
+	 */
+	public static function is_simple_xml_activated() {
+		return function_exists( 'simplexml_load_file' );
+	}
+
+	/**
+	 * Check if json Extension is activated
+	 *
+	 * @return boolean
+	 */
+	public static function is_json_activated() {
+		return function_exists( 'json_decode' );
+	}
 }
 

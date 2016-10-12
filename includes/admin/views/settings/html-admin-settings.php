@@ -133,23 +133,7 @@ $list_file = Lengow_Log::get_paths();
 								<?php echo $keys['lengow_import_ship_mp_enabled']['label'] ?>
 							</label>
 						</div>
-					</div>
-					<div id="lengow_wrapper_import_ship_mp_enabled">
-						<div class="grey-frame">
-							<div class="form-group">
-								<div class="lgw-switch <?php echo $values['lengow_import_stock_ship_mp'] == 1 ? 'checked' : '' ?>">
-									<label>
-										<div>
-											<span></span>
-											<input type="hidden" name="lengow_import_stock_ship_mp" value="0">
-											<input type="checkbox" name="lengow_import_stock_ship_mp" <?php echo $values['lengow_import_stock_ship_mp'] == 1 ? 'checked' : '' ?> />
-										</div>
-										<?php echo $keys['lengow_import_stock_ship_mp']['label'] ?>
-									</label>
-								</div>
-							</div>
-							<span class="legend" style="display:block;"><?php echo $keys['lengow_import_stock_ship_mp']['legend'] ?></span>
-						</div>
+						<span class="legend" style="display:block;"><?php echo $keys['lengow_import_ship_mp_enabled']['legend'] ?></span>
 					</div>
 				</div>
 			</div>

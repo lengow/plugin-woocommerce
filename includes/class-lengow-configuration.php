@@ -127,13 +127,7 @@ class Lengow_Configuration {
 				'lengow_import_ship_mp_enabled'      => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_import_ship_mp_enabled_title' ),
-					'default_value' => false,
-					'type'          => 'checkbox'
-				),
-				'lengow_import_stock_ship_mp'        => array(
-					'global'        => true,
-					'label'         => $locale->t( 'lengow_settings.lengow_import_stock_ship_mp_title' ),
-					'legend'        => $locale->t( 'lengow_settings.lengow_import_stock_ship_mp_legend' ),
+					'legend'        => $locale->t( 'lengow_settings.lengow_import_ship_mp_enabled_legend' ),
 					'default_value' => false,
 					'type'          => 'checkbox'
 				),
