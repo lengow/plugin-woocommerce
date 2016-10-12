@@ -14,11 +14,10 @@ $list_folders = array(
     '/export',
     '/includes',
     '/languages',
-    '/logs',
     '/toolbox',
     '/translations',
     '/upgrade',
-    '/webservices',
+    '/webservice',
 );
 
 $file_paths = array(

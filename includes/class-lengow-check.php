@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Check {
 
     /**
-     * @var $locale for translation
+     * @var $locale (for translation)
      */
     private $locale;
 
@@ -135,9 +135,8 @@ class Lengow_Check {
      */
     public function get_import_information()
     {
-        $last_import_date = date('l jS \of F Y h:i:s A');//TODO
-        /* $last_import = Lengow_Main::get_last_import();
-         * $last_import_date = (
+        $last_import = Lengow_Main::get_last_import();
+        $last_import_date = (
         $last_import['timestamp'] == 'none'
             ? $this->locale->t('toolbox.index.last_import_none')
             : date('Y-m-d H:i:s', $last_import['timestamp'])
@@ -148,13 +147,12 @@ class Lengow_Check {
             $last_import_type = $this->locale->t('toolbox.index.last_import_cron');
         } else {
             $last_import_type = $this->locale->t('toolbox.index.last_import_manual');
-        }*/
+        }
 
-         if (Lengow_Configuration::get('lengow_import_in_progress')) { // Lengow_Import::is_in_process()
-            /*$import_in_progress = Lengow_Main::decode_log_message('toolbox.index.rest_time_to_import', null, array(
+         if (Lengow_Import::is_in_process()) {
+            $import_in_progress = Lengow_Main::decode_log_message('toolbox.index.rest_time_to_import', null, array(
                 'rest_time' => Lengow_Import::rest_time_to_import()
-            )); TODO*/
-            $import_in_progress = "oui";
+            ));
         } else {
             $import_in_progress = $this->locale->t('toolbox.index.no_import');
         }
@@ -175,10 +173,10 @@ class Lengow_Check {
             'title'   => $this->locale->t('toolbox.index.shop_last_import'),
             'message' => $last_import_date
         );
-        /*$checklist[] = array(
+        $checklist[] = array(
             'title'   => $this->locale->t('toolbox.index.shop_type_import'),
             'message' => $last_import_type
-        );*/
+        );
         return $this->get_admin_content($checklist);
     }
 
@@ -194,7 +192,7 @@ class Lengow_Check {
         if (!is_null(Lengow_Configuration::get('lengow_last_export'))
             && Lengow_Configuration::get('lengow_last_export') != ''
         ) {
-            $last_export = Lengow_Configuration::get('lengow_last_export');
+            $last_export = date('Y-m-d H:i:s', Lengow_Configuration::get('lengow_last_export'));
         } else {
             $last_export = $this->locale->t('toolbox.index.last_export_none');
         }
@@ -361,6 +359,8 @@ class Lengow_Check {
      * Get HTML Table content of checklist
      *
      * @param array $checklist
+     *
+     * @return string
      */
     private function get_admin_content($checklist = array())
     {

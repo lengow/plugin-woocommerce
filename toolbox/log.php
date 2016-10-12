@@ -21,8 +21,8 @@
 
 require 'views/head.php';
 
-$action = isset($_REQUEST['action']) ?  $_REQUEST['action'] : null;
-$file = isset($_REQUEST['file']) ?  $_REQUEST['file'] : null;
+$action = isset($_GET['action']) ?  $_GET['action'] : null;
+$file = isset($_GET['file']) ?  $_GET['file'] : null;
 
 switch ($action) {
     case 'download':
