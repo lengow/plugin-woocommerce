@@ -1,6 +1,6 @@
 <?php
 define( 'WP_USE_THEMES', false );
-require( $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );
+require(dirname(dirname(dirname(dirname(dirname($_SERVER["SCRIPT_FILENAME"]))))). '/wp-load.php');
 require_once( '../lengow.php');
 require_once( '../includes/class-lengow-configuration.php' );
 require_once( '../includes/class-lengow-translation.php' );
