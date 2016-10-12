@@ -1,5 +1,5 @@
 #!/bin/bash
-# Build archive for Prestashop module
+# Build archive for Woocommerce plugin
 # Step :
 #     - Remove .DS_Store
 #     - Remove .README.md
@@ -61,7 +61,7 @@ BLEU="\\033[1;36m"
 echo
 echo "#####################################################"
 echo "##                                                 ##"
-echo "##       ""$BLEU""Lengow Prestashop""$NORMAL"" - Build Module          ##"
+echo "##       ""$BLEU""Lengow Woocommerce""$NORMAL"" - Build Module          ##"
 echo "##                                                 ##"
 echo "#####################################################"
 echo
@@ -76,6 +76,9 @@ fi
 # Generate translations
 php translate.php
 echo "- Generate translations : ""$VERT""DONE""$NORMAL"""
+# Create files checksum
+php checkmd5.php
+echo "- Create files checksum : ""$VERT""DONE""$NORMAL"""
 #remove TMP FOLDER
 remove_directory $FOLDER_TMP
 #copy files

@@ -225,7 +225,7 @@ class Lengow_Sync {
 			'get',
 			'/v3.0/subscriptions'
 		);
-		if ( $result ) {
+		if ( $result && !isset($result->error->code) ) {
 			$status         = array();
 			$status['type'] = $result->subscription->billing_offer->type;
 			$status['day']  = - round( ( strtotime( date( "c" ) ) - strtotime( $result->subscription->renewal ) ) / 86400 );
