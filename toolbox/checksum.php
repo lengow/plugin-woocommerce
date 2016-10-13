@@ -20,19 +20,11 @@
  */
 require 'views/head.php';
 require 'views/header.php';
-
 ?>
     <div class="container">
-    <h1> <?php echo $locale->t('toolbox.menu.lengow_toolbox') ?></h1>
-    <h3><i class="fa fa-check-square-o"></i> <?php echo $locale->t('toolbox.index.checklist_information') ?></h3>
-    <?php echo $check->get_check_list(); ?>
-    <h3><i class="fa fa-cog"></i> <?php echo $locale->t('toolbox.index.global_information') ?></h3>
-    <?php echo $check->get_global_information(); ?>
-    <h3><i class="fa fa-download"></i> <?php echo $locale->t('toolbox.index.import_information') ?></h3>
-    <?php echo $check->get_import_information(); ?>
-    <h3><i class="fa fa-upload"></i> <?php echo $locale->t('toolbox.index.export_information') ?></h3>
-    <?php echo $check->get_information_by_store(); ?>
-</div>
+        <h1><?php echo $locale->t('toolbox.checksum.checksum_integrity'); ?></h1>
+        <?php echo $check->check_file_md5(); ?>
+    </div>
 <?php
 require 'views/footer.php';
 ?>

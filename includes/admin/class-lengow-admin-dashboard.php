@@ -22,7 +22,6 @@ class Lengow_Admin_Dashboard {
      */
     public static function post_process()
     {
-        $isSync = isset($_POST['isSync']) ? $_POST['isSync'] : false;
         $action = isset( $_POST['do_action']) ?  $_POST['do_action']: false;
         if ($action) {
             switch ($action) {

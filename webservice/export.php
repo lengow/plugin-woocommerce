@@ -40,7 +40,7 @@
 @ini_set( 'memory_limit', '512M' );
 
 // Init wordpress
-require( $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );
+require(dirname(dirname(dirname(dirname(dirname($_SERVER["SCRIPT_FILENAME"]))))). '/wp-load.php');
 
 // Dependencies
 require_once( '../includes/class-lengow-main.php' );
