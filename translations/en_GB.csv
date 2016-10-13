@@ -5,6 +5,7 @@ module.description|Export your catalog and synchronize your stock
 module.version|2.0.0
 module.author|Lengow
 menu.product|Products
+menu.order|Stock management
 menu.jump_to_lengow|Jump to Lengow
 menu.preprod_active|Pre-production mode
 menu.counter|Trial period: %{counter} day(s) left.
@@ -79,6 +80,10 @@ product.table.in_stock|In Sotck
 product.table.out_of_stock|Out of Stock
 product.table.type_downloadable|Downloadable
 product.table.type_virtual|Virtual
+order.screen.last_order_importation|Last synchronization
+order.screen.no_order_importation|No synchronisation for now
+order.screen.button_update_orders|Synchronize Stock
+order.screen.preprod_warning_message|You are in pre-production mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>
 global_setting.screen.preprod_mode_title|Pre-production Mode
 global_setting.screen.preprod_mode_description|Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY
 global_setting.screen.log_file_title|Log Files

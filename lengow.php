@@ -127,6 +127,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/admin/class-lengow-admin-help.php' );
 				include_once( 'includes/admin/class-lengow-admin-legals.php' );
 				include_once( 'includes/admin/class-lengow-admin-products.php' );
+				include_once( 'includes/admin/class-lengow-admin-orders.php' );
 			}
 		}
 

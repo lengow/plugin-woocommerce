@@ -8,6 +8,7 @@ en:
     author: "Lengow"
   menu:
     product: "Products"
+    order: "Stock management"
     jump_to_lengow: "Jump to Lengow"
     preprod_active: "Pre-production mode"
     counter: "Trial period: %{counter} day(s) left."
@@ -90,6 +91,12 @@ en:
       out_of_stock: "Out of Stock"
       type_downloadable: "Downloadable"
       type_virtual: "Virtual"
+  order:
+    screen:
+      last_order_importation: "Last synchronization"
+      no_order_importation: "No synchronisation for now"
+      button_update_orders: "Synchronize Stock"
+      preprod_warning_message: "You are in pre-production mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>"
   global_setting:
     screen:
       preprod_mode_title: "Pre-production Mode"

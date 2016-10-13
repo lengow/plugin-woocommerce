@@ -76,6 +76,9 @@ class Lengow_Admin
             case 'lengow_admin_products':
                 Lengow_Admin_Products::html_display();
                 break;
+            case 'lengow_admin_orders':
+                Lengow_Admin_Orders::display();
+                break;
             case 'lengow_admin_help':
                 Lengow_Admin_Help::display();
                 break;
