@@ -77,7 +77,7 @@ class Lengow_Admin_Orders
         if (count($message) == 0) {
             $message[]= $locale->t('lengow_log.error.no_notification');
         }
-        if (isset($return['error'])) {
+        if (isset($return['error']) && $return['error'] != false) {
             foreach ($return['error'] as $errors) {
                 if (is_array($errors)) {
                     $message[]= join(', ', Lengow_Main::decode_log_message($errors));
@@ -117,7 +117,7 @@ class Lengow_Admin_Orders
     {
         $last_import =  Lengow_Main::get_last_import();
         $order_collection = array(
-            'last_import_date'  => strftime('%A %d %B %Y @ %X', $last_import['timestamp']),
+            'last_import_date'  => isset($last_import['timestamp']) ? strftime('%A %d %B %Y @ %X', $last_import['timestamp']) : '',
             'last_import_type'  => $last_import['type']
         );
 
