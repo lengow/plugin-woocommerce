@@ -8,6 +8,7 @@ en:
     author: "Lengow"
   menu:
     product: "Products"
+    order: "Stock management"
     jump_to_lengow: "Jump to Lengow"
     preprod_active: "Pre-production mode"
     counter: "Trial period: %{counter} day(s) left."
@@ -90,6 +91,14 @@ en:
       out_of_stock: "Out of Stock"
       type_downloadable: "Downloadable"
       type_virtual: "Virtual"
+  order:
+    screen:
+      import_charge_first: "Retrieving your orders..."
+      import_charge_second: "Please bear with us; this will not take long (2 min average waiting time)"
+      last_order_importation: "Last synchronization"
+      no_order_importation: "No synchronisation for now"
+      button_update_orders: "Synchronize Stock"
+      preprod_warning_message: "You are in pre-production mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>"
   global_setting:
     screen:
       preprod_mode_title: "Pre-production Mode"
@@ -172,6 +181,7 @@ en:
       no_billing_address: "Lengow error: no billing address in the order"
       no_country_for_delivery_address: "Lengow error: delivery address does not contain the country"
       no_product: "Lengow error: no product in the order"
+      check_logs: "You can check logs on <a href=%{link}>this page</a>"
     exception:
       no_connection_webservice: "connection didn't work with the Lengow webservice"
       credentials_not_valid: "account ID, token access or secret token are not valid"

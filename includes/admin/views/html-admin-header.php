@@ -19,6 +19,13 @@ if (isset($_GET['tab'])) {
 			<?php echo $locale->t('menu.product') ?>
 		</a>
 	</li>
+	<?php if ( Lengow_Configuration::get('lengow_import_enabled') == 1 ) : ?>
+	<li role="presentation" class="<?php echo (isset($current_page) && $current_page == 'lengow_admin_orders') ? "active" : "" ?>"><a href="
+            <?php echo admin_url('admin.php?page=lengow&tab=lengow_admin_orders'); ?>">
+			<?php echo $locale->t('menu.order') ?>
+		</a>
+	</li>
+	<?php endif; ?>
 	<li class="lengow_float_right <?php echo (isset($current_page) && $current_page == 'lengow_admin_settings') ? "active" : "" ?>" id="menugotosetting">
 		<a href="<?php echo admin_url('admin.php?page=lengow&tab=lengow_admin_settings'); ?>"
 		   class="lengow_link_tooltip"
