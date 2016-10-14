@@ -21,29 +21,39 @@
 (function ($) {
     $(document).ready(function () {
 
+        /**
+         * Ajax to synchronize stock
+         */
         $('#lengow_import_orders').on('click', function() {
-            var button = $(this);
-            var data = {do_action: 'import_all'};
+            var data = {
+                action: 'post_process_orders',
+                do_action: 'import_all'
+            };
 
-            // $('#lengow_charge_import_order').fadeIn(150);
-            //
-            // $.getJSON(href, data, function(content) {
-            //     lengow_jquery("#lengow_wrapper_messages").html(content['message']);
-            //     lengow_jquery("#lengow_last_importation").html(content['last_importation']);
-            //     lengow_jquery("#lengow_import_orders").html(content['import_orders']);
-            //     lengow_jquery("#lengow_order_table_wrapper").html(content['list_order']);
-            //
-            //     init_tooltip();
-            //     reload_table_js();
-            //     $('#lengow_charge_import_order').fadeOut(150);
-            //     setTimeout(function(){
-            //         $('#lengow_wrapper_messages').fadeIn(250);
-            //     }, 300);
-            // }).fail(function() {
-            //     $('#lengow_charge_import_order').fadeOut(150);
-            // });
+            $('#lengow_charge_import_order').fadeIn(150);
+
+            $.ajax({
+                url: ajaxurl,
+                type: "POST",
+                data: data,
+                success: function(content) {
+                    var data = JSON.parse(content);
+                    $("#lengow_wrapper_messages").html(data.message);
+                    $("#lengow_last_import_date").html(data.last_importation);
+                    $("#lengow_import_orders").html(data.import_orders);
+
+                    $('#lengow_charge_import_order').fadeOut(150);
+
+                    setTimeout(function(){
+                        $('#lengow_wrapper_messages').fadeIn(250);
+                    }, 300);
+                },
+                error: function(content) {
+                    $('#lengow_charge_import_order').fadeOut(150);
+                }
+            });
         });
 
     });
 
-});
+})(jQuery);

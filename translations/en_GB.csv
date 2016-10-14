@@ -80,9 +80,12 @@ product.table.in_stock|In Sotck
 product.table.out_of_stock|Out of Stock
 product.table.type_downloadable|Downloadable
 product.table.type_virtual|Virtual
+order.screen.import_charge_first|Retrieving your orders...
+order.screen.import_charge_second|Please bear with us; this will not take long (2 min average waiting time)
 order.screen.last_order_importation|Last synchronization
 order.screen.no_order_importation|No synchronisation for now
 order.screen.button_update_orders|Synchronize Stock
+order.screen.order_synchronize_disabled|You have not activated stock management, please visit <a href=%{url}>this page</a>
 order.screen.preprod_warning_message|You are in pre-production mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>
 global_setting.screen.preprod_mode_title|Pre-production Mode
 global_setting.screen.preprod_mode_description|Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY
@@ -157,6 +160,7 @@ lengow_log.error.no_country_for_billing_address|Lengow error: billing address do
 lengow_log.error.no_billing_address|Lengow error: no billing address in the order
 lengow_log.error.no_country_for_delivery_address|Lengow error: delivery address does not contain the country
 lengow_log.error.no_product|Lengow error: no product in the order
+lengow_log.error.check_logs|You can check logs on <a href=%{link}>this page</a>
 lengow_log.exception.no_connection_webservice|connection didn't work with the Lengow webservice
 lengow_log.exception.credentials_not_valid|account ID, token access or secret token are not valid
 lengow_log.exception.error_lengow_webservice|Lengow webservice: %{error_code} - %{error_message}
