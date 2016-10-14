@@ -85,6 +85,7 @@ order.screen.import_charge_second|Please bear with us; this will not take long (
 order.screen.last_order_importation|Last synchronization
 order.screen.no_order_importation|No synchronisation for now
 order.screen.button_update_orders|Synchronize Stock
+order.screen.order_synchronize_disabled|You have not activated stock management, please visit <a href=%{url}>this page</a>
 order.screen.preprod_warning_message|You are in pre-production mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>
 global_setting.screen.preprod_mode_title|Pre-production Mode
 global_setting.screen.preprod_mode_description|Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY

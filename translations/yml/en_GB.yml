@@ -98,6 +98,7 @@ en:
       last_order_importation: "Last synchronization"
       no_order_importation: "No synchronisation for now"
       button_update_orders: "Synchronize Stock"
+      order_synchronize_disabled: "You have not activated stock management, please visit <a href=%{url}>this page</a>"
       preprod_warning_message: "You are in pre-production mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>"
   global_setting:
     screen:
