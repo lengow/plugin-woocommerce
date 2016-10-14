@@ -140,7 +140,7 @@ $list_file = Lengow_Log::get_paths();
 			<span class="legend" style="display:block;"><?php echo $keys['lengow_import_enabled']['legend'] ?></span>
 		</div>
 		<div class="lgw-box">
-			<h2 id="lengow_logs"><?php echo $locale->t( 'global_setting.screen.log_file_title' ); ?></h2>
+			<h2><?php echo $locale->t( 'global_setting.screen.log_file_title' ); ?></h2>
 			<p><?php echo $locale->t( 'global_setting.screen.log_file_description' ); ?></p>
 			<select class="js-log-select js-select lengow_select">
 				<option value="" disabled selected>
