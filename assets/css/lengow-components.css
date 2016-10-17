@@ -3,6 +3,7 @@
 /*************************************************/
 
 .lgw-box {
+  overflow: hidden;
   background: white;
   display: block;
   border-radius: 3px;
