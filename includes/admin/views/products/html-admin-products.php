@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <?php endif; ?>
     <div class="lgw-box no-margin" id="block">
         <div class="lengow_shop_status">
-            <a href="#" class="lengow_check_shop lengow_check_shop_no_sync lengow_link_tooltip"
+            <a class="lengow_check_shop lengow_check_shop_no_sync lengow_link_tooltip"
                data-original-title="">
             </a>
             <label class="lengow_shop_status_label">
@@ -25,9 +25,10 @@ if ( ! defined( 'ABSPATH' ) ) {
            class="lengow_export_feed lengow_link_tooltip"
            data-original-title="<?php echo $locale->t('product.screen.button_download')?>"
            target="_blank"><i class="fa fa-download"></i></a>
-        <h2 class="text-center catalog-title lengow_link_tooltip"
-            data-original-title="<?php echo $shop['shop'].' ('.$shop['domain'].')'; ?>">
-            <?php echo $shop['shop']; ?>
+        <h2 class="text-center catalog-title">
+            <span class="lengow_link_tooltip" data-original-title="<?php echo $shop['shop'].' ('.$shop['domain'].')'; ?>">
+                <?php echo $shop['shop']; ?>
+            </span>
         </h2>
         <div class="text-center">
             <div class="margin-standard text-center">
@@ -110,7 +111,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             'nb' => $shop['select_all']
                             )) ?>"
                            class="lgw-btn lgw-btn-red js-lengow_remove_from_export">
-                            <i class="fa fa-minus"></i><?php echo $locale->t('product.screen.remove_from_export')?>
+                            <i class="fa fa-minus"></i> <?php echo $locale->t('product.screen.remove_from_export')?>
                         </a>
                         <a href="#" style="display:none;"
                            data-export-action="add_to_export"
@@ -119,9 +120,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                             'nb' => $shop['select_all']
                             )) ?>"
                            class="lgw-btn js-lengow_add_to_export">
-                            <i class="fa fa-plus"></i><?php echo $locale->t('product.screen.add_from_export')?>
+                            <i class="fa fa-plus"></i> <?php echo $locale->t('product.screen.add_from_export')?>
                         </a>
-                        <div class="js-lengow_select_all lgw-container" style="display:none;">
+                        <div class="js-lengow_select_all" style="display:none;">
                             <input type="checkbox" id="js-select_all_shop">
                             <span><?php echo $locale->t('product.screen.select_all_products', array(
                                 'nb' => $shop['select_all']

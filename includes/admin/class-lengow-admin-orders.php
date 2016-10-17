@@ -117,7 +117,9 @@ class Lengow_Admin_Orders
     {
         $last_import =  Lengow_Main::get_last_import();
         $order_collection = array(
-            'last_import_date'  => isset($last_import['timestamp']) ? strftime('%A %d %B %Y @ %X', $last_import['timestamp']) : '',
+            'last_import_date'  => $last_import['timestamp'] != 'none'
+                ? strftime('%A %d %B %Y @ %X', $last_import['timestamp'])
+                : '',
             'last_import_type'  => $last_import['type']
         );
 
