@@ -37,6 +37,7 @@
             $('.lengow_form button[type="submit"]').addClass('success');
             form.submit();
            }, 1000);
+            $(".lengow-nav").reload();
         });
 
         // MODAL
