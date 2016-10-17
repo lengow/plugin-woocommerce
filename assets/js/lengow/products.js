@@ -53,7 +53,7 @@
                         $(".lengow_feed_block_header_title").append(shop['header_title']);
                         title = shop['header_title'];
                     }
-                    selector.html("");
+                    selector.html('<i class="icon icon-circle"></i>');
 
                     $(".lengow_shop_status_label").html(title);
 
