@@ -20,7 +20,8 @@ if (isset($_GET['tab'])) {
 		</a>
 	</li>
 	<?php if ( Lengow_Configuration::get('lengow_import_enabled') == 1 ) : ?>
-	<li role="presentation" class="<?php echo (isset($current_page) && $current_page == 'lengow_admin_orders') ? "active" : "" ?>"><a href="
+	<li role="presentation" class="<?php echo (isset($current_page) && $current_page == 'lengow_admin_orders') ? "active" : "" ?>" id="js-menugotoimport">
+		<a href="
             <?php echo admin_url('admin.php?page=lengow&tab=lengow_admin_orders'); ?>">
 			<?php echo $locale->t('menu.order') ?>
 		</a>

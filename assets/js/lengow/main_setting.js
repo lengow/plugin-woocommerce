@@ -31,13 +31,15 @@
         $( ".lengow_form" ).submit(function( event ) {
             event.preventDefault();
             var form = this;
-          $('.lengow_form button[type="submit"]').addClass('loading');
-          setTimeout(function () {
-            $('.lengow_form button[type="submit"]').removeClass('loading');
-            $('.lengow_form button[type="submit"]').addClass('success');
-            form.submit();
-           }, 1000);
-            $(".lengow-nav").reload();
+
+            $('.lengow_form button[type="submit"]').addClass('loading');
+
+            setTimeout(function () {
+                $('.lengow_form button[type="submit"]').removeClass('loading');
+                $('.lengow_form button[type="submit"]').addClass('success');
+                form.submit();
+            }, 1000);
+
         });
 
         // MODAL
@@ -146,6 +148,19 @@
             if ($('.js-log-select').val() !== null) {
                 window.location.href = $('.js-log-select').val();
             }
+        });
+
+        /**
+         * Ajax to display Stock Management Button
+         */
+        $("input[name='lengow_import_enabled'][type='checkbox']").on('change', function(e) {
+            e.preventDefault();
+            if ($("input[name='lengow_import_enabled'][type='checkbox']").prop('checked')) {
+                $('#js-menugotoimport').show();
+            } else {
+                $('#js-menugotoimport').hide();
+            }
+
         });
 
     });
