@@ -96,17 +96,20 @@ $list_file = Lengow_Log::get_paths();
 		<div class="lgw-box">
 			<h2><?php echo $locale->t('global_setting.screen.import_setting_title'); ?></h2>
 			<p><?php echo $locale->t('global_setting.screen.import_setting_description'); ?></p>
-			<div class="lgw-switch <?php echo $values['lengow_import_enabled'] == 1 ? 'checked' : '' ;?>">
-				<label>
-					<div>
-						<span></span>
-						<input type="hidden" name="lengow_import_enabled" value="0">
-						<input name="lengow_import_enabled"
-							   type="checkbox"
-							<?php echo $values['lengow_import_enabled'] == 1 ? 'checked' : '' ;?> />
-					</div>
-					<?php echo $keys['lengow_import_enabled']['label'] ?>
-				</label>
+			<div class="form-group">
+				<div class="lgw-switch <?php echo $values['lengow_import_enabled'] == 1 ? 'checked' : '' ;?>">
+					<label>
+						<div>
+							<span></span>
+							<input type="hidden" name="lengow_import_enabled" value="0">
+							<input name="lengow_import_enabled"
+								   type="checkbox"
+								<?php echo $values['lengow_import_enabled'] == 1 ? 'checked' : '' ;?> />
+						</div>
+						<?php echo $keys['lengow_import_enabled']['label'] ?>
+					</label>
+				</div>
+				<span class="legend" style="display:block;"><?php echo $keys['lengow_import_enabled']['legend'] ?></span>
 			</div>
 			<div id="lengow_wrapper_import">
 				<div class="grey-frame">
@@ -137,7 +140,6 @@ $list_file = Lengow_Log::get_paths();
 					</div>
 				</div>
 			</div>
-			<span class="legend" style="display:block;"><?php echo $keys['lengow_import_enabled']['legend'] ?></span>
 		</div>
 		<div class="lgw-box">
 			<h2><?php echo $locale->t( 'global_setting.screen.log_file_title' ); ?></h2>

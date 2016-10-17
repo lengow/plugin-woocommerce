@@ -56,25 +56,20 @@ class Lengow_Configuration {
 					'legend' => $locale->t( 'lengow_settings.lengow_authorized_ip_legend' ),
 				),
 				'lengow_last_order_statistic_update' => array(
-					'label'  => $locale->t( 'lengow_settings.lengow_last_order_statistic_update_title' ),
 					'export' => false
 				),
 				'lengow_order_statistic'             => array(
-					'label'  => $locale->t( 'lengow_settings.lengow_order_statistic_title' ),
 					'type'   => 'json',
 					'export' => false
 				),
 				'lengow_last_option_update'          => array(
-					'label'  => $locale->t( 'lengow_settings.lengow_last_option_update_title' ),
 					'type'   => 'datetime',
 					'export' => false
 				),
 				'lengow_last_account_status_update'  => array(
-					'label'  => $locale->t( 'lengow_settings.lengow_last_account_status_update_title' ),
 					'export' => false
 				),
 				'lengow_account_status'              => array(
-					'label'  => $locale->t( 'lengow_settings.lengow_account_status_title' ),
 					'export' => false
 				),
 				'lengow_selection_enabled'           => array(
