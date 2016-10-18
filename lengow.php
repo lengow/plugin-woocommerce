@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Lengow for Woocommerce 2.x
+ * Plugin Name: Lengow for WooCommerce
  * Plugin URI: http://www.lengow.com
- * Description: Export your catalog and synchronize your stock
+ * Description: Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
  * Version: 2.0.0
  * Author: Lengow
  * Author URI: http://www.lengow.com

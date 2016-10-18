@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Lengow Plugin for WooCommerce\n"
 "POT-Creation-Date: 2016-08-30 11:31+0100\n"
-"PO-Revision-Date: 2016-08-30 12:18+0100\n"
+"PO-Revision-Date: 2016-10-18 11:04+0100\n"
 "Last-Translator: \n"
 "Language-Team: Lengow <team-connector@lengow.com>\n"
 "Language: French\n"
@@ -20,14 +20,22 @@ msgstr ""
 # @ lengow
 #. translators: plugin header field 'Plugin Name'
 #: lengow.php:0
-msgid "Lengow for Woocommerce 2.x"
-msgstr "Lengow pour Woocommerce 2.x"
+msgid "Lengow for WooCommerce"
+msgstr "Lengow pour WooCommerce"
 
 # @ lengow
 #. translators: plugin header field 'Description'
 #: lengow.php:0
-msgid "Export your catalog and synchronize your stock"
-msgstr "Exportez votre catalogue produit et synchronisez vos stocks"
+msgid ""
+"Lengow allows you to easily export your product catalogue from your "
+"WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, "
+"LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing "
+"channels!"
+msgstr ""
+"Avec votre module Lengow pour WooCommerce vendez rapidement vos produits sur "
+"Amazon, Ebay, Facebook, Google Shopping, Criteo, Bing et d’autres et touchez "
+"facilement de nouveaux clients partout dans le monde. Plus de 1 800 canaux "
+"marketing vous attendent sur la plateforme Lengow !"
 
 # @ lengow
 #. translators: plugin header field 'Version'
@@ -45,4 +53,4 @@ msgstr "Lengow"
 #. translators: plugin header field 'AuthorURI' and 'PluginURI'
 #: lengow.php:0
 msgid "http://www.lengow.com"
-msgstr "http://www.lengow.com"
+msgstr "http://www.lengow.com/fr"

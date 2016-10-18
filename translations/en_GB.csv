@@ -1,7 +1,7 @@
 module.name|Lengow
-module.plugin_name|Lengow for Woocommerce 2.x
+module.plugin_name|Lengow for WooCommerce
 module.plugin_uri|http://www.lengow.com
-module.description|Export your catalog and synchronize your stock
+module.description|Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
 module.version|2.0.0
 module.author|Lengow
 menu.product|Products
@@ -13,13 +13,13 @@ menu.upgrade_account|Subscribe
 menu.help|Help
 menu.global_parameter|General settings
 footer.legals|Legal notices
-footer.plugin_lengow|Lengow Woocommerce Plugin
+footer.plugin_lengow|Lengow WooCommerce Plugin
 dashboard.screen.welcome_back|Hi! Welcome back!
 dashboard.screen.go_to_lengow|Go to Lengow
 dashboard.screen.products_title|Products
 dashboard.screen.products_text|Take a look at all available products so that you can prepare your catalogue
 dashboard.screen.settings_title|Settings
-dashboard.screen.settings_text|Configure your Woocommerce plugin main settings
+dashboard.screen.settings_text|Configure your WooCommerce plugin main settings
 dashboard.screen.partner_business|Lengow, your business partner
 dashboard.screen.stat_turnover|Turnover
 dashboard.screen.stat_nb_orders|Orders
@@ -27,7 +27,7 @@ dashboard.screen.stat_more_stats|Want more stats?
 dashboard.screen.some_help_title|Need some help?
 dashboard.screen.get_in_touch|Get in touch with Lengow.
 dashboard.screen.visit_help_center|Visit our Help Center
-dashboard.screen.configure_plugin|for detailed information on how to configure your Woocommerce plugin properly
+dashboard.screen.configure_plugin|for detailed information on how to configure your WooCommerce plugin properly
 status.screen.title_end_free_trial|All good things come to an end
 status.screen.subtitle_end_free_trial|You've reached the end of your trial!
 status.screen.first_description_end_free_trial|Your free 15-day trial period on Lengow has now expired. We know that it is sad news, but the best is yet to come! We sincerely hope Lengow has helped you improve your business.
@@ -71,13 +71,13 @@ product.table.reference|UGS (Sku)
 product.table.stock|Stock
 product.table.category_name|Category
 product.table.type|Type
-product.table.price|Original price
+product.table.price|Price
 product.table.lengow_status|Include in export?
 product.table.edit|Edit
 product.table.publish_on_lengow|Include in export
-product.table.unpublish_on_lengow|Exclude in export
-product.table.in_stock|In Sotck
-product.table.out_of_stock|Out of Stock
+product.table.unpublish_on_lengow|Exclude from export
+product.table.in_stock|In stock
+product.table.out_of_stock|Out of stock
 product.table.type_downloadable|Downloadable
 product.table.type_virtual|Virtual
 order.screen.import_charge_first|Retrieving your orders...
@@ -85,7 +85,7 @@ order.screen.import_charge_second|Please bear with us; this will not take long (
 order.screen.last_order_importation|Last synchronization
 order.screen.no_order_importation|No synchronisation for now
 order.screen.button_update_orders|Synchronize Stock
-order.screen.order_synchronize_disabled|You have not activated stock management, please visit <a href=%{url}>this page</a>
+order.screen.order_synchronize_disabled|The option to decrease stocks in your WooCommerce backoffice is not activated; please visit <a href=%{url}>this page</a> to do it.
 order.screen.preprod_warning_message|You are in pre-production mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>
 global_setting.screen.preprod_mode_title|Pre-production Mode
 global_setting.screen.preprod_mode_description|Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY
@@ -95,8 +95,8 @@ global_setting.screen.button_download_file|Download log files
 global_setting.screen.button_save|Save changes
 global_setting.screen.setting_saving|Saving...
 global_setting.screen.setting_saved|Saved!
-global_setting.screen.import_setting_title|Order import
-global_setting.screen.import_setting_description|Manage your import settings for marketplace orders here
+global_setting.screen.import_setting_title|Stock management
+global_setting.screen.import_setting_description|All your orders are centralized in your Lengow platform : choose here if you want to synchronize your orders and decrease your products stock in your WooCommerce backoffice
 global_setting.screen.nb_days|days
 global_setting.screen.export_title|Export Setting
 global_setting.screen.product_types_title|Product type to export
@@ -109,32 +109,32 @@ help.screen.link_lengow_support|https://supportlengow.zendesk.com/hc/en-us/reque
 help.screen.need_some_help|Need some help?
 help.screen.contain_text_support_hour|We’ll do our best to get back to you during regular business hours (Monday to Friday – 9am to 6pm GMT+1).
 help.screen.find_answer|You can also find answers in our 
-help.screen.link_woocommerce_guide|Woocommerce dedicated guide
-help.screen.knowledge_link_url|https://en.lengow.help/help/woocommerce
+help.screen.link_woocommerce_guide|WooCommerce dedicated guide
+help.screen.knowledge_link_url|https://en.lengow.help/help/plugins-list
 legals.screen.simplified_company|Simplified limited liability company
 legals.screen.social_capital|Social capital:
 legals.screen.cnil_declaration|CNIL declaration:
-legals.screen.company_registration_number|Company Registration Number, Nantes:
+legals.screen.company_registration_number|Company Registration Number (Nantes):
 legals.screen.vat_identification_number|VAT identification number:
 legals.screen.address|Address
 legals.screen.contact|Contact
 legals.screen.hosting|Hosting
 lengow_settings.lengow_token_title|Token
-lengow_settings.lengow_store_active_title|Activate Store
+lengow_settings.lengow_store_active_title|Enable store
 lengow_settings.lengow_account_id_title|Account ID
 lengow_settings.lengow_access_token_title|Access Token
 lengow_settings.lengow_secret_token_title|Secret Token
 lengow_settings.lengow_authorized_ip_title|Authorised IP
-lengow_settings.lengow_authorized_ip_legend|Authorized IP separated by:
+lengow_settings.lengow_authorized_ip_legend|Authorize IP to get access to your export feed.<br />Separate them ' ; '
 lengow_settings.lengow_selection_enabled_title|Export the selection only
 lengow_settings.lengow_selection_enabled_legend|Activate this option if you do not want to export all available products. Then, select only the products you want to export
 lengow_settings.lengow_out_stock_title|Include out of stock products
 lengow_settings.lengow_product_types_title|Product type to export
-lengow_settings.lengow_product_types_legend|Product type legend
+lengow_settings.lengow_product_types_legend|Choose here the type of products you want to export: they will be automatically added to your export. Then go to the product page if you want to refine your selection.
 lengow_settings.lengow_cron_enabled_title|Use Crontab module WooCommerce
 lengow_settings.lengow_last_export_title|Last export
 lengow_settings.lengow_import_days_title|Re-import all orders made since:
-lengow_settings.lengow_import_days_legend|Activate this option if you have incorrect pending orders. It lets you re-import all orders that have been processed during this faulty period
+lengow_settings.lengow_import_days_legend|Import orders from X days and decrease your stock
 lengow_settings.lengow_import_ship_mp_enabled_title|Decrease my stock with the orders sent by marketplaces
 lengow_settings.lengow_import_ship_mp_enabled_legend|Use this option to take into account your orders sent by marketplaces on your stock in your WooCommerce backoffice
 lengow_settings.lengow_preprod_enabled_title|Activate Pre-production Mode
@@ -142,13 +142,13 @@ lengow_settings.lengow_import_in_progress_title|Import in progress
 lengow_settings.lengow_last_import_manual_title|Last manual import
 lengow_settings.lengow_last_import_cron_title|Last Cron import
 lengow_settings.lengow_import_enabled_title|Activate orders synchronisation
-lengow_settings.lengow_import_enabled_legend|Use this option to decrease stocks in your Woocommerce backoffice
+lengow_settings.lengow_import_enabled_legend|Use this option to decrease stocks in your WooCommerce backoffice
 lengow_settings.lengow_variation_enabled_title|Export product variations
 lengow_settings.lengow_variation_enabled_legend|If you don't want to export all of your products' variations, disable this option
 lengow_log.error.import_in_progress|Import in progress
 lengow_log.error.rest_time_to_import|Please wait %{rest_time} seconds before re-importing orders
 lengow_log.error.account_id_empty|Account ID, Access Token or Secret is empty
-lengow_log.error.nb_order_imported|%{nb_order} order(s) decremented
+lengow_log.error.nb_order_imported|%{nb_order} order(s) decreased
 lengow_log.error.nb_order_with_error|%{nb_order} order(s) with errors
 lengow_log.error.no_notification|No new notification on order
 lengow_log.error.no_country_for_billing_address|Lengow error: billing address does not contain the country
@@ -156,7 +156,7 @@ lengow_log.error.no_billing_address|Lengow error: no billing address in the orde
 lengow_log.error.no_country_for_delivery_address|Lengow error: delivery address does not contain the country
 lengow_log.error.no_product|Lengow error: no product in the order
 lengow_log.error.check_logs|You can check logs on <a href=%{link}>this page</a>
-lengow_log.exception.no_connection_webservice|connection didn't work with the Lengow webservice
+lengow_log.exception.no_connection_webservice|connection did not work with the Lengow webservice
 lengow_log.exception.credentials_not_valid|account ID, token access or secret token are not valid
 lengow_log.exception.error_lengow_webservice|Lengow webservice: %{error_code} - %{error_message}
 lengow_log.exception.order_not_found|Lengow error: order cannot be found in Lengow feed
