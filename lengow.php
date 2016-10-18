@@ -176,7 +176,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			) );
 			wp_enqueue_style( 'lengow_admin_css' );
 
-			wp_register_script( 'lengow_boostrap_js', plugins_url( '/assets/js/bootstrap.min.js', __FILE__ ) );
+            if ( intval(get_bloginfo('version')) >= 4 ) {
+                wp_register_script( 'lengow_boostrap_js', plugins_url( '/assets/js/bootstrap_v3.min.js', __FILE__ ) );
+            } else {
+                wp_register_script( 'lengow_boostrap_js', plugins_url( '/assets/js/bootstrap.min.js', __FILE__ ) );
+            }
 			wp_register_script( 'lengow_settings_js', plugins_url( '/assets/js/lengow/main_setting.js', __FILE__ ) );
 			wp_register_script( 'lengow_select2', plugins_url( '/assets/js/select2.js', __FILE__ ) );
 			wp_register_script( 'lengow_products', plugins_url( '/assets/js/lengow/products.js', __FILE__ ) );

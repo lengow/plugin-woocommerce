@@ -31,12 +31,14 @@
         $( ".lengow_form" ).submit(function( event ) {
             event.preventDefault();
             var form = this;
-          $('.lengow_form button[type="submit"]').addClass('loading');
-          setTimeout(function () {
-            $('.lengow_form button[type="submit"]').removeClass('loading');
-            $('.lengow_form button[type="submit"]').addClass('success');
-            form.submit();
-           }, 1000);
+
+            $('.lengow_form button[type="submit"]').addClass('loading');
+
+            setTimeout(function () {
+                $('.lengow_form button[type="submit"]').removeClass('loading');
+                $('.lengow_form button[type="submit"]').addClass('success');
+                form.submit();
+            }, 1000);
         });
 
         // MODAL

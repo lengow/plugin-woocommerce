@@ -39,14 +39,16 @@ if ( ! defined( 'ABSPATH' ) ) {
             </div>
         </div>
             <!-- UPDATE ORDERS -->
-            <div id="lengow_charge_import_order" style="display:none">
+            <div id="lengow_charge_import_order" style="display:none;">
                 <p id="lengow_charge_lign1"><?php echo $locale->t('order.screen.import_charge_first') ?></p>
                 <p id="lengow_charge_lign2"><?php echo $locale->t('order.screen.import_charge_second')?></p>
             </div>
             <!-- /UPDATE ORDERS -->
     <?php else: ?>
+        <div class="lgw-box">
             <?php echo $locale->t('order.screen.order_synchronize_disabled', array(
                 'url' => admin_url('admin.php?page=lengow&tab=lengow_admin_settings')
             )); ?>
+        </div>
     <?php endif; ?>
 </div>
