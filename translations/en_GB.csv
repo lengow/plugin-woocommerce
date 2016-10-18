@@ -86,7 +86,7 @@ order.screen.last_order_importation|Last synchronization
 order.screen.no_order_importation|No synchronisation for now
 order.screen.button_update_orders|Synchronize Stock
 order.screen.order_synchronize_disabled|The option to decrease stocks in your WooCommerce backoffice is not activated; please visit <a href=%{url}>this page</a> to do it.
-order.screen.preprod_warning_message|You are in pre-production mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>
+order.screen.preprod_warning_message|You are in pre-production mode. You can synchronize your stock but no interaction with Lengow is possible. <a href=%{url}>Change this</a>
 global_setting.screen.preprod_mode_title|Pre-production Mode
 global_setting.screen.preprod_mode_description|Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY
 global_setting.screen.log_file_title|Log Files
@@ -134,7 +134,7 @@ lengow_settings.lengow_product_types_legend|Choose here the type of products you
 lengow_settings.lengow_cron_enabled_title|Use Crontab module WooCommerce
 lengow_settings.lengow_last_export_title|Last export
 lengow_settings.lengow_import_days_title|Re-import all orders made since:
-lengow_settings.lengow_import_days_legend|Import orders from X days and decrease your stock
+lengow_settings.lengow_import_days_legend|Import orders from ... days and decrease your stock
 lengow_settings.lengow_import_ship_mp_enabled_title|Decrease my stock with the orders sent by marketplaces
 lengow_settings.lengow_import_ship_mp_enabled_legend|Use this option to take into account your orders sent by marketplaces on your stock in your WooCommerce backoffice
 lengow_settings.lengow_preprod_enabled_title|Activate Pre-production Mode
@@ -142,7 +142,7 @@ lengow_settings.lengow_import_in_progress_title|Import in progress
 lengow_settings.lengow_last_import_manual_title|Last manual import
 lengow_settings.lengow_last_import_cron_title|Last Cron import
 lengow_settings.lengow_import_enabled_title|Activate orders synchronisation
-lengow_settings.lengow_import_enabled_legend|Use this option to decrease stocks in your WooCommerce backoffice
+lengow_settings.lengow_import_enabled_legend|Use this option to decrease stocks in your WooCommerce backoffice. Go to the stock management page if you want to launch a manual synchronisation.
 lengow_settings.lengow_variation_enabled_title|Export product variations
 lengow_settings.lengow_variation_enabled_legend|If you don't want to export all of your products' variations, disable this option
 lengow_log.error.import_in_progress|Import in progress
@@ -150,7 +150,7 @@ lengow_log.error.rest_time_to_import|Please wait %{rest_time} seconds before re-
 lengow_log.error.account_id_empty|Account ID, Access Token or Secret is empty
 lengow_log.error.nb_order_imported|%{nb_order} order(s) decreased
 lengow_log.error.nb_order_with_error|%{nb_order} order(s) with errors
-lengow_log.error.no_notification|No new notification on order
+lengow_log.error.no_notification|No new notification about your stock
 lengow_log.error.no_country_for_billing_address|Lengow error: billing address does not contain the country
 lengow_log.error.no_billing_address|Lengow error: no billing address in the order
 lengow_log.error.no_country_for_delivery_address|Lengow error: delivery address does not contain the country

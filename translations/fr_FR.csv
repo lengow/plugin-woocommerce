@@ -86,7 +86,7 @@ order.screen.last_order_importation|Dernière synchronisation
 order.screen.no_order_importation|Aucune synchronisation pour le moment
 order.screen.button_update_orders|Synchroniser le stock
 order.screen.order_synchronize_disabled|Vous n'avez pas activé l'option permettant de diminuer le stock de vos produits. Vous pouvez le faire sur <a href=%{url}>cette page</a>
-order.screen.preprod_warning_message|Vous êtes en mode préproduction. Vous pouvez importer vos commandes mais les interactions avec Lengow ne sont pas possibles. <br /><a href=%{url}>Retourner en mode production ?</a>
+order.screen.preprod_warning_message|Vous êtes en mode préproduction. Vous pouvez synchroniser vos stocks mais les interactions avec Lengow ne sont pas possibles. <a href=%{url}>Retourner en mode production ?</a>
 global_setting.screen.preprod_mode_title|Mode préproduction
 global_setting.screen.preprod_mode_description|Utilisez la pré-production pour tester et simuler des commandes fictives. Pour rappel, vous devez activer ces paramètres UNIQUEMENT sur votre serveur de préproduction.
 global_setting.screen.log_file_title|Fichiers de Log
@@ -125,7 +125,7 @@ lengow_settings.lengow_account_id_title|ID du compte
 lengow_settings.lengow_access_token_title|Access Token
 lengow_settings.lengow_secret_token_title|Secret Token
 lengow_settings.lengow_authorized_ip_title|IP autorisée(s)
-lengow_settings.lengow_authorized_ip_legend|IP autorisée(s) à accéder à votre flux d'export.<br />Séparez-les par ' ; '
+lengow_settings.lengow_authorized_ip_legend|Listez ici les IP autorisées à accéder à votre flux d'export.<br />Séparez-les par ' ; '
 lengow_settings.lengow_selection_enabled_title|Exporter seulement la sélection
 lengow_settings.lengow_selection_enabled_legend|Activez cette option si vous ne voulez pas exporter tous vos produits disponibles. Sélectionnez ensuite les produits un par un.
 lengow_settings.lengow_out_stock_title|Inclure les produits hors stock
@@ -134,7 +134,7 @@ lengow_settings.lengow_product_types_legend|Choisissez le type de produits que v
 lengow_settings.lengow_cron_enabled_title|Utilisez l'éditeur de tâche Cron
 lengow_settings.lengow_last_export_title|Dernier export
 lengow_settings.lengow_import_days_title|Ré-importer toutes les commandes réalisées depuis
-lengow_settings.lengow_import_days_legend|Importez vos commandes depuis X jours et diminuez votre stock
+lengow_settings.lengow_import_days_legend|Importez vos commandes depuis ... jours et diminuez votre stock
 lengow_settings.lengow_import_ship_mp_enabled_title|Diminuez mon stock avec les commandes envoyées par les places de marché.
 lengow_settings.lengow_import_ship_mp_enabled_legend|Activez cette option pour diminuer mon stock avec les commandes envoyées par les places de marché.
 lengow_settings.lengow_preprod_enabled_title|Activez le mode préproduction
@@ -142,7 +142,7 @@ lengow_settings.lengow_import_in_progress_title|Import en cours
 lengow_settings.lengow_last_import_manual_title|Dernier import manuel
 lengow_settings.lengow_last_import_cron_title|Dernier import CRON
 lengow_settings.lengow_import_enabled_title|Activer la synchronisation des commandes
-lengow_settings.lengow_import_enabled_legend|Activez cette option pour diminuer les stocks dans votre backoffice WooCommerce
+lengow_settings.lengow_import_enabled_legend|Activez cette option pour diminuer les stocks dans votre backoffice WooCommerce. Rendez-vous sur la page de gestion du stock si vous souhaitez lancer une synchronisation manuelle.
 lengow_settings.lengow_variation_enabled_title|Exporter les déclinaisons produit
 lengow_settings.lengow_variation_enabled_legend|Activez cette option si vous souhaitez exporter tout votre catalogue avec les déclinaisons produit
 lengow_log.error.import_in_progress|Import en cours
@@ -150,7 +150,7 @@ lengow_log.error.rest_time_to_import|Attendez %{rest_time}  secondes avant d'imp
 lengow_log.error.account_id_empty|ID du compte, access token ou secret token vides
 lengow_log.error.nb_order_imported|%{nb_order} commande(s) diminuée(s)
 lengow_log.error.nb_order_with_error|%{nb_order} commande(s) avec erreurs
-lengow_log.error.no_notification|Pas de nouvelle notification sur vos commandes
+lengow_log.error.no_notification|Pas de nouvelle notification concernant vos stocks
 lengow_log.error.no_country_for_billing_address|Erreur Lengow : l'adresse de facturation ne contient pas de pays.
 lengow_log.error.no_billing_address|Erreur Lengow : pas d'adresse de facturation dans cette commande.
 lengow_log.error.no_country_for_delivery_address|Erreur Lengow : l'adresse de livraison ne contient pas de pays.

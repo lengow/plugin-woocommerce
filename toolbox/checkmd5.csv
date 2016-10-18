@@ -74,11 +74,11 @@
 /toolbox/views/footer.php|4d214dd44eaca17a5b8c100a0cee7ebc
 /toolbox/index.php|a63fde55e14baed4937931179aa7806a
 /toolbox/checksum.php|118121e95036e6d3f16b2600ed5a6327
-/translations/en_GB.csv|6044028cda2dfa5460444da4e5d530fd
-/translations/fr_FR.csv|2a9fabeb39073abf3653ebc2970cb804
+/translations/en_GB.csv|a203dce9199ab1dff0b60cf1cc140ffe
+/translations/fr_FR.csv|22ffc1cb36b28ea52e3ea59a9a9f1151
 /translations/yml/log.yml|3b1fa8c63b6be84644ea1686011e7736
-/translations/yml/fr_FR.yml|124ae796aad4f06a6bfc75449932aea5
-/translations/yml/en_GB.yml|1e08fa503abfb935225e4dcf6f45c10a
+/translations/yml/fr_FR.yml|9afebd29ffd3d64d75a65c25655f8110
+/translations/yml/en_GB.yml|94203ba54467451ac01a028f862635c4
 /upgrade/update_2.0.0.php|ca3fe55084486f4cffd2f46d1b2d4057
 /webservice/cron.php|4adae6f3564a236aaba03344419f0840
 /webservice/export.php|0753105ae7153c3b11539c6b7e3e2352
