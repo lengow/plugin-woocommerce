@@ -3,7 +3,6 @@
 /*************************************************/
 
 .lgw-box {
-  overflow: hidden;
   background: white;
   display: block;
   border-radius: 3px;
@@ -12,6 +11,9 @@
   margin-bottom: 30px;
   position: relative;
   top: 0;
+}
+.lgw-box.row {
+  overflow: hidden;
 }
 .lgw-table .lgw-box {
   padding-top: 0;
