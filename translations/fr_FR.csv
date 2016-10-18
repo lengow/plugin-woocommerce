@@ -106,3 +106,61 @@ help.screen.title|Demandez de l'aide à notre équipe Support !
 help.screen.contain_text_support|Des questions, un feedback sur Lengow... transmettez vos demandes au 
 help.screen.title_lengow_support|support Lengow
 help.screen.link_lengow_support|https://supportlengow.zendesk.com/hc/fr/requests/new
+help.screen.need_some_help|Besoin d'aide ?
+help.screen.contain_text_support_hour|Nous ferons notre maximum pour revenir vers vous au plus vite (Notre équipe Support est disponible du lundi au vendredi, de 9h à 18h).
+help.screen.find_answer|Vous pouvez aussi consulter
+help.screen.link_woocommerce_guide|notre guide dédié à WooCommerce
+help.screen.knowledge_link_url|https://fr.lengow.help/help/dossier-modules
+legals.screen.simplified_company|Société par actions simplifiées
+legals.screen.social_capital|Capital social :
+legals.screen.cnil_declaration|Déclaration CNIL :
+legals.screen.company_registration_number|RCS de Nantes :
+legals.screen.vat_identification_number|Numéro de TVA intracommunautaire :
+legals.screen.address|Adresse
+legals.screen.contact|Contact
+legals.screen.hosting|Hébergement
+lengow_settings.lengow_token_title|Token
+lengow_settings.lengow_store_active_title|Activer la boutique
+lengow_settings.lengow_account_id_title|ID du compte
+lengow_settings.lengow_access_token_title|Access Token
+lengow_settings.lengow_secret_token_title|Secret Token
+lengow_settings.lengow_authorized_ip_title|IP autorisée(s)
+lengow_settings.lengow_authorized_ip_legend|IP autorisée(s) à accéder à votre flux d'export.<br />Séparez-les par ' ; '
+lengow_settings.lengow_selection_enabled_title|Exporter seulement la sélection
+lengow_settings.lengow_selection_enabled_legend|Activez cette option si vous ne voulez pas exporter tous vos produits disponibles. Sélectionnez ensuite les produits un par un.
+lengow_settings.lengow_out_stock_title|Inclure les produits hors stock
+lengow_settings.lengow_product_types_title|Type de produit à exporter
+lengow_settings.lengow_product_types_legend|Choisissez le type de produits que vous voulez exporter : ils seront automatiquement ajoutés à votre export. Ensuite, rendez-vous sur la page des produits si vous souhaitez affiner votre sélection.
+lengow_settings.lengow_cron_enabled_title|Utilisez l'éditeur de tâche Cron
+lengow_settings.lengow_last_export_title|Dernier export
+lengow_settings.lengow_import_days_title|Ré-importer toutes les commandes réalisées depuis
+lengow_settings.lengow_import_days_legend|Importez vos commandes depuis X jours et diminuez votre stock
+lengow_settings.lengow_import_ship_mp_enabled_title|Diminuez mon stock avec les commandes envoyées par les places de marché.
+lengow_settings.lengow_import_ship_mp_enabled_legend|Activez cette option pour diminuer mon stock avec les commandes envoyées par les places de marché.
+lengow_settings.lengow_preprod_enabled_title|Activez le mode préproduction
+lengow_settings.lengow_import_in_progress_title|Import en cours
+lengow_settings.lengow_last_import_manual_title|Dernier import manuel
+lengow_settings.lengow_last_import_cron_title|Dernier import CRON
+lengow_settings.lengow_import_enabled_title|Activer la synchronisation des commandes
+lengow_settings.lengow_import_enabled_legend|Activez cette option pour diminuer les stocks dans votre backoffice WooCommerce
+lengow_settings.lengow_variation_enabled_title|Exporter les déclinaisons produit
+lengow_settings.lengow_variation_enabled_legend|Activez cette option si vous souhaitez exporter tout votre catalogue avec les déclinaisons produit
+lengow_log.error.import_in_progress|Import en cours
+lengow_log.error.rest_time_to_import|Attendez %{rest_time}  secondes avant d'importer de nouveau vos commandes
+lengow_log.error.account_id_empty|ID du compte, access token ou secret token vides
+lengow_log.error.nb_order_imported|%{nb_order} commande(s) diminuée(s)
+lengow_log.error.nb_order_with_error|%{nb_order} commande(s) avec erreurs
+lengow_log.error.no_notification|Pas de nouvelle notification sur vos commandes
+lengow_log.error.no_country_for_billing_address|Erreur Lengow : l'adresse de facturation ne contient pas de pays.
+lengow_log.error.no_billing_address|Erreur Lengow : pas d'adresse de facturation dans cette commande.
+lengow_log.error.no_country_for_delivery_address|Erreur Lengow : l'adresse de livraison ne contient pas de pays.
+lengow_log.error.no_product|Erreur Lengow : pas de produit dans cette commande.
+lengow_log.error.check_logs|Retrouvez tout l'historique des logs sur <a href=%{link}>cette page</a>
+lengow_log.exception.no_connection_webservice|la connexion ne se fait pas avec Lengow
+lengow_log.exception.credentials_not_valid|L'ID du compte, l'acces Token ou le secret Token secret ne sont pas valides
+lengow_log.exception.error_lengow_webservice|L'API Lengow : %{error_code} - %{error_message}
+lengow_log.exception.order_not_found|Erreur Lengow : la commande n'a pas été trouvée dans le flux Lengow.
+lengow_log.exception.marketplace_not_present|Erreur Lengow : la place de marché %{marketplace_name} n’apparaît pas dans la liste des places de marché.
+lengow_log.exception.product_list_is_empty|La commande ne peut être sauvegardée.
+lengow_log.exception.product_not_be_found|Le produit %{product_id} n'a pu être trouvé.
+lengow_log.exception.product_is_a_parent|Le produit %{product_id}  est un ID parent. Les déclinaisons du produit sont nécessaires.
