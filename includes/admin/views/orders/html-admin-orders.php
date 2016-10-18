@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <?php echo $locale->t('menu.preprod_active') ?>
             </div>
         <?php endif; ?>
-        <div class="lgw-box" id="lengow_order_wrapper">
+        <div class="lgw-box row" id="lengow_order_wrapper">
             <?php if ( $warning_message) : ?>
                 <p class="blue-frame" style="line-height: 20px;">
                     <?php echo $warning_message ?>
