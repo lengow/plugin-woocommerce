@@ -206,7 +206,7 @@ class Lengow_Import_Order {
 			$error_message = '[WooCommerce error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
 		}
 		if ( isset( $error_message ) ) {
-			$decoded_message = Lengow_Main::decode_log_message( $error_message );
+			$decoded_message = Lengow_Main::decode_log_message( $error_message , 'en_GB');
 			Lengow_Main::log(
 				'Import',
 				Lengow_Main::set_log_message( 'log.import.order_import_failed', array(
@@ -265,7 +265,7 @@ class Lengow_Import_Order {
 		}
 		if ( count( $error_messages ) > 0 ) {
 			foreach ( $error_messages as $error_message ) {
-				$decoded_message = Lengow_Main::decode_log_message( $error_message );
+				$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 				Lengow_Main::log(
 					'Import',
 					Lengow_Main::set_log_message( 'log.import.order_import_failed', array(

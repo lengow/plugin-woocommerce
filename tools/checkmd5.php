@@ -11,11 +11,9 @@ $fp = fopen(dirname(dirname(__FILE__)).'/toolbox/checkmd5.csv', 'w+');
 
 $list_folders = array(
     '/assets',
-    '/export',
     '/includes',
     '/languages',
     '/toolbox',
-    '/translations',
     '/upgrade',
     '/webservice',
 );

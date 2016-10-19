@@ -74,17 +74,11 @@ class Lengow_Admin_Orders
                 'link' => admin_url('admin.php?page=lengow&tab=lengow_admin_settings')
             ));
         }
+        if (isset($return['error']) && $return['error'] != false) {
+            $message[]= Lengow_Main::decode_log_message($return['error']);
+        }
         if (count($message) == 0) {
             $message[]= $locale->t('lengow_log.error.no_notification');
-        }
-        if (isset($return['error']) && $return['error'] != false) {
-            foreach ($return['error'] as $errors) {
-                if (is_array($errors)) {
-                    $message[]= join(', ', Lengow_Main::decode_log_message($errors));
-                } else {
-                    $message[]= Lengow_Main::decode_log_message($errors);
-                }
-            }
         }
         return $message;
     }

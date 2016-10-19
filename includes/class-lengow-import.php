@@ -251,7 +251,7 @@ class Lengow_Import {
 					$error_message = '[WooCommerce error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
 				}
 				if ( isset( $error_message ) ) {
-					$decoded_message = Lengow_Main::decode_log_message( $error_message );
+					$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 					Lengow_Main::log(
 						'Import',
 						Lengow_Main::set_log_message(
@@ -501,7 +501,7 @@ class Lengow_Import {
 					$error_message = '[WooCommerce error]: "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
 				}
 				if ( isset( $error_message ) ) {
-					$decoded_message = Lengow_Main::decode_log_message( $error_message );
+					$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 					Lengow_Main::log(
 						'Import',
 						Lengow_Main::set_log_message(
