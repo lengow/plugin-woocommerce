@@ -206,7 +206,7 @@ class Lengow_Import_Order {
 			$error_message = '[WooCommerce error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
 		}
 		if ( isset( $error_message ) ) {
-			$decoded_message = Lengow_Main::decode_log_message( $error_message , 'en_GB');
+			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 			Lengow_Main::log(
 				'Import',
 				Lengow_Main::set_log_message( 'log.import.order_import_failed', array(
@@ -336,7 +336,7 @@ class Lengow_Import_Order {
 				$found = true;
 			}
 			if ( ! $found ) {
-				$api_product_id    = ( ! is_null( $product_datas['merchant_product_id']->id )
+				$api_product_id = ( ! is_null( $product_datas['merchant_product_id']->id )
 					? (string) $product_datas['merchant_product_id']->id
 					: (string) $product_datas['marketplace_product_id']
 				);
@@ -361,9 +361,9 @@ class Lengow_Import_Order {
 			foreach ( $products as $product_id => $product ) {
 				$lengow_product = get_product( $product_id );
 				// Decrement stock product only if product managed in stock
-				if ($lengow_product->managing_stock()) {
-					$initial_stock  = $lengow_product->get_stock_quantity();
-					$new_stock      = $lengow_product->reduce_stock( $product['quantity'] );
+				if ( $lengow_product->managing_stock() ) {
+					$initial_stock = $lengow_product->get_stock_quantity();
+					$new_stock     = $lengow_product->reduce_stock( $product['quantity'] );
 					Lengow_Main::log(
 						'Import',
 						Lengow_Main::set_log_message( 'log.import.stock_decreased', array(

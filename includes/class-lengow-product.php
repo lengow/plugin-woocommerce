@@ -766,6 +766,5 @@ class Lengow_Product {
 
 		return $products;
 	}
-
 }
 

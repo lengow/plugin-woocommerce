@@ -40,7 +40,7 @@
 @ini_set( 'memory_limit', '512M' );
 
 // Init wordpress
-require(dirname(dirname(dirname(dirname(dirname($_SERVER["SCRIPT_FILENAME"]))))). '/wp-load.php');
+require( dirname( dirname( dirname( dirname( dirname( $_SERVER["SCRIPT_FILENAME"] ) ) ) ) ) . '/wp-load.php' );
 
 // Dependencies
 require_once( '../includes/class-lengow-main.php' );
@@ -111,7 +111,7 @@ $export = new Lengow_Export( array(
 if ( $get_params ) {
 	echo $export->get_export_params();
 } elseif ( $mode == 'size' ) {
-    echo $export->get_total_export_product();
+	echo $export->get_total_export_product();
 } elseif ( $mode == 'total' ) {
 	echo $export->get_total_product();
 } else {

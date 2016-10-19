@@ -21,16 +21,18 @@
 
 require 'views/head.php';
 
-$action = isset($_GET['action']) ?  $_GET['action'] : null;
-$file = isset($_GET['file']) ?  $_GET['file'] : null;
+$action = isset( $_GET['action'] ) ? $_GET['action'] : null;
+$file   = isset( $_GET['file'] ) ? $_GET['file'] : null;
 
-switch ($action) {
-    case 'download':
-        Lengow_Log::download($file);
-        break;
-    case 'download_all':
-        Lengow_Log::download();
-        break;
+switch ( $action ) {
+	case 'download':
+		Lengow_Log::download( $file );
+		break;
+	case 'download_all':
+		Lengow_Log::download();
+		break;
+	default:
+		break;
 }
 
 require 'views/header.php';
@@ -39,23 +41,23 @@ $locale = new Lengow_Translation();
 $listFile = Lengow_Log::get_paths();
 
 ?>
-<div class="container">
-<h1><?php echo $locale->t('toolbox.log.log_files'); ?></h1>
-
-<ul class="list-group">
-    <?php
-    foreach ($listFile as $file) {
-        echo '<li class="list-group-item">';
-        echo '<a href="/wp-content/plugins/lengow-woocommerce/toolbox/log.php?action=download&file='.urlencode($file['short_path']).'">
-    <i class="fa fa-download"></i> '.$file['name'].'</a>';
-        echo '</li>';
-    }
-    echo '<li class="list-group-item">';
-    echo '<a href="/wp-content/plugins/lengow-woocommerce/toolbox/log.php?action=download_all">
-        <i class="fa fa-download"></i> '.$locale->t('toolbox.log.download_all').'</a>';
-    echo '</li>';
-    ?>
-</ul>
-</div><!-- /.container -->
+	<div class="container">
+		<h1><?php echo $locale->t( 'toolbox.log.log_files' ); ?></h1>
+		<ul class="list-group">
+			<?php
+			foreach ( $listFile as $file ) {
+				echo '<li class="list-group-item">';
+				echo '<a href="/wp-content/plugins/lengow-woocommerce/toolbox/log.php?action=download&file='
+				     . urlencode( $file['short_path'] ) . '">
+                     <i class="fa fa-download"></i> ' . $file['name'] . '</a>';
+				echo '</li>';
+			}
+			echo '<li class="list-group-item">';
+			echo '<a href="/wp-content/plugins/lengow-woocommerce/toolbox/log.php?action=download_all">
+        		<i class="fa fa-download"></i> ' . $locale->t( 'toolbox.log.download_all' ) . '</a>';
+			echo '</li>';
+			?>
+		</ul>
+	</div><!-- /.container -->
 <?php
 require 'views/footer.php';

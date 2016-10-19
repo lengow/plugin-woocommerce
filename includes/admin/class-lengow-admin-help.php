@@ -9,7 +9,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+	exit;
 }
 
 /**
@@ -17,13 +17,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Lengow_Admin_Help {
 
-    /**
-     * Display help page
-     */
-    public static function display() {
-        $locale = new Lengow_Translation();
-        $keys   = Lengow_Configuration::get_keys();
-        include_once 'views/help/html-admin-help.php';
-
-    }
+	/**
+	 * Display help page
+	 */
+	public static function display() {
+		$locale = new Lengow_Translation();
+		$keys   = Lengow_Configuration::get_keys();
+		include_once 'views/help/html-admin-help.php';
+	}
 }

@@ -137,7 +137,7 @@ class Lengow_Sync {
 	 * @return boolean
 	 */
 	public static function set_cms_option( $force = false ) {
-		if ( Lengow_Main::is_new_merchant() ) {
+		if ( Lengow_Main::is_new_merchant() || (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
 			return false;
 		}
 		if ( ! $force ) {
@@ -225,10 +225,12 @@ class Lengow_Sync {
 			'get',
 			'/v3.0/subscriptions'
 		);
-		if ( isset($result->subscription) ) {
+		if ( isset( $result->subscription ) ) {
 			$status         = array();
 			$status['type'] = $result->subscription->billing_offer->type;
-			$status['day']  = - round( ( strtotime( date( "c" ) ) - strtotime( $result->subscription->renewal ) ) / 86400 );
+			$status['day']  = - round(
+				( strtotime( date( "c" ) ) - strtotime( $result->subscription->renewal ) ) / 86400
+			);
 			if ( $status['day'] < 0 ) {
 				$status['day'] = "0";
 			}

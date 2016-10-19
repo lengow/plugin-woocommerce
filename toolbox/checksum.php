@@ -21,10 +21,10 @@
 require 'views/head.php';
 require 'views/header.php';
 ?>
-    <div class="container">
-        <h1><?php echo $locale->t('toolbox.checksum.checksum_integrity'); ?></h1>
-        <?php echo $check->check_file_md5(); ?>
-    </div>
+	<div class="container">
+		<h1><?php echo $locale->t( 'toolbox.checksum.checksum_integrity' ); ?></h1>
+		<?php echo $check->check_file_md5(); ?>
+	</div>
 <?php
 require 'views/footer.php';
 ?>

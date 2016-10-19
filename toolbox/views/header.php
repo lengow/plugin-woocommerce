@@ -20,21 +20,6 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <!--<li>
-                        <a href="/wp-content/plugins/lengow-woocommerce/toolbox/product.php">
-                            <i class="fa fa-bicycle"></i> <?php echo $locale->t('toolbox.menu.product'); ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/wp-content/plugins/lengow-woocommerce/toolbox/order.php">
-                            <i class="fa fa-shopping-basket"></i> <?php echo $locale->t('toolbox.menu.order'); ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/wp-content/plugins/lengow-woocommerce/toolbox/config.php">
-                            <i class="fa fa-cog"></i> <?php echo $locale->t('toolbox.menu.configuration'); ?>
-                        </a>
-                    </li>-->
                 <li>
                     <a href="/wp-content/plugins/lengow-woocommerce/toolbox/checksum.php">
                         <i class="fa fa-search"></i> <?php echo $locale->t('toolbox.menu.checksum'); ?>
@@ -46,13 +31,6 @@
                     </a>
                 </li>
             </ul>
-            <!--<ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/wp-content/plugins/lengow-woocommerce/toolbox/logoff.php">
-                            <i class="fa fa-sign-out"></i> <?php echo $locale->t('toolbox.menu.log_off'); ?>
-                        </a>
-                    </li>
-                </ul>-->
         </div>
     </div>
 </nav>

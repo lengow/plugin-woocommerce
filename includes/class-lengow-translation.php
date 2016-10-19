@@ -93,6 +93,7 @@ class Lengow_Translation {
 				$params[] = '%{' . $key . '}';
 				$values[] = $value;
 			}
+
 			return str_replace( $params, $values, $text );
 		} else {
 			return $text;
@@ -121,6 +122,7 @@ class Lengow_Translation {
 			}
 		}
 		self::$translation[ $iso_code ] = $translation;
+
 		return count( $translation ) > 0;
 	}
 }

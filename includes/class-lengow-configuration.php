@@ -211,12 +211,12 @@ class Lengow_Configuration {
 				}
 				if ( $shop ) {
 					if ( isset( $value['shop'] ) && $value['shop'] ) {
-						$key_value = self::get( $key );
+						$key_value    = self::get( $key );
 						$rows[ $key ] = is_array( $key_value ) ? implode( ",", $key_value ) : $key_value;
 					}
 				} else {
 					if ( isset( $value['global'] ) && $value['global'] ) {
-						$key_value = self::get( $key );
+						$key_value    = self::get( $key );
 						$rows[ $key ] = is_array( $key_value ) ? implode( ",", $key_value ) : $key_value;
 					}
 				}
@@ -275,6 +275,5 @@ class Lengow_Configuration {
 			);
 		}
 	}
-
 }
 

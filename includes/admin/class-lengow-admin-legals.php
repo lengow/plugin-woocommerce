@@ -9,20 +9,19 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+	exit;
 }
 
 /**
  * Lengow_Admin_Legals Class.
  */
 class Lengow_Admin_Legals {
-    /**
-     * Display legals page
-     */
-    public static function display() {
-        $locale = new Lengow_Translation();
-        $keys   = Lengow_Configuration::get_keys();
-        include_once 'views/legals/html-admin-legals.php';
-
-    }
+	/**
+	 * Display legals page
+	 */
+	public static function display() {
+		$locale = new Lengow_Translation();
+		$keys   = Lengow_Configuration::get_keys();
+		include_once 'views/legals/html-admin-legals.php';
+	}
 }

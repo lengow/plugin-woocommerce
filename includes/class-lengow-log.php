@@ -83,7 +83,11 @@ class Lengow_Log extends Lengow_File {
 		}
 		$logs = array();
 		foreach ( $files as $file ) {
-			preg_match( '/\/lengow-woocommerce\/logs\/logs-([0-9]{4}-[0-9]{2}-[0-9]{2})\.txt/', $file->get_path(), $match );
+			preg_match(
+				'/\/lengow-woocommerce\/logs\/logs-([0-9]{4}-[0-9]{2}-[0-9]{2})\.txt/',
+				$file->get_path(),
+				$match
+			);
 			$logs[] = array(
 				'full_path'  => $file->get_path(),
 				'short_path' => 'logs-' . $match[1] . '.txt',
