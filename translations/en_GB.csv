@@ -67,7 +67,7 @@ product.table.button_search|Search
 product.table.id_product|ID
 product.table.image|Image
 product.table.name|Name
-product.table.reference|UGS (Sku)
+product.table.reference|UGS
 product.table.stock|Stock
 product.table.category_name|Category
 product.table.type|Type
@@ -91,12 +91,12 @@ global_setting.screen.preprod_mode_title|Pre-production Mode
 global_setting.screen.preprod_mode_description|Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY
 global_setting.screen.log_file_title|Log Files
 global_setting.screen.log_file_description|Find all the maintenance logs below (imported orders, errors reports...). They will be recorded here for 20 days.
-global_setting.screen.button_download_file|Download log files
+global_setting.screen.button_download_file|Download
 global_setting.screen.button_save|Save changes
 global_setting.screen.setting_saving|Saving...
 global_setting.screen.setting_saved|Saved!
 global_setting.screen.import_setting_title|Stock management
-global_setting.screen.import_setting_description|All your orders are centralized in your Lengow platform : choose here if you want to synchronize your orders and decrease your products stock in your WooCommerce backoffice
+global_setting.screen.import_setting_description|All your orders are centralized in your Lengow platform : choose here if you want to synchronize your orders in order to decrease your products stock in your WooCommerce backoffice
 global_setting.screen.nb_days|days
 global_setting.screen.export_title|Export Setting
 global_setting.screen.product_types_title|Product type to export
@@ -141,7 +141,7 @@ lengow_settings.lengow_preprod_enabled_title|Activate Pre-production Mode
 lengow_settings.lengow_import_in_progress_title|Import in progress
 lengow_settings.lengow_last_import_manual_title|Last manual import
 lengow_settings.lengow_last_import_cron_title|Last Cron import
-lengow_settings.lengow_import_enabled_title|Activate orders synchronisation
+lengow_settings.lengow_import_enabled_title|Activate stock synchronisation
 lengow_settings.lengow_import_enabled_legend|Use this option to decrease stocks in your WooCommerce backoffice. Go to the stock management page if you want to launch a manual synchronisation.
 lengow_settings.lengow_variation_enabled_title|Export product variations
 lengow_settings.lengow_variation_enabled_legend|If you don't want to export all of your products' variations, disable this option
