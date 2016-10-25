@@ -383,6 +383,9 @@ class Lengow_Connector {
 		}
 		try {
 			list( $account_id, $access_token, $secret_token ) = self::get_access_id();
+			if( is_null( $account_id ) ) {
+                return false;
+            }
 			$connector = new Lengow_Connector( $access_token, $secret_token );
 			$results   = $connector->$type(
 				$url,
