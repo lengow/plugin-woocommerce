@@ -14,7 +14,7 @@ On va alors installer le module directement dans le dossier plugin de la 3.5 et 
 ### Installation dans Wordpress ###
 
     cd ~/Documents/sites/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/tools
-    sh install.sh ~/Documents/docker_images/w461-w264
+    sh install.sh ~/Documents/docker_images/w461-w264/wordpress
 
 Le script va créer des liens symboliques vers les sources du module (Dans notre cas vers la version w461-w264)
 Activer l'extension Lengow for WooCommerce dans le menu Extensions / Extensions installées
