@@ -1,38 +1,50 @@
 ========================================================
 Version 2.0.0
 ========================================================
-- Full rewrite for the new platform Lengow
+
+	- Feature: Full rewrite for the new platform Lengow
+	- Feature: Add new lengow Dashbord
+	- Feature: Add new product selection
+	- Feature: Add new stock synchronisation page
+	- Feature: Add new help page
+	- Feature: Add new Toolbox page with all Lengow informations
+	- Feature: Add new legals page
+	- Feature: New lengow settings with cleaning old options
+	- Feature: Creating new accounts directly from the module
 
 ========================================================
 Version 1.0.4
 ========================================================
-- Add logs and export directory
+
+	- Feature: Add logs and export directory
 
 ========================================================
 Version 1.0.3
 ========================================================
-- Fix compatibility with 2.4
-- Fix bugs duplicate product
+
+	- Feature: Fix compatibility with 2.4
+	- Bugfix: Fix bugs duplicate product
 
 ========================================================
 Version 1.0.2
 ========================================================
-- Fix compatibility with 2.2
-- Add TagCapsule and SimpleTag support
-- Fix bugs
+
+	- Feature: Add TagCapsule and SimpleTag support
+	- Bugfix: Fix compatibility with 2.2
 
 ========================================================
 Version 1.0.1
 ========================================================
-- Fix warning in admin
-- Fix wrong product id in export
-- Add internal IP
+
+	- Feature: Add internal IP
+	- Bugfix: Fix warning in admin
+	- Bugfix: Fix wrong product id in export
 
 ========================================================
 Version 1.0.0 Beta
 ========================================================
 
-- Export product
-- Manage feeds
-- Order import
-- Add compatibility with WP-CLI
+	- Feature: Export product
+	- Feature: Manage feeds
+	- Feature: Order import
+	- Feature: Add compatibility with WP-CLI
