@@ -1,0 +1,52 @@
+product:
+  -
+    type: simple
+    status: publish
+    categories:
+      - id: 0
+      - id: 1
+    select: 1
+  -
+    type: simple
+    status: publish
+    select: 1
+  -
+    type: simple
+    status: publish
+    select: 0
+  -
+    type: simple
+    status: unpublish
+    select: 1
+  -
+    type: simple
+    status: unpublish
+    select: 0
+  -
+    type: variable
+    status: publish
+    select: 1
+  -
+    type: variable
+    status: unpublish
+    select: 1
+  -
+    type: variable
+    status: publish
+    select: 0
+  -
+    type: variable
+    status: unpublish
+    select: 0
+  -
+    type: variable
+    status: publish
+    select: 1
+  -
+    type: variable
+    status: publish
+    select: 1
+  -
+    type: simple
+    status: unpublish
+    select: 1

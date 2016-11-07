@@ -1,0 +1,5 @@
+2016-10-27 08:14:13 - [Import] Missing Translation [log.import.import_not_active]
+2016-10-27 08:15:21 - [Import] Missing Translation [log.import.import_not_active]
+2016-10-27 08:24:30 - [Import] Missing Translation [log.import.import_not_active]
+2016-10-27 08:24:30 - [Import] Missing Translation [log.import.start]
+2016-10-27 08:24:30 - [Import] Missing Translation [log.import.end]

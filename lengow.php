@@ -103,7 +103,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 * Include all dependencies
 		 */
 		public function includes() {
-			if ( is_admin() ) {
+			if ( isset($_SERVER['WP_TEST_UNIT']) || is_admin() ) {
 				include_once( 'includes/class-lengow-check.php' );
 				include_once( 'includes/class-lengow-configuration.php' );
 				include_once( 'includes/class-lengow-connector.php' );
@@ -135,7 +135,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 * Init Lengow when WordPress Initialises
 		 */
 		public function init() {
-			if ( is_admin() ) {
+			if ( isset($_SERVER['WP_TEST_UNIT']) || is_admin() ) {
 				// init ajax actions
 				add_action( 'wp_ajax_post_process', array( 'Lengow_Admin_Products', 'post_process' ) );
 				add_action( 'admin_action_dashboard_get_process', array( 'Lengow_Admin_Dashboard', 'get_process' ) );
