@@ -365,7 +365,11 @@ class Lengow_Check {
 			return false;
 		}
 		$connector = new Lengow_Connector( $access_token, $secret );
-		$result    = $connector->connect();
+		try {
+            $result = $connector->connect();
+        } catch ( Lengow_Exception $e ) {
+            return false;
+        }
 		if ( isset( $result['token'] ) && $account_id != 0 ) {
 			return true;
 		}

@@ -32,13 +32,13 @@
 /includes/class-lengow-order.php|7b002d482427f1eb4d39f5660a0f2e19
 /includes/class-lengow-feed.php|060a42bba707885d58aa82e33fa97d2b
 /includes/class-lengow-export.php|f632303c3d4488535ff2d0fc56a46576
-/includes/class-lengow-check.php|6106996e5e7c9490d156096ada112e7f
+/includes/class-lengow-check.php|a91844cd7d44fc45ecd056df4f95d03a
 /includes/class-lengow-configuration.php|e5b097d7d7a9321cb787fd95feb9b390
 /includes/class-lengow-exception.php|f16a0e8cc08a1917d932531ed80a209e
 /includes/class-lengow-marketplace.php|f24c74cb04ab21317e699b70f0b2e5e1
 /includes/class-lengow-import.php|4f51657a7721cfbb11f917af6cf50e3a
 /includes/class-lengow-translation.php|d72f085e0a8cc909249938da1b67edd4
-/includes/class-lengow-connector.php|7990adb79a5bd3481ba4247132557cc4
+/includes/class-lengow-connector.php|c0303f6749604e6c5ba3f2a18f897b5f
 /includes/class-lengow-sync.php|0474e027f2ea940cf76841a4f318988f
 /includes/class-lengow-main.php|5538b9ab2e0053f11c064ca17e8678cc
 /includes/admin/class-lengow-admin-products.php|2258d904a3b74bdf6f6f4710e2f3285c
@@ -54,7 +54,7 @@
 /includes/admin/views/dashboard/html-admin-dashboard.php|93e774538ea38ec82e289513bbb46145
 /includes/admin/views/dashboard/html-admin-new.php|82637b4d298e7c755c2cf3ff3aea76c2
 /includes/admin/views/dashboard/html-admin-status.php|b47906029185a8fe15f0ab77a4382dad
-/includes/admin/views/settings/html-admin-settings.php|b4b828f1111b51f95fba163e9ca06560
+/includes/admin/views/settings/html-admin-settings.php|f222c8eab90700f56705e6def965bafc
 /includes/admin/views/help/html-admin-help.php|870b52387b8da9c1726406969966f822
 /includes/admin/class-lengow-admin-help.php|67f2ee7de7bf709fabacf1c49f3aa94c
 /includes/admin/class-lengow-admin.php|4f372144e57887905372b0515641cb76

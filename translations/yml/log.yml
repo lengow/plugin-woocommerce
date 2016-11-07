@@ -43,6 +43,7 @@ en:
       call_api: "call %{curl_url}"
       error_api: "API call failed - %{error_code}"
       timeout_api: "API call has been blocked by a timeout"
+      error_curl: "Curl error %{error_code} - %{error_message}"
   toolbox:
       menu:
         lengow_toolbox: "Lengow Toolbox"

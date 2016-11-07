@@ -87,6 +87,7 @@ order.screen.no_order_importation|No synchronisation for now
 order.screen.button_update_orders|Synchronize Stock
 order.screen.order_synchronize_disabled|The option to decrease stocks in your WooCommerce backoffice is not activated; please visit <a href=%{url}>this page</a> to do it.
 order.screen.preprod_warning_message|You are in pre-production mode. You can synchronize your stock but no interaction with Lengow is possible. <a href=%{url}>Change this</a>
+global_setting.screen.main_setting_title|Main Setting
 global_setting.screen.preprod_mode_title|Pre-production Mode
 global_setting.screen.preprod_mode_description|Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY
 global_setting.screen.log_file_title|Log Files
@@ -203,6 +204,7 @@ log.import.stock_no_managed|product ID %{product_id} not managed in stock
 log.connector.call_api|call %{curl_url}
 log.connector.error_api|API call failed - %{error_code}
 log.connector.timeout_api|API call has been blocked by a timeout
+log.connector.error_curl|Curl error %{error_code} - %{error_message}
 toolbox.menu.lengow_toolbox|Lengow Toolbox
 toolbox.menu.product|Products
 toolbox.menu.order|Orders

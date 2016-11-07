@@ -87,6 +87,7 @@ order.screen.no_order_importation|Aucune synchronisation pour le moment
 order.screen.button_update_orders|Synchroniser le stock
 order.screen.order_synchronize_disabled|Vous n'avez pas activé l'option permettant de diminuer le stock de vos produits. Vous pouvez le faire sur <a href=%{url}>cette page</a>
 order.screen.preprod_warning_message|Vous êtes en mode préproduction. Vous pouvez synchroniser vos stocks mais les interactions avec Lengow ne sont pas possibles. <a href=%{url}>Retourner en mode production ?</a>
+global_setting.screen.main_setting_title|Paramètres principaux
 global_setting.screen.preprod_mode_title|Mode préproduction
 global_setting.screen.preprod_mode_description|Utilisez la pré-production pour tester et simuler des commandes fictives. Pour rappel, vous devez activer ces paramètres UNIQUEMENT sur votre serveur de préproduction.
 global_setting.screen.log_file_title|Fichiers de Log

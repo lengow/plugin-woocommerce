@@ -102,6 +102,7 @@ en:
       preprod_warning_message: "You are in pre-production mode. You can synchronize your stock but no interaction with Lengow is possible. <a href=%{url}>Change this</a>"
   global_setting:
     screen:
+      main_setting_title: "Main Setting"
       preprod_mode_title: "Pre-production Mode"
       preprod_mode_description: "Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY"
       log_file_title: "Log Files"
