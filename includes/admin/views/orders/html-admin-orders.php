@@ -46,9 +46,10 @@ if ( ! defined( 'ABSPATH' ) ) {
             <!-- /UPDATE ORDERS -->
     <?php else: ?>
         <div class="lgw-box">
-            <?php echo $locale->t('order.screen.order_synchronize_disabled', array(
-                'url' => admin_url('admin.php?page=lengow&tab=lengow_admin_settings')
-            )); ?>
+            <?php echo $locale->t(
+                'order.screen.order_synchronize_disabled',
+                array('url' => admin_url('admin.php?page=lengow&tab=lengow_admin_settings'))
+            ); ?>
         </div>
     <?php endif; ?>
 </div>

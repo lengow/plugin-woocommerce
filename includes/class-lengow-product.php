@@ -86,9 +86,10 @@ class Lengow_Product {
 		     || ! in_array( $this->product->post->post_type, array( 'product', 'product_variation' ) )
 		) {
 			throw new Lengow_Exception(
-				Lengow_Main::set_log_message( 'log.export.error_unable_to_find_product', array(
-					'product_id' => $product_id
-				) )
+				Lengow_Main::set_log_message(
+					'log.export.error_unable_to_find_product',
+					array('product_id' => $product_id)
+				)
 			);
 		}
 	}
@@ -648,18 +649,22 @@ class Lengow_Product {
 				$lengow_product = get_product( $product_id );
 				if ( $lengow_product->product_type === 'variable' ) {
 					throw new Lengow_Exception(
-						Lengow_Main::set_log_message( 'lengow_log.exception.product_is_a_parent', array(
-							'product_id' => $product_id
-						) )
+						Lengow_Main::set_log_message(
+							'lengow_log.exception.product_is_a_parent',
+							array('product_id' => $product_id)
+						)
 					);
 				}
 				Lengow_Main::log(
 					'Import',
-					Lengow_Main::set_log_message( 'log.import.product_be_found', array(
-						'product_id'      => $product_id,
-						'attribute_name'  => $attribute_name,
-						'attribute_value' => $attribute_value
-					) ),
+					Lengow_Main::set_log_message(
+						'log.import.product_be_found',
+						array(
+							'product_id'      => $product_id,
+							'attribute_name'  => $attribute_name,
+							'attribute_value' => $attribute_value
+						)
+					),
 					$log_output,
 					$marketplace_sku
 				);

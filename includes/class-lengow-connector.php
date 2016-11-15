@@ -52,11 +52,6 @@ class Lengow_Connector {
 	protected $user_id;
 
 	/**
-	 * @var string
-	 */
-	protected $request;
-
-	/**
 	 * @var string URL of the API Lengow
 	 */
 	// const LENGOW_API_URL = 'http://api.lengow.io:80';
@@ -75,20 +70,20 @@ class Lengow_Connector {
 	public static $CURL_OPTS = array(
 		CURLOPT_CONNECTTIMEOUT => 10,
 		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_TIMEOUT        => 300,
+		CURLOPT_TIMEOUT        => 20,
 		CURLOPT_USERAGENT      => 'lengow-php-sdk',
 	);
 
 	/**
-     * @var array lengow url for curl timeout
-     */
-    protected $lengow_urls = array (
-        '/v3.0/orders'        => 15,
-        '/v3.0/marketplaces'  => 10, 
-        '/v3.0/subscriptions' => 5,
-        '/v3.0/stats'         => 5,
-        '/v3.0/cms'           => 5,
-    );
+	 * @var array lengow url for curl timeout
+	 */
+	protected $lengow_urls = array(
+		'/v3.0/orders'        => 15,
+		'/v3.0/marketplaces'  => 10,
+		'/v3.0/subscriptions' => 5,
+		'/v3.0/stats'         => 5,
+		'/v3.0/cms'           => 5,
+	);
 
 	/**
 	 * Make a new Lengow API Connector.
@@ -99,10 +94,6 @@ class Lengow_Connector {
 	public function __construct( $access_token, $secret ) {
 		$this->access_token = $access_token;
 		$this->secret       = $secret;
-	}
-
-	public function getRequest() {
-		return $this->request;
 	}
 
 	/**
@@ -295,16 +286,16 @@ class Lengow_Connector {
 	 */
 	protected function make_request( $type, $url, $args, $token, $body = '' ) {
 		// Define CURLE_OPERATION_TIMEDOUT for old php versions
-        defined("CURLE_OPERATION_TIMEDOUT") || define("CURLE_OPERATION_TIMEDOUT", CURLE_OPERATION_TIMEOUTED);
+		defined( "CURLE_OPERATION_TIMEDOUT" ) || define( "CURLE_OPERATION_TIMEDOUT", CURLE_OPERATION_TIMEOUTED );
 		$ch = curl_init();
 		// Options
 		$opts = self::$CURL_OPTS;
 		// get special timeout for specific Lengow API
-        if ( array_key_exists( $url, $this->lengow_urls ) ) {
-            $opts[ CURLOPT_TIMEOUT ] = $this->lengow_urls[ $url ];
-        }
-        // get url for a specific environment
-        $url = self::LENGOW_API_URL . $url;
+		if ( array_key_exists( $url, $this->lengow_urls ) ) {
+			$opts[ CURLOPT_TIMEOUT ] = $this->lengow_urls[ $url ];
+		}
+		// get url for a specific environment
+		$url                            = self::LENGOW_API_URL . $url;
 		$opts[ CURLOPT_CUSTOMREQUEST ]  = strtoupper( $type );
 		$url                            = parse_url( $url );
 		$opts[ CURLOPT_PORT ]           = $url['port'];
@@ -329,10 +320,13 @@ class Lengow_Connector {
 				);
 				break;
 			case "PUT":
-				$opts[ CURLOPT_HTTPHEADER ] = array_merge( $opts[ CURLOPT_HTTPHEADER ], array(
-					'Content-Type: application/json',
-					'Content-Length: ' . strlen( $body )
-				) );
+				$opts[ CURLOPT_HTTPHEADER ] = array_merge(
+					$opts[ CURLOPT_HTTPHEADER ],
+					array(
+						'Content-Type: application/json',
+						'Content-Length: ' . strlen( $body )
+					)
+				);
 				$opts[ CURLOPT_URL ]        = $url . '?' . http_build_query( $args );
 				$opts[ CURLOPT_POSTFIELDS ] = $body;
 				break;
@@ -343,26 +337,31 @@ class Lengow_Connector {
 				break;
 		}
 		curl_setopt_array( $ch, $opts );
-		$result = curl_exec( $ch );
+		$result       = curl_exec( $ch );
 		$error_number = curl_errno( $ch );
-        $error_text = curl_error( $ch );
+		$error_text   = curl_error( $ch );
 		if ( in_array( $error_number, array( CURLE_OPERATION_TIMEDOUT, CURLE_OPERATION_TIMEOUTED ) ) ) {
 			$timeout       = Lengow_Main::set_log_message( 'log.connector.timeout_api' );
-			$error_message = Lengow_Main::set_log_message( 'log.connector.error_api', array(
-				'error_code' => Lengow_Main::decode_log_message( $timeout, 'en_GB' )
-			) );
+			$error_message = Lengow_Main::set_log_message(
+				'log.connector.error_api',
+				array( 'error_code' => Lengow_Main::decode_log_message( $timeout, 'en_GB' ) )
+			);
 			Lengow_Main::log( 'Connector', $error_message );
 			throw new Lengow_Exception( $timeout );
 		}
 		curl_close( $ch );
 		if ( $result === false ) {
-			$error_curl = Lengow_Main::set_log_message( 'log.connector.error_curl', array(
-                'error_code'    => $error_number,
-                'error_message' => $error_text
-            ) );
-            $error_message = Lengow_Main::set_log_message('log.connector.error_api', array(
-                'error_code' => Lengow_Main::decode_log_message( $error_curl, 'en_GB' )
-            ));
+			$error_curl    = Lengow_Main::set_log_message(
+				'log.connector.error_curl',
+				array(
+					'error_code'    => $error_number,
+					'error_message' => $error_text
+				)
+			);
+			$error_message = Lengow_Main::set_log_message(
+				'log.connector.error_api',
+				array( 'error_code' => Lengow_Main::decode_log_message( $error_curl, 'en_GB' ) )
+			);
 			Lengow_Main::log( 'Connector', $error_message );
 			throw new Lengow_Exception( $error_curl );
 		}
@@ -406,9 +405,9 @@ class Lengow_Connector {
 		}
 		try {
 			list( $account_id, $access_token, $secret_token ) = self::get_access_id();
-			if( is_null( $account_id ) ) {
-                return false;
-            }
+			if ( is_null( $account_id ) ) {
+				return false;
+			}
 			$connector = new Lengow_Connector( $access_token, $secret_token );
 			$results   = $connector->$type(
 				$url,

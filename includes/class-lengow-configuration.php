@@ -227,31 +227,6 @@ class Lengow_Configuration {
 	}
 
 	/**
-	 * Reset all Lengow settings
-	 *
-	 * @return boolean
-	 */
-	public static function reset_all() {
-		$keys = self::get_keys();
-		foreach ( $keys as $key => $value ) {
-			if ( isset( $value['default_value'] ) ) {
-				$val = $value['default_value'];
-			} else {
-				$val = '';
-			}
-
-			$oldValue = self::get( $key );
-			if ( $oldValue == "" ) {
-				self::update_value( $key, $val );
-			}
-
-		}
-		Lengow_Main::log( 'Setting', Lengow_Main::set_log_message( 'log.setting.setting_reset' ) );
-
-		return true;
-	}
-
-	/**
 	 * Check value and create a log if necessary
 	 *
 	 * @param string $key name of lengow setting
@@ -267,11 +242,14 @@ class Lengow_Configuration {
 		if ( $old_value != $value ) {
 			Lengow_Main::log(
 				'Setting',
-				Lengow_Main::set_log_message( 'log.setting.setting_change', array(
-					'key'       => $key,
-					'old_value' => is_array( $old_value ) ? implode( ",", $old_value ) : $old_value,
-					'value'     => is_array( $value ) ? implode( ",", $value ) : $value,
-				) )
+				Lengow_Main::set_log_message(
+					'log.setting.setting_change',
+					array(
+						'key'       => $key,
+						'old_value' => is_array( $old_value ) ? implode( ",", $old_value ) : $old_value,
+						'value'     => is_array( $value ) ? implode( ",", $value ) : $value,
+					)
+				)
 			);
 		}
 	}

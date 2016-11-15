@@ -333,9 +333,10 @@ class Lengow_Export {
 			$products = $this->_get_export_ids();
 			Lengow_Main::log(
 				'Export',
-				Lengow_Main::set_log_message( 'log.export.nb_product_found', array(
-					"nb_product" => count( $products )
-				) ),
+				Lengow_Main::set_log_message(
+					'log.export.nb_product_found',
+					array( 'nb_product' => count( $products ) )
+				),
 				$this->_log_output
 			);
 			$this->_export( $products, $fields );
@@ -356,9 +357,10 @@ class Lengow_Export {
 			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 			Lengow_Main::log(
 				'Export',
-				Lengow_Main::set_log_message( 'log.export.export_failed', array(
-					'decoded_message' => $decoded_message
-				) ),
+				Lengow_Main::set_log_message(
+					'log.export.export_failed',
+					array( 'decoded_message' => $decoded_message )
+				),
 				$this->_log_output
 			);
 		}
@@ -404,9 +406,10 @@ class Lengow_Export {
 			if ( $product_count > 0 && $product_count % 50 == 0 ) {
 				Lengow_Main::log(
 					'Export',
-					Lengow_Main::set_log_message( 'log.export.count_product', array(
-						'product_count' => $product_count
-					) ),
+					Lengow_Main::set_log_message(
+						'log.export.count_product',
+						array( 'product_count' => $product_count )
+					),
 					$this->_log_output
 				);
 			}

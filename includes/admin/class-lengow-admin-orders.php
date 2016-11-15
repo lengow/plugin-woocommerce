@@ -26,9 +26,9 @@ class Lengow_Admin_Orders {
 		if ( $action ) {
 			switch ( $action ) {
 				case 'import_all':
-					$import                   = new Lengow_Import( array(
-						'log_output' => false,
-					) );
+					$import                   = new Lengow_Import(
+						array('log_output' => false)
+					);
 					$return                   = $import->exec();
 					$message                  = $lengow_admin_orders->load_message( $return );
 					$order_collection         = $lengow_admin_orders->assign_last_importation_infos();
@@ -54,22 +54,26 @@ class Lengow_Admin_Orders {
 		$locale  = new Lengow_Translation();
 		$message = array();
 		if ( Lengow_Import::is_in_process() ) {
-			$message[] = $locale->t( 'lengow_log.error.rest_time_to_import', array(
-				'rest_time' => Lengow_Import::rest_time_to_import()
-			) );
+			$message[] = $locale->t(
+				'lengow_log.error.rest_time_to_import',
+				array('rest_time' => Lengow_Import::rest_time_to_import())
+			);
 		}
 		if ( isset( $return['order_new'] ) && $return['order_new'] > 0 ) {
-			$message[] = $locale->t( 'lengow_log.error.nb_order_imported', array(
-				'nb_order' => (int) $return['order_new']
-			) );
+			$message[] = $locale->t(
+				'lengow_log.error.nb_order_imported',
+				array('nb_order' => (int) $return['order_new'])
+			);
 		}
 		if ( isset( $return['order_error'] ) && $return['order_error'] > 0 ) {
-			$message[] = $locale->t( 'lengow_log.error.nb_order_with_error', array(
-				'nb_order' => (int) $return['order_error']
-			) );
-			$message[] = $locale->t( 'lengow_log.error.check_logs', array(
-				'link' => admin_url( 'admin.php?page=lengow&tab=lengow_admin_settings' )
-			) );
+			$message[] = $locale->t(
+				'lengow_log.error.nb_order_with_error',
+				array('nb_order' => (int) $return['order_error'])
+			);
+			$message[] = $locale->t(
+				'lengow_log.error.check_logs',
+				array('link' => admin_url( 'admin.php?page=lengow&tab=lengow_admin_settings' ))
+			);
 		}
 		if ( isset( $return['error'] ) && $return['error'] != false ) {
 			$message[] = Lengow_Main::decode_log_message( $return['error'] );

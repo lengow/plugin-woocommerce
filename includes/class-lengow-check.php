@@ -125,9 +125,11 @@ class Lengow_Check {
 		}
 
 		if ( Lengow_Import::is_in_process() ) {
-			$import_in_progress = Lengow_Main::decode_log_message( 'toolbox.index.rest_time_to_import', null, array(
-				'rest_time' => Lengow_Import::rest_time_to_import()
-			) );
+			$import_in_progress = Lengow_Main::decode_log_message(
+				'toolbox.index.rest_time_to_import',
+				null,
+				array( 'rest_time' => Lengow_Import::rest_time_to_import() )
+			);
 		} else {
 			$import_in_progress = $this->locale->t( 'toolbox.index.no_import' );
 		}
@@ -239,21 +241,24 @@ class Lengow_Check {
 				fclose( $file );
 			}
 			$checklist[] = array(
-				'title' => $this->locale->t( 'toolbox.checksum.file_checked', array(
-					'nb_file' => $file_counter
-				) ),
+				'title' => $this->locale->t(
+					'toolbox.checksum.file_checked',
+					array( 'nb_file' => $file_counter )
+				),
 				'state' => 1
 			);
 			$checklist[] = array(
-				'title' => $this->locale->t( 'toolbox.checksum.file_modified', array(
-					'nb_file' => count( $file_errors )
-				) ),
+				'title' => $this->locale->t(
+					'toolbox.checksum.file_modified',
+					array( 'nb_file' => count( $file_errors ) )
+				),
 				'state' => ( count( $file_errors ) > 0 ? 0 : 1 )
 			);
 			$checklist[] = array(
-				'title' => $this->locale->t( 'toolbox.checksum.file_deleted', array(
-					'nb_file' => count( $file_deletes )
-				) ),
+				'title' => $this->locale->t(
+					'toolbox.checksum.file_deleted',
+					array( 'nb_file' => count( $file_deletes ) )
+				),
 				'state' => ( count( $file_deletes ) > 0 ? 0 : 1 )
 			);
 			$html .= $this->get_admin_content( $checklist );
@@ -366,10 +371,10 @@ class Lengow_Check {
 		}
 		$connector = new Lengow_Connector( $access_token, $secret );
 		try {
-            $result = $connector->connect();
-        } catch ( Lengow_Exception $e ) {
-            return false;
-        }
+			$result = $connector->connect();
+		} catch ( Lengow_Exception $e ) {
+			return false;
+		}
 		if ( isset( $result['token'] ) && $account_id != 0 ) {
 			return true;
 		}

@@ -178,10 +178,12 @@ class Lengow_Admin_Products extends WP_List_Table {
 		$current_page = $this->get_pagenum();
 		$total_items  = count( $this->data );
 		$data         = array_slice( $this->data, ( ( $current_page - 1 ) * $per_page ), $per_page );
-		$this->set_pagination_args( array(
-			'total_items' => $total_items,
-			'per_page'    => $per_page
-		) );
+		$this->set_pagination_args(
+			array(
+				'total_items' => $total_items,
+				'per_page'    => $per_page
+			)
+		);
 
 		$this->items = $data;
 
@@ -332,20 +334,25 @@ class Lengow_Admin_Products extends WP_List_Table {
 		$checked            = isset( $id_lengow_products[ $product['ID'] ] ) ? 'checked' : '';
 		$check              = isset( $id_lengow_products[ $product['ID'] ] ) ? 'checked="checked"' : '';
 
-		return sprintf( '<div class="lgw-switch ' . $checked . '">
-                        <label><div><span></span>
-                        <input 
-                        type="checkbox"
-                        data-size="mini"
-                        class="js-lengow_switch_product"
-                        data-on-text="' . $this->locale->t( 'product.screen.button_yes' ) . '"
-                        data-off-text="' . $this->locale->t( 'product.screen.button_no' ) . '"
-                        name="lengow_product_selection[%s]"
-                        data-action="select_product"
-                        data-id_product="%s"
-                        id="js-lengow_product_%s"
-                        value="1" ' . $check . '/>
-                        </div></label></div>', $product['ID'], $product['ID'], $product['ID'] );
+		return sprintf( 
+			'<div class="lgw-switch ' . $checked . '">
+            <label><div><span></span>
+            <input 
+            type="checkbox"
+            data-size="mini"
+            class="js-lengow_switch_product"
+            data-on-text="' . $this->locale->t( 'product.screen.button_yes' ) . '"
+            data-off-text="' . $this->locale->t( 'product.screen.button_no' ) . '"
+            name="lengow_product_selection[%s]"
+            data-action="select_product"
+            data-id_product="%s"
+            id="js-lengow_product_%s"
+            value="1" ' . $check . '/>
+            </div></label></div>',
+            $product['ID'],
+            $product['ID'],
+            $product['ID'] 
+        );
 	}
 
 	/**

@@ -130,7 +130,7 @@ class Lengow_Main {
 	 * @return boolean
 	 */
 	public static function is_new_merchant() {
-		$account_id = $token = Lengow_Configuration::get( 'lengow_account_id' );
+		$account_id = Lengow_Configuration::get( 'lengow_account_id' );
 		if ( strlen( $account_id ) > 0 ) {
 			return false;
 		}

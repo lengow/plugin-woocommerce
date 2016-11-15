@@ -133,10 +133,13 @@ class Lengow_Import_Order {
 		if ( ! Lengow_Import::check_state( $this->_order_state_marketplace, $this->_marketplace ) ) {
 			Lengow_Main::log(
 				'Import',
-				Lengow_Main::set_log_message( 'log.import.current_order_state_unavailable', array(
-					'order_state_marketplace' => $this->_order_state_marketplace,
-					'marketplace_name'        => $this->_marketplace->name
-				) ),
+				Lengow_Main::set_log_message(
+					'log.import.current_order_state_unavailable',
+					array(
+						'order_state_marketplace' => $this->_order_state_marketplace,
+						'marketplace_name'        => $this->_marketplace->name
+					)
+				),
 				$this->_log_output,
 				$this->_marketplace_sku
 			);
@@ -156,9 +159,10 @@ class Lengow_Import_Order {
 				// If decrease stocks from mp option is disabled
 				Lengow_Main::log(
 					'Import',
-					Lengow_Main::set_log_message( 'log.import.order_shipped_by_marketplace', array(
-						'marketplace_name' => $this->_marketplace->name
-					) ),
+					Lengow_Main::set_log_message(
+						'log.import.order_shipped_by_marketplace',
+						array('marketplace_name' => $this->_marketplace->name)
+					),
 					$this->_log_output,
 					$this->_marketplace_sku
 				);
@@ -209,9 +213,10 @@ class Lengow_Import_Order {
 			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 			Lengow_Main::log(
 				'Import',
-				Lengow_Main::set_log_message( 'log.import.order_import_failed', array(
-					'decoded_message' => $decoded_message
-				) ),
+				Lengow_Main::set_log_message(
+					'log.import.order_import_failed',
+					array('decoded_message' => $decoded_message)
+				),
 				$this->_log_output,
 				$this->_marketplace_sku
 			);
@@ -268,9 +273,10 @@ class Lengow_Import_Order {
 				$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 				Lengow_Main::log(
 					'Import',
-					Lengow_Main::set_log_message( 'log.import.order_import_failed', array(
-						'decoded_message' => $decoded_message
-					) ),
+					Lengow_Main::set_log_message(
+						'log.import.order_import_failed',
+						array('decoded_message' => $decoded_message)
+					),
 					$this->_log_output,
 					$this->_marketplace_sku
 				);
@@ -315,10 +321,13 @@ class Lengow_Import_Order {
 					);
 					Lengow_Main::log(
 						'Import',
-						Lengow_Main::set_log_message( 'log.import.product_state_canceled', array(
-							'product_id'    => $api_product_id,
-							'state_product' => $state_product
-						) ),
+						Lengow_Main::set_log_message(
+							'log.import.product_state_canceled',
+							array(
+								'product_id'    => $api_product_id,
+								'state_product' => $state_product
+							)
+						),
 						$this->_log_output,
 						$this->_marketplace_sku
 					);
@@ -341,9 +350,10 @@ class Lengow_Import_Order {
 					: (string) $product_datas['marketplace_product_id']
 				);
 				throw new Lengow_Exception(
-					Lengow_Main::set_log_message( 'lengow_log.exception.product_not_be_found', array(
-						'product_id' => $api_product_id
-					) )
+					Lengow_Main::set_log_message(
+						'lengow_log.exception.product_not_be_found',
+						array('product_id' => $api_product_id)
+					)
 				);
 			}
 		}
@@ -366,20 +376,24 @@ class Lengow_Import_Order {
 					$new_stock     = $lengow_product->reduce_stock( $product['quantity'] );
 					Lengow_Main::log(
 						'Import',
-						Lengow_Main::set_log_message( 'log.import.stock_decreased', array(
-							'product_id'    => $product_id,
-							'initial_stock' => $initial_stock,
-							'new_stock'     => $new_stock
-						) ),
+						Lengow_Main::set_log_message(
+							'log.import.stock_decreased',
+							array(
+								'product_id'    => $product_id,
+								'initial_stock' => $initial_stock,
+								'new_stock'     => $new_stock
+							)
+						),
 						$this->_log_output,
 						$this->_marketplace_sku
 					);
 				} else {
 					Lengow_Main::log(
 						'Import',
-						Lengow_Main::set_log_message( 'log.import.stock_no_managed', array(
-							'product_id' => $product_id
-						) ),
+						Lengow_Main::set_log_message(
+							'log.import.stock_no_managed',
+							array('product_id' => $product_id)
+						),
 						$this->_log_output,
 						$this->_marketplace_sku
 					);

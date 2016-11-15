@@ -93,20 +93,22 @@ $legacy_fields      = isset( $_GET['legacy_fields'] ) ? (bool) $_GET['legacy_fie
 $log_output         = isset( $_GET['log_output'] ) ? (bool) $_GET['log_output'] : null;
 $update_export_date = isset( $_GET['update_export_date'] ) ? (bool) $_GET['update_export_date'] : null;
 
-$export = new Lengow_Export( array(
-	'format'             => $format,
-	'stream'             => $stream,
-	'offset'             => $offset,
-	'limit'              => $limit,
-	'selection'          => $selection,
-	'out_of_stock'       => $out_of_stock,
-	'product_ids'        => $product_ids,
-	'product_types'      => $product_types,
-	'variation'          => $variation,
-	'legacy_fields'      => $legacy_fields,
-	'log_output'         => $log_output,
-	'update_export_date' => $update_export_date,
-) );
+$export = new Lengow_Export(
+	array(
+		'format'             => $format,
+		'stream'             => $stream,
+		'offset'             => $offset,
+		'limit'              => $limit,
+		'selection'          => $selection,
+		'out_of_stock'       => $out_of_stock,
+		'product_ids'        => $product_ids,
+		'product_types'      => $product_types,
+		'variation'          => $variation,
+		'legacy_fields'      => $legacy_fields,
+		'log_output'         => $log_output,
+		'update_export_date' => $update_export_date,
+	)
+);
 
 if ( $get_params ) {
 	echo $export->get_export_params();
