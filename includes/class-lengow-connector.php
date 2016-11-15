@@ -29,27 +29,27 @@ class Lengow_Connector {
 	/**
 	 * @var string the access token to connect
 	 */
-	protected $access_token;
+	protected $_access_token;
 
 	/**
 	 * @var string the secret to connect
 	 */
-	protected $secret;
+	protected $_secret;
 
 	/**
 	 * @var string temporary token for the authorization
 	 */
-	protected $token;
+	protected $_token;
 
 	/**
 	 * @var integer ID account
 	 */
-	protected $account_id;
+	protected $_account_id;
 
 	/**
 	 * @var integer the user Id
 	 */
-	protected $user_id;
+	protected $_user_id;
 
 	/**
 	 * @var string URL of the API Lengow
@@ -67,7 +67,7 @@ class Lengow_Connector {
 	/**
 	 * @var array default options for curl
 	 */
-	public static $CURL_OPTS = array(
+	public static $curl_opts = array(
 		CURLOPT_CONNECTTIMEOUT => 10,
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_TIMEOUT        => 20,
@@ -92,8 +92,8 @@ class Lengow_Connector {
 	 * @param string $secret Your secret
 	 */
 	public function __construct( $access_token, $secret ) {
-		$this->access_token = $access_token;
-		$this->secret       = $secret;
+		$this->_access_token = $access_token;
+		$this->_secret       = $secret;
 	}
 
 	/**
@@ -107,16 +107,16 @@ class Lengow_Connector {
 		$data = $this->call_action(
 			'/access/get_token',
 			array(
-				'access_token' => $this->access_token,
-				'secret'       => $this->secret,
+				'access_token' => $this->_access_token,
+				'secret'       => $this->_secret,
 				'user_token'   => $user_token
 			),
 			'POST'
 		);
 		if ( isset( $data['token'] ) ) {
-			$this->token      = $data['token'];
-			$this->account_id = $data['account_id'];
-			$this->user_id    = $data['user_id'];
+			$this->_token      = $data['token'];
+			$this->_account_id = $data['account_id'];
+			$this->_user_id    = $data['user_id'];
 
 			return $data;
 		} else {
@@ -139,7 +139,7 @@ class Lengow_Connector {
 		$this->connect();
 		try {
 			if ( ! array_key_exists( 'account_id', $array ) ) {
-				$array['account_id'] = $this->account_id;
+				$array['account_id'] = $this->_account_id;
 			}
 			$data = $this->call_action( $method, $array, $type, $format, $body );
 		} catch ( Lengow_Exception $e ) {
@@ -245,7 +245,7 @@ class Lengow_Connector {
 	 * @return array The formated data response
 	 */
 	private function call_action( $api, $args, $type, $format = 'json', $body = '' ) {
-		$result = $this->make_request( $type, $api, $args, $this->token, $body );
+		$result = $this->make_request( $type, $api, $args, $this->_token, $body );
 
 		return $this->format( $result, $format );
 	}
@@ -280,7 +280,7 @@ class Lengow_Connector {
 	 * @param string $token temporary access token
 	 * @param string $body
 	 *
-	 * @throws Lengow_Exception
+	 * @throws Lengow_Exception Get curl error
 	 *
 	 * @return array The formated data response
 	 */
@@ -289,7 +289,7 @@ class Lengow_Connector {
 		defined( "CURLE_OPERATION_TIMEDOUT" ) || define( "CURLE_OPERATION_TIMEDOUT", CURLE_OPERATION_TIMEOUTED );
 		$ch = curl_init();
 		// Options
-		$opts = self::$CURL_OPTS;
+		$opts = self::$curl_opts;
 		// get special timeout for specific Lengow API
 		if ( array_key_exists( $url, $this->lengow_urls ) ) {
 			$opts[ CURLOPT_TIMEOUT ] = $this->lengow_urls[ $url ];

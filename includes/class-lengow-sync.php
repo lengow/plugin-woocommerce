@@ -20,7 +20,7 @@ class Lengow_Sync {
 	/**
 	 * Get Account Status every 5 hours
 	 */
-	protected static $cacheTime = 18000;
+	protected static $_cache_time = 18000;
 
 	/**
 	 * Get Sync Data (Inscription / Update)
@@ -142,7 +142,7 @@ class Lengow_Sync {
 		}
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_last_option_update' );
-			if ( ! is_null( $updated_at ) && ( time() - strtotime( $updated_at ) ) < self::$cacheTime ) {
+			if ( ! is_null( $updated_at ) && ( time() - strtotime( $updated_at ) ) < self::$_cache_time ) {
 				return false;
 			}
 		}
@@ -163,8 +163,8 @@ class Lengow_Sync {
 	 */
 	public static function get_statistic( $force = false ) {
 		if ( ! $force ) {
-			$updatedAt = Lengow_Configuration::get( 'lengow_last_order_statistic_update' );
-			if ( ( time() - strtotime( $updatedAt ) ) < self::$cacheTime ) {
+			$updated_at = Lengow_Configuration::get( 'lengow_last_order_statistic_update' );
+			if ( ( time() - strtotime( $updated_at ) ) < self::$_cache_time ) {
 				return json_decode( Lengow_Configuration::get( 'lengow_order_statistic' ), true );
 			}
 		}
@@ -212,7 +212,7 @@ class Lengow_Sync {
 			$updated_at = Lengow_Configuration::get(
 				'lengow_last_account_status_update'
 			);
-			if ( ! is_null( $updated_at ) && ( time() - strtotime( $updated_at ) ) < self::$cacheTime ) {
+			if ( ! is_null( $updated_at ) && ( time() - strtotime( $updated_at ) ) < self::$_cache_time ) {
 				$config = Lengow_Configuration::get(
 					'lengow_account_status'
 				);

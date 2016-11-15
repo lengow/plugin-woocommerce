@@ -13,11 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
     <?php endif; ?>
     <div class="lgw-box lengow_help_wrapper text-center">
-        <!--<img src="/modules/lengow/views/img/cosmo-yoga.png" class="img-circle" alt="lengow">-->
         <h2><?php echo $locale->t('help.screen.title')?></h2>
         <p>
-            <?php echo $locale->t('help.screen.contain_text_support');
-//            echo $mail_to; ?>
+            <?php echo $locale->t('help.screen.contain_text_support'); ?>
             <a href="<?php echo $locale->t('help.screen.link_lengow_support')?>"
                target="_blank"
                title="Support Lengow">

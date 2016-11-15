@@ -136,13 +136,13 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 */
 		public function init() {
 			if ( is_admin() ) {
-				// init ajax actions
+				// init ajax actions.
 				add_action( 'wp_ajax_post_process', array( 'Lengow_Admin_Products', 'post_process' ) );
 				add_action( 'admin_action_dashboard_get_process', array( 'Lengow_Admin_Dashboard', 'get_process' ) );
 				add_action( 'wp_ajax_post_process_dashboard', array( 'Lengow_Admin_Dashboard', 'post_process' ) );
 				add_action( 'wp_ajax_post_process_orders', array( 'Lengow_Admin_Orders', 'post_process' ) );
 
-				//check logs download to prevent the occurrence of the wordpress html header
+				// check logs download to prevent the occurrence of the wordpress html header.
 				$download = null;
 				if ( isset( $_GET['action'] ) ) {
 					$download = $_GET['action'];
@@ -204,12 +204,13 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				)
 			);
 			wp_enqueue_script( 'lengow_admin_js' );
-			// Must be added to instantiate admin-ajax.php
+			// Must be added to instantiate admin-ajax.php.
 			wp_localize_script( 'lengow_admin_js', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
 		}
 
 		/**
 		 * Remove Wordpress's updates messages
+		 *
 		 * @return object
 		 */
 		public function remove_core_updates() {

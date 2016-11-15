@@ -152,7 +152,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 *
 	 */
 	public static function render_lengow_list() {
-		//Need to instantiate a class because this method must be static
+		// Need to instantiate a class because this method must be static.
 		$lengow_admin_products         = new Lengow_Admin_Products();
 		$lengow_admin_products->locale = new Lengow_Translation();
 		$lengow_admin_products->prepare_items();
@@ -168,12 +168,12 @@ class Lengow_Admin_Products extends WP_List_Table {
 		$columns = $this->get_columns();
 		// $hidden defines the hidden columns
 		$hidden = array();
-		// $sortable defines if the table can be sorted by this column
+		// $sortable defines if the table can be sorted by this column.
 		$sortable              = $this->get_sortable_columns();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 		$this->data            = $this->get_products();
 		usort( $this->data, array( &$this, 'usort_reorder' ) );
-		// pagination
+		// pagination.
 		$per_page     = 10;
 		$current_page = $this->get_pagenum();
 		$total_items  = count( $this->data );
@@ -221,8 +221,8 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 * @return array
 	 */
 	public function column_default( $item, $column_name ) {
-		// To avoid the need to create a method for each column there is column_default
-		// that will process any column for which no special method is defined
+		// To avoid the need to create a method for each column there is column_default.
+		// that will process any column for which no special method is defined.
 		switch ( $column_name ) {
 			case 'ID':
 			case 'image':
@@ -250,7 +250,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	public function get_sortable_columns() {
 		$sortable_columns = array(
 			// The second parameter in the value array takes care of a possible pre-ordered column.
-			// If the value is true the column is assumed to be ordered ascending,
+			// If the value is true the column is assumed to be ordered ascending.
 			// if the value is false the column is assumed descending or unordered.
 			'ID'            => array( 'ID', true ),
 			'image'         => array( 'image', false ),
@@ -422,7 +422,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 						$products_data = $price . ' ' . get_woocommerce_currency_symbol();
 						break;
 					case 'product_type':
-						//Use woocommerce 2.0.0 function get_product(ID) to check type
+						// Use woocommerce 2.0.0 function get_product(ID) to check type.
 						$product_type     = get_product( $product->ID );
 						$downloadable     = get_post_meta( $product->ID, '_downloadable', true ) == 'yes'
 							? $this->locale->t( 'product.table.type_downloadable' )
@@ -464,7 +464,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 */
 	private function search( $text, $input_id ) {
 		echo '<form id="post-filter" method="post">';
-		//The hidden element is needed to load the right page
+		// The hidden element is needed to load the right page.
 		echo '<input type="hidden" name="page" value="lengow_list" />';
 		echo $this->search_box( $text, $input_id );
 		echo '</form>';
@@ -489,7 +489,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 * Display products page
 	 */
 	public static function html_display() {
-		//Need to instantiate a class because this method must be static
+		// Need to instantiate a class because this method must be static.
 		$lengow_admin_products         = new Lengow_Admin_Products();
 		$lengow_admin_products->locale = new Lengow_Translation();
 		$locale                        = $lengow_admin_products->locale;

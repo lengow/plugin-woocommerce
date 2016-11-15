@@ -19,40 +19,34 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-$default_locale = 'en_GB';
-$listDefaultValues = array();
-
 $directory = dirname(dirname(__FILE__)).'/translations/yml/';
-$listFiles = array_diff(scandir($directory), array('..', '.', 'index.php'));
-$listFiles = array_diff($listFiles, array('en_GB.yml'));
-array_unshift($listFiles, "en_GB.yml");
+$list_files = array_diff(scandir($directory), array('..', '.', 'index.php'));
+$list_files = array_diff($list_files, array('en_GB.yml'));
+array_unshift($list_files, "en_GB.yml");
 
-foreach ($listFiles as $list) {
-    $ymlFile = yaml_parse_file($directory.$list);
+foreach ($list_files as $list) {
+    $yml_file = yaml_parse_file($directory.$list);
     $locale =  basename($directory.$list, '.yml');
-
     if ($list == 'log.yml') {
         $fp = fopen(dirname(dirname(__FILE__)).'/translations/en_GB.csv', 'a+');
     } else {
         $fp = fopen(dirname(dirname(__FILE__)).'/translations/'.$locale.'.csv', 'w+');
     }
-
-    foreach ($ymlFile as $language => $categories) {
-        writeCsv($fp, $categories);
+    foreach ($yml_file as $language => $categories) {
+        write_csv($fp, $categories);
     }
     fclose($fp);
 }
 
-function writeCsv($fp, $text, &$frontKey = array())
-{
+function write_csv($fp, $text, &$front_key = array()) {
     if (is_array($text)) {
         foreach ($text as $k => $v) {
-            $frontKey[]= $k;
-            writeCsv($fp, $v, $frontKey);
-            array_pop($frontKey);
+            $front_key[]= $k;
+            write_csv($fp, $v, $front_key);
+            array_pop($front_key);
         }
     } else {
-        $line = join('.', $frontKey).'|'.str_replace("\n", '<br />', $text).PHP_EOL;
+        $line = join('.', $front_key).'|'.str_replace("\n", '<br />', $text).PHP_EOL;
         fwrite($fp, $line);
     }
 }

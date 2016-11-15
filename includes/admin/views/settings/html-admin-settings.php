@@ -23,11 +23,11 @@ $list_file = Lengow_Log::get_paths();
 			<label class="control-label"><?php echo $keys['lengow_authorized_ip']['label'] ?></label>
 			<input type="text" name="lengow_authorized_ip" class="form-control"
 			       value="<?php echo $values['lengow_authorized_ip'] ?>"/>
-			<span class="legend" style="display:block;"><?= $keys['lengow_authorized_ip']['legend'] ?></span>
+			<span class="legend" style="display:block;"><?php echo $keys['lengow_authorized_ip']['legend'] ?></span>
 			<br />
 			<h2 class="margin-s"><?php echo $locale->t( 'global_setting.screen.preprod_mode_title' ); ?></h2>
 			<p><?php echo $locale->t( 'global_setting.screen.preprod_mode_description' ); ?></p>
-			<div class="lgw-switch <?= $values['lengow_preprod_enabled'] == 1 ? 'checked' : '' ;?>">
+			<div class="lgw-switch <?php echo $values['lengow_preprod_enabled'] == 1 ? 'checked' : '' ;?>">
 				<label>
 					<div>
 						<span></span>

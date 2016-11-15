@@ -62,7 +62,7 @@ class Lengow_Marketplace {
 	 *
 	 * @param string $name The name of the marketplace
 	 *
-	 * @throws Lengow_Exception
+	 * @throws Lengow_Exception If marketplace not present
 	 */
 	public function __construct( $name ) {
 		$this->_load_api_marketplace();

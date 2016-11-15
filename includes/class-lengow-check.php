@@ -20,10 +20,10 @@ class Lengow_Check {
 	/**
 	 * @var $locale (for translation)
 	 */
-	private $locale;
+	private $_locale;
 
 	public function __construct() {
-		$this->locale                       = new Lengow_Translation();
+		$this->_locale                       = new Lengow_Translation();
 		Lengow_Translation::$force_iso_code = "en_GB";
 	}
 
@@ -35,31 +35,31 @@ class Lengow_Check {
 	public function get_check_list() {
 		$checklist   = array();
 		$checklist[] = array(
-			'title'      => $this->locale->t( 'toolbox.index.curl_message' ),
-			'help'       => $this->locale->t( 'toolbox.index.curl_help' ),
-			'help_link'  => $this->locale->t( 'toolbox.index.curl_help_link' ),
-			'help_label' => $this->locale->t( 'toolbox.index.curl_help_label' ),
+			'title'      => $this->_locale->t( 'toolbox.index.curl_message' ),
+			'help'       => $this->_locale->t( 'toolbox.index.curl_help' ),
+			'help_link'  => $this->_locale->t( 'toolbox.index.curl_help_link' ),
+			'help_label' => $this->_locale->t( 'toolbox.index.curl_help_label' ),
 			'state'      => (int) self::is_curl_activated()
 		);
 		$checklist[] = array(
-			'title'      => $this->locale->t( 'toolbox.index.simple_xml_message' ),
-			'help'       => $this->locale->t( 'toolbox.index.simple_xml_help' ),
-			'help_link'  => $this->locale->t( 'toolbox.index.simple_xml_help_link' ),
-			'help_label' => $this->locale->t( 'toolbox.index.simple_xml_help_label' ),
+			'title'      => $this->_locale->t( 'toolbox.index.simple_xml_message' ),
+			'help'       => $this->_locale->t( 'toolbox.index.simple_xml_help' ),
+			'help_link'  => $this->_locale->t( 'toolbox.index.simple_xml_help_link' ),
+			'help_label' => $this->_locale->t( 'toolbox.index.simple_xml_help_label' ),
 			'state'      => (int) self::is_simple_xml_activated()
 		);
 		$checklist[] = array(
-			'title'      => $this->locale->t( 'toolbox.index.json_php_message' ),
-			'help'       => $this->locale->t( 'toolbox.index.json_php_help' ),
-			'help_link'  => $this->locale->t( 'toolbox.index.json_php_help_link' ),
-			'help_label' => $this->locale->t( 'toolbox.index.json_php_help_label' ),
+			'title'      => $this->_locale->t( 'toolbox.index.json_php_message' ),
+			'help'       => $this->_locale->t( 'toolbox.index.json_php_help' ),
+			'help_link'  => $this->_locale->t( 'toolbox.index.json_php_help_link' ),
+			'help_label' => $this->_locale->t( 'toolbox.index.json_php_help_label' ),
 			'state'      => (int) self::is_json_activated()
 		);
 		$checklist[] = array(
-			'title'      => $this->locale->t( 'toolbox.index.checksum_message' ),
-			'help'       => $this->locale->t( 'toolbox.index.checksum_help' ),
+			'title'      => $this->_locale->t( 'toolbox.index.checksum_message' ),
+			'help'       => $this->_locale->t( 'toolbox.index.checksum_help' ),
 			'help_link'  => '/wp-content/plugins/lengow-woocommerce/toolbox/checksum.php',
-			'help_label' => $this->locale->t( 'toolbox.index.checksum_help_label' ),
+			'help_label' => $this->_locale->t( 'toolbox.index.checksum_help_label' ),
 			'state'      => (int) self::get_file_modified()
 		);
 
@@ -76,28 +76,28 @@ class Lengow_Check {
 		global $wp_version;
 		$checklist   = array();
 		$checklist[] = array(
-			'title'   => $this->locale->t( 'toolbox.index.wordpress_version' ),
+			'title'   => $this->_locale->t( 'toolbox.index.wordpress_version' ),
 			'message' => $wp_version
 		);
 		$checklist[] = array(
-			'title'   => $this->locale->t( 'toolbox.index.woocommerce_version' ),
+			'title'   => $this->_locale->t( 'toolbox.index.woocommerce_version' ),
 			'message' => $woocommerce->version
 		);
 
 		$checklist[] = array(
-			'title'   => $this->locale->t( 'toolbox.index.plugin_version' ),
+			'title'   => $this->_locale->t( 'toolbox.index.plugin_version' ),
 			'message' => LENGOW_VERSION
 		);
 		$checklist[] = array(
-			'title'   => $this->locale->t( 'toolbox.index.ip_server' ),
+			'title'   => $this->_locale->t( 'toolbox.index.ip_server' ),
 			'message' => $_SERVER['SERVER_ADDR']
 		);
 		$checklist[] = array(
-			'title'   => $this->locale->t( 'toolbox.index.ip_authorized' ),
+			'title'   => $this->_locale->t( 'toolbox.index.ip_authorized' ),
 			'message' => Lengow_Configuration::get( 'lengow_authorized_ip' )
 		);
 		$checklist[] = array(
-			'title' => $this->locale->t( 'toolbox.index.preprod_disabled' ),
+			'title' => $this->_locale->t( 'toolbox.index.preprod_disabled' ),
 			'state' => ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) ? 0 : 1 )
 		);
 
@@ -113,15 +113,15 @@ class Lengow_Check {
 		$last_import      = Lengow_Main::get_last_import();
 		$last_import_date = (
 		$last_import['timestamp'] == 'none'
-			? $this->locale->t( 'toolbox.index.last_import_none' )
+			? $this->_locale->t( 'toolbox.index.last_import_none' )
 			: date( 'Y-m-d H:i:s', $last_import['timestamp'] )
 		);
 		if ( $last_import['type'] == 'none' ) {
-			$last_import_type = $this->locale->t( 'toolbox.index.last_import_none' );
+			$last_import_type = $this->_locale->t( 'toolbox.index.last_import_none' );
 		} elseif ( $last_import['type'] == 'cron' ) {
-			$last_import_type = $this->locale->t( 'toolbox.index.last_import_cron' );
+			$last_import_type = $this->_locale->t( 'toolbox.index.last_import_cron' );
 		} else {
-			$last_import_type = $this->locale->t( 'toolbox.index.last_import_manual' );
+			$last_import_type = $this->_locale->t( 'toolbox.index.last_import_manual' );
 		}
 
 		if ( Lengow_Import::is_in_process() ) {
@@ -131,27 +131,27 @@ class Lengow_Check {
 				array( 'rest_time' => Lengow_Import::rest_time_to_import() )
 			);
 		} else {
-			$import_in_progress = $this->locale->t( 'toolbox.index.no_import' );
+			$import_in_progress = $this->_locale->t( 'toolbox.index.no_import' );
 		}
 		$checklist   = array();
 		$checklist[] = array(
-			'title'   => $this->locale->t( 'toolbox.index.global_token' ),
+			'title'   => $this->_locale->t( 'toolbox.index.global_token' ),
 			'message' => Lengow_Configuration::get( 'lengow_token' )
 		);
 		$checklist[] = array(
-			'title'   => $this->locale->t( 'toolbox.index.url_import' ),
+			'title'   => $this->_locale->t( 'toolbox.index.url_import' ),
 			'message' => Lengow_Main::get_cron_url()
 		);
 		$checklist[] = array(
-			'title'   => $this->locale->t( 'toolbox.index.import_in_progress' ),
+			'title'   => $this->_locale->t( 'toolbox.index.import_in_progress' ),
 			'message' => $import_in_progress
 		);
 		$checklist[] = array(
-			'title'   => $this->locale->t( 'toolbox.index.shop_last_import' ),
+			'title'   => $this->_locale->t( 'toolbox.index.shop_last_import' ),
 			'message' => $last_import_date
 		);
 		$checklist[] = array(
-			'title'   => $this->locale->t( 'toolbox.index.shop_type_import' ),
+			'title'   => $this->_locale->t( 'toolbox.index.shop_type_import' ),
 			'message' => $last_import_type
 		);
 
@@ -171,34 +171,34 @@ class Lengow_Check {
 		) {
 			$last_export = date( 'Y-m-d H:i:s', Lengow_Configuration::get( 'lengow_last_export' ) );
 		} else {
-			$last_export = $this->locale->t( 'toolbox.index.last_export_none' );
+			$last_export = $this->_locale->t( 'toolbox.index.last_export_none' );
 		}
 		$checklist   = array();
 		$checklist[] = array(
 			'header' => get_bloginfo( 'name' ) . ' - ' . get_bloginfo( 'wpurl' )
 		);
 		$checklist[] = array(
-			'title' => $this->locale->t( 'toolbox.index.shop_active' ),
+			'title' => $this->_locale->t( 'toolbox.index.shop_active' ),
 			'state' => (int) Lengow_Configuration::get( 'lengow_store_enabled' )
 		);
 		$checklist[] = array(
-			'title'   => $this->locale->t( 'toolbox.index.shop_product_total' ),
+			'title'   => $this->_locale->t( 'toolbox.index.shop_product_total' ),
 			'message' => $lengowExport->get_total_product()
 		);
 		$checklist[] = array(
-			'title'   => $this->locale->t( 'toolbox.index.shop_product_exported' ),
+			'title'   => $this->_locale->t( 'toolbox.index.shop_product_exported' ),
 			'message' => $lengowExport->get_total_export_product()
 		);
 		$checklist[] = array(
-			'title'   => $this->locale->t( 'toolbox.index.shop_export_token' ),
+			'title'   => $this->_locale->t( 'toolbox.index.shop_export_token' ),
 			'message' => Lengow_Configuration::get( 'lengow_token' )
 		);
 		$checklist[] = array(
-			'title'   => $this->locale->t( 'toolbox.index.url_export' ),
+			'title'   => $this->_locale->t( 'toolbox.index.url_export' ),
 			'message' => Lengow_Main::get_export_url()
 		);
 		$checklist[] = array(
-			'title'   => $this->locale->t( 'toolbox.index.shop_last_export' ),
+			'title'   => $this->_locale->t( 'toolbox.index.shop_last_export' ),
 			'message' => $last_export
 		);
 
@@ -214,7 +214,7 @@ class Lengow_Check {
 		$checklist    = array();
 		$file_name    = LENGOW_PLUGIN_PATH . '/toolbox' . DIRECTORY_SEPARATOR . 'checkmd5.csv';
 		$html         = '<h3><i class="fa fa-commenting"></i> '
-		                . $this->locale->t( 'toolbox.checksum.summary' ) . '</h3>';
+		                . $this->_locale->t( 'toolbox.checksum.summary' ) . '</h3>';
 		$file_counter = 0;
 		if ( file_exists( $file_name ) ) {
 			$file_errors  = array();
@@ -241,21 +241,21 @@ class Lengow_Check {
 				fclose( $file );
 			}
 			$checklist[] = array(
-				'title' => $this->locale->t(
+				'title' => $this->_locale->t(
 					'toolbox.checksum.file_checked',
 					array( 'nb_file' => $file_counter )
 				),
 				'state' => 1
 			);
 			$checklist[] = array(
-				'title' => $this->locale->t(
+				'title' => $this->_locale->t(
 					'toolbox.checksum.file_modified',
 					array( 'nb_file' => count( $file_errors ) )
 				),
 				'state' => ( count( $file_errors ) > 0 ? 0 : 1 )
 			);
 			$checklist[] = array(
-				'title' => $this->locale->t(
+				'title' => $this->_locale->t(
 					'toolbox.checksum.file_deleted',
 					array( 'nb_file' => count( $file_deletes ) )
 				),
@@ -264,17 +264,17 @@ class Lengow_Check {
 			$html .= $this->get_admin_content( $checklist );
 			if ( count( $file_errors ) > 0 ) {
 				$html .= '<h3><i class="fa fa-list"></i> '
-				         . $this->locale->t( 'toolbox.checksum.list_modified_file' ) . '</h3>';
+				         . $this->_locale->t( 'toolbox.checksum.list_modified_file' ) . '</h3>';
 				$html .= $this->get_admin_content( $file_errors );
 			}
 			if ( count( $file_deletes ) > 0 ) {
 				$html .= '<h3><i class="fa fa-list"></i> '
-				         . $this->locale->t( 'toolbox.checksum.list_deleted_file' ) . '</h3>';
+				         . $this->_locale->t( 'toolbox.checksum.list_deleted_file' ) . '</h3>';
 				$html .= $this->get_admin_content( $file_deletes );
 			}
 		} else {
 			$checklist[] = array(
-				'title' => $this->locale->t( 'toolbox.checksum.file_not_exists' ),
+				'title' => $this->_locale->t( 'toolbox.checksum.file_not_exists' ),
 				'state' => 0
 			);
 			$html .= $this->get_admin_content( $checklist );

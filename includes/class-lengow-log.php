@@ -20,12 +20,12 @@ class Lengow_Log extends Lengow_File {
 	/**
 	 * @var string name of logs folder
 	 */
-	public static $LENGOW_LOGS_FOLDER = 'logs';
+	public static $lengow_log_folder = 'logs';
 
 	/**
 	 * @var Lengow_File Lengow file instance
 	 */
-	protected $file;
+	protected $_file;
 
 	/**
 	 * Construct a new Lengow log
@@ -38,7 +38,7 @@ class Lengow_Log extends Lengow_File {
 		} else {
 			$this->file_name = $file_name;
 		}
-		$this->file = new Lengow_File( self::$LENGOW_LOGS_FOLDER, $this->file_name );
+		$this->_file = new Lengow_File( self::$lengow_log_folder, $this->file_name );
 	}
 
 	/**
@@ -59,7 +59,7 @@ class Lengow_Log extends Lengow_File {
 			echo $log . '<br />';
 			flush();
 		}
-		$this->file->write( $log );
+		$this->_file->write( $log );
 	}
 
 	/**
@@ -68,7 +68,7 @@ class Lengow_Log extends Lengow_File {
 	 * @return array
 	 */
 	public static function get_files() {
-		return Lengow_File::get_files_from_folder( self::$LENGOW_LOGS_FOLDER );
+		return Lengow_File::get_files_from_folder( self::$lengow_log_folder );
 	}
 
 	/**
@@ -105,7 +105,7 @@ class Lengow_Log extends Lengow_File {
 	 */
 	public static function download( $file = null ) {
 		if ( $file && preg_match( '/^logs-([0-9]{4}-[0-9]{2}-[0-9]{2})\.txt$/', $file, $match ) ) {
-			$filename = LENGOW_PLUGIN_PATH . '/' . self::$LENGOW_LOGS_FOLDER . '/' . $file;
+			$filename = LENGOW_PLUGIN_PATH . '/' . self::$lengow_log_folder . '/' . $file;
 			$handle   = fopen( $filename, "r" );
 			$contents = fread( $handle, filesize( $filename ) );
 			header( 'Content-type: text/plain' );

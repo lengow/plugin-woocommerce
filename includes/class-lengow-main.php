@@ -20,7 +20,7 @@ class Lengow_Main {
 	/**
 	 * Lengow Authorized IPs
 	 */
-	private static $IPS_LENGOW = array(
+	private static $_ips_lengow = array(
 		'46.19.183.204',
 		'46.19.183.218',
 		'46.19.183.222',
@@ -61,17 +61,17 @@ class Lengow_Main {
 	/**
 	 * @var mixed Marketplaces collection
 	 */
-	public static $REGISTERS = array();
+	public static $registers = array();
 
 	/**
 	 * @var Lengow_Log Lengow log file instance
 	 */
-	public static $LOG;
+	public static $log;
 
 	/**
 	 * @var integer life of log files in days
 	 */
-	public static $LOG_LIFE = 20;
+	public static $log_life = 20;
 
 	/**
 	 * @var array WooCommerce product types
@@ -114,7 +114,7 @@ class Lengow_Main {
 		$ips              = Lengow_Configuration::get( 'lengow_authorized_ip' );
 		$ips              = trim( str_replace( array( "\r\n", ',', '-', '|', ' ' ), ';', $ips ), ';' );
 		$ips              = array_filter( explode( ';', $ips ) );
-		$authorized_ips   = count( $ips ) > 0 ? array_merge( $ips, self::$IPS_LENGOW ) : self::$IPS_LENGOW;
+		$authorized_ips   = count( $ips ) > 0 ? array_merge( $ips, self::$_ips_lengow ) : self::$_ips_lengow;
 		$authorized_ips[] = $_SERVER['SERVER_ADDR'];
 		$hostname_ip      = $_SERVER['REMOTE_ADDR'];
 		if ( in_array( $hostname_ip, $authorized_ips ) ) {
@@ -179,11 +179,11 @@ class Lengow_Main {
 	 * @return Lengow_Marketplace Lengow shipping names option
 	 */
 	public static function get_marketplace_singleton( $name ) {
-		if ( ! isset( self::$REGISTERS[ $name ] ) ) {
-			self::$REGISTERS[ $name ] = new Lengow_Marketplace( $name );
+		if ( ! isset( self::$registers[ $name ] ) ) {
+			self::$registers[ $name ] = new Lengow_Marketplace( $name );
 		}
 
-		return self::$REGISTERS[ $name ];
+		return self::$registers[ $name ];
 	}
 
 	/**
@@ -205,11 +205,11 @@ class Lengow_Main {
 	 * @return Lengow_Log Lengow log file instance
 	 */
 	public static function get_log_instance() {
-		if ( is_null( self::$LOG ) ) {
-			self::$LOG = new Lengow_Log();
+		if ( is_null( self::$log ) ) {
+			self::$log = new Lengow_Log();
 		}
 
-		return self::$LOG;
+		return self::$log;
 	}
 
 	/**
@@ -219,7 +219,7 @@ class Lengow_Main {
 		$log_files = Lengow_Log::get_files();
 		$days      = array();
 		$days[]    = 'logs-' . date( 'Y-m-d' ) . '.txt';
-		for ( $i = 1; $i < self::$LOG_LIFE; $i ++ ) {
+		for ( $i = 1; $i < self::$log_life; $i ++ ) {
 			$days[] = 'logs-' . date( 'Y-m-d', strtotime( '-' . $i . 'day' ) ) . '.txt';
 		}
 		if ( empty( $log_files ) ) {
@@ -330,17 +330,16 @@ class Lengow_Main {
 	 */
 	public static function clean_data( $str ) {
 		$str = preg_replace(
-			'/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]' .
-			'|[\x00-\x7F][\x80-\xBF]+' .
-			'|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*' .
-			'|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})' .
-			'|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
+			'/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]
+			|[\x00-\x7F][\x80-\xBF]+
+			|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*
+			|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]{2,})
+			|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]{2})|[\x80-\xBF]{3,})/S',
 			'',
 			$str
 		);
 		$str = preg_replace(
-			'/\xE0[\x80-\x9F][\x80-\xBF]' .
-			'|\xED[\xA0-\xBF][\x80-\xBF]/S',
+			'/\xE0[\x80-\x9F][\x80-\xBF]|\xED[\xA0-\xBF][\x80-\xBF]/S',
 			'',
 			$str
 		);
