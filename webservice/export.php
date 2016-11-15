@@ -20,7 +20,7 @@
  */
 
 /**
- * list params
+ * List params
  * boolean mode               Number of products exported
  * string  format             Format of exported files ('csv','yaml','xml','json')
  * boolean stream             Stream file (1) or generate a file on server (0)
@@ -39,10 +39,10 @@
 @set_time_limit( 0 );
 @ini_set( 'memory_limit', '512M' );
 
-// Init wordpress
-require( dirname( dirname( dirname( dirname( dirname( $_SERVER["SCRIPT_FILENAME"] ) ) ) ) ) . '/wp-load.php' );
+// init wordpress.
+require( dirname( dirname( dirname( dirname( dirname( $_SERVER['SCRIPT_FILENAME'] ) ) ) ) ) . '/wp-load.php' );
 
-// Dependencies
+// dependencies
 require_once( '../includes/class-lengow-main.php' );
 require_once( '../includes/class-lengow-export.php' );
 require_once( '../includes/class-lengow-product.php' );
@@ -54,12 +54,12 @@ require_once( '../includes/class-lengow-configuration.php' );
 require_once( '../includes/class-lengow-connector.php' );
 require_once( '../includes/class-lengow-exception.php' );
 
-// check if WooCommerce plugin is activated
+// Check if WooCommerce plugin is activated.
 if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 	wp_die( 'WooCommerce plugin is not active', '', array( 'response' => 400 ) );
 }
 
-// check if Lengow plugin is activated
+// check if Lengow plugin is activated.
 if ( ! in_array(
 	'lengow-woocommerce/lengow.php',
 	apply_filters( 'active_plugins', get_option( 'active_plugins' ) )
@@ -68,12 +68,12 @@ if ( ! in_array(
 	wp_die( 'Lengow plugin is not active', '', array( 'response' => 400 ) );
 }
 
-// check IP
+// check IP.
 if ( ! Lengow_Main::check_ip() ) {
 	wp_die( 'Unauthorized access for IP: ' . $_SERVER['REMOTE_ADDR'], '', array( 'response' => 403 ) );
 }
 
-// get params data
+// get params data.
 $get_params         = isset( $_GET['get_params'] ) ? (bool) $_GET['get_params'] : false;
 $mode               = isset( $_GET['mode'] ) ? $_GET['mode'] : null;
 $format             = isset( $_GET['format'] ) ? $_GET['format'] : null;

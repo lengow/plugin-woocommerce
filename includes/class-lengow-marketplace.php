@@ -20,7 +20,7 @@ class Lengow_Marketplace {
 	/**
 	 * @var mixed all marketplaces allowed for an account ID
 	 */
-	public static $MARKETPLACES = null;
+	public static $marketplaces = null;
 
 	/**
 	 * @var string the name of the marketplace
@@ -67,7 +67,7 @@ class Lengow_Marketplace {
 	public function __construct( $name ) {
 		$this->_load_api_marketplace();
 		$this->name = strtolower( $name );
-		if ( ! isset( self::$MARKETPLACES->{$this->name} ) ) {
+		if ( ! isset( self::$marketplaces->{$this->name} ) ) {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message(
 					'lengow_log.exception.marketplace_not_present',
@@ -75,7 +75,7 @@ class Lengow_Marketplace {
 				)
 			);
 		}
-		$this->marketplace = self::$MARKETPLACES->{$this->name};
+		$this->marketplace = self::$marketplaces->{$this->name};
 		if ( ! empty( $this->marketplace ) ) {
 			$this->legacy_code = $this->marketplace->legacy_code;
 			$this->label_name  = $this->marketplace->name;
@@ -109,8 +109,8 @@ class Lengow_Marketplace {
 	 * Load the json configuration of all marketplaces
 	 */
 	private function _load_api_marketplace() {
-		if ( is_null( self::$MARKETPLACES ) ) {
-			self::$MARKETPLACES = Lengow_Connector::query_api( 'get', '/v3.0/marketplaces' );
+		if ( is_null( self::$marketplaces ) ) {
+			self::$marketplaces = Lengow_Connector::query_api( 'get', '/v3.0/marketplaces' );
 		}
 	}
 

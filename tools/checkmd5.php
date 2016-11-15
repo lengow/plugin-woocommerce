@@ -1,10 +1,10 @@
 <?php
 
-/*
+/**
  * Check MD5
  */
 error_reporting( E_ALL );
-ini_set( "display_errors", 1 );
+ini_set( 'display_errors', 1 );
 
 $base = dirname( dirname( __FILE__ ) );
 $fp   = fopen( dirname( dirname( __FILE__ ) ) . '/toolbox/checkmd5.csv', 'w+' );
@@ -34,6 +34,13 @@ foreach ( $file_paths as $file_path ) {
 }
 fclose( $fp );
 
+/**
+ * Explore Folders
+ *
+ * @param string $path folder path
+ *
+ * @return string
+ */
 function explorer( $path ) {
 	$paths = array();
 	if ( is_dir( $path ) ) {
@@ -51,6 +58,13 @@ function explorer( $path ) {
 	return $paths;
 }
 
+/**
+ * Write csv
+ *
+ * @param string $fp
+ * @param string $text
+ * @param array $front_key
+ */
 function write_csv( $fp, $text, &$front_key = array() ) {
 	if ( is_array( $text ) ) {
 		foreach ( $text as $k => $v ) {

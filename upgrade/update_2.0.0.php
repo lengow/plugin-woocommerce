@@ -159,7 +159,7 @@ $configuration_to_delete = array(
 	'lengow_api_key',
 	'lengow_default_carrier',
 	'lengow_import_cron',
-	'lengow_time_import_start'
+	'lengow_time_import_start',
 );
 foreach ( $configuration_to_delete as $config_name ) {
 	Lengow_Configuration::delete( $config_name );

@@ -20,22 +20,22 @@ class Lengow_Export {
 	/**
 	 * Default fields for export
 	 */
-	public static $DEFAULT_FIELDS;
+	public static $default_field;
 
 	/**
 	 * Export product attributes
 	 */
-	public static $ATTRIBUTES = null;
+	public static $attributes = null;
 
 	/**
 	 * Export product post metas
 	 */
-	public static $POST_METAS = null;
+	public static $post_metas = null;
 
 	/**
 	 * All available params for export
 	 */
-	public static $EXPORT_PARAMS = array(
+	public static $export_params = array(
 		'mode',
 		'format',
 		'stream',
@@ -261,7 +261,7 @@ class Lengow_Export {
 				$this->_legacy = false;
 			}
 		}
-		self::$DEFAULT_FIELDS = $this->_legacy ? $this->_legacy_fields : $this->_new_fields;
+		self::$default_field = $this->_legacy ? $this->_legacy_fields : $this->_new_fields;
 	}
 
 	/**
@@ -270,7 +270,7 @@ class Lengow_Export {
 	 * @param string $format The export format
 	 */
 	private function _set_format( $format ) {
-		$this->_format = ! in_array( $format, Lengow_Feed::$AVAILABLE_FORMATS ) ? 'csv' : $format;
+		$this->_format = ! in_array( $format, Lengow_Feed::$available_formats ) ? 'csv' : $format;
 	}
 
 	/**
@@ -298,7 +298,7 @@ class Lengow_Export {
 		if ( $product_types ) {
 			$exported_types = explode( ',', $product_types );
 			foreach ( $exported_types as $type ) {
-				if ( array_key_exists( $type, Lengow_Main::$PRODUCT_TYPES ) ) {
+				if ( array_key_exists( $type, Lengow_Main::$product_types ) ) {
 					$this->_product_types[] = $type;
 				}
 			}
@@ -322,14 +322,14 @@ class Lengow_Export {
 	 */
 	public function exec() {
 		try {
-			// clean logs
+			// clean logs.
 			Lengow_Main::clean_log();
 			Lengow_Main::log( 'Export', Lengow_Main::set_log_message( 'log.export.start' ), $this->_log_output );
-			// set legacy fields option
+			// set legacy fields option.
 			$this->_set_legacy_fields();
 			// get fields to export
 			$fields = $this->_get_fields();
-			// get products to be exported
+			// get products to be exported.
 			$products = $this->_get_export_ids();
 			Lengow_Main::log(
 				'Export',
@@ -379,7 +379,7 @@ class Lengow_Export {
 		$feed          = new Lengow_Feed( $this->_stream, $this->_format, $this->_legacy );
 		$feed->write( 'header', $fields );
 		$is_first = true;
-		// Get the maximum of character for yaml format
+		// Get the maximum of character for yaml format.
 		$max_character = 0;
 		foreach ( $fields as $field ) {
 			if ( strlen( $field ) > $max_character ) {
@@ -394,13 +394,13 @@ class Lengow_Export {
 				$product = new Lengow_Product( (int) $p->id_product );
 			}
 			foreach ( $fields as $field ) {
-				if ( isset( Lengow_Export::$DEFAULT_FIELDS[ $field ] ) ) {
-					$product_data[ $field ] = $product->get_data( Lengow_Export::$DEFAULT_FIELDS[ $field ] );
+				if ( isset( Lengow_Export::$default_field[ $field ] ) ) {
+					$product_data[ $field ] = $product->get_data( Lengow_Export::$default_field[ $field ] );
 				} else {
 					$product_data[ $field ] = $product->get_data( $field );
 				}
 			}
-			// write parent product
+			// write parent product.
 			$feed->write( 'body', $product_data, $is_first, $max_character );
 			$product_count ++;
 			if ( $product_count > 0 && $product_count % 50 == 0 ) {
@@ -413,7 +413,7 @@ class Lengow_Export {
 					$this->_log_output
 				);
 			}
-			// clean data for next product
+			// clean data for next product.
 			unset( $product_data );
 			unset( $product );
 			if ( function_exists( 'gc_collect_cycles' ) ) {
@@ -446,15 +446,15 @@ class Lengow_Export {
 	 */
 	private function _get_fields() {
 		$fields = array();
-		foreach ( self::$DEFAULT_FIELDS as $key => $value ) {
+		foreach ( self::$default_field as $key => $value ) {
 			$fields[] = $key;
 		}
-		self::$ATTRIBUTES = Lengow_Product::get_attributes();
-		foreach ( self::$ATTRIBUTES as $attribute ) {
+		self::$attributes = Lengow_Product::get_attributes();
+		foreach ( self::$attributes as $attribute ) {
 			$fields[] = $attribute;
 		}
-		self::$POST_METAS = Lengow_Product::get_post_metas();
-		foreach ( self::$POST_METAS as $post_meta ) {
+		self::$post_metas = Lengow_Product::get_post_metas();
+		foreach ( self::$post_metas as $post_meta ) {
 			$fields[] = $post_meta;
 		}
 
@@ -560,7 +560,7 @@ class Lengow_Export {
 				$query .= " INNER JOIN " . $wpdb->prefix . "lengow_product lp ON lp.product_id = p.id ";
 			}
 		}
-		// Specific conditions
+		// Specific conditions.
 		$where   = array();
 		$where[] = "p.post_status = 'publish'";
 		if ( $variation ) {
@@ -614,7 +614,7 @@ class Lengow_Export {
 	 */
 	public static function get_export_params() {
 		$params = array();
-		foreach ( self::$EXPORT_PARAMS as $param ) {
+		foreach ( self::$export_params as $param ) {
 			switch ( $param ) {
 				case 'mode':
 					$authorized_value = array( 'size', 'total' );
@@ -622,7 +622,7 @@ class Lengow_Export {
 					$example          = 'size';
 					break;
 				case 'format':
-					$authorized_value = Lengow_Feed::$AVAILABLE_FORMATS;
+					$authorized_value = Lengow_Feed::$available_formats;
 					$type             = 'string';
 					$example          = 'csv';
 					break;
@@ -639,7 +639,7 @@ class Lengow_Export {
 					break;
 				case 'product_types':
 					$types = array();
-					foreach ( Lengow_Main::$PRODUCT_TYPES as $key => $value ) {
+					foreach ( Lengow_Main::$product_types as $key => $value ) {
 						$types[] = $key;
 					}
 					$authorized_value = $types;

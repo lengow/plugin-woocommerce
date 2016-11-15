@@ -76,7 +76,7 @@ class Lengow_Main {
 	/**
 	 * @var array WooCommerce product types
 	 */
-	public static $PRODUCT_TYPES = array(
+	public static $product_types = array(
 		'simple'   => 'Simple Product',
 		'variable' => 'Variable Product',
 		'external' => 'External Product',
@@ -287,8 +287,6 @@ class Lengow_Main {
 	 * Record the date of the last import
 	 *
 	 * @param string $type (cron or manual)
-	 *
-	 * @return boolean
 	 */
 	public static function update_date_import( $type ) {
 		if ( $type === 'cron' ) {
@@ -581,9 +579,9 @@ class Lengow_Main {
 			'/[\x{0416}]/u'
 		);
 
-		// ö to oe
-		// å to aa
-		// ä to ae
+		// ö to oe.
+		// å to aa.
+		// ä to ae.
 		$replacements = array(
 			'a',
 			'b',

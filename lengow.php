@@ -16,16 +16,14 @@
  * @author Lengow
  */
 
-/**
- * Prevent direct access
- */
+// Prevent direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 global $wp_version;
-/**
- * Check if WooCommerce is active
- **/
+
+// Check if WooCommerce is active.
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 
 	/**
@@ -35,21 +33,19 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 * @version 2.0.0
 	 */
 	class Lengow {
+
 		/**
-		 * Current version of plugin
-		 * @var string
+		 * @var string Current version of plugin
 		 */
 		public $version = '2.0.0';
 
 		/**
-		 * The plugin name
-		 * @var string
+		 * @var string The plugin name
 		 */
 		public $name = 'lengow-woocommerce';
 
 		/**
-		 * Instance of Lengow Admin
-		 * @var Lengow Admin Object
+		 * @var Lengow Admin Object Instance of Lengow Admin
 		 */
 		public $lengow_admin;
 
@@ -175,7 +171,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					'lengow_font_awesome',
 					'lengow_select2_css',
 					'lengow_component_css',
-					'lengow_pages_css'
+					'lengow_pages_css',
 				)
 			);
 			wp_enqueue_style( 'lengow_admin_css' );
@@ -200,7 +196,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					'lengow_select2',
 					'lengow_home',
 					'lengow_orders',
-					'lengow_settings_js'
+					'lengow_settings_js',
 				)
 			);
 			wp_enqueue_script( 'lengow_admin_js' );
@@ -218,12 +214,12 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 			return (object) array(
 				'last_checked'    => time(),
-				'version_checked' => $wp_version
+				'version_checked' => $wp_version,
 			);
 		}
 	}
 
-	// Start module
+	// Start module.
 	$GLOBALS['lengow'] = new Lengow();
 	if ( $wp_version <= '4.0.0' ) {
 		$GLOBALS['hook_suffix'] = 'toplevel_page_lengow';

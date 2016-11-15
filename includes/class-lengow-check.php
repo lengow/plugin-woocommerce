@@ -23,7 +23,7 @@ class Lengow_Check {
 	private $_locale;
 
 	public function __construct() {
-		$this->_locale                       = new Lengow_Translation();
+		$this->_locale                      = new Lengow_Translation();
 		Lengow_Translation::$force_iso_code = "en_GB";
 	}
 
@@ -171,7 +171,7 @@ class Lengow_Check {
 		) {
 			$last_export = date( 'Y-m-d H:i:s', Lengow_Configuration::get( 'lengow_last_export' ) );
 		} else {
-			$last_export = $this->_locale->t( 'toolbox.index.last_export_none' );
+			$last_export = $this->_locale->t( 'toolbox.index.last_import_none' );
 		}
 		$checklist   = array();
 		$checklist[] = array(

@@ -78,7 +78,7 @@ $list_file = Lengow_Log::get_paths();
 			<label class="control-label"><?php echo $keys['lengow_product_types']['label'] ?></label>
 			<div class="form-group">
 				<select class="form-control js-multiple-select" name="lengow_product_types[]" multiple>
-					<?php foreach ( Lengow_Main::$PRODUCT_TYPES as $row => $value ) :
+					<?php foreach ( Lengow_Main::$product_types as $row => $value ) :
 						$selected = false;
 						foreach ( $values['lengow_product_types'] as $key => $type ) {
 							if ( $type == $row ) {

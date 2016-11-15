@@ -7,10 +7,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <div class="lgw-container">
-    <?php if ( $keys['lengow_preprod_enabled'] == 1 ) : ?>
-    <div id="lgw-preprod" class="adminlengowhelp">
-        <?php echo $locale->t('menu.preprod_active') ?>
-    </div>
+    <?php if ( Lengow_Configuration::get('lengow_preprod_enabled') == 1 ) : ?>
+        <div id="lgw-preprod" class="adminlengowlegals">
+            <?php echo $locale->t('menu.preprod_active') ?>
+        </div>
     <?php endif; ?>
     <div class="lgw-box lengow_help_wrapper text-center">
         <h2><?php echo $locale->t('help.screen.title')?></h2>

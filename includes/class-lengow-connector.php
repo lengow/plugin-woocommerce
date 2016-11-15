@@ -285,16 +285,16 @@ class Lengow_Connector {
 	 * @return array The formated data response
 	 */
 	protected function make_request( $type, $url, $args, $token, $body = '' ) {
-		// Define CURLE_OPERATION_TIMEDOUT for old php versions
+		// define CURLE_OPERATION_TIMEDOUT for old php versions.
 		defined( "CURLE_OPERATION_TIMEDOUT" ) || define( "CURLE_OPERATION_TIMEDOUT", CURLE_OPERATION_TIMEOUTED );
 		$ch = curl_init();
-		// Options
+		// options.
 		$opts = self::$curl_opts;
-		// get special timeout for specific Lengow API
+		// get special timeout for specific Lengow API.
 		if ( array_key_exists( $url, $this->lengow_urls ) ) {
 			$opts[ CURLOPT_TIMEOUT ] = $this->lengow_urls[ $url ];
 		}
-		// get url for a specific environment
+		// get url for a specific environment.
 		$url                            = self::LENGOW_API_URL . $url;
 		$opts[ CURLOPT_CUSTOMREQUEST ]  = strtoupper( $type );
 		$url                            = parse_url( $url );

@@ -20,7 +20,7 @@ class Lengow_Product {
 	/**
 	 * Default fields for export
 	 */
-	public static $EXCLUDES = array(
+	public static $excludes = array(
 		'_thumbnail_id',
 		'_stock_status',
 		'_downloadable',
@@ -59,7 +59,7 @@ class Lengow_Product {
 	/**
 	 * array API nodes containing relevant data
 	 */
-	public static $PRODUCT_API_NODES = array(
+	public static $product_api_nodes = array(
 		'marketplace_product_id',
 		'marketplace_status',
 		'merchant_product_id',
@@ -88,7 +88,7 @@ class Lengow_Product {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message(
 					'log.export.error_unable_to_find_product',
-					array('product_id' => $product_id)
+					array( 'product_id' => $product_id )
 				)
 			);
 		}
@@ -238,7 +238,7 @@ class Lengow_Product {
 				}
 
 				return '';
-			//speed up export
+			//speed up export.
 			case 'image_url_1':
 			case 'image_url_2':
 			case 'image_url_3':
@@ -249,7 +249,7 @@ class Lengow_Product {
 			case 'image_url_8':
 			case 'image_url_9':
 			case 'image_url_10':
-				//speed up export
+				//speed up export.
 				switch ( $name ) {
 					case 'image_url_1':
 						$id_image = 0;
@@ -353,9 +353,9 @@ class Lengow_Product {
 
 				return '';
 			default:
-				if ( in_array( $name, Lengow_Export::$ATTRIBUTES ) ) {
+				if ( in_array( $name, Lengow_Export::$attributes ) ) {
 					return Lengow_Main::clean_data( $this->_get_attribute_data( $name ) );
-				} elseif ( in_array( $name, Lengow_Export::$POST_METAS ) ) {
+				} elseif ( in_array( $name, Lengow_Export::$post_metas ) ) {
 					return Lengow_Main::clean_data( $this->_get_post_meta_data( $name ) );
 				}
 
@@ -434,7 +434,7 @@ class Lengow_Product {
 	 */
 	private function _get_categories() {
 		$taxonomy = 'product_cat';
-		// get all terms with id and name
+		// get all terms with id and name.
 		$terms     = array();
 		$all_terms = get_terms( $taxonomy );
 		foreach ( $all_terms as $term ) {
@@ -450,16 +450,16 @@ class Lengow_Product {
 				'child'  => $childs,
 			);
 		}
-		// get product terms
+		// get product terms.
 		$product_terms = get_the_terms( $this->product->id, $taxonomy );
 		if ( $product_terms && ! is_wp_error( $product_terms ) ) {
-			// get product terms with only term id
+			// get product terms with only term id.
 			$last_id          = false;
 			$product_term_ids = array();
 			foreach ( $product_terms as $product_term ) {
 				$product_term_ids[] = $product_term->term_id;
 			}
-			// get the id at the last term
+			// get the id at the last term.
 			foreach ( $product_term_ids as $product_term_id ) {
 				$term_childs = $terms[ $product_term_id ]['child'];
 				if ( count( $term_childs ) > 0 ) {
@@ -474,7 +474,7 @@ class Lengow_Product {
 					break;
 				}
 			}
-			// construct breadcrum with all term names
+			// construct breadcrum with all term names.
 			if ( $last_id ) {
 				$term_ids   = array();
 				$term_ids[] = $terms[ $last_id ]['name'];
@@ -580,7 +580,7 @@ class Lengow_Product {
             AND p.post_type = 'product'
         ";
 		foreach ( $wpdb->get_results( $sql ) as $result ) {
-			if ( ! in_array( $result->meta_key, self::$EXCLUDES ) ) {
+			if ( ! in_array( $result->meta_key, self::$excludes ) ) {
 				if ( ! in_array( $result->meta_key, $return ) ) {
 					$return[] = $result->meta_key;
 				}
@@ -599,7 +599,7 @@ class Lengow_Product {
 	 */
 	public static function extract_product_data_from_api( $product ) {
 		$temp = array();
-		foreach ( self::$PRODUCT_API_NODES as $node ) {
+		foreach ( self::$product_api_nodes as $node ) {
 			$temp[ $node ] = $product->{$node};
 		}
 		$temp['price_unit'] = (float) $temp['amount'] / (float) $temp['quantity'];
@@ -627,18 +627,18 @@ class Lengow_Product {
 		$product_field   = $product_datas['merchant_product_id']->field != null
 			? strtolower( (string) $product_datas['merchant_product_id']->field )
 			: false;
-		// search product foreach value
+		// search product foreach value.
 		foreach ( $api_product_ids as $attribute_name => $attribute_value ) {
-			// remove _FBA from product id
+			// remove _FBA from product id.
 			$attribute_value = preg_replace( '/_FBA$/', '', $attribute_value );
 			if ( empty( $attribute_value ) ) {
 				continue;
 			}
-			// search by field if exists
+			// search by field if exists.
 			if ( $product_field ) {
 				$product_id = self::search_product( $attribute_value, $product_field );
 			}
-			// search by id or sku
+			// search by id or sku.
 			if ( ! $product_id ) {
 				$product_id = self::search_product( $attribute_value );
 				if ( ! $product_id ) {
@@ -651,7 +651,7 @@ class Lengow_Product {
 					throw new Lengow_Exception(
 						Lengow_Main::set_log_message(
 							'lengow_log.exception.product_is_a_parent',
-							array('product_id' => $product_id)
+							array( 'product_id' => $product_id )
 						)
 					);
 				}
@@ -692,7 +692,7 @@ class Lengow_Product {
 				$attribute_value = str_replace( '\_', '_', $attribute_value );
 				$attribute_value = str_replace( 'X', '_', $attribute_value );
 				$ids             = explode( '_', $attribute_value );
-				// if a product variation -> search with product variation id
+				// if a product variation -> search with product variation id.
 				$id = isset( $ids[1] ) ? $ids[1] : $ids[0];
 				if ( preg_match( '/^[0-9]*$/', $id ) ) {
 					$product_id = $id;

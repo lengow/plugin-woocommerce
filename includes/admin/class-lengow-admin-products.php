@@ -166,7 +166,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 */
 	public function prepare_items() {
 		$columns = $this->get_columns();
-		// $hidden defines the hidden columns
+		// $hidden defines the hidden columns.
 		$hidden = array();
 		// $sortable defines if the table can be sorted by this column.
 		$sortable              = $this->get_sortable_columns();
@@ -275,16 +275,16 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 * @return mixed
 	 */
 	private function usort_reorder( $a, $b ) {
-		// If no sort, default to ID
+		// If no sort, default to ID.
 		$order_by = ( ! empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'ID';
 
-		// If no order, default to asc
+		// If no order, default to asc.
 		$order = ( ! empty( $_GET['order'] ) ) ? $_GET['order'] : 'asc';
 
-		// Determine sort order
+		// Determine sort order.
 		$result = strcmp( $a[ $order_by ], $b[ $order_by ] );
 
-		// Send final sort direction to usort
+		// Send final sort direction to usort.
 		return ( $order === 'asc' ) ? $result : - $result;
 	}
 
@@ -334,7 +334,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 		$checked            = isset( $id_lengow_products[ $product['ID'] ] ) ? 'checked' : '';
 		$check              = isset( $id_lengow_products[ $product['ID'] ] ) ? 'checked="checked"' : '';
 
-		return sprintf( 
+		return sprintf(
 			'<div class="lgw-switch ' . $checked . '">
             <label><div><span></span>
             <input 
@@ -349,10 +349,10 @@ class Lengow_Admin_Products extends WP_List_Table {
             id="js-lengow_product_%s"
             value="1" ' . $check . '/>
             </div></label></div>',
-            $product['ID'],
-            $product['ID'],
-            $product['ID'] 
-        );
+			$product['ID'],
+			$product['ID'],
+			$product['ID']
+		);
 	}
 
 	/**
@@ -372,7 +372,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 			'product_type'
 		);
 
-		// filter by search box
+		// filter by search box.
 		if ( isset( $_POST['s'] ) ) {
 			$products = get_posts(
 				array(

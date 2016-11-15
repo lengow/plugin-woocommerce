@@ -20,7 +20,7 @@ class Lengow_Import {
 	/**
 	 * @var array valid states lengow to create a Lengow order
 	 */
-	public static $LENGOW_STATES = array(
+	public static $lengow_states = array(
 		'accepted',
 		'waiting_shipment',
 		'shipped',
@@ -30,7 +30,7 @@ class Lengow_Import {
 	/**
 	 * @var boolean import is processing
 	 */
-	public static $PROCESSING;
+	public static $processing;
 
 	/**
 	 * @var string marketplace order sku
@@ -112,7 +112,7 @@ class Lengow_Import {
 	 * boolean preprod_mode        preprod mode
 	 */
 	public function __construct( $params = array() ) {
-		// params for re-import order
+		// params for re-import order.
 		if ( isset( $params['marketplace_sku'] ) && isset( $params['marketplace_name'] ) ) {
 			$this->_marketplace_sku  = $params['marketplace_sku'];
 			$this->_marketplace_name = $params['marketplace_name'];
@@ -122,7 +122,7 @@ class Lengow_Import {
 				$this->_delivery_address_id = $params['delivery_address_id'];
 			}
 		} else {
-			// recovering the time interval
+			// recovering the time interval.
 			$days             = (
 			isset( $params['days'] )
 				? $params['days']
@@ -132,7 +132,7 @@ class Lengow_Import {
 			$this->_date_to   = date( 'c' );
 			$this->_limit     = ( isset( $params['limit'] ) ? $params['limit'] : 0 );
 		}
-		// get other params
+		// get other params.
 		$this->_preprod_mode = (
 		isset( $params['preprod_mode'] )
 			? $params['preprod_mode']
@@ -162,7 +162,7 @@ class Lengow_Import {
 		$order_error = 0;
 		$error       = false;
 
-		// clean logs
+		// clean logs.
 		Lengow_Main::clean_log();
 		if ( self::is_in_process() && ! $this->_preprod_mode && ! $this->_import_one_order ) {
 			Lengow_Main::log(
@@ -193,19 +193,19 @@ class Lengow_Import {
 			}
 			if ( ! $this->_import_one_order ) {
 				self::set_in_process();
-				// update last import date
+				// update last import date.
 				Lengow_Main::update_date_import( $this->_type );
 			}
 
 			if ( Lengow_Configuration::get( 'lengow_store_enabled' ) ) {
 				try {
-					// check account ID, Access Token and Secret
+					// check account ID, Access Token and Secret.
 					$error_credential = $this->_check_credentials();
 					if ( $error_credential !== true ) {
 						Lengow_Main::log( 'Import', $error_credential, $this->_log_output );
 						$error = $error_credential;
 					} else {
-						// get orders from Lengow API
+						// get orders from Lengow API.
 						$orders       = $this->_get_orders_from_api();
 						$total_orders = count( $orders );
 						if ( $this->_import_one_order ) {
@@ -283,7 +283,7 @@ class Lengow_Import {
 				}
 			}
 
-			// finish import process
+			// finish import process.
 			self::set_end();
 			Lengow_Main::log(
 				'Import',
@@ -406,7 +406,7 @@ class Lengow_Import {
 						)
 					);
 				}
-				// Construct array orders
+				// Construct array orders.
 				foreach ( $results->results as $order ) {
 					$orders[] = $order;
 				}
@@ -442,7 +442,7 @@ class Lengow_Import {
 			if ( $this->_preprod_mode ) {
 				$marketplace_sku .= '--' . time();
 			}
-			// if order contains no package
+			// if order contains no package.
 			if ( count( $order_data->packages ) == 0 ) {
 				Lengow_Main::log(
 					'Import',
@@ -452,10 +452,10 @@ class Lengow_Import {
 				);
 				continue;
 			}
-			// start import
+			// start import.
 			foreach ( $order_data->packages as $package_data ) {
 				$nb_package ++;
-				// check whether the package contains a shipping address
+				// check whether the package contains a shipping address.
 				if ( ! isset( $package_data->delivery->id ) ) {
 					Lengow_Main::log(
 						'Import',
@@ -467,7 +467,7 @@ class Lengow_Import {
 				}
 				$package_delivery_address_id = (int) $package_data->delivery->id;
 				$first_package               = ( $nb_package > 1 ? false : true );
-				// check the package for re-import order
+				// check the package for re-import order.
 				if ( $this->_import_one_order ) {
 					if ( ! is_null( $this->_delivery_address_id )
 					     && $this->_delivery_address_id != $package_delivery_address_id
@@ -482,7 +482,7 @@ class Lengow_Import {
 					}
 				}
 				try {
-					// try to import or update order
+					// try to import or update order.
 					$import_order = new Lengow_Import_Order(
 						array(
 							'preprod_mode'        => $this->_preprod_mode,
@@ -514,7 +514,7 @@ class Lengow_Import {
 					unset( $error_message );
 					continue;
 				}
-				// if re-import order -> return order information
+				// if re-import order -> return order information.
 				if ( isset( $order ) && $this->_import_one_order ) {
 					return $order;
 				}
@@ -525,10 +525,10 @@ class Lengow_Import {
 						$order_error ++;
 					}
 				}
-				// clean process
+				// clean process.
 				unset( $import_order );
 				unset( $order );
-				// if limit is set
+				// if limit is set.
 				if ( $this->_limit > 0 && $order_new == $this->_limit ) {
 					$import_finished = true;
 					break;
@@ -553,7 +553,7 @@ class Lengow_Import {
 	public static function is_in_process() {
 		$timestamp = (int) Lengow_Configuration::get( 'lengow_import_in_progress' );
 		if ( $timestamp > 0 ) {
-			// security check : if last import is more than 60 seconds old => authorize new import to be launched
+			// security check : if last import is more than 60 seconds old => authorize new import to be launched.
 			if ( ( $timestamp + ( 60 * 1 ) ) < time() ) {
 				self::set_end();
 
@@ -584,7 +584,7 @@ class Lengow_Import {
 	 * Set import to "in process" state
 	 */
 	public static function set_in_process() {
-		self::$PROCESSING = true;
+		self::$processing = true;
 		Lengow_Configuration::update_value( 'lengow_import_in_progress', time() );
 	}
 
@@ -592,7 +592,7 @@ class Lengow_Import {
 	 * Set import to finished
 	 */
 	public static function set_end() {
-		self::$PROCESSING = false;
+		self::$processing = false;
 		Lengow_Configuration::update_value( 'lengow_import_in_progress', - 1 );
 	}
 
@@ -608,7 +608,7 @@ class Lengow_Import {
 		if ( empty( $order_state_marketplace ) ) {
 			return false;
 		}
-		if ( ! in_array( $marketplace->get_state_lengow( $order_state_marketplace ), self::$LENGOW_STATES ) ) {
+		if ( ! in_array( $marketplace->get_state_lengow( $order_state_marketplace ), self::$lengow_states ) ) {
 			return false;
 		}
 

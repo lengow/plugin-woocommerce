@@ -61,7 +61,7 @@ class Lengow_Feed {
 	/**
 	 * @var array formats available for export
 	 */
-	public static $AVAILABLE_FORMATS = array(
+	public static $available_formats = array(
 		'csv',
 		'yaml',
 		'xml',
@@ -71,7 +71,7 @@ class Lengow_Feed {
 	/**
 	 * @var string Lengow export folder
 	 */
-	public static $LENGOW_EXPORT_FOLDER = 'export';
+	public static $lengow_export_folder = 'export';
 
 	/**
 	 * Construct a new Lengow feed
@@ -96,14 +96,14 @@ class Lengow_Feed {
 	 */
 	private function _init_export_file() {
 		$sep                  = DIRECTORY_SEPARATOR;
-		$this->_export_folder = self::$LENGOW_EXPORT_FOLDER;
+		$this->_export_folder = self::$lengow_export_folder;
 		$folder_path          = LENGOW_PLUGIN_PATH . $sep . $this->_export_folder;
 		if ( ! file_exists( $folder_path ) ) {
 			if ( ! mkdir( $folder_path ) ) {
 				throw new Lengow_Exception(
 					Lengow_Main::set_log_message(
 						'log.export.error_unable_to_create_folder',
-						array('folder_path' => $folder_path)
+						array( 'folder_path' => $folder_path )
 					)
 				);
 			}

@@ -20,7 +20,7 @@ class Lengow_Install {
 	/**
 	 * installation status
 	 */
-	public static $installationStatus;
+	public static $installation_status;
 
 	/**
 	 * Installation of module
@@ -75,8 +75,6 @@ class Lengow_Install {
 	 *
 	 * @param string $table
 	 * @param string $field
-	 *
-	 * @return boolean
 	 */
 	public static function check_field_and_drop( $table, $field ) {
 		global $wpdb;
@@ -105,7 +103,7 @@ class Lengow_Install {
 	 * @param boolean $status Installation Status
 	 */
 	public static function set_installation_status( $status ) {
-		self::$installationStatus = $status;
+		self::$installation_status = $status;
 	}
 
 	/**
@@ -114,6 +112,6 @@ class Lengow_Install {
 	 * @return boolean
 	 */
 	public static function is_installation_in_progress() {
-		return self::$installationStatus;
+		return self::$installation_status;
 	}
 }

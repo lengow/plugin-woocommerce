@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <div class="lgw-container" id="lengow_feed_wrapper">
-    <?php if ( $keys['lengow_preprod_enabled'] == 1 ) : ?>
+    <?php if ( Lengow_Configuration::get('lengow_preprod_enabled') == 1 ) : ?>
         <div id="lgw-preprod" class="adminlengowlegals">
             <?php echo $locale->t('menu.preprod_active') ?>
         </div>

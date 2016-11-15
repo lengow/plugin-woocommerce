@@ -35,7 +35,7 @@ class Lengow_Order {
 	) {
 		global $wpdb;
 
-		// V2 compatibility
+		// V2 compatibility.
 		$marketplace_legacy = is_null( $marketplace_legacy ) ? $marketplace : strtolower( $marketplace_legacy );
 
 		$query = "

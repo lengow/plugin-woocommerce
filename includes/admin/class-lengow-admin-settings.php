@@ -37,7 +37,6 @@ class Lengow_Admin_Settings {
 				}
 				break;
 		}
-
 	}
 
 	/**

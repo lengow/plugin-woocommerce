@@ -97,7 +97,7 @@ class Lengow_Import_Order {
 		$this->_order_data          = $params['order_data'];
 		$this->_package_data        = $params['package_data'];
 		$this->_first_package       = $params['first_package'];
-		// get marketplace and Lengow order state
+		// get marketplace and Lengow order state.
 		$this->_marketplace             = Lengow_Main::get_marketplace_singleton(
 			(string) $this->_order_data->marketplace
 		);
@@ -111,14 +111,14 @@ class Lengow_Import_Order {
 	 * @return mixed
 	 */
 	public function import_order() {
-		// get a record in the lengow order table
+		// get a record in the lengow order table.
 		$already_decremented = Lengow_Order::get_id_order_from_lengow_orders(
 			$this->_marketplace_sku,
 			$this->_marketplace->name,
 			$this->_delivery_address_id,
 			$this->_marketplace->legacy_code
 		);
-		// If order does not already exist
+		// If order does not already exist.
 		if ( $already_decremented ) {
 			Lengow_Main::log(
 				'Import',
@@ -129,7 +129,7 @@ class Lengow_Import_Order {
 
 			return false;
 		}
-		// if order is cancelled or new -> skip
+		// if order is cancelled or new -> skip.
 		if ( ! Lengow_Import::check_state( $this->_order_state_marketplace, $this->_marketplace ) ) {
 			Lengow_Main::log(
 				'Import',
@@ -146,22 +146,22 @@ class Lengow_Import_Order {
 
 			return false;
 		}
-		// checks if the required order data is present
+		// checks if the required order data is present.
 		if ( ! $this->_check_order_data() ) {
 			return $this->_return_result( 'error', $this->_id_order_lengow );
 		}
-		// load tracking data
+		// load tracking data.
 		$this->_load_tracking_data();
-		// try to synchronise order
+		// try to synchronise order.
 		try {
-			// check if the order is shipped by marketplace
+			// check if the order is shipped by marketplace.
 			if ( $this->_shipped_by_mp ) {
-				// If decrease stocks from mp option is disabled
+				// If decrease stocks from mp option is disabled.
 				Lengow_Main::log(
 					'Import',
 					Lengow_Main::set_log_message(
 						'log.import.order_shipped_by_marketplace',
-						array('marketplace_name' => $this->_marketplace->name)
+						array( 'marketplace_name' => $this->_marketplace->name )
 					),
 					$this->_log_output,
 					$this->_marketplace_sku
@@ -170,16 +170,16 @@ class Lengow_Import_Order {
 					return false;
 				}
 			}
-			// get products
+			// get products.
 			$products = $this->_get_products();
 			if ( count( $products ) == 0 ) {
 				throw new Lengow_Exception(
 					Lengow_Main::set_log_message( 'lengow_log.exception.product_list_is_empty' )
 				);
 			} else {
-				// decrement product stock
+				// decrement product stock.
 				$this->_decrease_stock( $products );
-				// created a record in the lengow order table
+				// created a record in the lengow order table.
 				if ( ! $this->_create_lengow_order() ) {
 					Lengow_Main::log(
 						'Import',
@@ -215,7 +215,7 @@ class Lengow_Import_Order {
 				'Import',
 				Lengow_Main::set_log_message(
 					'log.import.order_import_failed',
-					array('decoded_message' => $decoded_message)
+					array( 'decoded_message' => $decoded_message )
 				),
 				$this->_log_output,
 				$this->_marketplace_sku
@@ -275,7 +275,7 @@ class Lengow_Import_Order {
 					'Import',
 					Lengow_Main::set_log_message(
 						'log.import.order_import_failed',
-						array('decoded_message' => $decoded_message)
+						array( 'decoded_message' => $decoded_message )
 					),
 					$this->_log_output,
 					$this->_marketplace_sku
@@ -352,7 +352,7 @@ class Lengow_Import_Order {
 				throw new Lengow_Exception(
 					Lengow_Main::set_log_message(
 						'lengow_log.exception.product_not_be_found',
-						array('product_id' => $api_product_id)
+						array( 'product_id' => $api_product_id )
 					)
 				);
 			}
@@ -370,7 +370,7 @@ class Lengow_Import_Order {
 		if ( get_option( 'woocommerce_manage_stock' ) === 'yes' ) {
 			foreach ( $products as $product_id => $product ) {
 				$lengow_product = get_product( $product_id );
-				// Decrement stock product only if product managed in stock
+				// Decrement stock product only if product managed in stock.
 				if ( $lengow_product->managing_stock() ) {
 					$initial_stock = $lengow_product->get_stock_quantity();
 					$new_stock     = $lengow_product->reduce_stock( $product['quantity'] );
@@ -392,7 +392,7 @@ class Lengow_Import_Order {
 						'Import',
 						Lengow_Main::set_log_message(
 							'log.import.stock_no_managed',
-							array('product_id' => $product_id)
+							array( 'product_id' => $product_id )
 						),
 						$this->_log_output,
 						$this->_marketplace_sku

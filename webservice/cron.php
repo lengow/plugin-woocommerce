@@ -35,7 +35,7 @@
 @ini_set( 'memory_limit', '512M' );
 
 // Init wordpress
-require( dirname( dirname( dirname( dirname( dirname( $_SERVER["SCRIPT_FILENAME"] ) ) ) ) ) . '/wp-load.php' );
+require( dirname( dirname( dirname( dirname( dirname( $_SERVER['SCRIPT_FILENAME'] ) ) ) ) ) . '/wp-load.php' );
 
 // Dependencies
 require_once( '../includes/class-lengow-main.php' );
@@ -55,12 +55,12 @@ require_once( '../includes/class-lengow-configuration.php' );
 require_once( '../includes/class-lengow-check.php' );
 require_once( '../includes/class-lengow-exception.php' );
 
-// check if WooCommerce plugin is activated
+// check if WooCommerce plugin is activated.
 if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 	wp_die( 'WooCommerce plugin is not active', '', array( 'response' => 400 ) );
 }
 
-// check if Lengow plugin is activated
+// check if Lengow plugin is activated.
 if ( ! in_array(
 	'lengow-woocommerce/lengow.php',
 	apply_filters( 'active_plugins', get_option( 'active_plugins' ) )
@@ -69,15 +69,15 @@ if ( ! in_array(
 	wp_die( 'Lengow plugin is not active', '', array( 'response' => 400 ) );
 }
 
-// check IP
+// check IP.
 if ( ! Lengow_Main::check_ip() ) {
 	wp_die( 'Unauthorized access for IP: ' . $_SERVER['REMOTE_ADDR'], '', array( 'response' => 403 ) );
 }
 
-// get sync action if exists
+// get sync action if exists.
 $sync = isset( $_GET['sync'] ) ? $_GET['sync'] : false;
 
-// sync orders between Lengow and WooCommerce
+// sync orders between Lengow and WooCommerce.
 if ( ! $sync || $sync === 'order' ) {
 	// array of params for import order
 	$params = array( 'type' => 'cron' );
@@ -105,11 +105,11 @@ if ( ! $sync || $sync === 'order' ) {
 	$import = new Lengow_Import( $params );
 	$import->exec();
 }
-// sync options between Lengow and WooCommerce
+// sync options between Lengow and WooCommerce.
 if ( ! $sync || $sync === 'option' ) {
 	Lengow_Sync::set_cms_option();
 }
-// sync option is not valid
+// sync option is not valid.
 if ( $sync && ( $sync !== 'order' && $sync !== 'option' ) ) {
 	wp_die( 'Action: ' . $sync . ' is not a valid action', '', array( 'response' => 400 ) );
 }
