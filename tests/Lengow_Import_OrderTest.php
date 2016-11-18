@@ -15,16 +15,19 @@ class Lengow_Import_OrderTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        /*$this->object = new Lengow_Import_Order(
-            array(
-                'preprod_mode'        => 1,
-                'log_output'          => 1,
-                'marketplace_sku'     => 'marketplace_sku',
-                'delivery_address_id' => 'delivery_address_id',
-                'order_data'          => 'order_data',
-                'package_data'        => 'package_data',
-                'first_package'       => 'first_package'
-            ));*/
+//        $array = array("marketplace" => "amazon", "marketplace_status" => "processing");
+//        $data = (object) $array;
+//
+//        $this->object = new Lengow_Import_Order(
+//            array(
+//                'preprod_mode'        => 1,
+//                'log_output'          => 1,
+//                'marketplace_sku'     => 'marketplace_sku',
+//                'delivery_address_id' => 'delivery_address_id',
+//                'order_data'          => $data,
+//                'package_data'        => $data,
+//                'first_package'       => 'first_package'
+//            ));
     }
 
     /**
@@ -36,14 +39,27 @@ class Lengow_Import_OrderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Lengow_Import_Order::import_order
-     * @todo   Implement testImport_order().
+     * @covers Lengow_Import_Order::import_order()
      */
     public function testImport_order()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        //$import_order = $this->object;
+        //$fixture = New Fixture();
+
+//        $this->assertEquals(5, $this->object->import_order());
+
+    }
+
+    /**
+     * @covers Lengow_Import_Order::_create_lengow_order()
+     */
+    public function test_create_lengow_order()
+    {
+//        $import_order = $this->object;
+//
+//        $fixture = New Fixture();
+        //print_r($fixture->invokeMethod($import_order, "_create_lengow_order", array("simple,plop,variable")));
+
+        //$this->assertEquals(2, count($fixture->getInnerPropertyValueByReflection($import_order, '_product_types')));
     }
 }

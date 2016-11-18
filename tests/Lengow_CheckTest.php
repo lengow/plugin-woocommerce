@@ -75,4 +75,26 @@ class Lengow_CheckTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * @covers Lengow_Check::get_admin_content()
+     */
+    public function testGet_admin_content()
+    {
+        $check = new Lengow_Check();
+        $fixture = New Fixture();
+        $this->assertEquals(null, $fixture->invokeMethod($check, "get_admin_content"));
+
+        $plop = array(
+            array( 'header' => "mon header 1"),
+            array( 'title' => "mon title 1",  'message' => "mon message 1"),
+            array( 'title' => "mon title 2",  'state' => 1),
+            array( 'header' => "mon header 2"),
+            array( 'title' => "mon title 3",  'message' => "mon message 3"),
+            array( 'title' => "mon title 4",  'state' => 0, 'help' => 'aide',
+                'help_link' => 'mon lien', 'help_label' => 'mon label help')
+        );
+
+        $this->assertEquals('<table class="table" cellpadding="0" cellspacing="0"><tr><td colspan="2" align="center" style="border:0"><h4>mon header 1</h4></td></tr><tr><td><b>mon title 1</b></td><td align="right"><b>mon message 1</b></td></tr><tr><td><b>mon title 2</b></td><td align="right"><i class="fa fa-check lengow-green"></i></td></tr><tr><td colspan="2" align="center" style="border:0"><h4>mon header 2</h4></td></tr><tr><td><b>mon title 3</b></td><td align="right"><b>mon message 3</b></td></tr><tr><td><b>mon title 4</b></td><td align="right"><i class="fa fa-times lengow-red"></i></td><tr><td colspan="2"><p>aide<br /><a target="_blank" href="mon lien">mon label help</a></p></td></tr></tr></table>', $fixture->invokeMethod($check, "get_admin_content", array($plop)));
+    }
+
 }

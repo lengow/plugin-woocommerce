@@ -1,0 +1,55 @@
+product:
+  -
+    type: simple
+    status: publish
+    categories:
+      id: 1
+      id: 2
+    select: 1
+    sku: sku1
+    name: mon nom
+    description: "<p>ma description</p>"
+    short_description: "<p>ma short description</p>"
+    manage_stock: true
+    stock_quantity: 102
+    available_product: 10 jours
+    reviews_allowed: "open"
+    #in_stock: false
+    virtual: false
+    downloadable: true
+    featured: true
+    #on_sale: true
+    #average_rating: "5.00"
+    #rating_count: 3
+    #purchasable: true
+    price: "20.00"
+    regular_price: "21.00"
+    sale_price: "15.00"
+    date_on_sale_from: "10/07/2016"
+    date_on_sale_to: "10/07/2017"
+    #tags:
+    #  plop1
+    #  plop2
+    #  plop3
+    #weight: 45.00
+    #dimensions:
+    #  length: 10
+    #  width: 20
+    #  height: 30
+  -
+    type: simple
+    status: publish
+    select: 1
+    sku: sku2
+  -
+    type: simple
+    status: publish
+    select: 0
+  -
+    type: variable
+    status: publish
+    select: 1
+  -
+    type: variable
+    status: unpublish
+    select: 1

@@ -30,8 +30,27 @@ class Lengow_ImportTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Lengow_Import::__construct
+     */
+    public function test__construct()
+    {
+        $fixture = New Fixture();
+        $this->object->__construct();
+        $this->assertEquals(0, $fixture->getInnerPropertyValueByReflection($this->object, '_limit'));
+        $this->assertEquals('manual', $fixture->getInnerPropertyValueByReflection($this->object, '_type'));
+        $this->assertEquals(false, $fixture->getInnerPropertyValueByReflection($this->object, '_log_output'));
+
+        $this->object->__construct(array("marketplace_sku" => "marketplace_sku", "marketplace_name" => "marketplace_name",
+            "type" => "auto", "limit" => 5, "delivery_address_id" => "22"));
+        $this->assertEquals(1, $fixture->getInnerPropertyValueByReflection($this->object, '_limit'));
+        $this->assertEquals('auto', $fixture->getInnerPropertyValueByReflection($this->object, '_type'));
+        $this->assertEquals('marketplace_sku', $fixture->getInnerPropertyValueByReflection($this->object, '_marketplace_sku'));
+        $this->assertEquals(22, $fixture->getInnerPropertyValueByReflection($this->object, '_delivery_address_id'));
+
+    }
+
+    /**
      * @covers Lengow_Import::exec
-     * @todo   Implement testExec().
      */
     public function testExec()
     {
@@ -53,6 +72,9 @@ class Lengow_ImportTest extends PHPUnit_Framework_TestCase
         Lengow_Configuration::update_value( 'lengow_store_enabled', 1);
 
         $import = new Lengow_Import(array('log_output' => false));
+        Lengow_Configuration::update_value( 'lengow_account_id', '');
+        Lengow_Configuration::update_value( 'lengow_access_token', 'ssss');
+        Lengow_Configuration::update_value( 'lengow_secret_token', 'zzzz');
         $result = $import->exec();
 
         $this->assertEquals('lengow_log.error.account_id_empty', $result['error'], 'no account id');
@@ -75,6 +97,18 @@ class Lengow_ImportTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('lengow_log.exception.credentials_not_valid', $result['error'], 'no access and secret');
 
+//        Lengow_Configuration::update_value( 'lengow_access_token', 'access12345');
+//        Lengow_Configuration::update_value( 'lengow_secret_token', 'secret12345');
+//        $import = new Lengow_Import(array('log_output' => false));
+//        $stub = $this->createMock(Lengow_Import::class);
+//        $stub->method('is_in_process')->willReturn(true);
+//        $fixture = New Fixture();
+//        $fixture->setInnerPropertyValueByReflection($import, '_preprod_mode', false);
+//        $fixture->setInnerPropertyValueByReflection($import, '_import_one_order', false);
+//        $result = $import->exec();
+//
+//        $this->assertEquals('lengow_log.exception.credentials_not_valid', $result['error'], 'no access and secret');
+
         /*
         $stub = $this->createMock(Lengow_Check::class);
         $stub->method('is_valid_auth')->willReturn(true);
@@ -87,6 +121,49 @@ class Lengow_ImportTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, $result['order_update'], '[Import Orders] nb order update');
         $this->assertEquals(0, $result['order_error'], '[Import Orders] nb order error');*/
     }
+
+    /**
+     * @covers Lengow_Import::_check_credentials
+     */
+    public function test_check_credentials()
+    {
+        $import = new Lengow_Import(array());
+        $fixture = New Fixture();
+
+        Lengow_Configuration::update_value( 'lengow_account_id','123456');
+        Lengow_Configuration::update_value( 'lengow_access_token','123456');
+        Lengow_Configuration::update_value( 'lengow_secret_token','123456');
+        $this->assertEquals(true, $fixture->invokeMethod($import, "_check_credentials"));
+
+        Lengow_Configuration::update_value( 'lengow_account_id','');
+        Lengow_Configuration::update_value( 'lengow_access_token','123456');
+        Lengow_Configuration::update_value( 'lengow_secret_token','123456');
+        $this->assertEquals("lengow_log.error.account_id_empty", $fixture->invokeMethod($import, "_check_credentials"));
+
+    }
+
+//    /**
+//     * @covers Lengow_Import::_get_orders_from_api
+//     */
+//    public function test_get_orders_from_api()
+//    {
+//        $import = new Lengow_Import(array());
+//        $fixture = New Fixture();
+//
+//        $mailer = $this->getMockBuilder('Lengow_Check')
+//            ->setMethods(array('is_valid_auth'))
+//            ->getMock();
+//
+//        $mailer->expects($this->any())
+//            ->method('is_valid_auth')
+//            ->willReturn(true);
+
+//        $stub = $this->createMock(Lengow_Check::class);
+//        $stub->method('is_valid_auth')->willReturn(true);
+        //Impossible car fonction is_valid_auth static donc impossible de mocker
+//        $this->assertEquals(true, $fixture->invokeMethod($import, "_get_orders_from_api"));
+//
+//    }
 
     /**
      * @covers Lengow_Import::is_in_process

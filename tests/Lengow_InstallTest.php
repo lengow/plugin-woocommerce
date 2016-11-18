@@ -32,6 +32,7 @@ class Lengow_InstallTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdate()
     {
+        global $wpdb;
         $table_name = $wpdb->prefix . 'lengow_product2';
         $sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . ' ('
             . ' `id` INTEGER(11) NOT NULL AUTO_INCREMENT,'
@@ -42,7 +43,6 @@ class Lengow_InstallTest extends PHPUnit_Framework_TestCase
         $sql = 'SELECT column_name'
             . 'FROM information_schema.columns'
             . 'WHERE table_name=' . $table_name . ' and column_name=product_id';
-
 
 
         // Remove the following lines when you implement this test.

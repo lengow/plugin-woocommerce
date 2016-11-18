@@ -26,12 +26,230 @@ class Lengow_FeedTest extends PHPUnit_Framework_TestCase
     {
     }
 
-    public function testTodo()
+    /**
+     * @covers Lengow_Feed::_init_export_file()
+     */
+    public function test_init_export_file()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $feed = new Lengow_Feed(true, 'csv', false);
+
+        $fixture = New Fixture();
+        $fixture->invokeMethod($feed, "_init_export_file");
+        $result = $fixture->getInnerPropertyValueByReflection($feed, '_file');
+        $this->assertNotNull($result->file_name);
+        $this->assertEquals('export', $result->folder_name);
+
+        function rrmdir($dir) {
+            if (is_dir($dir)) {
+                $objects = scandir($dir);
+                foreach ($objects as $object) {
+                    if ($object != "." && $object != "..") {
+                        if (is_dir($dir."/".$object))
+                            rrmdir($dir."/".$object);
+                        else
+                            unlink($dir."/".$object);
+                    }
+                }
+                rmdir($dir);
+            }
+        }
+
+        rrmdir("export");
+        $fixture->invokeMethod($feed, "_init_export_file");
+        $result = $fixture->getInnerPropertyValueByReflection($feed, '_file');
+        $this->assertNotNull($result->file_name);
+        $this->assertEquals('export', $result->folder_name);
+
+        //tester l'exception ?
+
     }
 
+    /**
+     * @covers Lengow_Feed::write()
+     */
+    public function testWrite()
+    {
+        //Cannot modify header information - headers already sent by
+        //$feed = new Lengow_Feed(true, 'csv', false);
+        //$this->assertEquals('export', $feed->write("header", "data"));
+
+        // Voir pour une autre comparaison que null
+        $feed = new Lengow_Feed(true, 'csv', false);
+        $this->assertEquals(null, $feed->write("body", array("plop" => "plop", "test" => "test", "ici" => "ici")));
+        // Voir pour une autre comparaison que null
+        $feed = new Lengow_Feed(true, 'csv', false);
+        $this->assertEquals(null, $feed->write("footer", array("plop" => "plop", "test" => "test", "ici" => "ici")));
+
+    }
+
+    /**
+     * @covers Lengow_Feed::_get_html_header()
+     */
+    public function test_get_html_header()
+    {
+        $fixture = New Fixture();
+        $feed = new Lengow_Feed(true, 'csv', false);
+        $this->assertEquals('Content-Type: text/csv; charset=UTF-8',
+            $fixture->invokeMethod($feed, "_get_html_header"));
+        $feed = new Lengow_Feed(true, 'xml', false);
+        $this->assertEquals('Content-Type: application/xml; charset=UTF-8',
+            $fixture->invokeMethod($feed, "_get_html_header"));
+        $feed = new Lengow_Feed(true, 'json', false);
+        $this->assertEquals('Content-Type: application/json; charset=UTF-8',
+            $fixture->invokeMethod($feed, "_get_html_header"));
+        $feed = new Lengow_Feed(true, 'yaml', false);
+        $this->assertEquals('Content-Type: text/x-yaml; charset=UTF-8',
+            $fixture->invokeMethod($feed, "_get_html_header"));
+        $feed = new Lengow_Feed(true, '', false);
+        $this->assertEquals(null, $fixture->invokeMethod($feed, "_get_html_header"));
+
+    }
+
+    /**
+     * @covers Lengow_Feed::_get_header()
+     */
+    public function test_get_header()
+    {
+        $feed = new Lengow_Feed(true, 'csv', false);
+
+        $fixture = New Fixture();
+        $data = array('id_product' => 'id', 'name_product' => 'name', 'sku_product'=> 'sku');
+        $this->assertEquals('"id"|"name"|"sku"'."\r\n", $fixture->invokeMethod($feed, "_get_header", array($data)));
+
+        $feed = new Lengow_Feed(true, 'xml', false);
+        $this->assertEquals('<?xml version="1.0" encoding="UTF-8"?>'."\r\n".'<catalog>'."\r\n",
+            $fixture->invokeMethod($feed, "_get_header", array($data)));
+
+        $feed = new Lengow_Feed(true, 'json', false);
+        $this->assertEquals('{"catalog":[', $fixture->invokeMethod($feed, "_get_header", array($data)));
+
+        $feed = new Lengow_Feed(true, 'yaml', false);
+        $this->assertEquals('"catalog":'."\r\n", $fixture->invokeMethod($feed, "_get_header", array($data)));
+
+        $feed = new Lengow_Feed(true, '', false);
+        $this->assertEquals('', $fixture->invokeMethod($feed, "_get_header", array($data)));
+    }
+
+    /**
+     * @covers Lengow_Feed::_get_body()
+     */
+    public function test_get_body()
+    {
+        $fixture = New Fixture();
+
+        $feed = new Lengow_Feed(true, 'csv', false);
+        $data = array('id_product' => 'id', 'name_product' => 'name', 'sku_product' => 'sku');
+        $this->assertEquals('"id"|"name"|"sku"'."\r\n", $fixture->invokeMethod($feed, "_get_body",
+            array($data, true, 50)));
+
+        $resultxml = "<product><id_product><![CDATA[id]]></id_product>"."\r\n".
+        "<name_product><![CDATA[name]]></name_product>"."\r\n".
+        "<sku_product><![CDATA[sku]]></sku_product>"."\r\n".
+        "</product>"."\r\n";
+
+        $feed = new Lengow_Feed(true, 'xml', false);
+        $data = array('id_product' => 'id', 'name_product' => 'name', 'sku_product' => 'sku');
+        $this->assertEquals($resultxml, $fixture->invokeMethod($feed, "_get_body",
+            array($data, true, 50)));
+
+        $resultjson = "{\"id_product\":\"id\",\"name_product\":\"name\",\"sku_product\":\"sku\"}";
+
+        $feed = new Lengow_Feed(true, 'json', false);
+        $data = array('id_product' => 'id', 'name_product' => 'name', 'sku_product' => 'sku');
+        $this->assertEquals($resultjson, $fixture->invokeMethod($feed, "_get_body",
+            array($data, true, 50)));
+
+        $resultyaml = '  "product":'."\r\n".
+        '    "id_product":  id'."\r\n".
+        '    "name_product":name'."\r\n".
+        '    "sku_product": sku'."\r\n";
+
+        $feed = new Lengow_Feed(true, 'yaml', false);
+        $data = array('id_product' => 'id', 'name_product' => 'name', 'sku_product' => 'sku');
+        $this->assertEquals($resultyaml, $fixture->invokeMethod($feed, "_get_body",
+            array($data, true, 10)));
+
+        $feed = new Lengow_Feed(true, 'plop', false);
+        $data = array('id_product' => 'id', 'name_product' => 'name', 'sku_product' => 'sku');
+        $this->assertEquals(null, $fixture->invokeMethod($feed, "_get_body",
+            array($data, true, 50)));
+
+    }
+
+    /**
+     * @covers Lengow_Feed::_get_footer()
+     */
+    public function test_get_footer()
+    {
+        $fixture = New Fixture();
+
+        $feed = new Lengow_Feed(true, 'csv', false);
+        $this->assertEquals('', $fixture->invokeMethod($feed, "_get_footer"));
+
+        $feed = new Lengow_Feed(true, 'xml', false);
+        $this->assertEquals('</catalog>', $fixture->invokeMethod($feed, "_get_footer"));
+
+        $feed = new Lengow_Feed(true, 'json', false);
+        $this->assertEquals(']}', $fixture->invokeMethod($feed, "_get_footer"));
+
+    }
+
+    /**
+     * @covers Lengow_Feed::end()
+     */
+    public function testEnd()
+    {
+        //$fixture = New Fixture();
+        $feed = new Lengow_Feed(true, 'csv', false);
+        $this->assertEquals(true, $feed->end());
+        $feed = new Lengow_Feed(false, 'csv', false);
+        $this->assertEquals(true, $feed->end());
+
+    }
+
+    /**
+     * @covers Lengow_Feed::_format_fields()
+     */
+    public function test_format_fields()
+    {
+        $fixture = New Fixture();
+
+        $feed = new Lengow_Feed(true, 'csv', false);
+        $this->assertEquals('eqsdfqsdfezre_456464sdfgsdfgxvcbxcvbefdddqs321',
+            $fixture->invokeMethod($feed, "_format_fields",
+            array("é@qsdfqsdfezré\"('--456464sdfgsdfgxvcbxcvb(-èfDDdqs321(!")));
+
+        $feed = new Lengow_Feed(true, 'csv', true);
+        $this->assertEquals('EQSDFQSDFEZRE_456464SDFGSDFGXVCBXCVBEFDDDQS321',
+            $fixture->invokeMethod($feed, "_format_fields",
+            array("é@qsdfqsdfezré\"('--456464sdfgsdfgxvcbxcvb(-èfDDdqs321(!")));
+
+        $feed = new Lengow_Feed(true, 'xml', true);
+        $this->assertEquals('eqsdfqsdfezre_456464sdfgsdfgxvcbxcvbefdddqs321',
+            $fixture->invokeMethod($feed, "_format_fields",
+            array("é@qsdfqsdfezré\"('--456464sdfgsdfgxvcbxcvb(-èfDDdqs321(!")));
+    }
+
+    /**
+     * @covers Lengow_Feed::_indent_yaml()
+     */
+    public function test_indent_yaml()
+    {
+        $fixture = New Fixture();
+
+        $feed = new Lengow_Feed(true, 'csv', false);
+        $this->assertEquals('          ', $fixture->invokeMethod($feed, "_indent_yaml", array("1234567890", 20)));
+        $this->assertEquals('', $fixture->invokeMethod($feed, "_indent_yaml", array("123456789012345678901", 20)));
+    }
+
+    /**
+     * @covers Lengow_Feed::get_url()
+     */
+    public function testGet_url()
+    {
+        $fixture = New Fixture();
+        $feed = new Lengow_Feed(false, 'csv', false);
+        $this->assertContains('/wp-content/plugins/lengow-woocommerce/export/flux-', $fixture->invokeMethod($feed, "get_url"));
+
+    }
 }

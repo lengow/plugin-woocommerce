@@ -27,6 +27,29 @@ class Lengow_ExportTest extends WP_UnitTestCase
     }
 
     /**
+     * @covers Lengow_Export::_set_legacy_fields
+     */
+    public function test_set_legacy_fields()
+    {
+        $export = new Lengow_Export(array(
+            "log_output" => false,
+        ));
+        $fixture = New Fixture();
+        $fixture->invokeMethod($export, "_set_legacy_fields");
+        $this->assertEquals(false, $fixture->getInnerPropertyValueByReflection($export, '_legacy'));
+        $this->assertEquals(47, count($fixture->getInnerPropertyValueByReflection($export, 'DEFAULT_FIELDS')));
+
+        // Le mock sur query api ne fonctionne pas, pourquoi ?
+//        $stub = $this->createMock(Lengow_Connector::class);
+//        $result = new stdClass();
+//        $result->legacy = true;
+//        print_r($result);
+//        $stub->method('query_api')->willReturn($result);
+//        $fixture->invokeMethod($export, "_set_legacy_fields");
+//        $this->assertEquals('plop', $fixture->getInnerPropertyValueByReflection($export, '_legacy'));
+    }
+
+    /**
      * @covers Lengow_Export::get_total_product
      */
     public function testGet_total_product()
@@ -45,6 +68,169 @@ class Lengow_ExportTest extends WP_UnitTestCase
             "log_output" => false,
         ));
         $this->assertEquals(5, $export->get_total_product());
+
+    }
+
+    /**
+     * @covers Lengow_Export::_set_format()
+     */
+    public function test_set_format()
+    {
+        $export = new Lengow_Export(array(
+            "selection" => false,
+            "log_output" => false,
+            "product_types" => "simple,variable",
+            "format" => ""
+        ));
+
+        $fixture = New Fixture();
+        $reflected_data = $fixture->getInnerPropertyValueByReflection($export, '_format');
+
+        $this->assertEquals("csv", $reflected_data);
+
+        $export = new Lengow_Export(array(
+            "selection" => false,
+            "log_output" => false,
+            "product_types" => "simple,variable",
+            "format" => "csv"
+        ));
+
+        $reflected_data = $fixture->getInnerPropertyValueByReflection($export, '_format');
+
+        $this->assertEquals("csv", $reflected_data);
+
+        $export = new Lengow_Export(array(
+            "selection" => false,
+            "log_output" => false,
+            "product_types" => "simple,variable",
+            "format" => "plop"
+        ));
+
+        $reflected_data = $fixture->getInnerPropertyValueByReflection($export, '_format');
+
+        $this->assertEquals("csv", $reflected_data);
+
+    }
+
+    /**
+     * @covers Lengow_Export::_set_product_ids()
+     */
+    public function test_set_product_ids()
+    {
+        $export = new Lengow_Export(array(
+            "selection" => false,
+            "log_output" => false,
+            "product_types" => "simple,variable",
+        ));
+
+        $fixture = New Fixture();
+        $fixture->invokeMethod($export, "_set_product_ids", array("1,2,3,4"));
+        $this->assertEquals(4, count($fixture->getInnerPropertyValueByReflection($export, '_product_ids')));
+
+    }
+
+    /**
+     * @covers Lengow_Export::_set_product_types()
+     */
+    public function test_set_product_types()
+    {
+        $export = new Lengow_Export(array(
+            "selection" => false,
+            "log_output" => false,
+        ));
+
+        $fixture = New Fixture();
+        $fixture->invokeMethod($export, "_set_product_types", array("simple,plop,variable"));
+        $this->assertEquals(2, count($fixture->getInnerPropertyValueByReflection($export, '_product_types')));
+
+        $export = new Lengow_Export(array(
+            "selection" => false,
+            "log_output" => false,
+        ));
+
+        $fixture = New Fixture();
+        $fixture->invokeMethod($export, "_set_product_types", array(""));
+        Lengow_Configuration::update_value('lengow_product_types', "simple");
+        $this->assertEquals(1, count($fixture->getInnerPropertyValueByReflection($export, '_product_types')));
+
+    }
+
+    /**
+     * @covers Lengow_Export::_set_log_output()
+     */
+    public function test_set_log_output()
+    {
+        $export = new Lengow_Export(array(
+            "selection" => false,
+            "log_output" => false,
+            "product_types" => "simple,variable",
+        ));
+
+        $fixture = New Fixture();
+        $reflected_data = $fixture->getInnerPropertyValueByReflection($export, '_log_output');
+
+        $this->assertEquals(false, $reflected_data);
+
+        $export = new Lengow_Export(array(
+            "selection" => false,
+            "product_types" => "simple,variable",
+            "stream" => false
+        ));
+
+        $reflected_data = $fixture->getInnerPropertyValueByReflection($export, '_log_output');
+
+        $this->assertEquals(true, $reflected_data);
+
+        $export = new Lengow_Export(array(
+            "selection" => false,
+            "product_types" => "simple,variable",
+            "stream" => false,
+            "log_output" => true
+        ));
+
+        $reflected_data = $fixture->getInnerPropertyValueByReflection($export, '_log_output');
+
+        $this->assertEquals(true, $reflected_data);
+    }
+
+    /**
+     * @covers Lengow_Export::exec
+     */
+    public function testExec()
+    {
+//        $fixture = New Fixture();
+//        $fixture->loadProducts('products1.yml');
+//
+//        $export = new Lengow_Export(array(
+//            "selection" => false,
+//            "log_output" => false,
+//            "product_types" => "simple,variable"
+//        ));
+//
+//        $this->assertEquals(7, $export->exec());
+
+    }
+
+    /**
+     * @covers Lengow_Export::_export
+     */
+    //@runInSeparateProcess
+    public function test_export()
+    {
+        // Impossible de faire un export car header déjà envoyé
+//        $fixture = New Fixture();
+//        $fixture->loadProducts('products1.yml');
+//
+//        $export = new Lengow_Export(array(
+//            "selection" => false,
+//            "log_output" => false,
+//            "product_types" => "simple,variable"
+//        ));
+//
+//        ob_clean();
+//        $fixture = New Fixture();
+//        $this->assertEquals(7, $fixture->invokeMethod($export, "_export", array("produits", "fields")));
+        //$this->assertEquals(7, $export->exec());
 
     }
 
@@ -86,6 +272,14 @@ class Lengow_ExportTest extends WP_UnitTestCase
             "product_types" => "simple,variable"
         ));
         $this->assertEquals(3, $export->get_total_export_product());
+
+        $export = new Lengow_Export(array(
+            "selection" => true,
+            "log_output" => false,
+            "product_types" => "simple,variable",
+            "variation" => true
+        ));
+        $this->assertEquals(3, $export->get_total_export_product());
     }
 
     /**
@@ -108,5 +302,43 @@ class Lengow_ExportTest extends WP_UnitTestCase
         "log_output\":{\"authorized_values\":[0,1],\"type\":\"integer\",\"example\":1},\"update_export_date\"".
         ":{\"authorized_values\":[0,1],\"type\":\"integer\",\"example\":1},\"get_params\":{\"authorized_values\"".
         ":[0,1],\"type\":\"integer\",\"example\":1}}", $export->get_export_params());
+    }
+
+    /**
+     * @covers Lengow_Export::_get_export_ids()
+     */
+    public function test_get_export_ids()
+    {
+        $fixture = New Fixture();
+        $fixture->loadProducts('products1.yml');
+
+        $export = new Lengow_Export(array(
+            "selection" => false,
+            "log_output" => false,
+            "product_types" => "simple,variable"
+        ));
+        //var_dump($fixture->invokeMethod($export, "_get_export_ids"));
+
+        $this->assertEquals(7, count($fixture->invokeMethod($export, "_get_export_ids")));
+
+        $export = new Lengow_Export(array(
+            "selection" => false,
+            "log_output" => false,
+            "product_types" => "simple,variable",
+            "limit" => 3,
+            "variation" => true,
+            "offset" => 2
+        ));
+
+        $this->assertEquals(3, count($fixture->invokeMethod($export, "_get_export_ids")));
+
+        $export = new Lengow_Export(array(
+            "selection" => false,
+            "log_output" => false,
+            "product_types" => "simple,variable",
+            "limit" => 3
+        ));
+
+        $this->assertEquals(3, count($fixture->invokeMethod($export, "_get_export_ids")));
     }
 }

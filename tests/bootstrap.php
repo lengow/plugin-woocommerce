@@ -40,10 +40,11 @@ function run_activate_plugin( $plugin ) {
  * Manually load the plugin being tested.
  */
 function _manually_load_plugin() {
+    $_SERVER['WP_TEST_UNIT'] = true;
     $_wp_dir = '/tmp/wordpress';
     require $_wp_dir . '/wp-content/plugins/woocommerce/woocommerce.php';
 	require dirname( dirname( __FILE__ ) ) . '/lengow.php';
-    require dirname( dirname( __FILE__ ) ) . '/includes/class-lengow-check.php';
+    /*require dirname( dirname( __FILE__ ) ) . '/includes/class-lengow-check.php';
     require dirname( dirname( __FILE__ ) ) . '/includes/class-lengow-configuration.php';
     require dirname( dirname( __FILE__ ) ) . '/includes/class-lengow-connector.php';
     require dirname( dirname( __FILE__ ) ) . '/includes/class-lengow-exception.php';
@@ -65,17 +66,13 @@ function _manually_load_plugin() {
     require dirname( dirname( __FILE__ ) ) . '/includes/admin/class-lengow-admin-settings.php';
     require dirname( dirname( __FILE__ ) ) . '/includes/admin/class-lengow-admin-help.php';
     require dirname( dirname( __FILE__ ) ) . '/includes/admin/class-lengow-admin-legals.php';
-    require dirname( dirname( __FILE__ ) ) . '/includes/admin/class-lengow-admin-products.php';
+    require dirname( dirname( __FILE__ ) ) . '/includes/admin/class-lengow-admin-products.php';*/
     require dirname( dirname( __FILE__ ) ) . '/tests/Fixture.php';
-    //update_option( 'active_plugins', 'woocommerce/woocommerce.php' );
-    //update_option( 'active_plugins', 'lengow-woocommerce/lengow.php' );
-    //activate_plugin(dirname( dirname( __FILE__ ) ). '/lengow.php');
-    //run_activate_plugin( 'lengow-woocommerce/lengow.php' );
+
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
 // Start up the WP testing environment.
 require $_tests_dir . '/includes/bootstrap.php';
-
 
 

@@ -15,7 +15,7 @@
 		<whitelist processUncoveredFilesFromWhitelist="true">
 			<directory suffix=".php">./includes</directory>
 			<exclude>
-				<directory suffix=".php">./includes/admin/views</directory>
+				<directory suffix=".php">./includes/admin</directory>
 			</exclude>
 		</whitelist>
 	</filter>
