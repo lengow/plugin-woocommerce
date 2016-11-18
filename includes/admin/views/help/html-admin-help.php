@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <p><?php echo $locale->t('help.screen.contain_text_support_hour')?></p>
         <p>
             <?php echo $locale->t('help.screen.find_answer')?>
-            <a href="https://en.knowledgeowl.com/help/woocommerce-plugin"
+            <a href="https://en.lengow.help/help/plugins-list"
                target="_blank"
                title="Help Center">
                 <?php echo $locale->t('help.screen.link_woocommerce_guide')?>

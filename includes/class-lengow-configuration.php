@@ -79,22 +79,11 @@ class Lengow_Configuration {
 					'default_value' => false,
 					'type'          => 'checkbox'
 				),
-				'lengow_out_stock'                   => array(
-					'shop'  => true,
-					'label' => $locale->t( 'lengow_settings.lengow_out_stock_title' ),
-					'type'  => 'checkbox'
-				),
-				'lengow_variation_enabled'           => array(
-					'shop'          => true,
-					'label'         => $locale->t( 'lengow_setting.lengow_variation_enabled_title' ),
-					'legend'        => $locale->t( 'lengow_setting.lengow_variation_enabled_legend' ),
-					'default_value' => true,
-				),
 				'lengow_product_types'               => array(
 					'shop'          => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_product_types_title' ),
 					'legend'        => $locale->t( 'lengow_settings.lengow_product_types_legend' ),
-					'default_value' => array( 'simple', 'variable' ),
+					'default_value' => array( 'simple', 'variable', 'external', 'grouped' ),
 				),
 				'lengow_last_export'                 => array(
 					'shop'  => true,

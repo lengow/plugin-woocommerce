@@ -33,16 +33,6 @@ class Lengow_Admin_Products extends WP_List_Table {
 		$action                = isset( $_POST['do_action'] ) ? $_POST['do_action'] : false;
 		if ( $action ) {
 			switch ( $action ) {
-				case 'change_option_product_variation':
-					$state = isset( $_POST['state'] ) ? $_POST['state'] : null;
-					if ( $state !== null ) {
-						Lengow_Configuration::update_value(
-							'lengow_variation_enabled',
-							$state
-						);
-						echo json_encode( Lengow_Admin_Products::reload_total() );
-					}
-					break;
 				case 'change_option_selected':
 					$state = isset( $_POST['state'] ) ? $_POST['state'] : null;
 					if ( $state !== null ) {
@@ -61,13 +51,6 @@ class Lengow_Admin_Products extends WP_List_Table {
 						echo json_encode( $result );
 					}
 					break;
-				case 'change_option_product_out_of_stock':
-					$state = isset( $_POST['state'] ) ? $_POST['state'] : null;
-					if ( $state !== null ) {
-						Lengow_Configuration::update_value( 'lengow_out_stock', $state );
-						echo json_encode( Lengow_Admin_Products::reload_total() );
-					}
-					break;
 				case 'check_shop':
 					$checkShop = Lengow_Sync::check_sync_shop();
 					$data      = array();
@@ -78,17 +61,15 @@ class Lengow_Admin_Products extends WP_List_Table {
 							$data['tooltip'] = $locale->t( 'product.screen.shop_not_index' );
 						} else {
 							$data['tooltip'] = $locale->t( 'product.screen.shop_last_indexation' ) .
-							                   ' : ' . strftime( "%A %e %B %Y @ %R", strtotime( $sync_date ) );
+							    ' : ' . strftime( "%A %e %B %Y @ %R", strtotime( $sync_date ) );
 						}
 						$data['original_title'] = $locale->t( 'product.screen.lengow_shop_sync' );
 					} else {
 						$data['check_shop']     = false;
 						$data['tooltip']        = $locale->t( 'product.screen.lengow_shop_no_sync' );
 						$data['original_title'] = $locale->t( 'product.screen.sync_your_shop' );
-						$data['header_title']   = '<a href="'
-						                          . admin_url( 'admin.php?page=lengow' )
-						                          . '&isSync=true">
-                                <span>' . $locale->t( 'product.screen.sync_your_shop' ) . '</span></a>';
+						$data['header_title']   = '<a href="http://my.lengow.local/company/store" target="_blank">
+                            <span>' . $locale->t( 'product.screen.sync_your_shop' ) . '</span></a>';
 					}
 					echo json_encode( $data );
 					break;
@@ -506,8 +487,6 @@ class Lengow_Admin_Products extends WP_List_Table {
 			'total_export_product'        => $lengow_export->get_total_export_product(),
 			'last_export'                 => Lengow_Configuration::get( 'lengow_last_export' ),
 			'option_selected'             => Lengow_Configuration::get( 'lengow_selection_enabled' ),
-			'option_product_out_of_stock' => Lengow_Configuration::get( 'lengow_out_stock' ),
-			'option_variation'            => Lengow_Configuration::get( 'lengow_variation_enabled' ),
 			'select_all'                  => count( $lengow_admin_products->get_products() )
 		);
 		include_once 'views/products/html-admin-products.php';

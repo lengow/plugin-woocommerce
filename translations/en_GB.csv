@@ -45,10 +45,6 @@ product.screen.nb_exported|products exported
 product.screen.nb_available|products available
 product.screen.button_yes|Yes
 product.screen.button_no|No
-product.screen.include_variation|Include product variations
-product.screen.include_variation_support|Use this option if you want to export all of your catalogue with variations
-product.screen.include_out_of_stock|Include out of stock products
-product.screen.include_out_of_stock_support|Use this option if you want to export out of stock products
 product.screen.include_specific_product|Include specific products
 product.screen.select_all_products|Select all of your products (%{nb} products)
 product.screen.add_confirmation|Do you really want to add %{nb} products to your selection?
@@ -129,7 +125,6 @@ lengow_settings.lengow_authorized_ip_title|Authorised IP
 lengow_settings.lengow_authorized_ip_legend|Authorize IP to get access to your export feed.<br />Separate them ' ; '
 lengow_settings.lengow_selection_enabled_title|Export the selection only
 lengow_settings.lengow_selection_enabled_legend|Activate this option if you do not want to export all available products. Then, select only the products you want to export
-lengow_settings.lengow_out_stock_title|Include out of stock products
 lengow_settings.lengow_product_types_title|Product type to export
 lengow_settings.lengow_product_types_legend|Choose here the type of products you want to export: they will be automatically added to your export. Then go to the product page if you want to refine your selection.
 lengow_settings.lengow_cron_enabled_title|Use Crontab module WooCommerce
@@ -144,8 +139,6 @@ lengow_settings.lengow_last_import_manual_title|Last manual import
 lengow_settings.lengow_last_import_cron_title|Last Cron import
 lengow_settings.lengow_import_enabled_title|Activate stock synchronisation
 lengow_settings.lengow_import_enabled_legend|Use this option to decrease stocks in your WooCommerce backoffice. Go to the stock management page if you want to launch a manual synchronisation.
-lengow_settings.lengow_variation_enabled_title|Export product variations
-lengow_settings.lengow_variation_enabled_legend|If you don't want to export all of your products' variations, disable this option
 lengow_log.error.import_in_progress|Import in progress
 lengow_log.error.rest_time_to_import|Please wait %{rest_time} seconds before re-importing orders
 lengow_log.error.account_id_empty|Account ID, Access Token or Secret is empty
@@ -165,8 +158,6 @@ lengow_log.exception.marketplace_not_present|Lengow error: %{marketplace_name} d
 lengow_log.exception.product_list_is_empty|order could not be saved
 lengow_log.exception.product_not_be_found|product ID %{product_id} could not be found
 lengow_log.exception.product_is_a_parent|product ID %{product_id} is variable. Product variation is needed
-log.setting.setting_reset|All Lengow settings were reset
-log.setting.setting_updated|All Lengow settings were updated
 log.setting.setting_change|%{key} - old value %{old_value} replaced with %{value}
 log.export.start|## start export ##
 log.export.end|## end export ##

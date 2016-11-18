@@ -55,10 +55,6 @@ en:
       nb_available: "products available"
       button_yes: "Yes"
       button_no: "No"
-      include_variation: "Include product variations"
-      include_variation_support: "Use this option if you want to export all of your catalogue with variations"
-      include_out_of_stock: "Include out of stock products"
-      include_out_of_stock_support: "Use this option if you want to export out of stock products"
       include_specific_product: "Include specific products"
       select_all_products: "Select all of your products (%{nb} products)"
       add_confirmation: "Do you really want to add %{nb} products to your selection?"
@@ -149,7 +145,6 @@ en:
     lengow_authorized_ip_legend: "Authorize IP to get access to your export feed.\nSeparate them ' ; '"
     lengow_selection_enabled_title: "Export the selection only"
     lengow_selection_enabled_legend: "Activate this option if you do not want to export all available products. Then, select only the products you want to export"
-    lengow_out_stock_title: "Include out of stock products"
     lengow_product_types_title: "Product type to export"
     lengow_product_types_legend: "Choose here the type of products you want to export: they will be automatically added to your export. Then go to the product page if you want to refine your selection."
     lengow_cron_enabled_title: "Use Crontab module WooCommerce"
@@ -164,8 +159,6 @@ en:
     lengow_last_import_cron_title: "Last Cron import"
     lengow_import_enabled_title: "Activate stock synchronisation"
     lengow_import_enabled_legend: "Use this option to decrease stocks in your WooCommerce backoffice. Go to the stock management page if you want to launch a manual synchronisation."
-    lengow_variation_enabled_title: "Export product variations"
-    lengow_variation_enabled_legend: "If you don't want to export all of your products' variations, disable this option"
   lengow_log:
     error:
       import_in_progress: "Import in progress"

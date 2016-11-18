@@ -233,12 +233,8 @@ class Lengow_Export {
 		$this->_selection          = isset( $params['selection'] )
 			? $params['selection']
 			: (bool) Lengow_Configuration::get( 'lengow_selection_enabled' );
-		$this->_out_of_stock       = isset( $params['out_of_stock'] )
-			? $params['out_of_stock']
-			: (bool) Lengow_Configuration::get( 'lengow_out_stock' );
-		$this->_variation          = isset( $params['variation'] )
-			? $params['variation']
-			: (bool) Lengow_Configuration::get( 'lengow_variation_enabled' );
+		$this->_out_of_stock       = isset( $params['out_of_stock'] ) ? $params['out_of_stock'] : true;
+		$this->_variation          = isset( $params['variation'] ) ? $params['variation'] : true;
 		$this->_update_export_date = isset( $params['update_export_date'] )
 			? (bool) $params['update_export_date']
 			: true;

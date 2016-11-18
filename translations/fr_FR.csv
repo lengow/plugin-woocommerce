@@ -45,10 +45,6 @@ product.screen.nb_exported|produits exportés
 product.screen.nb_available|produits disponibles
 product.screen.button_yes|Oui
 product.screen.button_no|Non
-product.screen.include_variation|Inclure les produits déclinés
-product.screen.include_variation_support|Activez cette option si vous souhaitez exporter l'ensemble de vos déclinaisons produits
-product.screen.include_out_of_stock|Inclure les produits hors stock
-product.screen.include_out_of_stock_support|Activez cette option si vous souhaitez exporter les produits dont les stocks sont à 0
 product.screen.include_specific_product|Inclure une sélection de produits
 product.screen.select_all_products|Sélectionnez l'ensemble de vos produits (%{nb} products)
 product.screen.add_confirmation|Voulez-vous vraiment ajouter %{nb} produits dans votre sélection ?
@@ -129,7 +125,6 @@ lengow_settings.lengow_authorized_ip_title|IP autorisée(s)
 lengow_settings.lengow_authorized_ip_legend|Listez ici les IP autorisées à accéder à votre flux d'export.<br />Séparez-les par ' ; '
 lengow_settings.lengow_selection_enabled_title|Exporter seulement la sélection
 lengow_settings.lengow_selection_enabled_legend|Activez cette option si vous ne voulez pas exporter tous vos produits disponibles. Sélectionnez ensuite les produits un par un.
-lengow_settings.lengow_out_stock_title|Inclure les produits hors stock
 lengow_settings.lengow_product_types_title|Type de produit à exporter
 lengow_settings.lengow_product_types_legend|Choisissez le type de produits que vous voulez exporter : ils seront automatiquement ajoutés à votre export. Ensuite, rendez-vous sur la page des produits si vous souhaitez affiner votre sélection.
 lengow_settings.lengow_cron_enabled_title|Utilisez l'éditeur de tâche Cron
@@ -144,8 +139,6 @@ lengow_settings.lengow_last_import_manual_title|Dernier import manuel
 lengow_settings.lengow_last_import_cron_title|Dernier import CRON
 lengow_settings.lengow_import_enabled_title|Activer la synchronisation des stocks
 lengow_settings.lengow_import_enabled_legend|Activez cette option pour diminuer les stocks dans votre backoffice WooCommerce. Rendez-vous sur la page de gestion du stock si vous souhaitez lancer une synchronisation manuelle.
-lengow_settings.lengow_variation_enabled_title|Exporter les déclinaisons produit
-lengow_settings.lengow_variation_enabled_legend|Activez cette option si vous souhaitez exporter tout votre catalogue avec les déclinaisons produit
 lengow_log.error.import_in_progress|Import en cours
 lengow_log.error.rest_time_to_import|Attendez %{rest_time}  secondes avant d'importer de nouveau vos commandes
 lengow_log.error.account_id_empty|ID du compte, access token ou secret token vides

@@ -42,41 +42,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </p>
             </div>
             <hr>
-            <div class="lgw-switch <?php echo $shop['option_variation'] == 1 ? 'checked' : '' ;?>">
-                <label>
-                    <div><span></span>
-                        <input
-                            type="checkbox"
-                            data-size="mini"
-                            data-on-text="<?php echo $locale->t('product.screen.button_yes')?>"
-                            data-off-text="<?php echo $locale->t('product.screen.button_no')?>"
-                            name="lengow_export_selection"
-                            class="js-lengow_switch_option"
-                            data-action="change_option_product_variation"
-                            value="1" <?php if ($shop['option_variation'] == 1) : ?> checked="checked" <?php endif; ?>>
-                    </div> <?php echo $locale->t('product.screen.include_variation')?>
-                </label>
-            </div>
-            <i
-                class="fa fa-info-circle lengow_link_tooltip"
-                title="<?php echo $locale->t('product.screen.include_variation_support')?>"></i><br>
-            <div class="lgw-switch <?php echo $shop['option_product_out_of_stock'] == 1 ? 'checked' : '' ;?>">
-                <label>
-                    <div><span></span>
-                        <input
-                            type="checkbox"
-                            data-size="mini"
-                            data-on-text="<?php echo $locale->t('product.screen.button_yes') ?>"
-                            data-off-text="<?php echo $locale->t('product.screen.button_no')?>"
-                            name="lengow_export_out_of_stock"
-                            class="js-lengow_switch_option"
-                            data-action="change_option_product_out_of_stock"
-                            value="1" <?php if ($shop['option_product_out_of_stock'] == 1) : ?> checked="checked" <?php endif; ?>>
-                    </div> <?php echo $locale->t('product.screen.include_out_of_stock') ?>
-                </label>
-            </div>
-            <i class="fa fa-info-circle lengow_link_tooltip"
-               title="<?php echo $locale->t('product.screen.include_out_of_stock_support')?>"></i><br>
             <div class="lgw-switch <?php echo $shop['option_selected'] == 1 ? 'checked' : '' ;?>">
                 <label>
                     <div><span></span>
