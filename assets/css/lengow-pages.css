@@ -34,10 +34,6 @@
   float: none;
 }
 
-body.lgw-home-iframe{
-  background: #fff;
-}
-
 body.lgw-home-iframe button {
   margin: 15px auto!important;
   display: block!important;
