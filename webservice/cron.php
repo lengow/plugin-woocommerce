@@ -74,42 +74,46 @@ if ( ! Lengow_Main::check_ip() ) {
 	wp_die( 'Unauthorized access for IP: ' . $_SERVER['REMOTE_ADDR'], '', array( 'response' => 403 ) );
 }
 
-// get sync action if exists.
-$sync = isset( $_GET['sync'] ) ? $_GET['sync'] : false;
+if (isset( $_GET['get_sync'] ) && (bool) $_GET['get_sync'] ) {
+	echo json_encode( Lengow_Sync::get_sync_data() );
+} else {
+	// get sync action if exists.
+	$sync = isset( $_GET['sync'] ) ? $_GET['sync'] : false;
 
-// sync orders between Lengow and WooCommerce.
-if ( ! $sync || $sync === 'order' ) {
-	// array of params for import order
-	$params = array( 'type' => 'cron' );
-	if ( isset( $_GET['preprod_mode'] ) ) {
-		$params['preprod_mode'] = (bool) $_GET['preprod_mode'];
+	// sync orders between Lengow and WooCommerce.
+	if ( ! $sync || $sync === 'order' ) {
+		// array of params for import order
+		$params = array( 'type' => 'cron' );
+		if ( isset( $_GET['preprod_mode'] ) ) {
+			$params['preprod_mode'] = (bool) $_GET['preprod_mode'];
+		}
+		if ( isset( $_GET['log_output'] ) ) {
+			$params['log_output'] = (bool) $_GET['log_output'];
+		}
+		if ( isset( $_GET['days'] ) ) {
+			$params['days'] = (int) $_GET['days'];
+		}
+		if ( isset( $_GET['limit'] ) ) {
+			$params['limit'] = (int) $_GET['limit'];
+		}
+		if ( isset( $_GET['marketplace_sku'] ) ) {
+			$params['marketplace_sku'] = (string) $_GET['marketplace_sku'];
+		}
+		if ( isset( $_GET['marketplace_name'] ) ) {
+			$params['marketplace_name'] = (string) $_GET['marketplace_name'];
+		}
+		if ( isset( $_GET['delivery_address_id'] ) ) {
+			$params['delivery_address_id'] = (int) $_GET['delivery_address_id'];
+		}
+		$import = new Lengow_Import( $params );
+		$import->exec();
 	}
-	if ( isset( $_GET['log_output'] ) ) {
-		$params['log_output'] = (bool) $_GET['log_output'];
+	// sync options between Lengow and WooCommerce.
+	if ( ! $sync || $sync === 'option' ) {
+		Lengow_Sync::set_cms_option();
 	}
-	if ( isset( $_GET['days'] ) ) {
-		$params['days'] = (int) $_GET['days'];
+	// sync option is not valid.
+	if ( $sync && ( $sync !== 'order' && $sync !== 'option' ) ) {
+		wp_die( 'Action: ' . $sync . ' is not a valid action', '', array( 'response' => 400 ) );
 	}
-	if ( isset( $_GET['limit'] ) ) {
-		$params['limit'] = (int) $_GET['limit'];
-	}
-	if ( isset( $_GET['marketplace_sku'] ) ) {
-		$params['marketplace_sku'] = (string) $_GET['marketplace_sku'];
-	}
-	if ( isset( $_GET['marketplace_name'] ) ) {
-		$params['marketplace_name'] = (string) $_GET['marketplace_name'];
-	}
-	if ( isset( $_GET['delivery_address_id'] ) ) {
-		$params['delivery_address_id'] = (int) $_GET['delivery_address_id'];
-	}
-	$import = new Lengow_Import( $params );
-	$import->exec();
-}
-// sync options between Lengow and WooCommerce.
-if ( ! $sync || $sync === 'option' ) {
-	Lengow_Sync::set_cms_option();
-}
-// sync option is not valid.
-if ( $sync && ( $sync !== 'order' && $sync !== 'option' ) ) {
-	wp_die( 'Action: ' . $sync . ' is not a valid action', '', array( 'response' => 400 ) );
 }

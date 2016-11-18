@@ -52,7 +52,7 @@
 /includes/admin/views/products/html-admin-products.php|8838195ce923e0c6b44bd9976525bc08
 /includes/admin/views/html-admin-footer.php|3d499bc5f55383c275bc536d39a40475
 /includes/admin/views/dashboard/html-admin-dashboard.php|93e774538ea38ec82e289513bbb46145
-/includes/admin/views/dashboard/html-admin-new.php|82637b4d298e7c755c2cf3ff3aea76c2
+/includes/admin/views/dashboard/html-admin-new.php|a611be57400307509f5ad8c073f4bae0
 /includes/admin/views/dashboard/html-admin-status.php|b47906029185a8fe15f0ab77a4382dad
 /includes/admin/views/settings/html-admin-settings.php|01df9e6f07c5d556ebed4eabb255cf58
 /includes/admin/views/help/html-admin-help.php|4f0804d27a8898da197a67fff9ac31fc
@@ -72,5 +72,5 @@
 /toolbox/views/footer.php|4d214dd44eaca17a5b8c100a0cee7ebc
 /toolbox/index.php|9ceb84820f4192f69ff1827090fe6538
 /upgrade/update_2.0.0.php|11506b4fae0a658e9bcff367269ac263
-/webservice/cron.php|f103dbbe246a1af33802c13476f042d7
+/webservice/cron.php|bfc8847eb527f6c69c0545eeaedc51a4
 /webservice/export.php|9cd80546c68c888484490882f056501c
