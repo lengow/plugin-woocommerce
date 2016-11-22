@@ -28,7 +28,7 @@
 
 
         // SUMBIT FORM
-        $( ".lengow_form" ).submit(function( event ) {
+        $(".lengow_form").submit(function (event) {
             event.preventDefault();
             var form = this;
 
@@ -44,49 +44,49 @@
         // MODAL
 
         // Open modal
-        $('.lgw-modal-delete').click(function(){
+        $('.lgw-modal-delete').click(function () {
             window.location.hash = 'delete';
             return false;
         });
 
         // Open modal on loading
 
-        if(window.location.hash) {
+        if (window.location.hash) {
             openModal();
         }
 
         // Delete modal
-        $('.js-close-this-modal').click(function(){
+        $('.js-close-this-modal').click(function () {
             window.location.hash = '';
             return false;
         });
 
         var hash = window.location.hash;
-        setInterval(function(){
+        setInterval(function () {
             if (window.location.hash != hash) {
                 hash = window.location.hash;
-                if( hash.length < 1){
+                if (hash.length < 1) {
                     killModal();
                 }
-                else{
-                    if( $('.lgw-modal.open').length == 0 ){
+                else {
+                    if ($('.lgw-modal.open').length == 0) {
                         openModal();
                     }
                 }
             }
         }, 100);
 
-        function killModal(){
+        function killModal() {
             window.location.hash = '';
             $('body').removeClass('unscrollable');
             $('.lgw-modal').removeClass('open');
             $('.js-confirm-delete').val('');
             $('.lengow_submit_delete_module')
-                    .addClass('lgw-btn-disabled')
-                    .removeClass('lgw-btn-red');
+                .addClass('lgw-btn-disabled')
+                .removeClass('lgw-btn-red');
         }
 
-        function openModal(){
+        function openModal() {
             window.location.hash = 'delete';
             $('body').addClass('unscrollable');
             $('.lgw-modal').addClass('open');
@@ -95,14 +95,14 @@
 
         // CONFIRM DELETE
 
-        $('.js-confirm-delete').keyup(function(){
+        $('.js-confirm-delete').keyup(function () {
             var confirm = $(this).data('confirm');
-            if( $(this).val() == confirm ){
+            if ($(this).val() == confirm) {
                 $('.lengow_submit_delete_module')
                     .removeClass('lgw-btn-disabled')
                     .addClass('lgw-btn-red');
             }
-            else{
+            else {
                 $('.lengow_submit_delete_module')
                     .addClass('lgw-btn-disabled')
                     .removeClass('lgw-btn-red');
@@ -137,13 +137,13 @@
         }
 
         // DOWNLOAD LOGS
-        $('.js-log-select').change(function(){
+        $('.js-log-select').change(function () {
             if ($('.js-log-select').val() !== null) {
-                $(".js-log-btn-download" ).show();
+                $(".js-log-btn-download").show();
             }
         });
 
-        $('.js-log-btn-download').on('click', function() {
+        $('.js-log-btn-download').on('click', function () {
             if ($('.js-log-select').val() !== null) {
                 window.location.href = $('.js-log-select').val();
             }

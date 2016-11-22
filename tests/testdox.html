@@ -1,165 +1,165 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8"/>
-        <title>Test Documentation</title>
-        <style>
-            body {
-                text-rendering: optimizeLegibility;
-                font-variant-ligatures: common-ligatures;
-                font-kerning: normal;
-                margin-left: 2em;
-            }
+<head>
+    <meta charset="utf-8"/>
+    <title>Test Documentation</title>
+    <style>
+        body {
+            text-rendering: optimizeLegibility;
+            font-variant-ligatures: common-ligatures;
+            font-kerning: normal;
+            margin-left: 2em;
+        }
 
-            body > ul > li {
-                font-family: Source Serif Pro, PT Sans, Trebuchet MS, Helvetica, Arial;
-                font-size: 2em;
-            }
+        body > ul > li {
+            font-family: Source Serif Pro, PT Sans, Trebuchet MS, Helvetica, Arial;
+            font-size: 2em;
+        }
 
-            h2 {
-                font-family: Tahoma, Helvetica, Arial;
-                font-size: 3em;
-            }
+        h2 {
+            font-family: Tahoma, Helvetica, Arial;
+            font-size: 3em;
+        }
 
-            ul {
-                list-style: none;
-                margin-bottom: 1em;
-            }
-        </style>
-    </head>
-    <body>
-        <h2 id="Lengow_CheckTest">Lengow_Check</h2>
-        <ul>
-            <li style="color: #555753;">✓ Is valid auth</li>
-            <li style="color: #555753;">✓ Get admin content</li>
-        </ul>
-        <h2 id="Lengow_ConfigurationTest">Lengow_Configuration</h2>
-        <ul>
-            <li style="color: #555753;">✓ Get keys</li>
-            <li style="color: #555753;">✓ Get</li>
-            <li style="color: #555753;">✓ Add value</li>
-            <li style="color: #555753;">✓ Update value</li>
-            <li style="color: #555753;">✓ Delete</li>
-            <li style="color: #555753;">✓ Get all values</li>
-            <li style="color: #555753;">✓ Check and log</li>
-        </ul>
-        <h2 id="Lengow_ConnectorTest">Lengow_Connector</h2>
-        <ul>
-            <li style="color: #555753;">✓ Connect</li>
-            <li style="color: #555753;">✓ Call</li>
-            <li style="color: #555753;">✓ Make request</li>
-            <li style="color: #555753;">✓ Get access id</li>
-            <li style="color: #555753;">✓ Format</li>
-            <li style="color: #555753;">✓ Query api</li>
-        </ul>
-        <h2 id="Lengow_ExportTest">Lengow_Export</h2>
-        <ul>
-            <li style="color: #555753;">✓ set legacy fields</li>
-            <li style="color: #555753;">✓ Get total product</li>
-            <li style="color: #555753;">✓ set format</li>
-            <li style="color: #555753;">✓ set product ids</li>
-            <li style="color: #555753;">✓ set product types</li>
-            <li style="color: #555753;">✓ set log output</li>
-            <li style="color: #555753;">✓ Exec</li>
-            <li style="color: #555753;">✓ export</li>
-            <li style="color: #555753;">✓ Get total export product</li>
-            <li style="color: #555753;">✓ Get export params</li>
-            <li style="color: #555753;">✓ get export ids</li>
-        </ul>
-        <h2 id="Lengow_FeedTest">Lengow_Feed</h2>
-        <ul>
-            <li style="color: #555753;">✓ init export file</li>
-            <li style="color: #555753;">✓ Write</li>
-            <li style="color: #555753;">✓ get html header</li>
-            <li style="color: #555753;">✓ get header</li>
-            <li style="color: #555753;">✓ get body</li>
-            <li style="color: #555753;">✓ get footer</li>
-            <li style="color: #555753;">✓ End</li>
-            <li style="color: #555753;">✓ format fields</li>
-            <li style="color: #555753;">✓ indent yaml</li>
-            <li style="color: #555753;">✓ Get url</li>
-        </ul>
-        <h2 id="Lengow_FileTest">Lengow_File</h2>
-        <ul>
-            <li style="color: #555753;">✓ Get link</li>
-            <li style="color: #555753;">✓ Get path</li>
-            <li style="color: #555753;">✓ Get folder path</li>
-            <li style="color: #555753;">✓ Exists</li>
-            <li style="color: #555753;">✓ Get files from folder</li>
-        </ul>
-        <h2 id="Lengow_ImportTest">Lengow_Import</h2>
-        <ul>
-            <li style="color: #555753;">✓ construct</li>
-            <li style="color: #555753;">✓ Exec</li>
-            <li style="color: #555753;">✓ check credentials</li>
-            <li style="color: #555753;">✓ Is in process</li>
-            <li style="color: #555753;">✓ Check state</li>
-        </ul>
-        <h2 id="Lengow_Import_OrderTest">Lengow_Import_Order</h2>
-        <ul>
-            <li style="color: #555753;">✓ Import order</li>
-            <li style="color: #555753;">✓ create lengow order</li>
-        </ul>
-        <h2 id="Lengow_InstallTest">Lengow_Install</h2>
-        <ul>
-            <li style="color: #ef2929;">❌ Update</li>
-            <li style="color: #ef2929;">❌ Check field exists</li>
-            <li style="color: #ef2929;">❌ Check field and drop</li>
-            <li style="color: #ef2929;">❌ Rename configuration key</li>
-            <li style="color: #ef2929;">❌ Set installation status</li>
-            <li style="color: #ef2929;">❌ Is installation in progress</li>
-        </ul>
-        <h2 id="Lengow_MainTest">Lengow_Main</h2>
-        <ul>
-            <li style="color: #555753;">✓ Get export url</li>
-            <li style="color: #555753;">✓ Get cron url</li>
-            <li style="color: #555753;">✓ Check ip</li>
-            <li style="color: #555753;">✓ Is new merchant</li>
-            <li style="color: #555753;">✓ Get token</li>
-            <li style="color: #555753;">✓ Find by token</li>
-            <li style="color: #555753;">✓ Set log message</li>
-            <li style="color: #555753;">✓ Decode log message</li>
-            <li style="color: #555753;">✓ Update date import</li>
-            <li style="color: #555753;">✓ Get last import</li>
-            <li style="color: #555753;">✓ Clean data</li>
-            <li style="color: #555753;">✓ Clean html</li>
-            <li style="color: #555753;">✓ Replace accented chars</li>
-        </ul>
-        <h2 id="Lengow_MarketplaceTest">Lengow_Marketplace</h2>
-        <ul>
-            <li style="color: #555753;">✓ Get state lengow</li>
-        </ul>
-        <h2 id="Lengow_OrderTest">Lengow_Order</h2>
-        <ul>
-            <li style="color: #555753;">✓ Get id order from lengow orders</li>
-            <li style="color: #ef2929;">❌ Get id from lengow orders</li>
-        </ul>
-        <h2 id="Lengow_ProductTest">Lengow_Product</h2>
-        <ul>
-            <li style="color: #555753;">✓ Get data</li>
-            <li style="color: #555753;">✓ get price</li>
-            <li style="color: #555753;">✓ get categories</li>
-            <li style="color: #555753;">✓ get attribute data</li>
-            <li style="color: #555753;">✓ get post meta data</li>
-            <li style="color: #555753;">✓ Get attributes</li>
-            <li style="color: #555753;">✓ Get post metas</li>
-            <li style="color: #555753;">✓ Search product</li>
-            <li style="color: #555753;">✓ Publish</li>
-            <li style="color: #555753;">✓ Get lengow products</li>
-        </ul>
-        <h2 id="Lengow_SyncTest">Lengow_Sync</h2>
-        <ul>
-            <li style="color: #555753;">✓ Sync</li>
-            <li style="color: #555753;">✓ Check sync shop</li>
-            <li style="color: #555753;">✓ Set cms option</li>
-            <li style="color: #555753;">✓ Get statistic</li>
-            <li style="color: #555753;">✓ Get status account</li>
-        </ul>
-        <h2 id="Lengow_TranslationTest">Lengow_Translation</h2>
-        <ul>
-            <li style="color: #555753;">✓ T</li>
-            <li style="color: #555753;">✓ Translate final</li>
-            <li style="color: #555753;">✓ Load file</li>
-        </ul>
-    </body>
+        ul {
+            list-style: none;
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body>
+<h2 id="Lengow_CheckTest">Lengow_Check</h2>
+<ul>
+    <li style="color: #555753;">✓ Is valid auth</li>
+    <li style="color: #555753;">✓ Get admin content</li>
+</ul>
+<h2 id="Lengow_ConfigurationTest">Lengow_Configuration</h2>
+<ul>
+    <li style="color: #555753;">✓ Get keys</li>
+    <li style="color: #555753;">✓ Get</li>
+    <li style="color: #555753;">✓ Add value</li>
+    <li style="color: #555753;">✓ Update value</li>
+    <li style="color: #555753;">✓ Delete</li>
+    <li style="color: #555753;">✓ Get all values</li>
+    <li style="color: #555753;">✓ Check and log</li>
+</ul>
+<h2 id="Lengow_ConnectorTest">Lengow_Connector</h2>
+<ul>
+    <li style="color: #555753;">✓ Connect</li>
+    <li style="color: #555753;">✓ Call</li>
+    <li style="color: #555753;">✓ Make request</li>
+    <li style="color: #555753;">✓ Get access id</li>
+    <li style="color: #555753;">✓ Format</li>
+    <li style="color: #555753;">✓ Query api</li>
+</ul>
+<h2 id="Lengow_ExportTest">Lengow_Export</h2>
+<ul>
+    <li style="color: #555753;">✓ set legacy fields</li>
+    <li style="color: #555753;">✓ Get total product</li>
+    <li style="color: #555753;">✓ set format</li>
+    <li style="color: #555753;">✓ set product ids</li>
+    <li style="color: #555753;">✓ set product types</li>
+    <li style="color: #555753;">✓ set log output</li>
+    <li style="color: #555753;">✓ Exec</li>
+    <li style="color: #555753;">✓ export</li>
+    <li style="color: #555753;">✓ Get total export product</li>
+    <li style="color: #555753;">✓ Get export params</li>
+    <li style="color: #555753;">✓ get export ids</li>
+</ul>
+<h2 id="Lengow_FeedTest">Lengow_Feed</h2>
+<ul>
+    <li style="color: #555753;">✓ init export file</li>
+    <li style="color: #555753;">✓ Write</li>
+    <li style="color: #555753;">✓ get html header</li>
+    <li style="color: #555753;">✓ get header</li>
+    <li style="color: #555753;">✓ get body</li>
+    <li style="color: #555753;">✓ get footer</li>
+    <li style="color: #555753;">✓ End</li>
+    <li style="color: #555753;">✓ format fields</li>
+    <li style="color: #555753;">✓ indent yaml</li>
+    <li style="color: #555753;">✓ Get url</li>
+</ul>
+<h2 id="Lengow_FileTest">Lengow_File</h2>
+<ul>
+    <li style="color: #555753;">✓ Get link</li>
+    <li style="color: #555753;">✓ Get path</li>
+    <li style="color: #555753;">✓ Get folder path</li>
+    <li style="color: #555753;">✓ Exists</li>
+    <li style="color: #555753;">✓ Get files from folder</li>
+</ul>
+<h2 id="Lengow_ImportTest">Lengow_Import</h2>
+<ul>
+    <li style="color: #555753;">✓ construct</li>
+    <li style="color: #555753;">✓ Exec</li>
+    <li style="color: #555753;">✓ check credentials</li>
+    <li style="color: #555753;">✓ Is in process</li>
+    <li style="color: #555753;">✓ Check state</li>
+</ul>
+<h2 id="Lengow_Import_OrderTest">Lengow_Import_Order</h2>
+<ul>
+    <li style="color: #555753;">✓ Import order</li>
+    <li style="color: #555753;">✓ create lengow order</li>
+</ul>
+<h2 id="Lengow_InstallTest">Lengow_Install</h2>
+<ul>
+    <li style="color: #ef2929;">❌ Update</li>
+    <li style="color: #ef2929;">❌ Check field exists</li>
+    <li style="color: #ef2929;">❌ Check field and drop</li>
+    <li style="color: #ef2929;">❌ Rename configuration key</li>
+    <li style="color: #ef2929;">❌ Set installation status</li>
+    <li style="color: #ef2929;">❌ Is installation in progress</li>
+</ul>
+<h2 id="Lengow_MainTest">Lengow_Main</h2>
+<ul>
+    <li style="color: #555753;">✓ Get export url</li>
+    <li style="color: #555753;">✓ Get cron url</li>
+    <li style="color: #555753;">✓ Check ip</li>
+    <li style="color: #555753;">✓ Is new merchant</li>
+    <li style="color: #555753;">✓ Get token</li>
+    <li style="color: #555753;">✓ Find by token</li>
+    <li style="color: #555753;">✓ Set log message</li>
+    <li style="color: #555753;">✓ Decode log message</li>
+    <li style="color: #555753;">✓ Update date import</li>
+    <li style="color: #555753;">✓ Get last import</li>
+    <li style="color: #555753;">✓ Clean data</li>
+    <li style="color: #555753;">✓ Clean html</li>
+    <li style="color: #555753;">✓ Replace accented chars</li>
+</ul>
+<h2 id="Lengow_MarketplaceTest">Lengow_Marketplace</h2>
+<ul>
+    <li style="color: #555753;">✓ Get state lengow</li>
+</ul>
+<h2 id="Lengow_OrderTest">Lengow_Order</h2>
+<ul>
+    <li style="color: #555753;">✓ Get id order from lengow orders</li>
+    <li style="color: #ef2929;">❌ Get id from lengow orders</li>
+</ul>
+<h2 id="Lengow_ProductTest">Lengow_Product</h2>
+<ul>
+    <li style="color: #555753;">✓ Get data</li>
+    <li style="color: #555753;">✓ get price</li>
+    <li style="color: #555753;">✓ get categories</li>
+    <li style="color: #555753;">✓ get attribute data</li>
+    <li style="color: #555753;">✓ get post meta data</li>
+    <li style="color: #555753;">✓ Get attributes</li>
+    <li style="color: #555753;">✓ Get post metas</li>
+    <li style="color: #555753;">✓ Search product</li>
+    <li style="color: #555753;">✓ Publish</li>
+    <li style="color: #555753;">✓ Get lengow products</li>
+</ul>
+<h2 id="Lengow_SyncTest">Lengow_Sync</h2>
+<ul>
+    <li style="color: #555753;">✓ Sync</li>
+    <li style="color: #555753;">✓ Check sync shop</li>
+    <li style="color: #555753;">✓ Set cms option</li>
+    <li style="color: #555753;">✓ Get statistic</li>
+    <li style="color: #555753;">✓ Get status account</li>
+</ul>
+<h2 id="Lengow_TranslationTest">Lengow_Translation</h2>
+<ul>
+    <li style="color: #555753;">✓ T</li>
+    <li style="color: #555753;">✓ Translate final</li>
+    <li style="color: #555753;">✓ Load file</li>
+</ul>
+</body>
 </html>

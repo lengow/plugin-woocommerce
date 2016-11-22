@@ -24,7 +24,7 @@
         /**
          * Ajax to synchronize stock
          */
-        $('#lengow_import_orders').on('click', function() {
+        $('#lengow_import_orders').on('click', function () {
             var data = {
                 action: 'post_process_orders',
                 do_action: 'import_all'
@@ -36,7 +36,7 @@
                 url: ajaxurl,
                 type: "POST",
                 data: data,
-                success: function(content) {
+                success: function (content) {
                     var data = JSON.parse(content);
                     $("#lengow_wrapper_messages").html(data.message);
                     $("#lengow_last_import_date").html(data.last_importation);
@@ -44,11 +44,11 @@
 
                     $('#lengow_charge_import_order').fadeOut(150);
 
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $('#lengow_wrapper_messages').fadeIn(250);
                     }, 300);
                 },
-                error: function(content) {
+                error: function (content) {
                     $('#lengow_charge_import_order').fadeOut(150);
                 }
             });

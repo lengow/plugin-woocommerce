@@ -51,7 +51,7 @@
         });
 
         /* SWITCH TOGGLE */
-        jQuery('body').on('change', '.lgw-switch', function(event) {
+        jQuery('body').on('change', '.lgw-switch', function (event) {
             var check = $(this);
             var checked = check.find('input').prop('checked');
             check.toggleClass('checked');
@@ -62,15 +62,14 @@
         init_tooltip();
         //var clipboard = new Clipboard('.lengow_copy');
 
-        var preprod_exist=$('#lgw-preprod').length;
-        if (preprod_exist>0){
+        var preprod_exist = $('#lgw-preprod').length;
+        if (preprod_exist > 0) {
             $("#lengow_feed_wrapper").addClass('activePreprod');
             $("#lengow_order_wrapper").addClass('activePreprod');
             $("#lengow_form_order_setting").addClass('activePreprod');
             $("#lengow_mainsettings_wrapper").addClass('activePreprod');
             $(".lengow_help_wrapper").addClass('activePreprod');
         }
-
 
 
     });

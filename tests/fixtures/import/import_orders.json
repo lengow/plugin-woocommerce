@@ -294,11 +294,10 @@
                 "is_delivered_by_marketplace": false,
                 "parcel_weight": null,
                 "shipped_at": null,
-                "relay":
-                  { 
-                    "id": null,
-                    "name": null
-                  },
+                "relay": {
+                  "id": null,
+                  "name": null
+                },
                 "marketplace_order_line_ids": [
                   "1300435653833-A-1"
                 ]
@@ -357,11 +356,10 @@
                 "is_delivered_by_marketplace": false,
                 "parcel_weight": null,
                 "shipped_at": null,
-                "relay":
-                  { 
-                    "id": null,
-                    "name": null
-                  },
+                "relay": {
+                  "id": null,
+                  "name": null
+                },
                 "marketplace_order_line_ids": [
                   "1300435653833-A-1"
                 ]

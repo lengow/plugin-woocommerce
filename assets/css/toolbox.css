@@ -3,115 +3,115 @@
 /*************************************************/
 
 body {
-  padding-top: 60px;
+    padding-top: 60px;
 }
 
 .starter-template {
-  padding: 40px 15px;
-  text-align: center;
+    padding: 40px 15px;
+    text-align: center;
 }
 
 .full-container {
-  margin: 0 40px;
+    margin: 0 40px;
 }
 
 #lengow_header_toolbox_order {
-  width: 100%;
+    width: 100%;
 }
 
 #lengow_header_toolbox_order td {
-  width: 33%;
-  vertical-align: top;
+    width: 33%;
+    vertical-align: top;
 }
 
 .lengow-green {
-  color: green;
+    color: green;
 }
 
 .lengow-red {
-  color: red;
+    color: red;
 }
 
 .lgw-btn {
-  display: inline-block;
-  padding: 6px 12px;
-  margin: 5px;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.42857143;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  cursor: pointer;
-  border-radius: 4px;
-  color: #fff !important;
-  background-color: #337ab7;
-  border-color: #2e6da4;
-  text-decoration: none !important;
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 5px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 4px;
+    color: #fff !important;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    text-decoration: none !important;
 }
 
 button {
-  margin: 0;
-  padding: 0;
-  line-height: 100%;
-  border: 0;
-  background: none;
+    margin: 0;
+    padding: 0;
+    line-height: 100%;
+    border: 0;
+    background: none;
 }
 
 #lengow_no_result_message {
-  padding: 30px;
-  text-align: center;
+    padding: 30px;
+    text-align: center;
 }
 
 span.img_no_result {
-  background: transparent;
-  height: 208px;
-  width: 395px;
-  display: block;
-  margin: 0 auto;
+    background: transparent;
+    height: 208px;
+    width: 395px;
+    display: block;
+    margin: 0 auto;
 }
 
 span.title_no_result {
-  display: block;
-  font-size: 15px;
-  font-weight: bold;
-  margin: 10px 0;
-  color: #c3c3c3;
+    display: block;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #c3c3c3;
 }
 
 legend {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .lengow_export_feed {
-  margin-right: 0px;
+    margin-right: 0px;
 }
 
 a.lengow_link_tooltip {
-  float: right;
-  padding: 0 5px;
-  margin-top: 0;
-  color: #555;
+    float: right;
+    padding: 0 5px;
+    margin-top: 0;
+    color: #555;
 }
 
 .lengow_check_shop {
-  float: left;
-  margin-right: 15px;
-  margin-top: 4px;
-  width: 5px;
-  height: 5px;
-  padding:5px;
-  border-radius: 10px;
+    float: left;
+    margin-right: 15px;
+    margin-top: 4px;
+    width: 5px;
+    height: 5px;
+    padding: 5px;
+    border-radius: 10px;
 }
 
 #lgw-preprod {
-  color: white;
-  background: #e55a4d;
-  padding: 5px 10px;
-  position: absolute;
-  top: 50px;
-  left: 0;
-  font-size: 12px;
+    color: white;
+    background: #e55a4d;
+    padding: 5px 10px;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    font-size: 12px;
 }
 
 /*************************************************/
@@ -123,11 +123,11 @@ a.lengow_link_tooltip {
 /*************************************************/
 
 .lengow_table_top {
-  height: 40px;
-  margin: 20px 0 10px 0;
+    height: 40px;
+    margin: 20px 0 10px 0;
 }
 
 .lengow_table_bottom {
-  height: 40px;
-  margin-bottom: 10px;
+    height: 40px;
+    margin-bottom: 10px;
 }

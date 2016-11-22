@@ -25,11 +25,11 @@
          */
         function checkShop() {
             var status = $('.lengow_check_shop'),
-            data = {
-                //action call php function
-                action: 'post_process',
-                do_action: 'check_shop'
-            };
+                data = {
+                    //action call php function
+                    action: 'post_process',
+                    do_action: 'check_shop'
+                };
 
             status.html('<i class="fa fa-circle-o-notch fa-spin"></i>');
 
@@ -79,13 +79,13 @@
         $('.js-lengow_switch_option').on('change', function (e) {
             e.preventDefault();
             var action = $(this).attr('data-action'),
-            state = $(this).prop('checked'),
-            data = {
-                //action call php function
-                action: 'post_process',
-                state: state ? 1 : 0,
-                do_action: action
-            };
+                state = $(this).prop('checked'),
+                data = {
+                    //action call php function
+                    action: 'post_process',
+                    state: state ? 1 : 0,
+                    do_action: action
+                };
 
             $.ajax({
                 url: ajaxurl,
@@ -127,7 +127,7 @@
                 type: "POST",
                 dataType: "JSON",
                 data: data,
-                success: function(content) {
+                success: function (content) {
                     reloadTotal(content);
                 }
             });
@@ -158,14 +158,14 @@
                 products = [];
 
             //find all checked products
-            $('#js-lengow_product_checkbox:checked').each(function() {
+            $('#js-lengow_product_checkbox:checked').each(function () {
                 products.push($(this).attr('value'));
             });
 
             var data = {
                 action: 'post_process',
                 do_action: do_action,
-                export_action : export_action,
+                export_action: export_action,
                 select_all: check,
                 product: products
             };
@@ -174,13 +174,13 @@
                     url: ajaxurl,
                     type: "POST",
                     data: data,
-                    success: function(content) {
+                    success: function (content) {
                         var data = JSON.parse(content);
                         if (data.message) {
                             alert(data.message);
                         } else {
                             $.each(data.product_id, function (idx, p_id) {
-                                if (export_action == 'add_to_export'){
+                                if (export_action == 'add_to_export') {
                                     $("#js-lengow_product_" + p_id + "").parents(".lgw-switch").addClass("checked");
                                     $('.js-lengow_switch_product').prop("checked", true);
                                 } else {
@@ -207,7 +207,7 @@
 
             var findProductSelected = false;
 
-            $('.js-lengow_selection:checked').each(function() {
+            $('.js-lengow_selection:checked').each(function () {
                 findProductSelected = true;
                 $('.js-lengow_toolbar a').show();
             });

@@ -22,10 +22,10 @@ class Lengow_Check {
 	 */
 	private $locale;
 
-    /**
-     * Lengow_Check constructor.
-     * @codeCoverageIgnore
-     */
+	/**
+	 * Lengow_Check constructor.
+	 * @codeCoverageIgnore
+	 */
 	public function __construct() {
 		$this->locale                       = new Lengow_Translation();
 		Lengow_Translation::$force_iso_code = "en_GB";
@@ -34,7 +34,7 @@ class Lengow_Check {
 	/**
 	 * Get array of requirements and their status
 	 *
-     * @codeCoverageIgnore
+	 * @codeCoverageIgnore
 	 * @return mixed
 	 */
 	public function get_check_list() {
@@ -74,7 +74,7 @@ class Lengow_Check {
 	/**
 	 * Get array of requirements and their status
 	 *
-     * @codeCoverageIgnore
+	 * @codeCoverageIgnore
 	 * @return mixed
 	 */
 	public function get_global_information() {
@@ -113,7 +113,7 @@ class Lengow_Check {
 	/**
 	 * Get array of requirements and their status
 	 *
-     * @codeCoverageIgnore
+	 * @codeCoverageIgnore
 	 * @return mixed
 	 */
 	public function get_import_information() {
@@ -167,7 +167,7 @@ class Lengow_Check {
 	/**
 	 * Get array of requirements and their status, no multi-store on wordpress
 	 *
-     * @codeCoverageIgnore
+	 * @codeCoverageIgnore
 	 * @return mixed
 	 */
 	public function get_information_by_store() {
@@ -214,7 +214,7 @@ class Lengow_Check {
 	/**
 	 * Get files checksum
 	 *
-     * @codeCoverageIgnore
+	 * @codeCoverageIgnore
 	 * @return mixed
 	 */
 	public function check_file_md5() {
@@ -375,10 +375,10 @@ class Lengow_Check {
 		}
 		$connector = new Lengow_Connector( $access_token, $secret );
 		try {
-            $result = $connector->connect();
-        } catch ( Lengow_Exception $e ) {
-            return false;
-        }
+			$result = $connector->connect();
+		} catch ( Lengow_Exception $e ) {
+			return false;
+		}
 		if ( isset( $result['token'] ) && $account_id != 0 ) {
 			return true;
 		}
@@ -389,7 +389,7 @@ class Lengow_Check {
 	/**
 	 * Check if PHP Curl is activated
 	 *
-     * @codeCoverageIgnore
+	 * @codeCoverageIgnore
 	 * @return boolean
 	 */
 	public static function is_curl_activated() {
@@ -399,7 +399,7 @@ class Lengow_Check {
 	/**
 	 * Check if SimpleXML Extension is activated
 	 *
-     * @codeCoverageIgnore
+	 * @codeCoverageIgnore
 	 * @return boolean
 	 */
 	public static function is_simple_xml_activated() {
@@ -409,7 +409,7 @@ class Lengow_Check {
 	/**
 	 * Check if json Extension is activated
 	 *
-     * @codeCoverageIgnore
+	 * @codeCoverageIgnore
 	 * @return boolean
 	 */
 	public static function is_json_activated() {

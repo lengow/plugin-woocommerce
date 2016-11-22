@@ -1,1265 +1,1265 @@
 {
-    "event": "suiteStart",
-    "suite": "",
-    "tests": 88
-}{
-    "event": "suiteStart",
-    "suite": "Lengow_CheckTest",
-    "tests": 2
-}{
-    "event": "testStart",
-    "suite": "Lengow_CheckTest",
-    "test": "Lengow_CheckTest::testIs_valid_auth"
-}{
-    "event": "test",
-    "suite": "Lengow_CheckTest",
-    "test": "Lengow_CheckTest::testIs_valid_auth",
-    "status": "pass",
-    "time": 0.23422598838806,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_CheckTest",
-    "test": "Lengow_CheckTest::testGet_admin_content"
-}{
-    "event": "test",
-    "suite": "Lengow_CheckTest",
-    "test": "Lengow_CheckTest::testGet_admin_content",
-    "status": "pass",
-    "time": 0.0011780261993408,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Lengow_ConfigurationTest",
-    "tests": 7
-}{
-    "event": "testStart",
-    "suite": "Lengow_ConfigurationTest",
-    "test": "Lengow_ConfigurationTest::testGet_keys"
-}{
-    "event": "test",
-    "suite": "Lengow_ConfigurationTest",
-    "test": "Lengow_ConfigurationTest::testGet_keys",
-    "status": "pass",
-    "time": 0.0061509609222412,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ConfigurationTest",
-    "test": "Lengow_ConfigurationTest::testGet"
-}{
-    "event": "test",
-    "suite": "Lengow_ConfigurationTest",
-    "test": "Lengow_ConfigurationTest::testGet",
-    "status": "pass",
-    "time": 0.020838975906372,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ConfigurationTest",
-    "test": "Lengow_ConfigurationTest::testAdd_value"
-}{
-    "event": "test",
-    "suite": "Lengow_ConfigurationTest",
-    "test": "Lengow_ConfigurationTest::testAdd_value",
-    "status": "pass",
-    "time": 0.01898193359375,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ConfigurationTest",
-    "test": "Lengow_ConfigurationTest::testUpdate_value"
-}{
-    "event": "test",
-    "suite": "Lengow_ConfigurationTest",
-    "test": "Lengow_ConfigurationTest::testUpdate_value",
-    "status": "pass",
-    "time": 0.032444000244141,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ConfigurationTest",
-    "test": "Lengow_ConfigurationTest::testDelete"
-}{
-    "event": "test",
-    "suite": "Lengow_ConfigurationTest",
-    "test": "Lengow_ConfigurationTest::testDelete",
-    "status": "pass",
-    "time": 0.018008947372437,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ConfigurationTest",
-    "test": "Lengow_ConfigurationTest::testGet_all_values"
-}{
-    "event": "test",
-    "suite": "Lengow_ConfigurationTest",
-    "test": "Lengow_ConfigurationTest::testGet_all_values",
-    "status": "pass",
-    "time": 0.019294023513794,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ConfigurationTest",
-    "test": "Lengow_ConfigurationTest::testCheck_and_log"
-}{
-    "event": "test",
-    "suite": "Lengow_ConfigurationTest",
-    "test": "Lengow_ConfigurationTest::testCheck_and_log",
-    "status": "pass",
-    "time": 0.02866005897522,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Lengow_ConnectorTest",
-    "tests": 6
-}{
-    "event": "testStart",
-    "suite": "Lengow_ConnectorTest",
-    "test": "Lengow_ConnectorTest::testConnect"
-}{
-    "event": "test",
-    "suite": "Lengow_ConnectorTest",
-    "test": "Lengow_ConnectorTest::testConnect",
-    "status": "pass",
-    "time": 0.087878942489624,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ConnectorTest",
-    "test": "Lengow_ConnectorTest::testCall"
-}{
-    "event": "test",
-    "suite": "Lengow_ConnectorTest",
-    "test": "Lengow_ConnectorTest::testCall",
-    "status": "pass",
-    "time": 0.095161914825439,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ConnectorTest",
-    "test": "Lengow_ConnectorTest::testMake_request"
-}{
-    "event": "test",
-    "suite": "Lengow_ConnectorTest",
-    "test": "Lengow_ConnectorTest::testMake_request",
-    "status": "pass",
-    "time": 0.25331091880798,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ConnectorTest",
-    "test": "Lengow_ConnectorTest::testGet_access_id"
-}{
-    "event": "test",
-    "suite": "Lengow_ConnectorTest",
-    "test": "Lengow_ConnectorTest::testGet_access_id",
-    "status": "pass",
-    "time": 0.023374080657959,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ConnectorTest",
-    "test": "Lengow_ConnectorTest::testFormat"
-}{
-    "event": "test",
-    "suite": "Lengow_ConnectorTest",
-    "test": "Lengow_ConnectorTest::testFormat",
-    "status": "pass",
-    "time": 0.0086710453033447,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ConnectorTest",
-    "test": "Lengow_ConnectorTest::testQuery_api"
-}{
-    "event": "test",
-    "suite": "Lengow_ConnectorTest",
-    "test": "Lengow_ConnectorTest::testQuery_api",
-    "status": "pass",
-    "time": 0.19953298568726,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Lengow_ExportTest",
-    "tests": 11
-}{
-    "event": "testStart",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::test_set_legacy_fields"
-}{
-    "event": "test",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::test_set_legacy_fields",
-    "status": "pass",
-    "time": 0.17332601547241,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::testGet_total_product"
-}{
-    "event": "test",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::testGet_total_product",
-    "status": "pass",
-    "time": 8.050124168396,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::test_set_format"
-}{
-    "event": "test",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::test_set_format",
-    "status": "pass",
-    "time": 0.0026750564575195,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::test_set_product_ids"
-}{
-    "event": "test",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::test_set_product_ids",
-    "status": "pass",
-    "time": 0.0017180442810059,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::test_set_product_types"
-}{
-    "event": "test",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::test_set_product_types",
-    "status": "pass",
-    "time": 0.008774995803833,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::test_set_log_output"
-}{
-    "event": "test",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::test_set_log_output",
-    "status": "pass",
-    "time": 0.002673864364624,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::testExec"
-}{
-    "event": "test",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::testExec",
-    "status": "pass",
-    "time": 0.0014281272888184,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::test_export"
-}{
-    "event": "test",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::test_export",
-    "status": "pass",
-    "time": 0.0014009475708008,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::testGet_total_export_product"
-}{
-    "event": "test",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::testGet_total_export_product",
-    "status": "pass",
-    "time": 10.824210882187,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::testGet_export_params"
-}{
-    "event": "test",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::testGet_export_params",
-    "status": "pass",
-    "time": 0.0024011135101318,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::test_get_export_ids"
-}{
-    "event": "test",
-    "suite": "Lengow_ExportTest",
-    "test": "Lengow_ExportTest::test_get_export_ids",
-    "status": "pass",
-    "time": 7.9255020618439,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Lengow_FeedTest",
-    "tests": 10
-}{
-    "event": "testStart",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::test_init_export_file"
-}{
-    "event": "test",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::test_init_export_file",
-    "status": "pass",
-    "time": 0.0025489330291748,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::testWrite"
-}{
-    "event": "test",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::testWrite",
-    "status": "pass",
-    "time": 0.00097203254699707,
-    "trace": [],
-    "message": "",
-    "output": "\"plop\"|\"test\"|\"ici\"\r\n"
-}{
-    "event": "testStart",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::test_get_html_header"
-}{
-    "event": "test",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::test_get_html_header",
-    "status": "pass",
-    "time": 0.0013530254364014,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::test_get_header"
-}{
-    "event": "test",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::test_get_header",
-    "status": "pass",
-    "time": 0.0030889511108398,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::test_get_body"
-}{
-    "event": "test",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::test_get_body",
-    "status": "pass",
-    "time": 0.0048749446868896,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::test_get_footer"
-}{
-    "event": "test",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::test_get_footer",
-    "status": "pass",
-    "time": 0.0011351108551025,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::testEnd"
-}{
-    "event": "test",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::testEnd",
-    "status": "pass",
-    "time": 0.0015230178833008,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::test_format_fields"
-}{
-    "event": "test",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::test_format_fields",
-    "status": "pass",
-    "time": 0.0023238658905029,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::test_indent_yaml"
-}{
-    "event": "test",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::test_indent_yaml",
-    "status": "pass",
-    "time": 0.0010330677032471,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::testGet_url"
-}{
-    "event": "test",
-    "suite": "Lengow_FeedTest",
-    "test": "Lengow_FeedTest::testGet_url",
-    "status": "pass",
-    "time": 0.0010418891906738,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Lengow_FileTest",
-    "tests": 5
-}{
-    "event": "testStart",
-    "suite": "Lengow_FileTest",
-    "test": "Lengow_FileTest::testGet_link"
-}{
-    "event": "test",
-    "suite": "Lengow_FileTest",
-    "test": "Lengow_FileTest::testGet_link",
-    "status": "pass",
-    "time": 0.00099682807922363,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_FileTest",
-    "test": "Lengow_FileTest::testGet_path"
-}{
-    "event": "test",
-    "suite": "Lengow_FileTest",
-    "test": "Lengow_FileTest::testGet_path",
-    "status": "pass",
-    "time": 0.00087499618530273,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_FileTest",
-    "test": "Lengow_FileTest::testGet_folder_path"
-}{
-    "event": "test",
-    "suite": "Lengow_FileTest",
-    "test": "Lengow_FileTest::testGet_folder_path",
-    "status": "pass",
-    "time": 0.00085687637329102,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_FileTest",
-    "test": "Lengow_FileTest::testExists"
-}{
-    "event": "test",
-    "suite": "Lengow_FileTest",
-    "test": "Lengow_FileTest::testExists",
-    "status": "pass",
-    "time": 0.0010719299316406,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_FileTest",
-    "test": "Lengow_FileTest::testGet_files_from_folder"
-}{
-    "event": "test",
-    "suite": "Lengow_FileTest",
-    "test": "Lengow_FileTest::testGet_files_from_folder",
-    "status": "pass",
-    "time": 0.0013768672943115,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Lengow_ImportTest",
-    "tests": 5
-}{
-    "event": "testStart",
-    "suite": "Lengow_ImportTest",
-    "test": "Lengow_ImportTest::test__construct"
-}{
-    "event": "test",
-    "suite": "Lengow_ImportTest",
-    "test": "Lengow_ImportTest::test__construct",
-    "status": "pass",
-    "time": 0.0027341842651367,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ImportTest",
-    "test": "Lengow_ImportTest::testExec"
-}{
-    "event": "test",
-    "suite": "Lengow_ImportTest",
-    "test": "Lengow_ImportTest::testExec",
-    "status": "pass",
-    "time": 0.26857495307922,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ImportTest",
-    "test": "Lengow_ImportTest::test_check_credentials"
-}{
-    "event": "test",
-    "suite": "Lengow_ImportTest",
-    "test": "Lengow_ImportTest::test_check_credentials",
-    "status": "pass",
-    "time": 0.036164999008179,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ImportTest",
-    "test": "Lengow_ImportTest::testIs_in_process"
-}{
-    "event": "test",
-    "suite": "Lengow_ImportTest",
-    "test": "Lengow_ImportTest::testIs_in_process",
-    "status": "pass",
-    "time": 0.033241033554077,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ImportTest",
-    "test": "Lengow_ImportTest::testCheck_state"
-}{
-    "event": "test",
-    "suite": "Lengow_ImportTest",
-    "test": "Lengow_ImportTest::testCheck_state",
-    "status": "pass",
-    "time": 0.0066208839416504,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Lengow_Import_OrderTest",
-    "tests": 2
-}{
-    "event": "testStart",
-    "suite": "Lengow_Import_OrderTest",
-    "test": "Lengow_Import_OrderTest::testImport_order"
-}{
-    "event": "test",
-    "suite": "Lengow_Import_OrderTest",
-    "test": "Lengow_Import_OrderTest::testImport_order",
-    "status": "pass",
-    "time": 0.00066614151000977,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_Import_OrderTest",
-    "test": "Lengow_Import_OrderTest::test_create_lengow_order"
-}{
-    "event": "test",
-    "suite": "Lengow_Import_OrderTest",
-    "test": "Lengow_Import_OrderTest::test_create_lengow_order",
-    "status": "pass",
-    "time": 0.00062894821166992,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Lengow_InstallTest",
-    "tests": 6
-}{
-    "event": "testStart",
-    "suite": "Lengow_InstallTest",
-    "test": "Lengow_InstallTest::testUpdate"
-}{
-    "event": "test",
-    "suite": "Lengow_InstallTest",
-    "test": "Lengow_InstallTest::testUpdate",
-    "status": "error",
-    "time": 0.0041050910949707,
-    "trace": [
-        {
-            "file": "\/home\/alexandrerabottin\/Documents\/images-docker\/0-compose-install\/w352-w200\/wordpress\/wp-content\/plugins\/lengow-woocommerce\/tests\/Lengow_InstallTest.php",
-            "line": 51,
-            "function": "markTestIncomplete",
-            "class": "PHPUnit_Framework_Assert",
-            "type": "::"
-        }
-    ],
-    "message": "Incomplete Test: This test has not been implemented yet.",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_InstallTest",
-    "test": "Lengow_InstallTest::testCheck_field_exists"
-}{
-    "event": "test",
-    "suite": "Lengow_InstallTest",
-    "test": "Lengow_InstallTest::testCheck_field_exists",
-    "status": "error",
-    "time": 0.00098609924316406,
-    "trace": [
-        {
-            "file": "\/home\/alexandrerabottin\/Documents\/images-docker\/0-compose-install\/w352-w200\/wordpress\/wp-content\/plugins\/lengow-woocommerce\/tests\/Lengow_InstallTest.php",
-            "line": 63,
-            "function": "markTestIncomplete",
-            "class": "PHPUnit_Framework_Assert",
-            "type": "::"
-        }
-    ],
-    "message": "Incomplete Test: This test has not been implemented yet.",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_InstallTest",
-    "test": "Lengow_InstallTest::testCheck_field_and_drop"
-}{
-    "event": "test",
-    "suite": "Lengow_InstallTest",
-    "test": "Lengow_InstallTest::testCheck_field_and_drop",
-    "status": "error",
-    "time": 0.00094079971313477,
-    "trace": [
-        {
-            "file": "\/home\/alexandrerabottin\/Documents\/images-docker\/0-compose-install\/w352-w200\/wordpress\/wp-content\/plugins\/lengow-woocommerce\/tests\/Lengow_InstallTest.php",
-            "line": 75,
-            "function": "markTestIncomplete",
-            "class": "PHPUnit_Framework_Assert",
-            "type": "::"
-        }
-    ],
-    "message": "Incomplete Test: This test has not been implemented yet.",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_InstallTest",
-    "test": "Lengow_InstallTest::testRename_configuration_key"
-}{
-    "event": "test",
-    "suite": "Lengow_InstallTest",
-    "test": "Lengow_InstallTest::testRename_configuration_key",
-    "status": "error",
-    "time": 0.0010678768157959,
-    "trace": [
-        {
-            "file": "\/home\/alexandrerabottin\/Documents\/images-docker\/0-compose-install\/w352-w200\/wordpress\/wp-content\/plugins\/lengow-woocommerce\/tests\/Lengow_InstallTest.php",
-            "line": 87,
-            "function": "markTestIncomplete",
-            "class": "PHPUnit_Framework_Assert",
-            "type": "::"
-        }
-    ],
-    "message": "Incomplete Test: This test has not been implemented yet.",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_InstallTest",
-    "test": "Lengow_InstallTest::testSet_installation_status"
-}{
-    "event": "test",
-    "suite": "Lengow_InstallTest",
-    "test": "Lengow_InstallTest::testSet_installation_status",
-    "status": "error",
-    "time": 0.0010437965393066,
-    "trace": [
-        {
-            "file": "\/home\/alexandrerabottin\/Documents\/images-docker\/0-compose-install\/w352-w200\/wordpress\/wp-content\/plugins\/lengow-woocommerce\/tests\/Lengow_InstallTest.php",
-            "line": 99,
-            "function": "markTestIncomplete",
-            "class": "PHPUnit_Framework_Assert",
-            "type": "::"
-        }
-    ],
-    "message": "Incomplete Test: This test has not been implemented yet.",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_InstallTest",
-    "test": "Lengow_InstallTest::testIs_installation_in_progress"
-}{
-    "event": "test",
-    "suite": "Lengow_InstallTest",
-    "test": "Lengow_InstallTest::testIs_installation_in_progress",
-    "status": "error",
-    "time": 0.00090408325195312,
-    "trace": [
-        {
-            "file": "\/home\/alexandrerabottin\/Documents\/images-docker\/0-compose-install\/w352-w200\/wordpress\/wp-content\/plugins\/lengow-woocommerce\/tests\/Lengow_InstallTest.php",
-            "line": 111,
-            "function": "markTestIncomplete",
-            "class": "PHPUnit_Framework_Assert",
-            "type": "::"
-        }
-    ],
-    "message": "Incomplete Test: This test has not been implemented yet.",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Lengow_MainTest",
-    "tests": 13
-}{
-    "event": "testStart",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testGet_export_url"
-}{
-    "event": "test",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testGet_export_url",
-    "status": "pass",
-    "time": 0.00079989433288574,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testGet_cron_url"
-}{
-    "event": "test",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testGet_cron_url",
-    "status": "pass",
-    "time": 0.00076413154602051,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testCheck_ip"
-}{
-    "event": "test",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testCheck_ip",
-    "status": "pass",
-    "time": 0.0080311298370361,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testIs_new_merchant"
-}{
-    "event": "test",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testIs_new_merchant",
-    "status": "pass",
-    "time": 0.0092730522155762,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testGet_token"
-}{
-    "event": "test",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testGet_token",
-    "status": "pass",
-    "time": 0.0243980884552,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testFind_by_token"
-}{
-    "event": "test",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testFind_by_token",
-    "status": "pass",
-    "time": 0.017093181610107,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testSet_log_message"
-}{
-    "event": "test",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testSet_log_message",
-    "status": "pass",
-    "time": 0.0014259815216064,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testDecode_log_message"
-}{
-    "event": "test",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testDecode_log_message",
-    "status": "pass",
-    "time": 0.0018830299377441,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testUpdate_date_import"
-}{
-    "event": "test",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testUpdate_date_import",
-    "status": "pass",
-    "time": 0.042631149291992,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testGet_last_import"
-}{
-    "event": "test",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testGet_last_import",
-    "status": "pass",
-    "time": 0.08130407333374,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testClean_data"
-}{
-    "event": "test",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testClean_data",
-    "status": "pass",
-    "time": 0.00095105171203613,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testClean_html"
-}{
-    "event": "test",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testClean_html",
-    "status": "pass",
-    "time": 0.00090694427490234,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testReplace_accented_chars"
-}{
-    "event": "test",
-    "suite": "Lengow_MainTest",
-    "test": "Lengow_MainTest::testReplace_accented_chars",
-    "status": "pass",
-    "time": 0.0011188983917236,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Lengow_MarketplaceTest",
-    "tests": 1
-}{
-    "event": "testStart",
-    "suite": "Lengow_MarketplaceTest",
-    "test": "Lengow_MarketplaceTest::testGet_state_lengow"
-}{
-    "event": "test",
-    "suite": "Lengow_MarketplaceTest",
-    "test": "Lengow_MarketplaceTest::testGet_state_lengow",
-    "status": "pass",
-    "time": 0.00064396858215332,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Lengow_OrderTest",
-    "tests": 2
-}{
-    "event": "testStart",
-    "suite": "Lengow_OrderTest",
-    "test": "Lengow_OrderTest::testGet_id_order_from_lengow_orders"
-}{
-    "event": "test",
-    "suite": "Lengow_OrderTest",
-    "test": "Lengow_OrderTest::testGet_id_order_from_lengow_orders",
-    "status": "pass",
-    "time": 0.0015530586242676,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_OrderTest",
-    "test": "Lengow_OrderTest::testGet_id_from_lengow_orders"
-}{
-    "event": "test",
-    "suite": "Lengow_OrderTest",
-    "test": "Lengow_OrderTest::testGet_id_from_lengow_orders",
-    "status": "error",
-    "time": 0.0010349750518799,
-    "trace": [
-        {
-            "file": "\/home\/alexandrerabottin\/Documents\/images-docker\/0-compose-install\/w352-w200\/wordpress\/wp-content\/plugins\/lengow-woocommerce\/tests\/Lengow_OrderTest.php",
-            "line": 46,
-            "function": "markTestIncomplete",
-            "class": "PHPUnit_Framework_Assert",
-            "type": "::"
-        }
-    ],
-    "message": "Incomplete Test: This test has not been implemented yet.",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Lengow_ProductTest",
-    "tests": 10
-}{
-    "event": "testStart",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::testGet_data"
-}{
-    "event": "test",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::testGet_data",
-    "status": "pass",
-    "time": 3.6768479347229,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::test_get_price"
-}{
-    "event": "test",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::test_get_price",
-    "status": "pass",
-    "time": 3.6876749992371,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::test_get_categories"
-}{
-    "event": "test",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::test_get_categories",
-    "status": "pass",
-    "time": 3.974983215332,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::test_get_attribute_data"
-}{
-    "event": "test",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::test_get_attribute_data",
-    "status": "pass",
-    "time": 4.1457347869873,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::test_get_post_meta_data"
-}{
-    "event": "test",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::test_get_post_meta_data",
-    "status": "pass",
-    "time": 4.0843329429626,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::testGet_attributes"
-}{
-    "event": "test",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::testGet_attributes",
-    "status": "pass",
-    "time": 4.7258379459381,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::testGet_post_metas"
-}{
-    "event": "test",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::testGet_post_metas",
-    "status": "pass",
-    "time": 4.5158050060272,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::testSearch_product"
-}{
-    "event": "test",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::testSearch_product",
-    "status": "pass",
-    "time": 4.6523368358612,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::testPublish"
-}{
-    "event": "test",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::testPublish",
-    "status": "pass",
-    "time": 4.630380153656,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::testGet_lengow_products"
-}{
-    "event": "test",
-    "suite": "Lengow_ProductTest",
-    "test": "Lengow_ProductTest::testGet_lengow_products",
-    "status": "pass",
-    "time": 4.7210900783539,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Lengow_SyncTest",
-    "tests": 5
-}{
-    "event": "testStart",
-    "suite": "Lengow_SyncTest",
-    "test": "Lengow_SyncTest::testSync"
-}{
-    "event": "test",
-    "suite": "Lengow_SyncTest",
-    "test": "Lengow_SyncTest::testSync",
-    "status": "pass",
-    "time": 0.073676109313965,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_SyncTest",
-    "test": "Lengow_SyncTest::testCheck_sync_shop"
-}{
-    "event": "test",
-    "suite": "Lengow_SyncTest",
-    "test": "Lengow_SyncTest::testCheck_sync_shop",
-    "status": "pass",
-    "time": 0.09042501449585,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_SyncTest",
-    "test": "Lengow_SyncTest::testSet_cms_option"
-}{
-    "event": "test",
-    "suite": "Lengow_SyncTest",
-    "test": "Lengow_SyncTest::testSet_cms_option",
-    "status": "pass",
-    "time": 0.012737035751343,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_SyncTest",
-    "test": "Lengow_SyncTest::testGet_statistic"
-}{
-    "event": "test",
-    "suite": "Lengow_SyncTest",
-    "test": "Lengow_SyncTest::testGet_statistic",
-    "status": "pass",
-    "time": 0.19033098220825,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_SyncTest",
-    "test": "Lengow_SyncTest::testGet_status_account"
-}{
-    "event": "test",
-    "suite": "Lengow_SyncTest",
-    "test": "Lengow_SyncTest::testGet_status_account",
-    "status": "pass",
-    "time": 0.17240595817566,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "suiteStart",
-    "suite": "Lengow_TranslationTest",
-    "tests": 3
-}{
-    "event": "testStart",
-    "suite": "Lengow_TranslationTest",
-    "test": "Lengow_TranslationTest::testT"
-}{
-    "event": "test",
-    "suite": "Lengow_TranslationTest",
-    "test": "Lengow_TranslationTest::testT",
-    "status": "pass",
-    "time": 0.0012240409851074,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_TranslationTest",
-    "test": "Lengow_TranslationTest::testTranslate_final"
-}{
-    "event": "test",
-    "suite": "Lengow_TranslationTest",
-    "test": "Lengow_TranslationTest::testTranslate_final",
-    "status": "pass",
-    "time": 0.001244068145752,
-    "trace": [],
-    "message": "",
-    "output": ""
-}{
-    "event": "testStart",
-    "suite": "Lengow_TranslationTest",
-    "test": "Lengow_TranslationTest::testLoad_file"
-}{
-    "event": "test",
-    "suite": "Lengow_TranslationTest",
-    "test": "Lengow_TranslationTest::testLoad_file",
-    "status": "pass",
-    "time": 0.0038869380950928,
-    "trace": [],
-    "message": "",
-    "output": ""
+  "event": "suiteStart",
+  "suite": "",
+  "tests": 88
+}{
+  "event": "suiteStart",
+  "suite": "Lengow_CheckTest",
+  "tests": 2
+}{
+  "event": "testStart",
+  "suite": "Lengow_CheckTest",
+  "test": "Lengow_CheckTest::testIs_valid_auth"
+}{
+  "event": "test",
+  "suite": "Lengow_CheckTest",
+  "test": "Lengow_CheckTest::testIs_valid_auth",
+  "status": "pass",
+  "time": 0.23422598838806,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_CheckTest",
+  "test": "Lengow_CheckTest::testGet_admin_content"
+}{
+  "event": "test",
+  "suite": "Lengow_CheckTest",
+  "test": "Lengow_CheckTest::testGet_admin_content",
+  "status": "pass",
+  "time": 0.0011780261993408,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "suiteStart",
+  "suite": "Lengow_ConfigurationTest",
+  "tests": 7
+}{
+  "event": "testStart",
+  "suite": "Lengow_ConfigurationTest",
+  "test": "Lengow_ConfigurationTest::testGet_keys"
+}{
+  "event": "test",
+  "suite": "Lengow_ConfigurationTest",
+  "test": "Lengow_ConfigurationTest::testGet_keys",
+  "status": "pass",
+  "time": 0.0061509609222412,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ConfigurationTest",
+  "test": "Lengow_ConfigurationTest::testGet"
+}{
+  "event": "test",
+  "suite": "Lengow_ConfigurationTest",
+  "test": "Lengow_ConfigurationTest::testGet",
+  "status": "pass",
+  "time": 0.020838975906372,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ConfigurationTest",
+  "test": "Lengow_ConfigurationTest::testAdd_value"
+}{
+  "event": "test",
+  "suite": "Lengow_ConfigurationTest",
+  "test": "Lengow_ConfigurationTest::testAdd_value",
+  "status": "pass",
+  "time": 0.01898193359375,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ConfigurationTest",
+  "test": "Lengow_ConfigurationTest::testUpdate_value"
+}{
+  "event": "test",
+  "suite": "Lengow_ConfigurationTest",
+  "test": "Lengow_ConfigurationTest::testUpdate_value",
+  "status": "pass",
+  "time": 0.032444000244141,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ConfigurationTest",
+  "test": "Lengow_ConfigurationTest::testDelete"
+}{
+  "event": "test",
+  "suite": "Lengow_ConfigurationTest",
+  "test": "Lengow_ConfigurationTest::testDelete",
+  "status": "pass",
+  "time": 0.018008947372437,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ConfigurationTest",
+  "test": "Lengow_ConfigurationTest::testGet_all_values"
+}{
+  "event": "test",
+  "suite": "Lengow_ConfigurationTest",
+  "test": "Lengow_ConfigurationTest::testGet_all_values",
+  "status": "pass",
+  "time": 0.019294023513794,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ConfigurationTest",
+  "test": "Lengow_ConfigurationTest::testCheck_and_log"
+}{
+  "event": "test",
+  "suite": "Lengow_ConfigurationTest",
+  "test": "Lengow_ConfigurationTest::testCheck_and_log",
+  "status": "pass",
+  "time": 0.02866005897522,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "suiteStart",
+  "suite": "Lengow_ConnectorTest",
+  "tests": 6
+}{
+  "event": "testStart",
+  "suite": "Lengow_ConnectorTest",
+  "test": "Lengow_ConnectorTest::testConnect"
+}{
+  "event": "test",
+  "suite": "Lengow_ConnectorTest",
+  "test": "Lengow_ConnectorTest::testConnect",
+  "status": "pass",
+  "time": 0.087878942489624,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ConnectorTest",
+  "test": "Lengow_ConnectorTest::testCall"
+}{
+  "event": "test",
+  "suite": "Lengow_ConnectorTest",
+  "test": "Lengow_ConnectorTest::testCall",
+  "status": "pass",
+  "time": 0.095161914825439,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ConnectorTest",
+  "test": "Lengow_ConnectorTest::testMake_request"
+}{
+  "event": "test",
+  "suite": "Lengow_ConnectorTest",
+  "test": "Lengow_ConnectorTest::testMake_request",
+  "status": "pass",
+  "time": 0.25331091880798,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ConnectorTest",
+  "test": "Lengow_ConnectorTest::testGet_access_id"
+}{
+  "event": "test",
+  "suite": "Lengow_ConnectorTest",
+  "test": "Lengow_ConnectorTest::testGet_access_id",
+  "status": "pass",
+  "time": 0.023374080657959,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ConnectorTest",
+  "test": "Lengow_ConnectorTest::testFormat"
+}{
+  "event": "test",
+  "suite": "Lengow_ConnectorTest",
+  "test": "Lengow_ConnectorTest::testFormat",
+  "status": "pass",
+  "time": 0.0086710453033447,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ConnectorTest",
+  "test": "Lengow_ConnectorTest::testQuery_api"
+}{
+  "event": "test",
+  "suite": "Lengow_ConnectorTest",
+  "test": "Lengow_ConnectorTest::testQuery_api",
+  "status": "pass",
+  "time": 0.19953298568726,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "suiteStart",
+  "suite": "Lengow_ExportTest",
+  "tests": 11
+}{
+  "event": "testStart",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::test_set_legacy_fields"
+}{
+  "event": "test",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::test_set_legacy_fields",
+  "status": "pass",
+  "time": 0.17332601547241,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::testGet_total_product"
+}{
+  "event": "test",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::testGet_total_product",
+  "status": "pass",
+  "time": 8.050124168396,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::test_set_format"
+}{
+  "event": "test",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::test_set_format",
+  "status": "pass",
+  "time": 0.0026750564575195,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::test_set_product_ids"
+}{
+  "event": "test",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::test_set_product_ids",
+  "status": "pass",
+  "time": 0.0017180442810059,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::test_set_product_types"
+}{
+  "event": "test",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::test_set_product_types",
+  "status": "pass",
+  "time": 0.008774995803833,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::test_set_log_output"
+}{
+  "event": "test",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::test_set_log_output",
+  "status": "pass",
+  "time": 0.002673864364624,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::testExec"
+}{
+  "event": "test",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::testExec",
+  "status": "pass",
+  "time": 0.0014281272888184,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::test_export"
+}{
+  "event": "test",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::test_export",
+  "status": "pass",
+  "time": 0.0014009475708008,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::testGet_total_export_product"
+}{
+  "event": "test",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::testGet_total_export_product",
+  "status": "pass",
+  "time": 10.824210882187,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::testGet_export_params"
+}{
+  "event": "test",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::testGet_export_params",
+  "status": "pass",
+  "time": 0.0024011135101318,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::test_get_export_ids"
+}{
+  "event": "test",
+  "suite": "Lengow_ExportTest",
+  "test": "Lengow_ExportTest::test_get_export_ids",
+  "status": "pass",
+  "time": 7.9255020618439,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "suiteStart",
+  "suite": "Lengow_FeedTest",
+  "tests": 10
+}{
+  "event": "testStart",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::test_init_export_file"
+}{
+  "event": "test",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::test_init_export_file",
+  "status": "pass",
+  "time": 0.0025489330291748,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::testWrite"
+}{
+  "event": "test",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::testWrite",
+  "status": "pass",
+  "time": 0.00097203254699707,
+  "trace": [],
+  "message": "",
+  "output": "\"plop\"|\"test\"|\"ici\"\r\n"
+}{
+  "event": "testStart",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::test_get_html_header"
+}{
+  "event": "test",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::test_get_html_header",
+  "status": "pass",
+  "time": 0.0013530254364014,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::test_get_header"
+}{
+  "event": "test",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::test_get_header",
+  "status": "pass",
+  "time": 0.0030889511108398,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::test_get_body"
+}{
+  "event": "test",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::test_get_body",
+  "status": "pass",
+  "time": 0.0048749446868896,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::test_get_footer"
+}{
+  "event": "test",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::test_get_footer",
+  "status": "pass",
+  "time": 0.0011351108551025,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::testEnd"
+}{
+  "event": "test",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::testEnd",
+  "status": "pass",
+  "time": 0.0015230178833008,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::test_format_fields"
+}{
+  "event": "test",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::test_format_fields",
+  "status": "pass",
+  "time": 0.0023238658905029,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::test_indent_yaml"
+}{
+  "event": "test",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::test_indent_yaml",
+  "status": "pass",
+  "time": 0.0010330677032471,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::testGet_url"
+}{
+  "event": "test",
+  "suite": "Lengow_FeedTest",
+  "test": "Lengow_FeedTest::testGet_url",
+  "status": "pass",
+  "time": 0.0010418891906738,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "suiteStart",
+  "suite": "Lengow_FileTest",
+  "tests": 5
+}{
+  "event": "testStart",
+  "suite": "Lengow_FileTest",
+  "test": "Lengow_FileTest::testGet_link"
+}{
+  "event": "test",
+  "suite": "Lengow_FileTest",
+  "test": "Lengow_FileTest::testGet_link",
+  "status": "pass",
+  "time": 0.00099682807922363,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_FileTest",
+  "test": "Lengow_FileTest::testGet_path"
+}{
+  "event": "test",
+  "suite": "Lengow_FileTest",
+  "test": "Lengow_FileTest::testGet_path",
+  "status": "pass",
+  "time": 0.00087499618530273,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_FileTest",
+  "test": "Lengow_FileTest::testGet_folder_path"
+}{
+  "event": "test",
+  "suite": "Lengow_FileTest",
+  "test": "Lengow_FileTest::testGet_folder_path",
+  "status": "pass",
+  "time": 0.00085687637329102,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_FileTest",
+  "test": "Lengow_FileTest::testExists"
+}{
+  "event": "test",
+  "suite": "Lengow_FileTest",
+  "test": "Lengow_FileTest::testExists",
+  "status": "pass",
+  "time": 0.0010719299316406,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_FileTest",
+  "test": "Lengow_FileTest::testGet_files_from_folder"
+}{
+  "event": "test",
+  "suite": "Lengow_FileTest",
+  "test": "Lengow_FileTest::testGet_files_from_folder",
+  "status": "pass",
+  "time": 0.0013768672943115,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "suiteStart",
+  "suite": "Lengow_ImportTest",
+  "tests": 5
+}{
+  "event": "testStart",
+  "suite": "Lengow_ImportTest",
+  "test": "Lengow_ImportTest::test__construct"
+}{
+  "event": "test",
+  "suite": "Lengow_ImportTest",
+  "test": "Lengow_ImportTest::test__construct",
+  "status": "pass",
+  "time": 0.0027341842651367,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ImportTest",
+  "test": "Lengow_ImportTest::testExec"
+}{
+  "event": "test",
+  "suite": "Lengow_ImportTest",
+  "test": "Lengow_ImportTest::testExec",
+  "status": "pass",
+  "time": 0.26857495307922,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ImportTest",
+  "test": "Lengow_ImportTest::test_check_credentials"
+}{
+  "event": "test",
+  "suite": "Lengow_ImportTest",
+  "test": "Lengow_ImportTest::test_check_credentials",
+  "status": "pass",
+  "time": 0.036164999008179,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ImportTest",
+  "test": "Lengow_ImportTest::testIs_in_process"
+}{
+  "event": "test",
+  "suite": "Lengow_ImportTest",
+  "test": "Lengow_ImportTest::testIs_in_process",
+  "status": "pass",
+  "time": 0.033241033554077,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ImportTest",
+  "test": "Lengow_ImportTest::testCheck_state"
+}{
+  "event": "test",
+  "suite": "Lengow_ImportTest",
+  "test": "Lengow_ImportTest::testCheck_state",
+  "status": "pass",
+  "time": 0.0066208839416504,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "suiteStart",
+  "suite": "Lengow_Import_OrderTest",
+  "tests": 2
+}{
+  "event": "testStart",
+  "suite": "Lengow_Import_OrderTest",
+  "test": "Lengow_Import_OrderTest::testImport_order"
+}{
+  "event": "test",
+  "suite": "Lengow_Import_OrderTest",
+  "test": "Lengow_Import_OrderTest::testImport_order",
+  "status": "pass",
+  "time": 0.00066614151000977,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_Import_OrderTest",
+  "test": "Lengow_Import_OrderTest::test_create_lengow_order"
+}{
+  "event": "test",
+  "suite": "Lengow_Import_OrderTest",
+  "test": "Lengow_Import_OrderTest::test_create_lengow_order",
+  "status": "pass",
+  "time": 0.00062894821166992,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "suiteStart",
+  "suite": "Lengow_InstallTest",
+  "tests": 6
+}{
+  "event": "testStart",
+  "suite": "Lengow_InstallTest",
+  "test": "Lengow_InstallTest::testUpdate"
+}{
+  "event": "test",
+  "suite": "Lengow_InstallTest",
+  "test": "Lengow_InstallTest::testUpdate",
+  "status": "error",
+  "time": 0.0041050910949707,
+  "trace": [
+    {
+      "file": "\/home\/alexandrerabottin\/Documents\/images-docker\/0-compose-install\/w352-w200\/wordpress\/wp-content\/plugins\/lengow-woocommerce\/tests\/Lengow_InstallTest.php",
+      "line": 51,
+      "function": "markTestIncomplete",
+      "class": "PHPUnit_Framework_Assert",
+      "type": "::"
+    }
+  ],
+  "message": "Incomplete Test: This test has not been implemented yet.",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_InstallTest",
+  "test": "Lengow_InstallTest::testCheck_field_exists"
+}{
+  "event": "test",
+  "suite": "Lengow_InstallTest",
+  "test": "Lengow_InstallTest::testCheck_field_exists",
+  "status": "error",
+  "time": 0.00098609924316406,
+  "trace": [
+    {
+      "file": "\/home\/alexandrerabottin\/Documents\/images-docker\/0-compose-install\/w352-w200\/wordpress\/wp-content\/plugins\/lengow-woocommerce\/tests\/Lengow_InstallTest.php",
+      "line": 63,
+      "function": "markTestIncomplete",
+      "class": "PHPUnit_Framework_Assert",
+      "type": "::"
+    }
+  ],
+  "message": "Incomplete Test: This test has not been implemented yet.",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_InstallTest",
+  "test": "Lengow_InstallTest::testCheck_field_and_drop"
+}{
+  "event": "test",
+  "suite": "Lengow_InstallTest",
+  "test": "Lengow_InstallTest::testCheck_field_and_drop",
+  "status": "error",
+  "time": 0.00094079971313477,
+  "trace": [
+    {
+      "file": "\/home\/alexandrerabottin\/Documents\/images-docker\/0-compose-install\/w352-w200\/wordpress\/wp-content\/plugins\/lengow-woocommerce\/tests\/Lengow_InstallTest.php",
+      "line": 75,
+      "function": "markTestIncomplete",
+      "class": "PHPUnit_Framework_Assert",
+      "type": "::"
+    }
+  ],
+  "message": "Incomplete Test: This test has not been implemented yet.",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_InstallTest",
+  "test": "Lengow_InstallTest::testRename_configuration_key"
+}{
+  "event": "test",
+  "suite": "Lengow_InstallTest",
+  "test": "Lengow_InstallTest::testRename_configuration_key",
+  "status": "error",
+  "time": 0.0010678768157959,
+  "trace": [
+    {
+      "file": "\/home\/alexandrerabottin\/Documents\/images-docker\/0-compose-install\/w352-w200\/wordpress\/wp-content\/plugins\/lengow-woocommerce\/tests\/Lengow_InstallTest.php",
+      "line": 87,
+      "function": "markTestIncomplete",
+      "class": "PHPUnit_Framework_Assert",
+      "type": "::"
+    }
+  ],
+  "message": "Incomplete Test: This test has not been implemented yet.",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_InstallTest",
+  "test": "Lengow_InstallTest::testSet_installation_status"
+}{
+  "event": "test",
+  "suite": "Lengow_InstallTest",
+  "test": "Lengow_InstallTest::testSet_installation_status",
+  "status": "error",
+  "time": 0.0010437965393066,
+  "trace": [
+    {
+      "file": "\/home\/alexandrerabottin\/Documents\/images-docker\/0-compose-install\/w352-w200\/wordpress\/wp-content\/plugins\/lengow-woocommerce\/tests\/Lengow_InstallTest.php",
+      "line": 99,
+      "function": "markTestIncomplete",
+      "class": "PHPUnit_Framework_Assert",
+      "type": "::"
+    }
+  ],
+  "message": "Incomplete Test: This test has not been implemented yet.",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_InstallTest",
+  "test": "Lengow_InstallTest::testIs_installation_in_progress"
+}{
+  "event": "test",
+  "suite": "Lengow_InstallTest",
+  "test": "Lengow_InstallTest::testIs_installation_in_progress",
+  "status": "error",
+  "time": 0.00090408325195312,
+  "trace": [
+    {
+      "file": "\/home\/alexandrerabottin\/Documents\/images-docker\/0-compose-install\/w352-w200\/wordpress\/wp-content\/plugins\/lengow-woocommerce\/tests\/Lengow_InstallTest.php",
+      "line": 111,
+      "function": "markTestIncomplete",
+      "class": "PHPUnit_Framework_Assert",
+      "type": "::"
+    }
+  ],
+  "message": "Incomplete Test: This test has not been implemented yet.",
+  "output": ""
+}{
+  "event": "suiteStart",
+  "suite": "Lengow_MainTest",
+  "tests": 13
+}{
+  "event": "testStart",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testGet_export_url"
+}{
+  "event": "test",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testGet_export_url",
+  "status": "pass",
+  "time": 0.00079989433288574,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testGet_cron_url"
+}{
+  "event": "test",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testGet_cron_url",
+  "status": "pass",
+  "time": 0.00076413154602051,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testCheck_ip"
+}{
+  "event": "test",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testCheck_ip",
+  "status": "pass",
+  "time": 0.0080311298370361,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testIs_new_merchant"
+}{
+  "event": "test",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testIs_new_merchant",
+  "status": "pass",
+  "time": 0.0092730522155762,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testGet_token"
+}{
+  "event": "test",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testGet_token",
+  "status": "pass",
+  "time": 0.0243980884552,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testFind_by_token"
+}{
+  "event": "test",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testFind_by_token",
+  "status": "pass",
+  "time": 0.017093181610107,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testSet_log_message"
+}{
+  "event": "test",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testSet_log_message",
+  "status": "pass",
+  "time": 0.0014259815216064,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testDecode_log_message"
+}{
+  "event": "test",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testDecode_log_message",
+  "status": "pass",
+  "time": 0.0018830299377441,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testUpdate_date_import"
+}{
+  "event": "test",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testUpdate_date_import",
+  "status": "pass",
+  "time": 0.042631149291992,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testGet_last_import"
+}{
+  "event": "test",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testGet_last_import",
+  "status": "pass",
+  "time": 0.08130407333374,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testClean_data"
+}{
+  "event": "test",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testClean_data",
+  "status": "pass",
+  "time": 0.00095105171203613,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testClean_html"
+}{
+  "event": "test",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testClean_html",
+  "status": "pass",
+  "time": 0.00090694427490234,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testReplace_accented_chars"
+}{
+  "event": "test",
+  "suite": "Lengow_MainTest",
+  "test": "Lengow_MainTest::testReplace_accented_chars",
+  "status": "pass",
+  "time": 0.0011188983917236,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "suiteStart",
+  "suite": "Lengow_MarketplaceTest",
+  "tests": 1
+}{
+  "event": "testStart",
+  "suite": "Lengow_MarketplaceTest",
+  "test": "Lengow_MarketplaceTest::testGet_state_lengow"
+}{
+  "event": "test",
+  "suite": "Lengow_MarketplaceTest",
+  "test": "Lengow_MarketplaceTest::testGet_state_lengow",
+  "status": "pass",
+  "time": 0.00064396858215332,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "suiteStart",
+  "suite": "Lengow_OrderTest",
+  "tests": 2
+}{
+  "event": "testStart",
+  "suite": "Lengow_OrderTest",
+  "test": "Lengow_OrderTest::testGet_id_order_from_lengow_orders"
+}{
+  "event": "test",
+  "suite": "Lengow_OrderTest",
+  "test": "Lengow_OrderTest::testGet_id_order_from_lengow_orders",
+  "status": "pass",
+  "time": 0.0015530586242676,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_OrderTest",
+  "test": "Lengow_OrderTest::testGet_id_from_lengow_orders"
+}{
+  "event": "test",
+  "suite": "Lengow_OrderTest",
+  "test": "Lengow_OrderTest::testGet_id_from_lengow_orders",
+  "status": "error",
+  "time": 0.0010349750518799,
+  "trace": [
+    {
+      "file": "\/home\/alexandrerabottin\/Documents\/images-docker\/0-compose-install\/w352-w200\/wordpress\/wp-content\/plugins\/lengow-woocommerce\/tests\/Lengow_OrderTest.php",
+      "line": 46,
+      "function": "markTestIncomplete",
+      "class": "PHPUnit_Framework_Assert",
+      "type": "::"
+    }
+  ],
+  "message": "Incomplete Test: This test has not been implemented yet.",
+  "output": ""
+}{
+  "event": "suiteStart",
+  "suite": "Lengow_ProductTest",
+  "tests": 10
+}{
+  "event": "testStart",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::testGet_data"
+}{
+  "event": "test",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::testGet_data",
+  "status": "pass",
+  "time": 3.6768479347229,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::test_get_price"
+}{
+  "event": "test",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::test_get_price",
+  "status": "pass",
+  "time": 3.6876749992371,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::test_get_categories"
+}{
+  "event": "test",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::test_get_categories",
+  "status": "pass",
+  "time": 3.974983215332,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::test_get_attribute_data"
+}{
+  "event": "test",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::test_get_attribute_data",
+  "status": "pass",
+  "time": 4.1457347869873,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::test_get_post_meta_data"
+}{
+  "event": "test",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::test_get_post_meta_data",
+  "status": "pass",
+  "time": 4.0843329429626,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::testGet_attributes"
+}{
+  "event": "test",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::testGet_attributes",
+  "status": "pass",
+  "time": 4.7258379459381,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::testGet_post_metas"
+}{
+  "event": "test",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::testGet_post_metas",
+  "status": "pass",
+  "time": 4.5158050060272,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::testSearch_product"
+}{
+  "event": "test",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::testSearch_product",
+  "status": "pass",
+  "time": 4.6523368358612,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::testPublish"
+}{
+  "event": "test",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::testPublish",
+  "status": "pass",
+  "time": 4.630380153656,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::testGet_lengow_products"
+}{
+  "event": "test",
+  "suite": "Lengow_ProductTest",
+  "test": "Lengow_ProductTest::testGet_lengow_products",
+  "status": "pass",
+  "time": 4.7210900783539,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "suiteStart",
+  "suite": "Lengow_SyncTest",
+  "tests": 5
+}{
+  "event": "testStart",
+  "suite": "Lengow_SyncTest",
+  "test": "Lengow_SyncTest::testSync"
+}{
+  "event": "test",
+  "suite": "Lengow_SyncTest",
+  "test": "Lengow_SyncTest::testSync",
+  "status": "pass",
+  "time": 0.073676109313965,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_SyncTest",
+  "test": "Lengow_SyncTest::testCheck_sync_shop"
+}{
+  "event": "test",
+  "suite": "Lengow_SyncTest",
+  "test": "Lengow_SyncTest::testCheck_sync_shop",
+  "status": "pass",
+  "time": 0.09042501449585,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_SyncTest",
+  "test": "Lengow_SyncTest::testSet_cms_option"
+}{
+  "event": "test",
+  "suite": "Lengow_SyncTest",
+  "test": "Lengow_SyncTest::testSet_cms_option",
+  "status": "pass",
+  "time": 0.012737035751343,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_SyncTest",
+  "test": "Lengow_SyncTest::testGet_statistic"
+}{
+  "event": "test",
+  "suite": "Lengow_SyncTest",
+  "test": "Lengow_SyncTest::testGet_statistic",
+  "status": "pass",
+  "time": 0.19033098220825,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_SyncTest",
+  "test": "Lengow_SyncTest::testGet_status_account"
+}{
+  "event": "test",
+  "suite": "Lengow_SyncTest",
+  "test": "Lengow_SyncTest::testGet_status_account",
+  "status": "pass",
+  "time": 0.17240595817566,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "suiteStart",
+  "suite": "Lengow_TranslationTest",
+  "tests": 3
+}{
+  "event": "testStart",
+  "suite": "Lengow_TranslationTest",
+  "test": "Lengow_TranslationTest::testT"
+}{
+  "event": "test",
+  "suite": "Lengow_TranslationTest",
+  "test": "Lengow_TranslationTest::testT",
+  "status": "pass",
+  "time": 0.0012240409851074,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_TranslationTest",
+  "test": "Lengow_TranslationTest::testTranslate_final"
+}{
+  "event": "test",
+  "suite": "Lengow_TranslationTest",
+  "test": "Lengow_TranslationTest::testTranslate_final",
+  "status": "pass",
+  "time": 0.001244068145752,
+  "trace": [],
+  "message": "",
+  "output": ""
+}{
+  "event": "testStart",
+  "suite": "Lengow_TranslationTest",
+  "test": "Lengow_TranslationTest::testLoad_file"
+}{
+  "event": "test",
+  "suite": "Lengow_TranslationTest",
+  "test": "Lengow_TranslationTest::testLoad_file",
+  "status": "pass",
+  "time": 0.0038869380950928,
+  "trace": [],
+  "message": "",
+  "output": ""
 }

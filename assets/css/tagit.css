@@ -16,25 +16,31 @@ ul.tagit {
     padding: 0 15px;
     transition: all 100ms ease;
 }
+
 ul.tagit:hover {
     border-color: #c0c0c0;
 }
+
 ul.tagit:focus {
     background-color: #fcfcfc;
     border-color: #00b0f0;
     outline: none;
 }
+
 ul.tagit.state.error {
     border-color: #e55a4d;
 }
+
 ul.tagit.state.ok {
     border-color: #7bc27a;
 }
+
 ul.tagit li {
     display: block;
     float: left;
     height: 40px;
 }
+
 ul.tagit li.tagit-choice {
     position: relative;
     line-height: inherit;
@@ -48,22 +54,27 @@ ul.tagit li.tagit-choice {
     color: #61687c;
     font-size: 15px;
 }
+
 ul.tagit li.tagit-choice a.tagit-label {
     cursor: pointer;
     text-decoration: none;
 }
+
 ul.tagit li.tagit-choice.highlight {
     border-color: #e6594d;
 }
+
 ul.tagit li.tagit-choice.state.error {
     border-color: #e6594d;
     border-image: none;
     border-style: none none dotted;
     border-width: medium medium 2px;
 }
+
 ul.tagit li.tagit-choice {
     margin-right: 5px;
 }
+
 ul.tagit li.tagit-choice .tagit-close {
     cursor: pointer;
     position: absolute;
@@ -75,16 +86,20 @@ ul.tagit li.tagit-choice .tagit-close {
     border-radius: 3px;
     background: url(../images/components/input/tag-close.png) center center no-repeat;
 }
+
 ul.tagit li.tagit-choice .tagit-close .text-icon {
     display: none;
 }
+
 ul.tagit li.tagit-choice .tagit-close:hover {
     background-color: #f5f5f5;
 }
+
 ul.tagit li.tagit-choice input {
     display: block;
     float: left;
 }
+
 ul.tagit input[type="text"] {
     box-shadow: none;
     border: none;
@@ -96,15 +111,19 @@ ul.tagit input[type="text"] {
     height: 44px;
     line-height: calc(44px - 2px);
 }
+
 ul.tagit li.tagit-new {
     display: block;
 }
+
 ul.tagit li.tagit-new input.ui-widget-content {
     width: 100%;
 }
+
 ul.tagit div.ui-effects-wrapper {
     display: inline-block;
 }
+
 ul.tagit:after {
     clear: both;
     content: " ";
@@ -123,6 +142,7 @@ input.tagit-hidden-field {
     margin: 0;
     padding: 3px 10px;
 }
+
 .tagit-autocomplete .ui-menu-item.ui-state-focus {
     margin: 0;
     padding: 3px 10px;
@@ -133,6 +153,7 @@ input.tagit-hidden-field {
 .tagit-group {
     position: relative;
 }
+
 .tagit-group .add-tag {
     position: absolute;
     top: 8px;
@@ -143,34 +164,42 @@ input.tagit-hidden-field {
     border-radius: 3px;
     background: url(../images/components/input/tag-add.png) center center no-repeat white;
 }
+
 .tagit-group .add-tag:hover, .tagit-group .add-tag:focus {
     border-color: #c0c0c0;
 }
+
 .tagit-group select {
     position: absolute;
     top: 43px;
     left: 0;
     z-index: 1;
 }
+
 .tagit-group ul.tagit {
     padding-bottom: 7px;
     padding-left: 42px;
 }
+
 .tagit-group ul.tagit li.tagit-new {
     display: none;
     pointer-events: none;
 }
+
 .tagit-group input {
     display: none;
 }
+
 .tagit-group.writable li.tagit-new input {
     display: inline;
 }
+
 .tagit-group.writable ul.tagit li.tagit-new {
     display: block;
     height: 36px;
     pointer-events: auto;
 }
+
 .tagit-group .dropdown-menu {
     left: 8px;
     top: 44px;

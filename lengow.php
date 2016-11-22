@@ -27,7 +27,8 @@ global $wp_version;
  * Check if WooCommerce is active
  **/
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) )
-    || isset($_SERVER['WP_TEST_UNIT']) ) {
+     || isset( $_SERVER['WP_TEST_UNIT'] )
+) {
 
 	/**
 	 * Main Lengow Class.
@@ -104,7 +105,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 * Include all dependencies
 		 */
 		public function includes() {
-			if ( isset($_SERVER['WP_TEST_UNIT']) || is_admin() ) {
+			if ( isset( $_SERVER['WP_TEST_UNIT'] ) || is_admin() ) {
 				include_once( 'includes/class-lengow-check.php' );
 				include_once( 'includes/class-lengow-configuration.php' );
 				include_once( 'includes/class-lengow-connector.php' );
@@ -136,7 +137,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 * Init Lengow when WordPress Initialises
 		 */
 		public function init() {
-			if ( isset($_SERVER['WP_TEST_UNIT']) || is_admin() ) {
+			if ( isset( $_SERVER['WP_TEST_UNIT'] ) || is_admin() ) {
 				// init ajax actions
 				add_action( 'wp_ajax_post_process', array( 'Lengow_Admin_Products', 'post_process' ) );
 				add_action( 'admin_action_dashboard_get_process', array( 'Lengow_Admin_Dashboard', 'get_process' ) );

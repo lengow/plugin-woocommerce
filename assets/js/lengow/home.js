@@ -69,7 +69,7 @@
                         type: "POST",
                         data: {do_action: 'sync', data: event.data.parameters, action: 'post_process_dashboard'},
                         dataType: 'script',
-                        success: function() {
+                        success: function () {
                             location.reload();
                         }
                     });
