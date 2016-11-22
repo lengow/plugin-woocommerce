@@ -20,36 +20,6 @@
 
 (function ($) {
     $(document).ready(function () {
-        // Reimport Order
-        $('#reimport-order').click(function (e) {
-            var url = $(this).data('url');
-            var orderid = $(this).data('orderid');
-            var lengoworderid = $(this).data('lengoworderid');
-            var feed_id = $(this).data('feedid');
-            var version = $(this).data('version');
-
-            var datas = {};
-            datas['url'] = url;
-            datas['orderid'] = orderid;
-            datas['lengoworderid'] = lengoworderid;
-            datas['feed_id'] = feed_id;
-            if (version < '1.5')
-                datas['action'] = 'reimport_order';
-
-            // Show loading div
-            $('#ajax_running').fadeIn(300);
-            $.getJSON(url, datas, function (data) {
-                $('#ajax_running').fadeOut(0);
-                if (data.status == 'success') {
-                    window.location.replace(data.new_order_url);
-                } else {
-                    alert(data.msg);
-                }
-
-            });
-            return false;
-        });
-
         /* SWITCH TOGGLE */
         jQuery('body').on('change', '.lgw-switch', function(event) {
             var check = $(this);
@@ -57,22 +27,16 @@
             check.toggleClass('checked');
         });
 
-        //$('.lengow_select').select2({ minimumResultsForSearch: 16});
-
         init_tooltip();
-        //var clipboard = new Clipboard('.lengow_copy');
 
-        var preprod_exist=$('#lgw-preprod').length;
-        if (preprod_exist>0){
+        var preprod_exist = $('#lgw-preprod').length;
+        if (preprod_exist > 0){
             $("#lengow_feed_wrapper").addClass('activePreprod');
             $("#lengow_order_wrapper").addClass('activePreprod');
             $("#lengow_form_order_setting").addClass('activePreprod');
             $("#lengow_mainsettings_wrapper").addClass('activePreprod');
             $(".lengow_help_wrapper").addClass('activePreprod');
         }
-
-
-
     });
 })(jQuery);
 

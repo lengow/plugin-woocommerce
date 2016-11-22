@@ -7,7 +7,7 @@
 /assets/images/picto-stats.png|c5c5b92b4b09579b02b856b897ded428
 /assets/images/lengow-white-big.png|6e6178f2db21104a157aebb27f9a5ca2
 /assets/images/home-settings.png|4f7751e943137d3c10b71da358f7b1d7
-/assets/css/lengow-components.css|5f1dbdc098bbcb0e5c8834035bf20955
+/assets/css/lengow-components.css|878c6d1e435fa755b4420094b7c3108e
 /assets/css/font-awesome.css|bf4b58c946c9234e4a6b9f7a70d38006
 /assets/css/toolbox.css|1d6f866fca6e0b0e33d569844c1cff26
 /assets/css/bootstrap-3.3.6.css|2f624089c65f12185e79925bc5a7fc42
@@ -24,9 +24,9 @@
 /assets/js/bootstrap.min.js|bed31fb959612a0a77d8e87b9d0b3683
 /assets/js/select2.js|fc6ada6e297531c8e4e3e3f3edc79207
 /assets/js/bootstrap_v3.min.js|5869c96cc8f19086aee625d670d741f9
-/assets/js/lengow/home.js|8d3a1beb944424023875eb8837d0303c
+/assets/js/lengow/home.js|7cdeca70b0e48112f1ecaf02f66a0ecd
 /assets/js/lengow/products.js|1149f7853fa5e8a41c333e7fd36ccddd
-/assets/js/lengow/admin.js|ddc2f2e30530465185a66a552b54a40b
+/assets/js/lengow/admin.js|ece687253e517710d4359f7c92e65832
 /assets/js/lengow/orders.js|bffcc8fabddf9d1030f261848c295886
 /assets/js/lengow/main_setting.js|879e4d0428d362704d639c878589c5f2
 /includes/class-lengow-order.php|8b4244c626ced0c242f70673fbcf1450
@@ -41,7 +41,7 @@
 /includes/class-lengow-connector.php|79bf8abe4de6d9e9aaf629e1c5112e68
 /includes/class-lengow-sync.php|f1e7ed951b6fdb4976b07f98af8954fd
 /includes/class-lengow-main.php|edf0401a79c7f2fcd70d0461a40b08e6
-/includes/admin/class-lengow-admin-products.php|d14696dd65d6f54fbd188b73917b69bc
+/includes/admin/class-lengow-admin-products.php|61b1588790bddbfea39ea2f6e54086fd
 /includes/admin/class-lengow-admin-settings.php|345bd79254b9f9e997d47d1501113434
 /includes/admin/class-lengow-admin-legals.php|28d921d48871b265227e18d889174a77
 /includes/admin/class-lengow-admin-dashboard.php|c6049c370afefa09620ccbd1ea0b0ff5

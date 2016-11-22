@@ -68,7 +68,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 						$data['check_shop']     = false;
 						$data['tooltip']        = $locale->t( 'product.screen.lengow_shop_no_sync' );
 						$data['original_title'] = $locale->t( 'product.screen.sync_your_shop' );
-						$data['header_title']   = '<a href="http://my.lengow.local/company/store" target="_blank">
+						$data['header_title']   = '<a href="' . admin_url( 'admin.php?page=lengow' ) . '&isSync=true">
                             <span>' . $locale->t( 'product.screen.sync_your_shop' ) . '</span></a>';
 					}
 					echo json_encode( $data );

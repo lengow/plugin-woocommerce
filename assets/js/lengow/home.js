@@ -21,10 +21,10 @@
 
 (function ($) {
     $(document).ready(function () {
-        var sync_link = $('#lengow_sync_link').val();
-        var sync_iframe = document.getElementById('lengow_iframe');
-        if (sync_iframe) {
-            sync_iframe.onload = function () {
+        var syncLink = $('#lengow_sync_link').val();
+        var syncIframe = document.getElementById('lengow_iframe');
+        if (syncIframe) {
+            syncIframe.onload = function () {
                 $.ajax({
                     url: ajaxurl,
                     type: "POST",
@@ -36,16 +36,16 @@
                     }
                 });
             };
-            if (sync_link) {
-                // sync_iframe.src = 'http://cms.lengow.io/sync/';
-                // sync_iframe.src = 'http://cms.lengow.net/sync/';
-                sync_iframe.src = 'http://cms.lengow.rec/sync/';
-                // sync_iframe.src = 'http://cms.lengow.dev/sync/';
+            if (syncLink) {
+                // syncIframe.src = 'http://cms.lengow.io/sync/';
+                // syncIframe.src = 'http://cms.lengow.net/sync/';
+                syncIframe.src = 'http://cms.lengow.rec/sync/';
+                // syncIframe.src = 'http://cms.lengow.dev/sync/';
             } else {
-                // sync_iframe.src = 'http://cms.lengow.io/';
-                // sync_iframe.src = 'http://cms.lengow.net/';
-                sync_iframe.src = 'http://cms.lengow.rec/';
-                // sync_iframe.src = 'http://cms.lengow.dev/';
+                // syncIframe.src = 'http://cms.lengow.io/';
+                // syncIframe.src = 'http://cms.lengow.net/';
+                syncIframe.src = 'http://cms.lengow.rec/';
+                // syncIframe.src = 'http://cms.lengow.dev/';
             }
             $('#frame_loader').hide();
             $('#lengow_iframe').show();
@@ -56,6 +56,10 @@
         function receiveMessage(event) {
             switch (event.data.function) {
                 case 'sync':
+                    // Store lengow information into Wordpress :
+                    // account_id
+                    // access_token
+                    // secret_token
                     $.ajax({
                         url: ajaxurl,
                         type: "POST",
@@ -64,6 +68,10 @@
                     });
                     break;
                 case 'sync_and_reload':
+                    // Store lengow information into Wordpress and reload it
+                    // account_id
+                    // access_token
+                    // secret_token
                     $.ajax({
                         url: ajaxurl,
                         type: "POST",
@@ -75,7 +83,13 @@
                     });
                     break;
                 case 'reload':
+                    // Reload the parent page (after sync is ok)
                     location.reload();
+                    break;
+                case 'cancel':
+                    // Reload Dashboard page
+                    var hrefCancel = location.href.replace('&isSync=true', '');
+                    window.location.replace(hrefCancel);
                     break;
             }
         }
