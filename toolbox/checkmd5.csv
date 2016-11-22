@@ -38,7 +38,7 @@
 /includes/class-lengow-marketplace.php|1394ac6a9e04780f8b02830bff3fd207
 /includes/class-lengow-import.php|a83bcb0f87ac229aaeb5e73eab16b522
 /includes/class-lengow-translation.php|d72f085e0a8cc909249938da1b67edd4
-/includes/class-lengow-connector.php|79bf8abe4de6d9e9aaf629e1c5112e68
+/includes/class-lengow-connector.php|82fe9434fc4fe4d7937415660a042a0b
 /includes/class-lengow-sync.php|f1e7ed951b6fdb4976b07f98af8954fd
 /includes/class-lengow-main.php|edf0401a79c7f2fcd70d0461a40b08e6
 /includes/admin/class-lengow-admin-products.php|61b1588790bddbfea39ea2f6e54086fd
@@ -72,5 +72,5 @@
 /toolbox/views/footer.php|4d214dd44eaca17a5b8c100a0cee7ebc
 /toolbox/index.php|9ceb84820f4192f69ff1827090fe6538
 /upgrade/update_2.0.0.php|11506b4fae0a658e9bcff367269ac263
-/webservice/cron.php|bfc8847eb527f6c69c0545eeaedc51a4
+/webservice/cron.php|c4ebd81a6ad8c45cde9cca7dd604e944
 /webservice/export.php|9cd80546c68c888484490882f056501c

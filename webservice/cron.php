@@ -74,7 +74,7 @@ if ( ! Lengow_Main::check_ip() ) {
 	wp_die( 'Unauthorized access for IP: ' . $_SERVER['REMOTE_ADDR'], '', array( 'response' => 403 ) );
 }
 
-if (isset( $_GET['get_sync'] ) && (bool) $_GET['get_sync'] ) {
+if (isset( $_GET['get_sync'] ) && $_GET['get_sync'] == 1) {
 	echo json_encode( Lengow_Sync::get_sync_data() );
 } else {
 	// get sync action if exists.
