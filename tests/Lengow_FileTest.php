@@ -41,7 +41,7 @@ class Lengow_FileTest extends PHPUnit_Framework_TestCase
     public function testGet_path()
     {
         $file = new Lengow_File('export', 'flux.csv');
-        $this->assertContains('wp-content/plugins/lengow-woocommerce/export/flux.csv', $file->get_path());
+        $this->assertContains('/lengow-woocommerce/export/flux.csv', $file->get_path());
     }
 
     /**
@@ -50,7 +50,7 @@ class Lengow_FileTest extends PHPUnit_Framework_TestCase
     public function testGet_folder_path()
     {
         $file = new Lengow_File('export', 'flux.csv');
-        $this->assertContains('wp-content/plugins/lengow-woocommerce/export', $file->get_folder_path());
+        $this->assertContains('/lengow-woocommerce/export', $file->get_folder_path());
     }
 
     /**

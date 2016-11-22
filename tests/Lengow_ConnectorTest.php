@@ -65,14 +65,14 @@
         {
             $connector = new Lengow_Connector('lengow_access_token', 'lengow_secret_token');
             $fixture = New Fixture();
-            $result = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2 Final//EN\">\n<title>405 Method Not Allowed</title>\n" .
-                "<h1>Method Not Allowed</h1>\n<p>The method is not allowed for the requested URL.</p>\n";
-            $this->assertEquals($result, $fixture->invokeMethod($connector, 'make_request',
+            //$result = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2 Final//EN\">\n<title>405 Method Not Allowed</title>\n" .
+            //    "<h1>Method Not Allowed</h1>\n<p>The method is not allowed for the requested URL.</p>\n";
+            $this->assertContains("405", $fixture->invokeMethod($connector, 'make_request',
                 array("plop", "/v3.0/cms", array('foo' => 'foo', 'bar' => 'bar'), "token")));
-            $this->assertEquals("{\"error\": {\"code\": 403, \"message\": \"Forbidden\"}}",
+            $this->assertContains("403",
                 $fixture->invokeMethod($connector, 'make_request',
                     array("GET", "/v3.0/cms", array('foo' => 'foo', 'bar' => 'bar'), "token")));
-            $this->assertEquals("{\"error\": {\"code\": 403, \"message\": \"Forbidden\"}}",
+            $this->assertContains("403",
                 $fixture->invokeMethod($connector, 'make_request',
                     array("PUT", "/v3.0/cms", array('foo' => 'foo', 'bar' => 'bar'), "token")));
             // Impossible de tester l'erreur timeout car il faudrait mocker curl_errno() et curl_exec() pour

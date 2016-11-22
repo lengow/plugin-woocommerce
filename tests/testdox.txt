@@ -1,0 +1,118 @@
+Lengow_Check
+ [x] Is valid auth
+ [x] Get admin content
+
+Lengow_Configuration
+ [x] Get keys
+ [x] Get
+ [x] Add value
+ [x] Update value
+ [x] Delete
+ [x] Get all values
+ [x] Check and log
+
+Lengow_Connector
+ [x] Connect
+ [x] Call
+ [x] Make request
+ [x] Get access id
+ [x] Format
+ [x] Query api
+
+Lengow_Export
+ [x] set legacy fields
+ [x] Get total product
+ [x] set format
+ [x] set product ids
+ [x] set product types
+ [x] set log output
+ [x] Exec
+ [x] export
+ [x] Get total export product
+ [x] Get export params
+ [x] get export ids
+
+Lengow_Feed
+ [x] init export file
+ [x] Write
+ [x] get html header
+ [x] get header
+ [x] get body
+ [x] get footer
+ [x] End
+ [x] format fields
+ [x] indent yaml
+ [x] Get url
+
+Lengow_File
+ [x] Get link
+ [x] Get path
+ [x] Get folder path
+ [x] Exists
+ [x] Get files from folder
+
+Lengow_Import
+ [x] construct
+ [x] Exec
+ [x] check credentials
+ [x] Is in process
+ [x] Check state
+
+Lengow_Import_Order
+ [x] Import order
+ [x] create lengow order
+
+Lengow_Install
+ [ ] Update
+ [ ] Check field exists
+ [ ] Check field and drop
+ [ ] Rename configuration key
+ [ ] Set installation status
+ [ ] Is installation in progress
+
+Lengow_Main
+ [x] Get export url
+ [x] Get cron url
+ [x] Check ip
+ [x] Is new merchant
+ [x] Get token
+ [x] Find by token
+ [x] Set log message
+ [x] Decode log message
+ [x] Update date import
+ [x] Get last import
+ [x] Clean data
+ [x] Clean html
+ [x] Replace accented chars
+
+Lengow_Marketplace
+ [x] Get state lengow
+
+Lengow_Order
+ [x] Get id order from lengow orders
+ [ ] Get id from lengow orders
+
+Lengow_Product
+ [x] Get data
+ [x] get price
+ [x] get categories
+ [x] get attribute data
+ [x] get post meta data
+ [x] Get attributes
+ [x] Get post metas
+ [x] Search product
+ [x] Publish
+ [x] Get lengow products
+
+Lengow_Sync
+ [x] Sync
+ [x] Check sync shop
+ [x] Set cms option
+ [x] Get statistic
+ [x] Get status account
+
+Lengow_Translation
+ [x] T
+ [x] Translate final
+ [x] Load file
+

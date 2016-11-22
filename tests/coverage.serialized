@@ -1,0 +1,9414 @@
+<?php
+$coverage = new SebastianBergmann\CodeCoverage\CodeCoverage;
+$coverage->setData(array (
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-order.php' => 
+  array (
+    36 => 
+    array (
+      0 => 'Lengow_OrderTest::testGet_id_order_from_lengow_orders',
+    ),
+    39 => 
+    array (
+      0 => 'Lengow_OrderTest::testGet_id_order_from_lengow_orders',
+    ),
+    43 => 
+    array (
+      0 => 'Lengow_OrderTest::testGet_id_order_from_lengow_orders',
+    ),
+    46 => 
+    array (
+      0 => 'Lengow_OrderTest::testGet_id_order_from_lengow_orders',
+    ),
+    48 => 
+    array (
+      0 => 'Lengow_OrderTest::testGet_id_order_from_lengow_orders',
+    ),
+    49 => 
+    array (
+      0 => 'Lengow_OrderTest::testGet_id_order_from_lengow_orders',
+    ),
+    50 => 
+    array (
+      0 => 'Lengow_OrderTest::testGet_id_order_from_lengow_orders',
+    ),
+    52 => 
+    array (
+      0 => 'Lengow_OrderTest::testGet_id_order_from_lengow_orders',
+    ),
+    53 => 
+    array (
+      0 => 'Lengow_OrderTest::testGet_id_order_from_lengow_orders',
+    ),
+    54 => NULL,
+    55 => 
+    array (
+    ),
+    56 => 
+    array (
+    ),
+    57 => 
+    array (
+    ),
+    58 => 
+    array (
+    ),
+    59 => 
+    array (
+    ),
+    60 => NULL,
+    61 => 
+    array (
+    ),
+    63 => 
+    array (
+    ),
+    64 => NULL,
+    75 => 
+    array (
+    ),
+    78 => 
+    array (
+    ),
+    81 => 
+    array (
+    ),
+    83 => 
+    array (
+    ),
+    84 => 
+    array (
+    ),
+    85 => 
+    array (
+    ),
+    87 => 
+    array (
+    ),
+    88 => 
+    array (
+    ),
+    89 => NULL,
+    91 => 
+    array (
+    ),
+    92 => NULL,
+  ),
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-main.php' => 
+  array (
+    92 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_export_url',
+    ),
+    94 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_export_url',
+    ),
+    95 => NULL,
+    103 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_cron_url',
+    ),
+    105 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_cron_url',
+    ),
+    106 => NULL,
+    114 => 
+    array (
+      0 => 'Lengow_MainTest::testCheck_ip',
+    ),
+    115 => 
+    array (
+      0 => 'Lengow_MainTest::testCheck_ip',
+    ),
+    116 => 
+    array (
+      0 => 'Lengow_MainTest::testCheck_ip',
+    ),
+    117 => 
+    array (
+      0 => 'Lengow_MainTest::testCheck_ip',
+    ),
+    118 => 
+    array (
+      0 => 'Lengow_MainTest::testCheck_ip',
+    ),
+    119 => 
+    array (
+      0 => 'Lengow_MainTest::testCheck_ip',
+    ),
+    120 => 
+    array (
+      0 => 'Lengow_MainTest::testCheck_ip',
+    ),
+    121 => 
+    array (
+      0 => 'Lengow_MainTest::testCheck_ip',
+    ),
+    122 => NULL,
+    124 => 
+    array (
+      0 => 'Lengow_MainTest::testCheck_ip',
+    ),
+    125 => NULL,
+    133 => 
+    array (
+      0 => 'Lengow_MainTest::testIs_new_merchant',
+    ),
+    134 => 
+    array (
+      0 => 'Lengow_MainTest::testIs_new_merchant',
+    ),
+    135 => 
+    array (
+      0 => 'Lengow_MainTest::testIs_new_merchant',
+    ),
+    136 => NULL,
+    138 => 
+    array (
+      0 => 'Lengow_MainTest::testIs_new_merchant',
+    ),
+    139 => NULL,
+    147 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_token',
+    ),
+    148 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_token',
+    ),
+    149 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_token',
+    ),
+    150 => NULL,
+    151 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_token',
+    ),
+    152 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_token',
+    ),
+    155 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_token',
+    ),
+    156 => NULL,
+    166 => 
+    array (
+      0 => 'Lengow_MainTest::testFind_by_token',
+    ),
+    167 => 
+    array (
+      0 => 'Lengow_MainTest::testFind_by_token',
+    ),
+    168 => 
+    array (
+      0 => 'Lengow_MainTest::testFind_by_token',
+    ),
+    169 => NULL,
+    171 => 
+    array (
+      0 => 'Lengow_MainTest::testFind_by_token',
+    ),
+    172 => NULL,
+    182 => 
+    array (
+    ),
+    183 => 
+    array (
+    ),
+    184 => 
+    array (
+    ),
+    186 => 
+    array (
+    ),
+    187 => NULL,
+    198 => 
+    array (
+    ),
+    199 => 
+    array (
+    ),
+    200 => 
+    array (
+    ),
+    208 => 
+    array (
+    ),
+    209 => 
+    array (
+    ),
+    210 => 
+    array (
+    ),
+    212 => 
+    array (
+    ),
+    213 => NULL,
+    219 => 
+    array (
+    ),
+    220 => 
+    array (
+    ),
+    221 => 
+    array (
+    ),
+    222 => 
+    array (
+    ),
+    223 => 
+    array (
+    ),
+    224 => 
+    array (
+    ),
+    225 => 
+    array (
+    ),
+    226 => 
+    array (
+    ),
+    227 => NULL,
+    228 => 
+    array (
+    ),
+    229 => 
+    array (
+    ),
+    230 => 
+    array (
+    ),
+    231 => 
+    array (
+    ),
+    232 => 
+    array (
+    ),
+    233 => 
+    array (
+    ),
+    244 => 
+    array (
+      0 => 'Lengow_MainTest::testSet_log_message',
+    ),
+    245 => 
+    array (
+      0 => 'Lengow_MainTest::testSet_log_message',
+    ),
+    246 => NULL,
+    247 => 
+    array (
+      0 => 'Lengow_MainTest::testSet_log_message',
+    ),
+    248 => 
+    array (
+      0 => 'Lengow_MainTest::testSet_log_message',
+    ),
+    249 => 
+    array (
+      0 => 'Lengow_MainTest::testSet_log_message',
+    ),
+    250 => 
+    array (
+      0 => 'Lengow_MainTest::testSet_log_message',
+    ),
+    251 => 
+    array (
+      0 => 'Lengow_MainTest::testSet_log_message',
+    ),
+    252 => 
+    array (
+      0 => 'Lengow_MainTest::testSet_log_message',
+    ),
+    254 => 
+    array (
+      0 => 'Lengow_MainTest::testSet_log_message',
+    ),
+    255 => NULL,
+    267 => 
+    array (
+      0 => 'Lengow_MainTest::testDecode_log_message',
+    ),
+    268 => 
+    array (
+      0 => 'Lengow_MainTest::testDecode_log_message',
+    ),
+    269 => 
+    array (
+      0 => 'Lengow_MainTest::testDecode_log_message',
+    ),
+    270 => 
+    array (
+      0 => 'Lengow_MainTest::testDecode_log_message',
+    ),
+    271 => 
+    array (
+      0 => 'Lengow_MainTest::testDecode_log_message',
+    ),
+    272 => 
+    array (
+      0 => 'Lengow_MainTest::testDecode_log_message',
+    ),
+    273 => 
+    array (
+      0 => 'Lengow_MainTest::testDecode_log_message',
+    ),
+    274 => 
+    array (
+      0 => 'Lengow_MainTest::testDecode_log_message',
+    ),
+    275 => 
+    array (
+      0 => 'Lengow_MainTest::testDecode_log_message',
+    ),
+    276 => 
+    array (
+      0 => 'Lengow_MainTest::testDecode_log_message',
+    ),
+    277 => 
+    array (
+      0 => 'Lengow_MainTest::testDecode_log_message',
+    ),
+    278 => 
+    array (
+      0 => 'Lengow_MainTest::testDecode_log_message',
+    ),
+    279 => 
+    array (
+      0 => 'Lengow_MainTest::testDecode_log_message',
+    ),
+    280 => 
+    array (
+      0 => 'Lengow_MainTest::testDecode_log_message',
+    ),
+    281 => 
+    array (
+      0 => 'Lengow_MainTest::testDecode_log_message',
+    ),
+    283 => 
+    array (
+      0 => 'Lengow_MainTest::testDecode_log_message',
+    ),
+    284 => NULL,
+    294 => 
+    array (
+      0 => 'Lengow_MainTest::testUpdate_date_import',
+    ),
+    295 => 
+    array (
+      0 => 'Lengow_MainTest::testUpdate_date_import',
+    ),
+    296 => 
+    array (
+      0 => 'Lengow_MainTest::testUpdate_date_import',
+    ),
+    297 => 
+    array (
+      0 => 'Lengow_MainTest::testUpdate_date_import',
+    ),
+    299 => 
+    array (
+      0 => 'Lengow_MainTest::testUpdate_date_import',
+    ),
+    307 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_last_import',
+    ),
+    308 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_last_import',
+    ),
+    309 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_last_import',
+    ),
+    310 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_last_import',
+    ),
+    311 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_last_import',
+    ),
+    312 => NULL,
+    313 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_last_import',
+    ),
+    315 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_last_import',
+    ),
+    316 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_last_import',
+    ),
+    317 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_last_import',
+    ),
+    318 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_last_import',
+    ),
+    319 => NULL,
+    321 => 
+    array (
+      0 => 'Lengow_MainTest::testGet_last_import',
+    ),
+    322 => NULL,
+    332 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    334 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    335 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    336 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    337 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    338 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    340 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    341 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    343 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    344 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    346 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    347 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    348 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    349 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    351 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    352 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    353 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    354 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    355 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    356 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    357 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    358 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    359 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    360 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    361 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    362 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    363 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    364 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    366 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    368 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    369 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    370 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    371 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    372 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    373 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    374 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    375 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    376 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    377 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    378 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    379 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    380 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    381 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    383 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    385 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    387 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_data',
+    ),
+    388 => NULL,
+    398 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    399 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    400 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    401 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    402 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    403 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    404 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    405 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    406 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    407 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    408 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    409 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    410 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    411 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    412 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    413 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    414 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    415 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    417 => 
+    array (
+      0 => 'Lengow_MainTest::testClean_html',
+    ),
+    418 => NULL,
+    436 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    438 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    440 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    442 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    444 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    446 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    448 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    450 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    452 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    454 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    456 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    458 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    460 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    462 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    464 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    466 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    468 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    470 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    472 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    474 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    476 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    478 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    480 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    482 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    484 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    486 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    488 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    490 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    492 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    494 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    496 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    498 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    500 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    502 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    504 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    506 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    508 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    512 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    514 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    516 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    518 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    520 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    522 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    524 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    526 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    528 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    530 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    532 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    534 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    536 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    538 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    540 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    542 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    544 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    546 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    548 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    550 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    552 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    554 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    556 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    558 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    560 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    562 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    564 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    566 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    568 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    570 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    572 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    574 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    576 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    578 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    580 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    583 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    589 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    590 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    591 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    592 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    593 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    594 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    595 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    596 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    597 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    598 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    599 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    600 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    601 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    602 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    603 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    604 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    605 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    606 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    607 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    608 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    609 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    610 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    611 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    612 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    613 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    614 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    615 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    616 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    617 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    618 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    619 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    620 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    621 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    622 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    623 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    624 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    625 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    626 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    627 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    628 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    629 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    630 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    631 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    632 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    633 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    634 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    635 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    636 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    637 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    638 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    639 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    640 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    641 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    642 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    643 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    644 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    645 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    646 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    647 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    648 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    649 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    650 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    651 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    652 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    653 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    654 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    655 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    656 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    657 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    658 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    659 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    660 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    662 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    664 => 
+    array (
+      0 => 'Lengow_MainTest::testReplace_accented_chars',
+    ),
+    665 => NULL,
+  ),
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-product.php' => 
+  array (
+    84 => 
+    array (
+    ),
+    85 => 
+    array (
+    ),
+    86 => 
+    array (
+    ),
+    87 => 
+    array (
+    ),
+    88 => 
+    array (
+    ),
+    89 => 
+    array (
+    ),
+    91 => 
+    array (
+    ),
+    92 => 
+    array (
+    ),
+    93 => NULL,
+    94 => 
+    array (
+    ),
+    105 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    106 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    107 => 
+    array (
+    ),
+    108 => NULL,
+    109 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    111 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    112 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    113 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    114 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    115 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    116 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    117 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    118 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    119 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    120 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    121 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    122 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    123 => NULL,
+    125 => 
+    array (
+    ),
+    126 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    127 => 
+    array (
+    ),
+    128 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    129 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    130 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    131 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    132 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    133 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    134 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    135 => 
+    array (
+    ),
+    136 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    137 => 
+    array (
+    ),
+    138 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    139 => 
+    array (
+    ),
+    140 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    141 => 
+    array (
+    ),
+    142 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    143 => 
+    array (
+    ),
+    144 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    145 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    146 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    147 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    148 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    149 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    150 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    151 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    152 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    153 => NULL,
+    155 => 
+    array (
+    ),
+    156 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    157 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    158 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    159 => NULL,
+    161 => 
+    array (
+    ),
+    162 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    163 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    164 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    165 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    166 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    167 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    168 => NULL,
+    170 => 
+    array (
+    ),
+    171 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    172 => 
+    array (
+    ),
+    173 => 
+    array (
+    ),
+    174 => 
+    array (
+    ),
+    175 => 
+    array (
+    ),
+    176 => 
+    array (
+    ),
+    177 => NULL,
+    179 => 
+    array (
+    ),
+    180 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    181 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    182 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    184 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    185 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    186 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    187 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    188 => NULL,
+    190 => 
+    array (
+    ),
+    191 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    192 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    193 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    194 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    195 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    196 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    198 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    199 => NULL,
+    201 => 
+    array (
+    ),
+    202 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    203 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    204 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    205 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    206 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    207 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    209 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    210 => NULL,
+    212 => 
+    array (
+    ),
+    213 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    214 => 
+    array (
+    ),
+    215 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    216 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    217 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    218 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    219 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    220 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    221 => 
+    array (
+    ),
+    222 => 
+    array (
+    ),
+    223 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    224 => 
+    array (
+    ),
+    225 => 
+    array (
+    ),
+    227 => 
+    array (
+    ),
+    228 => 
+    array (
+    ),
+    229 => 
+    array (
+    ),
+    230 => NULL,
+    231 => 
+    array (
+    ),
+    232 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    233 => 
+    array (
+    ),
+    234 => 
+    array (
+    ),
+    235 => 
+    array (
+    ),
+    236 => NULL,
+    237 => 
+    array (
+    ),
+    239 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    241 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    242 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    243 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    244 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    245 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    246 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    247 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    248 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    249 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    250 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    253 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    254 => 
+    array (
+    ),
+    255 => 
+    array (
+    ),
+    256 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    257 => 
+    array (
+    ),
+    258 => 
+    array (
+    ),
+    259 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    260 => 
+    array (
+    ),
+    261 => 
+    array (
+    ),
+    262 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    263 => 
+    array (
+    ),
+    264 => 
+    array (
+    ),
+    265 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    266 => 
+    array (
+    ),
+    267 => 
+    array (
+    ),
+    268 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    269 => 
+    array (
+    ),
+    270 => 
+    array (
+    ),
+    271 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    272 => 
+    array (
+    ),
+    273 => 
+    array (
+    ),
+    274 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    275 => 
+    array (
+    ),
+    276 => 
+    array (
+    ),
+    277 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    278 => 
+    array (
+    ),
+    279 => 
+    array (
+    ),
+    280 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    281 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    282 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    283 => NULL,
+    284 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    285 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    286 => 
+    array (
+    ),
+    288 => 
+    array (
+    ),
+    289 => NULL,
+    291 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    292 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    293 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    294 => 
+    array (
+    ),
+    295 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    296 => 
+    array (
+    ),
+    297 => NULL,
+    298 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    300 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    301 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    302 => 
+    array (
+    ),
+    303 => NULL,
+    304 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    306 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    307 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    308 => 
+    array (
+    ),
+    309 => 
+    array (
+    ),
+    310 => 
+    array (
+    ),
+    311 => 
+    array (
+    ),
+    312 => 
+    array (
+    ),
+    313 => 
+    array (
+    ),
+    314 => 
+    array (
+    ),
+    316 => 
+    array (
+    ),
+    317 => NULL,
+    319 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    320 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    321 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    322 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    323 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    324 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    325 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    326 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    327 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    328 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    329 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_data',
+    ),
+    330 => 
+    array (
+    ),
+    331 => 
+    array (
+    ),
+    332 => 
+    array (
+    ),
+    333 => 
+    array (
+    ),
+    334 => 
+    array (
+    ),
+    335 => 
+    array (
+    ),
+    336 => 
+    array (
+    ),
+    338 => 
+    array (
+    ),
+    339 => NULL,
+    341 => 
+    array (
+    ),
+    342 => 
+    array (
+    ),
+    343 => 
+    array (
+    ),
+    344 => 
+    array (
+    ),
+    345 => NULL,
+    347 => 
+    array (
+    ),
+    348 => 
+    array (
+    ),
+    349 => 
+    array (
+    ),
+    350 => 
+    array (
+    ),
+    351 => NULL,
+    353 => 
+    array (
+    ),
+    354 => 
+    array (
+    ),
+    355 => 
+    array (
+    ),
+    356 => 
+    array (
+    ),
+    357 => 
+    array (
+    ),
+    358 => 
+    array (
+    ),
+    359 => NULL,
+    361 => 
+    array (
+    ),
+    362 => 
+    array (
+    ),
+    363 => NULL,
+    373 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_price',
+    ),
+    374 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_price',
+    ),
+    375 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_price',
+    ),
+    376 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_price',
+    ),
+    377 => 
+    array (
+    ),
+    378 => 
+    array (
+    ),
+    379 => 
+    array (
+    ),
+    380 => 
+    array (
+    ),
+    381 => 
+    array (
+    ),
+    382 => 
+    array (
+    ),
+    383 => 
+    array (
+    ),
+    384 => 
+    array (
+    ),
+    385 => 
+    array (
+    ),
+    386 => 
+    array (
+    ),
+    387 => 
+    array (
+    ),
+    388 => 
+    array (
+    ),
+    390 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_price',
+    ),
+    391 => NULL,
+    399 => 
+    array (
+    ),
+    400 => 
+    array (
+    ),
+    401 => 
+    array (
+    ),
+    402 => 
+    array (
+    ),
+    403 => 
+    array (
+    ),
+    404 => 
+    array (
+    ),
+    405 => 
+    array (
+    ),
+    406 => 
+    array (
+    ),
+    407 => 
+    array (
+    ),
+    408 => 
+    array (
+    ),
+    409 => 
+    array (
+    ),
+    410 => 
+    array (
+    ),
+    412 => 
+    array (
+    ),
+    413 => 
+    array (
+    ),
+    414 => 
+    array (
+    ),
+    415 => 
+    array (
+    ),
+    416 => 
+    array (
+    ),
+    417 => 
+    array (
+    ),
+    418 => 
+    array (
+    ),
+    420 => 
+    array (
+    ),
+    421 => 
+    array (
+    ),
+    423 => 
+    array (
+    ),
+    424 => 
+    array (
+    ),
+    426 => 
+    array (
+    ),
+    427 => NULL,
+    435 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    437 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    438 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    439 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    440 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    441 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    442 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    443 => 
+    array (
+    ),
+    444 => 
+    array (
+    ),
+    445 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    446 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    447 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    448 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    449 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    451 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    453 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    454 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    456 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    457 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    458 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    459 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    460 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    462 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    463 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    464 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    465 => 
+    array (
+    ),
+    466 => 
+    array (
+    ),
+    467 => 
+    array (
+    ),
+    468 => 
+    array (
+    ),
+    469 => NULL,
+    470 => 
+    array (
+    ),
+    471 => 
+    array (
+    ),
+    472 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    473 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    475 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    477 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    478 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    479 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    480 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    482 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    483 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    484 => 
+    array (
+    ),
+    485 => 
+    array (
+    ),
+    486 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    488 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_categories',
+    ),
+    489 => NULL,
+    490 => 
+    array (
+    ),
+    492 => 
+    array (
+    ),
+    493 => NULL,
+    503 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_attribute_data',
+    ),
+    504 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_attribute_data',
+    ),
+    505 => NULL,
+    506 => 
+    array (
+    ),
+    507 => 
+    array (
+    ),
+    508 => 
+    array (
+    ),
+    509 => 
+    array (
+    ),
+    510 => 
+    array (
+    ),
+    511 => NULL,
+    512 => 
+    array (
+    ),
+    513 => 
+    array (
+    ),
+    514 => NULL,
+    515 => 
+    array (
+    ),
+    525 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_post_meta_data',
+    ),
+    526 => 
+    array (
+      0 => 'Lengow_ProductTest::test_get_post_meta_data',
+    ),
+    527 => NULL,
+    528 => 
+    array (
+    ),
+    529 => 
+    array (
+    ),
+    530 => 
+    array (
+    ),
+    531 => 
+    array (
+    ),
+    533 => 
+    array (
+    ),
+    534 => 
+    array (
+    ),
+    535 => NULL,
+    536 => 
+    array (
+    ),
+    538 => NULL,
+    546 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_attributes',
+    ),
+    547 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_attributes',
+    ),
+    550 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_attributes',
+    ),
+    552 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_attributes',
+    ),
+    553 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_attributes',
+    ),
+    554 => 
+    array (
+    ),
+    555 => 
+    array (
+    ),
+    556 => 
+    array (
+    ),
+    557 => 
+    array (
+    ),
+    558 => 
+    array (
+    ),
+    559 => 
+    array (
+    ),
+    560 => 
+    array (
+    ),
+    561 => 
+    array (
+    ),
+    562 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_attributes',
+    ),
+    564 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_attributes',
+    ),
+    565 => NULL,
+    573 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_post_metas',
+    ),
+    574 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_post_metas',
+    ),
+    577 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_post_metas',
+    ),
+    578 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_post_metas',
+    ),
+    580 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_post_metas',
+    ),
+    581 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_post_metas',
+    ),
+    582 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_post_metas',
+    ),
+    583 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_post_metas',
+    ),
+    584 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_post_metas',
+    ),
+    585 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_post_metas',
+    ),
+    586 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_post_metas',
+    ),
+    587 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_post_metas',
+    ),
+    589 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_post_metas',
+    ),
+    590 => NULL,
+    600 => 
+    array (
+    ),
+    601 => 
+    array (
+    ),
+    602 => 
+    array (
+    ),
+    603 => 
+    array (
+    ),
+    604 => 
+    array (
+    ),
+    606 => 
+    array (
+    ),
+    607 => NULL,
+    621 => 
+    array (
+    ),
+    623 => 
+    array (
+    ),
+    624 => 
+    array (
+    ),
+    625 => 
+    array (
+    ),
+    626 => 
+    array (
+    ),
+    627 => 
+    array (
+    ),
+    628 => 
+    array (
+    ),
+    630 => 
+    array (
+    ),
+    632 => 
+    array (
+    ),
+    633 => 
+    array (
+    ),
+    634 => 
+    array (
+    ),
+    635 => NULL,
+    637 => 
+    array (
+    ),
+    638 => 
+    array (
+    ),
+    639 => 
+    array (
+    ),
+    641 => 
+    array (
+    ),
+    642 => 
+    array (
+    ),
+    643 => 
+    array (
+    ),
+    644 => 
+    array (
+    ),
+    645 => 
+    array (
+    ),
+    646 => 
+    array (
+    ),
+    647 => 
+    array (
+    ),
+    648 => 
+    array (
+    ),
+    649 => 
+    array (
+    ),
+    650 => 
+    array (
+    ),
+    651 => 
+    array (
+    ),
+    653 => 
+    array (
+    ),
+    654 => 
+    array (
+    ),
+    655 => NULL,
+    656 => 
+    array (
+    ),
+    657 => 
+    array (
+    ),
+    658 => 
+    array (
+    ),
+    659 => 
+    array (
+    ),
+    660 => 
+    array (
+    ),
+    662 => 
+    array (
+    ),
+    663 => 
+    array (
+    ),
+    665 => 
+    array (
+    ),
+    666 => 
+    array (
+    ),
+    667 => 
+    array (
+    ),
+    668 => NULL,
+    669 => 
+    array (
+    ),
+    671 => 
+    array (
+    ),
+    672 => NULL,
+    683 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    684 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    686 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    687 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    688 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    689 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    691 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    692 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    693 => 
+    array (
+    ),
+    694 => 
+    array (
+    ),
+    695 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    696 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    698 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    700 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    701 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    702 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    703 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    705 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    707 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    708 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    709 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    710 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    711 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    712 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    713 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    714 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    715 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    716 => 
+    array (
+    ),
+    717 => NULL,
+    718 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    720 => NULL,
+    721 => 
+    array (
+    ),
+    722 => 
+    array (
+    ),
+    724 => 
+    array (
+      0 => 'Lengow_ProductTest::testSearch_product',
+    ),
+    725 => NULL,
+    736 => 
+    array (
+      0 => 'Lengow_ProductTest::testPublish',
+    ),
+    737 => 
+    array (
+      0 => 'Lengow_ProductTest::testPublish',
+    ),
+    738 => 
+    array (
+      0 => 'Lengow_ProductTest::testPublish',
+    ),
+    739 => 
+    array (
+      0 => 'Lengow_ProductTest::testPublish',
+    ),
+    741 => 
+    array (
+      0 => 'Lengow_ProductTest::testPublish',
+    ),
+    743 => 
+    array (
+      0 => 'Lengow_ProductTest::testPublish',
+    ),
+    744 => 
+    array (
+      0 => 'Lengow_ProductTest::testPublish',
+    ),
+    745 => 
+    array (
+      0 => 'Lengow_ProductTest::testPublish',
+    ),
+    746 => 
+    array (
+      0 => 'Lengow_ProductTest::testPublish',
+    ),
+    747 => 
+    array (
+      0 => 'Lengow_ProductTest::testPublish',
+    ),
+    750 => 
+    array (
+      0 => 'Lengow_ProductTest::testPublish',
+    ),
+    751 => NULL,
+    759 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_lengow_products',
+    ),
+    760 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_lengow_products',
+    ),
+    761 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_lengow_products',
+    ),
+    762 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_lengow_products',
+    ),
+    763 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_lengow_products',
+    ),
+    764 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_lengow_products',
+    ),
+    765 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_lengow_products',
+    ),
+    767 => 
+    array (
+      0 => 'Lengow_ProductTest::testGet_lengow_products',
+    ),
+    768 => NULL,
+  ),
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-translation.php' => 
+  array (
+    44 => 
+    array (
+    ),
+    45 => 
+    array (
+    ),
+    57 => 
+    array (
+      0 => 'Lengow_TranslationTest::testT',
+    ),
+    58 => 
+    array (
+      0 => 'Lengow_TranslationTest::testT',
+    ),
+    59 => 
+    array (
+      0 => 'Lengow_TranslationTest::testT',
+    ),
+    60 => 
+    array (
+      0 => 'Lengow_TranslationTest::testT',
+    ),
+    61 => 
+    array (
+    ),
+    62 => 
+    array (
+    ),
+    63 => 
+    array (
+      0 => 'Lengow_TranslationTest::testT',
+    ),
+    64 => 
+    array (
+    ),
+    65 => 
+    array (
+    ),
+    66 => 
+    array (
+      0 => 'Lengow_TranslationTest::testT',
+    ),
+    67 => 
+    array (
+      0 => 'Lengow_TranslationTest::testT',
+    ),
+    68 => NULL,
+    69 => 
+    array (
+      0 => 'Lengow_TranslationTest::testT',
+    ),
+    70 => 
+    array (
+    ),
+    71 => 
+    array (
+    ),
+    72 => 
+    array (
+      0 => 'Lengow_TranslationTest::testT',
+    ),
+    73 => 
+    array (
+    ),
+    74 => NULL,
+    75 => 
+    array (
+      0 => 'Lengow_TranslationTest::testT',
+    ),
+    78 => NULL,
+    89 => 
+    array (
+      0 => 'Lengow_TranslationTest::testTranslate_final',
+    ),
+    90 => 
+    array (
+      0 => 'Lengow_TranslationTest::testTranslate_final',
+    ),
+    91 => 
+    array (
+      0 => 'Lengow_TranslationTest::testTranslate_final',
+    ),
+    92 => 
+    array (
+      0 => 'Lengow_TranslationTest::testTranslate_final',
+    ),
+    93 => 
+    array (
+      0 => 'Lengow_TranslationTest::testTranslate_final',
+    ),
+    94 => 
+    array (
+      0 => 'Lengow_TranslationTest::testTranslate_final',
+    ),
+    95 => 
+    array (
+      0 => 'Lengow_TranslationTest::testTranslate_final',
+    ),
+    97 => 
+    array (
+      0 => 'Lengow_TranslationTest::testTranslate_final',
+    ),
+    98 => NULL,
+    99 => 
+    array (
+      0 => 'Lengow_TranslationTest::testTranslate_final',
+    ),
+    101 => NULL,
+    112 => 
+    array (
+      0 => 'Lengow_TranslationTest::testLoad_file',
+    ),
+    113 => 
+    array (
+      0 => 'Lengow_TranslationTest::testLoad_file',
+    ),
+    114 => 
+    array (
+      0 => 'Lengow_TranslationTest::testLoad_file',
+    ),
+    115 => 
+    array (
+      0 => 'Lengow_TranslationTest::testLoad_file',
+    ),
+    116 => 
+    array (
+      0 => 'Lengow_TranslationTest::testLoad_file',
+    ),
+    117 => 
+    array (
+      0 => 'Lengow_TranslationTest::testLoad_file',
+    ),
+    118 => 
+    array (
+      0 => 'Lengow_TranslationTest::testLoad_file',
+    ),
+    119 => 
+    array (
+      0 => 'Lengow_TranslationTest::testLoad_file',
+    ),
+    120 => 
+    array (
+      0 => 'Lengow_TranslationTest::testLoad_file',
+    ),
+    121 => 
+    array (
+      0 => 'Lengow_TranslationTest::testLoad_file',
+    ),
+    122 => 
+    array (
+      0 => 'Lengow_TranslationTest::testLoad_file',
+    ),
+    123 => 
+    array (
+      0 => 'Lengow_TranslationTest::testLoad_file',
+    ),
+    124 => 
+    array (
+      0 => 'Lengow_TranslationTest::testLoad_file',
+    ),
+    126 => 
+    array (
+      0 => 'Lengow_TranslationTest::testLoad_file',
+    ),
+    127 => NULL,
+  ),
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-export.php' => 
+  array (
+    230 => 
+    array (
+    ),
+    231 => 
+    array (
+    ),
+    232 => 
+    array (
+    ),
+    233 => 
+    array (
+    ),
+    234 => 
+    array (
+    ),
+    235 => 
+    array (
+    ),
+    236 => 
+    array (
+    ),
+    237 => 
+    array (
+    ),
+    238 => 
+    array (
+    ),
+    239 => 
+    array (
+    ),
+    240 => 
+    array (
+    ),
+    241 => 
+    array (
+    ),
+    242 => 
+    array (
+    ),
+    243 => 
+    array (
+    ),
+    244 => 
+    array (
+    ),
+    245 => 
+    array (
+    ),
+    246 => 
+    array (
+    ),
+    247 => 
+    array (
+    ),
+    248 => 
+    array (
+    ),
+    249 => 
+    array (
+    ),
+    250 => 
+    array (
+    ),
+    256 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_legacy_fields',
+    ),
+    257 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_legacy_fields',
+    ),
+    258 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_legacy_fields',
+    ),
+    259 => 
+    array (
+    ),
+    260 => 
+    array (
+    ),
+    261 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_legacy_fields',
+    ),
+    263 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_legacy_fields',
+    ),
+    264 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_legacy_fields',
+    ),
+    265 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_legacy_fields',
+    ),
+    273 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_format',
+    ),
+    274 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_format',
+    ),
+    282 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_ids',
+    ),
+    283 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_ids',
+    ),
+    284 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_ids',
+    ),
+    285 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_ids',
+    ),
+    286 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_ids',
+    ),
+    287 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_ids',
+    ),
+    288 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_ids',
+    ),
+    289 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_ids',
+    ),
+    290 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_ids',
+    ),
+    298 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_types',
+    ),
+    299 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_types',
+    ),
+    300 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_types',
+    ),
+    301 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_types',
+    ),
+    302 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_types',
+    ),
+    303 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_types',
+    ),
+    304 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_types',
+    ),
+    305 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_types',
+    ),
+    306 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_types',
+    ),
+    307 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_types',
+    ),
+    308 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_types',
+    ),
+    309 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_product_types',
+    ),
+    317 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_log_output',
+    ),
+    318 => 
+    array (
+      0 => 'Lengow_ExportTest::test_set_log_output',
+    ),
+    326 => 
+    array (
+    ),
+    327 => 
+    array (
+    ),
+    329 => 
+    array (
+    ),
+    331 => 
+    array (
+    ),
+    333 => 
+    array (
+    ),
+    334 => 
+    array (
+    ),
+    335 => 
+    array (
+    ),
+    336 => 
+    array (
+    ),
+    337 => 
+    array (
+    ),
+    338 => 
+    array (
+    ),
+    339 => 
+    array (
+    ),
+    340 => 
+    array (
+    ),
+    341 => 
+    array (
+    ),
+    342 => 
+    array (
+    ),
+    343 => 
+    array (
+    ),
+    344 => 
+    array (
+    ),
+    345 => 
+    array (
+    ),
+    346 => 
+    array (
+    ),
+    347 => 
+    array (
+    ),
+    348 => 
+    array (
+    ),
+    349 => 
+    array (
+    ),
+    350 => 
+    array (
+    ),
+    351 => 
+    array (
+    ),
+    352 => 
+    array (
+    ),
+    353 => 
+    array (
+    ),
+    355 => 
+    array (
+    ),
+    356 => 
+    array (
+    ),
+    357 => 
+    array (
+    ),
+    358 => 
+    array (
+    ),
+    359 => 
+    array (
+    ),
+    361 => 
+    array (
+    ),
+    362 => 
+    array (
+    ),
+    363 => 
+    array (
+    ),
+    364 => 
+    array (
+    ),
+    365 => 
+    array (
+    ),
+    376 => 
+    array (
+    ),
+    377 => 
+    array (
+    ),
+    378 => 
+    array (
+    ),
+    379 => 
+    array (
+    ),
+    381 => 
+    array (
+    ),
+    382 => 
+    array (
+    ),
+    383 => 
+    array (
+    ),
+    384 => 
+    array (
+    ),
+    385 => 
+    array (
+    ),
+    386 => 
+    array (
+    ),
+    387 => 
+    array (
+    ),
+    388 => 
+    array (
+    ),
+    389 => 
+    array (
+    ),
+    390 => 
+    array (
+    ),
+    391 => 
+    array (
+    ),
+    392 => 
+    array (
+    ),
+    394 => 
+    array (
+    ),
+    395 => 
+    array (
+    ),
+    396 => 
+    array (
+    ),
+    397 => 
+    array (
+    ),
+    398 => 
+    array (
+    ),
+    400 => 
+    array (
+    ),
+    402 => 
+    array (
+    ),
+    403 => 
+    array (
+    ),
+    404 => 
+    array (
+    ),
+    405 => 
+    array (
+    ),
+    406 => 
+    array (
+    ),
+    407 => 
+    array (
+    ),
+    409 => 
+    array (
+    ),
+    410 => 
+    array (
+    ),
+    411 => 
+    array (
+    ),
+    412 => 
+    array (
+    ),
+    414 => 
+    array (
+    ),
+    415 => 
+    array (
+    ),
+    416 => 
+    array (
+    ),
+    417 => 
+    array (
+    ),
+    418 => 
+    array (
+    ),
+    419 => 
+    array (
+    ),
+    420 => 
+    array (
+    ),
+    421 => 
+    array (
+    ),
+    422 => 
+    array (
+    ),
+    423 => 
+    array (
+    ),
+    424 => 
+    array (
+    ),
+    425 => 
+    array (
+    ),
+    426 => NULL,
+    427 => 
+    array (
+    ),
+    428 => 
+    array (
+    ),
+    429 => 
+    array (
+    ),
+    430 => 
+    array (
+    ),
+    431 => 
+    array (
+    ),
+    432 => 
+    array (
+    ),
+    433 => 
+    array (
+    ),
+    434 => 
+    array (
+    ),
+    435 => 
+    array (
+    ),
+    436 => 
+    array (
+    ),
+    437 => 
+    array (
+    ),
+    445 => 
+    array (
+    ),
+    446 => 
+    array (
+    ),
+    447 => 
+    array (
+    ),
+    448 => 
+    array (
+    ),
+    449 => 
+    array (
+    ),
+    450 => 
+    array (
+    ),
+    451 => 
+    array (
+    ),
+    452 => 
+    array (
+    ),
+    453 => 
+    array (
+    ),
+    454 => 
+    array (
+    ),
+    455 => 
+    array (
+    ),
+    456 => 
+    array (
+    ),
+    458 => 
+    array (
+    ),
+    459 => NULL,
+    467 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_total_product',
+    ),
+    470 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_total_product',
+    ),
+    473 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_total_product',
+    ),
+    475 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_total_product',
+    ),
+    476 => NULL,
+    484 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_total_export_product',
+    ),
+    485 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_total_export_product',
+    ),
+    486 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_total_export_product',
+    ),
+    487 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_total_export_product',
+    ),
+    488 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_total_export_product',
+    ),
+    489 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_total_export_product',
+    ),
+    490 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_total_export_product',
+    ),
+    491 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_total_export_product',
+    ),
+    492 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_total_export_product',
+    ),
+    495 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_total_export_product',
+    ),
+    496 => NULL,
+    504 => 
+    array (
+      0 => 'Lengow_ExportTest::test_get_export_ids',
+    ),
+    505 => 
+    array (
+      0 => 'Lengow_ExportTest::test_get_export_ids',
+    ),
+    506 => 
+    array (
+      0 => 'Lengow_ExportTest::test_get_export_ids',
+    ),
+    507 => 
+    array (
+      0 => 'Lengow_ExportTest::test_get_export_ids',
+    ),
+    508 => 
+    array (
+      0 => 'Lengow_ExportTest::test_get_export_ids',
+    ),
+    509 => 
+    array (
+      0 => 'Lengow_ExportTest::test_get_export_ids',
+    ),
+    510 => 
+    array (
+      0 => 'Lengow_ExportTest::test_get_export_ids',
+    ),
+    511 => 
+    array (
+      0 => 'Lengow_ExportTest::test_get_export_ids',
+    ),
+    512 => 
+    array (
+      0 => 'Lengow_ExportTest::test_get_export_ids',
+    ),
+    514 => 
+    array (
+      0 => 'Lengow_ExportTest::test_get_export_ids',
+    ),
+    515 => 
+    array (
+      0 => 'Lengow_ExportTest::test_get_export_ids',
+    ),
+    516 => 
+    array (
+      0 => 'Lengow_ExportTest::test_get_export_ids',
+    ),
+    517 => 
+    array (
+      0 => 'Lengow_ExportTest::test_get_export_ids',
+    ),
+    518 => 
+    array (
+      0 => 'Lengow_ExportTest::test_get_export_ids',
+    ),
+    520 => 
+    array (
+      0 => 'Lengow_ExportTest::test_get_export_ids',
+    ),
+    522 => 
+    array (
+      0 => 'Lengow_ExportTest::test_get_export_ids',
+    ),
+    523 => NULL,
+    533 => 
+    array (
+    ),
+    534 => 
+    array (
+    ),
+    537 => 
+    array (
+    ),
+    538 => 
+    array (
+    ),
+    541 => 
+    array (
+    ),
+    544 => 
+    array (
+    ),
+    545 => 
+    array (
+    ),
+    546 => 
+    array (
+    ),
+    547 => 
+    array (
+    ),
+    549 => 
+    array (
+    ),
+    550 => 
+    array (
+    ),
+    551 => 
+    array (
+    ),
+    552 => 
+    array (
+    ),
+    553 => 
+    array (
+    ),
+    554 => 
+    array (
+    ),
+    555 => 
+    array (
+    ),
+    556 => 
+    array (
+    ),
+    557 => 
+    array (
+    ),
+    559 => 
+    array (
+    ),
+    561 => 
+    array (
+    ),
+    562 => 
+    array (
+    ),
+    563 => 
+    array (
+    ),
+    564 => 
+    array (
+    ),
+    565 => 
+    array (
+    ),
+    566 => 
+    array (
+    ),
+    568 => 
+    array (
+    ),
+    569 => 
+    array (
+    ),
+    572 => 
+    array (
+    ),
+    575 => 
+    array (
+    ),
+    578 => 
+    array (
+    ),
+    580 => 
+    array (
+    ),
+    583 => 
+    array (
+    ),
+    586 => 
+    array (
+    ),
+    587 => 
+    array (
+    ),
+    588 => 
+    array (
+    ),
+    589 => 
+    array (
+    ),
+    590 => 
+    array (
+    ),
+    591 => 
+    array (
+    ),
+    592 => 
+    array (
+    ),
+    593 => 
+    array (
+    ),
+    594 => 
+    array (
+    ),
+    595 => 
+    array (
+    ),
+    596 => 
+    array (
+    ),
+    598 => 
+    array (
+    ),
+    599 => 
+    array (
+    ),
+    600 => 
+    array (
+    ),
+    601 => 
+    array (
+    ),
+    602 => 
+    array (
+    ),
+    604 => 
+    array (
+    ),
+    605 => NULL,
+    613 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    614 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    616 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    617 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    618 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    619 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    620 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    621 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    622 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    623 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    624 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    625 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    626 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    627 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    628 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    629 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    630 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    631 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    632 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    633 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    634 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    635 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    636 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    637 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    638 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    639 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    640 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    641 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    642 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    643 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    644 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    645 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    646 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    647 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    648 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    649 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    650 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    651 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    652 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    653 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    654 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    656 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    657 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    659 => 
+    array (
+      0 => 'Lengow_ExportTest::testGet_export_params',
+    ),
+    660 => NULL,
+  ),
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-log.php' => 
+  array (
+    36 => 
+    array (
+    ),
+    37 => 
+    array (
+    ),
+    38 => 
+    array (
+    ),
+    39 => 
+    array (
+    ),
+    41 => 
+    array (
+    ),
+    42 => 
+    array (
+    ),
+    53 => 
+    array (
+    ),
+    54 => 
+    array (
+    ),
+    55 => 
+    array (
+    ),
+    56 => 
+    array (
+    ),
+    57 => 
+    array (
+    ),
+    58 => 
+    array (
+    ),
+    59 => 
+    array (
+    ),
+    60 => 
+    array (
+    ),
+    61 => 
+    array (
+    ),
+    62 => 
+    array (
+    ),
+    63 => 
+    array (
+    ),
+    71 => 
+    array (
+    ),
+    72 => NULL,
+    80 => 
+    array (
+    ),
+    81 => 
+    array (
+    ),
+    82 => 
+    array (
+    ),
+    83 => NULL,
+    84 => 
+    array (
+    ),
+    85 => 
+    array (
+    ),
+    86 => 
+    array (
+    ),
+    87 => 
+    array (
+    ),
+    88 => 
+    array (
+    ),
+    90 => 
+    array (
+    ),
+    91 => 
+    array (
+    ),
+    92 => 
+    array (
+    ),
+    93 => 
+    array (
+    ),
+    94 => 
+    array (
+    ),
+    95 => 
+    array (
+    ),
+    96 => 
+    array (
+    ),
+    98 => 
+    array (
+    ),
+    99 => NULL,
+    107 => 
+    array (
+    ),
+    108 => 
+    array (
+    ),
+    109 => 
+    array (
+    ),
+    110 => 
+    array (
+    ),
+    111 => 
+    array (
+    ),
+    112 => 
+    array (
+    ),
+    113 => 
+    array (
+    ),
+    114 => 
+    array (
+    ),
+    115 => NULL,
+    116 => 
+    array (
+    ),
+    117 => 
+    array (
+    ),
+    118 => 
+    array (
+    ),
+    119 => 
+    array (
+    ),
+    120 => 
+    array (
+    ),
+    121 => 
+    array (
+    ),
+    122 => 
+    array (
+    ),
+    123 => 
+    array (
+    ),
+    124 => 
+    array (
+    ),
+    126 => NULL,
+  ),
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-check.php' => 
+  array (
+    296 => 
+    array (
+    ),
+    297 => 
+    array (
+    ),
+    298 => 
+    array (
+    ),
+    299 => 
+    array (
+    ),
+    300 => 
+    array (
+    ),
+    301 => 
+    array (
+    ),
+    302 => 
+    array (
+    ),
+    303 => 
+    array (
+    ),
+    304 => NULL,
+    305 => 
+    array (
+    ),
+    306 => 
+    array (
+    ),
+    308 => 
+    array (
+    ),
+    309 => NULL,
+    310 => 
+    array (
+    ),
+    312 => 
+    array (
+    ),
+    313 => NULL,
+    323 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    324 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    325 => NULL,
+    326 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    327 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    328 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    329 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    330 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    331 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    332 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    333 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    334 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    335 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    336 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    337 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    339 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    340 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    341 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    342 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    343 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    344 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    345 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    347 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    348 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    349 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    350 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    351 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    352 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    353 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    356 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    357 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    358 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    360 => 
+    array (
+      0 => 'Lengow_CheckTest::testGet_admin_content',
+    ),
+    361 => NULL,
+    369 => 
+    array (
+      0 => 'Lengow_CheckTest::testIs_valid_auth',
+    ),
+    370 => 
+    array (
+    ),
+    371 => NULL,
+    372 => 
+    array (
+      0 => 'Lengow_CheckTest::testIs_valid_auth',
+    ),
+    373 => 
+    array (
+      0 => 'Lengow_CheckTest::testIs_valid_auth',
+    ),
+    374 => 
+    array (
+      0 => 'Lengow_CheckTest::testIs_valid_auth',
+    ),
+    375 => NULL,
+    376 => 
+    array (
+      0 => 'Lengow_CheckTest::testIs_valid_auth',
+    ),
+    378 => 
+    array (
+      0 => 'Lengow_CheckTest::testIs_valid_auth',
+    ),
+    379 => 
+    array (
+      0 => 'Lengow_CheckTest::testIs_valid_auth',
+    ),
+    380 => 
+    array (
+    ),
+    382 => 
+    array (
+      0 => 'Lengow_CheckTest::testIs_valid_auth',
+    ),
+    383 => 
+    array (
+    ),
+    384 => NULL,
+    386 => 
+    array (
+      0 => 'Lengow_CheckTest::testIs_valid_auth',
+    ),
+    387 => NULL,
+  ),
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-file.php' => 
+  array (
+    50 => 
+    array (
+    ),
+    51 => 
+    array (
+    ),
+    52 => 
+    array (
+    ),
+    53 => 
+    array (
+    ),
+    54 => 
+    array (
+    ),
+    55 => 
+    array (
+    ),
+    56 => 
+    array (
+    ),
+    58 => 
+    array (
+    ),
+    60 => 
+    array (
+    ),
+    61 => 
+    array (
+    ),
+    62 => 
+    array (
+    ),
+    63 => NULL,
+    64 => 
+    array (
+    ),
+    70 => 
+    array (
+    ),
+    71 => 
+    array (
+    ),
+    79 => 
+    array (
+    ),
+    80 => 
+    array (
+    ),
+    81 => 
+    array (
+    ),
+    82 => 
+    array (
+    ),
+    83 => 
+    array (
+    ),
+    89 => 
+    array (
+    ),
+    90 => 
+    array (
+    ),
+    91 => 
+    array (
+    ),
+    92 => 
+    array (
+    ),
+    93 => 
+    array (
+    ),
+    94 => 
+    array (
+    ),
+    95 => 
+    array (
+    ),
+    105 => 
+    array (
+    ),
+    106 => NULL,
+    112 => 
+    array (
+    ),
+    113 => 
+    array (
+    ),
+    114 => 
+    array (
+    ),
+    115 => 
+    array (
+    ),
+    126 => 
+    array (
+    ),
+    127 => NULL,
+    135 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_link',
+    ),
+    136 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_link',
+    ),
+    137 => 
+    array (
+    ),
+    138 => 
+    array (
+    ),
+    139 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_link',
+    ),
+    140 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_link',
+    ),
+    141 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_link',
+    ),
+    143 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_link',
+    ),
+    144 => NULL,
+    152 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_path',
+    ),
+    154 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_path',
+    ),
+    155 => NULL,
+    163 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_folder_path',
+    ),
+    165 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_folder_path',
+    ),
+    166 => NULL,
+    174 => 
+    array (
+      0 => 'Lengow_FileTest::testExists',
+    ),
+    175 => NULL,
+    185 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_files_from_folder',
+    ),
+    186 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_files_from_folder',
+    ),
+    187 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_files_from_folder',
+    ),
+    188 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_files_from_folder',
+    ),
+    189 => NULL,
+    190 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_files_from_folder',
+    ),
+    191 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_files_from_folder',
+    ),
+    192 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_files_from_folder',
+    ),
+    193 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_files_from_folder',
+    ),
+    194 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_files_from_folder',
+    ),
+    195 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_files_from_folder',
+    ),
+    196 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_files_from_folder',
+    ),
+    198 => 
+    array (
+      0 => 'Lengow_FileTest::testGet_files_from_folder',
+    ),
+    199 => NULL,
+  ),
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-sync.php' => 
+  array (
+    31 => 
+    array (
+    ),
+    32 => 
+    array (
+    ),
+    33 => 
+    array (
+    ),
+    34 => 
+    array (
+    ),
+    35 => 
+    array (
+    ),
+    36 => 
+    array (
+    ),
+    37 => 
+    array (
+    ),
+    38 => 
+    array (
+    ),
+    39 => 
+    array (
+    ),
+    40 => 
+    array (
+    ),
+    41 => 
+    array (
+    ),
+    42 => 
+    array (
+    ),
+    43 => 
+    array (
+    ),
+    44 => 
+    array (
+    ),
+    45 => 
+    array (
+    ),
+    46 => 
+    array (
+    ),
+    47 => 
+    array (
+    ),
+    48 => 
+    array (
+    ),
+    50 => 
+    array (
+    ),
+    51 => NULL,
+    59 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    60 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    62 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    63 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    65 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    66 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    67 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    68 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    69 => NULL,
+    70 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    71 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    72 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    73 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    74 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    75 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    76 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    77 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    78 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    79 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    80 => NULL,
+    81 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    82 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    83 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    84 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    85 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    87 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    88 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    89 => 
+    array (
+      0 => 'Lengow_SyncTest::testSync',
+    ),
+    97 => 
+    array (
+      0 => 'Lengow_SyncTest::testCheck_sync_shop',
+    ),
+    98 => 
+    array (
+      0 => 'Lengow_SyncTest::testCheck_sync_shop',
+    ),
+    99 => NULL,
+    107 => 
+    array (
+    ),
+    108 => 
+    array (
+    ),
+    109 => 
+    array (
+    ),
+    110 => 
+    array (
+    ),
+    111 => 
+    array (
+    ),
+    112 => 
+    array (
+    ),
+    113 => 
+    array (
+    ),
+    114 => 
+    array (
+    ),
+    115 => 
+    array (
+    ),
+    116 => 
+    array (
+    ),
+    117 => 
+    array (
+    ),
+    118 => 
+    array (
+    ),
+    119 => 
+    array (
+    ),
+    120 => 
+    array (
+    ),
+    121 => 
+    array (
+    ),
+    122 => 
+    array (
+    ),
+    123 => 
+    array (
+    ),
+    124 => 
+    array (
+    ),
+    125 => 
+    array (
+    ),
+    126 => 
+    array (
+    ),
+    127 => 
+    array (
+    ),
+    129 => 
+    array (
+    ),
+    130 => NULL,
+    140 => 
+    array (
+      0 => 'Lengow_SyncTest::testSet_cms_option',
+    ),
+    141 => 
+    array (
+      0 => 'Lengow_SyncTest::testSet_cms_option',
+    ),
+    142 => NULL,
+    143 => 
+    array (
+    ),
+    144 => 
+    array (
+    ),
+    145 => 
+    array (
+    ),
+    146 => 
+    array (
+    ),
+    147 => NULL,
+    148 => 
+    array (
+    ),
+    149 => 
+    array (
+    ),
+    150 => 
+    array (
+    ),
+    151 => 
+    array (
+    ),
+    153 => 
+    array (
+    ),
+    154 => NULL,
+    165 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    166 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    167 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    168 => 
+    array (
+    ),
+    169 => NULL,
+    170 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    171 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    172 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    173 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    174 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    176 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    177 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    178 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    180 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    181 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    182 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    184 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    185 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    186 => 
+    array (
+    ),
+    187 => 
+    array (
+    ),
+    188 => 
+    array (
+    ),
+    189 => 
+    array (
+    ),
+    190 => 
+    array (
+    ),
+    191 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    192 => 
+    array (
+    ),
+    193 => 
+    array (
+    ),
+    194 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    196 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    197 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    199 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_statistic',
+    ),
+    201 => NULL,
+    211 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_status_account',
+    ),
+    212 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_status_account',
+    ),
+    214 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_status_account',
+    ),
+    215 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_status_account',
+    ),
+    216 => 
+    array (
+    ),
+    218 => 
+    array (
+    ),
+    220 => 
+    array (
+    ),
+    221 => NULL,
+    222 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_status_account',
+    ),
+    224 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_status_account',
+    ),
+    225 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_status_account',
+    ),
+    227 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_status_account',
+    ),
+    228 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_status_account',
+    ),
+    229 => 
+    array (
+    ),
+    230 => 
+    array (
+    ),
+    231 => 
+    array (
+    ),
+    232 => 
+    array (
+    ),
+    233 => 
+    array (
+    ),
+    234 => 
+    array (
+    ),
+    235 => 
+    array (
+    ),
+    236 => 
+    array (
+    ),
+    237 => 
+    array (
+    ),
+    238 => 
+    array (
+    ),
+    239 => 
+    array (
+    ),
+    240 => 
+    array (
+    ),
+    241 => 
+    array (
+    ),
+    243 => 
+    array (
+    ),
+    244 => 
+    array (
+    ),
+    245 => 
+    array (
+    ),
+    247 => 
+    array (
+    ),
+    249 => 
+    array (
+    ),
+    250 => NULL,
+    251 => 
+    array (
+    ),
+    253 => 
+    array (
+      0 => 'Lengow_SyncTest::testGet_status_account',
+    ),
+    254 => NULL,
+  ),
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-install.php' => 
+  array (
+    31 => 
+    array (
+    ),
+    32 => 
+    array (
+    ),
+    39 => 
+    array (
+    ),
+    40 => 
+    array (
+    ),
+    41 => 
+    array (
+    ),
+    42 => 
+    array (
+    ),
+    43 => 
+    array (
+    ),
+    44 => 
+    array (
+    ),
+    45 => 
+    array (
+    ),
+    46 => 
+    array (
+    ),
+    47 => NULL,
+    48 => 
+    array (
+    ),
+    49 => 
+    array (
+    ),
+    50 => 
+    array (
+    ),
+    51 => 
+    array (
+    ),
+    53 => 
+    array (
+    ),
+    54 => NULL,
+    65 => 
+    array (
+    ),
+    66 => 
+    array (
+    ),
+    67 => 
+    array (
+    ),
+    68 => 
+    array (
+    ),
+    70 => 
+    array (
+    ),
+    71 => NULL,
+    82 => 
+    array (
+    ),
+    83 => 
+    array (
+    ),
+    84 => 
+    array (
+    ),
+    85 => 
+    array (
+    ),
+    86 => 
+    array (
+    ),
+    87 => 
+    array (
+    ),
+    88 => 
+    array (
+    ),
+    97 => 
+    array (
+    ),
+    98 => 
+    array (
+    ),
+    99 => 
+    array (
+    ),
+    100 => 
+    array (
+    ),
+    108 => 
+    array (
+    ),
+    109 => 
+    array (
+    ),
+    117 => 
+    array (
+    ),
+    118 => NULL,
+  ),
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-feed.php' => 
+  array (
+    84 => 
+    array (
+    ),
+    85 => 
+    array (
+    ),
+    86 => 
+    array (
+    ),
+    87 => 
+    array (
+    ),
+    88 => 
+    array (
+    ),
+    89 => 
+    array (
+    ),
+    90 => 
+    array (
+    ),
+    98 => 
+    array (
+      0 => 'Lengow_FeedTest::test_init_export_file',
+    ),
+    99 => 
+    array (
+      0 => 'Lengow_FeedTest::test_init_export_file',
+    ),
+    100 => 
+    array (
+      0 => 'Lengow_FeedTest::test_init_export_file',
+    ),
+    101 => 
+    array (
+      0 => 'Lengow_FeedTest::test_init_export_file',
+    ),
+    102 => 
+    array (
+      0 => 'Lengow_FeedTest::test_init_export_file',
+    ),
+    103 => 
+    array (
+    ),
+    104 => 
+    array (
+    ),
+    106 => 
+    array (
+    ),
+    107 => 
+    array (
+    ),
+    108 => NULL,
+    109 => 
+    array (
+      0 => 'Lengow_FeedTest::test_init_export_file',
+    ),
+    110 => 
+    array (
+      0 => 'Lengow_FeedTest::test_init_export_file',
+    ),
+    111 => 
+    array (
+      0 => 'Lengow_FeedTest::test_init_export_file',
+    ),
+    112 => 
+    array (
+      0 => 'Lengow_FeedTest::test_init_export_file',
+    ),
+    124 => 
+    array (
+      0 => 'Lengow_FeedTest::testWrite',
+    ),
+    125 => 
+    array (
+    ),
+    126 => 
+    array (
+    ),
+    127 => 
+    array (
+    ),
+    128 => 
+    array (
+    ),
+    129 => 
+    array (
+    ),
+    130 => 
+    array (
+    ),
+    131 => 
+    array (
+    ),
+    132 => 
+    array (
+    ),
+    133 => 
+    array (
+    ),
+    134 => 
+    array (
+      0 => 'Lengow_FeedTest::testWrite',
+    ),
+    135 => 
+    array (
+      0 => 'Lengow_FeedTest::testWrite',
+    ),
+    136 => 
+    array (
+      0 => 'Lengow_FeedTest::testWrite',
+    ),
+    137 => 
+    array (
+      0 => 'Lengow_FeedTest::testWrite',
+    ),
+    138 => 
+    array (
+      0 => 'Lengow_FeedTest::testWrite',
+    ),
+    139 => 
+    array (
+      0 => 'Lengow_FeedTest::testWrite',
+    ),
+    140 => 
+    array (
+      0 => 'Lengow_FeedTest::testWrite',
+    ),
+    141 => 
+    array (
+      0 => 'Lengow_FeedTest::testWrite',
+    ),
+    142 => NULL,
+    143 => 
+    array (
+      0 => 'Lengow_FeedTest::testWrite',
+    ),
+    151 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_html_header',
+    ),
+    152 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_html_header',
+    ),
+    153 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_html_header',
+    ),
+    154 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_html_header',
+    ),
+    155 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_html_header',
+    ),
+    156 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_html_header',
+    ),
+    157 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_html_header',
+    ),
+    158 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_html_header',
+    ),
+    159 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_html_header',
+    ),
+    160 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_html_header',
+    ),
+    161 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_html_header',
+    ),
+    171 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_header',
+    ),
+    172 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_header',
+    ),
+    173 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_header',
+    ),
+    174 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_header',
+    ),
+    175 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_header',
+    ),
+    176 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_header',
+    ),
+    178 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_header',
+    ),
+    179 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_header',
+    ),
+    181 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_header',
+    ),
+    182 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_header',
+    ),
+    183 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_header',
+    ),
+    184 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_header',
+    ),
+    185 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_header',
+    ),
+    186 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_header',
+    ),
+    187 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_header',
+    ),
+    199 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    200 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    201 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    202 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    203 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    204 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    206 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    207 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    208 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    209 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    210 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    211 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    212 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    213 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    215 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    216 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    217 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    218 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    219 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    220 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    221 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    222 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    223 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    225 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    226 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    227 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    228 => 
+    array (
+    ),
+    229 => 
+    array (
+    ),
+    230 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    232 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    233 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    234 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    235 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    236 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    237 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    239 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    240 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    241 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_body',
+    ),
+    249 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_footer',
+    ),
+    250 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_footer',
+    ),
+    251 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_footer',
+    ),
+    252 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_footer',
+    ),
+    253 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_footer',
+    ),
+    254 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_footer',
+    ),
+    255 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_footer',
+    ),
+    256 => 
+    array (
+      0 => 'Lengow_FeedTest::test_get_footer',
+    ),
+    257 => NULL,
+    266 => 
+    array (
+    ),
+    267 => 
+    array (
+    ),
+    268 => 
+    array (
+    ),
+    269 => 
+    array (
+    ),
+    270 => 
+    array (
+    ),
+    272 => 
+    array (
+    ),
+    280 => 
+    array (
+      0 => 'Lengow_FeedTest::testEnd',
+    ),
+    281 => 
+    array (
+      0 => 'Lengow_FeedTest::testEnd',
+    ),
+    282 => 
+    array (
+      0 => 'Lengow_FeedTest::testEnd',
+    ),
+    283 => 
+    array (
+      0 => 'Lengow_FeedTest::testEnd',
+    ),
+    285 => 
+    array (
+      0 => 'Lengow_FeedTest::testEnd',
+    ),
+    286 => 
+    array (
+      0 => 'Lengow_FeedTest::testEnd',
+    ),
+    287 => 
+    array (
+      0 => 'Lengow_FeedTest::testEnd',
+    ),
+    288 => 
+    array (
+      0 => 'Lengow_FeedTest::testEnd',
+    ),
+    290 => 
+    array (
+      0 => 'Lengow_FeedTest::testEnd',
+    ),
+    291 => 
+    array (
+      0 => 'Lengow_FeedTest::testEnd',
+    ),
+    292 => 
+    array (
+      0 => 'Lengow_FeedTest::testEnd',
+    ),
+    293 => 
+    array (
+      0 => 'Lengow_FeedTest::testEnd',
+    ),
+    294 => 
+    array (
+    ),
+    295 => 
+    array (
+    ),
+    296 => 
+    array (
+    ),
+    297 => 
+    array (
+    ),
+    298 => 
+    array (
+    ),
+    301 => 
+    array (
+      0 => 'Lengow_FeedTest::testEnd',
+    ),
+    302 => NULL,
+    304 => 
+    array (
+      0 => 'Lengow_FeedTest::testEnd',
+    ),
+    305 => NULL,
+    315 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    316 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    317 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    318 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    319 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    320 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    321 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    322 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    323 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    324 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    325 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    326 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    328 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    329 => NULL,
+    330 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    331 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    332 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    333 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    334 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    335 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    336 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    337 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    338 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    340 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    342 => NULL,
+    343 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    344 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    345 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    346 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    347 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    348 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    349 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    350 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    351 => 
+    array (
+      0 => 'Lengow_FeedTest::test_format_fields',
+    ),
+    352 => NULL,
+    363 => 
+    array (
+      0 => 'Lengow_FeedTest::test_indent_yaml',
+    ),
+    364 => 
+    array (
+      0 => 'Lengow_FeedTest::test_indent_yaml',
+    ),
+    365 => 
+    array (
+      0 => 'Lengow_FeedTest::test_indent_yaml',
+    ),
+    366 => 
+    array (
+      0 => 'Lengow_FeedTest::test_indent_yaml',
+    ),
+    367 => 
+    array (
+      0 => 'Lengow_FeedTest::test_indent_yaml',
+    ),
+    369 => 
+    array (
+      0 => 'Lengow_FeedTest::test_indent_yaml',
+    ),
+    370 => NULL,
+    378 => 
+    array (
+      0 => 'Lengow_FeedTest::testGet_url',
+    ),
+    379 => NULL,
+  ),
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-connector.php' => 
+  array (
+    100 => 
+    array (
+    ),
+    101 => 
+    array (
+    ),
+    102 => 
+    array (
+    ),
+    105 => 
+    array (
+    ),
+    106 => NULL,
+    116 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testConnect',
+    ),
+    117 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testConnect',
+    ),
+    119 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testConnect',
+    ),
+    120 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testConnect',
+    ),
+    122 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testConnect',
+    ),
+    124 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testConnect',
+    ),
+    125 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testConnect',
+    ),
+    126 => 
+    array (
+    ),
+    127 => 
+    array (
+    ),
+    128 => 
+    array (
+    ),
+    130 => 
+    array (
+    ),
+    131 => NULL,
+    132 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testConnect',
+    ),
+    134 => NULL,
+    148 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testCall',
+    ),
+    150 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testCall',
+    ),
+    151 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testCall',
+    ),
+    152 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testCall',
+    ),
+    153 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testCall',
+    ),
+    154 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testCall',
+    ),
+    155 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testCall',
+    ),
+    158 => 
+    array (
+    ),
+    159 => NULL,
+    172 => 
+    array (
+    ),
+    173 => NULL,
+    186 => 
+    array (
+    ),
+    187 => NULL,
+    200 => 
+    array (
+    ),
+    201 => NULL,
+    214 => 
+    array (
+    ),
+    215 => NULL,
+    228 => 
+    array (
+    ),
+    229 => NULL,
+    242 => 
+    array (
+    ),
+    243 => NULL,
+    257 => 
+    array (
+    ),
+    259 => 
+    array (
+    ),
+    260 => NULL,
+    272 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testFormat',
+    ),
+    273 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testFormat',
+    ),
+    274 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testFormat',
+    ),
+    275 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testFormat',
+    ),
+    276 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testFormat',
+    ),
+    277 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testFormat',
+    ),
+    278 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testFormat',
+    ),
+    279 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testFormat',
+    ),
+    280 => NULL,
+    281 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testFormat',
+    ),
+    298 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    299 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    301 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    303 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    304 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    305 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    307 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    308 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    309 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    310 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    311 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    312 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    313 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    314 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    315 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    316 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    318 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    319 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    321 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    322 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    323 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    324 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    325 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    326 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    327 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    328 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    329 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    330 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    331 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    332 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    333 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    334 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    335 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    336 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    337 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    338 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    339 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    340 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    341 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    342 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    343 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    344 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    345 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    346 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    347 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    348 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    349 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    350 => 
+    array (
+    ),
+    351 => 
+    array (
+    ),
+    352 => 
+    array (
+    ),
+    353 => 
+    array (
+    ),
+    354 => 
+    array (
+    ),
+    355 => 
+    array (
+    ),
+    356 => NULL,
+    357 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    358 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    359 => 
+    array (
+    ),
+    360 => 
+    array (
+    ),
+    362 => 
+    array (
+    ),
+    363 => 
+    array (
+    ),
+    364 => 
+    array (
+    ),
+    365 => 
+    array (
+    ),
+    366 => 
+    array (
+    ),
+    367 => 
+    array (
+    ),
+    368 => NULL,
+    370 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testMake_request',
+    ),
+    371 => NULL,
+    379 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testGet_access_id',
+    ),
+    380 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testGet_access_id',
+    ),
+    381 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testGet_access_id',
+    ),
+    382 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testGet_access_id',
+    ),
+    384 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testGet_access_id',
+    ),
+    385 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testGet_access_id',
+    ),
+    386 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testGet_access_id',
+    ),
+    387 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testGet_access_id',
+    ),
+    388 => NULL,
+    389 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testGet_access_id',
+    ),
+    391 => NULL,
+    404 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testQuery_api',
+    ),
+    405 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testQuery_api',
+    ),
+    406 => NULL,
+    408 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testQuery_api',
+    ),
+    409 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testQuery_api',
+    ),
+    410 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testQuery_api',
+    ),
+    411 => NULL,
+    412 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testQuery_api',
+    ),
+    413 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testQuery_api',
+    ),
+    414 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testQuery_api',
+    ),
+    415 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testQuery_api',
+    ),
+    416 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testQuery_api',
+    ),
+    418 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testQuery_api',
+    ),
+    419 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testQuery_api',
+    ),
+    420 => 
+    array (
+    ),
+    423 => 
+    array (
+      0 => 'Lengow_ConnectorTest::testQuery_api',
+    ),
+    424 => NULL,
+  ),
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-import.php' => 
+  array (
+    116 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    117 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    118 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    119 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    120 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    121 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    122 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    123 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    124 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    127 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    128 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    129 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    130 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    131 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    132 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    133 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    136 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    137 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    138 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    139 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    140 => 
+    array (
+    ),
+    141 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    142 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    143 => 
+    array (
+      0 => 'Lengow_ImportTest::test__construct',
+    ),
+    151 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    152 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    153 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    154 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    155 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    156 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    158 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    159 => NULL,
+    161 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    162 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    163 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    166 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    167 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    168 => 
+    array (
+    ),
+    169 => 
+    array (
+    ),
+    170 => 
+    array (
+    ),
+    171 => 
+    array (
+    ),
+    172 => 
+    array (
+    ),
+    173 => 
+    array (
+    ),
+    174 => 
+    array (
+    ),
+    175 => 
+    array (
+    ),
+    176 => 
+    array (
+    ),
+    177 => 
+    array (
+    ),
+    178 => 
+    array (
+    ),
+    179 => 
+    array (
+    ),
+    180 => 
+    array (
+    ),
+    181 => 
+    array (
+    ),
+    182 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    183 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    184 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    185 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    186 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    187 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    188 => 
+    array (
+    ),
+    189 => 
+    array (
+    ),
+    190 => 
+    array (
+    ),
+    191 => 
+    array (
+    ),
+    192 => 
+    array (
+    ),
+    193 => 
+    array (
+    ),
+    194 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    195 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    197 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    198 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    200 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    203 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    204 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    205 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    206 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    207 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    209 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    210 => 
+    array (
+    ),
+    211 => 
+    array (
+    ),
+    212 => 
+    array (
+    ),
+    213 => 
+    array (
+    ),
+    214 => 
+    array (
+    ),
+    215 => 
+    array (
+    ),
+    217 => 
+    array (
+    ),
+    218 => 
+    array (
+    ),
+    219 => 
+    array (
+    ),
+    220 => 
+    array (
+    ),
+    221 => 
+    array (
+    ),
+    222 => 
+    array (
+    ),
+    223 => 
+    array (
+    ),
+    224 => 
+    array (
+    ),
+    225 => 
+    array (
+    ),
+    226 => 
+    array (
+    ),
+    227 => 
+    array (
+    ),
+    228 => 
+    array (
+    ),
+    229 => 
+    array (
+    ),
+    231 => 
+    array (
+    ),
+    232 => 
+    array (
+    ),
+    233 => 
+    array (
+    ),
+    234 => 
+    array (
+    ),
+    235 => 
+    array (
+    ),
+    236 => 
+    array (
+    ),
+    238 => 
+    array (
+    ),
+    239 => 
+    array (
+    ),
+    240 => 
+    array (
+    ),
+    241 => 
+    array (
+    ),
+    242 => 
+    array (
+    ),
+    243 => 
+    array (
+    ),
+    244 => 
+    array (
+    ),
+    245 => 
+    array (
+    ),
+    246 => 
+    array (
+    ),
+    248 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    249 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    250 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    251 => 
+    array (
+    ),
+    253 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    254 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    255 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    256 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    257 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    258 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    259 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    260 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    261 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    262 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    263 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    264 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    265 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    266 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    267 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    268 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    269 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    270 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    271 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    272 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    273 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    274 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    275 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    276 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    277 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    278 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    279 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    280 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    281 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    282 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    283 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    284 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    287 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    288 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    289 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    290 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    291 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    292 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    293 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    294 => 
+    array (
+    ),
+    296 => 
+    array (
+    ),
+    297 => NULL,
+    299 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    300 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    302 => 
+    array (
+      0 => 'Lengow_ImportTest::testExec',
+    ),
+    305 => 
+    array (
+    ),
+    313 => 
+    array (
+      0 => 'Lengow_ImportTest::test_check_credentials',
+    ),
+    314 => 
+    array (
+      0 => 'Lengow_ImportTest::test_check_credentials',
+    ),
+    315 => 
+    array (
+      0 => 'Lengow_ImportTest::test_check_credentials',
+    ),
+    317 => 
+    array (
+      0 => 'Lengow_ImportTest::test_check_credentials',
+    ),
+    318 => NULL,
+    320 => 
+    array (
+      0 => 'Lengow_ImportTest::test_check_credentials',
+    ),
+    321 => NULL,
+    331 => 
+    array (
+    ),
+    332 => 
+    array (
+    ),
+    333 => 
+    array (
+    ),
+    335 => 
+    array (
+    ),
+    336 => 
+    array (
+    ),
+    337 => 
+    array (
+    ),
+    338 => 
+    array (
+    ),
+    339 => 
+    array (
+    ),
+    340 => 
+    array (
+    ),
+    341 => 
+    array (
+    ),
+    343 => 
+    array (
+    ),
+    344 => 
+    array (
+    ),
+    345 => 
+    array (
+    ),
+    346 => 
+    array (
+    ),
+    347 => 
+    array (
+    ),
+    348 => 
+    array (
+    ),
+    349 => 
+    array (
+    ),
+    350 => 
+    array (
+    ),
+    351 => 
+    array (
+    ),
+    352 => 
+    array (
+    ),
+    353 => 
+    array (
+    ),
+    355 => 
+    array (
+    ),
+    356 => 
+    array (
+    ),
+    357 => 
+    array (
+    ),
+    358 => 
+    array (
+    ),
+    359 => 
+    array (
+    ),
+    360 => 
+    array (
+    ),
+    361 => 
+    array (
+    ),
+    364 => 
+    array (
+    ),
+    365 => 
+    array (
+    ),
+    366 => 
+    array (
+    ),
+    368 => 
+    array (
+    ),
+    369 => 
+    array (
+    ),
+    370 => 
+    array (
+    ),
+    372 => 
+    array (
+    ),
+    374 => 
+    array (
+    ),
+    375 => 
+    array (
+    ),
+    376 => 
+    array (
+    ),
+    377 => 
+    array (
+    ),
+    379 => 
+    array (
+    ),
+    380 => 
+    array (
+    ),
+    381 => 
+    array (
+    ),
+    383 => 
+    array (
+    ),
+    385 => 
+    array (
+    ),
+    387 => 
+    array (
+    ),
+    388 => 
+    array (
+    ),
+    389 => 
+    array (
+    ),
+    390 => 
+    array (
+    ),
+    391 => NULL,
+    392 => 
+    array (
+    ),
+    393 => 
+    array (
+    ),
+    394 => 
+    array (
+    ),
+    395 => 
+    array (
+    ),
+    396 => 
+    array (
+    ),
+    397 => NULL,
+    398 => 
+    array (
+    ),
+    399 => 
+    array (
+    ),
+    400 => 
+    array (
+    ),
+    401 => 
+    array (
+    ),
+    403 => 
+    array (
+    ),
+    404 => 
+    array (
+    ),
+    405 => 
+    array (
+    ),
+    406 => 
+    array (
+    ),
+    407 => 
+    array (
+    ),
+    408 => NULL,
+    410 => 
+    array (
+    ),
+    411 => 
+    array (
+    ),
+    412 => 
+    array (
+    ),
+    413 => 
+    array (
+    ),
+    414 => 
+    array (
+    ),
+    415 => 
+    array (
+    ),
+    416 => 
+    array (
+    ),
+    417 => 
+    array (
+    ),
+    418 => 
+    array (
+    ),
+    421 => 
+    array (
+    ),
+    422 => NULL,
+    432 => 
+    array (
+    ),
+    433 => 
+    array (
+    ),
+    434 => 
+    array (
+    ),
+    436 => 
+    array (
+    ),
+    437 => 
+    array (
+    ),
+    438 => 
+    array (
+    ),
+    439 => 
+    array (
+    ),
+    440 => 
+    array (
+    ),
+    441 => 
+    array (
+    ),
+    442 => 
+    array (
+    ),
+    443 => 
+    array (
+    ),
+    444 => 
+    array (
+    ),
+    446 => 
+    array (
+    ),
+    447 => 
+    array (
+    ),
+    448 => 
+    array (
+    ),
+    449 => 
+    array (
+    ),
+    450 => 
+    array (
+    ),
+    452 => 
+    array (
+    ),
+    453 => 
+    array (
+    ),
+    454 => NULL,
+    456 => 
+    array (
+    ),
+    457 => 
+    array (
+    ),
+    459 => 
+    array (
+    ),
+    460 => 
+    array (
+    ),
+    461 => 
+    array (
+    ),
+    462 => 
+    array (
+    ),
+    463 => 
+    array (
+    ),
+    465 => 
+    array (
+    ),
+    466 => 
+    array (
+    ),
+    467 => NULL,
+    468 => 
+    array (
+    ),
+    469 => 
+    array (
+    ),
+    471 => 
+    array (
+    ),
+    472 => 
+    array (
+    ),
+    473 => 
+    array (
+    ),
+    474 => 
+    array (
+    ),
+    475 => 
+    array (
+    ),
+    476 => 
+    array (
+    ),
+    477 => 
+    array (
+    ),
+    478 => 
+    array (
+    ),
+    480 => 
+    array (
+    ),
+    481 => 
+    array (
+    ),
+    482 => NULL,
+    483 => 
+    array (
+    ),
+    486 => 
+    array (
+    ),
+    488 => 
+    array (
+    ),
+    489 => 
+    array (
+    ),
+    490 => 
+    array (
+    ),
+    491 => 
+    array (
+    ),
+    492 => 
+    array (
+    ),
+    493 => 
+    array (
+    ),
+    495 => 
+    array (
+    ),
+    496 => 
+    array (
+    ),
+    497 => 
+    array (
+    ),
+    498 => 
+    array (
+    ),
+    499 => 
+    array (
+    ),
+    500 => 
+    array (
+    ),
+    501 => 
+    array (
+    ),
+    503 => 
+    array (
+    ),
+    504 => 
+    array (
+    ),
+    505 => 
+    array (
+    ),
+    506 => 
+    array (
+    ),
+    507 => 
+    array (
+    ),
+    508 => 
+    array (
+    ),
+    509 => 
+    array (
+    ),
+    510 => 
+    array (
+    ),
+    511 => 
+    array (
+    ),
+    513 => 
+    array (
+    ),
+    514 => 
+    array (
+    ),
+    515 => 
+    array (
+    ),
+    516 => NULL,
+    518 => 
+    array (
+    ),
+    519 => 
+    array (
+    ),
+    520 => NULL,
+    521 => 
+    array (
+    ),
+    522 => 
+    array (
+    ),
+    523 => 
+    array (
+    ),
+    524 => 
+    array (
+    ),
+    525 => 
+    array (
+    ),
+    526 => 
+    array (
+    ),
+    527 => 
+    array (
+    ),
+    529 => 
+    array (
+    ),
+    530 => 
+    array (
+    ),
+    532 => 
+    array (
+    ),
+    533 => 
+    array (
+    ),
+    534 => 
+    array (
+    ),
+    535 => NULL,
+    536 => 
+    array (
+    ),
+    537 => 
+    array (
+    ),
+    538 => 
+    array (
+    ),
+    539 => NULL,
+    540 => 
+    array (
+    ),
+    543 => 
+    array (
+    ),
+    545 => 
+    array (
+    ),
+    546 => NULL,
+    554 => 
+    array (
+      0 => 'Lengow_ImportTest::testIs_in_process',
+    ),
+    555 => 
+    array (
+      0 => 'Lengow_ImportTest::testIs_in_process',
+    ),
+    557 => 
+    array (
+      0 => 'Lengow_ImportTest::testIs_in_process',
+    ),
+    558 => 
+    array (
+      0 => 'Lengow_ImportTest::testIs_in_process',
+    ),
+    560 => 
+    array (
+      0 => 'Lengow_ImportTest::testIs_in_process',
+    ),
+    561 => NULL,
+    563 => 
+    array (
+      0 => 'Lengow_ImportTest::testIs_in_process',
+    ),
+    564 => NULL,
+    566 => 
+    array (
+      0 => 'Lengow_ImportTest::testIs_in_process',
+    ),
+    567 => NULL,
+    575 => 
+    array (
+    ),
+    576 => 
+    array (
+    ),
+    577 => 
+    array (
+    ),
+    578 => NULL,
+    580 => 
+    array (
+    ),
+    581 => NULL,
+    587 => 
+    array (
+    ),
+    588 => 
+    array (
+    ),
+    589 => 
+    array (
+    ),
+    595 => 
+    array (
+    ),
+    596 => 
+    array (
+    ),
+    597 => 
+    array (
+    ),
+    608 => 
+    array (
+      0 => 'Lengow_ImportTest::testCheck_state',
+    ),
+    609 => 
+    array (
+      0 => 'Lengow_ImportTest::testCheck_state',
+    ),
+    610 => NULL,
+    611 => 
+    array (
+      0 => 'Lengow_ImportTest::testCheck_state',
+    ),
+    612 => 
+    array (
+    ),
+    613 => NULL,
+    615 => 
+    array (
+      0 => 'Lengow_ImportTest::testCheck_state',
+    ),
+    616 => NULL,
+  ),
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-import-order.php' => 
+  array (
+    93 => 
+    array (
+    ),
+    94 => 
+    array (
+    ),
+    95 => 
+    array (
+    ),
+    96 => 
+    array (
+    ),
+    97 => 
+    array (
+    ),
+    98 => 
+    array (
+    ),
+    99 => 
+    array (
+    ),
+    101 => 
+    array (
+    ),
+    102 => 
+    array (
+    ),
+    103 => 
+    array (
+    ),
+    104 => 
+    array (
+    ),
+    105 => 
+    array (
+    ),
+    106 => 
+    array (
+    ),
+    115 => 
+    array (
+    ),
+    116 => 
+    array (
+    ),
+    117 => 
+    array (
+    ),
+    118 => 
+    array (
+    ),
+    119 => 
+    array (
+    ),
+    120 => 
+    array (
+    ),
+    122 => 
+    array (
+    ),
+    123 => 
+    array (
+    ),
+    124 => 
+    array (
+    ),
+    125 => 
+    array (
+    ),
+    126 => 
+    array (
+    ),
+    127 => 
+    array (
+    ),
+    128 => 
+    array (
+    ),
+    130 => 
+    array (
+    ),
+    131 => NULL,
+    133 => 
+    array (
+    ),
+    134 => 
+    array (
+    ),
+    135 => 
+    array (
+    ),
+    136 => 
+    array (
+    ),
+    137 => 
+    array (
+    ),
+    138 => 
+    array (
+    ),
+    139 => 
+    array (
+    ),
+    140 => 
+    array (
+    ),
+    141 => 
+    array (
+    ),
+    142 => 
+    array (
+    ),
+    144 => 
+    array (
+    ),
+    145 => NULL,
+    147 => 
+    array (
+    ),
+    148 => 
+    array (
+    ),
+    149 => NULL,
+    151 => 
+    array (
+    ),
+    155 => 
+    array (
+    ),
+    157 => 
+    array (
+    ),
+    158 => 
+    array (
+    ),
+    159 => 
+    array (
+    ),
+    160 => 
+    array (
+    ),
+    161 => 
+    array (
+    ),
+    162 => 
+    array (
+    ),
+    163 => 
+    array (
+    ),
+    164 => 
+    array (
+    ),
+    165 => 
+    array (
+    ),
+    166 => 
+    array (
+    ),
+    167 => NULL,
+    168 => 
+    array (
+    ),
+    170 => 
+    array (
+    ),
+    171 => 
+    array (
+    ),
+    172 => 
+    array (
+    ),
+    173 => 
+    array (
+    ),
+    174 => 
+    array (
+    ),
+    175 => NULL,
+    177 => 
+    array (
+    ),
+    179 => 
+    array (
+    ),
+    180 => 
+    array (
+    ),
+    181 => 
+    array (
+    ),
+    182 => 
+    array (
+    ),
+    183 => 
+    array (
+    ),
+    184 => 
+    array (
+    ),
+    185 => 
+    array (
+    ),
+    187 => 
+    array (
+    ),
+    188 => NULL,
+    189 => 
+    array (
+    ),
+    190 => 
+    array (
+    ),
+    191 => 
+    array (
+    ),
+    192 => 
+    array (
+    ),
+    193 => 
+    array (
+    ),
+    194 => 
+    array (
+    ),
+    195 => 
+    array (
+    ),
+    196 => 
+    array (
+    ),
+    197 => 
+    array (
+    ),
+    198 => 
+    array (
+    ),
+    199 => 
+    array (
+    ),
+    200 => 
+    array (
+    ),
+    203 => 
+    array (
+    ),
+    204 => 
+    array (
+    ),
+    205 => 
+    array (
+    ),
+    206 => 
+    array (
+    ),
+    208 => 
+    array (
+    ),
+    209 => 
+    array (
+    ),
+    210 => 
+    array (
+    ),
+    211 => 
+    array (
+    ),
+    212 => 
+    array (
+    ),
+    214 => 
+    array (
+    ),
+    215 => 
+    array (
+    ),
+    216 => 
+    array (
+    ),
+    217 => 
+    array (
+    ),
+    219 => 
+    array (
+    ),
+    220 => NULL,
+    222 => 
+    array (
+    ),
+    223 => NULL,
+    236 => 
+    array (
+    ),
+    237 => 
+    array (
+    ),
+    238 => 
+    array (
+    ),
+    239 => 
+    array (
+    ),
+    240 => 
+    array (
+    ),
+    241 => 
+    array (
+    ),
+    242 => 
+    array (
+    ),
+    243 => 
+    array (
+    ),
+    245 => 
+    array (
+    ),
+    246 => NULL,
+    254 => 
+    array (
+    ),
+    255 => 
+    array (
+    ),
+    256 => 
+    array (
+    ),
+    257 => 
+    array (
+    ),
+    258 => 
+    array (
+    ),
+    259 => 
+    array (
+    ),
+    260 => 
+    array (
+    ),
+    261 => 
+    array (
+    ),
+    262 => 
+    array (
+    ),
+    263 => 
+    array (
+    ),
+    264 => 
+    array (
+    ),
+    265 => 
+    array (
+    ),
+    266 => 
+    array (
+    ),
+    267 => 
+    array (
+    ),
+    268 => 
+    array (
+    ),
+    269 => 
+    array (
+    ),
+    270 => 
+    array (
+    ),
+    271 => 
+    array (
+    ),
+    273 => 
+    array (
+    ),
+    274 => 
+    array (
+    ),
+    275 => 
+    array (
+    ),
+    276 => 
+    array (
+    ),
+    277 => 
+    array (
+    ),
+    279 => 
+    array (
+    ),
+    280 => NULL,
+    282 => 
+    array (
+    ),
+    283 => NULL,
+    289 => 
+    array (
+    ),
+    290 => 
+    array (
+    ),
+    291 => 
+    array (
+    ),
+    292 => 
+    array (
+    ),
+    293 => 
+    array (
+    ),
+    294 => 
+    array (
+    ),
+    295 => 
+    array (
+    ),
+    305 => 
+    array (
+    ),
+    306 => 
+    array (
+    ),
+    307 => 
+    array (
+    ),
+    308 => 
+    array (
+    ),
+    309 => 
+    array (
+    ),
+    310 => 
+    array (
+    ),
+    311 => 
+    array (
+    ),
+    312 => 
+    array (
+    ),
+    313 => 
+    array (
+    ),
+    314 => 
+    array (
+    ),
+    315 => 
+    array (
+    ),
+    316 => 
+    array (
+    ),
+    317 => 
+    array (
+    ),
+    318 => 
+    array (
+    ),
+    319 => 
+    array (
+    ),
+    321 => 
+    array (
+    ),
+    322 => 
+    array (
+    ),
+    323 => 
+    array (
+    ),
+    324 => 
+    array (
+    ),
+    325 => 
+    array (
+    ),
+    326 => NULL,
+    327 => 
+    array (
+    ),
+    328 => 
+    array (
+    ),
+    329 => 
+    array (
+    ),
+    330 => 
+    array (
+    ),
+    331 => 
+    array (
+    ),
+    332 => 
+    array (
+    ),
+    333 => 
+    array (
+    ),
+    334 => 
+    array (
+    ),
+    336 => 
+    array (
+    ),
+    337 => 
+    array (
+    ),
+    338 => 
+    array (
+    ),
+    339 => 
+    array (
+    ),
+    340 => 
+    array (
+    ),
+    341 => 
+    array (
+    ),
+    342 => 
+    array (
+    ),
+    343 => 
+    array (
+    ),
+    344 => 
+    array (
+    ),
+    346 => 
+    array (
+    ),
+    347 => 
+    array (
+    ),
+    348 => NULL,
+    349 => 
+    array (
+    ),
+    351 => 
+    array (
+    ),
+    352 => NULL,
+    360 => 
+    array (
+    ),
+    361 => 
+    array (
+    ),
+    362 => 
+    array (
+    ),
+    364 => 
+    array (
+    ),
+    365 => 
+    array (
+    ),
+    366 => 
+    array (
+    ),
+    367 => 
+    array (
+    ),
+    368 => 
+    array (
+    ),
+    369 => 
+    array (
+    ),
+    370 => 
+    array (
+    ),
+    371 => 
+    array (
+    ),
+    373 => 
+    array (
+    ),
+    374 => 
+    array (
+    ),
+    375 => 
+    array (
+    ),
+    376 => 
+    array (
+    ),
+    377 => 
+    array (
+    ),
+    378 => 
+    array (
+    ),
+    379 => 
+    array (
+    ),
+    380 => 
+    array (
+    ),
+    382 => 
+    array (
+    ),
+    383 => 
+    array (
+    ),
+    384 => 
+    array (
+    ),
+    385 => 
+    array (
+    ),
+    387 => 
+    array (
+    ),
+    388 => 
+    array (
+    ),
+    389 => 
+    array (
+    ),
+    390 => 
+    array (
+    ),
+    398 => 
+    array (
+    ),
+    400 => 
+    array (
+    ),
+    401 => 
+    array (
+    ),
+    402 => 
+    array (
+    ),
+    403 => 
+    array (
+    ),
+    406 => 
+    array (
+    ),
+    407 => 
+    array (
+    ),
+    409 => 
+    array (
+    ),
+    410 => 
+    array (
+    ),
+    411 => 
+    array (
+    ),
+    412 => 
+    array (
+    ),
+    413 => 
+    array (
+    ),
+    414 => 
+    array (
+    ),
+    415 => 
+    array (
+    ),
+    417 => 
+    array (
+    ),
+    418 => 
+    array (
+    ),
+    419 => 
+    array (
+    ),
+    420 => 
+    array (
+    ),
+    421 => 
+    array (
+    ),
+    423 => 
+    array (
+    ),
+    424 => 
+    array (
+    ),
+    426 => 
+    array (
+    ),
+    427 => 
+    array (
+    ),
+    428 => 
+    array (
+    ),
+    429 => 
+    array (
+    ),
+    430 => 
+    array (
+    ),
+    432 => 
+    array (
+    ),
+    433 => NULL,
+    434 => 
+    array (
+    ),
+    436 => NULL,
+  ),
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-marketplace.php' => 
+  array (
+    68 => 
+    array (
+    ),
+    69 => 
+    array (
+    ),
+    70 => 
+    array (
+    ),
+    71 => 
+    array (
+    ),
+    72 => 
+    array (
+    ),
+    73 => 
+    array (
+    ),
+    74 => 
+    array (
+    ),
+    75 => 
+    array (
+    ),
+    76 => 
+    array (
+    ),
+    77 => NULL,
+    78 => 
+    array (
+    ),
+    79 => 
+    array (
+    ),
+    80 => 
+    array (
+    ),
+    81 => 
+    array (
+    ),
+    82 => 
+    array (
+    ),
+    83 => 
+    array (
+    ),
+    84 => 
+    array (
+    ),
+    85 => 
+    array (
+    ),
+    86 => 
+    array (
+    ),
+    87 => 
+    array (
+    ),
+    88 => 
+    array (
+    ),
+    89 => 
+    array (
+    ),
+    90 => 
+    array (
+    ),
+    91 => 
+    array (
+    ),
+    92 => 
+    array (
+    ),
+    93 => 
+    array (
+    ),
+    94 => 
+    array (
+    ),
+    95 => 
+    array (
+    ),
+    96 => 
+    array (
+    ),
+    97 => 
+    array (
+    ),
+    98 => 
+    array (
+    ),
+    99 => 
+    array (
+    ),
+    100 => 
+    array (
+    ),
+    101 => 
+    array (
+    ),
+    102 => 
+    array (
+    ),
+    103 => 
+    array (
+    ),
+    104 => 
+    array (
+    ),
+    105 => 
+    array (
+    ),
+    106 => 
+    array (
+    ),
+    112 => 
+    array (
+    ),
+    113 => 
+    array (
+    ),
+    114 => 
+    array (
+    ),
+    115 => 
+    array (
+    ),
+    125 => 
+    array (
+    ),
+    126 => 
+    array (
+    ),
+    127 => NULL,
+    129 => 
+    array (
+    ),
+    130 => NULL,
+  ),
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-configuration.php' => 
+  array (
+    26 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    27 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    28 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    32 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    33 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    34 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    35 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    37 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    38 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    40 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    42 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    43 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    44 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    46 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    47 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    48 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    50 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    51 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    52 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    54 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    55 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    56 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    57 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    60 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    62 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    64 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    66 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    68 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    71 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    74 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    76 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    77 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    78 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    79 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    81 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    83 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    84 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    86 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    88 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    89 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    90 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    91 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    92 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    94 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    95 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    96 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    97 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    98 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    100 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    101 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    102 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    104 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    105 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    106 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    108 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    110 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    111 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    112 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    113 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    115 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    117 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    118 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    119 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    120 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    121 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    123 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    124 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    125 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    126 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    128 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    130 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    131 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    132 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    134 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    136 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    137 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    138 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    140 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    141 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    142 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    144 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    145 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    146 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    147 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    148 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    150 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_keys',
+    ),
+    151 => NULL,
+    162 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet',
+    ),
+    163 => NULL,
+    172 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testAdd_value',
+    ),
+    173 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testAdd_value',
+    ),
+    182 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testUpdate_value',
+    ),
+    183 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testUpdate_value',
+    ),
+    191 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testDelete',
+    ),
+    192 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testDelete',
+    ),
+    203 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    204 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    205 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    206 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    207 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    208 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    209 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    210 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    211 => NULL,
+    212 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    213 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    214 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    215 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    216 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    217 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    218 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    219 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    220 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    221 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    224 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    226 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testGet_all_values',
+    ),
+    227 => NULL,
+    236 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testCheck_and_log',
+    ),
+    238 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testCheck_and_log',
+    ),
+    239 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testCheck_and_log',
+    ),
+    240 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testCheck_and_log',
+    ),
+    241 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testCheck_and_log',
+    ),
+    242 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testCheck_and_log',
+    ),
+    243 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testCheck_and_log',
+    ),
+    244 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testCheck_and_log',
+    ),
+    245 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testCheck_and_log',
+    ),
+    246 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testCheck_and_log',
+    ),
+    247 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testCheck_and_log',
+    ),
+    248 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testCheck_and_log',
+    ),
+    249 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testCheck_and_log',
+    ),
+    250 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testCheck_and_log',
+    ),
+    251 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testCheck_and_log',
+    ),
+    252 => 
+    array (
+      0 => 'Lengow_ConfigurationTest::testCheck_and_log',
+    ),
+  ),
+));
+$coverage->setTests(array (
+  'UNCOVERED_FILES_FROM_WHITELIST' => 
+  array (
+    'size' => 'unknown',
+    'status' => NULL,
+  ),
+  'Lengow_CheckTest::testIs_valid_auth' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_CheckTest::testGet_admin_content' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ConfigurationTest::testGet_keys' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ConfigurationTest::testGet' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ConfigurationTest::testAdd_value' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ConfigurationTest::testUpdate_value' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ConfigurationTest::testDelete' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ConfigurationTest::testGet_all_values' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ConfigurationTest::testCheck_and_log' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ConnectorTest::testConnect' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ConnectorTest::testCall' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ConnectorTest::testMake_request' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ConnectorTest::testGet_access_id' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ConnectorTest::testFormat' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ConnectorTest::testQuery_api' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ExportTest::test_set_legacy_fields' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ExportTest::testGet_total_product' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ExportTest::test_set_format' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ExportTest::test_set_product_ids' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ExportTest::test_set_product_types' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ExportTest::test_set_log_output' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ExportTest::testExec' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ExportTest::test_export' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ExportTest::testGet_total_export_product' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ExportTest::testGet_export_params' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ExportTest::test_get_export_ids' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_FeedTest::test_init_export_file' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_FeedTest::testWrite' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_FeedTest::test_get_html_header' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_FeedTest::test_get_header' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_FeedTest::test_get_body' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_FeedTest::test_get_footer' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_FeedTest::testEnd' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_FeedTest::test_format_fields' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_FeedTest::test_indent_yaml' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_FeedTest::testGet_url' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_FileTest::testGet_link' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_FileTest::testGet_path' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_FileTest::testGet_folder_path' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_FileTest::testExists' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_FileTest::testGet_files_from_folder' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ImportTest::test__construct' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ImportTest::testExec' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ImportTest::test_check_credentials' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ImportTest::testIs_in_process' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ImportTest::testCheck_state' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_MainTest::testGet_export_url' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_MainTest::testGet_cron_url' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_MainTest::testCheck_ip' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_MainTest::testIs_new_merchant' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_MainTest::testGet_token' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_MainTest::testFind_by_token' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_MainTest::testSet_log_message' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_MainTest::testDecode_log_message' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_MainTest::testUpdate_date_import' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_MainTest::testGet_last_import' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_MainTest::testClean_data' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_MainTest::testClean_html' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_MainTest::testReplace_accented_chars' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_OrderTest::testGet_id_order_from_lengow_orders' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ProductTest::testGet_data' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ProductTest::test_get_price' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ProductTest::test_get_categories' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ProductTest::test_get_attribute_data' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ProductTest::test_get_post_meta_data' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ProductTest::testGet_attributes' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ProductTest::testGet_post_metas' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ProductTest::testSearch_product' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ProductTest::testPublish' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_ProductTest::testGet_lengow_products' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_SyncTest::testSync' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_SyncTest::testCheck_sync_shop' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_SyncTest::testSet_cms_option' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_SyncTest::testGet_statistic' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_SyncTest::testGet_status_account' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_TranslationTest::testT' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_TranslationTest::testTranslate_final' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+  'Lengow_TranslationTest::testLoad_file' => 
+  array (
+    'size' => 'unknown',
+    'status' => 0,
+  ),
+));
+
+$filter = $coverage->filter();
+$filter->setWhitelistedFiles(array (
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-check.php' => true,
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-configuration.php' => true,
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-connector.php' => true,
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-exception.php' => true,
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-export.php' => true,
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-feed.php' => true,
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-file.php' => true,
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-import-order.php' => true,
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-import.php' => true,
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-install.php' => true,
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-log.php' => true,
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-main.php' => true,
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-marketplace.php' => true,
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-order.php' => true,
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-product.php' => true,
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-sync.php' => true,
+  '/home/alexandrerabottin/Documents/images-docker/0-compose-install/w352-w200/wordpress/wp-content/plugins/lengow-woocommerce/includes/class-lengow-translation.php' => true,
+));
+
+return $coverage;

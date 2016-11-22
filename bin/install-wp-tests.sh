@@ -95,7 +95,11 @@ install_test_suite() {
 		echo "require_once(ABSPATH . 'wp-settings.php');" >> $WP_CORE_DIR/wp-config.php
 	fi
 	DIR="$(dirname $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd ))"
-	if [ ! -d "/tmp/wordpress/wp-content/plugins/lengow-woocommerce" ]; then
+	chmod 777 -R $DIR
+	if [ -f "/tmp/wordpress/wp-content/plugins/lengow-woocommerce" ]; then
+	    rm /tmp/wordpress/wp-content/plugins/lengow-woocommerce
+	fi
+	if [ ! -f "/tmp/wordpress/wp-content/plugins/lengow-woocommerce" ]; then
         ln -s $DIR /tmp/wordpress/wp-content/plugins
     fi
 }
@@ -130,16 +134,19 @@ install_db() {
 }
 
 install_wc() {
-    wp core install --url=test.test --title="test wordpress" --admin_user=admin --admin_email=admin@admin.fr --admin_password=admin1234
-    wp plugin install woocommerce
-    wp plugin activate woocommerce
+    wp core install --url=test.test --title="test wordpress" --admin_user=admin --admin_email=admin@admin.fr --admin_password=admin1234 --allow-root
+    wp plugin install woocommerce --allow-root
+    wp plugin activate woocommerce --allow-root
     WP_TEST_UNIT="true"
     export WP_TEST_UNIT
-    wp plugin activate lengow-woocommerce
+    wp plugin activate lengow-woocommerce --allow-root
 }
 
 install_wp
+echo 'install_wp finished'
 install_test_suite
+echo 'install_test_suite finished'
 install_db
+echo 'install_db finished'
 cd /tmp/wordpress/
 install_wc

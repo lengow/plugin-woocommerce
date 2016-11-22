@@ -1,0 +1,91 @@
+TAP version 13
+ok 1 - Lengow_CheckTest::testIs_valid_auth
+ok 2 - Lengow_CheckTest::testGet_admin_content
+ok 3 - Lengow_ConfigurationTest::testGet_keys
+ok 4 - Lengow_ConfigurationTest::testGet
+ok 5 - Lengow_ConfigurationTest::testAdd_value
+ok 6 - Lengow_ConfigurationTest::testUpdate_value
+ok 7 - Lengow_ConfigurationTest::testDelete
+ok 8 - Lengow_ConfigurationTest::testGet_all_values
+ok 9 - Lengow_ConfigurationTest::testCheck_and_log
+ok 10 - Lengow_ConnectorTest::testConnect
+ok 11 - Lengow_ConnectorTest::testCall
+ok 12 - Lengow_ConnectorTest::testMake_request
+ok 13 - Lengow_ConnectorTest::testGet_access_id
+ok 14 - Lengow_ConnectorTest::testFormat
+ok 15 - Lengow_ConnectorTest::testQuery_api
+ok 16 - Lengow_ExportTest::test_set_legacy_fields
+ok 17 - Lengow_ExportTest::testGet_total_product
+ok 18 - Lengow_ExportTest::test_set_format
+ok 19 - Lengow_ExportTest::test_set_product_ids
+ok 20 - Lengow_ExportTest::test_set_product_types
+ok 21 - Lengow_ExportTest::test_set_log_output
+ok 22 - Lengow_ExportTest::testExec
+ok 23 - Lengow_ExportTest::test_export
+ok 24 - Lengow_ExportTest::testGet_total_export_product
+ok 25 - Lengow_ExportTest::testGet_export_params
+ok 26 - Lengow_ExportTest::test_get_export_ids
+ok 27 - Lengow_FeedTest::test_init_export_file
+ok 28 - Lengow_FeedTest::testWrite
+# "plop"|"test"|"ici"
+ok 29 - Lengow_FeedTest::test_get_html_header
+ok 30 - Lengow_FeedTest::test_get_header
+ok 31 - Lengow_FeedTest::test_get_body
+ok 32 - Lengow_FeedTest::test_get_footer
+ok 33 - Lengow_FeedTest::testEnd
+ok 34 - Lengow_FeedTest::test_format_fields
+ok 35 - Lengow_FeedTest::test_indent_yaml
+ok 36 - Lengow_FeedTest::testGet_url
+ok 37 - Lengow_FileTest::testGet_link
+ok 38 - Lengow_FileTest::testGet_path
+ok 39 - Lengow_FileTest::testGet_folder_path
+ok 40 - Lengow_FileTest::testExists
+ok 41 - Lengow_FileTest::testGet_files_from_folder
+ok 42 - Lengow_ImportTest::test__construct
+ok 43 - Lengow_ImportTest::testExec
+ok 44 - Lengow_ImportTest::test_check_credentials
+ok 45 - Lengow_ImportTest::testIs_in_process
+ok 46 - Lengow_ImportTest::testCheck_state
+ok 47 - Lengow_Import_OrderTest::testImport_order
+ok 48 - Lengow_Import_OrderTest::test_create_lengow_order
+not ok 49 - Lengow_InstallTest::testUpdate # TODO Incomplete Test
+not ok 50 - Lengow_InstallTest::testCheck_field_exists # TODO Incomplete Test
+not ok 51 - Lengow_InstallTest::testCheck_field_and_drop # TODO Incomplete Test
+not ok 52 - Lengow_InstallTest::testRename_configuration_key # TODO Incomplete Test
+not ok 53 - Lengow_InstallTest::testSet_installation_status # TODO Incomplete Test
+not ok 54 - Lengow_InstallTest::testIs_installation_in_progress # TODO Incomplete Test
+ok 55 - Lengow_MainTest::testGet_export_url
+ok 56 - Lengow_MainTest::testGet_cron_url
+ok 57 - Lengow_MainTest::testCheck_ip
+ok 58 - Lengow_MainTest::testIs_new_merchant
+ok 59 - Lengow_MainTest::testGet_token
+ok 60 - Lengow_MainTest::testFind_by_token
+ok 61 - Lengow_MainTest::testSet_log_message
+ok 62 - Lengow_MainTest::testDecode_log_message
+ok 63 - Lengow_MainTest::testUpdate_date_import
+ok 64 - Lengow_MainTest::testGet_last_import
+ok 65 - Lengow_MainTest::testClean_data
+ok 66 - Lengow_MainTest::testClean_html
+ok 67 - Lengow_MainTest::testReplace_accented_chars
+ok 68 - Lengow_MarketplaceTest::testGet_state_lengow
+ok 69 - Lengow_OrderTest::testGet_id_order_from_lengow_orders
+not ok 70 - Lengow_OrderTest::testGet_id_from_lengow_orders # TODO Incomplete Test
+ok 71 - Lengow_ProductTest::testGet_data
+ok 72 - Lengow_ProductTest::test_get_price
+ok 73 - Lengow_ProductTest::test_get_categories
+ok 74 - Lengow_ProductTest::test_get_attribute_data
+ok 75 - Lengow_ProductTest::test_get_post_meta_data
+ok 76 - Lengow_ProductTest::testGet_attributes
+ok 77 - Lengow_ProductTest::testGet_post_metas
+ok 78 - Lengow_ProductTest::testSearch_product
+ok 79 - Lengow_ProductTest::testPublish
+ok 80 - Lengow_ProductTest::testGet_lengow_products
+ok 81 - Lengow_SyncTest::testSync
+ok 82 - Lengow_SyncTest::testCheck_sync_shop
+ok 83 - Lengow_SyncTest::testSet_cms_option
+ok 84 - Lengow_SyncTest::testGet_statistic
+ok 85 - Lengow_SyncTest::testGet_status_account
+ok 86 - Lengow_TranslationTest::testT
+ok 87 - Lengow_TranslationTest::testTranslate_final
+ok 88 - Lengow_TranslationTest::testLoad_file
+1..88
