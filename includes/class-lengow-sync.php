@@ -172,7 +172,8 @@ class Lengow_Sync {
 		$return['total_order'] = 0;
 		$return['nb_order']    = 0;
 		$return['currency']    = '';
-
+		$return['available']   = false;
+		// get stats
 		$result = Lengow_Connector::query_api(
 			'get',
 			'/v3.0/stats',
@@ -187,7 +188,15 @@ class Lengow_Sync {
 			$return['total_order'] = $stats->revenue;
 			$return['nb_order']    = (int) $stats->transactions;
 			$return['currency']    = $result->currency->iso_a3;
+		} else {
+			if ( Lengow_Configuration::get( 'lengow_last_order_statistic_update' ) ) {
+		        return json_decode( Lengow_Configuration::get( 'lengow_order_statistic' ), true );
+	        }
+		    return $return;
 		}
+		if ( $return['total_order'] > 0 || $return['nb_order'] > 0 ) {
+		    $return['available'] = true;
+	    }
 		if ( $return['currency'] && get_woocommerce_currency_symbol( $return['currency'] ) ) {
 			$return['total_order'] = wc_price( $return['total_order'], array( 'currency' => $return['currency'] ) );
 		} else {

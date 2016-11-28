@@ -6,9 +6,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 Lengow_Admin_Settings::post_process();
-$keys   = Lengow_Configuration::get_keys();
-$values = Lengow_Configuration::get_all_values();
-$list_file = Lengow_Log::get_paths();
+$keys      = Lengow_Configuration::get_keys();
+$values    = Lengow_Configuration::get_all_values();
+$list_file = array_reverse( Lengow_Log::get_paths() );
 ?>
 <div class="lgw-container" id="lengow_mainsettings_wrapper" xmlns="http://www.w3.org/1999/html">
 	<?php if ( $values['lengow_preprod_enabled'] == 1 ) : ?>
@@ -74,7 +74,7 @@ $list_file = Lengow_Log::get_paths();
 			</div>
 		</div>
 		<div class="lgw-box">
-			<h2><?php echo $locale->t('global_setting.screen.export_title'); ?></h2>
+			<h2><?php echo $locale->t( 'global_setting.screen.export_title' ); ?></h2>
 			<label class="control-label"><?php echo $keys['lengow_product_types']['label'] ?></label>
 			<div class="form-group">
 				<select class="form-control js-multiple-select" name="lengow_product_types[]" multiple>
@@ -94,8 +94,8 @@ $list_file = Lengow_Log::get_paths();
 			<span class="legend" style="display:block;"><?php echo $keys['lengow_product_types']['legend'] ?></span>
 		</div>
 		<div class="lgw-box">
-			<h2><?php echo $locale->t('global_setting.screen.import_setting_title'); ?></h2>
-			<p><?php echo $locale->t('global_setting.screen.import_setting_description'); ?></p>
+			<h2><?php echo $locale->t( 'global_setting.screen.import_setting_title' ); ?></h2>
+			<p><?php echo $locale->t( 'global_setting.screen.import_setting_description' ); ?></p>
 			<div class="form-group">
 				<div class="lgw-switch <?php echo $values['lengow_import_enabled'] == 1 ? 'checked' : '' ;?>">
 					<label>
@@ -117,7 +117,7 @@ $list_file = Lengow_Log::get_paths();
 						<div class="input-group">
 							<input type="number" name="lengow_import_days" class="form-control" value="<?php echo $values['lengow_import_days'] ?>" min="1" max="99" />
 							<div class="input-group-addon">
-								<div class="unit"><?php echo $locale->t('global_setting.screen.nb_days'); ?></div>
+								<div class="unit"><?php echo $locale->t( 'global_setting.screen.nb_days' ); ?></div>
 							</div>
 							<div class="clearfix"></div>
 						</div>
@@ -146,15 +146,15 @@ $list_file = Lengow_Log::get_paths();
 			<p><?php echo $locale->t( 'global_setting.screen.log_file_description' ); ?></p>
 			<select class="js-log-select js-select lengow_select">
 				<option value="" disabled selected>
-					<?php echo $locale->t('global_setting.screen.please_choose_log')?>
+					<?php echo $locale->t( 'global_setting.screen.please_choose_log' )?>
 				</option>
 				<?php foreach ($list_file as $file) : ?>
 				<option value="<?php echo admin_url('admin.php?page=lengow&tab=lengow_settings');?>&action=download&file=<?php echo $file['short_path']?>">
-					<?php $file_name = explode(".", $file['name']); ?>
-					<?php echo date_format(date_create($file_name[0]), "d F Y");?></option>
+					<?php $file_name = explode('.', $file['name']); ?>
+					<?php echo date_format( date_create( $file_name[0] ), 'd F Y' );?></option>
 				<?php endforeach; ?>
 				<option value="<?php echo admin_url('admin.php?page=lengow&tab=lengow_settings');?>&action=download_all" >
-					<?php echo $locale->t('global_setting.screen.download_all_files')?>
+					<?php echo $locale->t( 'global_setting.screen.download_all_files' )?>
 				</option>
 			</select>
 			<button type="button" class="js-log-btn-download lgw-btn lgw-btn-white" style="display: none;">
