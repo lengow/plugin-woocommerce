@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <a href="<?php echo admin_url('admin.php?page=lengow&tab=lengow_admin_legals'); ?>"
                    class="sub-link" title="Legal"><?php echo $locale->t( 'footer.legals' ) ?></a>
                 | <?php echo $locale->t( 'footer.plugin_lengow' ) ?> -
-                <a href="http://www.lengow.com" target="_blank" class="sub-link" title="Lengow.com">Lengow.com</a>
+                copyright © 2016  <a href="http://www.lengow.com" target="_blank" class="sub-link" title="Lengow.com">Lengow</a>
             </p>
         </div>
     </div>

@@ -39,7 +39,7 @@
 /includes/class-lengow-import.php|a83bcb0f87ac229aaeb5e73eab16b522
 /includes/class-lengow-translation.php|d72f085e0a8cc909249938da1b67edd4
 /includes/class-lengow-connector.php|fbc28fcb891bd3fde07aa2d765391030
-/includes/class-lengow-sync.php|b8d37e7767ea7aefcbb383b402f7f831
+/includes/class-lengow-sync.php|1d1dd0e2f893bd6739be5173d29fad65
 /includes/class-lengow-main.php|edf0401a79c7f2fcd70d0461a40b08e6
 /includes/admin/class-lengow-admin-products.php|61b1588790bddbfea39ea2f6e54086fd
 /includes/admin/class-lengow-admin-settings.php|345bd79254b9f9e997d47d1501113434
@@ -50,7 +50,7 @@
 /includes/admin/views/legals/html-admin-legals.php|dcd82ea0d279cdc231dde98702318d8b
 /includes/admin/views/orders/html-admin-orders.php|4db684ff5a474a49eb5eab08132b9560
 /includes/admin/views/products/html-admin-products.php|dab296de9ea72a790d4a2126e8a1663e
-/includes/admin/views/html-admin-footer.php|5e642e6f7e89658c0fc30b690a05235f
+/includes/admin/views/html-admin-footer.php|881806f460caa38f6204f6696dc6951b
 /includes/admin/views/dashboard/html-admin-dashboard.php|fefab5fbe53cf146f731ffdff10532cd
 /includes/admin/views/dashboard/html-admin-new.php|a611be57400307509f5ad8c073f4bae0
 /includes/admin/views/dashboard/html-admin-status.php|53cfcff3a294f46178c7c3c2fb775ba4

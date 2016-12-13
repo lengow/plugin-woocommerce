@@ -197,7 +197,10 @@ class Lengow_Sync {
 		if ( $return['total_order'] > 0 || $return['nb_order'] > 0 ) {
 		    $return['available'] = true;
 	    }
-		if ( $return['currency'] && get_woocommerce_currency_symbol( $return['currency'] ) ) {
+		if ( $return['currency'] 
+			&& get_woocommerce_currency_symbol( $return['currency'] ) 
+			&& function_exists( 'wc_price' ) 
+		) {
 			$return['total_order'] = wc_price( $return['total_order'], array( 'currency' => $return['currency'] ) );
 		} else {
 			$return['total_order'] = number_format( $return['total_order'], 2, ',', ' ' );
