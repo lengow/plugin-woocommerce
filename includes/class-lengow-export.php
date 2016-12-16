@@ -410,8 +410,7 @@ class Lengow_Export {
 				);
 			}
 			// clean data for next product.
-			unset( $product_data );
-			unset( $product );
+			unset( $product_data, $product );
 			if ( function_exists( 'gc_collect_cycles' ) ) {
 				gc_collect_cycles();
 			}

@@ -332,6 +332,17 @@ class Lengow_Connector {
 				$opts[ CURLOPT_URL ]        = $url . '?' . http_build_query( $args );
 				$opts[ CURLOPT_POSTFIELDS ] = $body;
 				break;
+			case "PATCH":
+				if ( isset( $token ) ) {
+					$opts[ CURLOPT_HTTPHEADER ] = array_merge(
+						$opts[ CURLOPT_HTTPHEADER ],
+						array( 'Content-Type: application/json' )
+					);
+				}
+				$opts[ CURLOPT_URL ]        = $url;
+				$opts[ CURLOPT_POST ] 	    = count( $args );
+				$opts[ CURLOPT_POSTFIELDS ] = json_encode( $args );
+				break;
 			default:
 				$opts[ CURLOPT_URL ]        = $url;
 				$opts[ CURLOPT_POST ]       = count( $args );
@@ -378,8 +389,8 @@ class Lengow_Connector {
 	 */
 	public static function get_access_id() {
 		if ( strlen( Lengow_Configuration::get( 'lengow_account_id' ) ) > 0
-		     && strlen( Lengow_Configuration::get( 'lengow_access_token' ) ) > 0
-		     && strlen( Lengow_Configuration::get( 'lengow_secret_token' ) ) > 0
+			&& strlen( Lengow_Configuration::get( 'lengow_access_token' ) ) > 0
+			&& strlen( Lengow_Configuration::get( 'lengow_secret_token' ) ) > 0
 		) {
 			return array(
 				Lengow_Configuration::get( 'lengow_account_id' ),
