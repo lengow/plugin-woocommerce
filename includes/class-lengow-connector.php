@@ -286,7 +286,7 @@ class Lengow_Connector {
 	 */
 	protected function make_request( $type, $url, $args, $token, $body = '' ) {
 		// define CURLE_OPERATION_TIMEDOUT for old php versions.
-		defined( "CURLE_OPERATION_TIMEDOUT" ) || define( "CURLE_OPERATION_TIMEDOUT", CURLE_OPERATION_TIMEOUTED );
+		defined( 'CURLE_OPERATION_TIMEDOUT' ) || define( 'CURLE_OPERATION_TIMEDOUT', CURLE_OPERATION_TIMEOUTED );
 		$ch = curl_init();
 		// options.
 		$opts = self::$curl_opts;
@@ -309,7 +309,7 @@ class Lengow_Connector {
 		}
 		$url = $url['scheme'] . '://' . $url['host'] . $url['path'];
 		switch ( $type ) {
-			case "GET":
+			case 'GET':
 				$opts[ CURLOPT_URL ] = $url . '?' . http_build_query( $args );
 				Lengow_Main::log(
 					'Connector',
@@ -319,7 +319,7 @@ class Lengow_Connector {
 					)
 				);
 				break;
-			case "PUT":
+			case 'PUT':
 				if ( isset( $token ) ) {
 					$opts[ CURLOPT_HTTPHEADER ] = array_merge(
 						$opts[ CURLOPT_HTTPHEADER ],
@@ -332,7 +332,7 @@ class Lengow_Connector {
 				$opts[ CURLOPT_URL ]        = $url . '?' . http_build_query( $args );
 				$opts[ CURLOPT_POSTFIELDS ] = $body;
 				break;
-			case "PATCH":
+			case 'PATCH':
 				if ( isset( $token ) ) {
 					$opts[ CURLOPT_HTTPHEADER ] = array_merge(
 						$opts[ CURLOPT_HTTPHEADER ],
