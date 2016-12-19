@@ -38,14 +38,14 @@ class Lengow_Sync {
 		$data['plugin_version']                      = LENGOW_VERSION;
 		$data['email']                               = Lengow_Configuration::get( 'admin_email' );
 		$data['return_url']                          = 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
-		$data['shops'][1]['token']                   = Lengow_Main::get_token();
-		$data['shops'][1]['name']                    = Lengow_Configuration::get( 'blogname' );
-		$data['shops'][1]['domain']                  = $_SERVER["SERVER_NAME"];
-		$data['shops'][1]['feed_url']                = Lengow_Main::get_export_url();
-		$data['shops'][1]['cron_url']                = Lengow_Main::get_cron_url();
-		$data['shops'][1]['total_product_number']    = $lengow_export->get_total_product();
-		$data['shops'][1]['exported_product_number'] = $lengow_export->get_total_export_product();
-		$data['shops'][1]['configured']              = self::check_sync_shop();
+		$data['shops'][0]['token']                   = Lengow_Main::get_token();
+		$data['shops'][0]['name']                    = Lengow_Configuration::get( 'blogname' );
+		$data['shops'][0]['domain']                  = $_SERVER["SERVER_NAME"];
+		$data['shops'][0]['feed_url']                = Lengow_Main::get_export_url();
+		$data['shops'][0]['cron_url']                = Lengow_Main::get_cron_url();
+		$data['shops'][0]['total_product_number']    = $lengow_export->get_total_product();
+		$data['shops'][0]['exported_product_number'] = $lengow_export->get_total_export_product();
+		$data['shops'][0]['configured']              = self::check_sync_shop();
 
 		return $data;
 	}
@@ -114,7 +114,7 @@ class Lengow_Sync {
 			'options'        => Lengow_Configuration::get_all_values( false )
 		);
 		$lengow_export    = new Lengow_Export();
-		$data['shops'][1] = array(
+		$data['shops'][0] = array(
 			'enabled'                 => Lengow_Configuration::get( 'lengow_store_enabled' ),
 			'token'                   => Lengow_Main::get_token(),
 			'store_name'              => Lengow_Configuration::get( 'blogname' ),
