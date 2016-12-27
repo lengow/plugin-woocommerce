@@ -33,6 +33,7 @@ class Lengow_Admin_Dashboard {
 				case 'sync':
 					$data = isset( $_POST['data'] ) ? $_POST['data'] : false;
 					Lengow_Sync::sync( $data );
+					Lengow_Sync::get_status_account( true );
 					break;
 			}
 			exit();
@@ -64,11 +65,12 @@ class Lengow_Admin_Dashboard {
 		$stats           = Lengow_Sync::get_statistic();
 		$merchant_status = Lengow_Sync::get_status_account();
 		$is_new_merchant = Lengow_Main::is_new_merchant();
-		$isSync          = isset( $_GET['isSync'] ) ? $_GET['isSync'] : false;
+		$is_sync         = isset( $_GET['isSync'] ) ? $_GET['isSync'] : false;
+		$locale_iso_code = strtolower(substr(get_locale(), 0, 2));
 
 		$refresh_status = admin_url( 'admin.php?action=dashboard_get_process&do_action=refresh_status' );
 
-		if ( $is_new_merchant || $isSync ) {
+		if ( $is_new_merchant || $is_sync ) {
 			include_once 'views/dashboard/html-admin-new.php';
 		} elseif ( ( $merchant_status['type'] == 'free_trial' && $merchant_status['day'] <= 0 )
 		           || $merchant_status['type'] == 'bad_payer'

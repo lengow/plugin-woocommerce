@@ -14,5 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<iframe id="lengow_iframe" scrolling="yes" style="display: none; overflow-y: hidden;' width='580' height='400' frameborder='0' seamless='seamless'" frameBorder="0"></iframe>
 	</div>
 </div>
-<input type="hidden" id="lengow_sync_link" value="<?php echo $isSync; ?>">
+<input type="hidden" id="lengow_sync_link" value="<?php echo $is_sync; ?>">
+<input type="hidden" id="lengow_lang_iso" value="<?php echo $locale_iso_code; ?>">
 <script type="text/javascript">jQuery('body').addClass('lgw-home-iframe');</script>
