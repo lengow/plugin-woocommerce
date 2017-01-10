@@ -122,4 +122,3 @@ if ( $get_params ) {
 } else {
 	$export->exec();
 }
-

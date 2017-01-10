@@ -181,7 +181,7 @@ class Lengow_Check {
 	public function get_information_by_store() {
 		$lengowExport = new Lengow_Export;
 		if ( ! is_null( Lengow_Configuration::get( 'lengow_last_export' ) )
-		     && Lengow_Configuration::get( 'lengow_last_export' ) != ''
+			&& Lengow_Configuration::get( 'lengow_last_export' ) != ''
 		) {
 			$last_export = date( 'Y-m-d H:i:s', Lengow_Configuration::get( 'lengow_last_export' ) );
 		} else {
@@ -228,7 +228,7 @@ class Lengow_Check {
 		$checklist    = array();
 		$file_name    = LENGOW_PLUGIN_PATH . '/toolbox' . DIRECTORY_SEPARATOR . 'checkmd5.csv';
 		$html         = '<h3><i class="fa fa-commenting"></i> '
-		                . $this->_locale->t( 'toolbox.checksum.summary' ) . '</h3>';
+			. $this->_locale->t( 'toolbox.checksum.summary' ) . '</h3>';
 		$file_counter = 0;
 		if ( file_exists( $file_name ) ) {
 			$file_errors  = array();
@@ -278,12 +278,12 @@ class Lengow_Check {
 			$html .= $this->get_admin_content( $checklist );
 			if ( count( $file_errors ) > 0 ) {
 				$html .= '<h3><i class="fa fa-list"></i> '
-				         . $this->_locale->t( 'toolbox.checksum.list_modified_file' ) . '</h3>';
+					. $this->_locale->t( 'toolbox.checksum.list_modified_file' ) . '</h3>';
 				$html .= $this->get_admin_content( $file_errors );
 			}
 			if ( count( $file_deletes ) > 0 ) {
 				$html .= '<h3><i class="fa fa-list"></i> '
-				         . $this->_locale->t( 'toolbox.checksum.list_deleted_file' ) . '</h3>';
+					. $this->_locale->t( 'toolbox.checksum.list_deleted_file' ) . '</h3>';
 				$html .= $this->get_admin_content( $file_deletes );
 			}
 		} else {
@@ -348,13 +348,13 @@ class Lengow_Check {
 					}
 					if ( $check['state'] === 0 ) {
 						if ( isset( $check['help'] )
-						     && isset( $check['help_link'] )
-						     && isset( $check['help_label'] )
+							&& isset( $check['help_link'] )
+							&& isset( $check['help_label'] )
 						) {
 							$out .= '<tr><td colspan="2"><p>' . $check['help'];
 							if ( array_key_exists( 'help_link', $check ) && $check['help_link'] != '' ) {
 								$out .= '<br /><a target="_blank" href="'
-								        . $check['help_link'] . '">' . $check['help_label'] . '</a>';
+									. $check['help_link'] . '">' . $check['help_label'] . '</a>';
 							}
 							$out .= '</p></td></tr>';
 						}
@@ -423,4 +423,3 @@ class Lengow_Check {
 		return function_exists( 'json_decode' );
 	}
 }
-

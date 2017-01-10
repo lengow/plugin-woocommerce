@@ -194,7 +194,7 @@ class Lengow_Feed {
 				return rtrim( $header, self::CSV_SEPARATOR ) . self::EOL;
 			case 'xml':
 				return '<?xml version="1.0" encoding="UTF-8"?>' . self::EOL
-				       . '<catalog>' . self::EOL;
+					. '<catalog>' . self::EOL;
 			case 'json':
 				return '{"catalog":[';
 			case 'yaml':
@@ -394,4 +394,3 @@ class Lengow_Feed {
 		return $this->_file->get_link();
 	}
 }
-

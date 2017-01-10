@@ -212,4 +212,3 @@ class Lengow_File {
 		return $files;
 	}
 }
-

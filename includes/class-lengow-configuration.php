@@ -257,4 +257,3 @@ class Lengow_Configuration {
 		}
 	}
 }
-

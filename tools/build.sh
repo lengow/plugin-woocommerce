@@ -10,30 +10,28 @@
 #     - Remove tools folder
 #     - Remove .git Folder and .gitignore
 
-
-
 remove_if_exist(){
-    if [ -f $1 ]; then
-      rm $1
-    fi
+	if [ -f $1 ]; then
+		rm $1
+	fi
 }
 
 remove_directory(){
-    if [ -d "$1" ]; then
-        rm -rf $1
-    fi
+	if [ -d "$1" ]; then
+		rm -rf $1
+	fi
 }
 remove_files(){
-    DIRECTORY=$1
-    FILE=$2
-    find $DIRECTORY -name $FILE -nowarn -exec rm -rf {} \;
-    echo "- Delete $FILE : ""$VERT""DONE""$NORMAL"""
+	DIRECTORY=$1
+	FILE=$2
+	find $DIRECTORY -name $FILE -nowarn -exec rm -rf {} \;
+	echo "- Delete $FILE : ""$VERT""DONE""$NORMAL"""
 }
 
 remove_directories(){
-    DIRECTORY=$1
-    find $DIRECTORY -maxdepth 1 -mindepth 1 -type d -exec rm -rf {} \;
-    echo "- Delete $FILE : ""$VERT""DONE""$NORMAL"""
+	DIRECTORY=$1
+	find $DIRECTORY -maxdepth 1 -mindepth 1 -type d -exec rm -rf {} \;
+	echo "- Delete $FILE : ""$VERT""DONE""$NORMAL"""
 }
 # Check parameters
 if [ -z "$1" ]; then

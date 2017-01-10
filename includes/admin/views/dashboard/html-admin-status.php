@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 				<div class="text-center">
 					<a href="<?php echo $refresh_status; ?>"
-					   class="lgw-box-link">
+					   	class="lgw-box-link">
 						<?php echo $locale->t( 'status.screen.refresh_action' ); ?>
 					</a>
 				</div>

@@ -440,4 +440,3 @@ class Lengow_Connector {
 		return json_decode( $results );
 	}
 }
-

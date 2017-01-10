@@ -77,10 +77,10 @@ class Lengow_Admin {
 		$locale          = new Lengow_Translation();
 		$merchant_status = Lengow_Sync::get_status_account();
 		$is_new_merchant = Lengow_Main::is_new_merchant();
-		if ( $this->current_tab != $this->_default_tab &&
-		     ! ( $merchant_status['type'] == 'free_trial' && $merchant_status['day'] <= 0 )
-		     && $merchant_status['type'] != 'bad_payer'
-		     && ! $is_new_merchant
+		if ( $this->current_tab != $this->_default_tab
+			&& ! ( $merchant_status['type'] == 'free_trial' && $merchant_status['day'] <= 0 )
+			&& $merchant_status['type'] != 'bad_payer'
+			&& ! $is_new_merchant
 		) {
 			include_once 'views/html-admin-header.php';
 		}
@@ -106,5 +106,4 @@ class Lengow_Admin {
 		}
 		include_once 'views/html-admin-footer.php';
 	}
-
 }

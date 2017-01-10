@@ -47,7 +47,7 @@ class Lengow_Admin_Dashboard {
 		if ( $is_new_merchant || $is_sync ) {
 			include_once 'views/dashboard/html-admin-new.php';
 		} elseif ( ( $merchant_status['type'] == 'free_trial' && $merchant_status['day'] <= 0 )
-		           || $merchant_status['type'] == 'bad_payer'
+			|| $merchant_status['type'] == 'bad_payer'
 		) {
 			include_once 'views/dashboard/html-admin-status.php';
 		} else {

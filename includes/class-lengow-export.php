@@ -548,12 +548,12 @@ class Lengow_Export {
 		global $wpdb;
 		if ( $variation ) {
 			$query = "
-                SELECT p.post_parent AS id_product, p.id AS id_product_attribute
-            ";
+				SELECT p.post_parent AS id_product, p.id AS id_product_attribute
+			";
 		} else {
 			$query = "
-                SELECT DISTINCT(p.id) AS id_product, 0 AS id_product_attribute
-            ";
+				SELECT DISTINCT(p.id) AS id_product, 0 AS id_product_attribute
+			";
 		}
 		$query .= "
 			FROM {$wpdb->posts} AS p
@@ -561,8 +561,8 @@ class Lengow_Export {
 		";
 		if ( ! $variation ) {
 			$query .= "
-                INNER JOIN {$wpdb->term_relationships} AS tr ON tr.object_id = p.id 
-			    INNER JOIN {$wpdb->terms} AS t ON t.term_id = tr.term_taxonomy_id
+				INNER JOIN {$wpdb->term_relationships} AS tr ON tr.object_id = p.id 
+				INNER JOIN {$wpdb->terms} AS t ON t.term_id = tr.term_taxonomy_id
 			";
 		}
 		if ( $this->_selection ) {
@@ -582,24 +582,24 @@ class Lengow_Export {
 		}
 		if ( ! $this->_out_of_stock ) {
 			$where[] = "((
-                meta_key = '_stock_status' AND meta_value = 'instock'
-                ) OR ( meta_key = '_manage_stock' AND meta_value = 'yes' AND p.id IN
-                    (SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_stock' AND meta_value > 0)
-                ) OR (   
-                    p.id NOT IN 
-                    (SELECT post_id FROM {$wpdb->postmeta}
-                        WHERE meta_key = '_stock_status' AND meta_value IN ('instock', 'outofstock'))
-                    AND p.post_parent IN
-                    (SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_manage_stock' AND meta_value = 'yes')
-                    AND p.post_parent IN
-                    (SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_stock' AND meta_value > 0)
-                ) OR (   
-                    p.id NOT IN 
-                    (SELECT post_id FROM {$wpdb->postmeta} 
-                        WHERE meta_key = '_stock_status' AND meta_value IN ('instock', 'outofstock'))
-                    AND p.post_parent IN
-                    (SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_manage_stock' AND meta_value = 'no')  
-            ))";
+				meta_key = '_stock_status' AND meta_value = 'instock'
+				) OR ( meta_key = '_manage_stock' AND meta_value = 'yes' AND p.id IN
+					(SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_stock' AND meta_value > 0)
+				) OR (   
+					p.id NOT IN 
+					(SELECT post_id FROM {$wpdb->postmeta}
+						WHERE meta_key = '_stock_status' AND meta_value IN ('instock', 'outofstock'))
+					AND p.post_parent IN
+					(SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_manage_stock' AND meta_value = 'yes')
+					AND p.post_parent IN
+					(SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_stock' AND meta_value > 0)
+				) OR (   
+					p.id NOT IN 
+					(SELECT post_id FROM {$wpdb->postmeta} 
+						WHERE meta_key = '_stock_status' AND meta_value IN ('instock', 'outofstock'))
+					AND p.post_parent IN
+					(SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_manage_stock' AND meta_value = 'no')  
+			))";
 		}
 		if ( count( $this->_product_types ) > 0 && ! $variation ) {
 			$where[] = "t.name IN ('" . join( "','", $this->_product_types ) . "')";
@@ -674,4 +674,3 @@ class Lengow_Export {
 		return json_encode( $params );
 	}
 }
-

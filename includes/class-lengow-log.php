@@ -139,4 +139,3 @@ class Lengow_Log extends Lengow_File {
 		}
 	}
 }
-

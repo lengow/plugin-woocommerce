@@ -242,4 +242,3 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		$GLOBALS['hook_suffix'] = 'toplevel_page_lengow';
 	}
 }
-

@@ -465,4 +465,3 @@ class Lengow_Import_Order {
 		}
 	}
 }
-

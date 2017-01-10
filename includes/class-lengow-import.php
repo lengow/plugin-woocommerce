@@ -486,7 +486,7 @@ class Lengow_Import {
 				// check the package for re-import order.
 				if ( $this->_import_one_order ) {
 					if ( ! is_null( $this->_delivery_address_id )
-					     && $this->_delivery_address_id != $package_delivery_address_id
+						&& $this->_delivery_address_id != $package_delivery_address_id
 					) {
 						Lengow_Main::log(
 							'Import',
@@ -631,4 +631,3 @@ class Lengow_Import {
 		return true;
 	}
 }
-

@@ -109,7 +109,7 @@ class Lengow_Sync {
 	 */
 	public static function check_sync_shop() {
 		return Lengow_Configuration::get( 'lengow_store_enabled' )
-		       && Lengow_Check::is_valid_auth();
+			&& Lengow_Check::is_valid_auth();
 	}
 
 	/**
@@ -204,13 +204,13 @@ class Lengow_Sync {
 			$return['currency']    = $result->currency->iso_a3;
 		} else {
 			if ( Lengow_Configuration::get( 'lengow_last_order_statistic_update' ) ) {
-		        return json_decode( Lengow_Configuration::get( 'lengow_order_statistic' ), true );
-	        }
-		    return $return;
+				return json_decode( Lengow_Configuration::get( 'lengow_order_statistic' ), true );
+			}
+			return $return;
 		}
 		if ( $return['total_order'] > 0 || $return['nb_order'] > 0 ) {
-		    $return['available'] = true;
-	    }
+			$return['available'] = true;
+		}
 		if ( $return['currency'] 
 			&& get_woocommerce_currency_symbol( $return['currency'] ) 
 			&& function_exists( 'wc_price' ) 
@@ -279,4 +279,3 @@ class Lengow_Sync {
 		return false;
 	}
 }
-

@@ -105,16 +105,16 @@ class Lengow_Admin_Products extends WP_List_Table {
 						if ( $sync_date == null ) {
 							$data['tooltip'] = $locale->t( 'product.screen.shop_not_index' );
 						} else {
-							$data['tooltip'] = $locale->t( 'product.screen.shop_last_indexation' ) .
-							    ' : ' . strftime( "%A %e %B %Y @ %R", strtotime( $sync_date ) );
+							$data['tooltip'] = $locale->t( 'product.screen.shop_last_indexation' )
+								. ' : ' . strftime( "%A %e %B %Y @ %R", strtotime( $sync_date ) );
 						}
 						$data['original_title'] = $locale->t( 'product.screen.lengow_shop_sync' );
 					} else {
 						$data['check_shop']     = false;
 						$data['tooltip']        = $locale->t( 'product.screen.lengow_shop_no_sync' );
 						$data['original_title'] = $locale->t( 'product.screen.sync_your_shop' );
-						$data['header_title']   = '<a href="' . admin_url( 'admin.php?page=lengow' ) . '&isSync=true">
-                            <span>' . $locale->t( 'product.screen.sync_your_shop' ) . '</span></a>';
+						$data['header_title']   = '<a href="' . admin_url( 'admin.php?page=lengow' )
+							. '&isSync=true"><span>' . $locale->t( 'product.screen.sync_your_shop' ) . '</span></a>';
 					}
 					echo json_encode( $data );
 					break;
@@ -347,11 +347,11 @@ class Lengow_Admin_Products extends WP_List_Table {
 	public function column_cb( $product ) {
 		return sprintf(
 			'<input type="checkbox" 
-            id="js-lengow_product_checkbox" 
-            name="product[]" 
-            value="%s"
-            class="js-lengow_selection"
-            />', $product['ID']
+			id="js-lengow_product_checkbox" 
+			name="product[]" 
+			value="%s"
+			class="js-lengow_selection"
+			/>', $product['ID']
 		);
 	}
 
@@ -369,19 +369,19 @@ class Lengow_Admin_Products extends WP_List_Table {
 
 		return sprintf(
 			'<div class="lgw-switch ' . $checked . '">
-            <label><div><span></span>
-            <input 
-            type="checkbox"
-            data-size="mini"
-            class="js-lengow_switch_product"
-            data-on-text="' . $this->locale->t( 'product.screen.button_yes' ) . '"
-            data-off-text="' . $this->locale->t( 'product.screen.button_no' ) . '"
-            name="lengow_product_selection[%s]"
-            data-action="select_product"
-            data-id_product="%s"
-            id="js-lengow_product_%s"
-            value="1" ' . $check . '/>
-            </div></label></div>',
+			<label><div><span></span>
+			<input 
+			type="checkbox"
+			data-size="mini"
+			class="js-lengow_switch_product"
+			data-on-text="' . $this->locale->t( 'product.screen.button_yes' ) . '"
+			data-off-text="' . $this->locale->t( 'product.screen.button_no' ) . '"
+			name="lengow_product_selection[%s]"
+			data-action="select_product"
+			data-id_product="%s"
+			id="js-lengow_product_%s"
+			value="1" ' . $check . '/>
+			</div></label></div>',
 			$product['ID'],
 			$product['ID'],
 			$product['ID']

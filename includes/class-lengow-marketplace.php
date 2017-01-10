@@ -144,4 +144,3 @@ class Lengow_Marketplace {
 	}
 
 }
-

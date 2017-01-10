@@ -140,4 +140,3 @@ class Lengow_Translation {
 		return count( $translation ) > 0;
 	}
 }
-

@@ -105,4 +105,3 @@ class Lengow_Order {
 		return false;
 	}
 }
-

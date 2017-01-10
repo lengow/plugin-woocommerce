@@ -97,7 +97,7 @@ class Lengow_Product {
 	public function __construct( $product_id ) {
 		$this->product = get_product( $product_id );
 		if ( $this->product == ''
-		     || ! in_array( $this->product->post->post_type, array( 'product', 'product_variation' ) )
+			|| ! in_array( $this->product->post->post_type, array( 'product', 'product_variation' ) )
 		) {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message(
@@ -561,10 +561,10 @@ class Lengow_Product {
 		global $wpdb;
 		$return = array();
 		$sql    = "
-            SELECT *
-            FROM {$wpdb->postmeta}
-            WHERE meta_key = '_product_attributes'
-        ";
+			SELECT *
+			FROM {$wpdb->postmeta}
+			WHERE meta_key = '_product_attributes'
+		";
 		foreach ( $wpdb->get_results( $sql ) as $result ) {
 			$attributes = unserialize( $result->meta_value );
 			if ( ! empty( $attributes ) ) {
@@ -588,11 +588,11 @@ class Lengow_Product {
 		global $wpdb;
 		$return = array();
 		$sql    = "
-            SELECT DISTINCT(meta_key)
-            FROM {$wpdb->postmeta} AS pm
-            INNER JOIN {$wpdb->posts} AS p ON p.id = pm.post_id
-            AND p.post_type = 'product'
-        ";
+			SELECT DISTINCT(meta_key)
+			FROM {$wpdb->postmeta} AS pm
+			INNER JOIN {$wpdb->posts} AS p ON p.id = pm.post_id
+			AND p.post_type = 'product'
+		";
 		foreach ( $wpdb->get_results( $sql ) as $result ) {
 			if ( ! in_array( $result->meta_key, self::$excludes ) ) {
 				if ( ! in_array( $result->meta_key, $return ) ) {
@@ -714,16 +714,16 @@ class Lengow_Product {
 				break;
 			case 'sku':
 				$sql        = "
-                  SELECT post_id FROM $wpdb->postmeta 
-                  WHERE meta_key = '_sku' AND meta_value = '%s' LIMIT 1
-                ";
+				  	SELECT post_id FROM $wpdb->postmeta 
+				  	WHERE meta_key = '_sku' AND meta_value = '%s' LIMIT 1
+				";
 				$product_id = $wpdb->get_var( $wpdb->prepare( $sql, $attribute_value ) );
 				break;
 			default:
 				$sql        = "
 					SELECT post_id FROM $wpdb->postmeta 
-                    WHERE meta_key = '%s' AND meta_value = '%s' LIMIT 1
-                ";
+					WHERE meta_key = '%s' AND meta_value = '%s' LIMIT 1
+				";
 				$product_id = $wpdb->get_var( $wpdb->prepare( $sql, array( $type, $attribute_value ) ) );
 				break;
 		}
@@ -757,9 +757,9 @@ class Lengow_Product {
 			$wpdb->delete( $wpdb->prefix . 'lengow_product', array( 'product_id' => ( (int) $product_id ) ) );
 		} else {
 			$sql     = "
-            	SELECT product_id FROM {$wpdb->prefix}lengow_product
-            	WHERE product_id = %d
-            ";
+				SELECT product_id FROM {$wpdb->prefix}lengow_product
+				WHERE product_id = %d
+			";
 			$results = $wpdb->get_results( $wpdb->prepare( $sql, (int) $product_id ) );
 			if ( count( $results ) == 0 ) {
 				$wpdb->insert( $wpdb->prefix . 'lengow_product', array( 'product_id' => ( (int) $product_id ) ) );
@@ -786,4 +786,3 @@ class Lengow_Product {
 		return $products;
 	}
 }
-

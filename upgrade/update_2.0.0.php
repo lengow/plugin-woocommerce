@@ -37,8 +37,8 @@ if ( $wpdb->get_var( 'SHOW TABLES LIKE \'' . $table_name . '\'' ) ) {
 
 $sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . ' (
 	`id` INTEGER(11) NOT NULL AUTO_INCREMENT,
-    `product_id` bigint(20) NOT NULL,
-    PRIMARY KEY (`id`)
+	`product_id` bigint(20) NOT NULL,
+	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 dbDelta( $sql );
 
@@ -118,19 +118,19 @@ if ( $wpdb->get_var( 'SHOW TABLES LIKE \'' . $table_name . '\'' ) ) {
 
 $sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . ' (
 	`id` INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `delivery_address_id` int(11) NOT NULL,
-    `marketplace_sku` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-    `marketplace_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-    `order_date` datetime NOT NULL,
-    `created_at` datetime NOT NULL,
-    `extra` longtext COLLATE utf8_unicode_ci,
-    `id_flux` INTEGER(11) UNSIGNED NULL,
-    `id_order` INTEGER(11) UNSIGNED NULL,
-    `total_paid` DECIMAL(17,2) UNSIGNED NULL,
-    `message` TEXT,
-    `carrier` VARCHAR(100),
-    `tracking` VARCHAR(100),
-    PRIMARY KEY (`id`)
+	`delivery_address_id` int(11) NOT NULL,
+	`marketplace_sku` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+	`marketplace_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+	`order_date` datetime NOT NULL,
+	`created_at` datetime NOT NULL,
+	`extra` longtext COLLATE utf8_unicode_ci,
+	`id_flux` INTEGER(11) UNSIGNED NULL,
+	`id_order` INTEGER(11) UNSIGNED NULL,
+	`total_paid` DECIMAL(17,2) UNSIGNED NULL,
+	`message` TEXT,
+	`carrier` VARCHAR(100),
+	`tracking` VARCHAR(100),
+	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 dbDelta( $sql );
 

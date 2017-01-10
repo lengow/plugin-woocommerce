@@ -32,4 +32,3 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Exception extends Exception {
 
 }
-

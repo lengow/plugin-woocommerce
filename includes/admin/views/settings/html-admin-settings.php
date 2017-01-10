@@ -22,7 +22,7 @@ $list_file = array_reverse( Lengow_Log::get_paths() );
 			<h2><?php echo $locale->t( 'global_setting.screen.main_setting_title' ); ?></h2>
 			<label class="control-label"><?php echo $keys['lengow_authorized_ip']['label']; ?></label>
 			<input type="text" name="lengow_authorized_ip" class="form-control"
-			       value="<?php echo $values['lengow_authorized_ip']; ?>"/>
+				value="<?php echo $values['lengow_authorized_ip']; ?>"/>
 			<span class="legend" style="display:block;"><?php echo $keys['lengow_authorized_ip']['legend']; ?></span>
 			<br />
 			<h2 class="margin-s"><?php echo $locale->t( 'global_setting.screen.preprod_mode_title' ); ?></h2>
@@ -33,8 +33,8 @@ $list_file = array_reverse( Lengow_Log::get_paths() );
 						<span></span>
 						<input type="hidden" name="lengow_preprod_enabled" value="0">
 						<input name="lengow_preprod_enabled"
-						       type="checkbox"
-						<?php echo $values['lengow_preprod_enabled'] == 1 ? 'checked' : '';?> />
+							type="checkbox"
+							<?php echo $values['lengow_preprod_enabled'] == 1 ? 'checked' : '';?> />
 					</div>
 					<?php echo $keys['lengow_preprod_enabled']['label']; ?>
 				</label>
@@ -48,7 +48,7 @@ $list_file = array_reverse( Lengow_Log::get_paths() );
 									<span></span>
 									<input type="hidden" name="lengow_store_enabled" value="0">
 									<input name="lengow_store_enabled"
-										   type="checkbox"
+										type="checkbox"
 										<?php echo $values['lengow_store_enabled'] == 1 ? 'checked' : '';?>/>
 								</div>
 								<?php echo $keys['lengow_store_enabled']['label']; ?>
@@ -58,17 +58,17 @@ $list_file = array_reverse( Lengow_Log::get_paths() );
 					<div class="form-group">
 						<label class="control-label"><?php echo $keys['lengow_account_id']['label']; ?></label>
 						<input type="text" name="lengow_account_id" class="form-control"
-						   value="<?php echo $values['lengow_account_id']; ?>"/>
+							value="<?php echo $values['lengow_account_id']; ?>"/>
 					</div>
 					<div class="form-group">
 						<label class="control-label"><?php echo $keys['lengow_access_token']['label']; ?></label>
 						<input type="text" name="lengow_access_token" class="form-control"
-						   value="<?php echo $values['lengow_access_token']; ?>"/>
+							value="<?php echo $values['lengow_access_token']; ?>"/>
 					</div>
 					<div class="form-group">
 						<label class="control-label"><?php echo $keys['lengow_secret_token']['label']; ?></label>
 						<input type="text" name="lengow_secret_token" class="form-control"
-						   value="<?php echo $values['lengow_secret_token']; ?>"/>
+							value="<?php echo $values['lengow_secret_token']; ?>"/>
 					</div>
 				</div>
 			</div>
@@ -103,7 +103,7 @@ $list_file = array_reverse( Lengow_Log::get_paths() );
 							<span></span>
 							<input type="hidden" name="lengow_import_enabled" value="0">
 							<input name="lengow_import_enabled"
-								   type="checkbox"
+								type="checkbox"
 								<?php echo $values['lengow_import_enabled'] == 1 ? 'checked' : ''; ?> />
 						</div>
 						<?php echo $keys['lengow_import_enabled']['label']; ?>
@@ -130,7 +130,7 @@ $list_file = array_reverse( Lengow_Log::get_paths() );
 									<span></span>
 									<input type="hidden" name="lengow_import_ship_mp_enabled" value="0">
 									<input name="lengow_import_ship_mp_enabled"
-										   type="checkbox"
+										type="checkbox"
 										<?php echo $values['lengow_import_ship_mp_enabled'] == 1 ? 'checked' : ''; ?>/>
 								</div>
 								<?php echo $keys['lengow_import_ship_mp_enabled']['label']; ?>
