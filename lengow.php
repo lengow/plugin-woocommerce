@@ -14,7 +14,7 @@
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  * 
- * @category   	lengow
+ * @category   	Lengow
  * @package    	lengow-woocommerce
  * @author     	Team module <team-module@lengow.com>
  * @copyright  	2017 Lengow SAS

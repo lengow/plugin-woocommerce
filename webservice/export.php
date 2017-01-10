@@ -14,7 +14,7 @@
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
- * @category   	lengow
+ * @category   	Lengow
  * @package    	lengow-woocommerce
  * @subpackage 	webservice
  * @author     	Team module <team-module@lengow.com>
@@ -23,7 +23,7 @@
 
 /**
  * List params
- * boolean mode               Number of products exported
+ * string  mode               Number of products exported
  * string  format             Format of exported files ('csv','yaml','xml','json')
  * boolean stream             Stream file (1) or generate a file on server (0)
  * integer offset             Offset of total product
