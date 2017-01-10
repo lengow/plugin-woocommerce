@@ -2,10 +2,24 @@
 /**
  * Utilities functions
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Main {
 
 	/**
-	 * Lengow Authorized IPs
+	 * @var array Lengow Authorized IPs.
 	 */
 	private static $_ips_lengow = array(
 		'46.19.183.204',
@@ -59,22 +73,22 @@ class Lengow_Main {
 	);
 
 	/**
-	 * @var mixed Marketplaces collection
+	 * @var array Marketplaces collection.
 	 */
 	public static $registers = array();
 
 	/**
-	 * @var Lengow_Log Lengow log file instance
+	 * @var Lengow_Log Lengow log file instance.
 	 */
 	public static $log;
 
 	/**
-	 * @var integer life of log files in days
+	 * @var integer life of log files in days.
 	 */
 	public static $log_life = 20;
 
 	/**
-	 * @var array WooCommerce product types
+	 * @var array WooCommerce product types.
 	 */
 	public static $product_types = array(
 		'simple'   => 'Simple Product',
@@ -84,7 +98,7 @@ class Lengow_Main {
 	);
 
 	/**
-	 * Get export webservice links
+	 * Get export webservice links.
 	 *
 	 * @return string
 	 */
@@ -95,7 +109,7 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Get cron webservice links
+	 * Get cron webservice links.
 	 *
 	 * @return string
 	 */
@@ -106,7 +120,7 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Check if current IP is authorized
+	 * Check if current IP is authorized.
 	 *
 	 * @return boolean
 	 */
@@ -125,7 +139,7 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Check if is a new marchant
+	 * Check if is a new marchant.
 	 *
 	 * @return boolean
 	 */
@@ -139,7 +153,7 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Generate token
+	 * Generate token.
 	 *
 	 * @return string
 	 */
@@ -156,11 +170,11 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Check if shop is already synchronised
+	 * Check if shop is already synchronised.
 	 *
 	 * @param $token mixed Token
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function find_by_token( $token ) {
 		$lengow_token = Lengow_Configuration::get( 'lengow_token' );
@@ -172,11 +186,11 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Get Marketplace singleton
+	 * Get Marketplace singleton.
 	 *
-	 * @param string $name Marketplace name
+	 * @param string $name marketplace name
 	 *
-	 * @return Lengow_Marketplace Lengow shipping names option
+	 * @return Lengow_Marketplace
 	 */
 	public static function get_marketplace_singleton( $name ) {
 		if ( ! isset( self::$registers[ $name ] ) ) {
@@ -187,7 +201,7 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Writes log
+	 * Writes log.
 	 *
 	 * @param string $category Category log
 	 * @param string $txt log message
@@ -200,9 +214,9 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Get log Instance
+	 * Get log Instance.
 	 *
-	 * @return Lengow_Log Lengow log file instance
+	 * @return Lengow_Log
 	 */
 	public static function get_log_instance() {
 		if ( is_null( self::$log ) ) {
@@ -213,7 +227,7 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Suppress log files when too old
+	 * Suppress log files when too old.
 	 */
 	public static function clean_log() {
 		$log_files = Lengow_Log::get_files();
@@ -233,10 +247,10 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Set message with params for translation
+	 * Set message with params for translation.
 	 *
-	 * @param string $key
-	 * @param array $params
+	 * @param string $key log key to translate
+	 * @param array $params parameters to display in the translation message
 	 *
 	 * @return string
 	 */
@@ -255,11 +269,11 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Decode message with params for translation
+	 * Decode message with params for translation.
 	 *
-	 * @param string $message Key to translate
-	 * @param string $iso_code Language translation iso code
-	 * @param mixed $params array Parameters to display in the translation message
+	 * @param string $message key to translate
+	 * @param string $iso_code language translation iso code
+	 * @param array $params parameters to display in the translation message
 	 *
 	 * @return string
 	 */
@@ -284,9 +298,9 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Record the date of the last import
+	 * Record the date of the last import.
 	 *
-	 * @param string $type (cron or manual)
+	 * @param string $type last import type (cron or manual)
 	 */
 	public static function update_date_import( $type ) {
 		if ( $type === 'cron' ) {
@@ -297,9 +311,9 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Get last import (type and timestamp)
+	 * Get last import (type and timestamp).
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public static function get_last_import() {
 		$timestamp_cron   = Lengow_Configuration::get( 'lengow_last_import_cron' );
@@ -320,9 +334,9 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Clean data
+	 * Clean data.
 	 *
-	 * @param string $str The content
+	 * @param string $str the content
 	 *
 	 * @return string
 	 */
@@ -385,9 +399,9 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Clean html
+	 * Clean html.
 	 *
-	 * @param string $str The html content
+	 * @param string $str the html content
 	 *
 	 * @return string
 	 */
@@ -417,7 +431,7 @@ class Lengow_Main {
 	/**
 	 * Replace all accented chars by their equivalent non accented chars.
 	 *
-	 * @param string $str The content
+	 * @param string $str the content
 	 *
 	 * @return string
 	 */

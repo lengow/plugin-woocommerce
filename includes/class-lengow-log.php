@@ -2,10 +2,24 @@
 /**
  * All components to generate logs
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,17 +32,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Log extends Lengow_File {
 
 	/**
-	 * @var string name of logs folder
+	 * @var string name of logs folder.
 	 */
 	public static $lengow_log_folder = 'logs';
 
 	/**
-	 * @var Lengow_File Lengow file instance
+	 * @var Lengow_File Lengow file instance.
 	 */
 	protected $_file;
 
 	/**
-	 * Construct a new Lengow log
+	 * Construct a new Lengow log.
 	 *
 	 * @param string $file_name log file name
 	 */
@@ -42,7 +56,7 @@ class Lengow_Log extends Lengow_File {
 	}
 
 	/**
-	 * Write log
+	 * Write log.
 	 *
 	 * @param string $category Category
 	 * @param string $message log message
@@ -63,7 +77,7 @@ class Lengow_Log extends Lengow_File {
 	}
 
 	/**
-	 * Get log files
+	 * Get log files.
 	 *
 	 * @return array
 	 */
@@ -72,9 +86,9 @@ class Lengow_Log extends Lengow_File {
 	}
 
 	/**
-	 * Get log files path
+	 * Get log files path.
 	 *
-	 * @return mixed
+	 * @return array|false
 	 */
 	public static function get_paths() {
 		$files = self::get_files();
@@ -99,7 +113,7 @@ class Lengow_Log extends Lengow_File {
 	}
 
 	/**
-	 * Download log file
+	 * Download log file.
 	 *
 	 * @param string $file log file name
 	 */

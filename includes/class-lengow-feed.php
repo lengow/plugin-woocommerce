@@ -2,10 +2,24 @@
 /**
  * All options to create a specific format
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,48 +32,48 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Feed {
 
 	/**
-	 * Protection.
+	 * @var string  CSV protection.
 	 */
 	const PROTECTION = '"';
 
 	/**
-	 * CSV separator
+	 * @var string CSV separator.
 	 */
 	const CSV_SEPARATOR = '|';
 
 	/**
-	 * End of line.
+	 * @var string end of line.
 	 */
 	const EOL = "\r\n";
 
 	/**
-	 * @var Lengow_File temporary export file
+	 * @var Lengow_File temporary export file.
 	 */
 	private $_file;
 
 	/**
-	 * @var string feed format
+	 * @var string feed format.
 	 */
 	private $_format;
 
 	/**
-	 * @var boolean generate file or not
+	 * @var boolean generate file or not.
 	 */
 	private $_stream;
 
 	/**
-	 * @var boolean use legacy fields
+	 * @var boolean use legacy fields.
 	 */
 	private $_legacy;
 
 
 	/**
-	 * @var string full export folder
+	 * @var string full export folder.
 	 */
 	private $_export_folder;
 
 	/**
-	 * @var array formats available for export
+	 * @var array formats available for export.
 	 */
 	public static $available_formats = array(
 		'csv',
@@ -69,12 +83,12 @@ class Lengow_Feed {
 	);
 
 	/**
-	 * @var string Lengow export folder
+	 * @var string Lengow export folder.
 	 */
 	public static $lengow_export_folder = 'export';
 
 	/**
-	 * Construct a new Lengow feed
+	 * Construct a new Lengow feed.
 	 *
 	 * @param boolean $stream feed in file or not
 	 * @param string $format feed format
@@ -90,7 +104,7 @@ class Lengow_Feed {
 	}
 
 	/**
-	 * Create export file
+	 * Create export file.
 	 *
 	 * @throws Lengow_Exception Unable to create folder
 	 */
@@ -113,11 +127,11 @@ class Lengow_Feed {
 	}
 
 	/**
-	 * Write feed
+	 * Write feed.
 	 *
 	 * @param string $type (header, body or footer)
 	 * @param array $data export data
-	 * @param boolean $is_first
+	 * @param boolean $is_first is first product to export
 	 * @param boolean $max_character Max characters for yaml format
 	 */
 	public function write( $type, $data = array(), $is_first = null, $max_character = null ) {
@@ -144,7 +158,7 @@ class Lengow_Feed {
 	}
 
 	/**
-	 * Return HTML header according to the given format
+	 * Return HTML header according to the given format.
 	 *
 	 * @return string
 	 */
@@ -162,7 +176,7 @@ class Lengow_Feed {
 	}
 
 	/**
-	 * Return feed header
+	 * Return feed header.
 	 *
 	 * @param array $data feed data
 	 *
@@ -173,7 +187,8 @@ class Lengow_Feed {
 			case 'csv':
 				$header = '';
 				foreach ( $data as $field ) {
-					$header .= self::PROTECTION . $this->_format_fields( $field ) . self::PROTECTION . self::CSV_SEPARATOR;
+					$header .= self::PROTECTION . $this->_format_fields( $field )
+						. self::PROTECTION . self::CSV_SEPARATOR;
 				}
 
 				return rtrim( $header, self::CSV_SEPARATOR ) . self::EOL;
@@ -188,10 +203,10 @@ class Lengow_Feed {
 	}
 
 	/**
-	 * Get feed body
+	 * Get feed body.
 	 *
 	 * @param array $data feed data
-	 * @param boolean $is_first is first product
+	 * @param boolean $is_first is first product to export
 	 * @param integer $max_character max characters for yaml format
 	 *
 	 * @return string
@@ -242,7 +257,7 @@ class Lengow_Feed {
 	}
 
 	/**
-	 * Return feed footer
+	 * Return feed footer.
 	 *
 	 * @return string
 	 */
@@ -258,7 +273,7 @@ class Lengow_Feed {
 	}
 
 	/**
-	 * Flush feed content
+	 * Flush feed content.
 	 *
 	 * @param string $content feed content to be flushed
 	 *
@@ -273,9 +288,9 @@ class Lengow_Feed {
 	}
 
 	/**
-	 * Finalize export generation
+	 * Finalize export generation.
 	 *
-	 * @return bool
+	 * @return string|boolean
 	 */
 	public function end() {
 		$this->write( 'footer' );
@@ -306,7 +321,7 @@ class Lengow_Feed {
 	}
 
 	/**
-	 * Format field names according to the given format
+	 * Format field names according to the given format.
 	 *
 	 * @param string $str field name
 	 *
@@ -371,7 +386,7 @@ class Lengow_Feed {
 	}
 
 	/**
-	 * Get feed URL
+	 * Get feed URL.
 	 *
 	 * @return string
 	 */

@@ -1,11 +1,24 @@
 <?php
 /**
- * Installation related functions and actions.
+ * Admin rooting
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,19 +29,20 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Lengow_Admin Class.
  */
 class Lengow_Admin {
-	/**
-	 * Current tab
-	 */
-	public $current_tab = false;
 
 	/**
-	 * Default tab
+	 * @var string current tab.
+	 */
+	public $current_tab = '';
+
+	/**
+	 * @var string default tab
 	 */
 	private $_default_tab = 'lengow';
 
 	/**
-	 * Init Lengow for WooCommerce
-	 * Init module administration and action
+	 * Init Lengow for WooCommerce.
+	 * Init module administration and action.
 	 */
 	public function __construct() {
 		global $lengow, $woocommerce;
@@ -39,7 +53,7 @@ class Lengow_Admin {
 	}
 
 	/**
-	 * Add Lengow admin item menu
+	 * Add Lengow admin item menu.
 	 */
 	public function lengow_admin_menu() {
 
@@ -57,7 +71,7 @@ class Lengow_Admin {
 	}
 
 	/**
-	 * Routing
+	 * Routing.
 	 */
 	public function lengow_display() {
 		$locale          = new Lengow_Translation();

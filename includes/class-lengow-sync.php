@@ -2,10 +2,24 @@
 /**
  * All components to create and synchronise account
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,12 +32,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Sync {
 
 	/**
-	 * Get Account Status every 5 hours
+	 * @var integer cache time for statistic, account status and cms options.
 	 */
 	protected static $_cache_time = 18000;
 
 	/**
-	 * Get Sync Data (Inscription / Update)
+	 * Get Sync Data (Inscription / Update).
 	 *
 	 * @return array
 	 */
@@ -51,9 +65,9 @@ class Lengow_Sync {
 	}
 
 	/**
-	 * Store Configuration Key From Lengow
+	 * Set store configuration key from Lengow.
 	 *
-	 * @param $params
+	 * @param array $params Lengow API credentials
 	 */
 	public static function sync( $params ) {
 		foreach ( $params as $shop_token => $values ) {
@@ -89,7 +103,7 @@ class Lengow_Sync {
 	}
 
 	/**
-	 * Check Synchronisation shop
+	 * Check Synchronisation shop.
 	 *
 	 * @return boolean
 	 */
@@ -99,7 +113,7 @@ class Lengow_Sync {
 	}
 
 	/**
-	 * Get Sync Data (Inscription / Update)
+	 * Get Sync Data (Inscription / Update).
 	 *
 	 * @return array
 	 */
@@ -130,7 +144,7 @@ class Lengow_Sync {
 	}
 
 	/**
-	 * Set CMS options
+	 * Set CMS options.
 	 *
 	 * @param boolean $force Force cache Update
 	 *
@@ -155,7 +169,7 @@ class Lengow_Sync {
 
 
 	/**
-	 * Get Statistic
+	 * Get Statistic.
 	 *
 	 * @param boolean $force Force cache Update
 	 *
@@ -213,11 +227,11 @@ class Lengow_Sync {
 	}
 
 	/**
-	 * Get Status Account
+	 * Get Status Account.
 	 *
 	 * @param boolean $force Force cache Update
 	 *
-	 * @return mixed
+	 * @return array|false
 	 */
 	public static function get_status_account( $force = false ) {
 		if ( ! $force ) {

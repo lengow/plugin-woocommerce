@@ -2,10 +2,24 @@
 /**
  * Get all product data for export feed
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Product {
 
 	/**
-	 * Default fields for export
+	 * @var array default fields for export.
 	 */
 	public static $excludes = array(
 		'_thumbnail_id',
@@ -57,7 +71,7 @@ class Lengow_Product {
 	);
 
 	/**
-	 * array API nodes containing relevant data
+	 * @var array API nodes containing relevant data.
 	 */
 	public static $product_api_nodes = array(
 		'marketplace_product_id',
@@ -69,12 +83,12 @@ class Lengow_Product {
 	);
 
 	/**
-	 * Instance of WC_Product_Simple, WC_Product_External, WC_Product_Grouped, WC_Product_Variable
+	 * @var WC_Product_Simple|WC_Product_External|WC_Product_Grouped|WC_Product_Grouped WooCommerce product instance.
 	 */
 	public $product;
 
 	/**
-	 * Construct a new Lengow Product
+	 * Construct a new Lengow product.
 	 *
 	 * @param integer $product_id WooCommerce product id
 	 *
@@ -95,9 +109,9 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Get data of product
+	 * Get data of product.
 	 *
-	 * @param string $name
+	 * @param string $name field name
 	 *
 	 * @return string the data
 	 */
@@ -364,9 +378,9 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Returns the price (excluding tax)
+	 * Returns the price (excluding tax).
 	 *
-	 * @param  string $price to calculate, left blank to just use get_price()
+	 * @param string $price to calculate, left blank to just use get_price()
 	 *
 	 * @return string
 	 */
@@ -392,7 +406,7 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Returns the price shipping
+	 * Returns the price shipping.
 	 *
 	 * @return string
 	 */
@@ -428,7 +442,7 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Returns the category breadcrum
+	 * Returns the category breadcrum.
 	 *
 	 * @return string
 	 */
@@ -494,7 +508,7 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Get data for attribute
+	 * Get data for attribute.
 	 *
 	 * @param string $name attribute name
 	 *
@@ -516,7 +530,7 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Get data for post metas
+	 * Get data for post metas.
 	 *
 	 * @param string $name post meta name
 	 *
@@ -539,7 +553,7 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Get all attribute keys for export
+	 * Get all attribute keys for export.
 	 *
 	 * @return array
 	 */
@@ -566,7 +580,7 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Get all post meta keys for export
+	 * Get all post meta keys for export.
 	 *
 	 * @return array
 	 */
@@ -591,9 +605,9 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Extract cart data from API
+	 * Extract cart data from API.
 	 *
-	 * @param mixed $product
+	 * @param mixed $product API product datas
 	 *
 	 * @return array
 	 */
@@ -608,15 +622,15 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Match product with api datas
+	 * Match product with api datas.
 	 *
 	 * @param mixed $product_datas all product datas
-	 * @param string $marketplace_sku id lengow of current order
+	 * @param string $marketplace_sku Lengow id of current order
 	 * @param boolean $log_output see log or not
 	 *
 	 * @throws Lengow_Exception If product is a variable
 	 *
-	 * @return mixed
+	 * @return integer|false
 	 */
 	public static function match_product( $product_datas, $marketplace_sku, $log_output ) {
 		$product_id      = false;
@@ -677,12 +691,12 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Search product
+	 * Search product.
 	 *
 	 * @param string $attribute_value value for search
 	 * @param string $type id to search product (id, sku or other field)
 	 *
-	 * @return mixed
+	 * @return integer|false
 	 */
 	public static function search_product( $attribute_value, $type = 'id' ) {
 		global $wpdb;
@@ -735,7 +749,7 @@ class Lengow_Product {
 	 * @param integer $product_id the id product
 	 * @param integer $value 1 : publish, 0 : unpublish
 	 *
-	 * @return boolean.
+	 * @return boolean
 	 */
 	public static function publish( $product_id, $value ) {
 		global $wpdb;
@@ -758,7 +772,7 @@ class Lengow_Product {
 	/**
 	 * Get Lengow products.
 	 *
-	 * @return array.
+	 * @return array
 	 */
 	public static function get_lengow_products() {
 		global $wpdb;

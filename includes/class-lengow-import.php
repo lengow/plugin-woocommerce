@@ -2,10 +2,24 @@
 /**
  * Import process to synchronise stock
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Import {
 
 	/**
-	 * @var array valid states lengow to create a Lengow order
+	 * @var array valid states lengow to create a Lengow order.
 	 */
 	public static $lengow_states = array(
 		'accepted',
@@ -28,77 +42,77 @@ class Lengow_Import {
 	);
 
 	/**
-	 * @var boolean import is processing
+	 * @var boolean import is processing.
 	 */
 	public static $processing;
 
 	/**
-	 * @var string marketplace order sku
+	 * @var string marketplace order sku.
 	 */
 	private $_marketplace_sku = null;
 
 	/**
-	 * @var string markeplace name
+	 * @var string markeplace name.
 	 */
 	private $_marketplace_name = null;
 
 	/**
-	 * @var integer delivery address id
+	 * @var integer delivery address id.
 	 */
 	private $_delivery_address_id = null;
 
 	/**
-	 * @var integer number of orders to import
+	 * @var integer number of orders to import.
 	 */
 	private $_limit = 0;
 
 	/**
-	 * @var string start import date
+	 * @var string start import date.
 	 */
 	private $_date_from = null;
 
 	/**
-	 * @var string end import date
+	 * @var string end import date.
 	 */
 	private $_date_to = null;
 
 	/**
-	 * @var boolean import one order
+	 * @var boolean import one order.
 	 */
 	private $_import_one_order = false;
 
 	/**
-	 * @var boolean use preprod mode
+	 * @var boolean use preprod mode.
 	 */
 	private $_preprod_mode = false;
 
 	/**
-	 * @var boolean display log messages
+	 * @var boolean display log messages.
 	 */
 	private $_log_output = false;
 
 	/**
-	 * @var string type import (manual or cron)
+	 * @var string type import (manual or cron).
 	 */
 	private $_type;
 
 	/**
-	 * @var string account ID
+	 * @var string account ID.
 	 */
 	private $_account_id;
 
 	/**
-	 * @var string access token
+	 * @var string access token.
 	 */
 	private $_access_token;
 
 	/**
-	 * @var string secret
+	 * @var string access secret.
 	 */
 	private $_secret;
 
 	/**
-	 * Construct the import manager
+	 * Construct the import manager.
 	 *
 	 * @param $params array Optional options
 	 * string  marketplace_sku     lengow marketplace order id to import
@@ -143,9 +157,11 @@ class Lengow_Import {
 	}
 
 	/**
-	 * Execute import : fetch orders and import them
+	 * Execute import: fetch orders and import them.
 	 *
-	 * @return mixed
+	 * @throws Lengow_Exception order not found
+	 *
+	 * @return array|false
 	 */
 	public function exec() {
 		if ( ! (bool) Lengow_Configuration::get( 'lengow_import_enabled' ) ) {
@@ -305,7 +321,7 @@ class Lengow_Import {
 	}
 
 	/**
-	 * Check credentials
+	 * Check credentials.
 	 *
 	 * @return boolean
 	 */
@@ -321,11 +337,11 @@ class Lengow_Import {
 	}
 
 	/**
-	 * Call Lengow order API
+	 * Call Lengow order API.
 	 *
-	 * @throws Lengow_Exception If error while connect to the API
+	 * @throws Lengow_Exception no connection with Lengow webservice / credentials not valid
 	 *
-	 * @return mixed List of orders found by the API for this shop
+	 * @return array
 	 */
 	private function _get_orders_from_api() {
 		$page     = 1;
@@ -422,11 +438,11 @@ class Lengow_Import {
 	}
 
 	/**
-	 * Create or update order in WooCommerce
+	 * Create or update order in WooCommerce.
 	 *
 	 * @param mixed $orders API orders
 	 *
-	 * @return mixed
+	 * @return array|false
 	 */
 	protected function _import_orders( $orders ) {
 		$order_new       = 0;
@@ -519,9 +535,9 @@ class Lengow_Import {
 					return $order;
 				}
 				if ( isset( $order ) ) {
-					if ( $order['order_new'] == true ) {
+					if ( isset( $order['order_new'] ) && $order['order_new'] == true ) {
 						$order_new ++;
-					} elseif ( $order['order_error'] == true ) {
+					} elseif ( isset( $order['order_error'] ) && $order['order_error'] == true ) {
 						$order_error ++;
 					}
 				}
@@ -546,14 +562,14 @@ class Lengow_Import {
 	}
 
 	/**
-	 * Check if import is already in process
+	 * Check if import is already in process.
 	 *
 	 * @return boolean
 	 */
 	public static function is_in_process() {
 		$timestamp = (int) Lengow_Configuration::get( 'lengow_import_in_progress' );
 		if ( $timestamp > 0 ) {
-			// security check : if last import is more than 60 seconds old => authorize new import to be launched.
+			// security check: if last import is more than 60 seconds old => authorize new import to be launched.
 			if ( ( $timestamp + ( 60 * 1 ) ) < time() ) {
 				self::set_end();
 
@@ -567,7 +583,7 @@ class Lengow_Import {
 	}
 
 	/**
-	 * Get Rest time to make re import order
+	 * Get Rest time to make re import order.
 	 *
 	 * @return boolean
 	 */
@@ -581,7 +597,7 @@ class Lengow_Import {
 	}
 
 	/**
-	 * Set import to "in process" state
+	 * Set import to "in process" state.
 	 */
 	public static function set_in_process() {
 		self::$processing = true;
@@ -589,7 +605,7 @@ class Lengow_Import {
 	}
 
 	/**
-	 * Set import to finished
+	 * Set import to finished.
 	 */
 	public static function set_end() {
 		self::$processing = false;
@@ -597,10 +613,10 @@ class Lengow_Import {
 	}
 
 	/**
-	 * Check if order status is valid for import
+	 * Check if order status is valid for import.
 	 *
 	 * @param string $order_state_marketplace order state
-	 * @param Lengow_Marketplace $marketplace order marketplace
+	 * @param Lengow_Marketplace $marketplace Lengow marketplace instance
 	 *
 	 * @return boolean
 	 */

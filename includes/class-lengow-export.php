@@ -2,10 +2,24 @@
 /**
  * All components to generate Lengow feed
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,22 +32,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Export {
 
 	/**
-	 * Default fields for export
+	 * @var array default fields for export.
 	 */
 	public static $default_field;
 
 	/**
-	 * Export product attributes
+	 * @var array export product attributes.
 	 */
 	public static $attributes = null;
 
 	/**
-	 * Export product post metas
+	 * @var array export product post metas.
 	 */
 	public static $post_metas = null;
 
 	/**
-	 * All available params for export
+	 * @var array all available params for export.
 	 */
 	public static $export_params = array(
 		'mode',
@@ -53,7 +67,7 @@ class Lengow_Export {
 	);
 
 	/**
-	 * New fields for v3
+	 * @var array new fields for v3.
 	 */
 	private $_new_fields = array(
 		'id'                             => 'id',
@@ -106,7 +120,7 @@ class Lengow_Export {
 	);
 
 	/**
-	 * Legacy fields for export
+	 * @var array legacy fields for export.
 	 */
 	private $_legacy_fields = array(
 		'id_product'            => 'id',
@@ -150,69 +164,69 @@ class Lengow_Export {
 	);
 
 	/**
-	 * @var string Format of exported files
+	 * @var string format of exported files.
 	 */
 	private $_format;
 
 	/**
-	 * @var boolean Stream file or generate a file
+	 * @var boolean stream file or generate a file.
 	 */
 	private $_stream;
 
 	/**
-	 * @var integer Offset of total product
+	 * @var integer offset of total product.
 	 */
 	private $_offset;
 
 	/**
-	 * @var integer Limit number of exported product
+	 * @var integer limit number of exported product.
 	 */
 	private $_limit;
 
 	/**
-	 * @var boolean Export product selection
+	 * @var boolean export product selection.
 	 */
 	private $_selection;
 
 	/**
-	 * @var boolean Export out of stock product
+	 * @var boolean export out of stock product.
 	 */
 	private $_out_of_stock;
 
 	/**
-	 * @var boolean Use legacy fields
+	 * @var boolean use legacy fields.
 	 */
 	private $_legacy;
 
 	/**
-	 * @var array List of product id separate with comma
+	 * @var array list of product id separate with comma.
 	 */
 	private $_product_ids = array();
 
 	/**
-	 * @var array Product types separate with comma
+	 * @var array product types separate with comma.
 	 */
 	private $_product_types = array();
 
 	/**
-	 * @var boolean Export product Variation
+	 * @var boolean export product variation.
 	 */
 	private $_variation;
 
 	/**
-	 * @var boolean See logs
+	 * @var boolean See logs or not.
 	 */
 	private $_log_output;
 
 	/**
-	 * @var boolean Change last export date in data base
+	 * @var boolean change last export date in data base.
 	 */
 	private $_update_export_date;
 
 	/**
 	 * Construct new Lengow export
 	 *
-	 * @param array params optional options
+	 * @param array params optional options.
 	 * string  format             Format of exported files ('csv','yaml','xml','json')
 	 * boolean stream             Stream file (1) or generate a file on server (0)
 	 * integer offset             Offset of total product
@@ -246,7 +260,7 @@ class Lengow_Export {
 	}
 
 	/**
-	 * Set legacy fields or not
+	 * Set legacy fields or not.
 	 */
 	private function _set_legacy_fields() {
 		if ( is_null( $this->_legacy ) ) {
@@ -261,18 +275,18 @@ class Lengow_Export {
 	}
 
 	/**
-	 * Set format to export
+	 * Set format to export.
 	 *
-	 * @param string $format The export format
+	 * @param string $format export format
 	 */
 	private function _set_format( $format ) {
 		$this->_format = ! in_array( $format, Lengow_Feed::$available_formats ) ? 'csv' : $format;
 	}
 
 	/**
-	 * Set product ids to export
+	 * Set product ids to export.
 	 *
-	 * @param string $product_ids The product ids to export
+	 * @param string $product_ids product ids to export
 	 */
 	private function _set_product_ids( $product_ids ) {
 		if ( $product_ids ) {
@@ -286,9 +300,9 @@ class Lengow_Export {
 	}
 
 	/**
-	 * Set product types to export
+	 * Set product types to export.
 	 *
-	 * @param string $product_types The product types to export
+	 * @param string $product_types product types to export
 	 */
 	private function _set_product_types( $product_types ) {
 		if ( $product_types ) {
@@ -305,16 +319,16 @@ class Lengow_Export {
 	}
 
 	/**
-	 * Set Log output for export
+	 * Set Log output for export.
 	 *
-	 * @param boolean $log_output See logs or not
+	 * @param boolean $log_output see logs or not
 	 */
 	private function _set_log_output( $log_output ) {
 		$this->_log_output = $this->_stream ? false : $log_output;
 	}
 
 	/**
-	 * Execute the export
+	 * Execute the export.
 	 */
 	public function exec() {
 		try {
@@ -323,7 +337,7 @@ class Lengow_Export {
 			Lengow_Main::log( 'Export', Lengow_Main::set_log_message( 'log.export.start' ), $this->_log_output );
 			// set legacy fields option.
 			$this->_set_legacy_fields();
-			// get fields to export
+			// get fields to export.
 			$fields = $this->_get_fields();
 			// get products to be exported.
 			$products = $this->_get_export_ids();
@@ -363,7 +377,7 @@ class Lengow_Export {
 	}
 
 	/**
-	 * Export products
+	 * Export products.
 	 *
 	 * @param array $products list of products to be exported
 	 * @param array $fields list of fields
@@ -427,7 +441,10 @@ class Lengow_Export {
 			if ( $feed_url && php_sapi_name() != "cli" ) {
 				Lengow_Main::log(
 					'Export',
-					Lengow_Main::set_log_message( 'log.export.your_feed_available_here', array( 'feed_url' => $feed_url ) ),
+					Lengow_Main::set_log_message(
+						'log.export.your_feed_available_here',
+						array( 'feed_url' => $feed_url )
+					),
 					$this->_log_output
 				);
 			}
@@ -435,7 +452,7 @@ class Lengow_Export {
 	}
 
 	/**
-	 * Get fields to export
+	 * Get fields to export.
 	 *
 	 * @return array
 	 */
@@ -457,7 +474,7 @@ class Lengow_Export {
 	}
 
 	/**
-	 * Get Count total products
+	 * Get Count total products.
 	 *
 	 * @return integer
 	 */
@@ -474,7 +491,7 @@ class Lengow_Export {
 	}
 
 	/**
-	 * Get Count export products
+	 * Get Count export products.
 	 *
 	 * @return integer
 	 */
@@ -494,9 +511,9 @@ class Lengow_Export {
 	}
 
 	/**
-	 * Get the products to export
+	 * Get the products to export.
 	 *
-	 * @return array IDs product
+	 * @return array
 	 */
 	private function _get_export_ids() {
 		global $wpdb;
@@ -521,7 +538,7 @@ class Lengow_Export {
 	}
 
 	/**
-	 * Get Count export product
+	 * Get Count export product.
 	 *
 	 * @param boolean $variation count variation product
 	 *
@@ -603,7 +620,7 @@ class Lengow_Export {
 	}
 
 	/**
-	 * Get all export available parameters
+	 * Get all export available parameters.
 	 *
 	 * @return string
 	 */

@@ -2,10 +2,24 @@
 /**
  * Import order process to synchronise stock
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,67 +32,67 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Import_Order {
 
 	/**
-	 * @var boolean use preprod mode
+	 * @var boolean use preprod mode.
 	 */
 	private $_preprod_mode = false;
 
 	/**
-	 * @var boolean display log messages
+	 * @var boolean display log messages.
 	 */
 	private $_log_output = false;
 
 	/**
-	 * @var Lengow_Marketplace
+	 * @var Lengow_Marketplace Lengow marketplace instance.
 	 */
 	private $_marketplace;
 
 	/**
-	 * @var string id lengow of current order
+	 * @var string id lengow of current order.
 	 */
 	private $_marketplace_sku;
 
 	/**
-	 * @var integer id of delivery address for current order
+	 * @var integer id of delivery address for current order.
 	 */
 	private $_delivery_address_id;
 
 	/**
-	 * @var mixed all order data
+	 * @var mixed all order data.
 	 */
 	private $_order_data;
 
 	/**
-	 * @var mixed all package data
+	 * @var mixed all package data.
 	 */
 	private $_package_data;
 
 	/**
-	 * @var boolean if order is first package
+	 * @var boolean if order is first package.
 	 */
 	private $_first_package;
 
 	/**
-	 * @var string marketplace order state
+	 * @var string marketplace order state.
 	 */
 	private $_order_state_marketplace;
 
 	/**
-	 * @var string lengow order state
+	 * @var string lengow order state.
 	 */
 	private $_order_state_lengow;
 
 	/**
-	 * @var integer id of the record Lengow order table
+	 * @var integer id of the record Lengow order table.
 	 */
 	private $_id_order_lengow = null;
 
 	/**
-	 * @var boolean True if order is send by the marketplace
+	 * @var boolean True if order is send by the marketplace.
 	 */
 	private $_shipped_by_mp = false;
 
 	/**
-	 * Construct the import manager
+	 * Construct the import manager.
 	 *
 	 * @param $params array Optional options
 	 * boolean preprod_mode        preprod mode
@@ -106,9 +120,11 @@ class Lengow_Import_Order {
 	}
 
 	/**
-	 * Create or update order
+	 * Create or update order.
 	 *
-	 * @return mixed
+	 * @throws Lengow_Exception product list is empty
+	 *
+	 * @return array|false
 	 */
 	public function import_order() {
 		// get a record in the lengow order table.
@@ -228,10 +244,10 @@ class Lengow_Import_Order {
 	}
 
 	/**
-	 * Return an array of result for each order
+	 * Return an array of result for each order.
 	 *
 	 * @param string $type_result Type of result (new or error)
-	 * @param integer $id_order_lengow ID of the lengow order record
+	 * @param integer $id_order_lengow Lengow order id
 	 * @param integer $id_order WooCommerce order id
 	 *
 	 * @return array
@@ -251,7 +267,7 @@ class Lengow_Import_Order {
 	}
 
 	/**
-	 * Checks if order data are present
+	 * Checks if order data are present.
 	 *
 	 * @return boolean
 	 */
@@ -289,7 +305,7 @@ class Lengow_Import_Order {
 	}
 
 	/**
-	 * Get tracking data and update Lengow order record
+	 * Get tracking data and update Lengow order record.
 	 */
 	private function _load_tracking_data() {
 		$tracking = $this->_package_data->delivery->trackings;
@@ -301,11 +317,11 @@ class Lengow_Import_Order {
 	}
 
 	/**
-	 * Get products from the API and check that they exist in WooCommerce database
-	 *
-	 * @return array List of products found in WooCommerce
+	 * Get products from the API and check that they exist in WooCommerce database.
 	 *
 	 * @throws Lengow_Exception If product is not found
+	 * 
+	 * @return array
 	 */
 	private function _get_products() {
 		$products = array();
@@ -362,9 +378,9 @@ class Lengow_Import_Order {
 	}
 
 	/**
-	 * Decrease stocks for a giving product
+	 * Decrease stocks for a giving product.
 	 *
-	 * @param $products array Product which needs stocks to be decreased
+	 * @param array $products product which needs stocks to be decreased
 	 */
 	private function _decrease_stock( $products ) {
 		if ( get_option( 'woocommerce_manage_stock' ) === 'yes' ) {
@@ -404,7 +420,7 @@ class Lengow_Import_Order {
 	}
 
 	/**
-	 * Create a order in lengow orders table
+	 * Create a order in lengow orders table.
 	 *
 	 * @return boolean
 	 */

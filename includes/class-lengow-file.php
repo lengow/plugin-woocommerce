@@ -2,10 +2,24 @@
 /**
  * All components to manage file
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,27 +32,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_File {
 
 	/**
-	 * @var string file name
+	 * @var string file name.
 	 */
 	public $file_name;
 
 	/**
-	 * @var string folder name that contains the file
+	 * @var string folder name that contains the file.
 	 */
 	public $folder_name;
 
 	/**
-	 * @var string file link
+	 * @var string file link.
 	 */
 	public $link;
 
 	/**
-	 * @var Lengow_File ressource file hande
+	 * @var Lengow_File ressource file hande.
 	 */
 	public $instance;
 
 	/**
-	 * Construct a new Lengow File
+	 * Construct a new Lengow File.
 	 *
 	 * @param string $folder_name Folder name
 	 * @param string $file_name File name
@@ -64,14 +78,14 @@ class Lengow_File {
 	}
 
 	/**
-	 * Destruct
+	 * Destruct.
 	 */
 	public function __destruct() {
 		$this->close();
 	}
 
 	/**
-	 * Write content in file
+	 * Write content in file.
 	 *
 	 * @param string $txt text to be written
 	 */
@@ -83,7 +97,7 @@ class Lengow_File {
 	}
 
 	/**
-	 * Delete file
+	 * Delete file.
 	 */
 	public function delete() {
 		if ( $this->exists() ) {
@@ -95,7 +109,7 @@ class Lengow_File {
 	}
 
 	/**
-	 * Rename file
+	 * Rename file.
 	 *
 	 * @param string $new_name new name for file
 	 *
@@ -106,7 +120,7 @@ class Lengow_File {
 	}
 
 	/**
-	 * Close file handle
+	 * Close file handle.
 	 */
 	public function close() {
 		if ( is_resource( $this->instance ) ) {
@@ -115,7 +129,7 @@ class Lengow_File {
 	}
 
 	/**
-	 * Get resource of a given stream
+	 * Get resource of a given stream.
 	 *
 	 * @param string $path path to the file
 	 * @param string $mode type of access
@@ -127,7 +141,7 @@ class Lengow_File {
 	}
 
 	/**
-	 * Get file link
+	 * Get file link.
 	 *
 	 * @return string
 	 */
@@ -144,7 +158,7 @@ class Lengow_File {
 	}
 
 	/**
-	 * Get file path
+	 * Get file path.
 	 *
 	 * @return string
 	 */
@@ -155,7 +169,7 @@ class Lengow_File {
 	}
 
 	/**
-	 * Get folder path of current file
+	 * Get folder path of current file.
 	 *
 	 * @return string
 	 */
@@ -166,20 +180,20 @@ class Lengow_File {
 	}
 
 	/**
-	 * Check if current file exists
+	 * Check if current file exists.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function exists() {
 		return file_exists( $this->get_path() );
 	}
 
 	/**
-	 * Get a file list for a given folder
+	 * Get a file list for a given folder.
 	 *
 	 * @param string $folder folder name
 	 *
-	 * @return mixed
+	 * @return array|false
 	 */
 	public static function get_files_from_folder( $folder ) {
 		$sep         = DIRECTORY_SEPARATOR;

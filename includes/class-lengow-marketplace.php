@@ -2,10 +2,24 @@
 /**
  * Get marketplace information
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,49 +32,49 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Marketplace {
 
 	/**
-	 * @var mixed all marketplaces allowed for an account ID
+	 * @var mixed all marketplaces allowed for an account ID.
 	 */
 	public static $marketplaces = null;
 
 	/**
-	 * @var string the name of the marketplace
+	 * @var string the name of the marketplace.
 	 */
 	public $name;
 
 	/**
-	 * @var string the old code of the markeplace for v2 compatibility
+	 * @var string the old code of the markeplace for v2 compatibility.
 	 */
 	public $legacy_code;
 
 	/**
-	 * @var boolean if the marketplace is loaded
+	 * @var boolean if the marketplace is loaded.
 	 */
 	public $is_loaded = false;
 
 	/**
-	 * @var array Lengow states => marketplace states
+	 * @var array Lengow states => marketplace states.
 	 */
 	public $states_lengow = array();
 
 	/**
-	 * @var array marketplace states => Lengow states
+	 * @var array marketplace states => Lengow states.
 	 */
 	public $states = array();
 
 	/**
-	 * @var array all possible actions of the marketplace
+	 * @var array all possible actions of the marketplace.
 	 */
 	public $actions = array();
 
 	/**
-	 * @var array all carriers of the marketplace
+	 * @var array all carriers of the marketplace.
 	 */
 	public $carriers = array();
 
 	/**
-	 * Construct a new Marketplace instance with marketplace API
+	 * Construct a new Marketplace instance with marketplace API.
 	 *
-	 * @param string $name The name of the marketplace
+	 * @param string $name the name of the marketplace
 	 *
 	 * @throws Lengow_Exception If marketplace not present
 	 */
@@ -106,7 +120,7 @@ class Lengow_Marketplace {
 	}
 
 	/**
-	 * Load the json configuration of all marketplaces
+	 * Load the json configuration of all marketplaces.
 	 */
 	private function _load_api_marketplace() {
 		if ( is_null( self::$marketplaces ) ) {
@@ -115,11 +129,11 @@ class Lengow_Marketplace {
 	}
 
 	/**
-	 * Get the real lengow's state
+	 * Get the real lengow's state.
 	 *
-	 * @param string $name The marketplace state
+	 * @param string $name the marketplace state
 	 *
-	 * @return string The lengow state
+	 * @return string
 	 */
 	public function get_state_lengow( $name ) {
 		if ( array_key_exists( $name, $this->states_lengow ) ) {

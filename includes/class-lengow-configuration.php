@@ -1,11 +1,25 @@
 <?php
 /**
- * All Lengow configuration options
+ * All Lengow configuration options.
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Configuration {
 
 	/**
-	 * Get all Lengow configuration keys
+	 * Get all Lengow configuration keys.
 	 *
 	 * @return array
 	 */
@@ -140,9 +154,9 @@ class Lengow_Configuration {
 	}
 
 	/**
-	 * Get Lengow value
+	 * Get Lengow value.
 	 *
-	 * @param string $key lengow configuration key
+	 * @param string $key Lengow configuration key
 	 *
 	 * @return mixed
 	 */
@@ -152,9 +166,9 @@ class Lengow_Configuration {
 	}
 
 	/**
-	 * Update Lengow value by shop
+	 * Update Lengow value by shop.
 	 *
-	 * @param string $key lengow configuration key
+	 * @param string $key Lengow configuration key
 	 * @param mixed $value configuration value
 	 */
 	public static function add_value( $key, $value ) {
@@ -162,7 +176,7 @@ class Lengow_Configuration {
 	}
 
 	/**
-	 * Update Lengow value by shop
+	 * Update Lengow value by shop.
 	 *
 	 * @param string $key lengow configuration key
 	 * @param mixed $value configuration value
@@ -172,7 +186,7 @@ class Lengow_Configuration {
 	}
 
 	/**
-	 * Delete Lengow value by shop
+	 * Delete Lengow value by shop.
 	 *
 	 * @param string $key lengow configuration key
 	 */
@@ -181,7 +195,7 @@ class Lengow_Configuration {
 	}
 
 	/**
-	 * Get Values
+	 * Get all values.
 	 *
 	 * @param boolean $all get all shop value
 	 * @param boolean $shop get only shop value for get_option_data()
@@ -216,7 +230,7 @@ class Lengow_Configuration {
 	}
 
 	/**
-	 * Check value and create a log if necessary
+	 * Check value and create a log if necessary.
 	 *
 	 * @param string $key name of lengow setting
 	 * @param mixed $value setting value

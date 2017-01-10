@@ -1,9 +1,24 @@
 <?php
 /**
- * @author   Lengow
- * @category Admin
- * @package  Lengow/upgrade
- * @version  2.0.0
+ * Update 2.0.0
+ *
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	upgrade
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
  */
 
 if ( ! defined( 'ABSPATH' ) || ! Lengow_Install::is_installation_in_progress() ) {
@@ -46,7 +61,8 @@ if ( $wpdb->get_var( 'SHOW TABLES LIKE \'' . $table_name . '\'' ) ) {
 	}
 	if ( Lengow_Install::check_field_exists( 'lengow_orders', 'id_order_lengow' ) ) {
 		$wpdb->query(
-			'ALTER TABLE ' . $table_name . ' CHANGE `id_order_lengow` `marketplace_sku` VARCHAR(100) COLLATE utf8_unicode_ci NOT NULL'
+			'ALTER TABLE ' . $table_name
+			. ' CHANGE `id_order_lengow` `marketplace_sku` VARCHAR(100) COLLATE utf8_unicode_ci NOT NULL'
 		);
 		$wpdb->query(
 			'DROP INDEX `id_order_lengow` ON ' . $table_name
@@ -54,7 +70,8 @@ if ( $wpdb->get_var( 'SHOW TABLES LIKE \'' . $table_name . '\'' ) ) {
 	}
 	if ( Lengow_Install::check_field_exists( 'lengow_orders', 'marketplace' ) ) {
 		$wpdb->query(
-			'ALTER TABLE ' . $table_name . ' CHANGE `marketplace` `marketplace_name` VARCHAR(100) COLLATE utf8_unicode_ci NOT NULL'
+			'ALTER TABLE ' . $table_name
+			. ' CHANGE `marketplace` `marketplace_name` VARCHAR(100) COLLATE utf8_unicode_ci NOT NULL'
 		);
 		$wpdb->query(
 			'DROP INDEX `marketplace` ON ' . $table_name

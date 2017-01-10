@@ -1,5 +1,28 @@
 <?php
 /**
+ * Lengow
+ *
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ * 
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
+ */
+
+/**
+ * 
  * Plugin Name: Lengow for WooCommerce
  * Plugin URI: http://www.lengow.com
  * Description: Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
@@ -11,9 +34,6 @@
  *
  * Text Domain: lengow
  * Domain Path: /languages
- *
- * @package Lengow
- * @author Lengow
  */
 
 // Prevent direct access.
@@ -27,30 +47,27 @@ global $wp_version;
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 
 	/**
-	 * Main Lengow Class.
-	 *
-	 * @class Lengow
-	 * @version 2.0.0
+	 * Main Lengow Class
 	 */
 	class Lengow {
 
 		/**
-		 * @var string Current version of plugin
+		 * @var string current version of plugin.
 		 */
 		public $version = '2.0.0';
 
 		/**
-		 * @var string The plugin name
+		 * @var string plugin name.
 		 */
 		public $name = 'lengow-woocommerce';
 
 		/**
-		 * @var Lengow Admin Object Instance of Lengow Admin
+		 * @var Lengow_Admin Lengow Admin Instance.
 		 */
 		public $lengow_admin;
 
 		/**
-		 * Construct module Lengow for WooCommerce
+		 * Construct module Lengow for WooCommerce.
 		 */
 		public function __construct() {
 			$this->_define_constants();
@@ -59,7 +76,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 
 		/**
-		 * Hook into actions
+		 * Hook into actions.
 		 */
 		private function _init_hooks() {
 			register_activation_hook( __FILE__, array( 'Lengow_Install', 'install' ) );
@@ -74,7 +91,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 
 		/**
-		 * Define Lengow Constants
+		 * Define Lengow Constants.
 		 */
 		private function _define_constants() {
 			$this->_define( 'LENGOW_PLUGIN_FILE', __FILE__ );
@@ -84,10 +101,10 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 
 		/**
-		 * Define constant if not already set
+		 * Define constant if not already set.
 		 *
-		 * @param  string $name
-		 * @param  string|bool $value
+		 * @param  string $name constant name
+		 * @param  string|boolean $value constant value
 		 */
 		private function _define( $name, $value ) {
 			if ( ! defined( $name ) ) {
@@ -96,7 +113,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 
 		/**
-		 * Include all dependencies
+		 * Include all dependencies.
 		 */
 		public function includes() {
 			if ( is_admin() ) {
@@ -128,7 +145,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 
 		/**
-		 * Init Lengow when WordPress Initialises
+		 * Init Lengow when WordPress Initialises.
 		 */
 		public function init() {
 			if ( is_admin() ) {
@@ -157,7 +174,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 
 		/**
-		 * Add CSS and JS
+		 * Add CSS and JS.
 		 */
 		public function add_scripts() {
 			wp_register_style( 'lengow_component_css', plugins_url( '/assets/css/lengow-components.css', __FILE__ ) );
@@ -205,7 +222,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 
 		/**
-		 * Remove Wordpress's updates messages
+		 * Remove Wordpress's updates messages.
 		 *
 		 * @return object
 		 */

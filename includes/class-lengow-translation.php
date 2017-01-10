@@ -2,10 +2,24 @@
 /**
  * All components to manage the translation module
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,40 +32,40 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Translation {
 
 	/**
-	 * Version
+	 * @var array all translations.
 	 */
 	protected static $translation = null;
 
 	/**
-	 * Fallback iso code
+	 * @var string fallback iso code.
 	 */
 	public $fallback_iso_code = 'en_GB';
 
 	/**
-	 * Iso code
+	 * @var string iso code.
 	 */
 	protected $iso_code = null;
 
 	/**
-	 * Force iso code for log and toolbox
+	 * @var string force iso code for log and toolbox.
 	 */
 	public static $force_iso_code = null;
 
 	/**
-	 * Construct a new Lengow translation
+	 * Construct a new Lengow translation.
 	 */
 	public function __construct() {
 		$this->iso_code = get_locale();
 	}
 
 	/**
-	 * Translate message
+	 * Translate message.
 	 *
 	 * @param string $message localization key
 	 * @param array $args replace word in string
 	 * @param array $iso_code iso code
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function t( $message, $args = array(), $iso_code = null ) {
 		if ( ! is_null( self::$force_iso_code ) ) {
@@ -78,12 +92,12 @@ class Lengow_Translation {
 	}
 
 	/**
-	 * Translate string
+	 * Translate string.
 	 *
-	 * @param string $text
-	 * @param array $args
+	 * @param string $text localization key
+	 * @param array $args replace word in string
 	 *
-	 * @return string Final Translate string
+	 * @return string
 	 */
 	protected function translate_final( $text, $args ) {
 		if ( $args ) {
@@ -101,9 +115,9 @@ class Lengow_Translation {
 	}
 
 	/**
-	 * Load csv file
+	 * Load csv file.
 	 *
-	 * @param string $iso_code
+	 * @param string $iso_code translation iso code
 	 * @param string $filename file location
 	 *
 	 * @return boolean

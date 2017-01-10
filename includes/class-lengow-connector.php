@@ -2,10 +2,24 @@
 /**
  * Connector to use Lengow API
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,43 +30,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Lengow_Connector Class.
  */
 class Lengow_Connector {
-	/**
-	 * @var string connector version
-	 */
-	const VERSION = '1.0';
 
 	/**
-	 * @var mixed error returned by the API
-	 */
-	public $error;
-
-	/**
-	 * @var string the access token to connect
-	 */
-	protected $_access_token;
-
-	/**
-	 * @var string the secret to connect
-	 */
-	protected $_secret;
-
-	/**
-	 * @var string temporary token for the authorization
-	 */
-	protected $_token;
-
-	/**
-	 * @var integer ID account
-	 */
-	protected $_account_id;
-
-	/**
-	 * @var integer the user Id
-	 */
-	protected $_user_id;
-
-	/**
-	 * @var string URL of the API Lengow
+	 * @var string url of the API Lengow.
 	 */
 	// const LENGOW_API_URL = 'http://api.lengow.io:80';
 	// const LENGOW_API_URL = 'http://api.lengow.net:80';
@@ -60,12 +40,12 @@ class Lengow_Connector {
 	// const LENGOW_API_URL = 'http://10.100.1.82:8081';
 
 	/**
-	 * @var string URL of the SANDBOX Lengow
+	 * @var string url of the SANDBOX Lengow.
 	 */
 	const LENGOW_API_SANDBOX_URL = 'http://api.lengow.net:80';
 
 	/**
-	 * @var array default options for curl
+	 * @var array default options for curl.
 	 */
 	public static $curl_opts = array(
 		CURLOPT_CONNECTTIMEOUT => 10,
@@ -75,7 +55,32 @@ class Lengow_Connector {
 	);
 
 	/**
-	 * @var array lengow url for curl timeout
+	 * @var string the access token to connect.
+	 */
+	protected $_access_token;
+
+	/**
+	 * @var string the secret to connect.
+	 */
+	protected $_secret;
+
+	/**
+	 * @var string temporary token for the authorization.
+	 */
+	protected $_token;
+
+	/**
+	 * @var integer ID account.
+	 */
+	protected $_account_id;
+
+	/**
+	 * @var integer the user Id.
+	 */
+	protected $_user_id;
+
+	/**
+	 * @var array lengow url for curl timeout.
 	 */
 	protected $lengow_urls = array(
 		'/v3.0/orders'        => 15,
@@ -97,11 +102,11 @@ class Lengow_Connector {
 	}
 
 	/**
-	 * Connectection to the API
+	 * Connectection to the API.
 	 *
 	 * @param string $user_token The user token if is connected
 	 *
-	 * @return mixed array [authorized token + account_id + user_id] or false
+	 * @return array|false
 	 */
 	public function connect( $user_token = '' ) {
 		$data = $this->call_action(
@@ -125,15 +130,15 @@ class Lengow_Connector {
 	}
 
 	/**
-	 * The API method
+	 * The API method.
 	 *
 	 * @param string $method Lengow method API call
 	 * @param array $array Lengow method API parameters
 	 * @param string $type type of request GET|POST|PUT|HEAD|DELETE|PATCH
 	 * @param string $format return format of API
-	 * @param string $body
+	 * @param string $body body datas for request
 	 *
-	 * @return array The formated data response
+	 * @return array
 	 */
 	public function call( $method, $array = array(), $type = 'GET', $format = 'json', $body = '' ) {
 		$this->connect();
@@ -150,99 +155,99 @@ class Lengow_Connector {
 	}
 
 	/**
-	 * Get API call
+	 * Get API call.
 	 *
 	 * @param string $method Lengow method API call
 	 * @param array $array Lengow method API parameters
 	 * @param string $format return format of API
-	 * @param string $body
+	 * @param string $body body datas for request
 	 *
-	 * @return array The formated data response
+	 * @return array
 	 */
 	public function get( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'GET', $format, $body );
 	}
 
 	/**
-	 * Post API call
+	 * Post API call.
 	 *
 	 * @param string $method Lengow method API call
 	 * @param array $array Lengow method API parameters
 	 * @param string $format return format of API
-	 * @param string $body
+	 * @param string $body body datas for request
 	 *
-	 * @return array The formated data response
+	 * @return array
 	 */
 	public function post( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'POST', $format, $body );
 	}
 
 	/**
-	 * Head API call
+	 * Head API call.
 	 *
 	 * @param string $method Lengow method API call
 	 * @param array $array Lengow method API parameters
 	 * @param string $format return format of API
-	 * @param string $body
+	 * @param string $body body datas for request
 	 *
-	 * @return array The formated data response
+	 * @return array
 	 */
 	public function head( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'HEAD', $format, $body );
 	}
 
 	/**
-	 * Put API call
+	 * Put API call.
 	 *
 	 * @param string $method Lengow method API call
 	 * @param array $array Lengow method API parameters
 	 * @param string $format return format of API
-	 * @param string $body
+	 * @param string $body body datas for request
 	 *
-	 * @return array The formated data response
+	 * @return array
 	 */
 	public function put( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'PUT', $format, $body );
 	}
 
 	/**
-	 * Delete API call
+	 * Delete API call.
 	 *
 	 * @param string $method Lengow method API call
 	 * @param array $array Lengow method API parameters
 	 * @param string $format return format of API
-	 * @param string $body
+	 * @param string $body body datas for request
 	 *
-	 * @return array The formated data response
+	 * @return array
 	 */
 	public function delete( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'DELETE', $format, $body );
 	}
 
 	/**
-	 * Patch API call
+	 * Patch API call.
 	 *
 	 * @param string $method Lengow method API call
 	 * @param array $array Lengow method API parameters
 	 * @param string $format return format of API
-	 * @param string $body
+	 * @param string $body body datas for request
 	 *
-	 * @return array The formated data response
+	 * @return array
 	 */
 	public function patch( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'PATCH', $format, $body );
 	}
 
 	/**
-	 * Call API action
+	 * Call API action.
 	 *
 	 * @param string $api Lengow method API call
 	 * @param array $args Lengow method API parameters
 	 * @param string $type type of request GET|POST|PUT|HEAD|DELETE|PATCH
 	 * @param string $format return format of API
-	 * @param string $body
+	 * @param string $body body datas for request
 	 *
-	 * @return array The formated data response
+	 * @return array
 	 */
 	private function call_action( $api, $args, $type, $format = 'json', $body = '' ) {
 		$result = $this->make_request( $type, $api, $args, $this->_token, $body );
@@ -251,12 +256,12 @@ class Lengow_Connector {
 	}
 
 	/**
-	 * Get data in specific format
+	 * Get data in specific format.
 	 *
-	 * @param mixed $data
-	 * @param string $format
+	 * @param mixed $data Curl response data
+	 * @param string $format return format of API
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	private function format( $data, $format ) {
 		switch ( $format ) {
@@ -272,17 +277,17 @@ class Lengow_Connector {
 	}
 
 	/**
-	 * Make Curl request
+	 * Make Curl request.
 	 *
 	 * @param string $type Lengow method API call
 	 * @param string $url Lengow API url
 	 * @param array $args Lengow method API parameters
 	 * @param string $token temporary access token
-	 * @param string $body
+	 * @param string $body body datas for request
 	 *
 	 * @throws Lengow_Exception Get curl error
 	 *
-	 * @return array The formated data response
+	 * @return array
 	 */
 	protected function make_request( $type, $url, $args, $token, $body = '' ) {
 		// define CURLE_OPERATION_TIMEDOUT for old php versions.
@@ -383,7 +388,7 @@ class Lengow_Connector {
 	}
 
 	/**
-	 * Get Valid Account / Access / Secret
+	 * Get Valid Account / Access / Secret.
 	 *
 	 * @return array
 	 */
@@ -403,12 +408,12 @@ class Lengow_Connector {
 	}
 
 	/**
-	 * Get result for a query Api
+	 * Get result for a query Api.
 	 *
-	 * @param string $type (GET / POST / PUT / PATCH)
-	 * @param string $url
-	 * @param array $params
-	 * @param string $body
+	 * @param string $type request type (GET / POST / PUT / PATCH)
+	 * @param string $url request url
+	 * @param array $params request params
+	 * @param string $body body datas for request
 	 *
 	 * @return mixed
 	 */

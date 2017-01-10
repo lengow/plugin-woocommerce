@@ -1,11 +1,24 @@
 <?php
 /**
- * Installation related functions and actions.
+ * Admin order page
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,8 +29,20 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Lengow_Admin_Orders Class.
  */
 class Lengow_Admin_Orders {
+
 	/**
-	 * Process Post Parameters
+	 * Display admin orders page.
+	 */
+	public static function display() {
+		$lengow_admin_orders = new Lengow_Admin_Orders();
+		$warning_message     = $lengow_admin_orders->assign_warning_messages();
+		$order_collection    = $lengow_admin_orders->assign_last_importation_infos();
+		$locale              = new Lengow_Translation();
+		include_once 'views/orders/html-admin-orders.php';
+	}
+
+	/**
+	 * Process Post Parameters.
 	 */
 	public function post_process() {
 		$lengow_admin_orders = new Lengow_Admin_Orders();
@@ -44,9 +69,9 @@ class Lengow_Admin_Orders {
 	}
 
 	/**
-	 * Generate message array (new, update and errors)
+	 * Generate message array (new, update and errors).
 	 *
-	 * @param array $return
+	 * @param array $return import informations
 	 *
 	 * @return array
 	 */
@@ -86,7 +111,7 @@ class Lengow_Admin_Orders {
 	}
 
 	/**
-	 * Get warning messages
+	 * Get warning messages.
 	 */
 	public function assign_warning_messages() {
 		$locale           = new Lengow_Translation();
@@ -107,7 +132,7 @@ class Lengow_Admin_Orders {
 	}
 
 	/**
-	 * Get all last importation information
+	 * Get all last importation information.
 	 */
 	public function assign_last_importation_infos() {
 		$last_import      = Lengow_Main::get_last_import();
@@ -120,16 +145,4 @@ class Lengow_Admin_Orders {
 
 		return $order_collection;
 	}
-
-	/**
-	 * Display admin orders page
-	 */
-	public static function display() {
-		$lengow_admin_orders = new Lengow_Admin_Orders();
-		$warning_message     = $lengow_admin_orders->assign_warning_messages();
-		$order_collection    = $lengow_admin_orders->assign_last_importation_infos();
-		$locale              = new Lengow_Translation();
-		include_once 'views/orders/html-admin-orders.php';
-	}
-
 }

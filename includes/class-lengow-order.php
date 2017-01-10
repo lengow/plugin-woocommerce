@@ -2,10 +2,24 @@
 /**
  * All function to synchronised orders
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,9 +32,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Order {
 
 	/**
-	 * Get ID record from lengow orders table
+	 * Get ID record from lengow orders table.
 	 *
-	 * @param string $marketplace_sku Lengow order id
+	 * @param string $marketplace_sku Lengow id
 	 * @param string $marketplace marketplace name
 	 * @param integer $delivery_address_id delivery address id
 	 * @param string $marketplace_legacy old marketplace name for v2 compatibility
@@ -64,12 +78,12 @@ class Lengow_Order {
 	}
 
 	/**
-	 * Get ID record from lengow orders table
+	 * Get ID record from lengow orders table.
 	 *
-	 * @param string $marketplace_sku lengow order id
+	 * @param string $marketplace_sku Lengow id
 	 * @param integer $delivery_address_id delivery address id
 	 *
-	 * @return mixed
+	 * @return integer|false
 	 */
 	public static function get_id_from_lengow_orders( $marketplace_sku, $delivery_address_id ) {
 		global $wpdb;

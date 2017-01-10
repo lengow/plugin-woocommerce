@@ -2,10 +2,24 @@
 /**
  * All components for toolbox
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Check {
 
 	/**
-	 * @var $locale (for translation)
+	 * @var $locale Lengow_Translation Lengow translation instance.
 	 */
 	private $_locale;
 
@@ -28,9 +42,9 @@ class Lengow_Check {
 	}
 
 	/**
-	 * Get array of requirements and their status
+	 * Get array of requirements and their status.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function get_check_list() {
 		$checklist   = array();
@@ -67,9 +81,9 @@ class Lengow_Check {
 	}
 
 	/**
-	 * Get array of requirements and their status
+	 * Get array of requirements and their status.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function get_global_information() {
 		global $woocommerce;
@@ -105,9 +119,9 @@ class Lengow_Check {
 	}
 
 	/**
-	 * Get array of requirements and their status
+	 * Get array of requirements and their status.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function get_import_information() {
 		$last_import      = Lengow_Main::get_last_import();
@@ -160,9 +174,9 @@ class Lengow_Check {
 
 
 	/**
-	 * Get array of requirements and their status, no multi-store on wordpress
+	 * Get array of requirements and their status, no multi-store on wordpress.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function get_information_by_store() {
 		$lengowExport = new Lengow_Export;
@@ -206,9 +220,9 @@ class Lengow_Check {
 	}
 
 	/**
-	 * Get files checksum
+	 * Get files checksum.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function check_file_md5() {
 		$checklist    = array();
@@ -284,7 +298,7 @@ class Lengow_Check {
 	}
 
 	/**
-	 * Get checksum errors
+	 * Get checksum errors.
 	 *
 	 * @return boolean
 	 */
@@ -309,7 +323,7 @@ class Lengow_Check {
 	}
 
 	/**
-	 * Get HTML Table content of checklist
+	 * Get HTML Table content of checklist.
 	 *
 	 * @param array $checklist
 	 *
@@ -357,7 +371,7 @@ class Lengow_Check {
 	}
 
 	/**
-	 * Check API Authentification
+	 * Check API Authentification.
 	 *
 	 * @return boolean
 	 */
@@ -383,7 +397,7 @@ class Lengow_Check {
 	}
 
 	/**
-	 * Check if PHP Curl is activated
+	 * Check if PHP Curl is activated.
 	 *
 	 * @return boolean
 	 */
@@ -392,7 +406,7 @@ class Lengow_Check {
 	}
 
 	/**
-	 * Check if SimpleXML Extension is activated
+	 * Check if SimpleXML Extension is activated.
 	 *
 	 * @return boolean
 	 */
@@ -401,7 +415,7 @@ class Lengow_Check {
 	}
 
 	/**
-	 * Check if json Extension is activated
+	 * Check if json Extension is activated.
 	 *
 	 * @return boolean
 	 */

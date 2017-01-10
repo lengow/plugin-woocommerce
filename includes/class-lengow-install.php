@@ -2,10 +2,24 @@
 /**
  * Installation related functions and actions.
  *
- * @author   Lengow
- * @category Admin
- * @package  Lengow/Classes
- * @version  2.0.0
+ * Copyright 2017 Lengow SAS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * at your option) any later version.
+ * 
+ * It is available through the world-wide-web at this URL:
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0
+ *
+ * @category   	lengow
+ * @package    	lengow-woocommerce
+ * @subpackage 	includes
+ * @author     	Team module <team-module@lengow.com>
+ * @copyright  	2017 Lengow SAS
+ * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,22 +32,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Install {
 
 	/**
-	 * installation status
+	 * @var boolean installation status.
 	 */
 	public static $installation_status;
 
 	/**
-	 * Installation of module
-	 * Attached to activate_{ plugin_basename( __FILES__ ) } by register_activation_hook()
-	 * @static
+	 * Installation of module.
+	 * Attached to activate_{ plugin_basename( __FILES__ ) } by register_activation_hook().
 	 */
 	public static function install() {
 		Lengow_Install::update();
 	}
 
 	/**
-	 * Update process from previous versions
-	 * @return boolean Result of update process
+	 * Update process from previous versions.
+	 * 
+	 * @return boolean
 	 */
 	public static function update() {
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -54,10 +68,10 @@ class Lengow_Install {
 	}
 
 	/**
-	 * Checks if a field exists in BDD
+	 * Checks if a field exists in database.
 	 *
-	 * @param string $table
-	 * @param string $field
+	 * @param string $table Lengow table
+	 * @param string $field Lengow field
 	 *
 	 * @return boolean
 	 */
@@ -71,10 +85,10 @@ class Lengow_Install {
 	}
 
 	/**
-	 * Checks if a field exists in BDD and Dropped It
+	 * Checks if a field exists in BDD and Dropped It.
 	 *
-	 * @param string $table
-	 * @param string $field
+	 * @param string $table Lengow table
+	 * @param string $field Lengow field
 	 */
 	public static function check_field_and_drop( $table, $field ) {
 		global $wpdb;
@@ -86,10 +100,10 @@ class Lengow_Install {
 	}
 
 	/**
-	 * Rename configuration key
+	 * Rename configuration key.
 	 *
-	 * @param string $oldName
-	 * @param string $newName
+	 * @param string $oldName old Lengow configuration name
+	 * @param string $newName new Lengow configuration name
 	 */
 	public static function rename_configuration_key( $oldName, $newName ) {
 		$tempValue = Lengow_Configuration::get( $oldName );
@@ -98,7 +112,7 @@ class Lengow_Install {
 	}
 
 	/**
-	 * Set Installation Status
+	 * Set Installation Status.
 	 *
 	 * @param boolean $status Installation Status
 	 */
@@ -107,7 +121,7 @@ class Lengow_Install {
 	}
 
 	/**
-	 * Is Installation In Progress
+	 * Is Installation In Progress.
 	 *
 	 * @return boolean
 	 */
