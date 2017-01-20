@@ -235,15 +235,10 @@ class Lengow_Sync {
 	 */
 	public static function get_status_account( $force = false ) {
 		if ( ! $force ) {
-			$updated_at = Lengow_Configuration::get(
-				'lengow_last_account_status_update'
-			);
+			$updated_at = Lengow_Configuration::get( 'lengow_last_account_status_update' );
 			if ( ! is_null( $updated_at ) && ( time() - strtotime( $updated_at ) ) < self::$_cache_time ) {
-				$config = Lengow_Configuration::get(
-					'lengow_account_status'
-				);
 
-				return json_decode( $config, true );
+				return json_decode( Lengow_Configuration::get( 'lengow_account_status' ) , true );
 			}
 		}
 
@@ -263,16 +258,15 @@ class Lengow_Sync {
 			if ( $status ) {
 				$jsonStatus = json_encode( $status );
 				$date       = date( 'Y-m-d H:i:s' );
-				Lengow_Configuration::update_value(
-					'lengow_account_status',
-					$jsonStatus
-				);
-				Lengow_Configuration::update_value(
-					'lengow_last_account_status_update',
-					$date
-				);
+				Lengow_Configuration::update_value( 'lengow_account_status', $jsonStatus );
+				Lengow_Configuration::update_value( 'lengow_last_account_status_update', $date );
 
 				return $status;
+			}
+		} else {
+			if ( Lengow_Configuration::get( 'lengow_last_account_status_update' ) ) {
+
+				return json_decode( Lengow_Configuration::get( 'lengow_account_status' ) , true );;
 			}
 		}
 
