@@ -24,7 +24,7 @@
 /assets/js/bootstrap.min.js|bed31fb959612a0a77d8e87b9d0b3683
 /assets/js/select2.js|fc6ada6e297531c8e4e3e3f3edc79207
 /assets/js/bootstrap_v3.min.js|5869c96cc8f19086aee625d670d741f9
-/assets/js/lengow/home.js|09e4443e0481a7219e52322d47644248
+/assets/js/lengow/home.js|af736ac540f605dea583745ac9ac89b1
 /assets/js/lengow/products.js|1149f7853fa5e8a41c333e7fd36ccddd
 /assets/js/lengow/admin.js|ece687253e517710d4359f7c92e65832
 /assets/js/lengow/orders.js|bffcc8fabddf9d1030f261848c295886
@@ -50,7 +50,7 @@
 /includes/admin/views/legals/html-admin-legals.php|03beed5df56f664cbc96786f1c486d36
 /includes/admin/views/orders/html-admin-orders.php|00cdd98525998ad4fdf48523e0608c7b
 /includes/admin/views/products/html-admin-products.php|363d04096af5369a1fa3d555d368e494
-/includes/admin/views/html-admin-footer.php|262460fb8096a11764414eec2704ef85
+/includes/admin/views/html-admin-footer.php|ec2893e2e2d830f8f11ab4a1f86ec26b
 /includes/admin/views/dashboard/html-admin-dashboard.php|194ef502eac8ecfc3b1280b74e2e0adc
 /includes/admin/views/dashboard/html-admin-new.php|e3484e989cf39cec211abe14d8b326ce
 /includes/admin/views/dashboard/html-admin-status.php|4eddbfd42782d5da2f0aeeb8b6e55b05
