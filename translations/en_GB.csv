@@ -100,7 +100,7 @@ global_setting.screen.product_types_title|Product type to export
 global_setting.screen.please_choose_log|Please choose a log file...
 global_setting.screen.download_all_files|Download all files
 help.screen.title|Get a little help from your support team!
-help.screen.contain_text_support|Ask us anything about Lengow or share feedback to 
+help.screen.contain_text_support|Ask us anything about Lengow or share feedback with
 help.screen.title_lengow_support|Lengow Support.
 help.screen.link_lengow_support|https://supportlengow.zendesk.com/hc/en-us/requests/new
 help.screen.need_some_help|Need some help?
@@ -121,8 +121,8 @@ lengow_settings.lengow_store_active_title|Enable store
 lengow_settings.lengow_account_id_title|Account ID
 lengow_settings.lengow_access_token_title|Access Token
 lengow_settings.lengow_secret_token_title|Secret Token
-lengow_settings.lengow_authorized_ip_title|Authorised IP
-lengow_settings.lengow_authorized_ip_legend|Authorize IP to get access to your export feed.<br />Separate them ' ; '
+lengow_settings.lengow_authorized_ip_title|Authorised IPs
+lengow_settings.lengow_authorized_ip_legend|Authorise IP to get access to your export feed.<br />Separate them ' ; '
 lengow_settings.lengow_selection_enabled_title|Export the selection only
 lengow_settings.lengow_selection_enabled_legend|Activate this option if you do not want to export all available products. Then, select only the products you want to export
 lengow_settings.lengow_product_types_title|Product type to export

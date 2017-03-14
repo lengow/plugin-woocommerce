@@ -117,7 +117,7 @@ en:
   help:
     screen:
       title: "Get a little help from your support team!"
-      contain_text_support: "Ask us anything about Lengow or share feedback to "
+      contain_text_support: "Ask us anything about Lengow or share feedback with"
       title_lengow_support: "Lengow Support."
       link_lengow_support: "https://supportlengow.zendesk.com/hc/en-us/requests/new"
       need_some_help: "Need some help?"
@@ -141,8 +141,8 @@ en:
     lengow_account_id_title: "Account ID"
     lengow_access_token_title: "Access Token"
     lengow_secret_token_title: "Secret Token"
-    lengow_authorized_ip_title: "Authorised IP"
-    lengow_authorized_ip_legend: "Authorize IP to get access to your export feed.\nSeparate them ' ; '"
+    lengow_authorized_ip_title: "Authorised IPs"
+    lengow_authorized_ip_legend: "Authorise IP to get access to your export feed.\nSeparate them ' ; '"
     lengow_selection_enabled_title: "Export the selection only"
     lengow_selection_enabled_legend: "Activate this option if you do not want to export all available products. Then, select only the products you want to export"
     lengow_product_types_title: "Product type to export"

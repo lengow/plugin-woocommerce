@@ -100,7 +100,7 @@ global_setting.screen.product_types_title|Type de produit à exporter
 global_setting.screen.please_choose_log|Veuillez choisir un fichier de log...
 global_setting.screen.download_all_files|Télécharger tous les fichiers
 help.screen.title|Demandez de l'aide à notre équipe Support !
-help.screen.contain_text_support|Des questions, un feedback sur Lengow... transmettez vos demandes au 
+help.screen.contain_text_support|Des questions, un feedback sur Lengow... transmettez vos demandes au
 help.screen.title_lengow_support|support Lengow
 help.screen.link_lengow_support|https://supportlengow.zendesk.com/hc/fr/requests/new
 help.screen.need_some_help|Besoin d'aide ?
