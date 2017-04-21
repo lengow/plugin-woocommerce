@@ -8,7 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 Lengow_Admin_Settings::post_process();
 $keys      = Lengow_Configuration::get_keys();
 $values    = Lengow_Configuration::get_all_values();
-$list_file = array_reverse( Lengow_Log::get_paths() );
+$logs      = Lengow_Log::get_paths();
+$list_file = $logs ? array_reverse( $logs ) : array();
 ?>
 <div class="lgw-container" id="lengow_mainsettings_wrapper" xmlns="http://www.w3.org/1999/html">
 	<?php if ( $values['lengow_preprod_enabled'] == 1 ) : ?>
@@ -153,9 +154,11 @@ $list_file = array_reverse( Lengow_Log::get_paths() );
 					<?php $file_name = explode('.', $file['name']); ?>
 					<?php echo date_format( date_create( $file_name[0] ), 'd F Y' ); ?></option>
 				<?php endforeach; ?>
-				<option value="<?php echo admin_url('admin.php?page=lengow&tab=lengow_settings'); ?>&action=download_all" >
-					<?php echo $locale->t( 'global_setting.screen.download_all_files' ); ?>
-				</option>
+				<?php if ( count($list_file) > 0 ) : ?>
+					<option value="<?php echo admin_url('admin.php?page=lengow&tab=lengow_settings'); ?>&action=download_all" >
+						<?php echo $locale->t( 'global_setting.screen.download_all_files' ); ?>
+					</option>
+				<?php endif; ?>
 			</select>
 			<button type="button" class="js-log-btn-download lgw-btn lgw-btn-white" style="display: none;">
 				<i class="fa fa-download"></i> <?php echo $locale->t( 'global_setting.screen.button_download_file' ); ?>

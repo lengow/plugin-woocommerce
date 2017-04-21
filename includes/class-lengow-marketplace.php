@@ -36,6 +36,11 @@ class Lengow_Marketplace {
 	 */
 	public static $marketplaces = null;
 
+    /**
+     * @var mixed the current marketplace
+     */
+    public $marketplace;
+
 	/**
 	 * @var string the name of the marketplace.
 	 */
@@ -70,6 +75,11 @@ class Lengow_Marketplace {
 	 * @var array all carriers of the marketplace.
 	 */
 	public $carriers = array();
+
+    /**
+     * @var array all possible values for actions of the marketplace
+     */
+    public $arg_values = array();
 
 	/**
 	 * Construct a new Marketplace instance with marketplace API.
@@ -109,6 +119,27 @@ class Lengow_Marketplace {
 				foreach ( $action->optional_args as $optional_arg ) {
 					$this->actions[ (string) $key ]['optional_args'][ (string) $optional_arg ] = $optional_arg;
 				}
+                foreach ( $action->args_description as $arg_key => $arg_description ) {
+                    $valid_values = array();
+                    if ( isset( $arg_description->valid_values ) ) {
+                        foreach ( $arg_description->valid_values as $code => $valid_value ) {
+                            $valid_values[ (string) $code ] = isset( $valid_value->label )
+                                ? (string) $valid_value->label
+                                : (string) $valid_value;
+                        }
+                    }
+                    $default_value = isset( $arg_description->default_value )
+                        ? (string) $arg_description->default_value
+                        : '';
+                    $accept_free_value = isset( $arg_description->accept_free_values )
+                        ? (bool) $arg_description->accept_free_values
+                        : true;
+                    $this->arg_values[ (string)$arg_key ] = array(
+                        'default_value'      => $default_value,
+                        'accept_free_values' => $accept_free_value,
+                        'valid_values'       => $valid_values
+                    );
+                }
 			}
 			if ( isset( $this->marketplace->orders->carriers ) ) {
 				foreach ( $this->marketplace->orders->carriers as $key => $carrier ) {
