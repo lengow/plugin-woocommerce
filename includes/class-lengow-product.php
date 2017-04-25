@@ -296,7 +296,9 @@ class Lengow_Product {
 						$id_image = 9;
 						break;
 				}
-				$image_ids = explode( ',', $this->product->product_image_gallery );
+				$image_ids = is_array($this->product->product_image_gallery)
+                    ? $this->product->product_image_gallery
+                    : explode( ',', $this->product->product_image_gallery );
 				if ( count( $image_ids ) > 0 && isset( $image_ids[ $id_image ] ) && $image_ids[ $id_image ] ) {
 					$image = wp_get_attachment_image_src( $image_ids[ $id_image ], 'shop_catalog_image_size' );
 
