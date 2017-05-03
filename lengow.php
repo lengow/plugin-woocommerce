@@ -10,19 +10,19 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * at your option) any later version.
- * 
+ *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
- * 
- * @category   	Lengow
- * @package    	lengow-woocommerce
- * @author     	Team module <team-module@lengow.com>
- * @copyright  	2017 Lengow SAS
- * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
+ *
+ * @category  Lengow
+ * @package   lengow-woocommerce
+ * @author    Team module <team-module@lengow.com>
+ * @copyright 2017 Lengow SAS
+ * @license   https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 /**
- * 
+ *
  * Plugin Name: Lengow for WooCommerce
  * Plugin URI: http://www.lengow.com
  * Description: Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!

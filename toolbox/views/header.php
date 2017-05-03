@@ -15,19 +15,19 @@
 	<div class="container">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="/wp-content/plugins/lengow-woocommerce/toolbox/index.php">
-				<i class="fa fa-rocket"></i> <?php echo $locale->t('toolbox.menu.lengow_toolbox'); ?>
+				<i class="fa fa-rocket"></i> <?php echo $locale->t( 'toolbox.menu.lengow_toolbox' ); ?>
 			</a>
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li>
 					<a href="/wp-content/plugins/lengow-woocommerce/toolbox/checksum.php">
-						<i class="fa fa-search"></i> <?php echo $locale->t('toolbox.menu.checksum'); ?>
+						<i class="fa fa-search"></i> <?php echo $locale->t( 'toolbox.menu.checksum' ); ?>
 					</a>
 				</li>
 				<li>
 					<a href="/wp-content/plugins/lengow-woocommerce/toolbox/log.php">
-						<i class="fa fa-file-text-o"></i> <?php echo $locale->t('toolbox.menu.log'); ?>
+						<i class="fa fa-file-text-o"></i> <?php echo $locale->t( 'toolbox.menu.log' ); ?>
 					</a>
 				</li>
 			</ul>

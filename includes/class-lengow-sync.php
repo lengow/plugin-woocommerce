@@ -10,16 +10,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * at your option) any later version.
- * 
+ *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
- * @category   	Lengow
- * @package    	lengow-woocommerce
- * @subpackage 	includes
- * @author     	Team module <team-module@lengow.com>
- * @copyright  	2017 Lengow SAS
- * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
+ * @category    Lengow
+ * @package     lengow-woocommerce
+ * @subpackage  includes
+ * @author      Team module <team-module@lengow.com>
+ * @copyright   2017 Lengow SAS
+ * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -109,7 +109,7 @@ class Lengow_Sync {
 	 */
 	public static function check_sync_shop() {
 		return Lengow_Configuration::get( 'lengow_store_enabled' )
-			&& Lengow_Check::is_valid_auth();
+		       && Lengow_Check::is_valid_auth();
 	}
 
 	/**
@@ -206,14 +206,15 @@ class Lengow_Sync {
 			if ( Lengow_Configuration::get( 'lengow_last_order_statistic_update' ) ) {
 				return json_decode( Lengow_Configuration::get( 'lengow_order_statistic' ), true );
 			}
+
 			return $return;
 		}
 		if ( $return['total_order'] > 0 || $return['nb_order'] > 0 ) {
 			$return['available'] = true;
 		}
-		if ( $return['currency'] 
-			&& get_woocommerce_currency_symbol( $return['currency'] ) 
-			&& function_exists( 'wc_price' ) 
+		if ( $return['currency']
+		     && get_woocommerce_currency_symbol( $return['currency'] )
+		     && function_exists( 'wc_price' )
 		) {
 			$return['total_order'] = wc_price( $return['total_order'], array( 'currency' => $return['currency'] ) );
 		} else {
@@ -238,7 +239,7 @@ class Lengow_Sync {
 			$updated_at = Lengow_Configuration::get( 'lengow_last_account_status_update' );
 			if ( ! is_null( $updated_at ) && ( time() - strtotime( $updated_at ) ) < self::$_cache_time ) {
 
-				return json_decode( Lengow_Configuration::get( 'lengow_account_status' ) , true );
+				return json_decode( Lengow_Configuration::get( 'lengow_account_status' ), true );
 			}
 		}
 
@@ -265,8 +266,7 @@ class Lengow_Sync {
 			}
 		} else {
 			if ( Lengow_Configuration::get( 'lengow_last_account_status_update' ) ) {
-
-				return json_decode( Lengow_Configuration::get( 'lengow_account_status' ) , true );;
+				return json_decode( Lengow_Configuration::get( 'lengow_account_status' ), true );
 			}
 		}
 

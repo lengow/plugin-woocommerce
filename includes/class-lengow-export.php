@@ -224,9 +224,9 @@ class Lengow_Export {
 	private $_update_export_date;
 
 	/**
-	 * Construct new Lengow export
+	 * Construct new Lengow export.
 	 *
-	 * @param array params optional options.
+	 * @param array $params optional options
 	 * string  format             Format of exported files ('csv','yaml','xml','json')
 	 * boolean stream             Stream file (1) or generate a file on server (0)
 	 * integer offset             Offset of total product
@@ -257,6 +257,147 @@ class Lengow_Export {
 		$this->_set_product_ids( isset( $params['product_ids'] ) ? $params['product_ids'] : false );
 		$this->_set_product_types( isset( $params['product_types'] ) ? $params['product_types'] : false );
 		$this->_set_log_output( isset( $params['log_output'] ) ? $params['log_output'] : true );
+	}
+
+	/**
+	 * Execute the export.
+	 */
+	public function exec() {
+		try {
+			// clean logs.
+			Lengow_Main::clean_log();
+			Lengow_Main::log( 'Export', Lengow_Main::set_log_message( 'log.export.start' ), $this->_log_output );
+			// set legacy fields option.
+			$this->_set_legacy_fields();
+			// get fields to export.
+			$fields = $this->_get_fields();
+			// get products to be exported.
+			$products = $this->_get_export_ids();
+			Lengow_Main::log(
+				'Export',
+				Lengow_Main::set_log_message(
+					'log.export.nb_product_found',
+					array( 'nb_product' => count( $products ) )
+				),
+				$this->_log_output
+			);
+			$this->_export( $products, $fields );
+			if ( $this->_update_export_date ) {
+				Lengow_Configuration::update_value( 'lengow_last_export', time() );
+			}
+			Lengow_Main::log(
+				'Export',
+				Lengow_Main::set_log_message( 'log.export.end' ),
+				$this->_log_output
+			);
+		} catch ( Lengow_Exception $e ) {
+			$error_message = $e->getMessage();
+		} catch ( Exception $e ) {
+			$error_message = '[Wordpress error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
+		}
+		if ( isset( $error_message ) ) {
+			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
+			Lengow_Main::log(
+				'Export',
+				Lengow_Main::set_log_message(
+					'log.export.export_failed',
+					array( 'decoded_message' => $decoded_message )
+				),
+				$this->_log_output
+			);
+		}
+	}
+
+	/**
+	 * Get Count total products.
+	 *
+	 * @return integer
+	 */
+	public function get_total_product() {
+		global $wpdb;
+		$query = "
+			SELECT COUNT(DISTINCT(id)) as total
+			FROM {$wpdb->posts}
+			WHERE post_type IN ('product', 'product_variation')
+			AND post_status = 'publish' 
+		";
+
+		return (int) $wpdb->get_var( $query );
+	}
+
+	/**
+	 * Get Count export products.
+	 *
+	 * @return integer
+	 */
+	public function get_total_export_product() {
+		global $wpdb;
+		if ( $this->_variation && in_array( 'variable', $this->_product_types ) ) {
+			$query = " SELECT COUNT(*) AS total FROM ( ( ";
+			$query .= $this->_build_total_query();
+			$query .= " ) UNION ( ";
+			$query .= $this->_build_total_query( true );
+			$query .= " ) ) AS tmp";
+		} else {
+			$query = " SELECT COUNT(*) AS total FROM ( " . $this->_build_total_query() . " ) AS tmp";
+		}
+
+		return (int) $wpdb->get_var( $query );
+	}
+
+	/**
+	 * Get all export available parameters.
+	 *
+	 * @return string
+	 */
+	public static function get_export_params() {
+		$params = array();
+		foreach ( self::$export_params as $param ) {
+			switch ( $param ) {
+				case 'mode':
+					$authorized_value = array( 'size', 'total' );
+					$type             = 'string';
+					$example          = 'size';
+					break;
+				case 'format':
+					$authorized_value = Lengow_Feed::$available_formats;
+					$type             = 'string';
+					$example          = 'csv';
+					break;
+				case 'offset':
+				case 'limit':
+					$authorized_value = 'all integers';
+					$type             = 'integer';
+					$example          = 100;
+					break;
+				case 'product_ids':
+					$authorized_value = 'all integers';
+					$type             = 'string';
+					$example          = '101,108,215';
+					break;
+				case 'product_types':
+					$types = array();
+					foreach ( Lengow_Main::$product_types as $key => $value ) {
+						$types[] = $key;
+					}
+					$authorized_value = $types;
+					$type             = 'string';
+					$example          = 'simple,variable,external,grouped';
+					break;
+				default:
+					$authorized_value = array( 0, 1 );
+					$type             = 'integer';
+					$example          = 1;
+					break;
+			}
+			$params[ $param ] = array(
+				'authorized_values' => $authorized_value,
+				'type'              => $type,
+				'example'           => $example
+			);
+		}
+
+		return json_encode( $params );
 	}
 
 	/**
@@ -327,54 +468,6 @@ class Lengow_Export {
 		$this->_log_output = $this->_stream ? false : $log_output;
 	}
 
-	/**
-	 * Execute the export.
-	 */
-	public function exec() {
-		try {
-			// clean logs.
-			Lengow_Main::clean_log();
-			Lengow_Main::log( 'Export', Lengow_Main::set_log_message( 'log.export.start' ), $this->_log_output );
-			// set legacy fields option.
-			$this->_set_legacy_fields();
-			// get fields to export.
-			$fields = $this->_get_fields();
-			// get products to be exported.
-			$products = $this->_get_export_ids();
-			Lengow_Main::log(
-				'Export',
-				Lengow_Main::set_log_message(
-					'log.export.nb_product_found',
-					array( 'nb_product' => count( $products ) )
-				),
-				$this->_log_output
-			);
-			$this->_export( $products, $fields );
-			if ( $this->_update_export_date ) {
-				Lengow_Configuration::update_value( 'lengow_last_export', time() );
-			}
-			Lengow_Main::log(
-				'Export',
-				Lengow_Main::set_log_message( 'log.export.end' ),
-				$this->_log_output
-			);
-		} catch ( Lengow_Exception $e ) {
-			$error_message = $e->getMessage();
-		} catch ( Exception $e ) {
-			$error_message = '[Wordpress error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
-		}
-		if ( isset( $error_message ) ) {
-			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
-			Lengow_Main::log(
-				'Export',
-				Lengow_Main::set_log_message(
-					'log.export.export_failed',
-					array( 'decoded_message' => $decoded_message )
-				),
-				$this->_log_output
-			);
-		}
-	}
 
 	/**
 	 * Export products.
@@ -474,43 +567,6 @@ class Lengow_Export {
 	}
 
 	/**
-	 * Get Count total products.
-	 *
-	 * @return integer
-	 */
-	public function get_total_product() {
-		global $wpdb;
-		$query = "
-			SELECT COUNT(DISTINCT(id)) as total
-			FROM {$wpdb->posts}
-			WHERE post_type IN ('product', 'product_variation')
-			AND post_status = 'publish' 
-		";
-
-		return (int) $wpdb->get_var( $query );
-	}
-
-	/**
-	 * Get Count export products.
-	 *
-	 * @return integer
-	 */
-	public function get_total_export_product() {
-		global $wpdb;
-		if ( $this->_variation && in_array( 'variable', $this->_product_types ) ) {
-			$query = " SELECT COUNT(*) AS total FROM ( ( ";
-			$query .= $this->build_total_query();
-			$query .= " ) UNION ( ";
-			$query .= $this->build_total_query( true );
-			$query .= " ) ) AS tmp";
-		} else {
-			$query = " SELECT COUNT(*) AS total FROM ( " . $this->build_total_query() . " ) AS tmp";
-		}
-
-		return (int) $wpdb->get_var( $query );
-	}
-
-	/**
 	 * Get the products to export.
 	 *
 	 * @return array
@@ -519,12 +575,12 @@ class Lengow_Export {
 		global $wpdb;
 		if ( $this->_variation && in_array( 'variable', $this->_product_types ) ) {
 			$query = " SELECT * FROM ( ( ";
-			$query .= $this->build_total_query();
+			$query .= $this->_build_total_query();
 			$query .= " ) UNION ( ";
-			$query .= $this->build_total_query( true );
+			$query .= $this->_build_total_query( true );
 			$query .= " ) ) AS tmp ORDER BY id_product, id_product_attribute";
 		} else {
-			$query = $this->build_total_query();
+			$query = $this->_build_total_query();
 		}
 		if ( $this->_limit > 0 ) {
 			if ( $this->_offset > 0 ) {
@@ -544,7 +600,7 @@ class Lengow_Export {
 	 *
 	 * @return string
 	 */
-	public function build_total_query( $variation = false ) {
+	private function _build_total_query( $variation = false ) {
 		global $wpdb;
 		if ( $variation ) {
 			$query = "
@@ -617,60 +673,5 @@ class Lengow_Export {
 		$query .= " ORDER BY id_product ASC";
 
 		return $query;
-	}
-
-	/**
-	 * Get all export available parameters.
-	 *
-	 * @return string
-	 */
-	public static function get_export_params() {
-		$params = array();
-		foreach ( self::$export_params as $param ) {
-			switch ( $param ) {
-				case 'mode':
-					$authorized_value = array( 'size', 'total' );
-					$type             = 'string';
-					$example          = 'size';
-					break;
-				case 'format':
-					$authorized_value = Lengow_Feed::$available_formats;
-					$type             = 'string';
-					$example          = 'csv';
-					break;
-				case 'offset':
-				case 'limit':
-					$authorized_value = 'all integers';
-					$type             = 'integer';
-					$example          = 100;
-					break;
-				case 'product_ids':
-					$authorized_value = 'all integers';
-					$type             = 'string';
-					$example          = '101,108,215';
-					break;
-				case 'product_types':
-					$types = array();
-					foreach ( Lengow_Main::$product_types as $key => $value ) {
-						$types[] = $key;
-					}
-					$authorized_value = $types;
-					$type             = 'string';
-					$example          = 'simple,variable,external,grouped';
-					break;
-				default:
-					$authorized_value = array( 0, 1 );
-					$type             = 'integer';
-					$example          = 1;
-					break;
-			}
-			$params[ $param ] = array(
-				'authorized_values' => $authorized_value,
-				'type'              => $type,
-				'example'           => $example
-			);
-		}
-
-		return json_encode( $params );
 	}
 }

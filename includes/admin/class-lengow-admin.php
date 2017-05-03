@@ -36,7 +36,7 @@ class Lengow_Admin {
 	public $current_tab = '';
 
 	/**
-	 * @var string default tab
+	 * @var string default tab.
 	 */
 	private $_default_tab = 'lengow';
 

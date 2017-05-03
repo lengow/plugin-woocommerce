@@ -10,16 +10,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * at your option) any later version.
- * 
+ *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
- * @category   	Lengow
- * @package    	lengow-woocommerce
- * @subpackage 	includes
- * @author     	Team module <team-module@lengow.com>
- * @copyright  	2017 Lengow SAS
- * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
+ * @category    Lengow
+ * @package     lengow-woocommerce
+ * @subpackage  includes
+ * @author      Team module <team-module@lengow.com>
+ * @copyright   2017 Lengow SAS
+ * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -57,32 +57,32 @@ class Lengow_Connector {
 	/**
 	 * @var string the access token to connect.
 	 */
-	protected $_access_token;
+	private $_access_token;
 
 	/**
 	 * @var string the secret to connect.
 	 */
-	protected $_secret;
+	private $_secret;
 
 	/**
 	 * @var string temporary token for the authorization.
 	 */
-	protected $_token;
+	private $_token;
 
 	/**
 	 * @var integer ID account.
 	 */
-	protected $_account_id;
+	private $_account_id;
 
 	/**
 	 * @var integer the user Id.
 	 */
-	protected $_user_id;
+	private $_user_id;
 
 	/**
 	 * @var array lengow url for curl timeout.
 	 */
-	protected $lengow_urls = array(
+	private $lengow_urls = array(
 		'/v3.0/orders'        => 15,
 		'/v3.0/marketplaces'  => 10,
 		'/v3.0/subscriptions' => 3,
@@ -102,7 +102,7 @@ class Lengow_Connector {
 	}
 
 	/**
-	 * Connectection to the API.
+	 * Connection to the API.
 	 *
 	 * @param string $user_token The user token if is connected
 	 *
@@ -261,7 +261,7 @@ class Lengow_Connector {
 	 * @param mixed $data Curl response data
 	 * @param string $format return format of API
 	 *
-	 * @return array
+	 * @return array|SimpleXMLElement
 	 */
 	private function format( $data, $format ) {
 		switch ( $format ) {
@@ -345,7 +345,7 @@ class Lengow_Connector {
 					);
 				}
 				$opts[ CURLOPT_URL ]        = $url;
-				$opts[ CURLOPT_POST ] 	    = count( $args );
+				$opts[ CURLOPT_POST ]       = count( $args );
 				$opts[ CURLOPT_POSTFIELDS ] = json_encode( $args );
 				break;
 			default:
@@ -394,8 +394,8 @@ class Lengow_Connector {
 	 */
 	public static function get_access_id() {
 		if ( strlen( Lengow_Configuration::get( 'lengow_account_id' ) ) > 0
-			&& strlen( Lengow_Configuration::get( 'lengow_access_token' ) ) > 0
-			&& strlen( Lengow_Configuration::get( 'lengow_secret_token' ) ) > 0
+		     && strlen( Lengow_Configuration::get( 'lengow_access_token' ) ) > 0
+		     && strlen( Lengow_Configuration::get( 'lengow_secret_token' ) ) > 0
 		) {
 			return array(
 				Lengow_Configuration::get( 'lengow_account_id' ),

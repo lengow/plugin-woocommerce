@@ -10,15 +10,15 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * at your option) any later version.
- * 
+ *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
- * @category   	Lengow
- * @package    	lengow-woocommerce
- * @subpackage 	toolbox
- * @author     	Team module <team-module@lengow.com>
- * @copyright  	2017 Lengow SAS
+ * @category    Lengow
+ * @package     lengow-woocommerce
+ * @subpackage  toolbox
+ * @author      Team module <team-module@lengow.com>
+ * @copyright   2017 Lengow SAS
  */
 
 require 'views/head.php';
@@ -50,7 +50,7 @@ $listFile = Lengow_Log::get_paths();
 			foreach ( $listFile as $file ) {
 				echo '<li class="list-group-item">';
 				echo '<a href="/wp-content/plugins/lengow-woocommerce/toolbox/log.php?action=download&file='
-					. urlencode( $file['short_path'] ) . '">
+				     . urlencode( $file['short_path'] ) . '">
 					<i class="fa fa-download"></i> ' . $file['name'] . '</a>';
 				echo '</li>';
 			}

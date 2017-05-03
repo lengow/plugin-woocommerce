@@ -10,16 +10,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * at your option) any later version.
- * 
+ *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
- * @category   	Lengow
- * @package    	lengow-woocommerce
- * @subpackage 	includes
- * @author     	Team module <team-module@lengow.com>
- * @copyright  	2017 Lengow SAS
- * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
+ * @category    Lengow
+ * @package     lengow-woocommerce
+ * @subpackage  includes
+ * @author      Team module <team-module@lengow.com>
+ * @copyright   2017 Lengow SAS
+ * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -32,13 +32,69 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Check {
 
 	/**
-	 * @var $locale Lengow_Translation Lengow translation instance.
+	 * @var Lengow_Translation Lengow translation instance.
 	 */
 	private $_locale;
 
+	/**
+	 * Construct new Lengow check.
+	 */
 	public function __construct() {
 		$this->_locale                      = new Lengow_Translation();
 		Lengow_Translation::$force_iso_code = "en_GB";
+	}
+
+	/**
+	 * Check API Authentication.
+	 *
+	 * @return boolean
+	 */
+	public static function is_valid_auth() {
+		if ( ! self::is_curl_activated() ) {
+			return false;
+		}
+		list( $account_id, $access_token, $secret ) = Lengow_Connector::get_access_id();
+		if ( is_null( $account_id ) || is_null( $access_token ) || is_null( $secret ) ) {
+			return false;
+		}
+		$connector = new Lengow_Connector( $access_token, $secret );
+		try {
+			$result = $connector->connect();
+		} catch ( Lengow_Exception $e ) {
+			return false;
+		}
+		if ( isset( $result['token'] ) && $account_id != 0 ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check if PHP Curl is activated.
+	 *
+	 * @return boolean
+	 */
+	public static function is_curl_activated() {
+		return function_exists( 'curl_version' );
+	}
+
+	/**
+	 * Check if SimpleXML Extension is activated.
+	 *
+	 * @return boolean
+	 */
+	public static function is_simple_xml_activated() {
+		return function_exists( 'simplexml_load_file' );
+	}
+
+	/**
+	 * Check if json Extension is activated.
+	 *
+	 * @return boolean
+	 */
+	public static function is_json_activated() {
+		return function_exists( 'json_decode' );
 	}
 
 	/**
@@ -86,8 +142,7 @@ class Lengow_Check {
 	 * @return string
 	 */
 	public function get_global_information() {
-		global $woocommerce;
-		global $wp_version;
+		global $woocommerce, $wp_version;
 		$checklist   = array();
 		$checklist[] = array(
 			'title'   => $this->_locale->t( 'toolbox.index.wordpress_version' ),
@@ -181,7 +236,7 @@ class Lengow_Check {
 	public function get_information_by_store() {
 		$lengowExport = new Lengow_Export;
 		if ( ! is_null( Lengow_Configuration::get( 'lengow_last_export' ) )
-			&& Lengow_Configuration::get( 'lengow_last_export' ) != ''
+		     && Lengow_Configuration::get( 'lengow_last_export' ) != ''
 		) {
 			$last_export = date( 'Y-m-d H:i:s', Lengow_Configuration::get( 'lengow_last_export' ) );
 		} else {
@@ -228,7 +283,7 @@ class Lengow_Check {
 		$checklist    = array();
 		$file_name    = LENGOW_PLUGIN_PATH . '/toolbox' . DIRECTORY_SEPARATOR . 'checkmd5.csv';
 		$html         = '<h3><i class="fa fa-commenting"></i> '
-			. $this->_locale->t( 'toolbox.checksum.summary' ) . '</h3>';
+		                . $this->_locale->t( 'toolbox.checksum.summary' ) . '</h3>';
 		$file_counter = 0;
 		if ( file_exists( $file_name ) ) {
 			$file_errors  = array();
@@ -278,12 +333,12 @@ class Lengow_Check {
 			$html .= $this->get_admin_content( $checklist );
 			if ( count( $file_errors ) > 0 ) {
 				$html .= '<h3><i class="fa fa-list"></i> '
-					. $this->_locale->t( 'toolbox.checksum.list_modified_file' ) . '</h3>';
+				         . $this->_locale->t( 'toolbox.checksum.list_modified_file' ) . '</h3>';
 				$html .= $this->get_admin_content( $file_errors );
 			}
 			if ( count( $file_deletes ) > 0 ) {
 				$html .= '<h3><i class="fa fa-list"></i> '
-					. $this->_locale->t( 'toolbox.checksum.list_deleted_file' ) . '</h3>';
+				         . $this->_locale->t( 'toolbox.checksum.list_deleted_file' ) . '</h3>';
 				$html .= $this->get_admin_content( $file_deletes );
 			}
 		} else {
@@ -348,13 +403,13 @@ class Lengow_Check {
 					}
 					if ( $check['state'] === 0 ) {
 						if ( isset( $check['help'] )
-							&& isset( $check['help_link'] )
-							&& isset( $check['help_label'] )
+						     && isset( $check['help_link'] )
+						     && isset( $check['help_label'] )
 						) {
 							$out .= '<tr><td colspan="2"><p>' . $check['help'];
 							if ( array_key_exists( 'help_link', $check ) && $check['help_link'] != '' ) {
 								$out .= '<br /><a target="_blank" href="'
-									. $check['help_link'] . '">' . $check['help_label'] . '</a>';
+								        . $check['help_link'] . '">' . $check['help_label'] . '</a>';
 							}
 							$out .= '</p></td></tr>';
 						}
@@ -368,58 +423,5 @@ class Lengow_Check {
 		$out .= '</table>';
 
 		return $out;
-	}
-
-	/**
-	 * Check API Authentification.
-	 *
-	 * @return boolean
-	 */
-	public static function is_valid_auth() {
-		if ( ! self::is_curl_activated() ) {
-			return false;
-		}
-		list( $account_id, $access_token, $secret ) = Lengow_Connector::get_access_id();
-		if ( is_null( $account_id ) || is_null( $access_token ) || is_null( $secret ) ) {
-			return false;
-		}
-		$connector = new Lengow_Connector( $access_token, $secret );
-		try {
-			$result = $connector->connect();
-		} catch ( Lengow_Exception $e ) {
-			return false;
-		}
-		if ( isset( $result['token'] ) && $account_id != 0 ) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Check if PHP Curl is activated.
-	 *
-	 * @return boolean
-	 */
-	public static function is_curl_activated() {
-		return function_exists( 'curl_version' );
-	}
-
-	/**
-	 * Check if SimpleXML Extension is activated.
-	 *
-	 * @return boolean
-	 */
-	public static function is_simple_xml_activated() {
-		return function_exists( 'simplexml_load_file' );
-	}
-
-	/**
-	 * Check if json Extension is activated.
-	 *
-	 * @return boolean
-	 */
-	public static function is_json_activated() {
-		return function_exists( 'json_decode' );
 	}
 }

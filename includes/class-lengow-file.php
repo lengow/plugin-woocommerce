@@ -10,16 +10,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * at your option) any later version.
- * 
+ *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
- * @category   	Lengow
- * @package    	lengow-woocommerce
- * @subpackage 	includes
- * @author     	Team module <team-module@lengow.com>
- * @copyright  	2017 Lengow SAS
- * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
+ * @category    Lengow
+ * @package     lengow-woocommerce
+ * @subpackage  includes
+ * @author      Team module <team-module@lengow.com>
+ * @copyright   2017 Lengow SAS
+ * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -47,7 +47,7 @@ class Lengow_File {
 	public $link;
 
 	/**
-	 * @var Lengow_File ressource file hande.
+	 * @var Lengow_File resource file handel.
 	 */
 	public $instance;
 
@@ -63,7 +63,7 @@ class Lengow_File {
 	public function __construct( $folder_name, $file_name = null, $mode = 'a+' ) {
 		$this->file_name   = $file_name;
 		$this->folder_name = $folder_name;
-		$this->instance    = self::get_ressource( $this->get_path(), $mode );
+		$this->instance    = self::get_resource( $this->get_path(), $mode );
 		if ( ! is_resource( $this->instance ) ) {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message(
@@ -136,7 +136,7 @@ class Lengow_File {
 	 *
 	 * @return resource
 	 */
-	public static function get_ressource( $path, $mode = 'a+' ) {
+	public static function get_resource( $path, $mode = 'a+' ) {
 		return fopen( $path, $mode );
 	}
 

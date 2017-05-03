@@ -10,16 +10,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * at your option) any later version.
- * 
+ *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
- * @category   	Lengow
- * @package    	lengow-woocommerce
- * @subpackage 	includes
- * @author     	Team module <team-module@lengow.com>
- * @copyright  	2017 Lengow SAS
- * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
+ * @category    Lengow
+ * @package     lengow-woocommerce
+ * @subpackage  includes
+ * @author      Team module <team-module@lengow.com>
+ * @copyright   2017 Lengow SAS
+ * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -259,8 +259,8 @@ class Lengow_Import_Order {
 			'marketplace_sku'  => $this->_marketplace_sku,
 			'marketplace_name' => $this->_marketplace->name,
 			'lengow_state'     => $this->_order_state_lengow,
-			'order_new'        => ( $type_result == 'new' ? true : false ),
-			'order_error'      => ( $type_result == 'error' ? true : false )
+			'order_new'        => $type_result == 'new' ? true : false,
+			'order_error'      => $type_result == 'error' ? true : false
 		);
 
 		return $result;
@@ -320,21 +320,20 @@ class Lengow_Import_Order {
 	 * Get products from the API and check that they exist in WooCommerce database.
 	 *
 	 * @throws Lengow_Exception If product is not found
-	 * 
+	 *
 	 * @return array
 	 */
 	private function _get_products() {
 		$products = array();
 		foreach ( $this->_package_data->cart as $product ) {
-			$found         = false;
-			$product_datas = Lengow_Product::extract_product_data_from_api( $product );
+			$found          = false;
+			$product_datas  = Lengow_Product::extract_product_data_from_api( $product );
+			$api_product_id = ! is_null( $product_datas['merchant_product_id']->id )
+				? (string) $product_datas['merchant_product_id']->id
+				: (string) $product_datas['marketplace_product_id'];
 			if ( ! is_null( $product_datas['marketplace_status'] ) ) {
 				$state_product = $this->_marketplace->get_state_lengow( (string) $product_datas['marketplace_status'] );
 				if ( $state_product == 'canceled' || $state_product == 'refused' ) {
-					$api_product_id = ( ! is_null( $product_datas['merchant_product_id']->id )
-						? (string) $product_datas['merchant_product_id']->id
-						: (string) $product_datas['marketplace_product_id']
-					);
 					Lengow_Main::log(
 						'Import',
 						Lengow_Main::set_log_message(
@@ -361,10 +360,6 @@ class Lengow_Import_Order {
 				$found = true;
 			}
 			if ( ! $found ) {
-				$api_product_id = ( ! is_null( $product_datas['merchant_product_id']->id )
-					? (string) $product_datas['merchant_product_id']->id
-					: (string) $product_datas['marketplace_product_id']
-				);
 				throw new Lengow_Exception(
 					Lengow_Main::set_log_message(
 						'lengow_log.exception.product_not_be_found',
@@ -385,11 +380,11 @@ class Lengow_Import_Order {
 	private function _decrease_stock( $products ) {
 		if ( get_option( 'woocommerce_manage_stock' ) === 'yes' ) {
 			foreach ( $products as $product_id => $product ) {
-				$lengow_product = get_product( $product_id );
+				$wc_product = Lengow_Product::get_product( $product_id );
 				// Decrement stock product only if product managed in stock.
-				if ( $lengow_product->managing_stock() ) {
-					$initial_stock = $lengow_product->get_stock_quantity();
-					$new_stock     = $lengow_product->reduce_stock( $product['quantity'] );
+				if ( $wc_product->managing_stock() ) {
+					$initial_stock = $wc_product->get_stock_quantity();
+					$new_stock     = Lengow_Product::reduce_product_stock( $wc_product, $product['quantity'] );
 					Lengow_Main::log(
 						'Import',
 						Lengow_Main::set_log_message(
@@ -414,7 +409,7 @@ class Lengow_Import_Order {
 						$this->_marketplace_sku
 					);
 				}
-				unset( $lengow_product );
+				unset( $wc_product );
 			}
 		}
 	}

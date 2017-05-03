@@ -10,16 +10,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * at your option) any later version.
- * 
+ *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
- * @category   	Lengow
- * @package    	lengow-woocommerce
- * @subpackage 	includes
- * @author     	Team module <team-module@lengow.com>
- * @copyright  	2017 Lengow SAS
- * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
+ * @category    Lengow
+ * @package     lengow-woocommerce
+ * @subpackage  includes
+ * @author      Team module <team-module@lengow.com>
+ * @copyright   2017 Lengow SAS
+ * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -52,7 +52,7 @@ class Lengow_Import {
 	private $_marketplace_sku = null;
 
 	/**
-	 * @var string markeplace name.
+	 * @var string marketplace name.
 	 */
 	private $_marketplace_name = null;
 
@@ -264,7 +264,8 @@ class Lengow_Import {
 				} catch ( Lengow_Exception $e ) {
 					$error_message = $e->getMessage();
 				} catch ( Exception $e ) {
-					$error_message = '[WooCommerce error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
+					$error_message = '[WooCommerce error] "' . $e->getMessage()
+					                 . '" ' . $e->getFile() . ' | ' . $e->getLine();
 				}
 				if ( isset( $error_message ) ) {
 					$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
@@ -318,6 +319,8 @@ class Lengow_Import {
 				);
 			}
 		}
+
+		return false;
 	}
 
 	/**
@@ -486,7 +489,7 @@ class Lengow_Import {
 				// check the package for re-import order.
 				if ( $this->_import_one_order ) {
 					if ( ! is_null( $this->_delivery_address_id )
-						&& $this->_delivery_address_id != $package_delivery_address_id
+					     && $this->_delivery_address_id != $package_delivery_address_id
 					) {
 						Lengow_Main::log(
 							'Import',
@@ -514,7 +517,8 @@ class Lengow_Import {
 				} catch ( Lengow_Exception $e ) {
 					$error_message = $e->getMessage();
 				} catch ( Exception $e ) {
-					$error_message = '[WooCommerce error]: "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
+					$error_message = '[WooCommerce error]: "' . $e->getMessage()
+					                 . '" ' . $e->getFile() . ' | ' . $e->getLine();
 				}
 				if ( isset( $error_message ) ) {
 					$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
