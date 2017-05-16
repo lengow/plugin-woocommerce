@@ -3,7 +3,7 @@ Version 2.0.0
 ========================================================
 
 	- Feature: Full rewrite for the new platform Lengow
-	- Feature: Add new lengow Dashbord
+	- Feature: Add new lengow Dashboard
 	- Feature: Add new product selection
 	- Feature: Add new stock synchronisation page
 	- Feature: Add new help page
@@ -11,6 +11,13 @@ Version 2.0.0
 	- Feature: Add new legals page
 	- Feature: New lengow settings with cleaning old options
 	- Feature: Creating new accounts directly from the module
+
+========================================================
+Version 1.0.6
+========================================================
+
+    - Bugfix: Transforms array to json element for post-meta data
+    - Bugfix: Added a new check for the server's addr constant
 
 ========================================================
 Version 1.0.5

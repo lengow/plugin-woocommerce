@@ -111,12 +111,14 @@ class Lengow_Main {
 	 * @return boolean
 	 */
 	public static function check_ip() {
-		$ips              = Lengow_Configuration::get( 'lengow_authorized_ip' );
-		$ips              = trim( str_replace( array( "\r\n", ',', '-', '|', ' ' ), ';', $ips ), ';' );
-		$ips              = array_filter( explode( ';', $ips ) );
-		$authorized_ips   = count( $ips ) > 0 ? array_merge( $ips, self::$_ips_lengow ) : self::$_ips_lengow;
-		$authorized_ips[] = $_SERVER['SERVER_ADDR'];
-		$hostname_ip      = $_SERVER['REMOTE_ADDR'];
+		$ips            = Lengow_Configuration::get( 'lengow_authorized_ip' );
+		$ips            = trim( str_replace( array( "\r\n", ',', '-', '|', ' ' ), ';', $ips ), ';' );
+		$ips            = array_filter( explode( ';', $ips ) );
+		$authorized_ips = count( $ips ) > 0 ? array_merge( $ips, self::$_ips_lengow ) : self::$_ips_lengow;
+		if ( isset( $_SERVER['SERVER_ADDR'] ) ) {
+			$authorized_ips[] = $_SERVER['SERVER_ADDR'];
+		}
+		$hostname_ip = $_SERVER['REMOTE_ADDR'];
 		if ( in_array( $hostname_ip, $authorized_ips ) ) {
 			return true;
 		}

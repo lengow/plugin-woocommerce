@@ -902,7 +902,7 @@ class Lengow_Product {
 			$product_id = ! is_null( $this->_variation_id ) ? $this->_variation_id : $this->_product_id;
 			$post_meta  = get_post_meta( $product_id, $name );
 			if ( isset( $post_meta[0] ) ) {
-				return is_array( $post_meta[0] ) ? implode( ",", $post_meta[0] ) : $post_meta[0];
+				return is_array( $post_meta[0] ) ? json_encode( $post_meta[0] ) : $post_meta[0];
 			}
 		}
 
