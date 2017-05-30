@@ -121,6 +121,8 @@ lengow_settings.lengow_store_active_title|Enable store
 lengow_settings.lengow_account_id_title|Account ID
 lengow_settings.lengow_access_token_title|Access Token
 lengow_settings.lengow_secret_token_title|Secret Token
+lengow_settings.lengow_ip_enable_title|Activate IP authorisation
+lengow_settings.lengow_ip_enable_legend|Activate this option if you want to secure your export by ip. By default, your export is secured by a token
 lengow_settings.lengow_authorized_ip_title|Authorised IPs
 lengow_settings.lengow_authorized_ip_legend|Authorise IP to get access to your export feed.<br />Separate them ' ; '
 lengow_settings.lengow_selection_enabled_title|Export the selection only
@@ -226,6 +228,7 @@ toolbox.index.wordpress_version|Wordpress version
 toolbox.index.woocommerce_version|Woocommerce version
 toolbox.index.plugin_version|Plugin version
 toolbox.index.ip_server|Server IP
+toolbox.index.ip_enabled|IP Authorisation enabled
 toolbox.index.ip_authorized|IP authorised
 toolbox.index.preprod_disabled|Pre-production mode disabled
 toolbox.index.cron_enable|Cron job set in the Crontab module

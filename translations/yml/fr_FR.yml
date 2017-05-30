@@ -141,6 +141,8 @@ fr:
     lengow_account_id_title: "ID du compte"
     lengow_access_token_title: "Access Token"
     lengow_secret_token_title: "Secret Token"
+    lengow_ip_enable_title: "Activer l'autorisation par IP"
+    lengow_ip_enable_legend: "Activez cette option si vous voulez sécuriser votre export par ip. Par défaut, votre export est sécurisé par une clé unique."
     lengow_authorized_ip_title: "IP autorisée(s)"
     lengow_authorized_ip_legend: "Listez ici les IP autorisées à accéder à votre flux d'export.\nSéparez-les par ' ; '"
     lengow_selection_enabled_title: "Exporter seulement la sélection"

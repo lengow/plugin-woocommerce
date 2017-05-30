@@ -121,6 +121,8 @@ lengow_settings.lengow_store_active_title|Activer la boutique
 lengow_settings.lengow_account_id_title|ID du compte
 lengow_settings.lengow_access_token_title|Access Token
 lengow_settings.lengow_secret_token_title|Secret Token
+lengow_settings.lengow_ip_enable_title|Activer l'autorisation par IP
+lengow_settings.lengow_ip_enable_legend|Activez cette option si vous voulez sécuriser votre export par ip. Par défaut, votre export est sécurisé par une clé unique.
 lengow_settings.lengow_authorized_ip_title|IP autorisée(s)
 lengow_settings.lengow_authorized_ip_legend|Listez ici les IP autorisées à accéder à votre flux d'export.<br />Séparez-les par ' ; '
 lengow_settings.lengow_selection_enabled_title|Exporter seulement la sélection

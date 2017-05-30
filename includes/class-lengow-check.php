@@ -162,12 +162,16 @@ class Lengow_Check {
 			'message' => $_SERVER['SERVER_ADDR']
 		);
 		$checklist[] = array(
+			'title'   => $this->_locale->t( 'toolbox.index.ip_enabled' ),
+			'state' =>  (bool) Lengow_Configuration::get( 'lengow_ip_enabled' ) ? 1 : 0
+		);
+		$checklist[] = array(
 			'title'   => $this->_locale->t( 'toolbox.index.ip_authorized' ),
 			'message' => Lengow_Configuration::get( 'lengow_authorized_ip' )
 		);
 		$checklist[] = array(
 			'title' => $this->_locale->t( 'toolbox.index.preprod_disabled' ),
-			'state' => ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) ? 0 : 1 )
+			'state' => (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' ) ? 0 : 1
 		);
 
 		return $this->get_admin_content( $checklist );
@@ -180,11 +184,9 @@ class Lengow_Check {
 	 */
 	public function get_import_information() {
 		$last_import      = Lengow_Main::get_last_import();
-		$last_import_date = (
-		$last_import['timestamp'] == 'none'
+		$last_import_date = $last_import['timestamp'] == 'none'
 			? $this->_locale->t( 'toolbox.index.last_import_none' )
-			: date( 'Y-m-d H:i:s', $last_import['timestamp'] )
-		);
+			: date( 'Y-m-d H:i:s', $last_import['timestamp'] );
 		if ( $last_import['type'] == 'none' ) {
 			$last_import_type = $this->_locale->t( 'toolbox.index.last_import_none' );
 		} elseif ( $last_import['type'] == 'cron' ) {
@@ -321,14 +323,14 @@ class Lengow_Check {
 					'toolbox.checksum.file_modified',
 					array( 'nb_file' => count( $file_errors ) )
 				),
-				'state' => ( count( $file_errors ) > 0 ? 0 : 1 )
+				'state' => count( $file_errors ) > 0 ? 0 : 1
 			);
 			$checklist[] = array(
 				'title' => $this->_locale->t(
 					'toolbox.checksum.file_deleted',
 					array( 'nb_file' => count( $file_deletes ) )
 				),
-				'state' => ( count( $file_deletes ) > 0 ? 0 : 1 )
+				'state' => count( $file_deletes ) > 0 ? 0 : 1
 			);
 			$html .= $this->get_admin_content( $checklist );
 			if ( count( $file_errors ) > 0 ) {

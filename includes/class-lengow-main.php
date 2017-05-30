@@ -91,7 +91,7 @@ class Lengow_Main {
 	public static function get_export_url() {
 		$sep = DIRECTORY_SEPARATOR;
 
-		return LENGOW_PLUGIN_URL . $sep . 'webservice' . $sep . 'export.php';
+		return LENGOW_PLUGIN_URL . $sep . 'webservice' . $sep . 'export.php?token=' . self::get_token();
 	}
 
 	/**
@@ -102,19 +102,59 @@ class Lengow_Main {
 	public static function get_cron_url() {
 		$sep = DIRECTORY_SEPARATOR;
 
-		return LENGOW_PLUGIN_URL . $sep . 'webservice' . $sep . 'cron.php';
+		return LENGOW_PLUGIN_URL . $sep . 'webservice' . $sep . 'cron.php?token=' . self::get_token();
+	}
+
+	/**
+	 * Check Webservice access (export and cron).
+	 *
+	 * @param string $token store token
+	 *
+	 * @return boolean
+	 */
+	public static function check_webservice_access( $token ) {
+		if ( ! (bool) Lengow_Configuration::get( 'lengow_ip_enabled' ) && self::check_token( $token ) ) {
+			return true;
+		}
+		if ( self::check_ip() ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check if token is correct.
+	 *
+	 * @param string $token store token
+	 *
+	 * @return boolean
+	 */
+	public static function check_token( $token ) {
+		$storeToken = Lengow_Configuration::get( 'lengow_token' );
+		if ( $token === $storeToken ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
 	 * Check if current IP is authorized.
 	 *
+	 * @param boolean $toolbox force check ip for toolbox
+	 *
 	 * @return boolean
 	 */
-	public static function check_ip() {
-		$ips            = Lengow_Configuration::get( 'lengow_authorized_ip' );
-		$ips            = trim( str_replace( array( "\r\n", ',', '-', '|', ' ' ), ';', $ips ), ';' );
-		$ips            = array_filter( explode( ';', $ips ) );
-		$authorized_ips = count( $ips ) > 0 ? array_merge( $ips, self::$_ips_lengow ) : self::$_ips_lengow;
+	public static function check_ip( $toolbox = false ) {
+		$ips = Lengow_Configuration::get( 'lengow_authorized_ip' );
+		if ( strlen( $ips ) > 0 && ( (bool) Lengow_Configuration::get( 'lengow_ip_enabled' ) || $toolbox ) ) {
+			$ips            = trim( str_replace( array( "\r\n", ',', '-', '|', ' ' ), ';', $ips ), ';' );
+			$ips            = array_filter( explode( ';', $ips ) );
+			$authorized_ips = count( $ips ) > 0 ? array_merge( $ips, self::$_ips_lengow ) : self::$_ips_lengow;
+		} else {
+			$authorized_ips = self::$_ips_lengow;
+		}
 		if ( isset( $_SERVER['SERVER_ADDR'] ) ) {
 			$authorized_ips[] = $_SERVER['SERVER_ADDR'];
 		}

@@ -154,6 +154,12 @@ foreach ( $keys as $key => $value ) {
 	Lengow_Configuration::add_value( $key, $val );
 }
 
+// Active ip authorization if authorized ips exist
+$authorizedIps = Lengow_Configuration::get( 'lengow_authorized_ip' );
+if ( strlen( $authorizedIps ) > 0 ) {
+	Lengow_Configuration::update_value( 'lengow_ip_enabled', true );
+}
+
 // Delete old settings
 $configuration_to_delete = array(
 	'lengow_export_format',

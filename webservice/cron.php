@@ -72,9 +72,19 @@ if ( ! in_array(
 	wp_die( 'Lengow plugin is not active', '', array( 'response' => 400 ) );
 }
 
-// check IP.
-if ( ! Lengow_Main::check_ip() ) {
-	wp_die( 'Unauthorized access for IP: ' . $_SERVER['REMOTE_ADDR'], '', array( 'response' => 403 ) );
+// get token for authorisation
+$token = isset( $_GET['token'] ) ? $_GET['token'] : '';
+
+// check webservices access
+if ( ! Lengow_Main::check_webservice_access( $token ) ) {
+	if ( Lengow_Configuration::get( 'lengow_ip_enabled' ) ) {
+		$errorMessage = 'Unauthorized access for IP: ' . $_SERVER['REMOTE_ADDR'];
+	} else {
+		$errorMessage = strlen( $token ) > 0
+			? 'unauthorised access for this token: ' . $token
+			: 'unauthorised access: token parameter is empty';
+	}
+	wp_die( $errorMessage, '', array( 'response' => 403 ) );
 }
 
 if ( isset( $_GET['get_sync'] ) && $_GET['get_sync'] == 1 ) {

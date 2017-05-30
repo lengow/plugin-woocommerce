@@ -20,6 +20,7 @@
 
 (function ($) {
     $(document).ready(function () {
+
         // Multibox selection
         $(".js-multiple-select").select2({
             closeOnSelect: false
@@ -41,60 +42,7 @@
             }, 1000);
         });
 
-        // MODAL
-
-        // Open modal
-        $('.lgw-modal-delete').click(function(){
-            window.location.hash = 'delete';
-            return false;
-        });
-
-        // Open modal on loading
-
-        if(window.location.hash) {
-            openModal();
-        }
-
-        // Delete modal
-        $('.js-close-this-modal').click(function(){
-            window.location.hash = '';
-            return false;
-        });
-
-        var hash = window.location.hash;
-        setInterval(function(){
-            if (window.location.hash != hash) {
-                hash = window.location.hash;
-                if( hash.length < 1){
-                    killModal();
-                }
-                else{
-                    if( $('.lgw-modal.open').length == 0 ){
-                        openModal();
-                    }
-                }
-            }
-        }, 100);
-
-        function killModal(){
-            window.location.hash = '';
-            $('body').removeClass('unscrollable');
-            $('.lgw-modal').removeClass('open');
-            $('.js-confirm-delete').val('');
-            $('.lengow_submit_delete_module')
-                    .addClass('lgw-btn-disabled')
-                    .removeClass('lgw-btn-red');
-        }
-
-        function openModal(){
-            window.location.hash = 'delete';
-            $('body').addClass('unscrollable');
-            $('.lgw-modal').addClass('open');
-        }
-
-
         // CONFIRM DELETE
-
         $('.js-confirm-delete').keyup(function(){
             var confirm = $(this).data('confirm');
             if( $(this).val() == confirm ){
@@ -109,6 +57,21 @@
             }
         });
 
+        // ENABLE AUTHORIZED IP
+        displayAuthorizedIpMode();
+        $("input[name='lengow_ip_enabled']").on('change', function () {
+            displayAuthorizedIpMode();
+        });
+
+        function displayAuthorizedIpMode() {
+            if ($("input[name='lengow_ip_enabled'][type='checkbox']").prop('checked')) {
+                $('#lengow_wrapper_authorized_ip').slideDown(150);
+            } else {
+                $('#lengow_wrapper_authorized_ip').slideUp(150);
+            }
+        }
+
+        // ENABLE PREPROD MODE
         displayPreProdMode();
         $("input[name='lengow_preprod_enabled']").on('change', function () {
             displayPreProdMode();
@@ -122,7 +85,7 @@
             }
         }
 
-        // ORDER IMPORT
+        // ENABLE ORDER IMPORT
         displayOrderImportMode();
         $("input[name='lengow_import_enabled']").on('change', function () {
             displayOrderImportMode();

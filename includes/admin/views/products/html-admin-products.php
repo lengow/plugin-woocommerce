@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<label class="lengow_shop_status_label">
 			</label>
 		</div>
-		<a href="<?php echo $shop['link']; ?>?stream=1&update_export_date=0"
+		<a href="<?php echo $shop['link']; ?>&stream=1&update_export_date=0"
 			class="lengow_export_feed lengow_link_tooltip"
 			data-original-title="<?php echo $locale->t( 'product.screen.button_download' ); ?>"
 			target="_blank"><i class="fa fa-download"></i></a>

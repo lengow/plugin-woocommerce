@@ -13,4 +13,9 @@ require_once( '../includes/class-lengow-log.php' );
 require_once( '../includes/class-lengow-import.php' );
 $locale = new Lengow_Translation();
 $check  = new Lengow_Check();
+if ( ! Lengow_Main::check_ip( true ) ) {
+	$isHttps = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 'https://' : 'http://';
+	$url = $isHttps . $_SERVER['SERVER_NAME'];
+	header('Location: ' . $url);
+}
 ?>

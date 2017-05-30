@@ -10,16 +10,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * at your option) any later version.
- * 
+ *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
- * @category   	Lengow
- * @package    	lengow-woocommerce
- * @subpackage 	includes
- * @author     	Team module <team-module@lengow.com>
- * @copyright  	2017 Lengow SAS
- * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
+ * @category    Lengow
+ * @package        lengow-woocommerce
+ * @subpackage    includes
+ * @author        Team module <team-module@lengow.com>
+ * @copyright    2017 Lengow SAS
+ * @license        https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -63,6 +63,13 @@ class Lengow_Configuration {
 				'lengow_secret_token'                => array(
 					'shop'  => true,
 					'label' => $locale->t( 'lengow_settings.lengow_secret_token_title' ),
+				),
+				'lengow_ip_enabled'                  => array(
+					'global'        => true,
+					'label'         => $locale->t( 'lengow_settings.lengow_ip_enable_title' ),
+					'legend'        => $locale->t( 'lengow_settings.lengow_ip_enable_legend' ),
+					'default_value' => false,
+					'type'          => 'checkbox'
 				),
 				'lengow_authorized_ip'               => array(
 					'global' => true,
