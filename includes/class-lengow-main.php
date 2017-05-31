@@ -131,7 +131,7 @@ class Lengow_Main {
 	 * @return boolean
 	 */
 	public static function check_token( $token ) {
-		$storeToken = Lengow_Configuration::get( 'lengow_token' );
+		$storeToken = self::get_token();
 		if ( $token === $storeToken ) {
 			return true;
 		}
