@@ -38,12 +38,19 @@ class Lengow_Main {
 		'127.0.0.1',
 		'10.0.4.150',
 		'46.19.183.204',
+		'46.19.183.217',
 		'46.19.183.218',
+		'46.19.183.219',
 		'46.19.183.222',
+		'52.50.58.130',
 		'89.107.175.172',
+		'89.107.175.185',
 		'89.107.175.186',
+		'89.107.175.187',
 		'90.63.241.226',
 		'109.190.189.175',
+		'146.185.41.180',
+		'146.185.41.177',
 		'185.61.176.129',
 		'185.61.176.130',
 		'185.61.176.131',
@@ -164,20 +171,6 @@ class Lengow_Main {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Check if is a new merchant.
-	 *
-	 * @return boolean
-	 */
-	public static function is_new_merchant() {
-		$account_id = Lengow_Configuration::get( 'lengow_account_id' );
-		if ( strlen( $account_id ) > 0 ) {
-			return false;
-		}
-
-		return true;
 	}
 
 	/**

@@ -165,7 +165,6 @@ fr:
     error:
       import_in_progress: "Import en cours"
       rest_time_to_import: "Attendez %{rest_time}  secondes avant d'importer de nouveau vos commandes"
-      account_id_empty: "ID du compte, access token ou secret token vides"
       nb_order_imported: "%{nb_order} commande(s) diminuée(s)"
       nb_order_with_error: "%{nb_order} commande(s) avec erreurs"
       no_notification: "Pas de nouvelle notification concernant vos stocks"

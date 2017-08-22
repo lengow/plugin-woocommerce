@@ -38,7 +38,7 @@ class Lengow_Admin_Dashboard {
 		$locale          = new Lengow_Translation();
 		$stats           = Lengow_Sync::get_statistic();
 		$merchant_status = Lengow_Sync::get_status_account();
-		$is_new_merchant = Lengow_Main::is_new_merchant();
+		$is_new_merchant = Lengow_Connector::is_new_merchant();
 		$is_sync         = isset( $_GET['isSync'] ) ? $_GET['isSync'] : false;
 		$locale_iso_code = strtolower( substr( get_locale(), 0, 2 ) );
 

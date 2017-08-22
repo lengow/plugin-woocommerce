@@ -163,12 +163,12 @@ en:
     lengow_import_enabled_legend: "Use this option to decrease stocks in your WooCommerce backoffice. Go to the stock management page if you want to launch a manual synchronisation."
   lengow_log:
     error:
-      import_in_progress: "Import in progress"
       rest_time_to_import: "Please wait %{rest_time} seconds before re-importing orders"
-      account_id_empty: "Account ID, Access Token or Secret is empty"
       nb_order_imported: "%{nb_order} order(s) decreased"
       nb_order_with_error: "%{nb_order} order(s) with errors"
       no_notification: "No new notification about your stock"
+      credentials_not_valid: "Account ID, token access or secret token are not valid"
+      no_catalog_for_shop: "No catalog ID valid for the shop"
       no_country_for_billing_address: "Lengow error: billing address does not contain the country"
       no_billing_address: "Lengow error: no billing address in the order"
       no_country_for_delivery_address: "Lengow error: delivery address does not contain the country"
@@ -176,7 +176,6 @@ en:
       check_logs: "You can check logs on <a href=%{link}>this page</a>"
     exception:
       no_connection_webservice: "connection did not work with the Lengow webservice"
-      credentials_not_valid: "account ID, token access or secret token are not valid"
       error_lengow_webservice: "Lengow webservice: %{error_code} - %{error_message}"
       order_not_found: "Lengow error: order cannot be found in Lengow feed"
       marketplace_not_present: "Lengow error: %{marketplace_name} does not feature in the marketplace list"
