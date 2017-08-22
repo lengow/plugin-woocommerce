@@ -10,15 +10,15 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * at your option) any later version.
- * 
+ *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
- * @category   	Lengow
- * @package    	lengow-woocommerce
- * @subpackage 	includes
- * @author     	Team module <team-module@lengow.com>
- * @copyright  	2017 Lengow SAS
+ * @category    Lengow
+ * @package        lengow-woocommerce
+ * @subpackage    includes
+ * @author        Team module <team-module@lengow.com>
+ * @copyright    2017 Lengow SAS
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -40,14 +40,14 @@ class Lengow_Admin_Dashboard {
 		$merchant_status = Lengow_Sync::get_status_account();
 		$is_new_merchant = Lengow_Main::is_new_merchant();
 		$is_sync         = isset( $_GET['isSync'] ) ? $_GET['isSync'] : false;
-		$locale_iso_code = strtolower(substr(get_locale(), 0, 2));
+		$locale_iso_code = strtolower( substr( get_locale(), 0, 2 ) );
 
 		$refresh_status = admin_url( 'admin.php?action=dashboard_get_process&do_action=refresh_status' );
 
 		if ( $is_new_merchant || $is_sync ) {
 			include_once 'views/dashboard/html-admin-new.php';
-		} elseif ( ( $merchant_status['type'] == 'free_trial' && $merchant_status['day'] <= 0 )
-			|| $merchant_status['type'] == 'bad_payer'
+		} elseif ( ( $merchant_status['type'] == 'free_trial' && $merchant_status['expired'] )
+		           || $merchant_status['type'] == 'bad_payer'
 		) {
 			include_once 'views/dashboard/html-admin-status.php';
 		} else {

@@ -75,7 +75,7 @@ class Lengow_Sync {
 				$list_key = array(
 					'account_id'   => false,
 					'access_token' => false,
-					'secret_token' => false
+					'secret_token' => false,
 				);
 				foreach ( $values as $k => $v ) {
 					if ( ! in_array( $k, array_keys( $list_key ) ) ) {
@@ -125,7 +125,7 @@ class Lengow_Sync {
 			'type'           => 'woocommerce',
 			'version'        => $wp_version,
 			'plugin_version' => LENGOW_VERSION,
-			'options'        => Lengow_Configuration::get_all_values( false )
+			'options'        => Lengow_Configuration::get_all_values( false ),
 		);
 		$lengow_export    = new Lengow_Export();
 		$data['shops'][0] = array(
@@ -137,7 +137,7 @@ class Lengow_Sync {
 			'cron_url'                => Lengow_Main::get_cron_url(),
 			'total_product_number'    => $lengow_export->get_total_product(),
 			'exported_product_number' => $lengow_export->get_total_export_product(),
-			'options'                 => Lengow_Configuration::get_all_values( false, true )
+			'options'                 => Lengow_Configuration::get_all_values( false, true ),
 		);
 
 		return $data;
@@ -167,6 +167,45 @@ class Lengow_Sync {
 		return true;
 	}
 
+	/**
+	 * Get Status Account.
+	 *
+	 * @param boolean $force Force cache Update
+	 *
+	 * @return array|false
+	 */
+	public static function get_status_account( $force = false ) {
+		if ( ! $force ) {
+			$updated_at = Lengow_Configuration::get( 'lengow_last_account_status_update' );
+			if ( ! is_null( $updated_at ) && ( time() - strtotime( $updated_at ) ) < self::$_cache_time ) {
+
+				return json_decode( Lengow_Configuration::get( 'lengow_account_status' ), true );
+			}
+		}
+
+		$result = Lengow_Connector::query_api( 'get', '/v3.0/plans' );
+		if ( isset( $result->isFreeTrial ) ) {
+			$status            = array();
+			$status['type']    = $result->isFreeTrial ? 'free_trial' : '';
+			$status['day']     = (int) $result->leftDaysBeforeExpired;
+			$status['expired'] = (bool) $result->isExpired;
+			if ( $status['day'] < 0 ) {
+				$status['day'] = 0;
+			}
+			if ( $status ) {
+				Lengow_Configuration::update_value( 'lengow_account_status', json_encode( $status ) );
+				Lengow_Configuration::update_value( 'lengow_last_account_status_update', date( 'Y-m-d H:i:s' ) );
+
+				return $status;
+			}
+		} else {
+			if ( Lengow_Configuration::get( 'lengow_last_account_status_update' ) ) {
+				return json_decode( Lengow_Configuration::get( 'lengow_account_status' ), true );
+			}
+		}
+
+		return false;
+	}
 
 	/**
 	 * Get Statistic.
@@ -225,51 +264,5 @@ class Lengow_Sync {
 
 		return $return;
 
-	}
-
-	/**
-	 * Get Status Account.
-	 *
-	 * @param boolean $force Force cache Update
-	 *
-	 * @return array|false
-	 */
-	public static function get_status_account( $force = false ) {
-		if ( ! $force ) {
-			$updated_at = Lengow_Configuration::get( 'lengow_last_account_status_update' );
-			if ( ! is_null( $updated_at ) && ( time() - strtotime( $updated_at ) ) < self::$_cache_time ) {
-
-				return json_decode( Lengow_Configuration::get( 'lengow_account_status' ), true );
-			}
-		}
-
-		$result = Lengow_Connector::query_api(
-			'get',
-			'/v3.0/subscriptions'
-		);
-		if ( isset( $result->subscription ) ) {
-			$status         = array();
-			$status['type'] = $result->subscription->billing_offer->type;
-			$status['day']  = - round(
-				( strtotime( date( "c" ) ) - strtotime( $result->subscription->renewal ) ) / 86400
-			);
-			if ( $status['day'] < 0 ) {
-				$status['day'] = "0";
-			}
-			if ( $status ) {
-				$jsonStatus = json_encode( $status );
-				$date       = date( 'Y-m-d H:i:s' );
-				Lengow_Configuration::update_value( 'lengow_account_status', $jsonStatus );
-				Lengow_Configuration::update_value( 'lengow_last_account_status_update', $date );
-
-				return $status;
-			}
-		} else {
-			if ( Lengow_Configuration::get( 'lengow_last_account_status_update' ) ) {
-				return json_decode( Lengow_Configuration::get( 'lengow_account_status' ), true );
-			}
-		}
-
-		return false;
 	}
 }

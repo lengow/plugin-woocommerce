@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php echo $locale->t( 'menu.preprod_active' ); ?>
 	</div>
 	<?php endif; ?>
-	<?php if ( $merchant_status['type'] == 'free_trial' && $merchant_status['day'] != 0 ) : ?>
+	<?php if ( $merchant_status['type'] == 'free_trial' && ! $merchant_status['expired'] ) : ?>
 	<p class="text-right" id="menucountertrial">
 		<?php echo $locale->t( 'menu.counter', array( 'counter' => $merchant_status['day'] ) ); ?>
 		<a href="http://my.lengow.io/" target="_blank">

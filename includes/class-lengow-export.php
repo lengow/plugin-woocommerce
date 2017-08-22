@@ -10,16 +10,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * at your option) any later version.
- * 
+ *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
- * @category   	Lengow
- * @package    	lengow-woocommerce
- * @subpackage 	includes
- * @author     	Team module <team-module@lengow.com>
- * @copyright  	2017 Lengow SAS
- * @license    	https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
+ * @category    Lengow
+ * @package        lengow-woocommerce
+ * @subpackage    includes
+ * @author        Team module <team-module@lengow.com>
+ * @copyright    2017 Lengow SAS
+ * @license        https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -63,7 +63,7 @@ class Lengow_Export {
 		'legacy_fields',
 		'log_output',
 		'update_export_date',
-		'get_params'
+		'get_params',
 	);
 
 	/**
@@ -393,7 +393,7 @@ class Lengow_Export {
 			$params[ $param ] = array(
 				'authorized_values' => $authorized_value,
 				'type'              => $type,
-				'example'           => $example
+				'example'           => $example,
 			);
 		}
 
@@ -405,9 +405,9 @@ class Lengow_Export {
 	 */
 	private function _set_legacy_fields() {
 		if ( is_null( $this->_legacy ) ) {
-			$result = Lengow_Connector::query_api( 'get', '/v3.0/subscriptions' );
-			if ( isset( $result->legacy ) ) {
-				$this->_legacy = (bool) $result->legacy;
+			$result = Lengow_Connector::query_api( 'get', '/v3.0/plans' );
+			if ( isset( $result->accountVersion ) ) {
+				$this->_legacy = $result->accountVersion === 'v2' ? true : false;
 			} else {
 				$this->_legacy = false;
 			}
