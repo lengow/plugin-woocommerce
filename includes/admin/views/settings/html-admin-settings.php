@@ -93,6 +93,13 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 						<input type="text" name="lengow_secret_token" class="form-control"
 						       value="<?php echo $values['lengow_secret_token']; ?>"/>
 					</div>
+					<div class="form-group">
+						<label class="control-label"><?php echo $keys['lengow_catalog_id']['label']; ?></label>
+						<input type="text" name="lengow_catalog_id" class="form-control"
+						       value="<?php echo $values['lengow_catalog_id']; ?>"/>
+						<span class="legend"
+						      style="display:block;"><?php echo $keys['lengow_catalog_id']['legend']; ?></span>
+					</div>
 				</div>
 			</div>
 		</div>

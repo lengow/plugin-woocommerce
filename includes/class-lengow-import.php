@@ -116,6 +116,11 @@ class Lengow_Import {
 	private $_connector;
 
 	/**
+	 * @var array shop catalog ids for import
+	 */
+	private $_shop_catalog_ids = array();
+
+	/**
 	 * Construct the import manager.
 	 *
 	 * @param $params array Optional options
@@ -344,8 +349,14 @@ class Lengow_Import {
 		if ( $this->_import_one_order ) {
 			return true;
 		}
+		$catalog_ids = Lengow_Configuration::get_catalog_ids();
+		if ( count( $catalog_ids ) > 0 ) {
+			$this->_shop_catalog_ids = $catalog_ids;
 
-		return true;
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -379,7 +390,7 @@ class Lengow_Import {
 					array(
 						'date_from'  => date( 'Y-m-d', strtotime( (string) $this->_date_from ) ),
 						'date_to'    => date( 'Y-m-d', strtotime( (string) $this->_date_to ) ),
-						'account_id' => $this->_account_id,
+						'catalog_id' => implode(', ', $this->_shop_catalog_ids),
 					)
 				),
 				$this->_log_output
@@ -403,6 +414,7 @@ class Lengow_Import {
 					array(
 						'updated_from' => $this->_date_from,
 						'updated_to'   => $this->_date_to,
+						'catalog_ids'  => implode( ',', $this->_shop_catalog_ids ),
 						'account_id'   => $this->_account_id,
 						'page'         => $page,
 					),

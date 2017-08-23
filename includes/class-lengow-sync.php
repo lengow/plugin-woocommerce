@@ -214,7 +214,7 @@ class Lengow_Sync {
 	 *
 	 * @return array
 	 */
-	public static function get_statistic( $force = true ) {
+	public static function get_statistic( $force = false ) {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_last_order_statistic_update' );
 			if ( ( time() - strtotime( $updated_at ) ) < self::$_cache_time ) {

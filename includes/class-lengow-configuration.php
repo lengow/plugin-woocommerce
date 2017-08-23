@@ -64,6 +64,11 @@ class Lengow_Configuration {
 					'global' => true,
 					'label'  => $locale->t( 'lengow_settings.lengow_secret_token_title' ),
 				),
+				'lengow_catalog_id'                  => array(
+					'shop'   => true,
+					'label'  => $locale->t( 'lengow_settings.lengow_catalog_id_title' ),
+					'legend' => $locale->t( 'lengow_settings.lengow_catalog_id_legend' ),
+				),
 				'lengow_ip_enabled'                  => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_ip_enable_title' ),
@@ -219,6 +224,43 @@ class Lengow_Configuration {
 		} else {
 			return array( null, null, null );
 		}
+	}
+
+	/**
+	 * Get catalog ids.
+	 *
+	 * @return array
+	 */
+	public static function get_catalog_ids() {
+		$catalog_ids      = array();
+		$shop_catalog_ids = self::get( 'lengow_catalog_id' );
+		if ( strlen( $shop_catalog_ids ) > 0 && $shop_catalog_ids != 0 ) {
+			$ids = trim( str_replace( array( "\r\n", ',', '-', '|', ' ', '/' ), ';', $shop_catalog_ids ), ';' );
+			$ids = array_filter( explode( ';', $ids ) );
+			foreach ( $ids as $id ) {
+				if ( is_numeric( $id ) && $id > 0 ) {
+					$catalog_ids[] = (int) $id;
+				}
+			}
+		}
+
+		return $catalog_ids;
+	}
+
+	/**
+	 * Set catalog ids.
+	 *
+	 * @param array $catalog_ids Lengow catalog ids
+	 */
+	public static function set_catalog_ids($catalog_ids)
+	{
+		$shop_catalog_ids = self::get_catalog_ids();
+		foreach ($catalog_ids as $catalog_id) {
+			if (!in_array($catalog_id, $shop_catalog_ids) && is_numeric($catalog_id) && $catalog_id > 0) {
+				$shop_catalog_ids[] = (int)$catalog_id;
+			}
+		}
+		self::update_value('lengow_catalog_id', implode(';', $shop_catalog_ids));
 	}
 
 	/**
