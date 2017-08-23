@@ -141,6 +141,8 @@ en:
     lengow_account_id_title: "Account ID"
     lengow_access_token_title: "Access Token"
     lengow_secret_token_title: "Secret Token"
+    lengow_catalog_id_title: "Catalogues ID"
+    lengow_catalog_id_legend: "Your catalogues ID to import orders. Separate them by ' ; '"
     lengow_ip_enable_title: "Enable authorisation by IP"
     lengow_ip_enable_legend: "Enable this option if you want your export to be secured by IP. By default, your export is secured by a unique key."
     lengow_authorized_ip_title: "Authorised IPs"

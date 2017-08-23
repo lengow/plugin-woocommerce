@@ -121,6 +121,8 @@ lengow_settings.lengow_store_active_title|Enable store
 lengow_settings.lengow_account_id_title|Account ID
 lengow_settings.lengow_access_token_title|Access Token
 lengow_settings.lengow_secret_token_title|Secret Token
+lengow_settings.lengow_catalog_id_title|Catalogues ID
+lengow_settings.lengow_catalog_id_legend|Your catalogues ID to import orders. Separate them by ' ; '
 lengow_settings.lengow_ip_enable_title|Enable authorisation by IP
 lengow_settings.lengow_ip_enable_legend|Enable this option if you want your export to be secured by IP. By default, your export is secured by a unique key.
 lengow_settings.lengow_authorized_ip_title|Authorised IPs
@@ -175,7 +177,7 @@ log.import.start|## start %{type} import ##
 log.import.end|## end %{type} import ##
 log.import.preprod_mode_active|warning ! Pre-prod mode is activated
 log.import.connector_get_order|get order with order ID: %{marketplace_sku} and marketplace: %{marketplace_name}
-log.import.connector_get_all_order|get orders between %{date_from} and %{date_to} for the account ID: %{account_id}
+log.import.connector_get_all_order|get orders between %{date_from} and %{date_to} for catalogs ID: %{catalog_id}
 log.import.find_one_order|%{nb_order} order found for order ID: %{marketplace_sku} and markeplace: %{marketplace_name} with account ID: %{account_id}
 log.import.find_all_orders|%{nb_order} order(s) found with account ID: %{account_id}
 log.import.order_already_decremented|order already decremented
@@ -244,6 +246,7 @@ toolbox.index.last_import_cron|Cron
 toolbox.index.last_import_manual|manual
 toolbox.index.export_information|Export information (by shop)
 toolbox.index.shop_active|Shop followed by Lengow
+toolbox.index.shop_catalogs_id|Lengow catalogs id synchronized
 toolbox.index.shop_export_token|Export token
 toolbox.index.shop_last_export|Last export
 toolbox.index.shop_product_total|Products available in the shop
