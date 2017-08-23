@@ -45,32 +45,6 @@ class Lengow_Check {
 	}
 
 	/**
-	 * Check API Authentication.
-	 *
-	 * @return boolean
-	 */
-	public static function is_valid_auth() {
-		if ( ! self::is_curl_activated() ) {
-			return false;
-		}
-		list( $account_id, $access_token, $secret ) = Lengow_Connector::get_access_id();
-		if ( is_null( $account_id ) || is_null( $access_token ) || is_null( $secret ) ) {
-			return false;
-		}
-		$connector = new Lengow_Connector( $access_token, $secret );
-		try {
-			$result = $connector->connect();
-		} catch ( Lengow_Exception $e ) {
-			return false;
-		}
-		if ( isset( $result['token'] ) && $account_id != 0 ) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * Check if PHP Curl is activated.
 	 *
 	 * @return boolean

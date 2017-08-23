@@ -10,15 +10,15 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * at your option) any later version.
- * 
+ *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
- * @category   	Lengow
- * @package    	lengow-woocommerce
- * @subpackage 	includes
- * @author     	Team module <team-module@lengow.com>
- * @copyright  	2017 Lengow SAS
+ * @category    Lengow
+ * @package     lengow-woocommerce
+ * @subpackage  includes
+ * @author      Team module <team-module@lengow.com>
+ * @copyright   2017 Lengow SAS
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -76,38 +76,34 @@ class Lengow_Admin_Orders {
 	 * @return array
 	 */
 	public function load_message( $return ) {
-		$locale  = new Lengow_Translation();
-		$message = array();
-		if ( Lengow_Import::is_in_process() ) {
-			$message[] = $locale->t(
-				'lengow_log.error.rest_time_to_import',
-				array( 'rest_time' => Lengow_Import::rest_time_to_import() )
-			);
+		$locale   = new Lengow_Translation();
+		$messages = array();
+		if ( isset( $return['error'] ) && $return['error'] != false ) {
+			$messages[] = Lengow_Main::decode_log_message( $return['error'] );
+
+			return $messages;
 		}
 		if ( isset( $return['order_new'] ) && $return['order_new'] > 0 ) {
-			$message[] = $locale->t(
+			$messages[] = $locale->t(
 				'lengow_log.error.nb_order_imported',
 				array( 'nb_order' => (int) $return['order_new'] )
 			);
 		}
 		if ( isset( $return['order_error'] ) && $return['order_error'] > 0 ) {
-			$message[] = $locale->t(
+			$messages[] = $locale->t(
 				'lengow_log.error.nb_order_with_error',
 				array( 'nb_order' => (int) $return['order_error'] )
 			);
-			$message[] = $locale->t(
+			$messages[] = $locale->t(
 				'lengow_log.error.check_logs',
 				array( 'link' => admin_url( 'admin.php?page=lengow&tab=lengow_admin_settings' ) )
 			);
 		}
-		if ( isset( $return['error'] ) && $return['error'] != false ) {
-			$message[] = Lengow_Main::decode_log_message( $return['error'] );
-		}
-		if ( count( $message ) == 0 ) {
-			$message[] = $locale->t( 'lengow_log.error.no_notification' );
+		if ( count( $messages ) == 0 ) {
+			$messages[] = $locale->t( 'lengow_log.error.no_notification' );
 		}
 
-		return $message;
+		return $messages;
 	}
 
 	/**
@@ -140,7 +136,7 @@ class Lengow_Admin_Orders {
 			'last_import_date' => $last_import['timestamp'] != 'none'
 				? strftime( '%A %d %B %Y @ %X', $last_import['timestamp'] )
 				: '',
-			'last_import_type' => $last_import['type']
+			'last_import_type' => $last_import['type'],
 		);
 
 		return $order_collection;

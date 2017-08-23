@@ -143,7 +143,6 @@ lengow_settings.lengow_import_enabled_title|Activer la synchronisation des stock
 lengow_settings.lengow_import_enabled_legend|Activez cette option pour diminuer les stocks dans votre backoffice WooCommerce. Rendez-vous sur la page de gestion du stock si vous souhaitez lancer une synchronisation manuelle.
 lengow_log.error.import_in_progress|Import en cours
 lengow_log.error.rest_time_to_import|Attendez %{rest_time}  secondes avant d'importer de nouveau vos commandes
-lengow_log.error.account_id_empty|ID du compte, access token ou secret token vides
 lengow_log.error.nb_order_imported|%{nb_order} commande(s) diminuée(s)
 lengow_log.error.nb_order_with_error|%{nb_order} commande(s) avec erreurs
 lengow_log.error.no_notification|Pas de nouvelle notification concernant vos stocks

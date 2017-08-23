@@ -34,9 +34,9 @@ class Lengow_Connector {
 	/**
 	 * @var string url of the API Lengow.
 	 */
-	const LENGOW_API_URL = 'http://api.lengow.io:80';
+	// const LENGOW_API_URL = 'http://api.lengow.io:80';
 	// const LENGOW_API_URL = 'http://api.lengow.net:80';
-	// const LENGOW_API_URL = 'http://api.lengow.rec:80';
+	const LENGOW_API_URL = 'http://api.lengow.rec:80';
 	// const LENGOW_API_URL = 'http://10.100.1.82:8081';
 
 	/**
@@ -83,11 +83,11 @@ class Lengow_Connector {
 	 * @var array lengow url for curl timeout.
 	 */
 	private $lengow_urls = array(
-		'/v3.0/orders'        => 15,
-		'/v3.0/marketplaces'  => 10,
-		'/v3.0/plans'         => 3,
-		'/v3.0/stats'         => 3,
-		'/v3.0/cms'           => 3,
+		'/v3.0/orders'       => 15,
+		'/v3.0/marketplaces' => 10,
+		'/v3.0/plans'        => 3,
+		'/v3.0/stats'        => 3,
+		'/v3.0/cms'          => 3,
 	);
 
 	/**
@@ -114,7 +114,7 @@ class Lengow_Connector {
 			array(
 				'access_token' => $this->_access_token,
 				'secret'       => $this->_secret,
-				'user_token'   => $user_token
+				'user_token'   => $user_token,
 			),
 			'POST'
 		);
@@ -330,7 +330,7 @@ class Lengow_Connector {
 						$opts[ CURLOPT_HTTPHEADER ],
 						array(
 							'Content-Type: application/json',
-							'Content-Length: ' . strlen( $body )
+							'Content-Length: ' . strlen( $body ),
 						)
 					);
 				}
@@ -373,7 +373,7 @@ class Lengow_Connector {
 				'log.connector.error_curl',
 				array(
 					'error_code'    => $error_number,
-					'error_message' => $error_text
+					'error_message' => $error_text,
 				)
 			);
 			$error_message = Lengow_Main::set_log_message(
@@ -388,22 +388,42 @@ class Lengow_Connector {
 	}
 
 	/**
-	 * Get Valid Account / Access / Secret.
+	 * Check if is a new merchant.
 	 *
-	 * @return array
+	 * @return boolean
 	 */
-	public static function get_access_id() {
-		if ( strlen( Lengow_Configuration::get( 'lengow_account_id' ) ) > 0
-		     && strlen( Lengow_Configuration::get( 'lengow_access_token' ) ) > 0
-		     && strlen( Lengow_Configuration::get( 'lengow_secret_token' ) ) > 0
-		) {
-			return array(
-				Lengow_Configuration::get( 'lengow_account_id' ),
-				Lengow_Configuration::get( 'lengow_access_token' ),
-				Lengow_Configuration::get( 'lengow_secret_token' )
-			);
+	public static function is_new_merchant() {
+		list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
+		if ( ! is_null( $account_id ) && ! is_null( $access_token ) && ! is_null( $secret_token ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check API Authentication.
+	 *
+	 * @return boolean
+	 */
+	public static function is_valid_auth() {
+		if ( ! Lengow_Check::is_curl_activated() ) {
+			return false;
+		}
+		list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
+		if ( is_null( $account_id ) || $account_id == 0 || ! is_numeric( $account_id ) ) {
+			return false;
+		}
+		$connector = new Lengow_Connector( $access_token, $secret_token );
+		try {
+			$result = $connector->connect();
+		} catch ( Lengow_Exception $e ) {
+			return false;
+		}
+		if ( isset( $result['token'] ) ) {
+			return true;
 		} else {
-			return array( null, null, null );
+			return false;
 		}
 	}
 
@@ -422,7 +442,7 @@ class Lengow_Connector {
 			return false;
 		}
 		try {
-			list( $account_id, $access_token, $secret_token ) = self::get_access_id();
+			list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
 			if ( is_null( $account_id ) ) {
 				return false;
 			}

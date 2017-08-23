@@ -109,7 +109,7 @@ class Lengow_Sync {
 	 */
 	public static function check_sync_shop() {
 		return Lengow_Configuration::get( 'lengow_store_enabled' )
-		       && Lengow_Check::is_valid_auth();
+		       && Lengow_Connector::is_valid_auth();
 	}
 
 	/**
@@ -151,7 +151,7 @@ class Lengow_Sync {
 	 * @return boolean
 	 */
 	public static function set_cms_option( $force = false ) {
-		if ( Lengow_Main::is_new_merchant() || (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
+		if ( Lengow_Connector::is_new_merchant() || (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
 			return false;
 		}
 		if ( ! $force ) {
@@ -214,19 +214,13 @@ class Lengow_Sync {
 	 *
 	 * @return array
 	 */
-	public static function get_statistic( $force = false ) {
+	public static function get_statistic( $force = true ) {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_last_order_statistic_update' );
 			if ( ( time() - strtotime( $updated_at ) ) < self::$_cache_time ) {
 				return json_decode( Lengow_Configuration::get( 'lengow_order_statistic' ), true );
 			}
 		}
-		$return                = array();
-		$return['total_order'] = 0;
-		$return['nb_order']    = 0;
-		$return['currency']    = '';
-		$return['available']   = false;
-		// get stats
 		$result = Lengow_Connector::query_api(
 			'get',
 			'/v3.0/stats',
@@ -237,16 +231,24 @@ class Lengow_Sync {
 			)
 		);
 		if ( isset( $result->level0 ) ) {
-			$stats                 = $result->level0[0];
-			$return['total_order'] = $stats->revenue;
-			$return['nb_order']    = (int) $stats->transactions;
-			$return['currency']    = $result->currency->iso_a3;
+			$stats  = $result->level0[0];
+			$return = array(
+				'total_order' => $stats->revenue,
+				'nb_order'    => (int) $stats->transactions,
+				'currency'    => $result->currency->iso_a3,
+				'available'   => false,
+			);
 		} else {
 			if ( Lengow_Configuration::get( 'lengow_last_order_statistic_update' ) ) {
 				return json_decode( Lengow_Configuration::get( 'lengow_order_statistic' ), true );
+			} else {
+				return array(
+					'total_order' => 0,
+					'nb_order'    => 0,
+					'currency'    => '',
+					'available'   => false,
+				);
 			}
-
-			return $return;
 		}
 		if ( $return['total_order'] > 0 || $return['nb_order'] > 0 ) {
 			$return['available'] = true;
@@ -263,6 +265,5 @@ class Lengow_Sync {
 		Lengow_Configuration::update_value( 'lengow_last_order_statistic_update', date( 'Y-m-d H:i:s' ) );
 
 		return $return;
-
 	}
 }

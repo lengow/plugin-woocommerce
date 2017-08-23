@@ -10,15 +10,15 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * at your option) any later version.
- * 
+ *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
- * @category   	Lengow
- * @package    	lengow-woocommerce
- * @subpackage 	includes
- * @author     	Team module <team-module@lengow.com>
- * @copyright  	2017 Lengow SAS
+ * @category    Lengow
+ * @package     lengow-woocommerce
+ * @subpackage  includes
+ * @author      Team module <team-module@lengow.com>
+ * @copyright   2017 Lengow SAS
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -76,11 +76,11 @@ class Lengow_Admin {
 	public function lengow_display() {
 		$locale          = new Lengow_Translation();
 		$merchant_status = Lengow_Sync::get_status_account();
-		$is_new_merchant = Lengow_Main::is_new_merchant();
+		$is_new_merchant = Lengow_Connector::is_new_merchant();
 		if ( $this->current_tab != $this->_default_tab
-			&& ! ( $merchant_status['type'] == 'free_trial' && $merchant_status['day'] <= 0 )
-			&& $merchant_status['type'] != 'bad_payer'
-			&& ! $is_new_merchant
+		     && ! ( $merchant_status['type'] === 'free_trial' && $merchant_status['expired'] )
+		     && $merchant_status['type'] !== 'bad_payer'
+		     && ! $is_new_merchant
 		) {
 			include_once 'views/html-admin-header.php';
 		}
