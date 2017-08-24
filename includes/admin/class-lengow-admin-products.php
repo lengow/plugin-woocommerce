@@ -64,7 +64,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 			'total_export_product' => $lengow_export->get_total_export_product(),
 			'last_export'          => Lengow_Configuration::get( 'lengow_last_export' ),
 			'option_selected'      => Lengow_Configuration::get( 'lengow_selection_enabled' ),
-			'select_all'           => count( $lengow_admin_products->get_products() )
+			'select_all'           => count( $lengow_admin_products->get_products() ),
 		);
 		include_once 'views/products/html-admin-products.php';
 	}
@@ -95,29 +95,6 @@ class Lengow_Admin_Products extends WP_List_Table {
 						echo json_encode( $result );
 					}
 					break;
-				case 'check_shop':
-					$checkShop = Lengow_Sync::check_sync_shop();
-					$data      = array();
-					if ( $checkShop ) {
-						$data['check_shop'] = true;
-						$sync_date          = Lengow_Configuration::get( 'lengow_last_export' );
-						if ( $sync_date == null ) {
-							$data['tooltip'] = $locale->t( 'product.screen.shop_not_index' );
-						} else {
-							$data['tooltip'] = $locale->t( 'product.screen.shop_last_indexation' )
-							                   . ' : ' . strftime( "%A %e %B %Y @ %R", strtotime( $sync_date ) );
-						}
-						$data['original_title'] = $locale->t( 'product.screen.lengow_shop_sync' );
-					} else {
-						$data['check_shop']     = false;
-						$data['tooltip']        = $locale->t( 'product.screen.lengow_shop_no_sync' );
-						$data['original_title'] = $locale->t( 'product.screen.sync_your_shop' );
-						$data['header_title']   = '<a href="' . admin_url( 'admin.php?page=lengow' )
-						                          . '&isSync=true"><span>'
-						                          . $locale->t( 'product.screen.sync_your_shop' ) . '</span></a>';
-					}
-					echo json_encode( $data );
-					break;
 				case 'select_product':
 					$state     = isset( $_POST['state'] ) ? $_POST['state'] : null;
 					$productId = isset( $_POST['id_product'] ) ? $_POST['id_product'] : null;
@@ -135,7 +112,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 						$all_products = get_posts(
 							array(
 								'numberposts' => - 1,
-								'post_type'   => 'product'
+								'post_type'   => 'product',
 							) );
 						$all          = array();
 						foreach ( $all_products as $value ) {
@@ -210,7 +187,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 		$this->set_pagination_args(
 			array(
 				'total_items' => $total_items,
-				'per_page'    => $per_page
+				'per_page'    => $per_page,
 			)
 		);
 
@@ -414,7 +391,8 @@ class Lengow_Admin_Products extends WP_List_Table {
 			'_stock_status',
 			'_sku',
 			'_price',
-			'product_type'
+			'product_type',
+			'lengow',
 		);
 
 		// filter by search box.
@@ -423,14 +401,14 @@ class Lengow_Admin_Products extends WP_List_Table {
 				array(
 					'numberposts' => - 1,
 					'post_type'   => 'product',
-					's'           => $_POST['s']
+					's'           => $_POST['s'],
 				)
 			);
 		} else {
 			$posts = get_posts(
 				array(
 					'numberposts' => - 1,
-					'post_type'   => 'product'
+					'post_type'   => 'product',
 				)
 			);
 		}
@@ -492,6 +470,9 @@ class Lengow_Admin_Products extends WP_List_Table {
 						} else {
 							$products_data = ucfirst( $product_type );
 						}
+						break;
+					case 'lengow':
+						$products_data = (int) Lengow_Product::is_lengow_product( $post->ID );
 						break;
 					default :
 						$products_data = get_post_meta( $post->ID, $key, true );

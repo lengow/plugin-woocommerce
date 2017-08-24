@@ -93,7 +93,7 @@ class Lengow_Import {
 	/**
 	 * @var string type import (manual or cron).
 	 */
-	private $_type;
+	private $_type_import;
 
 	/**
 	 * @var string account ID.
@@ -161,7 +161,7 @@ class Lengow_Import {
 			? $params['preprod_mode']
 			: (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' )
 		);
-		$this->_type         = ( isset( $params['type'] ) ? $params['type'] : 'manual' );
+		$this->_type_import  = ( isset( $params['type'] ) ? $params['type'] : 'manual' );
 		$this->_log_output   = ( isset( $params['log_output'] ) ? $params['log_output'] : false );
 	}
 
@@ -199,9 +199,13 @@ class Lengow_Import {
 			$error = Lengow_Main::set_log_message( 'lengow_log.error.credentials_not_valid' );
 			Lengow_Main::log( 'Import', $error, $this->_log_output );
 		} else {
+			// check Lengow catalogs for order synchronisation
+			if ( ! $this->_preprod_mode && ! $this->_import_one_order && $this->_type_import === 'manual' ) {
+				Lengow_Sync::sync_catalog();
+			}
 			Lengow_Main::log(
 				'Import',
-				Lengow_Main::set_log_message( 'log.import.start', array( 'type' => $this->_type ) ),
+				Lengow_Main::set_log_message( 'log.import.start', array( 'type' => $this->_type_import ) ),
 				$this->_log_output
 			);
 			if ( $this->_preprod_mode ) {
@@ -214,7 +218,7 @@ class Lengow_Import {
 			if ( ! $this->_import_one_order ) {
 				self::set_in_process();
 				// update last import date.
-				Lengow_Main::update_date_import( $this->_type );
+				Lengow_Main::update_date_import( $this->_type_import );
 			}
 			if ( Lengow_Configuration::get( 'lengow_store_enabled' ) ) {
 				try {
@@ -307,7 +311,7 @@ class Lengow_Import {
 			self::set_end();
 			Lengow_Main::log(
 				'Import',
-				Lengow_Main::set_log_message( 'log.import.end', array( 'type' => $this->_type ) ),
+				Lengow_Main::set_log_message( 'log.import.end', array( 'type' => $this->_type_import ) ),
 				$this->_log_output
 			);
 		}
@@ -390,7 +394,7 @@ class Lengow_Import {
 					array(
 						'date_from'  => date( 'Y-m-d', strtotime( (string) $this->_date_from ) ),
 						'date_to'    => date( 'Y-m-d', strtotime( (string) $this->_date_to ) ),
-						'catalog_id' => implode(', ', $this->_shop_catalog_ids),
+						'catalog_id' => implode( ', ', $this->_shop_catalog_ids ),
 					)
 				),
 				$this->_log_output

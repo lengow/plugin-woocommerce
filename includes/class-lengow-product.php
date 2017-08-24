@@ -79,7 +79,7 @@ class Lengow_Product {
 		'merchant_product_id',
 		'marketplace_order_line_id',
 		'quantity',
-		'amount'
+		'amount',
 	);
 
 	/**
@@ -510,11 +510,7 @@ class Lengow_Product {
 	public static function get_attributes() {
 		global $wpdb;
 		$return = array();
-		$sql    = "
-			SELECT *
-			FROM {$wpdb->postmeta}
-			WHERE meta_key = '_product_attributes'
-		";
+		$sql    = "SELECT * FROM {$wpdb->postmeta} WHERE meta_key = '_product_attributes'";
 		foreach ( $wpdb->get_results( $sql ) as $result ) {
 			$attributes = unserialize( $result->meta_value );
 			if ( ! empty( $attributes ) ) {
@@ -586,7 +582,7 @@ class Lengow_Product {
 		$product_id      = false;
 		$api_product_ids = array(
 			'merchant_product_id'    => $product_datas['merchant_product_id']->id,
-			'marketplace_product_id' => $product_datas['marketplace_product_id']
+			'marketplace_product_id' => $product_datas['marketplace_product_id'],
 		);
 		$product_field   = $product_datas['merchant_product_id']->field != null
 			? strtolower( (string) $product_datas['merchant_product_id']->field )
@@ -626,7 +622,7 @@ class Lengow_Product {
 						array(
 							'product_id'      => $product_id,
 							'attribute_name'  => $attribute_name,
-							'attribute_value' => $attribute_value
+							'attribute_value' => $attribute_value,
 						)
 					),
 					$log_output,
@@ -706,10 +702,7 @@ class Lengow_Product {
 		if ( ! $value ) {
 			$wpdb->delete( $wpdb->prefix . 'lengow_product', array( 'product_id' => ( (int) $product_id ) ) );
 		} else {
-			$sql     = "
-				SELECT product_id FROM {$wpdb->prefix}lengow_product
-				WHERE product_id = %d
-			";
+			$sql     = "SELECT product_id FROM {$wpdb->prefix}lengow_product WHERE product_id = %d";
 			$results = $wpdb->get_results( $wpdb->prepare( $sql, (int) $product_id ) );
 			if ( count( $results ) == 0 ) {
 				$wpdb->insert( $wpdb->prefix . 'lengow_product', array( 'product_id' => ( (int) $product_id ) ) );
@@ -734,6 +727,24 @@ class Lengow_Product {
 		}
 
 		return $products;
+	}
+
+	/**
+	 * Is Lengow product.
+	 *
+	 * @param integer $product_id the id product
+	 *
+	 * @return boolean
+	 */
+	public static function is_lengow_product( $product_id ) {
+		global $wpdb;
+		$sql     = "SELECT product_id FROM {$wpdb->prefix}lengow_product WHERE product_id = %d";
+		$results = $wpdb->get_results( $wpdb->prepare( $sql, (int) $product_id ) );
+		if ( count( $results ) > 0 ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

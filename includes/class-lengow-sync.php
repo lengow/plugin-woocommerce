@@ -37,79 +37,92 @@ class Lengow_Sync {
 	protected static $_cache_time = 18000;
 
 	/**
+	 * @var array valid sync actions
+	 */
+	public static $sync_actions = array(
+		'order',
+		'action',
+		'catalog',
+		'option',
+	);
+
+	/**
 	 * Get Sync Data (Inscription / Update).
 	 *
 	 * @return array
 	 */
 	public static function get_sync_data() {
 		global $wp_version;
-		$lengow_export                               = new Lengow_Export();
-		$data                                        = array();
-		$data['domain_name']                         = $_SERVER["SERVER_NAME"];
-		$data['token']                               = Lengow_Main::get_token();
-		$data['type']                                = 'woocommerce';
-		$data['version']                             = $wp_version;
-		$data['plugin_version']                      = LENGOW_VERSION;
-		$data['email']                               = Lengow_Configuration::get( 'admin_email' );
-		$data['return_url']                          = 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
-		$data['shops'][0]['token']                   = Lengow_Main::get_token();
-		$data['shops'][0]['name']                    = Lengow_Configuration::get( 'blogname' );
-		$data['shops'][0]['domain']                  = $_SERVER["SERVER_NAME"];
-		$data['shops'][0]['feed_url']                = Lengow_Main::get_export_url();
-		$data['shops'][0]['cron_url']                = Lengow_Main::get_cron_url();
-		$data['shops'][0]['total_product_number']    = $lengow_export->get_total_product();
-		$data['shops'][0]['exported_product_number'] = $lengow_export->get_total_export_product();
-		$data['shops'][0]['configured']              = self::check_sync_shop();
+		$lengow_export    = new Lengow_Export();
+		$data             = array(
+			'domain_name'    => $_SERVER["SERVER_NAME"],
+			'token'          => Lengow_Main::get_token(),
+			'type'           => 'woocommerce',
+			'version'        => $wp_version,
+			'plugin_version' => LENGOW_VERSION,
+			'email'          => Lengow_Configuration::get( 'admin_email' ),
+			'cron_url'       => Lengow_Main::get_cron_url(),
+			'return_url'     => 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"],
+			'shops'          => array(),
+		);
+		$data['shops'][1] = array(
+			'token'                   => Lengow_Main::get_token(),
+			'shop_name'               => Lengow_Configuration::get( 'blogname' ),
+			'domain_url'              => $_SERVER["SERVER_NAME"],
+			'feed_url'                => Lengow_Main::get_export_url(),
+			'total_product_number'    => $lengow_export->get_total_product(),
+			'exported_product_number' => $lengow_export->get_total_export_product(),
+			'enabled'                 => Lengow_Configuration::shop_is_active(),
+		);
 
 		return $data;
 	}
 
 	/**
-	 * Set store configuration key from Lengow.
+	 * Set shop configuration key from Lengow.
 	 *
 	 * @param array $params Lengow API credentials
 	 */
 	public static function sync( $params ) {
-		foreach ( $params as $shop_token => $values ) {
-			if ( $shop = Lengow_Main::find_by_token( $shop_token ) ) {
-				$list_key = array(
-					'account_id'   => false,
-					'access_token' => false,
-					'secret_token' => false,
-				);
-				foreach ( $values as $k => $v ) {
-					if ( ! in_array( $k, array_keys( $list_key ) ) ) {
-						continue;
-					}
-					if ( strlen( $v ) > 0 ) {
-						$list_key[ $k ] = true;
-						Lengow_Configuration::update_value( ( 'lengow_' . $k ), $v );
-					}
-				}
-				$find_false_value = false;
-				foreach ( $list_key as $k => $v ) {
-					if ( ! $v ) {
-						$find_false_value = true;
-						break;
-					}
-				}
-				if ( ! $find_false_value ) {
-					Lengow_Configuration::update_value( 'lengow_store_enabled', true );
-				} else {
-					Lengow_Configuration::update_value( 'lengow_store_enabled', false );
-				}
+		Lengow_Configuration::set_access_ids(
+			array(
+				'lengow_account_id'   => $params['account_id'],
+				'lengow_access_token' => $params['access_token'],
+				'lengow_secret_token' => $params['secret_token'],
+			)
+		);
+		foreach ( $params['shops'] as $shop_token => $shop_catalog_ids ) {
+			$shop = Lengow_Main::find_by_token( $shop_token );
+			if ( $shop ) {
+				Lengow_Configuration::set_catalog_ids( $shop_catalog_ids['catalog_ids'] );
+				Lengow_Configuration::set_active_shop();
 			}
 		}
 	}
 
 	/**
-	 * Check Synchronisation shop.
-	 *
-	 * @return boolean
+	 * Sync Lengow catalogs for order synchronisation
 	 */
-	public static function check_sync_shop() {
-		return Lengow_Configuration::get( 'lengow_store_enabled' )
-		       && Lengow_Connector::is_valid_auth();
+	public static function sync_catalog() {
+		if ( Lengow_Connector::is_new_merchant() || (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
+			return false;
+		}
+		$result = Lengow_Connector::query_api( 'get', '/v3.1/cms' );
+		if ( isset( $result->cms ) ) {
+			$cms_token = Lengow_Main::get_token();
+			foreach ( $result->cms as $cms ) {
+				if ( $cms->token === $cms_token ) {
+					foreach ( $cms->shops as $cms_shop ) {
+						$shop = Lengow_Main::find_by_token( $cms_shop->token );
+						if ( $shop ) {
+							Lengow_Configuration::set_catalog_ids( $cms_shop->catalog_ids );
+							Lengow_Configuration::set_active_shop();
+						}
+					}
+					break;
+				}
+			}
+		}
 	}
 
 	/**
@@ -119,22 +132,17 @@ class Lengow_Sync {
 	 */
 	public static function get_option_data() {
 		global $wp_version;
-		$data             = array();
-		$data['cms']      = array(
+		$lengow_export   = new Lengow_Export();
+		$data            = array(
 			'token'          => Lengow_Main::get_token(),
-			'type'           => 'woocommerce',
 			'version'        => $wp_version,
 			'plugin_version' => LENGOW_VERSION,
 			'options'        => Lengow_Configuration::get_all_values( false ),
+			'shops'          => array(),
 		);
-		$lengow_export    = new Lengow_Export();
-		$data['shops'][0] = array(
-			'enabled'                 => Lengow_Configuration::get( 'lengow_store_enabled' ),
+		$data['shops'][] = array(
 			'token'                   => Lengow_Main::get_token(),
-			'store_name'              => Lengow_Configuration::get( 'blogname' ),
-			'domain_url'              => $_SERVER["SERVER_NAME"],
-			'feed_url'                => Lengow_Main::get_export_url(),
-			'cron_url'                => Lengow_Main::get_cron_url(),
+			'enabled'                 => Lengow_Configuration::shop_is_active(),
 			'total_product_number'    => $lengow_export->get_total_product(),
 			'exported_product_number' => $lengow_export->get_total_export_product(),
 			'options'                 => Lengow_Configuration::get_all_values( false, true ),
@@ -161,7 +169,7 @@ class Lengow_Sync {
 			}
 		}
 		$options = json_encode( self::get_option_data() );
-		Lengow_Connector::query_api( 'put', '/v3.0/cms', array(), $options );
+		Lengow_Connector::query_api( 'put', '/v3.1/cms', array(), $options );
 		Lengow_Configuration::update_value( 'lengow_last_option_update', date( 'Y-m-d H:i:s' ) );
 
 		return true;
