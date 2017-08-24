@@ -62,12 +62,7 @@ fr:
       remove_from_export: "Supprimer de mon export"
       add_from_export: "Inclure dans mon export"
       include_specific_product_support: "Utilisez cette option pour sélectionner vos produits individuellement"
-      lengow_shop_sync: "Boutique synchronisée"
-      lengow_shop_no_sync: "Boutique non synchronisée"
-      sync_your_shop: "Synchroniser ma boutique avec Lengow"
       no_product_selected: "Sélectionnez un produit"
-      shop_last_indexation: "Dernière indexation"
-      shop_not_index: "Pas encore indexé"
       button_download: "Télécharger"
     table:
       button_search: "Rechercher"
@@ -141,6 +136,8 @@ fr:
     lengow_account_id_title: "ID du compte"
     lengow_access_token_title: "Access Token"
     lengow_secret_token_title: "Secret Token"
+    lengow_catalog_id_title: "ID Catalogues"
+    lengow_catalog_id_legend: "Vos identifiants de catalogues pour importer vos commandes. Séparez les par des \";\""
     lengow_ip_enable_title: "Activer l'autorisation par IP"
     lengow_ip_enable_legend: "Activez cette option si vous voulez sécuriser votre export par ip. Par défaut, votre export est sécurisé par une clé unique."
     lengow_authorized_ip_title: "IP autorisée(s)"
@@ -163,11 +160,12 @@ fr:
     lengow_import_enabled_legend: "Activez cette option pour diminuer les stocks dans votre backoffice WooCommerce. Rendez-vous sur la page de gestion du stock si vous souhaitez lancer une synchronisation manuelle."
   lengow_log:
     error:
-      import_in_progress: "Import en cours"
       rest_time_to_import: "Attendez %{rest_time}  secondes avant d'importer de nouveau vos commandes"
       nb_order_imported: "%{nb_order} commande(s) diminuée(s)"
       nb_order_with_error: "%{nb_order} commande(s) avec erreurs"
       no_notification: "Pas de nouvelle notification concernant vos stocks"
+      credentials_not_valid: "Votre identifiant de compte, votre jeton d'accès ou votre jeton secret ne sont pas valides"
+      no_catalog_for_shop: "Aucun identifiant de catalogue valide pour la boutique"
       no_country_for_billing_address: "Erreur Lengow : l'adresse de facturation ne contient pas de pays."
       no_billing_address: "Erreur Lengow : pas d'adresse de facturation dans cette commande."
       no_country_for_delivery_address: "Erreur Lengow : l'adresse de livraison ne contient pas de pays."
@@ -175,7 +173,6 @@ fr:
       check_logs: "Retrouvez tout l'historique des logs sur <a href=%{link}>cette page</a>"
     exception:
       no_connection_webservice: "la connexion ne se fait pas avec Lengow"
-      credentials_not_valid: "L'ID du compte, l'acces Token ou le secret Token secret ne sont pas valides"
       error_lengow_webservice: "L'API Lengow : %{error_code} - %{error_message}"
       order_not_found: "Erreur Lengow : la commande n'a pas été trouvée dans le flux Lengow."
       marketplace_not_present: "Erreur Lengow : la place de marché %{marketplace_name} n’apparaît pas dans la liste des places de marché."
