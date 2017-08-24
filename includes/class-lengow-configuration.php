@@ -227,6 +227,23 @@ class Lengow_Configuration {
 	}
 
 	/**
+	 * Set Valid Account id / Access token / Secret token.
+	 *
+	 * @param array $access_ids Account id / Access token / Secret token
+	 */
+	public static function set_access_ids( $access_ids ) {
+		$list_key = array( 'lengow_account_id', 'lengow_access_token', 'lengow_secret_token' );
+		foreach ( $access_ids as $key => $value ) {
+			if ( ! in_array( $key, array_keys( $list_key ) ) ) {
+				continue;
+			}
+			if ( strlen( $value ) > 0 ) {
+				self::update_value( $key, $value );
+			}
+		}
+	}
+
+	/**
 	 * Get catalog ids.
 	 *
 	 * @return array
@@ -252,15 +269,35 @@ class Lengow_Configuration {
 	 *
 	 * @param array $catalog_ids Lengow catalog ids
 	 */
-	public static function set_catalog_ids($catalog_ids)
-	{
+	public static function set_catalog_ids( $catalog_ids ) {
 		$shop_catalog_ids = self::get_catalog_ids();
-		foreach ($catalog_ids as $catalog_id) {
-			if (!in_array($catalog_id, $shop_catalog_ids) && is_numeric($catalog_id) && $catalog_id > 0) {
-				$shop_catalog_ids[] = (int)$catalog_id;
+		foreach ( $catalog_ids as $catalog_id ) {
+			if ( ! in_array( $catalog_id, $shop_catalog_ids ) && is_numeric( $catalog_id ) && $catalog_id > 0 ) {
+				$shop_catalog_ids[] = (int) $catalog_id;
 			}
 		}
-		self::update_value('lengow_catalog_id', implode(';', $shop_catalog_ids));
+		self::update_value( 'lengow_catalog_id', implode( ';', $shop_catalog_ids ) );
+	}
+
+	/**
+	 * Recovers if a shop is active or not
+	 *
+	 * @return boolean
+	 */
+	public static function shop_is_active() {
+		return (bool) self::get( 'lengow_store_enabled' );
+	}
+
+	/**
+	 * Set active shop or not
+	 */
+	public static function set_active_shop() {
+		$active           = true;
+		$shop_catalog_ids = self::get_catalog_ids();
+		if ( count( $shop_catalog_ids ) === 0 ) {
+			$active = false;
+		}
+		self::update_value( 'lengow_store_enabled', $active );
 	}
 
 	/**

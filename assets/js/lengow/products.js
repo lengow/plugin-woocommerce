@@ -21,50 +21,6 @@
 (function ($) {
     $(document).ready(function () {
         /**
-         * Ajax for check synchronization with Lengow Solution
-         */
-        function checkShop() {
-            var status = $('.lengow_check_shop'),
-            data = {
-                //action call php function
-                action: 'post_process',
-                do_action: 'check_shop'
-            };
-
-            status.html('<i class="fa fa-circle-o-notch fa-spin"></i>');
-
-            $.ajax({
-                url: ajaxurl,
-                //use 'type' not 'method' for Wordpress compatibility
-                type: "POST",
-                dataType: "JSON",
-                data: data,
-                success: function (shop) {
-                    var selector = $(".lengow_check_shop");
-                    selector.attr("data-original-title", shop['tooltip']);
-
-                    var title = shop['original_title'];
-
-                    if (shop['check_shop'] === true) {
-                        selector.removeClass('lengow_check_shop_no_sync').addClass('lengow_check_shop_sync');
-                        selector.attr("id", "lengow_shop_sync");
-                    } else {
-                        selector.attr("id", "lengow_shop_no_sync");
-                        $(".lengow_feed_block_header_title").append(shop['header_title']);
-                        title = shop['header_title'];
-                    }
-                    selector.html('<i class="icon icon-circle"></i>');
-
-                    $(".lengow_shop_status_label").html(title);
-
-                    init_tooltip();
-                }
-            });
-        }
-
-        checkShop();
-
-        /**
          * Refresh total product/product exported
          * @param data Number of products exported and total products
          */

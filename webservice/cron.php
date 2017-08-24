@@ -92,7 +92,10 @@ if ( isset( $_GET['get_sync'] ) && $_GET['get_sync'] == 1 ) {
 } else {
 	// get sync action if exists.
 	$sync = isset( $_GET['sync'] ) ? $_GET['sync'] : false;
-
+	// sync catalogs id between Lengow and Shopware
+	if ( ! $sync || $sync === 'catalog' ) {
+		Lengow_Sync::sync_catalog();
+	}
 	// sync orders between Lengow and WooCommerce.
 	if ( ! $sync || $sync === 'order' ) {
 		// array of params for import order
@@ -126,7 +129,7 @@ if ( isset( $_GET['get_sync'] ) && $_GET['get_sync'] == 1 ) {
 		Lengow_Sync::set_cms_option();
 	}
 	// sync option is not valid.
-	if ( $sync && ( $sync !== 'order' && $sync !== 'option' ) ) {
+	if ( $sync && ! in_array( $sync, Lengow_Sync::$sync_actions ) ) {
 		wp_die( 'Action: ' . $sync . ' is not a valid action', '', array( 'response' => 400 ) );
 	}
 }

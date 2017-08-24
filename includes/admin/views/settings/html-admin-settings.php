@@ -34,7 +34,7 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 						<?php echo $keys['lengow_ip_enabled']['label']; ?>
 					</label>
 				</div>
-				<span class="legend" style="display:block;"><?php echo $keys['lengow_ip_enabled']['legend']; ?></span>
+				<span class="legend blue-frame" style="display:block;"><?php echo $keys['lengow_ip_enabled']['legend']; ?></span>
 			</div>
 			<div id="lengow_wrapper_authorized_ip">
 				<div class="grey-frame">
@@ -42,7 +42,7 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 						<label class="control-label"><?php echo $keys['lengow_authorized_ip']['label']; ?></label>
 						<input type="text" name="lengow_authorized_ip" class="form-control"
 						       value="<?php echo $values['lengow_authorized_ip']; ?>"/>
-						<span class="legend"
+						<span class="legend blue-frame"
 						      style="display:block;"><?php echo $keys['lengow_authorized_ip']['legend']; ?></span>
 					</div>
 				</div>
@@ -65,20 +65,6 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 			<div id="lengow_wrapper_preprod">
 				<div class="grey-frame">
 					<div class="form-group">
-						<div class="lgw-switch <?php echo $values['lengow_store_enabled'] == 1 ? 'checked' : ''; ?>">
-							<label>
-								<div>
-									<span></span>
-									<input type="hidden" name="lengow_store_enabled" value="0">
-									<input name="lengow_store_enabled"
-									       type="checkbox"
-										<?php echo $values['lengow_store_enabled'] == 1 ? 'checked' : ''; ?>/>
-								</div>
-								<?php echo $keys['lengow_store_enabled']['label']; ?>
-							</label>
-						</div>
-					</div>
-					<div class="form-group">
 						<label class="control-label"><?php echo $keys['lengow_account_id']['label']; ?></label>
 						<input type="text" name="lengow_account_id" class="form-control"
 						       value="<?php echo $values['lengow_account_id']; ?>"/>
@@ -93,11 +79,27 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 						<input type="text" name="lengow_secret_token" class="form-control"
 						       value="<?php echo $values['lengow_secret_token']; ?>"/>
 					</div>
+				</div>
+				<div class="grey-frame">
+					<div class="form-group">
+						<div class="lgw-switch <?php echo $values['lengow_store_enabled'] == 1 ? 'checked' : ''; ?>">
+							<label>
+								<div>
+									<span></span>
+									<input type="hidden" name="lengow_store_enabled" value="0">
+									<input name="lengow_store_enabled"
+									       type="checkbox"
+										<?php echo $values['lengow_store_enabled'] == 1 ? 'checked' : ''; ?>/>
+								</div>
+								<?php echo $keys['lengow_store_enabled']['label']; ?>
+							</label>
+						</div>
+					</div>
 					<div class="form-group">
 						<label class="control-label"><?php echo $keys['lengow_catalog_id']['label']; ?></label>
 						<input type="text" name="lengow_catalog_id" class="form-control"
 						       value="<?php echo $values['lengow_catalog_id']; ?>"/>
-						<span class="legend"
+						<span class="legend blue-frame"
 						      style="display:block;"><?php echo $keys['lengow_catalog_id']['legend']; ?></span>
 					</div>
 				</div>
@@ -121,7 +123,7 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 					<?php endforeach; ?>
 				</select>
 			</div>
-			<span class="legend" style="display:block;"><?php echo $keys['lengow_product_types']['legend']; ?></span>
+			<span class="legend blue-frame" style="display:block;"><?php echo $keys['lengow_product_types']['legend']; ?></span>
 		</div>
 		<div class="lgw-box">
 			<h2><?php echo $locale->t( 'global_setting.screen.import_setting_title' ); ?></h2>
@@ -139,7 +141,7 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 						<?php echo $keys['lengow_import_enabled']['label']; ?>
 					</label>
 				</div>
-				<span class="legend"
+				<span class="legend blue-frame"
 				      style="display:block;"><?php echo $keys['lengow_import_enabled']['legend']; ?></span>
 			</div>
 			<div id="lengow_wrapper_import">
@@ -170,7 +172,7 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 								<?php echo $keys['lengow_import_ship_mp_enabled']['label']; ?>
 							</label>
 						</div>
-						<span class="legend"
+						<span class="legend blue-frame"
 						      style="display:block;"><?php echo $keys['lengow_import_ship_mp_enabled']['legend']; ?></span>
 					</div>
 				</div>
