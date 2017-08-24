@@ -392,6 +392,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 			'_sku',
 			'_price',
 			'product_type',
+			'lengow',
 		);
 
 		// filter by search box.
@@ -469,6 +470,9 @@ class Lengow_Admin_Products extends WP_List_Table {
 						} else {
 							$products_data = ucfirst( $product_type );
 						}
+						break;
+					case 'lengow':
+						$products_data = (int) Lengow_Product::is_lengow_product( $post->ID );
 						break;
 					default :
 						$products_data = get_post_meta( $post->ID, $key, true );

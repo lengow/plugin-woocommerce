@@ -41,7 +41,7 @@
 /includes/class-lengow-connector.php|f0c39cce2af454a4c201ef6709518469
 /includes/class-lengow-sync.php|f7f15d2ccccb539ff6cf7de9402018cf
 /includes/class-lengow-main.php|d550293f85fb021f3ef50a5aec3de95c
-/includes/admin/class-lengow-admin-products.php|3150d682e33c13417127be2cbebf585c
+/includes/admin/class-lengow-admin-products.php|23a480f3be3cd668cd539cb2cb61cec1
 /includes/admin/class-lengow-admin-settings.php|35ffc4534f9618f164573d44207b1859
 /includes/admin/class-lengow-admin-legals.php|bf40d1bf8c0992e6830c941ab651441e
 /includes/admin/class-lengow-admin-dashboard.php|e5a2a9bf0df0de5a84aa64997d1f1538
@@ -61,7 +61,7 @@
 /includes/class-lengow-install.php|47cc3e4ecda2995b9893f8421af114a2
 /includes/class-lengow-log.php|19d9bbbf2ed3b79bd7ebfa5f6e669545
 /includes/class-lengow-import-order.php|e0fe557f2b828b04c004282a9be61a16
-/includes/class-lengow-product.php|e4c3d3d0f7260c2d226e8c604c672007
+/includes/class-lengow-product.php|ed1b429f5b69e1101ba019e3db85c8d6
 /includes/class-lengow-file.php|4cd348c738dc0a2792883c0c18e98587
 /languages/lengow-fr_FR.mo|6f968e5b0b7561c9408381b850c44415
 /languages/lengow-fr_FR.po|03cf6e179b6ac0c886e626b2c309c285
