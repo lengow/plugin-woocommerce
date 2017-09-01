@@ -14,7 +14,7 @@
 /assets/css/tagit.css|b68adfd33603afaf5adc32d92b8ba991
 /assets/css/lengow-layout.css|e144e37686bd94d34a1b63d9553832aa
 /assets/css/select2.css|8969ac4614d64a13dfc32e1eb4e731f7
-/assets/css/lengow-pages.css|bdaf434e5f37cbd05ddf6f103d08f611
+/assets/css/lengow-pages.css|71a350104a87df21546388ad959920e6
 /assets/fonts/fontawesome-webfont.ttf|a3de2170e4e9df77161ea5d3f31b2668
 /assets/fonts/fontawesome-webfont.woff|a35720c2fed2c7f043bc7e4ffb45e073
 /assets/fonts/fontawesome-webfont.woff2|db812d8a70a4e88e888744c1c9a27e89
@@ -52,7 +52,7 @@
 /includes/admin/views/products/html-admin-products.php|bdf6e88221e561c9cf921b8971e9410b
 /includes/admin/views/html-admin-footer.php|ec2893e2e2d830f8f11ab4a1f86ec26b
 /includes/admin/views/dashboard/html-admin-dashboard.php|ca65317443db8daaa937065ae0949c9b
-/includes/admin/views/dashboard/html-admin-new.php|e3484e989cf39cec211abe14d8b326ce
+/includes/admin/views/dashboard/html-admin-new.php|69b3e2d955c5222182672884020478c7
 /includes/admin/views/dashboard/html-admin-status.php|a3453b368ec713db9fb10b6d41ee1ef7
 /includes/admin/views/settings/html-admin-settings.php|948758380eea9e19d9af7eec79857433
 /includes/admin/views/help/html-admin-help.php|c6a7b54bc18199f77031a4d543a7779c
