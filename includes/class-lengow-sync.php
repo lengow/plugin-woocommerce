@@ -104,7 +104,7 @@ class Lengow_Sync {
 	 * Sync Lengow catalogs for order synchronisation
 	 */
 	public static function sync_catalog() {
-		if ( Lengow_Connector::is_new_merchant() || (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
+		if ( Lengow_Connector::is_new_merchant() ) {
 			return false;
 		}
 		$result = Lengow_Connector::query_api( 'get', '/v3.1/cms' );
@@ -190,7 +190,6 @@ class Lengow_Sync {
 				return json_decode( Lengow_Configuration::get( 'lengow_account_status' ), true );
 			}
 		}
-
 		$result = Lengow_Connector::query_api( 'get', '/v3.0/plans' );
 		if ( isset( $result->isFreeTrial ) ) {
 			$status            = array();
