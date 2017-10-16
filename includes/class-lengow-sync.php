@@ -91,11 +91,13 @@ class Lengow_Sync {
 				'lengow_secret_token' => $params['secret_token'],
 			)
 		);
-		foreach ( $params['shops'] as $shop_token => $shop_catalog_ids ) {
-			$shop = Lengow_Main::find_by_token( $shop_token );
-			if ( $shop ) {
-				Lengow_Configuration::set_catalog_ids( $shop_catalog_ids['catalog_ids'] );
-				Lengow_Configuration::set_active_shop();
+		if ( isset( $params['shops'] ) ) {
+			foreach ( $params['shops'] as $shop_token => $shop_catalog_ids ) {
+				$shop = Lengow_Main::find_by_token( $shop_token );
+				if ( $shop ) {
+					Lengow_Configuration::set_catalog_ids( $shop_catalog_ids['catalog_ids'] );
+					Lengow_Configuration::set_active_shop();
+				}
 			}
 		}
 	}
