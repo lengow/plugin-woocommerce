@@ -25,8 +25,18 @@ if ( ! defined( 'ABSPATH' ) || ! Lengow_Install::is_installation_in_progress() )
 	exit;
 }
 
+// *********************************************************
+//                         lengow_product
+// *********************************************************
+// create table lengow_product
 $table_name = $wpdb->prefix . 'lengow_product';
-
+$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . ' (
+	`id` INTEGER(11) NOT NULL AUTO_INCREMENT,
+	`product_id` bigint(20) NOT NULL,
+	PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+dbDelta( $sql );
+// alter product table for old versions
 if ( $wpdb->get_var( 'SHOW TABLES LIKE \'' . $table_name . '\'' ) ) {
 	if ( ! Lengow_Install::check_field_exists( 'lengow_product', 'id' ) ) {
 		$wpdb->query(
@@ -35,16 +45,29 @@ if ( $wpdb->get_var( 'SHOW TABLES LIKE \'' . $table_name . '\'' ) ) {
 	}
 }
 
+// *********************************************************
+//                         lengow_orders
+// *********************************************************
+// Create table lengow_orders
+$table_name = $wpdb->prefix . 'lengow_orders';
 $sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . ' (
-	`id` INTEGER(11) NOT NULL AUTO_INCREMENT,
-	`product_id` bigint(20) NOT NULL,
+	`id` INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`delivery_address_id` int(11) NOT NULL,
+	`marketplace_sku` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+	`marketplace_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+	`order_date` datetime NOT NULL,
+	`created_at` datetime NOT NULL,
+	`extra` longtext COLLATE utf8_unicode_ci,
+	`id_flux` INTEGER(11) UNSIGNED NULL,
+	`id_order` INTEGER(11) UNSIGNED NULL,
+	`total_paid` DECIMAL(17,2) UNSIGNED NULL,
+	`message` TEXT,
+	`carrier` VARCHAR(100),
+	`tracking` VARCHAR(100),
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 dbDelta( $sql );
-
-$table_name = $wpdb->prefix . 'lengow_orders';
-
-// if table lengow_orders exist we update it
+// alter product table for old versions
 if ( $wpdb->get_var( 'SHOW TABLES LIKE \'' . $table_name . '\'' ) ) {
 	if ( ! Lengow_Install::check_field_exists( 'lengow_orders', 'id' ) ) {
 		$wpdb->query(
@@ -116,50 +139,14 @@ if ( $wpdb->get_var( 'SHOW TABLES LIKE \'' . $table_name . '\'' ) ) {
 	}
 }
 
-$sql = 'CREATE TABLE IF NOT EXISTS ' . $table_name . ' (
-	`id` INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`delivery_address_id` int(11) NOT NULL,
-	`marketplace_sku` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-	`marketplace_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-	`order_date` datetime NOT NULL,
-	`created_at` datetime NOT NULL,
-	`extra` longtext COLLATE utf8_unicode_ci,
-	`id_flux` INTEGER(11) UNSIGNED NULL,
-	`id_order` INTEGER(11) UNSIGNED NULL,
-	`total_paid` DECIMAL(17,2) UNSIGNED NULL,
-	`message` TEXT,
-	`carrier` VARCHAR(100),
-	`tracking` VARCHAR(100),
-	PRIMARY KEY (`id`)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
-dbDelta( $sql );
-
+// *********************************************************
+//                  Other install process
+// *********************************************************
 // Rename old settings
 Lengow_Install::rename_configuration_key( 'lengow_debug', 'lengow_preprod_enabled' );
 Lengow_Install::rename_configuration_key( 'lengow_export_type', 'lengow_product_types' );
 Lengow_Install::rename_configuration_key( 'lengow_export_cron', 'lengow_cron_enabled' );
 Lengow_Install::rename_configuration_key( 'is_import_processing', 'lengow_import_in_progress' );
-
-// Add new settings
-$keys = Lengow_Configuration::get_keys();
-foreach ( $keys as $key => $value ) {
-	if ( Lengow_Configuration::get( $key ) ) {
-		continue;
-	}
-	if ( isset( $value['default_value'] ) ) {
-		$val = $value['default_value'];
-	} else {
-		$val = '';
-	}
-	Lengow_Configuration::add_value( $key, $val );
-}
-
-// Active ip authorization if authorized ips exist
-$authorizedIps = Lengow_Configuration::get( 'lengow_authorized_ip' );
-if ( strlen( $authorizedIps ) > 0 ) {
-	Lengow_Configuration::update_value( 'lengow_ip_enabled', true );
-}
-
 // Delete old settings
 $configuration_to_delete = array(
 	'lengow_export_format',
@@ -183,6 +170,7 @@ $configuration_to_delete = array(
 	'lengow_default_carrier',
 	'lengow_import_cron',
 	'lengow_time_import_start',
+	'LENGOW_MP_CONF'
 );
 foreach ( $configuration_to_delete as $config_name ) {
 	Lengow_Configuration::delete( $config_name );

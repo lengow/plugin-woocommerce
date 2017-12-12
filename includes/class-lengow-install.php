@@ -51,22 +51,35 @@ class Lengow_Install {
 	 */
 	public static function update() {
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		global $wpdb;
 		self::set_installation_status( true );
 		$upgrade_files = array_diff( scandir( LENGOW_PLUGIN_PATH . '/upgrade' ), array( '..', '.' ) );
 		foreach ( $upgrade_files as $file ) {
 			$number_version = preg_replace( '/update_|\.php$/', '', $file );
-			if ( version_compare( get_option( 'lengow_version' ), $number_version, '>=' ) ) {
-				continue;
-			}
 			include LENGOW_PLUGIN_PATH . '/upgrade/' . $file;
 		}
+		// set default value for old version
+		self::set_default_values();
+		// Active ip authorization if authorized ips exist for old customer
+		if (Lengow_Configuration::get( 'lengow_version' ) < '2.0.0' ) {
+			Lengow_Configuration::check_ip_authorization();
+		}
+		// update lengow version
 		if ( isset( $number_version ) ) {
 			Lengow_Configuration::update_value( 'lengow_version', $number_version );
 		}
 		self::set_installation_status( false );
 
 		return true;
+	}
+
+	/**
+	 * Set default value for Lengow configuration
+	 *
+	 * @return boolean
+	 */
+	public static function set_default_values()
+	{
+		return Lengow_Configuration::reset_all();
 	}
 
 	/**
@@ -109,8 +122,10 @@ class Lengow_Install {
 	 */
 	public static function rename_configuration_key( $oldName, $newName ) {
 		$tempValue = Lengow_Configuration::get( $oldName );
-		Lengow_Configuration::update_value( $newName, $tempValue );
-		Lengow_Configuration::delete( $oldName );
+		if ( $tempValue ) {
+			Lengow_Configuration::update_value( $newName, $tempValue );
+			Lengow_Configuration::delete( $oldName );
+		}
 	}
 
 	/**

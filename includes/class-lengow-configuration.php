@@ -301,6 +301,44 @@ class Lengow_Configuration {
 	}
 
 	/**
+	 * Reset all Lengow settings.
+	 *
+	 * @param boolean $overwrite rewrite all Lengow settings
+	 *
+	 * @return boolean
+	 */
+	public static function reset_all( $overwrite = false ) {
+		$keys = self::get_keys();
+		foreach ( $keys as $key => $value ) {
+			if ( isset( $value['default_value'] ) ) {
+				$val = $value['default_value'];
+			} else {
+				$val = '';
+			}
+			if ( $overwrite ) {
+				self::add_value( $key, $val );
+			} else {
+				$old_value = self::get( $key );
+				if ( ! $old_value ) {
+					self::add_value( $key, $val );
+				}
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Active ip authorization if authorized ips exist for old customer.
+	 */
+	public static function check_ip_authorization() {
+		$authorizedIps = self::get( 'lengow_authorized_ip' );
+		if ( strlen( $authorizedIps ) > 0 ) {
+			self::update_value( 'lengow_ip_enabled', true );
+		}
+	}
+
+	/**
 	 * Get all values.
 	 *
 	 * @param boolean $all get all shop value
