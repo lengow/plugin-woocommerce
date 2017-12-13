@@ -1,0 +1,72 @@
+========================================================
+Version 2.0.0
+========================================================
+
+	- Feature: Full rewrite for the new platform Lengow
+	- Feature: Add new lengow Dashboard
+	- Feature: Add new product selection
+	- Feature: Add new stock synchronisation page
+	- Feature: Add new help page
+	- Feature: Add new Toolbox page with all Lengow informations
+	- Feature: Add new legals page
+	- Feature: New lengow settings with cleaning old options
+	- Feature: Creating new accounts directly from the module
+
+========================================================
+Version 1.0.6
+========================================================
+
+    - Bugfix: Transforms array to json element for post-meta data
+    - Bugfix: Added a new check for the server's addr constant
+
+========================================================
+Version 1.0.5
+========================================================
+
+    - Feature: Add compatibility for WooCommerce 3.0
+    - Feature: Add retro-compatibility for WooCommerce 2.0
+    - Feature: Add new export parameters (limit, offset and product_ids)
+    - Feature: Get image for product variation in export
+    - Feature: Add all post meta field in export
+    - Feature: Clean import process with new logs and verifications
+    - Feature: Delete Lengow dashboard widget
+    - Bugfix: Fix bug with Lengow simple tracker and tag capsule
+    - Bugfix: Fix bug for product category in export
+    - Bugfix: Fix bug for product sku in export
+    
+========================================================
+Version 1.0.4
+========================================================
+
+	- Feature: Add logs and export directory
+
+========================================================
+Version 1.0.3
+========================================================
+
+	- Feature: Fix compatibility with 2.4
+	- Bugfix: Fix bugs duplicate product
+
+========================================================
+Version 1.0.2
+========================================================
+
+	- Feature: Add TagCapsule and SimpleTag support
+	- Bugfix: Fix compatibility with 2.2
+
+========================================================
+Version 1.0.1
+========================================================
+
+	- Feature: Add internal IP
+	- Bugfix: Fix warning in admin
+	- Bugfix: Fix wrong product id in export
+
+========================================================
+Version 1.0.0 Beta
+========================================================
+
+	- Feature: Export product
+	- Feature: Manage feeds
+	- Feature: Order import
+	- Feature: Add compatibility with WP-CLI

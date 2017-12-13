@@ -1,0 +1,5 @@
+.idea
+logs/*.txt
+export/*
+!export/index.php
+/toolbox/checkmd5.csv
