@@ -156,6 +156,15 @@ lengow_log.exception.marketplace_not_present|Lengow error: %{marketplace_name} d
 lengow_log.exception.product_list_is_empty|order could not be saved
 lengow_log.exception.product_not_be_found|product ID %{product_id} could not be found
 lengow_log.exception.product_is_a_parent|product ID %{product_id} is variable. Product variation is needed
+log.install.install_start|## start install for version %{version} ##
+log.install.install_end|## end install for version %{version} ##
+log.install.table_created|adding table %{name} in database
+log.install.table_already_created|skipping table %{name} : already existing in database
+log.install.update_start|## start updating for version %{old_version} to %{new_version} ##
+log.install.update_end|## end updating for version %{old_version} to %{new_version} ##
+log.install.add_upgrade_version|adding SQL patch required for the plugin version %{version}
+log.setting.setting_reset|all Lengow settings were reset
+log.setting.setting_updated|all Lengow settings were updated
 log.setting.setting_change|%{key} - old value %{old_value} replaced with %{value}
 log.export.start|## start export ##
 log.export.end|## end export ##

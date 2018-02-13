@@ -310,19 +310,22 @@ class Lengow_Configuration {
 	public static function reset_all( $overwrite = false ) {
 		$keys = self::get_keys();
 		foreach ( $keys as $key => $value ) {
-			if ( isset( $value['default_value'] ) ) {
-				$val = $value['default_value'];
-			} else {
-				$val = '';
-			}
+			$val = isset( $value['default_value'] ) ? $value['default_value'] : '';
 			if ( $overwrite ) {
-				self::add_value( $key, $val );
+				if ( isset( $value['default_value'] ) ) {
+					self::add_value( $key, $val );
+				}
 			} else {
 				$old_value = self::get( $key );
 				if ( ! $old_value ) {
 					self::add_value( $key, $val );
 				}
 			}
+		}
+		if ( $overwrite ) {
+			Lengow_Main::log( 'Setting', Lengow_Main::set_log_message( 'log.setting.setting_reset' ) );
+		} else {
+			Lengow_Main::log( 'Setting', Lengow_Main::set_log_message( 'log.setting.setting_updated' ) );
 		}
 
 		return true;

@@ -24,3 +24,23 @@
 if ( ! defined( 'ABSPATH' ) || ! Lengow_Install::is_installation_in_progress() ) {
 	exit;
 }
+
+// *********************************************************
+//                         lengow_product
+// *********************************************************
+
+if ( Lengow_Install::check_table_exists( 'lengow_product' ) ) {
+	if ( ! Lengow_Install::check_index_exists( 'lengow_product', 'product_id' ) ) {
+		$wpdb->query( 'ALTER TABLE ' . $wpdb->prefix . 'lengow_product ADD INDEX(`product_id`)' );
+	}
+}
+
+// *********************************************************
+//                         lengow_orders
+// *********************************************************
+
+if ( Lengow_Install::check_table_exists( 'lengow_orders' ) ) {
+	if ( ! Lengow_Install::check_index_exists( 'lengow_orders', 'id_order' ) ) {
+		$wpdb->query( 'ALTER TABLE ' . $wpdb->prefix . 'lengow_orders ADD INDEX(`id_order`)' );
+	}
+}
