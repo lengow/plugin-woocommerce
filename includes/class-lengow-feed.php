@@ -92,6 +92,8 @@ class Lengow_Feed {
 	 * @param boolean $stream feed in file or not
 	 * @param string $format feed format
 	 * @param boolean $legacy use legacy fields
+	 *
+	 * @throws Lengow_Exception Unable to create folder
 	 */
 	public function __construct( $stream, $format, $legacy ) {
 		$this->_stream = $stream;

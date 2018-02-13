@@ -813,7 +813,7 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Returns the category breadcrum.
+	 * Returns the category breadcrumb.
 	 *
 	 * @return string
 	 */

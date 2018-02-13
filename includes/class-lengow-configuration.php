@@ -280,7 +280,7 @@ class Lengow_Configuration {
 	}
 
 	/**
-	 * Recovers if a shop is active or not
+	 * Recovers if a shop is active or not.
 	 *
 	 * @return boolean
 	 */
@@ -289,7 +289,7 @@ class Lengow_Configuration {
 	}
 
 	/**
-	 * Set active shop or not
+	 * Set active shop or not.
 	 */
 	public static function set_active_shop() {
 		$active           = true;

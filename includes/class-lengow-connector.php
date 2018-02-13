@@ -106,6 +106,8 @@ class Lengow_Connector {
 	 *
 	 * @param string $user_token The user token if is connected
 	 *
+	 * @throws Lengow_Exception Get Curl error
+	 *
 	 * @return array|false
 	 */
 	public function connect( $user_token = '' ) {
@@ -138,7 +140,9 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
-	 * @return array
+	 * @throws Lengow_Exception Get Curl error
+	 *
+	 * @return mixed
 	 */
 	public function call( $method, $array = array(), $type = 'GET', $format = 'json', $body = '' ) {
 		$this->connect();
@@ -162,6 +166,8 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @throws Lengow_Exception Get Curl error
+	 *
 	 * @return array
 	 */
 	public function get( $method, $array = array(), $format = 'json', $body = '' ) {
@@ -175,6 +181,8 @@ class Lengow_Connector {
 	 * @param array $array Lengow method API parameters
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
+	 *
+	 * @throws Lengow_Exception Get Curl error
 	 *
 	 * @return array
 	 */
@@ -190,6 +198,8 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @throws Lengow_Exception Get Curl error
+	 *
 	 * @return array
 	 */
 	public function head( $method, $array = array(), $format = 'json', $body = '' ) {
@@ -203,6 +213,8 @@ class Lengow_Connector {
 	 * @param array $array Lengow method API parameters
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
+	 *
+	 * @throws Lengow_Exception Get Curl error
 	 *
 	 * @return array
 	 */
@@ -218,6 +230,8 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @throws Lengow_Exception Get Curl error
+	 *
 	 * @return array
 	 */
 	public function delete( $method, $array = array(), $format = 'json', $body = '' ) {
@@ -231,6 +245,8 @@ class Lengow_Connector {
 	 * @param array $array Lengow method API parameters
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
+	 *
+	 * @throws Lengow_Exception Get Curl error
 	 *
 	 * @return array
 	 */
@@ -246,6 +262,8 @@ class Lengow_Connector {
 	 * @param string $type type of request GET|POST|PUT|HEAD|DELETE|PATCH
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
+	 *
+	 * @throws Lengow_Exception Get Curl error
 	 *
 	 * @return array
 	 */

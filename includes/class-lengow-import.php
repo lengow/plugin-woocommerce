@@ -168,8 +168,6 @@ class Lengow_Import {
 	/**
 	 * Execute import: fetch orders and import them.
 	 *
-	 * @throws Lengow_Exception order not found
-	 *
 	 * @return array|false
 	 */
 	public function exec() {
@@ -345,7 +343,7 @@ class Lengow_Import {
 	}
 
 	/**
-	 * Check catalog ids
+	 * Check catalog ids.
 	 *
 	 * @return boolean
 	 */
