@@ -73,7 +73,7 @@ class Lengow_Configuration {
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_ip_enable_title' ),
 					'legend'        => $locale->t( 'lengow_settings.lengow_ip_enable_legend' ),
-					'default_value' => false,
+					'default_value' => 0,
 					'type'          => 'checkbox',
 				),
 				'lengow_authorized_ip'               => array(
@@ -102,7 +102,19 @@ class Lengow_Configuration {
 					'shop'          => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_selection_enabled_title' ),
 					'legend'        => $locale->t( 'lengow_settings.lengow_selection_enabled_legend' ),
-					'default_value' => false,
+					'default_value' => 0,
+					'type'          => 'checkbox',
+				),
+				'lengow_export_format'               => array(
+					'global'        => true,
+					'label'         => $locale->t( 'lengow_settings.lengow_export_format_title' ),
+					'default_value' => 'csv',
+				),
+				'lengow_export_file_enabled'         => array(
+					'global'        => true,
+					'label'         => $locale->t( 'lengow_settings.lengow_export_file_enabled_title' ),
+					'legend'        => $locale->t( 'lengow_settings.lengow_export_file_enabled_legend' ),
+					'default_value' => 0,
 					'type'          => 'checkbox',
 				),
 				'lengow_product_types'               => array(
@@ -115,17 +127,11 @@ class Lengow_Configuration {
 					'shop'  => true,
 					'label' => $locale->t( 'lengow_settings.lengow_last_export_title' ),
 				),
-				'lengow_cron_enabled'                => array(
-					'global'        => true,
-					'label'         => $locale->t( 'lengow_settings.lengow_cron_enabled_title' ),
-					'default_value' => false,
-					'type'          => 'checkbox',
-				),
 				'lengow_import_enabled'              => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_import_enabled_title' ),
 					'legend'        => $locale->t( 'lengow_settings.lengow_import_enabled_legend' ),
-					'default_value' => false,
+					'default_value' => 0,
 					'type'          => 'checkbox',
 				),
 				'lengow_import_days'                 => array(
@@ -138,13 +144,13 @@ class Lengow_Configuration {
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_import_ship_mp_enabled_title' ),
 					'legend'        => $locale->t( 'lengow_settings.lengow_import_ship_mp_enabled_legend' ),
-					'default_value' => false,
+					'default_value' => 0,
 					'type'          => 'checkbox',
 				),
 				'lengow_preprod_enabled'             => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_preprod_enabled_title' ),
-					'default_value' => false,
+					'default_value' => 0,
 					'type'          => 'checkbox',
 				),
 				'lengow_import_in_progress'          => array(
@@ -335,9 +341,35 @@ class Lengow_Configuration {
 	 * Active ip authorization if authorized ips exist for old customer.
 	 */
 	public static function check_ip_authorization() {
-		$authorizedIps = self::get( 'lengow_authorized_ip' );
-		if ( strlen( $authorizedIps ) > 0 ) {
+		$authorized_ips = self::get( 'lengow_authorized_ip' );
+		if ( strlen( $authorized_ips ) > 0 ) {
 			self::update_value( 'lengow_ip_enabled', true );
+		}
+	}
+
+	/**
+	 * Migrate product selection for old version.
+	 */
+	public static function migrate_product_selection() {
+		$export_all_product = self::get( 'lengow_export_all_product' );
+		if ( $export_all_product !== false ) {
+			$value = ( $export_all_product == '' || $export_all_product == '0' ) ? 1 : 0;
+			self::update_value( 'lengow_selection_enabled', $value );
+			self::delete( 'lengow_export_all_product' );
+		}
+	}
+
+	/**
+	 * Migrate product types for old version - convert string to array
+	 */
+	public static function migrate_product_types() {
+		$old_product_types = self::get( 'lengow_export_type' );
+		if ( $old_product_types !== false ) {
+			$old_product_types = json_decode( $old_product_types, true );
+			if ( is_array( $old_product_types ) ) {
+				self::update_value( 'lengow_product_types', $old_product_types );
+			}
+			self::delete( 'lengow_export_type' );
 		}
 	}
 

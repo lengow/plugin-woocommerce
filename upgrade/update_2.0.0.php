@@ -103,11 +103,12 @@ Lengow_Install::check_index_and_drop( 'lengow_orders', 'id_flux' );
 // *********************************************************
 
 if ( Lengow_Install::$old_version && Lengow_Install::$old_version < '2.0.0' ) {
-	// Rename old settings
-	Lengow_Install::rename_configuration_key( 'lengow_debug', 'lengow_preprod_enabled' );
-	Lengow_Install::rename_configuration_key( 'lengow_export_type', 'lengow_product_types' );
-	Lengow_Install::rename_configuration_key( 'lengow_export_cron', 'lengow_cron_enabled' );
-	Lengow_Install::rename_configuration_key( 'is_import_processing', 'lengow_import_in_progress' );
-	// Reset access id for old customer v2
+	// Migrate specific settings for new version
+	Lengow_Configuration::migrate_product_selection();
+	Lengow_Configuration::migrate_product_types();
 	Lengow_Configuration::check_ip_authorization();
+	// Rename old settings
+	Lengow_Install::rename_configuration_key( 'lengow_export_file', 'lengow_export_file_enabled' );
+	Lengow_Install::rename_configuration_key( 'lengow_debug', 'lengow_preprod_enabled' );
+	Lengow_Install::rename_configuration_key( 'is_import_processing', 'lengow_import_in_progress' );
 }

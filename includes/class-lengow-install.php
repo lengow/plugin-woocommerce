@@ -45,14 +45,12 @@ class Lengow_Install {
 	 * @var array old configuration keys to remove
 	 */
 	public static $old_configuration_keys = array(
-		'lengow_export_format',
-		'lengow_export_all_product',
 		'lengow_export_attributes',
 		'lengow_export_meta',
 		'lengow_export_full_title',
 		'lengow_export_images',
 		'lengow_export_image_size',
-		'lengow_export_file',
+		'lengow_export_cron',
 		'lengow_order_process',
 		'lengow_order_shipped',
 		'lengow_order_cancel',
@@ -155,7 +153,7 @@ class Lengow_Install {
 				`id` INTEGER(11) NOT NULL AUTO_INCREMENT,
 				`product_id` bigint(20) NOT NULL,
 				PRIMARY KEY (`id`),
-				INDEX (`product_id`),
+				INDEX (`product_id`)
 				) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 			dbDelta( $sql );
 			Lengow_Main::log(
@@ -187,7 +185,7 @@ class Lengow_Install {
 				`carrier` VARCHAR(100),
 				`tracking` VARCHAR(100),
 				PRIMARY KEY (`id`),
-				INDEX (`id_order`),
+				INDEX (`id_order`)
 				) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 			dbDelta( $sql );
 			Lengow_Main::log(
@@ -264,7 +262,7 @@ class Lengow_Install {
 	public static function check_index_exists( $table, $index ) {
 		global $wpdb;
 		$result = $wpdb->get_results(
-			'SHOW INDEXES FROM ' . $wpdb->prefix . $table . ' WHERE `Column_name` = \'' . $index . '\''
+			'SHOW INDEXES FROM ' . $wpdb->prefix . $table . ' WHERE `Key_name` = \'' . $index . '\''
 		);
 
 		return count( $result ) > 0 ? true : false;
@@ -295,14 +293,14 @@ class Lengow_Install {
 	/**
 	 * Rename configuration key.
 	 *
-	 * @param string $oldName old Lengow configuration name
-	 * @param string $newName new Lengow configuration name
+	 * @param string $old_name old Lengow configuration name
+	 * @param string $new_name new Lengow configuration name
 	 */
-	public static function rename_configuration_key( $oldName, $newName ) {
-		$tempValue = Lengow_Configuration::get( $oldName );
-		if ( $tempValue ) {
-			Lengow_Configuration::update_value( $newName, $tempValue );
-			Lengow_Configuration::delete( $oldName );
+	public static function rename_configuration_key( $old_name, $new_name ) {
+		$temp_value = Lengow_Configuration::get( $old_name );
+		if ( $temp_value !== false ) {
+			Lengow_Configuration::update_value( $new_name, $temp_value );
+			Lengow_Configuration::delete( $old_name );
 		}
 	}
 

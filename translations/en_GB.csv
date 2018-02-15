@@ -126,7 +126,9 @@ lengow_settings.lengow_selection_enabled_title|Export the selection only
 lengow_settings.lengow_selection_enabled_legend|Activate this option if you do not want to export all available products. Then, select only the products you want to export
 lengow_settings.lengow_product_types_title|Product type to export
 lengow_settings.lengow_product_types_legend|Choose here the type of products you want to export: they will be automatically added to your export. Then go to the product page if you want to refine your selection.
-lengow_settings.lengow_cron_enabled_title|Use Crontab module WooCommerce
+lengow_settings.lengow_export_format_title|Export the default format
+lengow_settings.lengow_export_file_enabled_title|Export in a file
+lengow_settings.lengow_export_file_enabled_legend|You should use this option if you have 3,000 products or more
 lengow_settings.lengow_last_export_title|Last export
 lengow_settings.lengow_import_days_title|Re-import all orders made since:
 lengow_settings.lengow_import_days_legend|Import orders from ... days and decrease your stock
