@@ -4,6 +4,7 @@ Version 2.0.1
 
     - Feature: Complete refactoring of the installation and update processes
     - Bugfix: Add indexes to database to speed up the display of product grid
+    - Bugfix: Deleting the indefinite index user_id in the connector
 
 ========================================================
 Version 2.0.0
