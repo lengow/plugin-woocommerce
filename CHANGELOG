@@ -24,6 +24,7 @@ Version 2.0.0
 Version 1.0.6
 ========================================================
 
+    - Feature: Get description of product & variation for variation
     - Bugfix: Transforms array to json element for post-meta data
     - Bugfix: Added a new check for the server's addr constant
 

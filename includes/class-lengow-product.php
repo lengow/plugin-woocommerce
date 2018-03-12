@@ -88,6 +88,11 @@ class Lengow_Product {
 	public $product;
 
 	/**
+	 * @var WC_Product WooCommerce product parent instance for variation.
+	 */
+	private $_product_parent;
+
+	/**
 	 * @var integer product id
 	 */
 	private $_product_id;
@@ -121,9 +126,10 @@ class Lengow_Product {
 				)
 			);
 		}
-		$this->_product_type = self::get_product_type( $this->product );
-		$this->_product_id   = self::get_product_id( $this->product );
-		$this->_variation_id = self::get_variation_id( $this->product );
+		$this->_product_type   = self::get_product_type( $this->product );
+		$this->_product_id     = self::get_product_id( $this->product );
+		$this->_variation_id   = self::get_variation_id( $this->product );
+		$this->_product_parent = self::get_product_parent( $this->product, $this->_product_type );
 	}
 
 	/**
@@ -317,16 +323,24 @@ class Lengow_Product {
 				return get_locale();
 			case 'description':
 				return Lengow_Main::clean_html(
-					Lengow_Main::clean_data( self::get_description( $this->product ) )
+					Lengow_Main::clean_data(
+						self::get_description( $this->product, $this->_product_parent, $this->_product_type )
+					)
 				);
 			case 'description_html':
-				return Lengow_Main::clean_data( self::get_description( $this->product ) );
+				return Lengow_Main::clean_data(
+					self::get_description( $this->product, $this->_product_parent, $this->_product_type )
+				);
 			case 'description_short':
 				return Lengow_Main::clean_html(
-					Lengow_Main::clean_data( self::get_short_description( $this->product ) )
+					Lengow_Main::clean_data(
+						self::get_short_description( $this->product, $this->_product_parent, $this->_product_type )
+					)
 				);
 			case 'description_short_html':
-				return Lengow_Main::clean_data( self::get_short_description( $this->product ) );
+				return Lengow_Main::clean_data(
+					self::get_short_description( $this->product, $this->_product_parent, $this->_product_type )
+				);
 			case 'tags':
 				$return = array();
 				$tags   = get_the_terms( $this->_product_id, 'product_tag' );
@@ -420,6 +434,22 @@ class Lengow_Product {
 		return ! is_null( $variation_id ) ? (int) $variation_id : null;
 	}
 
+
+	/**
+	 * Get parent product for variation
+	 *
+	 * @param WC_Product $product WooCommerce product instance
+	 * @param string $product_type WooCommerce product type
+	 *
+	 * @return WC_Product
+	 */
+	public static function get_product_parent( $product, $product_type ) {
+		return Lengow_Main::get_woocommerce_version() > '3.0' && $product_type === 'variation'
+			? wc_get_product( $product->get_parent_id() )
+			: null;
+	}
+
+
 	/**
 	 * Get regular price.
 	 *
@@ -466,26 +496,50 @@ class Lengow_Product {
 	 * Get description.
 	 *
 	 * @param WC_Product $product WooCommerce product instance
+	 * @param WC_Product|null $product_parent WooCommerce product parent instance
+	 * @param string $product_type WooCommerce product type
 	 *
 	 * @return string
 	 */
-	public static function get_description( $product ) {
-		return Lengow_Main::get_woocommerce_version() < '3.0'
-			? $product->post->post_content
-			: $product->get_description();
+	public static function get_description( $product, $product_parent, $product_type ) {
+		if ( Lengow_Main::get_woocommerce_version() < '2.5' ) {
+			$description = $product->post->post_content;
+		} else if ( Lengow_Main::get_woocommerce_version() < '3.0' ) {
+			if ( $product_type === 'variation' && $product->get_variation_description() != null ) {
+				$description = $product->get_variation_description();
+			} else {
+				$description = $product->post->post_content;
+			}
+		} else {
+			if ( $product_type === 'variation' && $product->get_description() == null ) {
+				$description = $product_parent->get_description();
+			} else {
+				$description = $product->get_description();
+			}
+		}
+
+		return $description;
 	}
 
 	/**
 	 * Get short description.
 	 *
 	 * @param WC_Product $product WooCommerce product instance
+	 * @param WC_Product|null $product_parent WooCommerce product parent instance
+	 * @param string $product_type WooCommerce product type
 	 *
 	 * @return string
 	 */
-	public static function get_short_description( $product ) {
-		return Lengow_Main::get_woocommerce_version() < '3.0'
-			? $product->post->post_excerpt
-			: $product->get_short_description();
+	public static function get_short_description( $product, $product_parent, $product_type ) {
+		if ( Lengow_Main::get_woocommerce_version() < '3.0' ) {
+			$short_description = $product->post->post_excerpt;
+		} else {
+			$short_description = $product_type === 'variation'
+				? $product_parent->get_short_description()
+				: $product->get_short_description();
+		}
+
+		return $short_description;
 	}
 
 	/**
