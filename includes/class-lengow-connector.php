@@ -34,15 +34,15 @@ class Lengow_Connector {
 	/**
 	 * @var string url of the API Lengow.
 	 */
-	// const LENGOW_API_URL = 'http://api.lengow.io:80';
-	// const LENGOW_API_URL = 'http://api.lengow.net:80';
-	const LENGOW_API_URL = 'http://api.lengow.rec:80';
+	// const LENGOW_API_URL = 'https://api.lengow.io';
+	// const LENGOW_API_URL = 'https://api.lengow.net';
+	const LENGOW_API_URL = 'http://api.lengow.rec';
 	// const LENGOW_API_URL = 'http://10.100.1.82:8081';
 
 	/**
 	 * @var string url of the SANDBOX Lengow.
 	 */
-	const LENGOW_API_SANDBOX_URL = 'http://api.lengow.net:80';
+	const LENGOW_API_SANDBOX_URL = 'https://api.lengow.net';
 
 	/**
 	 * @var array default options for curl.
@@ -108,7 +108,7 @@ class Lengow_Connector {
 			'/access/get_token',
 			array(
 				'access_token' => $this->_access_token,
-				'secret'       => $this->_secret
+				'secret'       => $this->_secret,
 			),
 			'POST'
 		);
@@ -309,10 +309,12 @@ class Lengow_Connector {
 			$opts[ CURLOPT_TIMEOUT ] = $this->lengow_urls[ $url ];
 		}
 		// get url for a specific environment.
-		$url                            = self::LENGOW_API_URL . $url;
-		$opts[ CURLOPT_CUSTOMREQUEST ]  = strtoupper( $type );
-		$url                            = parse_url( $url );
-		$opts[ CURLOPT_PORT ]           = $url['port'];
+		$url                           = self::LENGOW_API_URL . $url;
+		$opts[ CURLOPT_CUSTOMREQUEST ] = strtoupper( $type );
+		$url                           = parse_url( $url );
+		if ( isset( $url['port'] ) ) {
+			$opts[ CURLOPT_PORT ] = $url['port'];
+		}
 		$opts[ CURLOPT_HEADER ]         = false;
 		$opts[ CURLOPT_RETURNTRANSFER ] = true;
 		$opts[ CURLOPT_VERBOSE ]        = false;
