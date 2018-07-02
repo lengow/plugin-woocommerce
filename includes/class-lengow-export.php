@@ -241,7 +241,9 @@ class Lengow_Export {
 	 * boolean update_export_date Change last export date in data base (1) or not (0)
 	 */
 	public function __construct( $params = array() ) {
-		$this->_stream             = isset( $params['stream'] ) ? $params['stream'] : true;
+		$this->_stream             = isset( $params['stream'] )
+			? $params['stream']
+			: ! (bool) Lengow_Configuration::get( 'lengow_export_file_enabled' );
 		$this->_offset             = isset( $params['offset'] ) ? $params['offset'] : 0;
 		$this->_limit              = isset( $params['limit'] ) ? $params['limit'] : 0;
 		$this->_selection          = isset( $params['selection'] )
@@ -253,7 +255,7 @@ class Lengow_Export {
 			? (bool) $params['update_export_date']
 			: true;
 		$this->_legacy             = isset( $params['legacy_fields'] ) ? $params['legacy_fields'] : null;
-		$this->_set_format( isset( $params['format'] ) ? $params['format'] : 'csv' );
+		$this->_set_format( isset( $params['format'] ) ? $params['format'] : false );
 		$this->_set_product_ids( isset( $params['product_ids'] ) ? $params['product_ids'] : false );
 		$this->_set_product_types( isset( $params['product_types'] ) ? $params['product_types'] : false );
 		$this->_set_log_output( isset( $params['log_output'] ) ? $params['log_output'] : true );
@@ -421,7 +423,12 @@ class Lengow_Export {
 	 * @param string $format export format
 	 */
 	private function _set_format( $format ) {
-		$this->_format = ! in_array( $format, Lengow_Feed::$available_formats ) ? 'csv' : $format;
+		if ( $format ) {
+			$this->_format = ! in_array( $format, Lengow_Feed::$available_formats ) ? null : $format;
+		}
+		if ( is_null( $this->_format ) ) {
+			$this->_format = Lengow_Configuration::get( 'lengow_export_format' );
+		}
 	}
 
 	/**
@@ -455,7 +462,8 @@ class Lengow_Export {
 			}
 		}
 		if ( count( $this->_product_types ) == 0 ) {
-			$this->_product_types = Lengow_Configuration::get( 'lengow_product_types' );
+			$product_types        = Lengow_Configuration::get( 'lengow_product_types' );
+			$this->_product_types = is_array( $product_types ) ? $product_types : json_decode( $product_types, true );
 		}
 	}
 

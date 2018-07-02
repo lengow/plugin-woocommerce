@@ -122,8 +122,6 @@ class Lengow_Import_Order {
 	/**
 	 * Create or update order.
 	 *
-	 * @throws Lengow_Exception product list is empty
-	 *
 	 * @return array|false
 	 */
 	public function import_order() {

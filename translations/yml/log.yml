@@ -1,6 +1,16 @@
 en:
   log:
+    install:
+      install_start: "## start install for version %{version} ##"
+      install_end: "## end install for version %{version} ##"
+      table_created: "adding table %{name} in database"
+      table_already_created: "skipping table %{name} : already existing in database"
+      update_start: "## start updating for version %{old_version} to %{new_version} ##"
+      update_end: "## end updating for version %{old_version} to %{new_version} ##"
+      add_upgrade_version: "adding SQL patch required for the plugin version %{version}"
     setting:
+      setting_reset: "all Lengow settings were reset"
+      setting_updated: "all Lengow settings were updated"
       setting_change: "%{key} - old value %{old_value} replaced with %{value}"
     export:
       start: "## start export ##"

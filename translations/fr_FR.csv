@@ -2,7 +2,7 @@ module.name|Lengow
 module.plugin_name|Lengow pour WooCommerce
 module.plugin_uri|http://www.lengow.com/fr
 module.description|Avec votre module Lengow pour WooCommerce vendez rapidement vos produits sur Amazon, Ebay, Facebook, Google Shopping, Criteo, Bing et d’autres et touchez facilement de nouveaux clients partout dans le monde. Plus de 1 800 canaux marketing vous attendent sur la plateforme Lengow !
-module.version|2.0.0
+module.version|2.0.1
 module.author|Lengow
 menu.product|Produits
 menu.order|Gestion du stock
@@ -126,7 +126,9 @@ lengow_settings.lengow_selection_enabled_title|Exporter seulement la sélection
 lengow_settings.lengow_selection_enabled_legend|Activez cette option si vous ne voulez pas exporter tous vos produits disponibles. Sélectionnez ensuite les produits un par un.
 lengow_settings.lengow_product_types_title|Type de produit à exporter
 lengow_settings.lengow_product_types_legend|Choisissez le type de produits que vous voulez exporter : ils seront automatiquement ajoutés à votre export. Ensuite, rendez-vous sur la page des produits si vous souhaitez affiner votre sélection.
-lengow_settings.lengow_cron_enabled_title|Utilisez l'éditeur de tâche Cron
+lengow_settings.lengow_export_format_title|Exportez le format par défaut
+lengow_settings.lengow_export_file_enabled_title|Exportez dans un fichier
+lengow_settings.lengow_export_file_enabled_legend|Il est conseillé d'activer cette option si vous avez 3 000 produits ou plus
 lengow_settings.lengow_last_export_title|Dernier export
 lengow_settings.lengow_import_days_title|Ré-importer toutes les commandes réalisées depuis
 lengow_settings.lengow_import_days_legend|Importez vos commandes depuis ... jours et diminuez votre stock

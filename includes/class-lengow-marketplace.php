@@ -47,6 +47,11 @@ class Lengow_Marketplace {
 	public $name;
 
 	/**
+	 * @var string the name of the marketplace
+	 */
+	public $label_name;
+
+	/**
 	 * @var string the old code of the marketplace for v2 compatibility.
 	 */
 	public $legacy_code;

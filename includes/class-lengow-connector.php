@@ -34,15 +34,15 @@ class Lengow_Connector {
 	/**
 	 * @var string url of the API Lengow.
 	 */
-	// const LENGOW_API_URL = 'http://api.lengow.io:80';
-	// const LENGOW_API_URL = 'http://api.lengow.net:80';
-	const LENGOW_API_URL = 'http://api.lengow.rec:80';
+	// const LENGOW_API_URL = 'https://api.lengow.io';
+	// const LENGOW_API_URL = 'https://api.lengow.net';
+	const LENGOW_API_URL = 'http://api.lengow.rec';
 	// const LENGOW_API_URL = 'http://10.100.1.82:8081';
 
 	/**
 	 * @var string url of the SANDBOX Lengow.
 	 */
-	const LENGOW_API_SANDBOX_URL = 'http://api.lengow.net:80';
+	const LENGOW_API_SANDBOX_URL = 'https://api.lengow.net';
 
 	/**
 	 * @var array default options for curl.
@@ -75,11 +75,6 @@ class Lengow_Connector {
 	private $_account_id;
 
 	/**
-	 * @var integer the user Id.
-	 */
-	private $_user_id;
-
-	/**
 	 * @var array lengow url for curl timeout.
 	 */
 	private $lengow_urls = array(
@@ -104,24 +99,22 @@ class Lengow_Connector {
 	/**
 	 * Connection to the API.
 	 *
-	 * @param string $user_token The user token if is connected
+	 * @throws Lengow_Exception Get Curl error
 	 *
 	 * @return array|false
 	 */
-	public function connect( $user_token = '' ) {
+	public function connect() {
 		$data = $this->call_action(
 			'/access/get_token',
 			array(
 				'access_token' => $this->_access_token,
 				'secret'       => $this->_secret,
-				'user_token'   => $user_token,
 			),
 			'POST'
 		);
 		if ( isset( $data['token'] ) ) {
 			$this->_token      = $data['token'];
 			$this->_account_id = $data['account_id'];
-			$this->_user_id    = $data['user_id'];
 
 			return $data;
 		} else {
@@ -138,7 +131,9 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
-	 * @return array
+	 * @throws Lengow_Exception Get Curl error
+	 *
+	 * @return mixed
 	 */
 	public function call( $method, $array = array(), $type = 'GET', $format = 'json', $body = '' ) {
 		$this->connect();
@@ -162,6 +157,8 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @throws Lengow_Exception Get Curl error
+	 *
 	 * @return array
 	 */
 	public function get( $method, $array = array(), $format = 'json', $body = '' ) {
@@ -175,6 +172,8 @@ class Lengow_Connector {
 	 * @param array $array Lengow method API parameters
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
+	 *
+	 * @throws Lengow_Exception Get Curl error
 	 *
 	 * @return array
 	 */
@@ -190,6 +189,8 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @throws Lengow_Exception Get Curl error
+	 *
 	 * @return array
 	 */
 	public function head( $method, $array = array(), $format = 'json', $body = '' ) {
@@ -203,6 +204,8 @@ class Lengow_Connector {
 	 * @param array $array Lengow method API parameters
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
+	 *
+	 * @throws Lengow_Exception Get Curl error
 	 *
 	 * @return array
 	 */
@@ -218,6 +221,8 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @throws Lengow_Exception Get Curl error
+	 *
 	 * @return array
 	 */
 	public function delete( $method, $array = array(), $format = 'json', $body = '' ) {
@@ -231,6 +236,8 @@ class Lengow_Connector {
 	 * @param array $array Lengow method API parameters
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
+	 *
+	 * @throws Lengow_Exception Get Curl error
 	 *
 	 * @return array
 	 */
@@ -246,6 +253,8 @@ class Lengow_Connector {
 	 * @param string $type type of request GET|POST|PUT|HEAD|DELETE|PATCH
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
+	 *
+	 * @throws Lengow_Exception Get Curl error
 	 *
 	 * @return array
 	 */
@@ -300,10 +309,12 @@ class Lengow_Connector {
 			$opts[ CURLOPT_TIMEOUT ] = $this->lengow_urls[ $url ];
 		}
 		// get url for a specific environment.
-		$url                            = self::LENGOW_API_URL . $url;
-		$opts[ CURLOPT_CUSTOMREQUEST ]  = strtoupper( $type );
-		$url                            = parse_url( $url );
-		$opts[ CURLOPT_PORT ]           = $url['port'];
+		$url                           = self::LENGOW_API_URL . $url;
+		$opts[ CURLOPT_CUSTOMREQUEST ] = strtoupper( $type );
+		$url                           = parse_url( $url );
+		if ( isset( $url['port'] ) ) {
+			$opts[ CURLOPT_PORT ] = $url['port'];
+		}
 		$opts[ CURLOPT_HEADER ]         = false;
 		$opts[ CURLOPT_RETURNTRANSFER ] = true;
 		$opts[ CURLOPT_VERBOSE ]        = false;

@@ -2,7 +2,7 @@ module.name|Lengow
 module.plugin_name|Lengow for WooCommerce
 module.plugin_uri|http://www.lengow.com
 module.description|Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
-module.version|2.0.0
+module.version|2.0.1
 module.author|Lengow
 menu.product|Products
 menu.order|Stock management
@@ -126,7 +126,9 @@ lengow_settings.lengow_selection_enabled_title|Export the selection only
 lengow_settings.lengow_selection_enabled_legend|Activate this option if you do not want to export all available products. Then, select only the products you want to export
 lengow_settings.lengow_product_types_title|Product type to export
 lengow_settings.lengow_product_types_legend|Choose here the type of products you want to export: they will be automatically added to your export. Then go to the product page if you want to refine your selection.
-lengow_settings.lengow_cron_enabled_title|Use Crontab module WooCommerce
+lengow_settings.lengow_export_format_title|Export the default format
+lengow_settings.lengow_export_file_enabled_title|Export in a file
+lengow_settings.lengow_export_file_enabled_legend|You should use this option if you have 3,000 products or more
 lengow_settings.lengow_last_export_title|Last export
 lengow_settings.lengow_import_days_title|Re-import all orders made since:
 lengow_settings.lengow_import_days_legend|Import orders from ... days and decrease your stock
@@ -156,6 +158,15 @@ lengow_log.exception.marketplace_not_present|Lengow error: %{marketplace_name} d
 lengow_log.exception.product_list_is_empty|order could not be saved
 lengow_log.exception.product_not_be_found|product ID %{product_id} could not be found
 lengow_log.exception.product_is_a_parent|product ID %{product_id} is variable. Product variation is needed
+log.install.install_start|## start install for version %{version} ##
+log.install.install_end|## end install for version %{version} ##
+log.install.table_created|adding table %{name} in database
+log.install.table_already_created|skipping table %{name} : already existing in database
+log.install.update_start|## start updating for version %{old_version} to %{new_version} ##
+log.install.update_end|## end updating for version %{old_version} to %{new_version} ##
+log.install.add_upgrade_version|adding SQL patch required for the plugin version %{version}
+log.setting.setting_reset|all Lengow settings were reset
+log.setting.setting_updated|all Lengow settings were updated
 log.setting.setting_change|%{key} - old value %{old_value} replaced with %{value}
 log.export.start|## start export ##
 log.export.end|## end export ##
