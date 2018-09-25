@@ -119,7 +119,7 @@ fr:
       contain_text_support_hour: "Nous ferons notre maximum pour revenir vers vous au plus vite (Notre équipe Support est disponible du lundi au vendredi, de 9h à 18h)."
       find_answer: "Vous pouvez aussi consulter"
       link_woocommerce_guide: "notre guide dédié à WooCommerce"
-      knowledge_link_url: "https://fr.lengow.help/help/woocommerce"
+      knowledge_link_url: "https://supportlengow.zendesk.com/hc/fr/articles/360011968912"
   legals:
     screen:
       simplified_company: "Société par actions simplifiées"
