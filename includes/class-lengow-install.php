@@ -94,6 +94,7 @@ class Lengow_Install {
 	 * @return boolean
 	 */
 	public static function update( $old_version = false ) {
+		global $wpdb;
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		if ( $old_version ) {
 			self::$old_version = $old_version;
