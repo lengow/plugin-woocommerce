@@ -564,13 +564,13 @@ class Lengow_Export {
 		}
 		self::$attributes = Lengow_Product::get_attributes();
 		foreach ( self::$attributes as $attribute ) {
-		    if (!in_array($attribute, $fields)) {
+		    if ( ! in_array( $attribute, $fields ) ) {
                 $fields[] = $attribute;
             }
 		}
 		self::$post_metas = Lengow_Product::get_post_metas();
 		foreach ( self::$post_metas as $post_meta ) {
-		    if (!in_array($post_meta, $fields)) {
+		    if ( ! in_array( $post_meta, $fields ) ) {
                 $fields[] = $post_meta;
             }
 		}
