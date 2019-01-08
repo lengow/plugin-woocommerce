@@ -318,10 +318,15 @@ class Lengow_Export {
 	public function get_total_product() {
 		global $wpdb;
 		$query = "
-			SELECT COUNT(DISTINCT(id)) as total
-			FROM {$wpdb->posts}
-			WHERE post_type IN ('product', 'product_variation')
-			AND post_status = 'publish' 
+			SELECT COUNT(*) AS total FROM ( (
+				SELECT DISTINCT(id) AS id_product
+				FROM {$wpdb->posts} 
+    			WHERE post_status = 'publish' AND post_type = 'product'
+    		) UNION ( 
+   				SELECT post_parent AS id_product
+   				FROM {$wpdb->posts}
+   				WHERE post_status = 'publish' AND post_type = 'product_variation' AND post_parent > 0
+   			) ) AS tmp
 		";
 
 		return (int) $wpdb->get_var( $query );
@@ -500,6 +505,9 @@ class Lengow_Export {
 		foreach ( $products as $p ) {
 			$product_data = array();
 			if ( (int) $p->id_product_attribute > 0 ) {
+				if ( (int) $p->id_product === 0 ) {
+					continue;
+				}
 				$product = new Lengow_Product( (int) $p->id_product_attribute );
 			} else {
 				$product = new Lengow_Product( (int) $p->id_product );
@@ -644,6 +652,7 @@ class Lengow_Export {
 		$where   = array();
 		$where[] = "p.post_status = 'publish'";
 		if ( $variation ) {
+			$where[] = "p.post_parent > 0";
 			$where[] = "p.post_type = 'product_variation'";
 		} else {
 			$where[] = "p.post_type = 'product'";
