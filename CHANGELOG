@@ -7,6 +7,7 @@ Version 2.0.2
     - Bugfix: [Export] Checking for the description if a parent product is null
     - Bugfix: Instantiation of the wpdb component for the update process
     - Bugfix: [Export] Exclusion of variations without parent from export feed
+    - Bugfix: [import] Improved security to avoid duplicate synchronization
 
 ========================================================
 Version 2.0.1

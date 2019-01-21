@@ -197,6 +197,11 @@ class Lengow_Import {
 			$error = Lengow_Main::set_log_message( 'lengow_log.error.credentials_not_valid' );
 			Lengow_Main::log( 'Import', $error, $this->_log_output );
 		} else {
+            if ( ! $this->_import_one_order ) {
+                self::set_in_process();
+                // update last import date.
+                Lengow_Main::update_date_import( $this->_type_import );
+            }
 			// check Lengow catalogs for order synchronisation
 			if ( ! $this->_preprod_mode && ! $this->_import_one_order && $this->_type_import === 'manual' ) {
 				Lengow_Sync::sync_catalog();
@@ -212,11 +217,6 @@ class Lengow_Import {
 					Lengow_Main::set_log_message( 'log.import.preprod_mode_active' ),
 					$this->_log_output
 				);
-			}
-			if ( ! $this->_import_one_order ) {
-				self::set_in_process();
-				// update last import date.
-				Lengow_Main::update_date_import( $this->_type_import );
 			}
 			if ( Lengow_Configuration::get( 'lengow_store_enabled' ) ) {
 				try {
