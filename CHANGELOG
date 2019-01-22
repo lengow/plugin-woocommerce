@@ -3,6 +3,7 @@ Version 2.0.2
 ========================================================
 
     - Feature: Adding links to the new Lengow help center
+    - Feature: [Export] Adding shipping_class field to the export feed
     - Bugfix: [Export] Management of duplicate fields
     - Bugfix: [Export] Checking for the description if a parent product is null
     - Bugfix: Instantiation of the wpdb component for the update process
