@@ -93,6 +93,7 @@ class Lengow_Export {
 		'discount_percent'               => 'discount_percent',
 		'discount_start_date'            => 'discount_start_date',
 		'discount_end_date'              => 'discount_end_date',
+		'shipping_class'                 => 'shipping_class',
 		'shipping_cost'                  => 'price_shipping',
 		'currency'                       => 'currency',
 		'image_product'                  => 'image_product',
@@ -144,6 +145,7 @@ class Lengow_Export {
 		'tags'                  => 'tags',
 		'available_product'     => 'available_product',
 		'quantity'              => 'quantity',
+		'shipping_class'        => 'shipping_class',
 		'shipping_price'        => 'shipping_cost',
 		'id_parent'             => 'parent_id',
 		'is_featured'           => 'is_featured',
@@ -318,10 +320,15 @@ class Lengow_Export {
 	public function get_total_product() {
 		global $wpdb;
 		$query = "
-			SELECT COUNT(DISTINCT(id)) as total
-			FROM {$wpdb->posts}
-			WHERE post_type IN ('product', 'product_variation')
-			AND post_status = 'publish' 
+			SELECT COUNT(*) AS total FROM ( (
+				SELECT DISTINCT(id) AS id_product
+				FROM {$wpdb->posts} 
+    			WHERE post_status = 'publish' AND post_type = 'product'
+    		) UNION ( 
+   				SELECT post_parent AS id_product
+   				FROM {$wpdb->posts}
+   				WHERE post_status = 'publish' AND post_type = 'product_variation' AND post_parent > 0
+   			) ) AS tmp
 		";
 
 		return (int) $wpdb->get_var( $query );
@@ -500,6 +507,9 @@ class Lengow_Export {
 		foreach ( $products as $p ) {
 			$product_data = array();
 			if ( (int) $p->id_product_attribute > 0 ) {
+				if ( (int) $p->id_product === 0 ) {
+					continue;
+				}
 				$product = new Lengow_Product( (int) $p->id_product_attribute );
 			} else {
 				$product = new Lengow_Product( (int) $p->id_product );
@@ -564,11 +574,15 @@ class Lengow_Export {
 		}
 		self::$attributes = Lengow_Product::get_attributes();
 		foreach ( self::$attributes as $attribute ) {
-			$fields[] = $attribute;
+		    if ( ! in_array( $attribute, $fields ) ) {
+                $fields[] = $attribute;
+            }
 		}
 		self::$post_metas = Lengow_Product::get_post_metas();
 		foreach ( self::$post_metas as $post_meta ) {
-			$fields[] = $post_meta;
+		    if ( ! in_array( $post_meta, $fields ) ) {
+                $fields[] = $post_meta;
+            }
 		}
 
 		return $fields;
@@ -640,6 +654,7 @@ class Lengow_Export {
 		$where   = array();
 		$where[] = "p.post_status = 'publish'";
 		if ( $variation ) {
+			$where[] = "p.post_parent > 0";
 			$where[] = "p.post_type = 'product_variation'";
 		} else {
 			$where[] = "p.post_type = 'product'";

@@ -250,6 +250,8 @@ class Lengow_Product {
 				}
 
 				return '';
+			case 'shipping_class':
+				return $this->_get_shipping_class();
 			case 'price_shipping':
 				return $this->_get_price_shipping();
 			case 'currency':
@@ -511,7 +513,7 @@ class Lengow_Product {
 				$description = $product->post->post_content;
 			}
 		} else {
-			if ( $product_type === 'variation' && $product->get_description() == null ) {
+			if ( $product_type === 'variation' && $product->get_description() == null && $product_parent ) {
 				$description = $product_parent->get_description();
 			} else {
 				$description = $product->get_description();
@@ -534,9 +536,11 @@ class Lengow_Product {
 		if ( Lengow_Main::get_woocommerce_version() < '3.0' ) {
 			$short_description = $product->post->post_excerpt;
 		} else {
-			$short_description = $product_type === 'variation'
-				? $product_parent->get_short_description()
-				: $product->get_short_description();
+			if ( $product_type === 'variation' && $product->get_short_description() == null && $product_parent ) {
+				$short_description = $product_parent->get_short_description();
+			} else {
+				$short_description = $product->get_short_description();
+			}
 		}
 
 		return $short_description;
@@ -864,6 +868,26 @@ class Lengow_Product {
 		}
 
 		return $price_shipping;
+	}
+
+	/**
+	 * Returns the shipping class.
+	 *
+	 * @return string
+	 */
+	private function _get_shipping_class() {
+		$shipping_class_name = '';
+		$taxonomy = 'product_shipping_class';
+		// get product terms.
+		$product_terms = get_the_terms( $this->_product_id, $taxonomy );
+		if ( $product_terms ) {
+			$shipping_class = $product_terms[0];
+			if ( isset( $shipping_class->name ) ) {
+				$shipping_class_name = $shipping_class->name;
+			}
+		}
+
+		return $shipping_class_name;
 	}
 
 	/**
