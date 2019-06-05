@@ -26,7 +26,7 @@
  * Plugin Name: Lengow for WooCommerce
  * Plugin URI: http://www.lengow.com
  * Description: Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
- * Version: 2.0.2
+ * Version: 2.1.0
  * Author: Lengow
  * Author URI: http://www.lengow.com
  * Requires at least: 3.5
@@ -54,7 +54,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		/**
 		 * @var string current version of plugin.
 		 */
-		public $version = '2.0.2';
+		public $version = '2.1.0';
 
 		/**
 		 * @var string plugin name.
