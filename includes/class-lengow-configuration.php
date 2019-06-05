@@ -98,6 +98,9 @@ class Lengow_Configuration {
 				'lengow_account_status'              => array(
 					'export' => false,
 				),
+				'lengow_marketplace_update'          => array(
+					'export' => false,
+				),
 				'lengow_selection_enabled'           => array(
 					'shop'          => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_selection_enabled_title' ),

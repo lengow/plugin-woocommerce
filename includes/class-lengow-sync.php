@@ -226,7 +226,7 @@ class Lengow_Sync {
 	public static function get_statistic( $force = false ) {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_last_order_statistic_update' );
-			if ( ( time() - strtotime( $updated_at ) ) < self::$_cache_time ) {
+			if ( ! is_null( $updated_at ) && ( time() - strtotime( $updated_at ) ) < self::$_cache_time ) {
 				return json_decode( Lengow_Configuration::get( 'lengow_order_statistic' ), true );
 			}
 		}
@@ -274,5 +274,64 @@ class Lengow_Sync {
 		Lengow_Configuration::update_value( 'lengow_last_order_statistic_update', date( 'Y-m-d H:i:s' ) );
 
 		return $return;
+	}
+
+	/**
+	 * Get marketplace data
+	 *
+	 * @param boolean $force force cache update
+	 *
+	 * @return array|false
+	 */
+	public static function get_marketplaces( $force = false ) {
+		$file_path = Lengow_Marketplace::get_file_path();
+		if ( ! $force ) {
+			$updated_at = Lengow_Configuration::get( 'lengow_marketplace_update' );
+			if ( ! is_null( $updated_at )
+			     && ( time() - strtotime( $updated_at ) ) < self::$_cache_time
+			     && file_exists( $file_path )
+			) {
+				// Recovering data with the marketplaces.json file
+				$marketplaces_data = file_get_contents( $file_path );
+				if ( $marketplaces_data ) {
+					return json_decode( $marketplaces_data );
+				}
+			}
+		}
+		// Recovering data with the API
+		$result = Lengow_Connector::query_api( 'get', '/v3.0/marketplaces' );
+		if ( $result && is_object( $result ) && ! isset( $result->error ) ) {
+			// Updated marketplaces.json file
+			try {
+				$marketplace_file = new Lengow_File(
+					Lengow_Main::$lengow_config_folder,
+					Lengow_Marketplace::$marketplace_json,
+					'w+'
+				);
+				$marketplace_file->write( json_encode( $result ) );
+				$marketplace_file->close();
+				Lengow_Configuration::update_value( 'lengow_marketplace_update', date( 'Y-m-d H:i:s' ) );
+			} catch ( Lengow_Exception $e ) {
+				Lengow_Main::log(
+					'Import',
+					Lengow_Main::set_log_message(
+						'log.import.marketplace_update_failed',
+						array( 'decoded_message' => Lengow_Main::decode_log_message( $e->getMessage(), 'en' ) )
+					)
+				);
+			}
+
+			return $result;
+		} else {
+			// If the API does not respond, use marketplaces.json if it exists
+			if ( file_exists( $file_path ) ) {
+				$marketplaces_data = file_get_contents( $file_path );
+				if ( $marketplaces_data ) {
+					return json_encode( $marketplaces_data );
+				}
+			}
+		}
+
+		return false;
 	}
 }

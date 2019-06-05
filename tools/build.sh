@@ -46,6 +46,7 @@ fi
 # Variables
 FOLDER_TMP="/tmp/lengow-woocommerce"
 FOLDER_LOGS="/tmp/lengow-woocommerce/logs"
+FOLDER_CONFIG="/tmp/lengow-woocommerce/config"
 FOLDER_EXPORT="/tmp/lengow-woocommerce/export"
 FOLDER_TOOLS="/tmp/lengow-woocommerce/tools"
 FOLDER_TRANSLATION="/tmp/lengow-woocommerce/translations/yml"
@@ -93,6 +94,8 @@ remove_files $FOLDER_TMP ".git"
 remove_files $FOLDER_TMP ".DS_Store"
 # Remove .idea
 remove_files $FOLDER_TMP ".idea"
+# Clean Config Folder
+remove_files $FOLDER_CONFIG "marketplaces.json"
 # Clean Log Folder
 remove_files $FOLDER_LOGS "*.txt"
 echo "- Clean logs folder : ""$VERT""DONE""$NORMAL"""

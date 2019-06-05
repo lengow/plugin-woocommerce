@@ -32,9 +32,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Marketplace {
 
 	/**
+	 * @var string marketplace file name.
+	 */
+	public static $marketplace_json = 'marketplaces.json';
+
+	/**
 	 * @var mixed all marketplaces allowed for an account ID.
 	 */
-	public static $marketplaces = null;
+	public static $marketplaces = false;
 
 	/**
 	 * @var mixed the current marketplace.
@@ -159,9 +164,20 @@ class Lengow_Marketplace {
 	 * Load the json configuration of all marketplaces.
 	 */
 	private function _load_api_marketplace() {
-		if ( is_null( self::$marketplaces ) ) {
-			self::$marketplaces = Lengow_Connector::query_api( 'get', '/v3.0/marketplaces' );
+		if ( ! self::$marketplaces ) {
+			self::$marketplaces = Lengow_Sync::get_marketplaces();
 		}
+	}
+
+	/**
+	 * Get marketplaces.json path
+	 *
+	 * @return string
+	 */
+	public static function get_file_path() {
+		$sep = DIRECTORY_SEPARATOR;
+
+		return LENGOW_PLUGIN_PATH . $sep . Lengow_Main::$lengow_config_folder . $sep . self::$marketplace_json;
 	}
 
 	/**

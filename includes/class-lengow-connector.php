@@ -70,11 +70,6 @@ class Lengow_Connector {
 	private $_token;
 
 	/**
-	 * @var integer ID account.
-	 */
-	private $_account_id;
-
-	/**
 	 * @var array lengow url for curl timeout.
 	 */
 	private $lengow_urls = array(
@@ -113,8 +108,7 @@ class Lengow_Connector {
 			'POST'
 		);
 		if ( isset( $data['token'] ) ) {
-			$this->_token      = $data['token'];
-			$this->_account_id = $data['account_id'];
+			$this->_token = $data['token'];
 
 			return $data;
 		} else {
@@ -138,9 +132,6 @@ class Lengow_Connector {
 	public function call( $method, $array = array(), $type = 'GET', $format = 'json', $body = '' ) {
 		$this->connect();
 		try {
-			if ( ! array_key_exists( 'account_id', $array ) ) {
-				$array['account_id'] = $this->_account_id;
-			}
 			$data = $this->call_action( $method, $array, $type, $format, $body );
 		} catch ( Lengow_Exception $e ) {
 			return $e->getMessage();
@@ -326,7 +317,7 @@ class Lengow_Connector {
 		$url = $url['scheme'] . '://' . $url['host'] . $url['path'];
 		switch ( $type ) {
 			case 'GET':
-				$opts[ CURLOPT_URL ] = $url . '?' . http_build_query( $args );
+				$opts[ CURLOPT_URL ] = $url . ( ! empty( $args ) ? '?' . http_build_query( $args ) : '' );
 				Lengow_Main::log(
 					'Connector',
 					Lengow_Main::set_log_message(
