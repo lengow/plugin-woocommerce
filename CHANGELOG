@@ -5,6 +5,7 @@ Version 2.1.0
     - Feature: Registering marketplace data in a json file
     - Feature: Optimization of API calls between PrestaShop and Lengow
     - Bugfix: [export] Caching legacy export data
+    - Bugfix: [export] Improved deletion of duplicate headers
 
 ========================================================
 Version 2.0.2

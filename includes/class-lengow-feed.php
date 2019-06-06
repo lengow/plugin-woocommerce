@@ -188,7 +188,7 @@ class Lengow_Feed {
 			case 'csv':
 				$header = '';
 				foreach ( $data as $field ) {
-					$header .= self::PROTECTION . $this->_format_fields( $field )
+					$header .= self::PROTECTION . self::format_fields( $field, 'csv', $this->_legacy )
 					           . self::PROTECTION . self::CSV_SEPARATOR;
 				}
 
@@ -224,7 +224,7 @@ class Lengow_Feed {
 			case 'xml':
 				$content = '<product>';
 				foreach ( $data as $field => $value ) {
-					$field = $this->_format_fields( $field );
+					$field = self::format_fields( $field, 'xml', $this->_legacy);
 					$content .= '<' . $field . '><![CDATA[' . $value . ']]></' . $field . '>' . self::EOL;
 				}
 				$content .= '</product>' . self::EOL;
@@ -234,7 +234,7 @@ class Lengow_Feed {
 				$content    = $is_first ? '' : ',';
 				$json_array = array();
 				foreach ( $data as $field => $value ) {
-					$field                = $this->_format_fields( $field );
+					$field                = self::format_fields( $field, 'json', $this->_legacy );
 					$json_array[ $field ] = $value;
 				}
 				$content .= json_encode( $json_array );
@@ -248,7 +248,7 @@ class Lengow_Feed {
 				}
 				$content = '  ' . self::PROTECTION . 'product' . self::PROTECTION . ':' . self::EOL;
 				foreach ( $data as $field => $value ) {
-					$field = $this->_format_fields( $field );
+					$field = self::format_fields( $field, 'yaml', $this->_legacy );
 					$content .= '    ' . self::PROTECTION . $field . self::PROTECTION . ':';
 					$content .= $this->_indent_yaml( $field, $max_character ) . (string) $value . self::EOL;
 				}
@@ -325,13 +325,15 @@ class Lengow_Feed {
 	 * Format field names according to the given format.
 	 *
 	 * @param string $str field name
+	 * @param string $format export format
+	 * @param boolean $legacy export legacy field or not
 	 *
 	 * @return string
 	 */
-	private function _format_fields( $str ) {
-		switch ( $this->_format ) {
+	public static function format_fields( $str, $format, $legacy = false ) {
+		switch ( $format ) {
 			case 'csv':
-				if ( $this->_legacy ) {
+				if ( $legacy ) {
 					return substr(
 						strtoupper(
 							preg_replace(
