@@ -203,7 +203,7 @@ class Lengow_Import {
                 Lengow_Main::update_date_import( $this->_type_import );
             }
 			// check Lengow catalogs for order synchronisation
-			if ( ! $this->_preprod_mode && ! $this->_import_one_order && $this->_type_import === 'manual' ) {
+			if ( ! $this->_import_one_order && $this->_type_import === 'manual' ) {
 				Lengow_Sync::sync_catalog();
 			}
 			Lengow_Main::log(

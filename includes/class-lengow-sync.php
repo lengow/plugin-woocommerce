@@ -32,18 +32,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Sync {
 
 	/**
-	 * @var integer cache time for statistic, account status and cms options.
+	 * @var array cache time for statistic, account status, cms options and marketplace synchronisation.
 	 */
-	protected static $_cache_time = 18000;
+	protected static $_cache_times = array(
+		'cms_option'     => 86400,
+		'status_account' => 86400,
+		'statistic'      => 43200,
+		'marketplace'    => 21600,
+	);
 
 	/**
-	 * @var array valid sync actions
+	 * @var array valid sync actions.
 	 */
 	public static $sync_actions = array(
 		'order',
-		'action',
+		'cms_option',
+		'status_account',
+		'statistic',
+		'marketplace',
 		'catalog',
-		'option',
 	);
 
 	/**
@@ -166,7 +173,9 @@ class Lengow_Sync {
 		}
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_last_option_update' );
-			if ( ! is_null( $updated_at ) && ( time() - strtotime( $updated_at ) ) < self::$_cache_time ) {
+			if ( ! is_null( $updated_at )
+			     && ( time() - strtotime( $updated_at ) ) < self::$_cache_times['cms_option']
+			) {
 				return false;
 			}
 		}
@@ -187,7 +196,9 @@ class Lengow_Sync {
 	public static function get_status_account( $force = false ) {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_last_account_status_update' );
-			if ( ! is_null( $updated_at ) && ( time() - strtotime( $updated_at ) ) < self::$_cache_time ) {
+			if ( ! is_null( $updated_at )
+			     && ( time() - strtotime( $updated_at ) ) < self::$_cache_times['status_account']
+			) {
 
 				return json_decode( Lengow_Configuration::get( 'lengow_account_status' ), true );
 			}
@@ -226,7 +237,9 @@ class Lengow_Sync {
 	public static function get_statistic( $force = false ) {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_last_order_statistic_update' );
-			if ( ! is_null( $updated_at ) && ( time() - strtotime( $updated_at ) ) < self::$_cache_time ) {
+			if ( ! is_null( $updated_at )
+			     && ( time() - strtotime( $updated_at ) ) < self::$_cache_times['statistic']
+			) {
 				return json_decode( Lengow_Configuration::get( 'lengow_order_statistic' ), true );
 			}
 		}
@@ -288,7 +301,7 @@ class Lengow_Sync {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_marketplace_update' );
 			if ( ! is_null( $updated_at )
-			     && ( time() - strtotime( $updated_at ) ) < self::$_cache_time
+			     && ( time() - strtotime( $updated_at ) ) < self::$_cache_times['marketplace']
 			     && file_exists( $file_path )
 			) {
 				// Recovering data with the marketplaces.json file

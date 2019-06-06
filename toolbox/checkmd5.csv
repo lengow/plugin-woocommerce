@@ -37,10 +37,10 @@
 /includes/class-lengow-configuration.php|e27f9fb0c610abb0ca7b650f5e40056a
 /includes/class-lengow-exception.php|a436a14aa00758bcacc96c17d198fe57
 /includes/class-lengow-marketplace.php|830c4f72782061067129d4fb6d917b07
-/includes/class-lengow-import.php|993fc12122b716693505e04c3570f182
+/includes/class-lengow-import.php|677ccfd6cdefa94016fd64633e804e6f
 /includes/class-lengow-translation.php|745a4445e79425ed6c67bbe7242cfa7e
-/includes/class-lengow-connector.php|371890659a0afdae85e061392eea8009
-/includes/class-lengow-sync.php|e627d562ddbac18b4217376ae733977a
+/includes/class-lengow-connector.php|30c6942f204e29f142479d33fe3ef28d
+/includes/class-lengow-sync.php|1c71b66eef735606c59ed5f7e507edb3
 /includes/class-lengow-main.php|944fd19f3497ced412c840f1d3038247
 /includes/admin/class-lengow-admin-products.php|23a480f3be3cd668cd539cb2cb61cec1
 /includes/admin/class-lengow-admin-settings.php|35ffc4534f9618f164573d44207b1859
@@ -74,5 +74,5 @@
 /toolbox/index.php|2e095e8125b6a24392b242e93ddd571c
 /upgrade/update_2.0.1.php|15010eb865a876bb961543506f00e101
 /upgrade/update_2.0.0.php|7a9b5bfa6ae2b82125a75478b47dc7bd
-/webservice/cron.php|6e406311ed63080ad7ac06659be23de7
+/webservice/cron.php|120ffba8680d94c661f0f0274f284807
 /webservice/export.php|61312e791188873699211b0f95dd94fa
