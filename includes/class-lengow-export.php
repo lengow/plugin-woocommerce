@@ -414,9 +414,9 @@ class Lengow_Export {
 	 */
 	private function _set_legacy_fields() {
 		if ( is_null( $this->_legacy ) ) {
-			$result = Lengow_Connector::query_api( 'get', '/v3.0/plans' );
-			if ( isset( $result->accountVersion ) ) {
-				$this->_legacy = $result->accountVersion === 'v2' ? true : false;
+			$merchant_status = Lengow_Sync::get_status_account();
+			if ( $merchant_status && isset( $merchant_status['legacy'] ) ) {
+				$this->_legacy = $merchant_status['legacy'];
 			} else {
 				$this->_legacy = false;
 			}

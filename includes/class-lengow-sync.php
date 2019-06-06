@@ -199,25 +199,21 @@ class Lengow_Sync {
 			if ( ! is_null( $updated_at )
 			     && ( time() - strtotime( $updated_at ) ) < self::$_cache_times['status_account']
 			) {
-
 				return json_decode( Lengow_Configuration::get( 'lengow_account_status' ), true );
 			}
 		}
 		$result = Lengow_Connector::query_api( 'get', '/v3.0/plans' );
 		if ( isset( $result->isFreeTrial ) ) {
-			$status            = array();
-			$status['type']    = $result->isFreeTrial ? 'free_trial' : '';
-			$status['day']     = (int) $result->leftDaysBeforeExpired;
-			$status['expired'] = (bool) $result->isExpired;
-			if ( $status['day'] < 0 ) {
-				$status['day'] = 0;
-			}
-			if ( $status ) {
-				Lengow_Configuration::update_value( 'lengow_account_status', json_encode( $status ) );
-				Lengow_Configuration::update_value( 'lengow_last_account_status_update', date( 'Y-m-d H:i:s' ) );
+			$status = array(
+				'type'    => $result->isFreeTrial ? 'free_trial' : '',
+				'day'     => (int) $result->leftDaysBeforeExpired < 0 ? 0 : (int) $result->leftDaysBeforeExpired,
+				'expired' => (bool) $result->isExpired,
+				'legacy'  => $result->accountVersion === 'v2' ? true : false,
+			);
+			Lengow_Configuration::update_value( 'lengow_account_status', json_encode( $status ) );
+			Lengow_Configuration::update_value( 'lengow_last_account_status_update', date( 'Y-m-d H:i:s' ) );
 
-				return $status;
-			}
+			return $status;
 		} else {
 			if ( Lengow_Configuration::get( 'lengow_last_account_status_update' ) ) {
 				return json_decode( Lengow_Configuration::get( 'lengow_account_status' ), true );
