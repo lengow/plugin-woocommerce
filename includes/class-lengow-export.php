@@ -325,7 +325,7 @@ class Lengow_Export {
 				FROM {$wpdb->posts} 
     			WHERE post_status = 'publish' AND post_type = 'product'
     		) UNION ( 
-   				SELECT post_parent AS id_product
+   				SELECT DISTINCT(id) AS id_product
    				FROM {$wpdb->posts}
    				WHERE post_status = 'publish' AND post_type = 'product_variation' AND post_parent > 0
    			) ) AS tmp

@@ -6,6 +6,7 @@ Version 2.1.0
     - Feature: Optimization of API calls between PrestaShop and Lengow
     - Bugfix: [export] Caching legacy export data
     - Bugfix: [export] Improved deletion of duplicate headers
+    - Bugfix: [export] Correction of the counter on the total number of products
 
 ========================================================
 Version 2.0.2
