@@ -149,7 +149,7 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 					<div class="form-group">
 						<div class="input-group">
 							<input type="number" name="lengow_import_days" class="form-control"
-							       value="<?php echo $values['lengow_import_days']; ?>" min="1" max="99"/>
+							       value="<?php echo $values['lengow_import_days']; ?>" min="1" max="30"/>
 							<div class="input-group-addon">
 								<div class="unit"><?php echo $locale->t( 'global_setting.screen.nb_days' ); ?></div>
 							</div>

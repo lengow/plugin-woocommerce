@@ -141,7 +141,7 @@ class Lengow_Configuration {
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_import_days_title' ),
 					'legend'        => $locale->t( 'lengow_settings.lengow_import_days_legend' ),
-					'default_value' => 5,
+					'default_value' => 3,
 				),
 				'lengow_import_ship_mp_enabled'      => array(
 					'global'        => true,
