@@ -70,19 +70,14 @@ class Lengow_Connector {
 	private $_token;
 
 	/**
-	 * @var integer ID account.
-	 */
-	private $_account_id;
-
-	/**
 	 * @var array lengow url for curl timeout.
 	 */
-	private $lengow_urls = array(
-		'/v3.0/orders'       => 15,
-		'/v3.0/marketplaces' => 10,
-		'/v3.0/plans'        => 3,
+	private $_lengow_urls = array(
+		'/v3.0/orders'       => 20,
+		'/v3.0/marketplaces' => 15,
+		'/v3.0/plans'        => 5,
 		'/v3.0/stats'        => 3,
-		'/v3.1/cms'          => 3,
+		'/v3.1/cms'          => 5,
 	);
 
 	/**
@@ -113,8 +108,7 @@ class Lengow_Connector {
 			'POST'
 		);
 		if ( isset( $data['token'] ) ) {
-			$this->_token      = $data['token'];
-			$this->_account_id = $data['account_id'];
+			$this->_token = $data['token'];
 
 			return $data;
 		} else {
@@ -138,9 +132,6 @@ class Lengow_Connector {
 	public function call( $method, $array = array(), $type = 'GET', $format = 'json', $body = '' ) {
 		$this->connect();
 		try {
-			if ( ! array_key_exists( 'account_id', $array ) ) {
-				$array['account_id'] = $this->_account_id;
-			}
 			$data = $this->call_action( $method, $array, $type, $format, $body );
 		} catch ( Lengow_Exception $e ) {
 			return $e->getMessage();
@@ -305,8 +296,8 @@ class Lengow_Connector {
 		// options.
 		$opts = self::$curl_opts;
 		// get special timeout for specific Lengow API.
-		if ( array_key_exists( $url, $this->lengow_urls ) ) {
-			$opts[ CURLOPT_TIMEOUT ] = $this->lengow_urls[ $url ];
+		if ( array_key_exists( $url, $this->_lengow_urls ) ) {
+			$opts[ CURLOPT_TIMEOUT ] = $this->_lengow_urls[ $url ];
 		}
 		// get url for a specific environment.
 		$url                           = self::LENGOW_API_URL . $url;
@@ -326,7 +317,7 @@ class Lengow_Connector {
 		$url = $url['scheme'] . '://' . $url['host'] . $url['path'];
 		switch ( $type ) {
 			case 'GET':
-				$opts[ CURLOPT_URL ] = $url . '?' . http_build_query( $args );
+				$opts[ CURLOPT_URL ] = $url . ( ! empty( $args ) ? '?' . http_build_query( $args ) : '' );
 				Lengow_Main::log(
 					'Connector',
 					Lengow_Main::set_log_message(

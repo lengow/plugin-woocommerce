@@ -325,7 +325,7 @@ class Lengow_Export {
 				FROM {$wpdb->posts} 
     			WHERE post_status = 'publish' AND post_type = 'product'
     		) UNION ( 
-   				SELECT post_parent AS id_product
+   				SELECT DISTINCT(id) AS id_product
    				FROM {$wpdb->posts}
    				WHERE post_status = 'publish' AND post_type = 'product_variation' AND post_parent > 0
    			) ) AS tmp
@@ -414,9 +414,9 @@ class Lengow_Export {
 	 */
 	private function _set_legacy_fields() {
 		if ( is_null( $this->_legacy ) ) {
-			$result = Lengow_Connector::query_api( 'get', '/v3.0/plans' );
-			if ( isset( $result->accountVersion ) ) {
-				$this->_legacy = $result->accountVersion === 'v2' ? true : false;
+			$merchant_status = Lengow_Sync::get_status_account();
+			if ( $merchant_status && isset( $merchant_status['legacy'] ) ) {
+				$this->_legacy = $merchant_status['legacy'];
 			} else {
 				$this->_legacy = false;
 			}
@@ -569,20 +569,27 @@ class Lengow_Export {
 	 */
 	private function _get_fields() {
 		$fields = array();
+		// Check field name to lower to avoid duplicates
+		$formatted_fields = array();
 		foreach ( self::$default_field as $key => $value ) {
-			$fields[] = $key;
+			$fields[]           = $key;
+			$formatted_fields[] = Lengow_Feed::format_fields( $key, $this->_format, $this->_legacy );
 		}
 		self::$attributes = Lengow_Product::get_attributes();
 		foreach ( self::$attributes as $attribute ) {
-		    if ( ! in_array( $attribute, $fields ) ) {
-                $fields[] = $attribute;
-            }
+			$formatted_attribute = Lengow_Feed::format_fields( $attribute, $this->_format, $this->_legacy );
+			if ( ! in_array( $formatted_attribute, $formatted_fields ) ) {
+				$fields[]           = $attribute;
+				$formatted_fields[] = $formatted_attribute;
+			}
 		}
 		self::$post_metas = Lengow_Product::get_post_metas();
 		foreach ( self::$post_metas as $post_meta ) {
-		    if ( ! in_array( $post_meta, $fields ) ) {
-                $fields[] = $post_meta;
-            }
+			$formatted_post_meta = Lengow_Feed::format_fields( $post_meta, $this->_format, $this->_legacy );
+			if ( ! in_array( $formatted_post_meta, $formatted_fields ) ) {
+				$fields[]           = $post_meta;
+				$formatted_fields[] = $formatted_post_meta;
+			}
 		}
 
 		return $fields;

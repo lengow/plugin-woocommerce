@@ -81,6 +81,11 @@ class Lengow_Main {
 	public static $log_life = 20;
 
 	/**
+	 * @var string Lengow configuration folder name.
+	 */
+	public static $lengow_config_folder = 'config';
+
+	/**
 	 * @var array WooCommerce product types.
 	 */
 	public static $product_types = array(

@@ -37,6 +37,7 @@ en:
       current_order_state_unavailable: "current order's status [%{order_state_marketplace}] makes it unavailable to import for marketplace %{marketplace_name}"
       order_successfully_decremented: "order successfully decremented"
       import_failed: "import failed - %{decoded_message}"
+      marketplace_update_failed: "marketplace update failed - %{decoded_message}"
       order_import_failed: "import order failed - %{decoded_message}"
       error_no_package: "import order failed - Lengow error: no package in the order"
       error_wrong_package_number: "import order failed - wrong package number"

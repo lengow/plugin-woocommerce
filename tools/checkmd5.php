@@ -18,7 +18,10 @@ $list_folders = array(
 	'/webservice',
 );
 
-$file_paths = array( $base . '/lengow.php' );
+$file_paths = array(
+	$base . '/lengow.php',
+	$base . '/config/index.php',
+);
 
 foreach ( $list_folders as $folder ) {
 	if ( file_exists( $base . $folder ) ) {
@@ -39,7 +42,7 @@ fclose( $fp );
  *
  * @param string $path folder path
  *
- * @return string
+ * @return array
  */
 function explorer( $path ) {
 	$paths = array();
@@ -61,8 +64,8 @@ function explorer( $path ) {
 /**
  * Write csv
  *
- * @param string $fp
- * @param string $text
+ * @param resource $fp
+ * @param array|string $text
  * @param array $front_key
  */
 function write_csv( $fp, $text, &$front_key = array() ) {

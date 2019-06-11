@@ -29,6 +29,7 @@
  * string  $marketplace_sku    Lengow marketplace order id to import
  * string  marketplace_name    Lengow marketplace name to import
  * integer delivery_address_id Lengow delivery address id to import
+ * boolean force               Force synchronisation for a specific process
  * boolean preprod_mode        Activate preprod mode
  * boolean log_output          See logs (1) or not (0)
  * boolean get_sync            See synchronisation parameters in json format (1) or not (0)
@@ -90,6 +91,7 @@ if ( ! Lengow_Main::check_webservice_access( $token ) ) {
 if ( isset( $_GET['get_sync'] ) && $_GET['get_sync'] == 1 ) {
 	echo json_encode( Lengow_Sync::get_sync_data() );
 } else {
+	$force = isset( $_GET['force'] ) ? (bool) $_GET['force'] : false;
 	// get sync action if exists.
 	$sync = isset( $_GET['sync'] ) ? $_GET['sync'] : false;
 	// sync catalogs id between Lengow and Shopware
@@ -125,8 +127,20 @@ if ( isset( $_GET['get_sync'] ) && $_GET['get_sync'] == 1 ) {
 		$import->exec();
 	}
 	// sync options between Lengow and WooCommerce.
-	if ( ! $sync || $sync === 'option' ) {
-		Lengow_Sync::set_cms_option();
+	if ( ! $sync || $sync === 'cms_option' ) {
+		Lengow_Sync::set_cms_option( $force );
+	}
+	// sync marketplaces between Lengow and WooCommerce.
+	if ( $sync === 'marketplace' ) {
+		Lengow_Sync::get_marketplaces( $force );
+	}
+	// sync status account between Lengow and WooCommerce.
+	if ( $sync === 'status_account' ) {
+		Lengow_Sync::get_status_account( $force );
+	}
+	// sync statistics between Lengow and WooCommerce.
+	if ( $sync === 'statistic' ) {
+		Lengow_Sync::get_statistic( $force );
 	}
 	// sync option is not valid.
 	if ( $sync && ! in_array( $sync, Lengow_Sync::$sync_actions ) ) {

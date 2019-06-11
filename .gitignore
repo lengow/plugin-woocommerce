@@ -2,4 +2,4 @@
 logs/*.txt
 export/*
 !export/index.php
-/toolbox/checkmd5.csv
+config/marketplaces.json
