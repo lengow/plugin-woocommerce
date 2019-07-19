@@ -324,7 +324,7 @@ class Lengow_Export {
 				SELECT DISTINCT(id) AS id_product
 				FROM {$wpdb->posts} 
     			WHERE post_status = 'publish' AND post_type = 'product'
-    		) UNION ( 
+    		) UNION ALL ( 
    				SELECT DISTINCT(id) AS id_product
    				FROM {$wpdb->posts}
    				WHERE post_status = 'publish' AND post_type = 'product_variation' AND post_parent > 0
@@ -344,7 +344,7 @@ class Lengow_Export {
 		if ( $this->_variation && in_array( 'variable', $this->_product_types ) ) {
 			$query = " SELECT COUNT(*) AS total FROM ( ( ";
 			$query .= $this->_build_total_query();
-			$query .= " ) UNION ( ";
+			$query .= " ) UNION ALL ( ";
 			$query .= $this->_build_total_query( true );
 			$query .= " ) ) AS tmp";
 		} else {
@@ -605,7 +605,7 @@ class Lengow_Export {
 		if ( $this->_variation && in_array( 'variable', $this->_product_types ) ) {
 			$query = " SELECT * FROM ( ( ";
 			$query .= $this->_build_total_query();
-			$query .= " ) UNION ( ";
+			$query .= " ) UNION ALL ( ";
 			$query .= $this->_build_total_query( true );
 			$query .= " ) ) AS tmp ORDER BY id_product, id_product_attribute";
 		} else {
@@ -633,7 +633,7 @@ class Lengow_Export {
 		global $wpdb;
 		if ( $variation ) {
 			$query = "
-				SELECT p.post_parent AS id_product, p.id AS id_product_attribute
+				SELECT DISTINCT(p.post_parent) AS id_product, p.id AS id_product_attribute
 			";
 		} else {
 			$query = "
