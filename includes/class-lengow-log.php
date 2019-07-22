@@ -45,6 +45,8 @@ class Lengow_Log extends Lengow_File {
 	 * Construct a new Lengow log.
 	 *
 	 * @param string $file_name log file name
+	 *
+	 * @throws Lengow_Exception
 	 */
 	public function __construct( $file_name = null ) {
 		if ( empty( $file_name ) ) {
@@ -61,14 +63,14 @@ class Lengow_Log extends Lengow_File {
 	 * @param string $category Category
 	 * @param string $message log message
 	 * @param boolean $display display on screen
-	 * @param string $marketplace_sku lengow order id
+	 * @param string|null $marketplace_sku lengow order id
 	 */
-	public function write( $category, $message = "", $display = false, $marketplace_sku = null ) {
+	public function write( $category, $message = '', $display = false, $marketplace_sku = null ) {
 		$decoded_message = Lengow_Main::decode_log_message( $message, 'en_GB' );
 		$log             = date( 'Y-m-d H:i:s' );
-		$log .= ' - ' . ( empty( $category ) ? '' : '[' . $category . '] ' );
-		$log .= '' . ( empty( $marketplace_sku ) ? '' : 'order ' . $marketplace_sku . ' : ' );
-		$log .= $decoded_message . "\r\n";
+		$log             .= ' - ' . ( empty( $category ) ? '' : '[' . $category . '] ' );
+		$log             .= '' . ( empty( $marketplace_sku ) ? '' : 'order ' . $marketplace_sku . ' : ' );
+		$log             .= $decoded_message . "\r\n";
 		if ( $display ) {
 			echo $log . '<br />';
 			flush();
@@ -105,7 +107,7 @@ class Lengow_Log extends Lengow_File {
 			$logs[] = array(
 				'full_path'  => $file->get_path(),
 				'short_path' => 'logs-' . $match[1] . '.txt',
-				'name'       => $match[1] . '.txt'
+				'name'       => $match[1] . '.txt',
 			);
 		}
 
@@ -115,7 +117,7 @@ class Lengow_Log extends Lengow_File {
 	/**
 	 * Download log file.
 	 *
-	 * @param string $file log file name
+	 * @param string|null $file log file name
 	 */
 	public static function download( $file = null ) {
 		if ( $file && preg_match( '/^logs-([0-9]{4}-[0-9]{2}-[0-9]{2})\.txt$/', $file, $match ) ) {

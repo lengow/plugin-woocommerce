@@ -37,12 +37,12 @@ class Lengow_Export {
 	public static $default_field;
 
 	/**
-	 * @var array export product attributes.
+	 * @var array|null export product attributes.
 	 */
 	public static $attributes = null;
 
 	/**
-	 * @var array export product post metas.
+	 * @var array|null  export product post metas.
 	 */
 	public static $post_metas = null;
 
@@ -319,17 +319,17 @@ class Lengow_Export {
 	 */
 	public function get_total_product() {
 		global $wpdb;
-		$query = "
+		$query = '
 			SELECT COUNT(*) AS total FROM ( (
 				SELECT DISTINCT(id) AS id_product
-				FROM {$wpdb->posts} 
-    			WHERE post_status = 'publish' AND post_type = 'product'
+				FROM ' . $wpdb->posts . ' 
+    			WHERE post_status = \'publish\' AND post_type = \'product\'
     		) UNION ALL ( 
    				SELECT DISTINCT(id) AS id_product
-   				FROM {$wpdb->posts}
-   				WHERE post_status = 'publish' AND post_type = 'product_variation' AND post_parent > 0
+   				FROM ' . $wpdb->posts . '
+   				WHERE post_status = \'publish\' AND post_type = \'product_variation\' AND post_parent > 0
    			) ) AS tmp
-		";
+		';
 
 		return (int) $wpdb->get_var( $query );
 	}
@@ -342,13 +342,13 @@ class Lengow_Export {
 	public function get_total_export_product() {
 		global $wpdb;
 		if ( $this->_variation && in_array( 'variable', $this->_product_types ) ) {
-			$query = " SELECT COUNT(*) AS total FROM ( ( ";
+			$query = ' SELECT COUNT(*) AS total FROM ( ( ';
 			$query .= $this->_build_total_query();
-			$query .= " ) UNION ALL ( ";
+			$query .= ' ) UNION ALL ( ';
 			$query .= $this->_build_total_query( true );
-			$query .= " ) ) AS tmp";
+			$query .= ' ) ) AS tmp';
 		} else {
-			$query = " SELECT COUNT(*) AS total FROM ( " . $this->_build_total_query() . " ) AS tmp";
+			$query = ' SELECT COUNT(*) AS total FROM ( ' . $this->_build_total_query() . ' ) AS tmp';
 		}
 
 		return (int) $wpdb->get_var( $query );
@@ -427,7 +427,7 @@ class Lengow_Export {
 	/**
 	 * Set format to export.
 	 *
-	 * @param string $format export format
+	 * @param string|false $format export format
 	 */
 	private function _set_format( $format ) {
 		if ( $format ) {
@@ -441,7 +441,7 @@ class Lengow_Export {
 	/**
 	 * Set product ids to export.
 	 *
-	 * @param string $product_ids product ids to export
+	 * @param string|false $product_ids product ids to export
 	 */
 	private function _set_product_ids( $product_ids ) {
 		if ( $product_ids ) {
@@ -457,7 +457,7 @@ class Lengow_Export {
 	/**
 	 * Set product types to export.
 	 *
-	 * @param string $product_types product types to export
+	 * @param string|false $product_types product types to export
 	 */
 	private function _set_product_types( $product_types ) {
 		if ( $product_types ) {
@@ -468,7 +468,7 @@ class Lengow_Export {
 				}
 			}
 		}
-		if ( count( $this->_product_types ) == 0 ) {
+		if ( count( $this->_product_types ) === 0 ) {
 			$product_types        = Lengow_Configuration::get( 'lengow_product_types' );
 			$this->_product_types = is_array( $product_types ) ? $product_types : json_decode( $product_types, true );
 		}
@@ -524,7 +524,7 @@ class Lengow_Export {
 			// write parent product.
 			$feed->write( 'body', $product_data, $is_first, $max_character );
 			$product_count ++;
-			if ( $product_count > 0 && $product_count % 50 == 0 ) {
+			if ( $product_count > 0 && $product_count % 50 === 0 ) {
 				Lengow_Main::log(
 					'Export',
 					Lengow_Main::set_log_message(
@@ -549,7 +549,7 @@ class Lengow_Export {
 		}
 		if ( ! $this->_stream ) {
 			$feed_url = $feed->get_url();
-			if ( $feed_url && php_sapi_name() != "cli" ) {
+			if ( $feed_url && php_sapi_name() !== 'cli' ) {
 				Lengow_Main::log(
 					'Export',
 					Lengow_Main::set_log_message(
@@ -603,19 +603,19 @@ class Lengow_Export {
 	private function _get_export_ids() {
 		global $wpdb;
 		if ( $this->_variation && in_array( 'variable', $this->_product_types ) ) {
-			$query = " SELECT * FROM ( ( ";
+			$query = ' SELECT * FROM ( ( ';
 			$query .= $this->_build_total_query();
-			$query .= " ) UNION ALL ( ";
+			$query .= ' ) UNION ALL ( ';
 			$query .= $this->_build_total_query( true );
-			$query .= " ) ) AS tmp ORDER BY id_product, id_product_attribute";
+			$query .= ' ) ) AS tmp ORDER BY id_product, id_product_attribute';
 		} else {
 			$query = $this->_build_total_query();
 		}
 		if ( $this->_limit > 0 ) {
 			if ( $this->_offset > 0 ) {
-				$query .= " LIMIT " . $this->_offset . ", " . $this->_limit;
+				$query .= ' LIMIT ' . $this->_offset . ', ' . $this->_limit;
 			} else {
-				$query .= " LIMIT 0, " . $this->_limit;
+				$query .= ' LIMIT 0, ' . $this->_limit;
 			}
 		}
 
@@ -632,75 +632,74 @@ class Lengow_Export {
 	private function _build_total_query( $variation = false ) {
 		global $wpdb;
 		if ( $variation ) {
-			$query = "
-				SELECT DISTINCT(p.post_parent) AS id_product, p.id AS id_product_attribute
-			";
+			$query = 'SELECT DISTINCT(p.post_parent) AS id_product, p.id AS id_product_attribute ';
 		} else {
-			$query = "
-				SELECT DISTINCT(p.id) AS id_product, 0 AS id_product_attribute
-			";
+			$query = 'SELECT DISTINCT(p.id) AS id_product, 0 AS id_product_attribute ';
 		}
-		$query .= "
-			FROM {$wpdb->posts} AS p
-			INNER JOIN {$wpdb->postmeta} AS pm ON p.id = pm.post_id
-		";
+		$query .= '
+			FROM ' . $wpdb->posts . ' AS p
+			INNER JOIN ' . $wpdb->postmeta . ' AS pm ON p.id = pm.post_id
+		';
 		if ( ! $variation ) {
-			$query .= "
-				INNER JOIN {$wpdb->term_relationships} AS tr ON tr.object_id = p.id 
-				INNER JOIN {$wpdb->terms} AS t ON t.term_id = tr.term_taxonomy_id
-			";
+			$query .= '
+				INNER JOIN ' . $wpdb->term_relationships . ' AS tr ON tr.object_id = p.id 
+				INNER JOIN ' . $wpdb->terms . ' AS t ON t.term_id = tr.term_taxonomy_id
+			';
 		}
 		if ( $this->_selection ) {
 			if ( $variation ) {
-				$query .= " INNER JOIN " . $wpdb->prefix . "lengow_product lp ON lp.product_id = p.post_parent ";
+				$query .= ' INNER JOIN ' . $wpdb->prefix . 'lengow_product lp ON lp.product_id = p.post_parent ';
 			} else {
-				$query .= " INNER JOIN " . $wpdb->prefix . "lengow_product lp ON lp.product_id = p.id ";
+				$query .= ' INNER JOIN ' . $wpdb->prefix . 'lengow_product lp ON lp.product_id = p.id ';
 			}
 		}
-		// Specific conditions.
+		// specific conditions.
 		$where   = array();
-		$where[] = "p.post_status = 'publish'";
+		$where[] = 'p.post_status = \'publish\'';
 		if ( $variation ) {
-			$where[] = "p.post_parent > 0";
-			$where[] = "p.post_type = 'product_variation'";
+			$where[] = 'p.post_parent > 0';
+			$where[] = 'p.post_type = \'product_variation\'';
 		} else {
 			$where[] = "p.post_type = 'product'";
 		}
 		if ( ! $this->_out_of_stock ) {
-			$where[] = "((
-				meta_key = '_stock_status' AND meta_value = 'instock'
-				) OR ( meta_key = '_manage_stock' AND meta_value = 'yes' AND p.id IN
-					(SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_stock' AND meta_value > 0)
+			$where[] = '((
+				meta_key = \'_stock_status\' AND meta_value = \'instock\'
+				) OR ( meta_key = \'_manage_stock\' AND meta_value = \'yes\' AND p.id IN
+					(SELECT post_id FROM ' . $wpdb->postmeta . ' WHERE meta_key = \'_stock\' AND meta_value > 0)
 				) OR (   
 					p.id NOT IN 
-					(SELECT post_id FROM {$wpdb->postmeta}
-						WHERE meta_key = '_stock_status' AND meta_value IN ('instock', 'outofstock'))
+					(SELECT post_id FROM ' . $wpdb->postmeta . '
+						WHERE meta_key = \'_stock_status\' AND meta_value IN (\'instock\', \'outofstock\'))
 					AND p.post_parent IN
-					(SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_manage_stock' AND meta_value = 'yes')
+						(SELECT post_id FROM ' . $wpdb->postmeta . ' 
+							WHERE meta_key = \'_manage_stock\' AND meta_value = \'yes\')
 					AND p.post_parent IN
-					(SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_stock' AND meta_value > 0)
+						(SELECT post_id FROM ' . $wpdb->postmeta . '
+							WHERE meta_key = \'_stock\' AND meta_value > 0)
 				) OR (   
 					p.id NOT IN 
-					(SELECT post_id FROM {$wpdb->postmeta} 
-						WHERE meta_key = '_stock_status' AND meta_value IN ('instock', 'outofstock'))
+					(SELECT post_id FROM ' . $wpdb->postmeta . ' 
+						WHERE meta_key = \'_stock_status\' AND meta_value IN (\'instock\', \'outofstock\'))
 					AND p.post_parent IN
-					(SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_manage_stock' AND meta_value = 'no')  
-			))";
+					(SELECT post_id FROM ' . $wpdb->postmeta . ' 
+						WHERE meta_key = \'_manage_stock\' AND meta_value = \'no\')  
+			))';
 		}
 		if ( count( $this->_product_types ) > 0 && ! $variation ) {
-			$where[] = "t.name IN ('" . join( "','", $this->_product_types ) . "')";
+			$where[] = 't.name IN (\'' . join( "','", $this->_product_types ) . '\')';
 		}
 		if ( count( $this->_product_ids ) > 0 ) {
 			if ( $variation ) {
-				$where[] = "p.post_parent IN (" . join( ',', $this->_product_ids ) . ")";
+				$where[] = 'p.post_parent IN (' . join( ',', $this->_product_ids ) . ')';
 			} else {
-				$where[] = "p.id IN (" . join( ',', $this->_product_ids ) . ")";
+				$where[] = 'p.id IN (' . join( ',', $this->_product_ids ) . ')';
 			}
 		}
 		if ( count( $where ) > 0 ) {
-			$query .= " WHERE " . join( ' AND ', $where );
+			$query .= ' WHERE ' . join( ' AND ', $where );
 		}
-		$query .= " ORDER BY id_product ASC";
+		$query .= ' ORDER BY id_product ASC';
 
 		return $query;
 	}

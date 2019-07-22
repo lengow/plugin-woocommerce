@@ -150,7 +150,7 @@ class Lengow_Connector {
 	 *
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	public function get( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'GET', $format, $body );
@@ -166,7 +166,7 @@ class Lengow_Connector {
 	 *
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	public function post( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'POST', $format, $body );
@@ -182,7 +182,7 @@ class Lengow_Connector {
 	 *
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	public function head( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'HEAD', $format, $body );
@@ -198,7 +198,7 @@ class Lengow_Connector {
 	 *
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	public function put( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'PUT', $format, $body );
@@ -214,7 +214,7 @@ class Lengow_Connector {
 	 *
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	public function delete( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'DELETE', $format, $body );
@@ -230,7 +230,7 @@ class Lengow_Connector {
 	 *
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	public function patch( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'PATCH', $format, $body );
@@ -247,7 +247,7 @@ class Lengow_Connector {
 	 *
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	private function call_action( $api, $args, $type, $format = 'json', $body = '' ) {
 		$result = $this->make_request( $type, $api, $args, $this->_token, $body );
@@ -261,7 +261,7 @@ class Lengow_Connector {
 	 * @param mixed $data Curl response data
 	 * @param string $format return format of API
 	 *
-	 * @return array|SimpleXMLElement
+	 * @return mixed
 	 */
 	private function format( $data, $format ) {
 		switch ( $format ) {
@@ -287,7 +287,7 @@ class Lengow_Connector {
 	 *
 	 * @throws Lengow_Exception Get curl error
 	 *
-	 * @return array
+	 * @return mixed
 	 */
 	protected function make_request( $type, $url, $args, $token, $body = '' ) {
 		// define CURLE_OPERATION_TIMEDOUT for old php versions.
@@ -413,7 +413,7 @@ class Lengow_Connector {
 			return false;
 		}
 		list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
-		if ( is_null( $account_id ) || $account_id == 0 || ! is_numeric( $account_id ) ) {
+		if ( is_null( $account_id ) || $account_id === 0 || ! is_numeric( $account_id ) ) {
 			return false;
 		}
 		$connector = new Lengow_Connector( $access_token, $secret_token );

@@ -52,18 +52,18 @@ class Lengow_Order {
 		// V2 compatibility.
 		$marketplace_legacy = is_null( $marketplace_legacy ) ? $marketplace : strtolower( $marketplace_legacy );
 
-		$query = "
+		$query = '
 			SELECT id_order, delivery_address_id, id_flux
-			FROM " . $wpdb->prefix . "lengow_orders 
+			FROM ' . $wpdb->prefix . 'lengow_orders 
 			WHERE marketplace_sku = %s
 			AND marketplace_name IN (%s, %s)
-		";
+		';
 
 		$results = $wpdb->get_results(
 			$wpdb->prepare( $query, array( $marketplace_sku, $marketplace, $marketplace_legacy ) )
 		);
 
-		if ( count( $results ) == 0 ) {
+		if ( count( $results ) === 0 ) {
 			return false;
 		}
 		foreach ( $results as $result ) {
@@ -88,11 +88,11 @@ class Lengow_Order {
 	public static function get_id_from_lengow_orders( $marketplace_sku, $delivery_address_id ) {
 		global $wpdb;
 
-		$query = "
-			SELECT id FROM " . $wpdb->prefix . "lengow_orders 
+		$query = '
+			SELECT id FROM ' . $wpdb->prefix . 'lengow_orders 
 			WHERE marketplace_sku = %s
 			AND delivery_address_id = %d
-		";
+		';
 
 		$id_order_lengow = $wpdb->get_var(
 			$wpdb->prepare( $query, array( $marketplace_sku, $delivery_address_id ) )

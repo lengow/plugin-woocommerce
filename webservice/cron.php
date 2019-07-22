@@ -26,7 +26,7 @@
  * string  sync                Number of products exported
  * integer days                Import period
  * integer limit               Number of orders to import
- * string  $marketplace_sku    Lengow marketplace order id to import
+ * string  marketplace_sku     Lengow marketplace order id to import
  * string  marketplace_name    Lengow marketplace name to import
  * integer delivery_address_id Lengow delivery address id to import
  * boolean force               Force synchronisation for a specific process

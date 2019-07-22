@@ -46,7 +46,7 @@ class Lengow_Admin {
 	 */
 	public function __construct() {
 		global $lengow, $woocommerce;
-		$this->current_tab = ( empty( $_GET['tab'] ) )
+		$this->current_tab = empty( $_GET['tab'] )
 			? $this->_default_tab
 			: sanitize_text_field( urldecode( $_GET['tab'] ) );
 		add_action( 'admin_menu', array( $this, 'lengow_admin_menu' ) );

@@ -46,17 +46,17 @@ class Lengow_Import {
 	public static $processing;
 
 	/**
-	 * @var string marketplace order sku.
+	 * @var string|null marketplace order sku.
 	 */
 	private $_marketplace_sku = null;
 
 	/**
-	 * @var string marketplace name.
+	 * @var string|null marketplace name.
 	 */
 	private $_marketplace_name = null;
 
 	/**
-	 * @var integer delivery address id.
+	 * @var integer|null delivery address id.
 	 */
 	private $_delivery_address_id = null;
 
@@ -66,12 +66,12 @@ class Lengow_Import {
 	private $_limit = 0;
 
 	/**
-	 * @var string start import date.
+	 * @var string|null start import date.
 	 */
 	private $_date_from = null;
 
 	/**
-	 * @var string end import date.
+	 * @var string|null end import date.
 	 */
 	private $_date_to = null;
 
@@ -146,23 +146,19 @@ class Lengow_Import {
 			}
 		} else {
 			// recovering the time interval.
-			$days             = (
-			isset( $params['days'] )
+			$days             = isset( $params['days'] )
 				? $params['days']
-				: (int) Lengow_Configuration::get( 'lengow_import_days' )
-			);
+				: (int) Lengow_Configuration::get( 'lengow_import_days' );
 			$this->_date_from = date( 'c', strtotime( date( 'Y-m-d' ) . ' -' . $days . 'days' ) );
 			$this->_date_to   = date( 'c' );
-			$this->_limit     = ( isset( $params['limit'] ) ? $params['limit'] : 0 );
+			$this->_limit     = isset( $params['limit'] ) ? $params['limit'] : 0;
 		}
 		// get other params.
-		$this->_preprod_mode = (
-		isset( $params['preprod_mode'] )
+		$this->_preprod_mode = isset( $params['preprod_mode'] )
 			? $params['preprod_mode']
-			: (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' )
-		);
-		$this->_type_import  = ( isset( $params['type'] ) ? $params['type'] : 'manual' );
-		$this->_log_output   = ( isset( $params['log_output'] ) ? $params['log_output'] : false );
+			: (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' );
+		$this->_type_import  = isset( $params['type'] ) ? $params['type'] : 'manual';
+		$this->_log_output   = isset( $params['log_output'] ) ? $params['log_output'] : false;
 	}
 
 	/**
@@ -478,7 +474,7 @@ class Lengow_Import {
 				$marketplace_sku .= '--' . time();
 			}
 			// if order contains no package.
-			if ( count( $order_data->packages ) == 0 ) {
+			if ( count( $order_data->packages ) === 0 ) {
 				Lengow_Main::log(
 					'Import',
 					Lengow_Main::set_log_message( 'log.import.error_no_package' ),
@@ -501,11 +497,11 @@ class Lengow_Import {
 					continue;
 				}
 				$package_delivery_address_id = (int) $package_data->delivery->id;
-				$first_package               = ( $nb_package > 1 ? false : true );
+				$first_package               = $nb_package > 1 ? false : true;
 				// check the package for re-import order.
 				if ( $this->_import_one_order ) {
 					if ( ! is_null( $this->_delivery_address_id )
-					     && $this->_delivery_address_id != $package_delivery_address_id
+					     && $this->_delivery_address_id !== $package_delivery_address_id
 					) {
 						Lengow_Main::log(
 							'Import',
@@ -555,9 +551,9 @@ class Lengow_Import {
 					return $order;
 				}
 				if ( isset( $order ) ) {
-					if ( isset( $order['order_new'] ) && $order['order_new'] == true ) {
+					if ( isset( $order['order_new'] ) && $order['order_new'] ) {
 						$order_new ++;
-					} elseif ( isset( $order['order_error'] ) && $order['order_error'] == true ) {
+					} elseif ( isset( $order['order_error'] ) && $order['order_error'] ) {
 						$order_error ++;
 					}
 				}
@@ -565,7 +561,7 @@ class Lengow_Import {
 				unset( $import_order );
 				unset( $order );
 				// if limit is set.
-				if ( $this->_limit > 0 && $order_new == $this->_limit ) {
+				if ( $this->_limit > 0 && $order_new === $this->_limit ) {
 					$import_finished = true;
 					break;
 				}

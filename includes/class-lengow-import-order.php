@@ -82,7 +82,7 @@ class Lengow_Import_Order {
 	private $_order_state_lengow;
 
 	/**
-	 * @var integer id of the record Lengow order table.
+	 * @var integer|null id of the record Lengow order table.
 	 */
 	private $_id_order_lengow = null;
 
@@ -151,7 +151,7 @@ class Lengow_Import_Order {
 					'log.import.current_order_state_unavailable',
 					array(
 						'order_state_marketplace' => $this->_order_state_marketplace,
-						'marketplace_name'        => $this->_marketplace->name
+						'marketplace_name'        => $this->_marketplace->name,
 					)
 				),
 				$this->_log_output,
@@ -186,7 +186,7 @@ class Lengow_Import_Order {
 			}
 			// get products.
 			$products = $this->_get_products();
-			if ( count( $products ) == 0 ) {
+			if ( count( $products ) === 0 ) {
 				throw new Lengow_Exception(
 					Lengow_Main::set_log_message( 'lengow_log.exception.product_list_is_empty' )
 				);
@@ -246,7 +246,7 @@ class Lengow_Import_Order {
 	 *
 	 * @param string $type_result Type of result (new or error)
 	 * @param integer $id_order_lengow Lengow order id
-	 * @param integer $id_order WooCommerce order id
+	 * @param integer|null $id_order WooCommerce order id
 	 *
 	 * @return array
 	 */
@@ -271,7 +271,7 @@ class Lengow_Import_Order {
 	 */
 	private function _check_order_data() {
 		$error_messages = array();
-		if ( count( $this->_package_data->cart ) == 0 ) {
+		if ( count( $this->_package_data->cart ) === 0 ) {
 			$error_messages[] = Lengow_Main::set_log_message( 'lengow_log.error.no_product' );
 		}
 		if ( is_null( $this->_order_data->billing_address ) ) {
@@ -331,14 +331,14 @@ class Lengow_Import_Order {
 				: (string) $product_datas['marketplace_product_id'];
 			if ( ! is_null( $product_datas['marketplace_status'] ) ) {
 				$state_product = $this->_marketplace->get_state_lengow( (string) $product_datas['marketplace_status'] );
-				if ( $state_product == 'canceled' || $state_product == 'refused' ) {
+				if ( $state_product === 'canceled' || $state_product === 'refused' ) {
 					Lengow_Main::log(
 						'Import',
 						Lengow_Main::set_log_message(
 							'log.import.product_state_canceled',
 							array(
 								'product_id'    => $api_product_id,
-								'state_product' => $state_product
+								'state_product' => $state_product,
 							)
 						),
 						$this->_log_output,
@@ -390,7 +390,7 @@ class Lengow_Import_Order {
 							array(
 								'product_id'    => $product_id,
 								'initial_stock' => $initial_stock,
-								'new_stock'     => $new_stock
+								'new_stock'     => $new_stock,
 							)
 						),
 						$this->_log_output,
@@ -434,7 +434,7 @@ class Lengow_Import_Order {
 				'delivery_address_id' => (int) $this->_delivery_address_id,
 				'order_date'          => date( 'Y-m-d H:i:s', strtotime( $order_date ) ),
 				'extra'               => json_encode( $this->_order_data ),
-				'created_at'          => date( 'Y-m-d H:i:s' )
+				'created_at'          => date( 'Y-m-d H:i:s' ),
 			),
 			array(
 				'%s',
@@ -442,7 +442,7 @@ class Lengow_Import_Order {
 				'%d',
 				'%s',
 				'%s',
-				'%s'
+				'%s',
 			)
 		);
 

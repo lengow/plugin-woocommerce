@@ -78,7 +78,7 @@ class Lengow_Install {
 		);
 		$old_version = Lengow_Configuration::get( 'lengow_version' );
 		$old_version = $old_version ? $old_version : false;
-		$old_version = $old_version == LENGOW_VERSION ? false : $old_version;
+		$old_version = $old_version === LENGOW_VERSION ? false : $old_version;
 		Lengow_Install::update( $old_version );
 		Lengow_Main::log(
 			'Install',
@@ -106,11 +106,11 @@ class Lengow_Install {
 				)
 			);
 		}
-		// check if update is in progress
+		// check if update is in progress.
 		self::set_installation_status( true );
-		// Create all Lengow tables
+		// create all Lengow tables.
 		self::create_lengow_tables();
-		// Run sql script and configuration upgrade for specific version
+		// run sql script and configuration upgrade for specific version.
 		$upgrade_files = array_diff( scandir( LENGOW_PLUGIN_PATH . '/upgrade' ), array( '..', '.' ) );
 		foreach ( $upgrade_files as $file ) {
 			include LENGOW_PLUGIN_PATH . '/upgrade/' . $file;
@@ -120,11 +120,11 @@ class Lengow_Install {
 				Lengow_Main::set_log_message( 'log.install.add_upgrade_version', array( 'version' => $number_version ) )
 			);
 		}
-		// Delete old configuration
+		// delete old configuration.
 		self::remove_old_configuration_keys();
-		// set default value for old version
+		// set default value for old version.
 		self::set_default_values();
-		// update lengow version
+		// update lengow version.
 		if ( isset( $number_version ) ) {
 			Lengow_Configuration::update_value( 'lengow_version', LENGOW_VERSION );
 		}
@@ -147,7 +147,7 @@ class Lengow_Install {
 	 */
 	public static function create_lengow_tables() {
 		global $wpdb;
-		// create table lengow_product
+		// create table lengow_product.
 		$name = 'lengow_product';
 		if ( ! self::check_table_exists( $name ) ) {
 			$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . $name . ' (
@@ -168,7 +168,7 @@ class Lengow_Install {
 			);
 		}
 
-		// Create table lengow_orders
+		// Create table lengow_orders.
 		$name = 'lengow_orders';
 		if ( ! self::check_table_exists( $name ) ) {
 			$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . $name . ' (

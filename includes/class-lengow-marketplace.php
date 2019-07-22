@@ -147,7 +147,7 @@ class Lengow_Marketplace {
 					$this->arg_values[ (string) $arg_key ] = array(
 						'default_value'      => $default_value,
 						'accept_free_values' => $accept_free_value,
-						'valid_values'       => $valid_values
+						'valid_values'       => $valid_values,
 					);
 				}
 			}

@@ -116,7 +116,7 @@ class Lengow_Product {
 	 */
 	public function __construct( $product_id ) {
 		$this->product = self::get_product( $product_id );
-		if ( $this->product == ''
+		if ( $this->product === ''
 		     || ! in_array( get_post_type( $product_id ), array( 'product', 'product_variation' ) )
 		) {
 			throw new Lengow_Exception(
@@ -157,7 +157,7 @@ class Lengow_Product {
 				return self::get_stock_status( $this->product );
 			case 'available_product':
 				$availability = $this->product->get_availability();
-				if ( $availability['availability'] != '' ) {
+				if ( $availability['availability'] !== '' ) {
 					return ltrim( $availability['availability'] );
 				}
 
@@ -237,7 +237,7 @@ class Lengow_Product {
 					$product_id = $this->_product_type === 'variation' ? $this->_variation_id : $this->_product_id;
 					$start_date = get_post_meta( $product_id, '_sale_price_dates_from', true );
 
-					return $start_date != '' ? date( 'Y-m-d H:i:s', $start_date ) : '';
+					return $start_date !== '' ? date( 'Y-m-d H:i:s', $start_date ) : '';
 				}
 
 				return '';
@@ -246,7 +246,7 @@ class Lengow_Product {
 					$product_id = $this->_product_type === 'variation' ? $this->_variation_id : $this->_product_id;
 					$end_date   = get_post_meta( $product_id, '_sale_price_dates_to', true );
 
-					return $end_date != '' ? date( 'Y-m-d H:i:s', $end_date ) : '';
+					return $end_date !== '' ? date( 'Y-m-d H:i:s', $end_date ) : '';
 				}
 
 				return '';
@@ -302,11 +302,7 @@ class Lengow_Product {
 					return $this->_product_type;
 				}
 			case 'parent_id':
-				if ( $this->_product_type === 'variation' ) {
-					return $this->_product_id;
-				}
-
-				return '';
+				return $this->_product_type === 'variation' ? $this->_product_id : '';
 			case 'variation':
 				if ( $this->_product_type === 'variable' ) {
 					$variations = array();
@@ -356,17 +352,9 @@ class Lengow_Product {
 
 				return '';
 			case 'weight':
-				if ( $this->product->has_weight() ) {
-					return $this->product->get_weight();
-				}
-
-				return '';
+				return $this->product->has_weight() ? $this->product->get_weight() : '';
 			case 'dimensions':
-				if ( $this->product->has_dimensions() ) {
-					return $this->product->get_dimensions();
-				}
-
-				return '';
+				return $this->product->has_dimensions() ? $this->product->get_dimensions() : '';
 			default:
 				if ( in_array( $name, Lengow_Export::$attributes ) ) {
 					return Lengow_Main::clean_data( $this->_get_attribute_data( $name ) );
@@ -428,9 +416,9 @@ class Lengow_Product {
 	 */
 	public static function get_variation_id( $product ) {
 		if ( Lengow_Main::get_woocommerce_version() < '3.0' ) {
-			$variation_id = $product->product_type == 'variation' ? $product->variation_id : null;
+			$variation_id = $product->product_type === 'variation' ? $product->variation_id : null;
 		} else {
-			$variation_id = $product->get_type() == 'variation' ? $product->get_id() : null;
+			$variation_id = $product->get_type() === 'variation' ? $product->get_id() : null;
 		}
 
 		return ! is_null( $variation_id ) ? (int) $variation_id : null;
@@ -536,7 +524,7 @@ class Lengow_Product {
 		if ( Lengow_Main::get_woocommerce_version() < '3.0' ) {
 			$short_description = $product->post->post_excerpt;
 		} else {
-			if ( $product_type === 'variation' && $product->get_short_description() == null && $product_parent ) {
+			if ( $product_type === 'variation' && $product->get_short_description() === null && $product_parent ) {
 				$short_description = $product_parent->get_short_description();
 			} else {
 				$short_description = $product->get_short_description();
@@ -568,7 +556,7 @@ class Lengow_Product {
 	public static function get_attributes() {
 		global $wpdb;
 		$return = array();
-		$sql    = "SELECT * FROM {$wpdb->postmeta} WHERE meta_key = '_product_attributes'";
+		$sql    = 'SELECT * FROM ' . $wpdb->postmeta . ' WHERE meta_key = \'_product_attributes\'';
 		foreach ( $wpdb->get_results( $sql ) as $result ) {
 			$attributes = unserialize( $result->meta_value );
 			if ( ! empty( $attributes ) ) {
@@ -591,12 +579,12 @@ class Lengow_Product {
 	public static function get_post_metas() {
 		global $wpdb;
 		$return = array();
-		$sql    = "
+		$sql    = '
 			SELECT DISTINCT(meta_key)
-			FROM {$wpdb->postmeta} AS pm
-			INNER JOIN {$wpdb->posts} AS p ON p.id = pm.post_id
-			AND p.post_type = 'product'
-		";
+			FROM ' . $wpdb->postmeta . ' AS pm
+			INNER JOIN ' . $wpdb->posts . ' AS p ON p.id = pm.post_id
+			AND p.post_type = \'product\'
+		';
 		foreach ( $wpdb->get_results( $sql ) as $result ) {
 			if ( ! in_array( $result->meta_key, self::$excludes ) ) {
 				if ( ! in_array( $result->meta_key, $return ) ) {
@@ -632,9 +620,9 @@ class Lengow_Product {
 	 * @param string $marketplace_sku Lengow id of current order
 	 * @param boolean $log_output see log or not
 	 *
+	 * @return integer|false
 	 * @throws Lengow_Exception If product is a variable
 	 *
-	 * @return integer|false
 	 */
 	public static function match_product( $product_datas, $marketplace_sku, $log_output ) {
 		$product_id      = false;
@@ -642,7 +630,7 @@ class Lengow_Product {
 			'merchant_product_id'    => $product_datas['merchant_product_id']->id,
 			'marketplace_product_id' => $product_datas['marketplace_product_id'],
 		);
-		$product_field   = $product_datas['merchant_product_id']->field != null
+		$product_field   = $product_datas['merchant_product_id']->field !== null
 			? strtolower( (string) $product_datas['merchant_product_id']->field )
 			: false;
 		// search product foreach value.
@@ -717,17 +705,17 @@ class Lengow_Product {
 				}
 				break;
 			case 'sku':
-				$sql        = "
-				  	SELECT post_id FROM $wpdb->postmeta 
-				  	WHERE meta_key = '_sku' AND meta_value = '%s' LIMIT 1
-				";
+				$sql        = '
+				  	SELECT post_id FROM ' . $wpdb->postmeta . ' 
+				  	WHERE meta_key = \'_sku\' AND meta_value = \'%s\' LIMIT 1
+				';
 				$product_id = $wpdb->get_var( $wpdb->prepare( $sql, $attribute_value ) );
 				break;
 			default:
-				$sql        = "
-					SELECT post_id FROM $wpdb->postmeta 
-					WHERE meta_key = '%s' AND meta_value = '%s' LIMIT 1
-				";
+				$sql        = '
+					SELECT post_id FROM ' . $wpdb->postmeta . ' 
+					WHERE meta_key = \'%s\' AND meta_value = \'%s\' LIMIT 1
+				';
 				$product_id = $wpdb->get_var( $wpdb->prepare( $sql, array( $type, $attribute_value ) ) );
 				break;
 		}
@@ -760,9 +748,9 @@ class Lengow_Product {
 		if ( ! $value ) {
 			$wpdb->delete( $wpdb->prefix . 'lengow_product', array( 'product_id' => ( (int) $product_id ) ) );
 		} else {
-			$sql     = "SELECT product_id FROM {$wpdb->prefix}lengow_product WHERE product_id = %d";
+			$sql     = 'SELECT product_id FROM ' . $wpdb->prefix . 'lengow_product WHERE product_id = %d';
 			$results = $wpdb->get_results( $wpdb->prepare( $sql, (int) $product_id ) );
-			if ( count( $results ) == 0 ) {
+			if ( count( $results ) === 0 ) {
 				$wpdb->insert( $wpdb->prefix . 'lengow_product', array( 'product_id' => ( (int) $product_id ) ) );
 			}
 		}
@@ -777,7 +765,7 @@ class Lengow_Product {
 	 */
 	public static function get_lengow_products() {
 		global $wpdb;
-		$sql      = "SELECT * FROM {$wpdb->prefix}lengow_product";
+		$sql      = 'SELECT * FROM ' . $wpdb->prefix . 'lengow_product';
 		$results  = $wpdb->get_results( $sql );
 		$products = array();
 		foreach ( $results as $value ) {
@@ -796,7 +784,7 @@ class Lengow_Product {
 	 */
 	public static function is_lengow_product( $product_id ) {
 		global $wpdb;
-		$sql     = "SELECT product_id FROM {$wpdb->prefix}lengow_product WHERE product_id = %d";
+		$sql     = 'SELECT product_id FROM ' . $wpdb->prefix . 'lengow_product WHERE product_id = %d';
 		$results = $wpdb->get_results( $wpdb->prepare( $sql, (int) $product_id ) );
 		if ( count( $results ) > 0 ) {
 			return true;
@@ -809,7 +797,7 @@ class Lengow_Product {
 	 * Returns the price (excluding tax).
 	 *
 	 * @param boolean $including_tax price including tax or not
-	 * @param string $price to calculate, left blank to just use get_price()
+	 * @param string|null $price to calculate, left blank to just use get_price()
 	 *
 	 * @return string
 	 */
@@ -877,7 +865,7 @@ class Lengow_Product {
 	 */
 	private function _get_shipping_class() {
 		$shipping_class_name = '';
-		$taxonomy = 'product_shipping_class';
+		$taxonomy            = 'product_shipping_class';
 		// get product terms.
 		$product_terms = get_the_terms( $this->_product_id, $taxonomy );
 		if ( $product_terms ) {
@@ -959,19 +947,19 @@ class Lengow_Product {
 	/**
 	 * Get data for attribute.
 	 *
-	 * @param string $name attribute name
+	 * @param string|null $name attribute name
 	 *
 	 * @return string
 	 */
 	private function _get_attribute_data( $name = null ) {
 		if ( ! is_null( $name ) ) {
-			if ( $this->_product_type == 'variation' ) {
+			if ( $this->_product_type === 'variation' ) {
 				$name            = 'attribute_' . $name;
 				$variation_datas = $this->product->get_variation_attributes();
 				if ( array_key_exists( $name, $variation_datas ) ) {
 					return $variation_datas[ $name ];
 				}
-			} elseif ( $this->_product_type != 'variable' ) {
+			} elseif ( $this->_product_type !== 'variable' ) {
 				return $this->product->get_attribute( $name );
 			}
 		}
@@ -982,7 +970,7 @@ class Lengow_Product {
 	/**
 	 * Get data for post metas.
 	 *
-	 * @param string $name post meta name
+	 * @param string|null $name post meta name
 	 *
 	 * @return string
 	 */

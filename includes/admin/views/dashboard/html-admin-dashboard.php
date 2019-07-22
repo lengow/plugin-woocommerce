@@ -7,12 +7,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <div class="lgw-container" id="lengow_home_wrapper">
-	<?php if ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) == 1 ) : ?>
+	<?php if ( (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) : ?>
 	<div id="lgw-preprod" class="adminlengowhome">
 		<?php echo $locale->t( 'menu.preprod_active' ); ?>
 	</div>
 	<?php endif; ?>
-	<?php if ( $merchant_status['type'] == 'free_trial' && ! $merchant_status['expired'] ) : ?>
+	<?php if ( $merchant_status['type'] === 'free_trial' && ! $merchant_status['expired'] ) : ?>
 	<p class="text-right" id="menucountertrial">
 		<?php echo $locale->t( 'menu.counter', array( 'counter' => $merchant_status['day'] ) ); ?>
 		<a href="http://my.lengow.io/" target="_blank">

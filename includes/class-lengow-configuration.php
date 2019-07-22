@@ -40,7 +40,6 @@ class Lengow_Configuration {
 		static $keys = null;
 		if ( $keys === null ) {
 			$locale = new Lengow_Translation();
-
 			$keys = array(
 				'lengow_token'                       => array(
 					'global' => true,
@@ -226,7 +225,7 @@ class Lengow_Configuration {
 		     && strlen( self::get( 'lengow_secret_token' ) ) > 0
 		) {
 			return array(
-				self::get( 'lengow_account_id' ),
+				(int)self::get( 'lengow_account_id' ),
 				self::get( 'lengow_access_token' ),
 				self::get( 'lengow_secret_token' ),
 			);
@@ -356,14 +355,14 @@ class Lengow_Configuration {
 	public static function migrate_product_selection() {
 		$export_all_product = self::get( 'lengow_export_all_product' );
 		if ( $export_all_product !== false ) {
-			$value = ( $export_all_product == '' || $export_all_product == '0' ) ? 1 : 0;
+			$value = ( $export_all_product === '' || $export_all_product === '0' ) ? 1 : 0;
 			self::update_value( 'lengow_selection_enabled', $value );
 			self::delete( 'lengow_export_all_product' );
 		}
 	}
 
 	/**
-	 * Migrate product types for old version - convert string to array
+	 * Migrate product types for old version - convert string to array.
 	 */
 	public static function migrate_product_types() {
 		$old_product_types = self::get( 'lengow_export_type' );
@@ -420,7 +419,7 @@ class Lengow_Configuration {
 	public static function check_and_log( $key, $value ) {
 		$old_value = self::get( $key );
 
-		if ( $key == 'lengow_access_token' || $key == 'lengow_secret_token' ) {
+		if ( $key === 'lengow_access_token' || $key === 'lengow_secret_token' ) {
 			$value     = preg_replace( "/[a-zA-Z0-9]/", '*', $value );
 			$old_value = preg_replace( "/[a-zA-Z0-9]/", '*', $old_value );
 		}

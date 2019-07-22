@@ -49,7 +49,7 @@ function explorer( $path ) {
 	if ( is_dir( $path ) ) {
 		$me = opendir( $path );
 		while ( $child = readdir( $me ) ) {
-			if ( $child != '.' && $child != '..' && $child != 'checkmd5.csv' ) {
+			if ( $child !== '.' && $child !== '..' && $child !== 'checkmd5.csv' ) {
 				$result = explorer( $path . DIRECTORY_SEPARATOR . $child );
 				$paths  = array_merge( $paths, $result );
 			}

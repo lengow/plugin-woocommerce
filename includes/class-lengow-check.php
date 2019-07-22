@@ -158,7 +158,7 @@ class Lengow_Check {
 	 */
 	public function get_import_information() {
 		$last_import      = Lengow_Main::get_last_import();
-		$last_import_date = $last_import['timestamp'] == 'none'
+		$last_import_date = $last_import['timestamp'] === 'none'
 			? $this->_locale->t( 'toolbox.index.last_import_none' )
 			: date( 'Y-m-d H:i:s', $last_import['timestamp'] );
 		if ( $last_import['type'] == 'none' ) {
@@ -212,7 +212,7 @@ class Lengow_Check {
 	public function get_information_by_store() {
 		$lengowExport = new Lengow_Export;
 		if ( ! is_null( Lengow_Configuration::get( 'lengow_last_export' ) )
-		     && Lengow_Configuration::get( 'lengow_last_export' ) != ''
+		     && Lengow_Configuration::get( 'lengow_last_export' ) !== ''
 		) {
 			$last_export = date( 'Y-m-d H:i:s', Lengow_Configuration::get( 'lengow_last_export' ) );
 		} else {
@@ -268,8 +268,8 @@ class Lengow_Check {
 		if ( file_exists( $file_name ) ) {
 			$file_errors  = array();
 			$file_deletes = array();
-			if ( ( $file = fopen( $file_name, "r" ) ) !== false ) {
-				while ( ( $data = fgetcsv( $file, 1000, "|" ) ) !== false ) {
+			if ( ( $file = fopen( $file_name, 'r' ) ) !== false ) {
+				while ( ( $data = fgetcsv( $file, 1000, '|' ) ) !== false ) {
 					$file_counter ++;
 					$file_path = LENGOW_PLUGIN_PATH . $data[0];
 					if ( file_exists( $file_path ) ) {
@@ -340,8 +340,8 @@ class Lengow_Check {
 	public static function get_file_modified() {
 		$file_name = LENGOW_PLUGIN_PATH . '/toolbox' . DIRECTORY_SEPARATOR . 'checkmd5.csv';
 		if ( file_exists( $file_name ) ) {
-			if ( ( $file = fopen( $file_name, "r" ) ) !== false ) {
-				while ( ( $data = fgetcsv( $file, 1000, "|" ) ) !== false ) {
+			if ( ( $file = fopen( $file_name, 'r' ) ) !== false ) {
+				while ( ( $data = fgetcsv( $file, 1000, '|' ) ) !== false ) {
 					$file_path = LENGOW_PLUGIN_PATH . $data[0];
 					$file_md5  = md5_file( $file_path );
 					if ( $file_md5 !== $data[1] ) {
@@ -376,7 +376,7 @@ class Lengow_Check {
 			} else {
 				$out .= '<td><b>' . $check['title'] . '</b></td>';
 				if ( isset( $check['state'] ) ) {
-					if ( $check['state'] == 1 ) {
+					if ( $check['state'] === 1 ) {
 						$out .= '<td align="right"><i class="fa fa-check lengow-green"></i></td>';
 					} else {
 						$out .= '<td align="right"><i class="fa fa-times lengow-red"></i></td>';
@@ -387,7 +387,7 @@ class Lengow_Check {
 						     && isset( $check['help_label'] )
 						) {
 							$out .= '<tr><td colspan="2"><p>' . $check['help'];
-							if ( array_key_exists( 'help_link', $check ) && $check['help_link'] != '' ) {
+							if ( array_key_exists( 'help_link', $check ) && $check['help_link'] !== '' ) {
 								$out .= '<br /><a target="_blank" href="'
 								        . $check['help_link'] . '">' . $check['help_label'] . '</a>';
 							}

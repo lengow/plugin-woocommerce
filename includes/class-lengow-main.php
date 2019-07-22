@@ -204,7 +204,7 @@ class Lengow_Main {
 	 */
 	public static function find_by_token( $token ) {
 		$lengow_token = Lengow_Configuration::get( 'lengow_token' );
-		if ( $lengow_token == $token ) {
+		if ( $lengow_token === $token ) {
 			return true;
 		}
 
@@ -217,6 +217,8 @@ class Lengow_Main {
 	 * @param string $name marketplace name
 	 *
 	 * @return Lengow_Marketplace
+	 *
+	 * @throws Lengow_Exception
 	 */
 	public static function get_marketplace_singleton( $name ) {
 		if ( ! isset( self::$registers[ $name ] ) ) {
@@ -243,21 +245,27 @@ class Lengow_Main {
 	 * @param string $category Category log
 	 * @param string $txt log message
 	 * @param boolean $force_output output on screen
-	 * @param string $marketplace_sku lengow marketplace sku
+	 * @param string|null $marketplace_sku lengow marketplace sku
 	 */
 	public static function log( $category, $txt, $force_output = false, $marketplace_sku = null ) {
 		$log = self::get_log_instance();
-		$log->write( $category, $txt, $force_output, $marketplace_sku );
+		if ( $log ) {
+			$log->write( $category, $txt, $force_output, $marketplace_sku );
+		}
 	}
 
 	/**
 	 * Get log Instance.
 	 *
-	 * @return Lengow_Log
+	 * @return Lengow_Log|false
 	 */
 	public static function get_log_instance() {
 		if ( is_null( self::$log ) ) {
-			self::$log = new Lengow_Log();
+			try {
+				self::$log = new Lengow_Log();
+			} catch ( Lengow_Exception $e ) {
+				return false;
+			}
 		}
 
 		return self::$log;
@@ -267,12 +275,13 @@ class Lengow_Main {
 	 * Suppress log files when too old.
 	 */
 	public static function clean_log() {
-		$log_files = Lengow_Log::get_files();
-		$days      = array();
-		$days[]    = 'logs-' . date( 'Y-m-d' ) . '.txt';
+		$days   = array();
+		$days[] = 'logs-' . date( 'Y-m-d' ) . '.txt';
 		for ( $i = 1; $i < self::$log_life; $i ++ ) {
 			$days[] = 'logs-' . date( 'Y-m-d', strtotime( '-' . $i . 'day' ) ) . '.txt';
 		}
+		/** @var Lengow_File[] $log_files */
+		$log_files = Lengow_Log::get_files();
 		if ( empty( $log_files ) ) {
 			return;
 		}
@@ -287,12 +296,12 @@ class Lengow_Main {
 	 * Set message with params for translation.
 	 *
 	 * @param string $key log key to translate
-	 * @param array $params parameters to display in the translation message
+	 * @param array|null $params parameters to display in the translation message
 	 *
 	 * @return string
 	 */
 	public static function set_log_message( $key, $params = null ) {
-		if ( is_null( $params ) || ( is_array( $params ) && count( $params ) == 0 ) ) {
+		if ( is_null( $params ) || ( is_array( $params ) && count( $params ) === 0 ) ) {
 			return $key;
 		}
 		$all_params = array();
@@ -309,8 +318,8 @@ class Lengow_Main {
 	 * Decode message with params for translation.
 	 *
 	 * @param string $message key to translate
-	 * @param string $iso_code language translation iso code
-	 * @param array $params parameters to display in the translation message
+	 * @param string|null $iso_code language translation iso code
+	 * @param array|null $params parameters to display in the translation message
 	 *
 	 * @return string
 	 */
@@ -318,17 +327,17 @@ class Lengow_Main {
 		if ( preg_match( '/^(([a-z\_]*\.){1,3}[a-z\_]*)(\[(.*)\]|)$/', $message, $result ) ) {
 			if ( isset( $result[1] ) ) {
 				$key = $result[1];
-			}
-			if ( isset( $result[4] ) && is_null( $params ) ) {
-				$str_param  = $result[4];
-				$all_params = explode( '|', $str_param );
-				foreach ( $all_params as $param ) {
-					$result               = explode( '==', $param );
-					$params[ $result[0] ] = $result[1];
+				if ( isset( $result[4] ) && is_null( $params ) ) {
+					$str_param  = $result[4];
+					$all_params = explode( '|', $str_param );
+					foreach ( $all_params as $param ) {
+						$result               = explode( '==', $param );
+						$params[ $result[0] ] = $result[1];
+					}
 				}
+				$locale  = new Lengow_Translation();
+				$message = $locale->t( $key, $params, $iso_code );
 			}
-			$locale  = new Lengow_Translation();
-			$message = $locale->t( $key, $params, $iso_code );
 		}
 
 		return $message;
@@ -410,7 +419,7 @@ class Lengow_Main {
 				chr( 29 ),
 				chr( 28 ),
 				"\n",
-				"\r"
+				"\r",
 			),
 			array(
 				' ',
@@ -427,7 +436,7 @@ class Lengow_Main {
 				'',
 				'',
 				'',
-				''
+				'',
 			),
 			$str
 		);
@@ -627,7 +636,7 @@ class Lengow_Main {
 			/* YU */
 			'/[\x{042E}]/u',
 			/* ZH */
-			'/[\x{0416}]/u'
+			'/[\x{0416}]/u',
 		);
 
 		// ö to oe.
@@ -706,7 +715,7 @@ class Lengow_Main {
 			'YI',
 			'YO',
 			'YU',
-			'ZH'
+			'ZH',
 		);
 
 		return preg_replace( $patterns, $replacements, $str );

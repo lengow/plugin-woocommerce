@@ -51,7 +51,7 @@ class Lengow_Admin_Settings {
 		switch ( $action ) {
 			case 'process':
 				foreach ( $_POST as $key => $value ) {
-					if ( $value == "on" ) {
+					if ( $value === 'on' ) {
 						$value = 1;
 					}
 					if ( Lengow_Configuration::get( $key ) != $value ) {
