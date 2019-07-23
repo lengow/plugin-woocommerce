@@ -266,7 +266,7 @@ class Lengow_Import {
 								$this->_log_output
 							);
 						}
-						/*if ( $total_orders <= 0 && $this->_import_one_order ) {
+						if ( $total_orders <= 0 && $this->_import_one_order ) {
 							throw new Lengow_Exception( 'lengow_log.exception.order_not_found' );
 						} elseif ( $total_orders > 0 ) {
 							$result = $this->_import_orders( $orders );
@@ -274,7 +274,7 @@ class Lengow_Import {
 								$order_new   += $result['order_new'];
 								$order_error += $result['order_error'];
 							}
-						}*/
+						}
 					}
 				} catch ( Lengow_Exception $e ) {
 					$error_message = $e->getMessage();
