@@ -98,6 +98,9 @@ class Lengow_Configuration {
 					'export' => false,
 					'global' => true,
 				),
+				'lengow_catalog_update'              => array(
+					'global' => true,
+				),
 				'lengow_marketplace_update'          => array(
 					'global' => true,
 				),

@@ -40,18 +40,13 @@ class Lengow_Connector {
 	// const LENGOW_API_URL = 'http://10.100.1.82:8081';
 
 	/**
-	 * @var string url of the SANDBOX Lengow.
-	 */
-	const LENGOW_API_SANDBOX_URL = 'https://api.lengow.net';
-
-	/**
 	 * @var array default options for curl.
 	 */
 	public static $curl_opts = array(
 		CURLOPT_CONNECTTIMEOUT => 10,
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_TIMEOUT        => 10,
-		CURLOPT_USERAGENT      => 'lengow-php-sdk',
+		CURLOPT_USERAGENT      => 'lengow-cms-woocommerce',
 	);
 
 	/**
@@ -76,7 +71,7 @@ class Lengow_Connector {
 		'/v3.0/orders'       => 20,
 		'/v3.0/marketplaces' => 15,
 		'/v3.0/plans'        => 5,
-		'/v3.0/stats'        => 3,
+		'/v3.0/stats'        => 5,
 		'/v3.1/cms'          => 5,
 	);
 
@@ -121,7 +116,7 @@ class Lengow_Connector {
 	 *
 	 * @param string $method Lengow method API call
 	 * @param array $array Lengow method API parameters
-	 * @param string $type type of request GET|POST|PUT|HEAD|DELETE|PATCH
+	 * @param string $type type of request GET|POST|PUT|PATCH
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
@@ -173,22 +168,6 @@ class Lengow_Connector {
 	}
 
 	/**
-	 * Head API call.
-	 *
-	 * @param string $method Lengow method API call
-	 * @param array $array Lengow method API parameters
-	 * @param string $format return format of API
-	 * @param string $body body datas for request
-	 *
-	 * @throws Lengow_Exception Get Curl error
-	 *
-	 * @return mixed
-	 */
-	public function head( $method, $array = array(), $format = 'json', $body = '' ) {
-		return $this->call( $method, $array, 'HEAD', $format, $body );
-	}
-
-	/**
 	 * Put API call.
 	 *
 	 * @param string $method Lengow method API call
@@ -202,22 +181,6 @@ class Lengow_Connector {
 	 */
 	public function put( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'PUT', $format, $body );
-	}
-
-	/**
-	 * Delete API call.
-	 *
-	 * @param string $method Lengow method API call
-	 * @param array $array Lengow method API parameters
-	 * @param string $format return format of API
-	 * @param string $body body datas for request
-	 *
-	 * @throws Lengow_Exception Get Curl error
-	 *
-	 * @return mixed
-	 */
-	public function delete( $method, $array = array(), $format = 'json', $body = '' ) {
-		return $this->call( $method, $array, 'DELETE', $format, $body );
 	}
 
 	/**

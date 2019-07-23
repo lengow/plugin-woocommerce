@@ -98,7 +98,7 @@ if ( isset( $_GET['get_sync'] ) && $_GET['get_sync'] == 1 ) {
 	$sync = isset( $_GET['sync'] ) ? $_GET['sync'] : false;
 	// sync catalogs id between Lengow and Shopware
 	if ( ! $sync || $sync === 'catalog' ) {
-		Lengow_Sync::sync_catalog();
+		Lengow_Sync::sync_catalog( $force );
 	}
 	// sync orders between Lengow and WooCommerce.
 	if ( ! $sync || $sync === 'order' ) {

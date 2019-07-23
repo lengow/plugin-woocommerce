@@ -35,10 +35,11 @@ class Lengow_Sync {
 	 * @var array cache time for statistic, account status, cms options and marketplace synchronisation.
 	 */
 	protected static $_cache_times = array(
+		'catalog'        => 21600,
 		'cms_option'     => 86400,
 		'status_account' => 86400,
-		'statistic'      => 43200,
-		'marketplace'    => 21600,
+		'statistic'      => 86400,
+		'marketplace'    => 43200,
 	);
 
 	/**
@@ -113,11 +114,23 @@ class Lengow_Sync {
 
 	/**
 	 * Sync Lengow catalogs for order synchronisation
+	 *
+	 * @param boolean $force Force cache Update
+	 *
+	 * @return boolean
 	 */
-	public static function sync_catalog() {
+	public static function sync_catalog( $force = false ) {
 		$setting_updated = false;
 		if ( Lengow_Connector::is_new_merchant() ) {
 			return false;
+		}
+		if ( ! $force ) {
+			$updated_at = Lengow_Configuration::get( 'lengow_catalog_update' );
+			if ( ! is_null( $updated_at )
+			     && ( time() - strtotime( $updated_at ) ) < self::$_cache_times['catalog']
+			) {
+				return false;
+			}
 		}
 		$result = Lengow_Connector::query_api( 'get', '/v3.1/cms' );
 		if ( isset( $result->cms ) ) {
@@ -142,6 +155,9 @@ class Lengow_Sync {
 		if ( $setting_updated ) {
 			Lengow_Configuration::update_value( 'lengow_last_setting_update', date( 'Y-m-d H:i:s' ) );
 		}
+		Lengow_Configuration::update_value( 'lengow_catalog_update', date( 'Y-m-d H:i:s' ) );
+
+		return true;
 	}
 
 	/**
