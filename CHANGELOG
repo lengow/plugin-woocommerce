@@ -2,6 +2,7 @@
 Version 2.1.1
 ========================================================
 
+    - Feature: [import] Optimization of the order recovery system
     - Bugfix: [export] Recovering all distinct attributes in SQL query
 
 ========================================================

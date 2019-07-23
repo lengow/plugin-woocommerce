@@ -32,6 +32,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Import {
 
 	/**
+	 * @var integer max import days for old versions
+	 */
+	const MAX_IMPORT_DAYS = 10;
+
+	/**
 	 * @var array valid states lengow to create a Lengow order.
 	 */
 	public static $lengow_states = array(
@@ -66,14 +71,24 @@ class Lengow_Import {
 	private $_limit = 0;
 
 	/**
-	 * @var string|null start import date.
+	 * @var string|false imports orders updated since
 	 */
-	private $_date_from = null;
+	protected $_updated_from = false;
 
 	/**
-	 * @var string|null end import date.
+	 * @var string|false imports orders updated until
 	 */
-	private $_date_to = null;
+	protected $_updated_to = false;
+
+	/**
+	 * @var string|false imports orders created since
+	 */
+	protected $_created_from = false;
+
+	/**
+	 * @var string|false imports orders created until
+	 */
+	protected $_created_to = false;
 
 	/**
 	 * @var boolean import one order.
@@ -127,6 +142,8 @@ class Lengow_Import {
 	 * string  marketplace_sku     lengow marketplace order id to import
 	 * string  marketplace_name    lengow marketplace name to import
 	 * string  type                type of current import
+	 * string  created_from        import of orders since
+	 * string  created_to          import of orders until
 	 * integer delivery_address_id Lengow delivery address id to import
 	 * integer shop_id             shop id for current import
 	 * integer days                import period
@@ -146,12 +163,12 @@ class Lengow_Import {
 			}
 		} else {
 			// recovering the time interval.
-			$days             = isset( $params['days'] )
-				? $params['days']
-				: (int) Lengow_Configuration::get( 'lengow_import_days' );
-			$this->_date_from = date( 'c', strtotime( date( 'Y-m-d' ) . ' -' . $days . 'days' ) );
-			$this->_date_to   = date( 'c' );
-			$this->_limit     = isset( $params['limit'] ) ? $params['limit'] : 0;
+			$this->_get_import_period(
+				isset( $params['days'] ) ? (int) $params['days'] : false,
+				isset( $params['created_from'] ) ? $params['created_from'] : false,
+				isset( $params['created_to'] ) ? $params['created_to'] : false
+			);
+			$this->_limit = isset( $params['limit'] ) ? $params['limit'] : 0;
 		}
 		// get other params.
 		$this->_preprod_mode = isset( $params['preprod_mode'] )
@@ -176,11 +193,10 @@ class Lengow_Import {
 
 			return false;
 		}
-
 		$order_new   = 0;
 		$order_error = 0;
 		$error       = false;
-
+		$sync_ok     = true;
 		// clean logs.
 		Lengow_Main::clean_log();
 		if ( self::is_in_process() && ! $this->_preprod_mode && ! $this->_import_one_order ) {
@@ -193,11 +209,9 @@ class Lengow_Import {
 			$error = Lengow_Main::set_log_message( 'lengow_log.error.credentials_not_valid' );
 			Lengow_Main::log( 'Import', $error, $this->_log_output );
 		} else {
-            if ( ! $this->_import_one_order ) {
-                self::set_in_process();
-                // update last import date.
-                Lengow_Main::update_date_import( $this->_type_import );
-            }
+			if ( ! $this->_import_one_order ) {
+				self::set_in_process();
+			}
 			// check Lengow catalogs for order synchronisation
 			if ( ! $this->_import_one_order && $this->_type_import === 'manual' ) {
 				Lengow_Sync::sync_catalog();
@@ -252,15 +266,15 @@ class Lengow_Import {
 								$this->_log_output
 							);
 						}
-						if ( $total_orders <= 0 && $this->_import_one_order ) {
+						/*if ( $total_orders <= 0 && $this->_import_one_order ) {
 							throw new Lengow_Exception( 'lengow_log.exception.order_not_found' );
 						} elseif ( $total_orders > 0 ) {
 							$result = $this->_import_orders( $orders );
 							if ( ! $this->_import_one_order ) {
-								$order_new += $result['order_new'];
+								$order_new   += $result['order_new'];
 								$order_error += $result['order_error'];
 							}
-						}
+						}*/
 					}
 				} catch ( Lengow_Exception $e ) {
 					$error_message = $e->getMessage();
@@ -269,6 +283,7 @@ class Lengow_Import {
 					                 . '" ' . $e->getFile() . ' | ' . $e->getLine();
 				}
 				if ( isset( $error_message ) ) {
+					$sync_ok         = false;
 					$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 					Lengow_Main::log(
 						'Import',
@@ -300,7 +315,10 @@ class Lengow_Import {
 					);
 				}
 			}
-
+			// update last import date.
+			if ( ! $this->_import_one_order && $sync_ok ) {
+				Lengow_Main::update_date_import( $this->_type_import );
+			}
 			// finish import process.
 			self::set_end();
 			Lengow_Main::log(
@@ -360,9 +378,9 @@ class Lengow_Import {
 	/**
 	 * Call Lengow order API.
 	 *
+	 * @return array
 	 * @throws Lengow_Exception no connection with Lengow webservice / credentials not valid
 	 *
-	 * @return array
 	 */
 	private function _get_orders_from_api() {
 		$page   = 1;
@@ -381,13 +399,15 @@ class Lengow_Import {
 				$this->_log_output
 			);
 		} else {
+			$date_from = $this->_created_from ? $this->_created_from : $this->_updated_from;
+			$date_to   = $this->_created_to ? $this->_created_to : $this->_updated_to;
 			Lengow_Main::log(
 				'Import',
 				Lengow_Main::set_log_message(
 					'log.import.connector_get_all_order',
 					array(
-						'date_from'  => date( 'Y-m-d', strtotime( (string) $this->_date_from ) ),
-						'date_to'    => date( 'Y-m-d', strtotime( (string) $this->_date_to ) ),
+						'date_from'  => date( 'Y-m-d H:i:s', strtotime( $date_from ) ),
+						'date_to'    => date( 'Y-m-d H:i:s', strtotime( $date_to ) ),
 						'catalog_id' => implode( ', ', $this->_shop_catalog_ids ),
 					)
 				),
@@ -407,14 +427,26 @@ class Lengow_Import {
 					'stream'
 				);
 			} else {
+				if ( $this->_created_from && $this->_created_to ) {
+					$time_params = array(
+						'marketplace_order_date_from' => $this->_created_from,
+						'marketplace_order_date_to'   => $this->_created_to,
+					);
+				} else {
+					$time_params = array(
+						'updated_from' => $this->_updated_from,
+						'updated_to'   => $this->_updated_to,
+					);
+				}
 				$results = $this->_connector->get(
 					'/v3.0/orders',
-					array(
-						'updated_from' => $this->_date_from,
-						'updated_to'   => $this->_date_to,
-						'catalog_ids'  => implode( ',', $this->_shop_catalog_ids ),
-						'account_id'   => $this->_account_id,
-						'page'         => $page,
+					array_merge(
+						$time_params,
+						array(
+							'catalog_ids' => implode( ',', $this->_shop_catalog_ids ),
+							'account_id'  => $this->_account_id,
+							'page'        => $page,
+						)
 					),
 					'stream'
 				);
@@ -575,6 +607,52 @@ class Lengow_Import {
 			'order_new'   => $order_new,
 			'order_error' => $order_error,
 		);
+	}
+
+	/**
+	 * Get Import period
+	 *
+	 * @param integer|false $days Import period
+	 * @param string|false $created_from Import of orders since
+	 * @param string|false $created_to Import of orders until
+	 */
+	protected function _get_import_period( $days, $created_from, $created_to ) {
+		if ( $created_from && $created_to ) {
+			// retrieval of orders created from ... until ...
+			$created_from_timestamp = strtotime( $created_from );
+			$created_to_timestamp   = strtotime( $created_to ) + 86399;
+			$interval_day           = (int) ( ( $created_to_timestamp - $created_from_timestamp ) / 86400 );
+			if ( $interval_day > self::MAX_IMPORT_DAYS ) {
+				$date_from = date( 'c', $created_from_timestamp );
+				$date_to   = date( 'c', ( $created_from_timestamp + self::MAX_IMPORT_DAYS * 86400 ) );
+			} else {
+				$date_from = date( 'c', $created_from_timestamp );
+				$date_to   = date( 'c', $created_to_timestamp );
+			}
+			$this->_created_from = $date_from;
+			$this->_created_to   = $date_to;
+		} else {
+			// order recovery updated since ... days
+			$import_days = (int) Lengow_Configuration::get( 'lengow_import_days' );
+			// add security for older versions of the plugin
+			$import_days = $import_days > self::MAX_IMPORT_DAYS ? self::MAX_IMPORT_DAYS : $import_days;
+			if ( $days ) {
+				$import_days = $days > self::MAX_IMPORT_DAYS ? self::MAX_IMPORT_DAYS : $days;
+			} else {
+				$last_import         = Lengow_Main::get_last_import();
+				$last_setting_update = Lengow_Configuration::get( 'lengow_last_setting_update' );
+				if ( $last_import['timestamp'] !== 'none'
+				     && $last_import['timestamp'] > strtotime( $last_setting_update )
+				) {
+					$current_timestamp = time();
+					$interval_day      = (int) ( ( $current_timestamp - $last_import['timestamp'] ) / 86400 );
+					$interval_day      = $interval_day === 0 ? 1 : $interval_day;
+					$import_days       = $interval_day > $import_days ? $import_days : $interval_day;
+				}
+			}
+			$this->_updated_from = date( 'c', ( time() - $import_days * 86400 ) );
+			$this->_updated_to   = date( 'c' );
+		}
 	}
 
 	/**
