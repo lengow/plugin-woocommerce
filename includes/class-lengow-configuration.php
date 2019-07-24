@@ -432,7 +432,7 @@ class Lengow_Configuration {
 			$setting   = $keys[ $key ];
 			$old_value = self::get( $key );
 			if ( $old_value != $value ) {
-				if ( isset( $setting['secret'] ) || $setting['secret'] ) {
+				if ( isset( $setting['secret'] ) && $setting['secret'] ) {
 					$value     = preg_replace( "/[a-zA-Z0-9]/", '*', $value );
 					$old_value = preg_replace( "/[a-zA-Z0-9]/", '*', $old_value );
 				}
