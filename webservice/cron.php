@@ -26,8 +26,10 @@
  * string  sync                Number of products exported
  * integer days                Import period
  * integer limit               Number of orders to import
- * string  $marketplace_sku    Lengow marketplace order id to import
+ * string  marketplace_sku     Lengow marketplace order id to import
  * string  marketplace_name    Lengow marketplace name to import
+ * string  created_from        import of orders since
+ * string  created_to          import of orders until
  * integer delivery_address_id Lengow delivery address id to import
  * boolean force               Force synchronisation for a specific process
  * boolean preprod_mode        Activate preprod mode
@@ -96,7 +98,7 @@ if ( isset( $_GET['get_sync'] ) && $_GET['get_sync'] == 1 ) {
 	$sync = isset( $_GET['sync'] ) ? $_GET['sync'] : false;
 	// sync catalogs id between Lengow and Shopware
 	if ( ! $sync || $sync === 'catalog' ) {
-		Lengow_Sync::sync_catalog();
+		Lengow_Sync::sync_catalog( $force );
 	}
 	// sync orders between Lengow and WooCommerce.
 	if ( ! $sync || $sync === 'order' ) {
@@ -110,6 +112,12 @@ if ( isset( $_GET['get_sync'] ) && $_GET['get_sync'] == 1 ) {
 		}
 		if ( isset( $_GET['days'] ) ) {
 			$params['days'] = (int) $_GET['days'];
+		}
+		if ( isset( $_GET['created_from'] ) ) {
+			$params['created_from'] = (string) $_GET['created_from'];
+		}
+		if ( isset( $_GET['created_to'] ) ) {
+			$params['created_to'] = (string) $_GET['created_to'];
 		}
 		if ( isset( $_GET['limit'] ) ) {
 			$params['limit'] = (int) $_GET['limit'];

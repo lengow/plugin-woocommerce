@@ -40,7 +40,7 @@ if [ -z "$1" ]; then
 	exit 0
 else
 	VERSION="$1"
-	ARCHIVE_NAME='lengow-woocommerce.'$VERSION'.zip'
+	ARCHIVE_NAME='lengow.woocommerce.'$VERSION'.zip'
 fi
 
 # Variables

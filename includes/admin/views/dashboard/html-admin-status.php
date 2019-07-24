@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="lgw-container">
 	<div class="lgw-box">
 		<div class="lgw-row">
-			<?php if ( $merchant_status['type'] == 'free_trial' && $merchant_status['expired'] ) : ?>
+			<?php if ( $merchant_status['type'] === 'free_trial' && $merchant_status['expired'] ) : ?>
 			<div class="lgw-col-6 display-inline-block">
 				<h2 class="text-center"><?php echo $locale->t( 'status.screen.title_end_free_trial' ); ?></h2>
 				<h3 class="text-center"><?php echo $locale->t( 'status.screen.subtitle_end_free_trial' ); ?></h3>

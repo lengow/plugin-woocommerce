@@ -35,10 +35,11 @@ class Lengow_Sync {
 	 * @var array cache time for statistic, account status, cms options and marketplace synchronisation.
 	 */
 	protected static $_cache_times = array(
+		'catalog'        => 21600,
 		'cms_option'     => 86400,
 		'status_account' => 86400,
-		'statistic'      => 43200,
-		'marketplace'    => 21600,
+		'statistic'      => 86400,
+		'marketplace'    => 43200,
 	);
 
 	/**
@@ -62,20 +63,20 @@ class Lengow_Sync {
 		global $wp_version;
 		$lengow_export    = new Lengow_Export();
 		$data             = array(
-			'domain_name'    => $_SERVER["SERVER_NAME"],
+			'domain_name'    => $_SERVER['SERVER_NAME'],
 			'token'          => Lengow_Main::get_token(),
 			'type'           => 'woocommerce',
 			'version'        => $wp_version,
 			'plugin_version' => LENGOW_VERSION,
 			'email'          => Lengow_Configuration::get( 'admin_email' ),
 			'cron_url'       => Lengow_Main::get_cron_url(),
-			'return_url'     => 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"],
+			'return_url'     => 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'],
 			'shops'          => array(),
 		);
 		$data['shops'][1] = array(
 			'token'                   => Lengow_Main::get_token(),
 			'shop_name'               => Lengow_Configuration::get( 'blogname' ),
-			'domain_url'              => $_SERVER["SERVER_NAME"],
+			'domain_url'              => $_SERVER['SERVER_NAME'],
 			'feed_url'                => Lengow_Main::get_export_url(),
 			'total_product_number'    => $lengow_export->get_total_product(),
 			'exported_product_number' => $lengow_export->get_total_export_product(),
@@ -107,14 +108,29 @@ class Lengow_Sync {
 				}
 			}
 		}
+		// Save last update date for a specific settings (change synchronisation interval time)
+		Lengow_Configuration::update_value( 'lengow_last_setting_update', date( 'Y-m-d H:i:s' ) );
 	}
 
 	/**
 	 * Sync Lengow catalogs for order synchronisation
+	 *
+	 * @param boolean $force Force cache Update
+	 *
+	 * @return boolean
 	 */
-	public static function sync_catalog() {
+	public static function sync_catalog( $force = false ) {
+		$setting_updated = false;
 		if ( Lengow_Connector::is_new_merchant() ) {
 			return false;
+		}
+		if ( ! $force ) {
+			$updated_at = Lengow_Configuration::get( 'lengow_catalog_update' );
+			if ( ! is_null( $updated_at )
+			     && ( time() - strtotime( $updated_at ) ) < self::$_cache_times['catalog']
+			) {
+				return false;
+			}
 		}
 		$result = Lengow_Connector::query_api( 'get', '/v3.1/cms' );
 		if ( isset( $result->cms ) ) {
@@ -124,14 +140,24 @@ class Lengow_Sync {
 					foreach ( $cms->shops as $cms_shop ) {
 						$shop = Lengow_Main::find_by_token( $cms_shop->token );
 						if ( $shop ) {
-							Lengow_Configuration::set_catalog_ids( $cms_shop->catalog_ids );
-							Lengow_Configuration::set_active_shop();
+							$catalog_ids_change = Lengow_Configuration::set_catalog_ids( $cms_shop->catalog_ids );
+							$active_shop_change = Lengow_Configuration::set_active_shop();
+							if ( ! $setting_updated && ( $catalog_ids_change || $active_shop_change ) ) {
+								$setting_updated = true;
+							}
 						}
 					}
 					break;
 				}
 			}
 		}
+		// Save last update date for a specific settings (change synchronisation interval time)
+		if ( $setting_updated ) {
+			Lengow_Configuration::update_value( 'lengow_last_setting_update', date( 'Y-m-d H:i:s' ) );
+		}
+		Lengow_Configuration::update_value( 'lengow_catalog_update', date( 'Y-m-d H:i:s' ) );
+
+		return true;
 	}
 
 	/**

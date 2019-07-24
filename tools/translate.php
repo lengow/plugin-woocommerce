@@ -20,12 +20,12 @@ ini_set( "display_errors", 1 );
 $directory  = dirname( dirname( __FILE__ ) ) . '/translations/yml/';
 $list_files = array_diff( scandir( $directory ), array( '..', '.', 'index.php' ) );
 $list_files = array_diff( $list_files, array( 'en_GB.yml' ) );
-array_unshift( $list_files, "en_GB.yml" );
+array_unshift( $list_files, 'en_GB.yml' );
 
 foreach ( $list_files as $list ) {
 	$yml_file = yaml_parse_file( $directory . $list );
 	$locale   = basename( $directory . $list, '.yml' );
-	if ( $list == 'log.yml' ) {
+	if ( $list === 'log.yml' ) {
 		$fp = fopen( dirname( dirname( __FILE__ ) ) . '/translations/en_GB.csv', 'a+' );
 	} else {
 		$fp = fopen( dirname( dirname( __FILE__ ) ) . '/translations/' . $locale . '.csv', 'w+' );
@@ -39,7 +39,7 @@ foreach ( $list_files as $list ) {
 /**
  * Write csv
  *
- * @param string $fp
+ * @param resource $fp
  * @param string $text
  * @param array $front_key
  */

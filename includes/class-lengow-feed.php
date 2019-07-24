@@ -132,15 +132,15 @@ class Lengow_Feed {
 	 *
 	 * @param string $type (header, body or footer)
 	 * @param array $data export data
-	 * @param boolean $is_first is first product to export
-	 * @param boolean $max_character Max characters for yaml format
+	 * @param boolean|null $is_first is first product to export
+	 * @param boolean|null $max_character Max characters for yaml format
 	 */
 	public function write( $type, $data = array(), $is_first = null, $max_character = null ) {
 		switch ( $type ) {
 			case 'header':
 				if ( $this->_stream ) {
 					header( $this->_get_html_header() );
-					if ( $this->_format == 'csv' ) {
+					if ( $this->_format === 'csv' ) {
 						header( 'Content-Disposition: attachment; filename=feed.csv' );
 					}
 				}
@@ -241,7 +241,7 @@ class Lengow_Feed {
 
 				return $content;
 			case 'yaml':
-				if ( $max_character % 2 == 1 ) {
+				if ( $max_character % 2 === 1 ) {
 					$max_character = $max_character + 1;
 				} else {
 					$max_character = $max_character + 2;
@@ -292,6 +292,8 @@ class Lengow_Feed {
 	 * Finalize export generation.
 	 *
 	 * @return string|boolean
+	 *
+	 * @throws Lengow_Exception
 	 */
 	public function end() {
 		$this->write( 'footer' );

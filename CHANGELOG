@@ -1,4 +1,13 @@
 ========================================================
+Version 2.1.1
+========================================================
+
+    - Feature: [import] Optimization of the order recovery system
+    - Feature: [import] Setting up a cache for synchronizing catalogs ids
+    - Feature: [export] Recovering parent images for the variation
+    - Bugfix: [export] Recovering all distinct attributes in SQL query
+
+========================================================
 Version 2.1.0
 ========================================================
 

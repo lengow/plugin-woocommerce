@@ -12,7 +12,7 @@ $logs      = Lengow_Log::get_paths();
 $list_file = $logs ? array_reverse( $logs ) : array();
 ?>
 <div class="lgw-container" id="lengow_mainsettings_wrapper" xmlns="http://www.w3.org/1999/html">
-	<?php if ( $values['lengow_preprod_enabled'] == 1 ) : ?>
+	<?php if ( (bool) $values['lengow_preprod_enabled'] ) : ?>
 		<div id="lgw-preprod" class="adminlengowmainsetting">
 			<?php echo $locale->t( 'menu.preprod_active' ); ?>
 		</div>
@@ -22,14 +22,14 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 		<div class="lgw-box">
 			<h2><?php echo $locale->t( 'global_setting.screen.main_setting_title' ); ?></h2>
 			<div class="form-group">
-				<div class="lgw-switch <?php echo $values['lengow_ip_enabled'] == 1 ? 'checked' : ''; ?>">
+				<div class="lgw-switch <?php echo (bool) $values['lengow_ip_enabled'] ? 'checked' : ''; ?>">
 					<label>
 						<div>
 							<span></span>
 							<input type="hidden" name="lengow_ip_enabled" value="0">
 							<input name="lengow_ip_enabled"
 							       type="checkbox"
-								<?php echo $values['lengow_ip_enabled'] == 1 ? 'checked' : ''; ?> />
+								<?php echo (bool) $values['lengow_ip_enabled'] ? 'checked' : ''; ?> />
 						</div>
 						<?php echo $keys['lengow_ip_enabled']['label']; ?>
 					</label>
@@ -50,14 +50,14 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 			<br/>
 			<h2 class="margin-s"><?php echo $locale->t( 'global_setting.screen.preprod_mode_title' ); ?></h2>
 			<p><?php echo $locale->t( 'global_setting.screen.preprod_mode_description' ); ?></p>
-			<div class="lgw-switch <?php echo $values['lengow_preprod_enabled'] == 1 ? 'checked' : ''; ?>">
+			<div class="lgw-switch <?php echo (bool) $values['lengow_preprod_enabled'] ? 'checked' : ''; ?>">
 				<label>
 					<div>
 						<span></span>
 						<input type="hidden" name="lengow_preprod_enabled" value="0">
 						<input name="lengow_preprod_enabled"
 						       type="checkbox"
-							<?php echo $values['lengow_preprod_enabled'] == 1 ? 'checked' : ''; ?> />
+							<?php echo (bool) $values['lengow_preprod_enabled'] ? 'checked' : ''; ?> />
 					</div>
 					<?php echo $keys['lengow_preprod_enabled']['label']; ?>
 				</label>
@@ -82,14 +82,14 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 				</div>
 				<div class="grey-frame">
 					<div class="form-group">
-						<div class="lgw-switch <?php echo $values['lengow_store_enabled'] == 1 ? 'checked' : ''; ?>">
+						<div class="lgw-switch <?php echo (bool) $values['lengow_store_enabled'] ? 'checked' : ''; ?>">
 							<label>
 								<div>
 									<span></span>
 									<input type="hidden" name="lengow_store_enabled" value="0">
 									<input name="lengow_store_enabled"
 									       type="checkbox"
-										<?php echo $values['lengow_store_enabled'] == 1 ? 'checked' : ''; ?>/>
+										<?php echo (bool) $values['lengow_store_enabled'] ? 'checked' : ''; ?>/>
 								</div>
 								<?php echo $keys['lengow_store_enabled']['label']; ?>
 							</label>
@@ -113,7 +113,7 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 					<?php foreach ( Lengow_Main::$product_types as $row => $value ) :
 						$selected = false;
 						foreach ( $values['lengow_product_types'] as $key => $type ) {
-							if ( $type == $row ) {
+							if ( $type === $row ) {
 								$selected = 'selected';
 								continue;
 							}
@@ -129,14 +129,14 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 			<h2><?php echo $locale->t( 'global_setting.screen.import_setting_title' ); ?></h2>
 			<p><?php echo $locale->t( 'global_setting.screen.import_setting_description' ); ?></p>
 			<div class="form-group">
-				<div class="lgw-switch <?php echo $values['lengow_import_enabled'] == 1 ? 'checked' : ''; ?>">
+				<div class="lgw-switch <?php echo (bool) $values['lengow_import_enabled'] ? 'checked' : ''; ?>">
 					<label>
 						<div>
 							<span></span>
 							<input type="hidden" name="lengow_import_enabled" value="0">
 							<input name="lengow_import_enabled"
 							       type="checkbox"
-								<?php echo $values['lengow_import_enabled'] == 1 ? 'checked' : ''; ?> />
+								<?php echo (bool) $values['lengow_import_enabled'] ? 'checked' : ''; ?> />
 						</div>
 						<?php echo $keys['lengow_import_enabled']['label']; ?>
 					</label>
@@ -160,14 +160,14 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 					</div>
 					<div class="form-group">
 						<div
-							class="lgw-switch <?php echo $values['lengow_import_ship_mp_enabled'] == 1 ? 'checked' : ''; ?>">
+							class="lgw-switch <?php echo (bool) $values['lengow_import_ship_mp_enabled'] ? 'checked' : ''; ?>">
 							<label>
 								<div>
 									<span></span>
 									<input type="hidden" name="lengow_import_ship_mp_enabled" value="0">
 									<input name="lengow_import_ship_mp_enabled"
 									       type="checkbox"
-										<?php echo $values['lengow_import_ship_mp_enabled'] == 1 ? 'checked' : ''; ?>/>
+										<?php echo (bool) $values['lengow_import_ship_mp_enabled'] ? 'checked' : ''; ?>/>
 								</div>
 								<?php echo $keys['lengow_import_ship_mp_enabled']['label']; ?>
 							</label>

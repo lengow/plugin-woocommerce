@@ -126,9 +126,9 @@ $export = new Lengow_Export(
 
 if ( $get_params ) {
 	echo $export->get_export_params();
-} elseif ( $mode == 'size' ) {
+} elseif ( $mode === 'size' ) {
 	echo $export->get_total_export_product();
-} elseif ( $mode == 'total' ) {
+} elseif ( $mode === 'total' ) {
 	echo $export->get_total_product();
 } else {
 	$export->exec();

@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <div class="lgw-container" id="lengow_feed_wrapper">
-	<?php if ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) == 1 ) : ?>
+	<?php if ( (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) : ?>
 		<div id="lgw-preprod" class="adminlengowlegals">
 			<?php echo $locale->t( 'menu.preprod_active' ); ?>
 		</div>
@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</p>
 			</div>
 			<hr>
-			<div class="lgw-switch <?php echo $shop['option_selected'] == 1 ? 'checked' : ''; ?>">
+			<div class="lgw-switch <?php echo $shop['option_selected'] ? 'checked' : ''; ?>">
 				<label>
 					<div><span></span>
 						<input
@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							name="lengow_export_selection"
 							class="js-lengow_switch_option"
 							data-action="change_option_selected"
-							value="1" <?php if ( $shop['option_selected'] == 1 ) : ?> checked="checked" <?php endif; ?>>
+							value="1" <?php if ( $shop['option_selected'] ) : ?> checked="checked" <?php endif; ?>>
 					</div> <?php echo $locale->t( 'product.screen.include_specific_product' ); ?>
 				</label>
 			</div>

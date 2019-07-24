@@ -99,7 +99,7 @@ class Lengow_Admin_Orders {
 				array( 'link' => admin_url( 'admin.php?page=lengow&tab=lengow_admin_settings' ) )
 			);
 		}
-		if ( count( $messages ) == 0 ) {
+		if ( count( $messages ) === 0 ) {
 			$messages[] = $locale->t( 'lengow_log.error.no_notification' );
 		}
 

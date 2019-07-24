@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Translation {
 
 	/**
-	 * @var array all translations.
+	 * @var array|null all translations.
 	 */
 	protected static $translation = null;
 
@@ -42,12 +42,12 @@ class Lengow_Translation {
 	public $fallback_iso_code = 'en_GB';
 
 	/**
-	 * @var string iso code.
+	 * @var string|null iso code.
 	 */
 	protected $iso_code = null;
 
 	/**
-	 * @var string force iso code for log and toolbox.
+	 * @var string|null force iso code for log and toolbox.
 	 */
 	public static $force_iso_code = null;
 
@@ -63,7 +63,7 @@ class Lengow_Translation {
 	 *
 	 * @param string $message localization key
 	 * @param array $args replace word in string
-	 * @param array $iso_code iso code
+	 * @param array|null $iso_code iso code
 	 *
 	 * @return string
 	 */
@@ -118,7 +118,7 @@ class Lengow_Translation {
 	 * Load csv file.
 	 *
 	 * @param string $iso_code translation iso code
-	 * @param string $filename file location
+	 * @param string|null $filename file location
 	 *
 	 * @return boolean
 	 */
