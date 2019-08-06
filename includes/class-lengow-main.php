@@ -301,7 +301,7 @@ class Lengow_Main {
 	 * @return string
 	 */
 	public static function set_log_message( $key, $params = null ) {
-		if ( is_null( $params ) || ( is_array( $params ) && count( $params ) === 0 ) ) {
+		if ( is_null( $params ) || ( is_array( $params ) && empty( $params ) ) ) {
 			return $key;
 		}
 		$all_params = array();

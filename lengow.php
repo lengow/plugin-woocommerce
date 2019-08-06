@@ -36,14 +36,14 @@
  * Domain Path: /languages
  */
 
-// Prevent direct access.
+// prevent direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 global $wp_version;
 
-// Check if WooCommerce is active.
+// check if WooCommerce is active.
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 
 	/**
@@ -217,7 +217,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				)
 			);
 			wp_enqueue_script( 'lengow_admin_js' );
-			// Must be added to instantiate admin-ajax.php.
+			// must be added to instantiate admin-ajax.php.
 			wp_localize_script( 'lengow_admin_js', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
 		}
 
@@ -236,7 +236,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 	}
 
-	// Start module.
+	// start module.
 	$GLOBALS['lengow'] = new Lengow();
 	if ( $wp_version <= '4.0.0' ) {
 		$GLOBALS['hook_suffix'] = 'toplevel_page_lengow';

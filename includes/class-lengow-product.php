@@ -671,7 +671,7 @@ class Lengow_Product {
 		} else {
 			$sql     = 'SELECT product_id FROM ' . $wpdb->prefix . 'lengow_product WHERE product_id = %d';
 			$results = $wpdb->get_results( $wpdb->prepare( $sql, (int) $product_id ) );
-			if ( count( $results ) === 0 ) {
+			if ( empty( $results ) ) {
 				$wpdb->insert( $wpdb->prefix . 'lengow_product', array( 'product_id' => ( (int) $product_id ) ) );
 			}
 		}

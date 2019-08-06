@@ -168,7 +168,7 @@ class Lengow_Install {
 			);
 		}
 
-		// Create table lengow_orders.
+		// create table lengow_orders.
 		$name = 'lengow_orders';
 		if ( ! self::check_table_exists( $name ) ) {
 			$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . $name . ' (

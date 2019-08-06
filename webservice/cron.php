@@ -40,10 +40,10 @@
 @set_time_limit( 0 );
 @ini_set( 'memory_limit', '512M' );
 
-// Init wordpress
+// init wordpress
 require( dirname( dirname( dirname( dirname( dirname( $_SERVER['SCRIPT_FILENAME'] ) ) ) ) ) . '/wp-load.php' );
 
-// Dependencies
+// dependencies
 require_once( '../includes/class-lengow-main.php' );
 require_once( '../includes/class-lengow-sync.php' );
 require_once( '../includes/class-lengow-export.php' );

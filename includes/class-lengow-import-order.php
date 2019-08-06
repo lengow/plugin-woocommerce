@@ -102,6 +102,8 @@ class Lengow_Import_Order {
 	 * mixed   order_data          order data
 	 * mixed   package_data        package data
 	 * boolean first_package       it is the first package
+	 *
+	 * @throws Lengow_Exception
 	 */
 	public function __construct( $params = array() ) {
 		$this->_preprod_mode        = $params['preprod_mode'];
@@ -132,7 +134,7 @@ class Lengow_Import_Order {
 			$this->_delivery_address_id,
 			$this->_marketplace->legacy_code
 		);
-		// If order does not already exist.
+		// if order does not already exist.
 		if ( $already_decremented ) {
 			Lengow_Main::log(
 				'Import',
@@ -170,7 +172,7 @@ class Lengow_Import_Order {
 		try {
 			// check if the order is shipped by marketplace.
 			if ( $this->_shipped_by_mp ) {
-				// If decrease stocks from mp option is disabled.
+				// if decrease stocks from mp option is disabled.
 				Lengow_Main::log(
 					'Import',
 					Lengow_Main::set_log_message(
@@ -186,7 +188,7 @@ class Lengow_Import_Order {
 			}
 			// get products.
 			$products = $this->_get_products();
-			if ( count( $products ) === 0 ) {
+			if ( empty( $products ) ) {
 				throw new Lengow_Exception(
 					Lengow_Main::set_log_message( 'lengow_log.exception.product_list_is_empty' )
 				);
@@ -258,7 +260,7 @@ class Lengow_Import_Order {
 			'marketplace_name' => $this->_marketplace->name,
 			'lengow_state'     => $this->_order_state_lengow,
 			'order_new'        => $type_result == 'new' ? true : false,
-			'order_error'      => $type_result == 'error' ? true : false
+			'order_error'      => $type_result == 'error' ? true : false,
 		);
 
 		return $result;
@@ -271,7 +273,7 @@ class Lengow_Import_Order {
 	 */
 	private function _check_order_data() {
 		$error_messages = array();
-		if ( count( $this->_package_data->cart ) === 0 ) {
+		if ( empty( $this->_package_data->cart ) ) {
 			$error_messages[] = Lengow_Main::set_log_message( 'lengow_log.error.no_product' );
 		}
 		if ( is_null( $this->_order_data->billing_address ) ) {
@@ -379,7 +381,7 @@ class Lengow_Import_Order {
 		if ( get_option( 'woocommerce_manage_stock' ) === 'yes' ) {
 			foreach ( $products as $product_id => $product ) {
 				$wc_product = Lengow_Product::get_product( $product_id );
-				// Decrement stock product only if product managed in stock.
+				// decrement stock product only if product managed in stock.
 				if ( $wc_product->managing_stock() ) {
 					$initial_stock = $wc_product->get_stock_quantity();
 					$new_stock     = Lengow_Product::reduce_product_stock( $wc_product, $product['quantity'] );

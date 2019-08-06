@@ -468,7 +468,7 @@ class Lengow_Export {
 				}
 			}
 		}
-		if ( count( $this->_product_types ) === 0 ) {
+		if ( empty( $this->_product_types ) ) {
 			$product_types        = Lengow_Configuration::get( 'lengow_product_types' );
 			$this->_product_types = is_array( $product_types ) ? $product_types : json_decode( $product_types, true );
 		}
@@ -497,7 +497,7 @@ class Lengow_Export {
 		$feed          = new Lengow_Feed( $this->_stream, $this->_format, $this->_legacy );
 		$feed->write( 'header', $fields );
 		$is_first = true;
-		// Get the maximum of character for yaml format.
+		// get the maximum of character for yaml format.
 		$max_character = 0;
 		foreach ( $fields as $field ) {
 			if ( strlen( $field ) > $max_character ) {
@@ -569,7 +569,7 @@ class Lengow_Export {
 	 */
 	private function _get_fields() {
 		$fields = array();
-		// Check field name to lower to avoid duplicates
+		// check field name to lower to avoid duplicates
 		$formatted_fields = array();
 		foreach ( self::$default_field as $key => $value ) {
 			$fields[]           = $key;

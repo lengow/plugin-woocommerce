@@ -58,7 +58,7 @@ require_once( '../includes/class-lengow-connector.php' );
 require_once( '../includes/class-lengow-exception.php' );
 require_once( '../includes/class-lengow-sync.php' );
 
-// Check if WooCommerce plugin is activated.
+// check if WooCommerce plugin is activated.
 if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 	wp_die( 'WooCommerce plugin is not active', '', array( 'response' => 400 ) );
 }

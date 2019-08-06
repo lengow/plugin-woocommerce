@@ -473,7 +473,7 @@ class Lengow_Import {
 					)
 				);
 			}
-			// Construct array orders.
+			// construct array orders.
 			foreach ( $results->results as $order ) {
 				$orders[] = $order;
 			}
@@ -506,7 +506,7 @@ class Lengow_Import {
 				$marketplace_sku .= '--' . time();
 			}
 			// if order contains no package.
-			if ( count( $order_data->packages ) === 0 ) {
+			if ( empty( $order_data->packages ) ) {
 				Lengow_Main::log(
 					'Import',
 					Lengow_Main::set_log_message( 'log.import.error_no_package' ),

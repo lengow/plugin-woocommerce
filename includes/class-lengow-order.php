@@ -49,7 +49,7 @@ class Lengow_Order {
 	) {
 		global $wpdb;
 
-		// V2 compatibility.
+		// v2 compatibility.
 		$marketplace_legacy = is_null( $marketplace_legacy ) ? $marketplace : strtolower( $marketplace_legacy );
 
 		$query = '
@@ -63,7 +63,7 @@ class Lengow_Order {
 			$wpdb->prepare( $query, array( $marketplace_sku, $marketplace, $marketplace_legacy ) )
 		);
 
-		if ( count( $results ) === 0 ) {
+		if ( empty( $results ) ) {
 			return false;
 		}
 		foreach ( $results as $result ) {

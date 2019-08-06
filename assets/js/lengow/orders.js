@@ -34,7 +34,7 @@
 
             $.ajax({
                 url: ajaxurl,
-                type: "POST",
+                type: 'POST',
                 data: data,
                 success: function(content) {
                     var data = JSON.parse(content);

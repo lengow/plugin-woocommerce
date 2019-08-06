@@ -108,7 +108,7 @@ class Lengow_Sync {
 				}
 			}
 		}
-		// Save last update date for a specific settings (change synchronisation interval time)
+		// save last update date for a specific settings (change synchronisation interval time)
 		Lengow_Configuration::update_value( 'lengow_last_setting_update', date( 'Y-m-d H:i:s' ) );
 	}
 
@@ -151,7 +151,7 @@ class Lengow_Sync {
 				}
 			}
 		}
-		// Save last update date for a specific settings (change synchronisation interval time)
+		// save last update date for a specific settings (change synchronisation interval time)
 		if ( $setting_updated ) {
 			Lengow_Configuration::update_value( 'lengow_last_setting_update', date( 'Y-m-d H:i:s' ) );
 		}
@@ -326,17 +326,17 @@ class Lengow_Sync {
 			     && ( time() - strtotime( $updated_at ) ) < self::$_cache_times['marketplace']
 			     && file_exists( $file_path )
 			) {
-				// Recovering data with the marketplaces.json file
+				// recovering data with the marketplaces.json file
 				$marketplaces_data = file_get_contents( $file_path );
 				if ( $marketplaces_data ) {
 					return json_decode( $marketplaces_data );
 				}
 			}
 		}
-		// Recovering data with the API
+		// recovering data with the API
 		$result = Lengow_Connector::query_api( 'get', '/v3.0/marketplaces' );
 		if ( $result && is_object( $result ) && ! isset( $result->error ) ) {
-			// Updated marketplaces.json file
+			// updated marketplaces.json file
 			try {
 				$marketplace_file = new Lengow_File(
 					Lengow_Main::$lengow_config_folder,
@@ -358,7 +358,7 @@ class Lengow_Sync {
 
 			return $result;
 		} else {
-			// If the API does not respond, use marketplaces.json if it exists
+			// if the API does not respond, use marketplaces.json if it exists
 			if ( file_exists( $file_path ) ) {
 				$marketplaces_data = file_get_contents( $file_path );
 				if ( $marketplaces_data ) {
