@@ -69,9 +69,22 @@ if ( Lengow_Install::check_table_exists( 'lengow_orders' ) ) {
 			. ' CHANGE `marketplace` `marketplace_name` VARCHAR(100) COLLATE utf8_unicode_ci NOT NULL'
 		);
 	}
+	if ( Lengow_Install::check_field_exists( 'lengow_orders', 'carrier' ) ) {
+		$wpdb->query(
+			'ALTER TABLE ' . $table_name
+			. ' MODIFY `carrier` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL;'
+		);
+	}
+	if ( Lengow_Install::check_field_exists( 'lengow_orders', 'message' ) ) {
+		$wpdb->query(
+			'ALTER TABLE ' . $table_name
+			. ' MODIFY `message` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL;'
+		);
+	}
 	if ( Lengow_Install::check_field_exists( 'lengow_orders', 'extra' ) ) {
 		$wpdb->query(
-			'ALTER TABLE ' . $table_name . ' MODIFY `extra` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci;'
+			'ALTER TABLE ' . $table_name
+			. ' MODIFY `extra` LONGTEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL;'
 		);
 	}
 	if ( ! Lengow_Install::check_field_exists( 'lengow_orders', 'delivery_address_id' ) ) {
@@ -96,6 +109,7 @@ if ( Lengow_Install::check_table_exists( 'lengow_orders' ) ) {
 Lengow_Install::check_field_and_drop( 'lengow_orders', 'date_add' );
 Lengow_Install::check_index_and_drop( 'lengow_orders', 'id_order_lengow' );
 Lengow_Install::check_index_and_drop( 'lengow_orders', 'marketplace' );
+Lengow_Install::check_index_and_drop( 'lengow_orders', 'id_order' );
 Lengow_Install::check_index_and_drop( 'lengow_orders', 'id_flux' );
 
 // *********************************************************
