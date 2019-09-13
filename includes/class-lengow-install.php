@@ -267,6 +267,35 @@ class Lengow_Install {
 				Lengow_Main::set_log_message( 'log.install.table_already_created', array( 'name' => $name ) )
 			);
 		}
+
+		// create table lengow_action.
+		$name = 'lengow_action';
+		if ( ! self::check_table_exists( $name ) ) {
+			$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . $name . ' (
+				`id` INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `order_id` INTEGER(11) UNSIGNED NOT NULL,
+                `action_id` INTEGER(11) UNSIGNED NOT NULL,
+                `order_line_sku` VARCHAR(100) NULL DEFAULT NULL,
+                `action_type` VARCHAR(32) NOT NULL,
+                `retry` SMALLINT(5) UNSIGNED NOT NULL DEFAULT 0,
+                `parameters` TEXT NOT NULL,
+                `state` SMALLINT(5) UNSIGNED NOT NULL,
+                `created_at` DATETIME NOT NULL,
+				`updated_at` DATETIME NULL DEFAULT NULL,
+                PRIMARY KEY(`id`),
+                INDEX (`order_id`)
+				) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+			dbDelta( $sql );
+			Lengow_Main::log(
+				'Install',
+				Lengow_Main::set_log_message( 'log.install.table_created', array( 'name' => $name ) )
+			);
+		} else {
+			Lengow_Main::log(
+				'Install',
+				Lengow_Main::set_log_message( 'log.install.table_already_created', array( 'name' => $name ) )
+			);
+		}
 	}
 
 	/**
