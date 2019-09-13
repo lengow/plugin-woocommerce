@@ -84,7 +84,7 @@ class Lengow_Import_Order {
 	/**
 	 * @var integer|null id of the record Lengow order table.
 	 */
-	private $_id_order_lengow = null;
+	private $_order_lengow_id = null;
 
 	/**
 	 * @var boolean True if order is send by the marketplace.
@@ -164,7 +164,7 @@ class Lengow_Import_Order {
 		}
 		// checks if the required order data is present.
 		if ( ! $this->_check_order_data() ) {
-			return $this->_return_result( 'error', $this->_id_order_lengow );
+			return $this->_return_result( 'error', $this->_order_lengow_id );
 		}
 		// load tracking data.
 		$this->_load_tracking_data();
@@ -204,7 +204,7 @@ class Lengow_Import_Order {
 						$this->_marketplace_sku
 					);
 
-					return $this->_return_result( 'error', $this->_id_order_lengow );
+					return $this->_return_result( 'error', $this->_order_lengow_id );
 				} else {
 					Lengow_Main::log(
 						'Import',
@@ -237,25 +237,25 @@ class Lengow_Import_Order {
 				$this->_marketplace_sku
 			);
 
-			return $this->_return_result( 'error', $this->_id_order_lengow );
+			return $this->_return_result( 'error', $this->_order_lengow_id );
 		}
 
-		return $this->_return_result( 'new', $this->_id_order_lengow );
+		return $this->_return_result( 'new', $this->_order_lengow_id );
 	}
 
 	/**
 	 * Return an array of result for each order.
 	 *
 	 * @param string $type_result Type of result (new or error)
-	 * @param integer $id_order_lengow Lengow order id
-	 * @param integer|null $id_order WooCommerce order id
+	 * @param integer $order_lengow_id Lengow order id
+	 * @param integer|null $order_id WooCommerce order id
 	 *
 	 * @return array
 	 */
-	private function _return_result( $type_result, $id_order_lengow, $id_order = null ) {
+	private function _return_result( $type_result, $order_lengow_id, $order_id = null ) {
 		$result = array(
-			'id_order'         => $id_order,
-			'id_order_lengow'  => $id_order_lengow,
+			'order_id'         => $order_id,
+			'order_lengow_id'  => $order_lengow_id,
 			'marketplace_sku'  => $this->_marketplace_sku,
 			'marketplace_name' => $this->_marketplace->name,
 			'lengow_state'     => $this->_order_state_lengow,
@@ -449,7 +449,7 @@ class Lengow_Import_Order {
 		);
 
 		if ( $result ) {
-			$this->_id_order_lengow = Lengow_Order::get_id_from_lengow_orders(
+			$this->_order_lengow_id = Lengow_Order::get_id_from_lengow_orders(
 				$this->_marketplace_sku,
 				$this->_delivery_address_id
 			);

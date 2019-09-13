@@ -53,7 +53,7 @@ class Lengow_Order {
 		$marketplace_legacy = is_null( $marketplace_legacy ) ? $marketplace : strtolower( $marketplace_legacy );
 
 		$query = '
-			SELECT id_order, delivery_address_id, id_flux
+			SELECT order_id, delivery_address_id, flux_id
 			FROM ' . $wpdb->prefix . 'lengow_orders 
 			WHERE marketplace_sku = %s
 			AND marketplace_name IN (%s, %s)
@@ -67,7 +67,7 @@ class Lengow_Order {
 			return false;
 		}
 		foreach ( $results as $result ) {
-			if ( is_null( $result->delivery_address_id ) && ! is_null( $result->id_flux ) ) {
+			if ( is_null( $result->delivery_address_id ) && ! is_null( $result->flux_id ) ) {
 				return true;
 			} elseif ( $result->delivery_address_id == $delivery_address_id ) {
 				return true;
@@ -94,12 +94,12 @@ class Lengow_Order {
 			AND delivery_address_id = %d
 		';
 
-		$id_order_lengow = $wpdb->get_var(
+		$order_lengow_id = $wpdb->get_var(
 			$wpdb->prepare( $query, array( $marketplace_sku, $delivery_address_id ) )
 		);
 
-		if ( $id_order_lengow ) {
-			return (int) $id_order_lengow;
+		if ( $order_lengow_id ) {
+			return (int) $order_lengow_id;
 		}
 
 		return false;
