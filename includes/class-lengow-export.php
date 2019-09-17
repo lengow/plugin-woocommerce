@@ -15,11 +15,11 @@
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
  * @category    Lengow
- * @package        lengow-woocommerce
- * @subpackage    includes
- * @author        Team module <team-module@lengow.com>
- * @copyright    2017 Lengow SAS
- * @license        https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
+ * @package     lengow-woocommerce
+ * @subpackage  includes
+ * @author      Team Connector <team-connector@lengow.com>
+ * @copyright   2017 Lengow SAS
+ * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

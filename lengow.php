@@ -16,7 +16,7 @@
  *
  * @category  Lengow
  * @package   lengow-woocommerce
- * @author    Team module <team-module@lengow.com>
+ * @author    Team Connector <team-connector@lengow.com>
  * @copyright 2017 Lengow SAS
  * @license   https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
@@ -30,7 +30,7 @@
  * Author: Lengow
  * Author URI: http://www.lengow.com
  * Requires at least: 3.5
- * Tested up to: 4.6
+ * Tested up to: 5.2
  *
  * Text Domain: lengow
  * Domain Path: /languages
