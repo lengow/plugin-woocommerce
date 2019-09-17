@@ -134,12 +134,6 @@ class Lengow_Configuration {
 					'shop'  => true,
 					'label' => $locale->t( 'lengow_settings.lengow_last_export_title' ),
 				),
-				'lengow_import_enabled'              => array(
-					'global'        => true,
-					'label'         => $locale->t( 'lengow_settings.lengow_import_enabled_title' ),
-					'legend'        => $locale->t( 'lengow_settings.lengow_import_enabled_legend' ),
-					'default_value' => 0,
-				),
 				'lengow_import_days'                 => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_import_days_title' ),
@@ -150,7 +144,12 @@ class Lengow_Configuration {
 				'lengow_import_ship_mp_enabled'      => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_import_ship_mp_enabled_title' ),
-					'legend'        => $locale->t( 'lengow_settings.lengow_import_ship_mp_enabled_legend' ),
+					'default_value' => 0,
+				),
+				'lengow_import_stock_ship_mp'        => array(
+					'global'        => true,
+					'label'         => $locale->t( 'lengow_settings.lengow_import_stock_ship_mp_title' ),
+					'legend'        => $locale->t( 'lengow_settings.lengow_import_stock_ship_mp_legend' ),
 					'default_value' => 0,
 				),
 				'lengow_preprod_enabled'             => array(

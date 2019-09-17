@@ -43,7 +43,6 @@
         });
 
         // enable authorized ip
-        displayAuthorizedIpMode();
         $("input[name='lengow_ip_enabled']").on('change', function () {
             displayAuthorizedIpMode();
         });
@@ -57,7 +56,6 @@
         }
 
         // enable preprod mode
-        displayPreProdMode();
         $("input[name='lengow_preprod_enabled']").on('change', function () {
             displayPreProdMode();
         });
@@ -67,20 +65,6 @@
                 $('#lengow_wrapper_preprod').slideDown(150);
             } else {
                 $('#lengow_wrapper_preprod').slideUp(150);
-            }
-        }
-
-        // enable order import
-        displayOrderImportMode();
-        $("input[name='lengow_import_enabled']").on('change', function () {
-            displayOrderImportMode();
-        });
-
-        function displayOrderImportMode() {
-            if ($("input[name='lengow_import_enabled'][type='checkbox']").prop('checked')) {
-                $('#lengow_wrapper_import').slideDown(150);
-            } else {
-                $('#lengow_wrapper_import').slideUp(150);
             }
         }
 

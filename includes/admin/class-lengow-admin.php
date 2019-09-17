@@ -74,9 +74,10 @@ class Lengow_Admin {
 	 * Routing.
 	 */
 	public function lengow_display() {
-		$locale          = new Lengow_Translation();
-		$merchant_status = Lengow_Sync::get_status_account();
-		$is_new_merchant = Lengow_Connector::is_new_merchant();
+		$locale              = new Lengow_Translation();
+		$merchant_status     = Lengow_Sync::get_status_account();
+		$is_new_merchant     = Lengow_Connector::is_new_merchant();
+		$total_pending_order = Lengow_Order::get_total_order_by_status( 'waiting_shipment' );
 		if ( $this->current_tab != $this->_default_tab
 		     && ! ( $merchant_status['type'] === 'free_trial' && $merchant_status['expired'] )
 		     && $merchant_status['type'] !== 'bad_payer'
@@ -91,11 +92,14 @@ class Lengow_Admin {
 			case 'lengow_admin_orders':
 				Lengow_Admin_Orders::display();
 				break;
+			case 'lengow_admin_order_settings':
+				Lengow_Admin_Order_Settings::display();
+				break;
 			case 'lengow_admin_help':
 				Lengow_Admin_Help::display();
 				break;
 			case 'lengow_admin_settings':
-				Lengow_Admin_Settings::display();
+				Lengow_Admin_Main_Settings::display();
 				break;
 			case 'lengow_admin_legals':
 				Lengow_Admin_Legals::display();

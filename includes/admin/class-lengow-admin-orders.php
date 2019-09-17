@@ -38,6 +38,7 @@ class Lengow_Admin_Orders {
 		$warning_message     = $lengow_admin_orders->assign_warning_messages();
 		$order_collection    = $lengow_admin_orders->assign_last_importation_infos();
 		$locale              = new Lengow_Translation();
+		include_once 'views/html-admin-header-order.php';
 		include_once 'views/orders/html-admin-orders.php';
 	}
 

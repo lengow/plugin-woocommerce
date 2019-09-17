@@ -184,15 +184,6 @@ class Lengow_Import {
 	 * @return array|false
 	 */
 	public function exec() {
-		if ( ! (bool) Lengow_Configuration::get( 'lengow_import_enabled' ) ) {
-			Lengow_Main::log(
-				'Import',
-				Lengow_Main::set_log_message( 'log.import.import_not_active' ),
-				$this->_log_output
-			);
-
-			return false;
-		}
 		$order_new   = 0;
 		$order_error = 0;
 		$error       = false;
