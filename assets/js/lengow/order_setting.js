@@ -36,12 +36,11 @@
         });
 
         // enable stock mp
-        displayAuthorizedIpMode();
         $("input[name='lengow_import_ship_mp_enabled']").on('change', function () {
-            displayAuthorizedIpMode();
+            displayStockMP();
         });
 
-        function displayAuthorizedIpMode() {
+        function displayStockMP() {
             var selector = $('.lengow_import_stock_ship_mp');
             if ($("input[name='lengow_import_ship_mp_enabled'][type='checkbox']").prop('checked')) {
                 selector.slideDown(150);

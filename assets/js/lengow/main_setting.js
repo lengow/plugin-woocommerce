@@ -43,7 +43,6 @@
         });
 
         // enable authorized ip
-        displayAuthorizedIpMode();
         $("input[name='lengow_ip_enabled']").on('change', function () {
             displayAuthorizedIpMode();
         });
@@ -57,7 +56,6 @@
         }
 
         // enable preprod mode
-        displayPreProdMode();
         $("input[name='lengow_preprod_enabled']").on('change', function () {
             displayPreProdMode();
         });
