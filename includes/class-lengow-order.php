@@ -88,20 +88,33 @@ class Lengow_Order {
 	public static function get_id_from_lengow_orders( $marketplace_sku, $delivery_address_id ) {
 		global $wpdb;
 
-		$query = '
+		$query           = '
 			SELECT id FROM ' . $wpdb->prefix . 'lengow_orders 
 			WHERE marketplace_sku = %s
 			AND delivery_address_id = %d
 		';
-
 		$order_lengow_id = $wpdb->get_var(
 			$wpdb->prepare( $query, array( $marketplace_sku, $delivery_address_id ) )
 		);
-
 		if ( $order_lengow_id ) {
 			return (int) $order_lengow_id;
 		}
 
 		return false;
+	}
+
+	/**
+	 * Get total order by statuses.
+	 *
+	 * @param string $order_status Lengow order state
+	 *
+	 * @return integer
+	 */
+	public static function get_total_order_by_status( $order_status ) {
+		global $wpdb;
+		$query = 'SELECT COUNT(*) as total FROM ' . $wpdb->prefix . 'lengow_orders WHERE order_lengow_state = %s';
+		$total = $wpdb->get_var( $wpdb->prepare( $query, array( $order_status ) ) );
+
+		return (int) $total;
 	}
 }

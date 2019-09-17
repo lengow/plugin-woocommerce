@@ -63,6 +63,7 @@ class Lengow_Install {
 		'lengow_api_key',
 		'lengow_default_carrier',
 		'lengow_import_cron',
+		'lengow_import_enabled',
 		'lengow_time_import_start',
 		'LENGOW_MP_CONF',
 	);

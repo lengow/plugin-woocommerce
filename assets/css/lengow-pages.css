@@ -62,22 +62,15 @@ body.lgw-home-iframe .lgw-content-section p {
 /*                      HOME                     */
 /*************************************************/
 
-.adminlengowhome .lengow-nav {
+#lengow_home_wrapper .lengow-nav {
   display:none;
 }
 
-.adminlengowhome #lgw-preprod {
-  color: white;
-  background: #e55a4d;
-  padding: 5px 10px;
-  position: absolute;
-  left: 0px;
-  font-size: 12px;
-  z-index: 2;
+#lengow_home_wrapper #lgw-preprod {
   top: 0px;
 }
 
-.adminlengowhome .lgw-label.red {
+#lengow_home_wrapper .lgw-label.red {
   padding: 0 8px;
 }
 
@@ -93,12 +86,13 @@ body.lgw-home-iframe .lgw-content-section p {
   color: white;
 }
 
-.adminlengowhome .lgw-row h5 {
+#lengow_home_wrapper .lgw-row h5 {
   margin: 0;
   padding: 0;
   font-style: initial;
   font-size: 15px;
 }
+
 .lgw-home-stats {
   margin: 60px 0 30px;
 }
@@ -107,21 +101,48 @@ body.lgw-home-iframe .lgw-content-section p {
   min-height: 280px;
 }
 
-.adminlengowhome .lgw-container .lgw-btn-white {
+#lengow_home_wrapper .lgw-btn-white {
   background-color: #fff;
   border: 1px solid #d7d7d7;
   color: #00aeef;
 }
 
-.adminlengowhome .lgw-container .lgw-btn-white:hover,
-.adminlengowhome .lgw-container .lgw-btn-white:focus {
+#lengow_home_wrapper .lgw-btn-white:hover,
+#lengow_home_wrapper .lgw-btn-white:focus {
   background-color: #f7f7f7;
   color: #555;
 }
 
 /*************************************************/
+/*                    PRODUCTS                   */
+/*************************************************/
+
+#lengow_feed_wrapper,
+#lengow_feed_table {
+  min-width: 900px;
+  max-width: 1400px;
+  width: auto;
+}
+
+/*************************************************/
 /*                     ORDERS                    */
 /*************************************************/
+
+#lengow_order_wrapper {
+  min-width: 1100px;
+  max-width: 1400px;
+  width: auto;
+}
+
+#lengow_order_wrapper,
+#lengow_order_setting_wrapper {
+  padding-top: 60px;
+}
+
+#lengow_order_wrapper #lgw-preprod,
+#lengow_order_setting_wrapper #lgw-preprod {
+  top: 110px;
+}
 
 #lengow_wrapper_messages {
   max-width: 600px;

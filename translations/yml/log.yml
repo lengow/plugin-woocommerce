@@ -24,7 +24,6 @@ en:
       error_unable_to_create_file: "unable to create file %{file_name} in %{folder_name}"
       error_folder_not_writable: "export file generation did not end properly. Please make sure the export folder is writable"
     import:
-      import_not_active: "Order synchronisation is not activated in Lengow's settings"
       start: "## start %{type} import ##"
       end: "## end %{type} import ##"
       preprod_mode_active: "warning ! Pre-prod mode is activated"

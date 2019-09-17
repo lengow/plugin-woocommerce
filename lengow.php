@@ -103,8 +103,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		/**
 		 * Define constant if not already set.
 		 *
-		 * @param  string $name constant name
-		 * @param  string|boolean $value constant value
+		 * @param string $name constant name
+		 * @param string|boolean $value constant value
 		 */
 		private function _define( $name, $value ) {
 			if ( ! defined( $name ) ) {
@@ -136,11 +136,12 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/class-lengow-translation.php' );
 				include_once( 'includes/admin/class-lengow-admin.php' );
 				include_once( 'includes/admin/class-lengow-admin-dashboard.php' );
-				include_once( 'includes/admin/class-lengow-admin-settings.php' );
 				include_once( 'includes/admin/class-lengow-admin-help.php' );
 				include_once( 'includes/admin/class-lengow-admin-legals.php' );
-				include_once( 'includes/admin/class-lengow-admin-products.php' );
+				include_once( 'includes/admin/class-lengow-admin-order-settings.php' );
 				include_once( 'includes/admin/class-lengow-admin-orders.php' );
+				include_once( 'includes/admin/class-lengow-admin-products.php' );
+				include_once( 'includes/admin/class-lengow-admin-main-settings.php' );
 			}
 		}
 
@@ -177,18 +178,18 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 * Add CSS and JS.
 		 */
 		public function add_scripts() {
-			wp_register_style( 'lengow_component_css', plugins_url( '/assets/css/lengow-components.css', __FILE__ ) );
 			wp_register_style( 'lengow_font_awesome', plugins_url( '/assets/css/font-awesome.css', __FILE__ ) );
 			wp_register_style( 'lengow_select2_css', plugins_url( '/assets/css/select2.css', __FILE__ ) );
-			wp_register_style( 'lengow_pages_css', plugins_url( '/assets/css/lengow-pages.css', __FILE__ ) );
+			wp_register_style( 'lengow_layout_css', plugins_url( '/assets/css/lengow-layout.css', __FILE__ ) );
+			wp_register_style( 'lengow_components_css', plugins_url( '/assets/css/lengow-components.css', __FILE__ ) );
 			wp_register_style(
 				'lengow_admin_css',
-				plugins_url( '/assets/css/lengow-layout.css', __FILE__ ),
+				plugins_url( '/assets/css/lengow-pages.css', __FILE__ ),
 				array(
 					'lengow_font_awesome',
 					'lengow_select2_css',
-					'lengow_component_css',
-					'lengow_pages_css',
+					'lengow_layout_css',
+					'lengow_components_css',
 				)
 			);
 			wp_enqueue_style( 'lengow_admin_css' );
@@ -198,7 +199,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			} else {
 				wp_register_script( 'lengow_boostrap_js', plugins_url( '/assets/js/bootstrap.min.js', __FILE__ ) );
 			}
-			wp_register_script( 'lengow_settings_js', plugins_url( '/assets/js/lengow/main_setting.js', __FILE__ ) );
+			wp_register_script( 'lengow_main_settings', plugins_url( '/assets/js/lengow/main_setting.js', __FILE__ ) );
+			wp_register_script(
+				'lengow_order_settings',
+				plugins_url( '/assets/js/lengow/order_setting.js', __FILE__ )
+			);
 			wp_register_script( 'lengow_select2', plugins_url( '/assets/js/select2.js', __FILE__ ) );
 			wp_register_script( 'lengow_products', plugins_url( '/assets/js/lengow/products.js', __FILE__ ) );
 			wp_register_script( 'lengow_home', plugins_url( '/assets/js/lengow/home.js', __FILE__ ) );
@@ -213,7 +218,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					'lengow_select2',
 					'lengow_home',
 					'lengow_orders',
-					'lengow_settings_js',
+					'lengow_main_settings',
+					'lengow_order_settings',
 				)
 			);
 			wp_enqueue_script( 'lengow_admin_js' );

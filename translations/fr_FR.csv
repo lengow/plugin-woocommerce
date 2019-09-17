@@ -5,11 +5,13 @@ module.description|Avec votre module Lengow pour WooCommerce vendez rapidement v
 module.version|2.0.1
 module.author|Lengow
 menu.product|Produits
-menu.order|Gestion du stock
+menu.order|Commandes
 menu.jump_to_lengow|Accéder à Lengow
 menu.preprod_active|Mode préproduction
 menu.counter|Période d'essai : %{counter} jours restants
 menu.upgrade_account|Souscrire
+menu.order_overview|Vue d'ensemble
+menu.order_parameter|Paramètres des commandes
 menu.help|Aide
 menu.global_parameter|Paramètres principaux
 footer.legals|Mentions légales
@@ -18,6 +20,8 @@ dashboard.screen.welcome_back|Bonjour ! Bienvenue parmi nous !
 dashboard.screen.go_to_lengow|Aller sur la plateforme Lengow
 dashboard.screen.products_title|Produits
 dashboard.screen.products_text|Consulter tous vos produits disponibles pour préparer votre catalogue
+dashboard.screen.orders_title|Commandes
+dashboard.screen.orders_text|Gérer vos commandes directement sur votre tableau de bord WooCommerce
 dashboard.screen.settings_title|Paramètrage
 dashboard.screen.settings_text|Configurer les principaux paramètres de votre plugin WooCommerce
 dashboard.screen.partner_business|Lengow, partenaire de votre activité e-commerce
@@ -75,10 +79,12 @@ order.screen.import_charge_first|Commandes en cours de récupération...
 order.screen.import_charge_second|Restez avec nous, cela ne va pas durer longtemps (2 min d'attente en moyenne)
 order.screen.last_order_importation|Dernière synchronisation
 order.screen.no_order_importation|Aucune synchronisation pour le moment
-order.screen.button_update_orders|Synchroniser le stock
-order.screen.order_synchronize_disabled|Vous n'avez pas activé l'option permettant de diminuer le stock de vos produits. Vous pouvez le faire sur <a href=%{url}>cette page</a>
-order.screen.preprod_warning_message|Vous êtes en mode préproduction. Vous pouvez synchroniser vos stocks mais les interactions avec Lengow ne sont pas possibles. <a href=%{url}>Retourner en mode production ?</a>
-global_setting.screen.main_setting_title|Paramètres principaux
+order.screen.button_update_orders|Synchroniser les commandes
+order.screen.preprod_warning_message|Vous êtes en mode préproduction. Vous pouvez importer vos commandes mais les interactions avec Lengow ne sont pas possibles. <a href=%{url}>Retourner en mode production ?</a>
+order_setting.screen.import_setting_title|Import des commandes
+order_setting.screen.import_setting_description|Gérez ici vos paramètres d'import pour les commandes provenant des places de marché
+order_setting.screen.nb_days|jours
+global_setting.screen.security_title|Sécurité
 global_setting.screen.preprod_mode_title|Mode préproduction
 global_setting.screen.preprod_mode_description|Utilisez la pré-production pour tester et simuler des commandes fictives. Pour rappel, vous devez activer ces paramètres UNIQUEMENT sur votre serveur de préproduction.
 global_setting.screen.log_file_title|Fichiers de Log
@@ -87,9 +93,6 @@ global_setting.screen.button_download_file|Télécharger
 global_setting.screen.button_save|Sauvegarder les changements
 global_setting.screen.setting_saving|Enregistrement en cours...
 global_setting.screen.setting_saved|Enregistrement terminé !
-global_setting.screen.import_setting_title|Gestion du stock
-global_setting.screen.import_setting_description|Toutes vos commandes sont centralisées sur votre plateforme Lengow : choisissez ici si vous voulez synchroniser vos commandes afin de diminuer les stocks dans votre backoffice WooCommerce
-global_setting.screen.nb_days|jours
 global_setting.screen.export_title|Paramètres d'export
 global_setting.screen.product_types_title|Type de produit à exporter
 global_setting.screen.please_choose_log|Veuillez choisir un fichier de log...
@@ -130,16 +133,15 @@ lengow_settings.lengow_export_format_title|Exportez le format par défaut
 lengow_settings.lengow_export_file_enabled_title|Exportez dans un fichier
 lengow_settings.lengow_export_file_enabled_legend|Il est conseillé d'activer cette option si vous avez 3 000 produits ou plus
 lengow_settings.lengow_last_export_title|Dernier export
-lengow_settings.lengow_import_days_title|Ré-importer toutes les commandes réalisées depuis
+lengow_settings.lengow_import_days_title|Synchroniser toutes les commandes mises à jour depuis
 lengow_settings.lengow_import_days_legend|Importez vos commandes depuis ... jours et diminuez votre stock
-lengow_settings.lengow_import_ship_mp_enabled_title|Diminuer mon stock avec les commandes envoyées par les places de marché.
-lengow_settings.lengow_import_ship_mp_enabled_legend|Activez cette option pour diminuer mon stock avec les commandes envoyées par les places de marché.
+lengow_settings.lengow_import_ship_mp_enabled_title|Import des commandes expédiées par les places de marché
+lengow_settings.lengow_import_stock_ship_mp_title|Je veux diminuer mon stock
+lengow_settings.lengow_import_stock_ship_mp_legend|Activez cette option pour prendre en compte les commandes des places de marché sur les stocks de votre backoffice WooCommerce
 lengow_settings.lengow_preprod_enabled_title|Activer le mode préproduction
 lengow_settings.lengow_import_in_progress_title|Import en cours
 lengow_settings.lengow_last_import_manual_title|Dernier import manuel
 lengow_settings.lengow_last_import_cron_title|Dernier import CRON
-lengow_settings.lengow_import_enabled_title|Activer la synchronisation des stocks
-lengow_settings.lengow_import_enabled_legend|Activez cette option pour diminuer les stocks dans votre backoffice WooCommerce. Rendez-vous sur la page de gestion du stock si vous souhaitez lancer une synchronisation manuelle.
 lengow_log.error.rest_time_to_import|Attendez %{rest_time}  secondes avant d'importer de nouveau vos commandes
 lengow_log.error.nb_order_imported|%{nb_order} commande(s) diminuée(s)
 lengow_log.error.nb_order_with_error|%{nb_order} commande(s) avec erreurs
