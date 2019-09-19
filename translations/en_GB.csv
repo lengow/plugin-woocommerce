@@ -81,6 +81,10 @@ order.screen.last_order_importation|Last synchronization
 order.screen.no_order_importation|No synchronisation for now
 order.screen.button_update_orders|Synchronize Orders
 order.screen.preprod_warning_message|You are in pre-production mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>
+order_setting.screen.default_shipping_method_title|Manage shipping methods
+order_setting.screen.default_shipping_method_description|Select the default shipping method that you would like to apply to your orders
+order_setting.screen.order_status_title|Order Status
+order_setting.screen.order_status_description|Match your Lengow order status to retrieve them in your orders easily
 order_setting.screen.import_setting_title|Order import
 order_setting.screen.import_setting_description|Manage your import settings for marketplace orders here
 order_setting.screen.nb_days|days
@@ -133,6 +137,11 @@ lengow_settings.lengow_export_format_title|Export the default format
 lengow_settings.lengow_export_file_enabled_title|Export in a file
 lengow_settings.lengow_export_file_enabled_legend|You should use this option if you have 3,000 products or more
 lengow_settings.lengow_last_export_title|Last export
+lengow_settings.lengow_import_default_shipping_method_title|Default import shipping method
+lengow_settings.lengow_id_waiting_shipment_title|Orders in preparation
+lengow_settings.lengow_id_shipped_title|Shipped orders
+lengow_settings.lengow_id_cancel_title|Cancelled orders
+lengow_settings.lengow_id_shipped_by_mp_title|Orders shipped by marketplace
 lengow_settings.lengow_import_days_title|Synchronize all orders updated since
 lengow_settings.lengow_import_days_legend|Import orders from ... days and decrease your stock
 lengow_settings.lengow_import_ship_mp_enabled_title|Import orders shipped by marketplaces

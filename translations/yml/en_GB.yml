@@ -96,6 +96,10 @@ en:
       preprod_warning_message: "You are in pre-production mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>"
   order_setting:
     screen:
+      default_shipping_method_title: "Manage shipping methods"
+      default_shipping_method_description: "Select the default shipping method that you would like to apply to your orders"
+      order_status_title: "Order Status"
+      order_status_description: "Match your Lengow order status to retrieve them in your orders easily"
       import_setting_title: "Order import"
       import_setting_description: "Manage your import settings for marketplace orders here"
       nb_days: "days"
@@ -155,6 +159,11 @@ en:
     lengow_export_file_enabled_title: "Export in a file"
     lengow_export_file_enabled_legend: "You should use this option if you have 3,000 products or more"
     lengow_last_export_title: "Last export"
+    lengow_import_default_shipping_method_title: "Default import shipping method"
+    lengow_id_waiting_shipment_title: "Orders in preparation"
+    lengow_id_shipped_title: "Shipped orders"
+    lengow_id_cancel_title: "Cancelled orders"
+    lengow_id_shipped_by_mp_title: "Orders shipped by marketplace"
     lengow_import_days_title: "Synchronize all orders updated since"
     lengow_import_days_legend: "Import orders from ... days and decrease your stock"
     lengow_import_ship_mp_enabled_title: "Import orders shipped by marketplaces"
