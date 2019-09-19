@@ -229,7 +229,7 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Get version of woocommerce
+	 * Get version of woocommerce.
 	 *
 	 * @return string
 	 */
@@ -237,6 +237,18 @@ class Lengow_Main {
 		global $woocommerce;
 
 		return $woocommerce->version;
+	}
+
+	/**
+	 * Compare WooCommerce current version with a specified one.
+	 *
+	 * @param string $version_to_compare version to compare
+	 * @param string $operator operator to compare
+	 *
+	 * @return boolean
+	 */
+	public static function compare_version( $version_to_compare, $operator = '>=' ) {
+		return version_compare( self::get_woocommerce_version(), $version_to_compare, $operator );
 	}
 
 	/**
@@ -377,6 +389,43 @@ class Lengow_Main {
 		}
 
 		return array( 'type' => 'none', 'timestamp' => 'none' );
+	}
+
+	/**
+	 * Get all order statuses.
+	 *
+	 * @return array
+	 */
+	public static function get_order_statuses() {
+		$order_statuses = array();
+		if ( self::compare_version( '2.2' ) ) {
+			$statuses = wc_get_order_statuses();
+			foreach ( $statuses as $status => $label ) {
+				$order_statuses[ $status ] = __( $label, 'woocommerce' );
+			}
+		} else {
+			$statuses = get_terms( 'shop_order_status', array( 'hide_empty' => 0, 'orderby' => 'id,' ) );
+			foreach ( $statuses as $status ) {
+				$order_statuses[ $status->slug ] = __( $status->name, 'woocommerce' );
+			}
+		}
+
+		return $order_statuses;
+	}
+
+	/**
+	 * Get list of shipping methods.
+	 *
+	 * @return array
+	 */
+	public static function get_shipping_methods() {
+		$wc_shipping = new WC_Shipping();
+		$return      = array();
+		foreach ( $wc_shipping->load_shipping_methods() as $key => $shipping ) {
+			$return[ $key ] = __( $shipping->method_title, 'woocommerce' );
+		}
+
+		return $return;
 	}
 
 	/**
