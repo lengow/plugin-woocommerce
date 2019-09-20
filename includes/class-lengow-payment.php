@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WC_Lengow_Payment_Gateway extends WC_Payment_Gateway {
 
 	/**
-	 * Construct WC_Lengow_Payment_Gateway
+	 * Construct WC_Lengow_Payment_Gateway.
 	 */
 	public function __construct() {
 		$this->id                 = 'lengow_payment_gateway';
@@ -46,7 +46,7 @@ class WC_Lengow_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Get title of payment gateway
+	 * Get title of payment gateway.
 	 *
 	 * @return string
 	 */
