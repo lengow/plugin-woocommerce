@@ -81,6 +81,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		private function _init_hooks() {
 			register_activation_hook( __FILE__, array( 'Lengow_Install', 'install' ) );
 			add_action( 'init', array( $this, 'init' ) );
+			add_action( 'plugins_loaded', array( $this, 'init_lengow_payment' ) );
 
 			if ( isset( $_GET['page'] ) && $_GET['page'] === 'lengow' ) {
 				add_action( 'admin_enqueue_scripts', array( $this, 'add_scripts' ) );
@@ -172,6 +173,28 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				}
 				$this->lengow_admin = new Lengow_Admin();
 			}
+		}
+
+		/**
+		 * Init the Lengow Payment Method.
+		 *
+		 */
+		public function init_lengow_payment() {
+			add_filter( 'woocommerce_payment_gateways', array( $this, 'add_lengow_gateway_class' ) );
+			include_once( 'includes/class-lengow-payment.php' );
+		}
+
+		/**
+		 * Add the Lengow Payment gateway.
+		 *
+		 * @param array $methods All methods
+		 *
+		 * @return array
+		 */
+		public function add_lengow_gateway_class( $methods ) {
+			$methods[] = 'WC_Lengow_Payment_Gateway';
+
+			return $methods;
 		}
 
 		/**

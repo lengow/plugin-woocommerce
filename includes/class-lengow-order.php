@@ -104,6 +104,29 @@ class Lengow_Order {
 	}
 
 	/**
+	 * Get marketplace name by Wordpress order id
+	 *
+	 * @param integer $order_id Wordpress order id
+	 *
+	 * @return string|false
+	 */
+	public static function get_marketplace_name_by_order_id( $order_id ) {
+		global $wpdb;
+		if ( $order_id === null ) {
+			return false;
+		}
+
+		$marketplace_name = $wpdb->get_var(
+			$wpdb->prepare(
+				'SELECT `marketplace_name` FROM ' . $wpdb->prefix . 'lengow_orders WHERE `order_id` = %d',
+				$order_id
+			)
+		);
+
+		return $marketplace_name;
+	}
+
+	/**
 	 * Get total order by statuses.
 	 *
 	 * @param string $order_status Lengow order state
