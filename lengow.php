@@ -157,7 +157,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				add_action( 'wp_ajax_post_process_dashboard', array( 'Lengow_Admin_Dashboard', 'post_process' ) );
 				add_action( 'wp_ajax_post_process_orders', array( 'Lengow_Admin_Orders', 'post_process' ) );
 				// init lengow technical error status.
-				$this->init_lengow_technical_error_status();
+				if ( Lengow_Main::compare_version( '2.2' ) ) {
+					$this->init_lengow_technical_error_status();
+				}
 				// check logs download to prevent the occurrence of the wordpress html header.
 				$download = null;
 				if ( isset( $_GET['action'] ) ) {
@@ -229,7 +231,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 * @return array
 		 */
 		public function add_lengow_technical_error_status( $order_statuses ) {
-			$locale = new Lengow_Translation();
+			$locale                            = new Lengow_Translation();
 			$order_statuses['wc-lengow-error'] = $locale->t( 'module.state_technical_error' );
 
 			return $order_statuses;

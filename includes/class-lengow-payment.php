@@ -40,7 +40,7 @@ class WC_Lengow_Payment_Gateway extends WC_Payment_Gateway {
 	 * Construct WC_Lengow_Payment_Gateway.
 	 */
 	public function __construct() {
-		$locale = new Lengow_Translation();
+		$locale                   = new Lengow_Translation();
 		$this->id                 = 'lengow_payment_gateway';
 		$this->has_fields         = false;
 		$this->title              = $locale->t( 'module.lengow_payment_title' );
