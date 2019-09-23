@@ -1,4 +1,4 @@
-/lengow.php|bc73a452ac70f008772ec7f85ca28a27
+/lengow.php|db2eb5ca1254322bf189a21252c48acd
 /config/index.php|d41d8cd98f00b204e9800998ecf8427e
 /assets/images/home-orders.png|db05b21ec6b166d844b42c0e807cb265
 /assets/images/lengow-white.png|0324647d065652cd15282d7fac4ef8ff
@@ -68,7 +68,7 @@
 /includes/class-lengow-import-order.php|4f37cb39282ac744b37195f06aa47c1a
 /includes/class-lengow-product.php|af5c4869ae6db3ff99df8aff6bb13e4b
 /includes/class-lengow-file.php|2c7863f444270e42fb6097cef29640f1
-/includes/class-lengow-payment.php|6cb24531ad3d7fa690e597eb46858f3c
+/includes/class-lengow-payment.php|63bdfded65d4a57e0899890395f617a9
 /languages/lengow-fr_FR.mo|6f968e5b0b7561c9408381b850c44415
 /languages/lengow-fr_FR.po|748a3a41182fe741efd5580e47367b5f
 /toolbox/checksum.php|734fee2430077f75e26b2e7e3b704199

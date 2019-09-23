@@ -27,6 +27,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Dependencies for front office
+ */
+include_once( 'class-lengow-translation.php' );
+
+/**
  * Lengow_Payment Class.
  */
 class WC_Lengow_Payment_Gateway extends WC_Payment_Gateway {
@@ -35,11 +40,12 @@ class WC_Lengow_Payment_Gateway extends WC_Payment_Gateway {
 	 * Construct WC_Lengow_Payment_Gateway.
 	 */
 	public function __construct() {
+		$locale = new Lengow_Translation();
 		$this->id                 = 'lengow_payment_gateway';
 		$this->has_fields         = false;
-		$this->title              = __( 'Lengow payment', 'lengow' );
-		$this->method_title       = __( 'Lengow payment', 'lengow' );
-		$this->method_description = __( 'Payment on Lengow', 'Lengow' );
+		$this->title              = $locale->t( 'module.lengow_payment_title' );
+		$this->method_title       = $locale->t( 'module.lengow_payment_title' );
+		$this->method_description = $locale->t( 'module.lengow_payment_description' );
 
 		$this->init_form_fields();
 		$this->init_settings();

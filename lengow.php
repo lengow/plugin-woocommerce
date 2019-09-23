@@ -156,7 +156,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				add_action( 'admin_action_dashboard_get_process', array( 'Lengow_Admin_Dashboard', 'get_process' ) );
 				add_action( 'wp_ajax_post_process_dashboard', array( 'Lengow_Admin_Dashboard', 'post_process' ) );
 				add_action( 'wp_ajax_post_process_orders', array( 'Lengow_Admin_Orders', 'post_process' ) );
-
+				// init lengow technical error status.
+				$this->init_lengow_technical_error_status();
 				// check logs download to prevent the occurrence of the wordpress html header.
 				$download = null;
 				if ( isset( $_GET['action'] ) ) {
@@ -195,6 +196,43 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			$methods[] = 'WC_Lengow_Payment_Gateway';
 
 			return $methods;
+		}
+
+		/**
+		 * Init the Lengow technical error status.
+		 *
+		 */
+		public function init_lengow_technical_error_status() {
+			$locale = new Lengow_Translation();
+			register_post_status(
+				'wc-lengow-error',
+				array(
+					'label'                     => $locale->t( 'module.state_technical_error' ),
+					'public'                    => true,
+					'exclude_from_search'       => false,
+					'show_in_admin_all_list'    => true,
+					'show_in_admin_status_list' => true,
+					'label_count'               => _n_noop(
+						$locale->t( 'module.state_technical_error' ) . ' <span class="count">(%s)</span>',
+						$locale->t( 'module.state_technical_error' ) . ' <span class="count">(%s)</span>'
+					),
+				)
+			);
+			add_filter( 'wc_order_statuses', array( $this, 'add_lengow_technical_error_status' ) );
+		}
+
+		/**
+		 * Add the Lengow technical error status.
+		 *
+		 * @param array $order_statuses All order statuses
+		 *
+		 * @return array
+		 */
+		public function add_lengow_technical_error_status( $order_statuses ) {
+			$locale = new Lengow_Translation();
+			$order_statuses['wc-lengow-error'] = $locale->t( 'module.state_technical_error' );
+
+			return $order_statuses;
 		}
 
 		/**
