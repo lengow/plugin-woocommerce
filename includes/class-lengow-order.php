@@ -340,7 +340,7 @@ class Lengow_Order {
 	}
 
 	/**
-	 * Get marketplace name by WooCommerce order id
+	 * Get marketplace name by WooCommerce order id.
 	 *
 	 * @param integer $order_id WooCommerce order id
 	 *

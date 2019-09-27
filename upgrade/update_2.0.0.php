@@ -29,14 +29,14 @@ if ( ! defined( 'ABSPATH' ) || ! Lengow_Install::is_installation_in_progress() )
 //                         lengow_product
 // *********************************************************
 
-// alter product table for old versions
+// alter product table for old versions.
 if ( Lengow_Install::check_table_exists( 'lengow_product' ) ) {
 	$table_name = $wpdb->prefix . 'lengow_product';
 	if ( ! Lengow_Install::check_field_exists( 'lengow_product', 'id' ) ) {
 		$wpdb->query(
 			'ALTER TABLE ' . $table_name . ' ADD `id` INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST'
 		);
-		// for first install, delete unique key in product_id field
+		// for first install, delete unique key in product_id field.
 		Lengow_Install::check_index_and_drop( 'lengow_product', 'product_id' );
 	}
 }
@@ -45,7 +45,7 @@ if ( Lengow_Install::check_table_exists( 'lengow_product' ) ) {
 //                         lengow_orders
 // *********************************************************
 
-// alter order table for old versions
+// alter order table for old versions.
 $table = Lengow_Crud::LENGOW_ORDER;
 if ( Lengow_Install::check_table_exists( $table ) ) {
 	$table_name = $wpdb->prefix . $table;
@@ -95,7 +95,7 @@ if ( Lengow_Install::check_table_exists( $table ) ) {
 		$wpdb->query( 'ALTER TABLE ' . $table_name . ' ADD `order_date` DATETIME NOT NULL' );
 		$wpdb->query( 'UPDATE ' . $table_name . ' SET `order_date` = `date_add`' );
 	}
-	// keep and change old columns
+	// keep and change old columns.
 	if ( Lengow_Install::check_field_exists( $table, 'id_flux' ) ) {
 		$wpdb->query( 'ALTER TABLE  ' . $table_name . ' CHANGE `id_flux` `id_flux` INTEGER(11) UNSIGNED NULL' );
 	}
@@ -106,7 +106,7 @@ if ( Lengow_Install::check_table_exists( $table ) ) {
 		$wpdb->query( 'ALTER TABLE  ' . $table_name . ' CHANGE `total_paid` `total_paid` DECIMAL(17,2) UNSIGNED NULL' );
 	}
 }
-// drop old column from lengow_orders table
+// drop old column from lengow_orders table.
 Lengow_Install::check_field_and_drop( $table, 'date_add' );
 Lengow_Install::check_index_and_drop( $table, 'id_order_lengow' );
 Lengow_Install::check_index_and_drop( $table, 'marketplace' );
@@ -118,11 +118,11 @@ Lengow_Install::check_index_and_drop( $table, 'id_flux' );
 // *********************************************************
 
 if ( Lengow_Install::$old_version && Lengow_Install::$old_version < '2.0.0' ) {
-	// migrate specific settings for new version
+	// migrate specific settings for new version.
 	Lengow_Configuration::migrate_product_selection();
 	Lengow_Configuration::migrate_product_types();
 	Lengow_Configuration::check_ip_authorization();
-	// rename old settings
+	// rename old settings.
 	Lengow_Install::rename_configuration_key( 'lengow_export_file', 'lengow_export_file_enabled' );
 	Lengow_Install::rename_configuration_key( 'lengow_debug', 'lengow_preprod_enabled' );
 	Lengow_Install::rename_configuration_key( 'is_import_processing', 'lengow_import_in_progress' );

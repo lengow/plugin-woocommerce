@@ -172,7 +172,7 @@ class Lengow_Import_Order {
 	 * @return array|false
 	 */
 	public function import_order() {
-		// if order error exist and not finished
+		// if order error exists and not finished.
 		$order_error = Lengow_Order_Error::order_is_in_error( $this->_marketplace_sku, $this->_delivery_address_id );
 		if ( $order_error ) {
 			$decoded_message = Lengow_Main::decode_log_message( $order_error->message, 'en_GB' );
