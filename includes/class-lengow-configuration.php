@@ -336,7 +336,8 @@ class Lengow_Configuration {
 	 */
 	public static function set_active_shop() {
 		$shop_is_active   = self::shop_is_active();
-		$shop_has_catalog = ! empty( self::get_catalog_ids() );
+		$catalog_ids      = self::get_catalog_ids();
+		$shop_has_catalog = ! empty( $catalog_ids );
 		self::update_value( 'lengow_store_enabled', $shop_has_catalog );
 
 		return $shop_is_active !== $shop_has_catalog ? true : false;

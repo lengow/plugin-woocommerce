@@ -35,9 +35,9 @@
 /includes/class-lengow-feed.php|05f03585d61731875aa33aceee23be91
 /includes/class-lengow-export.php|a5159202c0635315986d1e481cc3ea34
 /includes/class-lengow-check.php|04e2fafeff73e272f6b6183dde9de748
-/includes/class-lengow-configuration.php|3a7dc01b4d88b4efb21670209991143f
+/includes/class-lengow-configuration.php|5d8fb0d1f32bf97c4120db1c64d0a86d
 /includes/class-lengow-exception.php|fb9efab995d3be2b906dc627b7fe2666
-/includes/class-lengow-crud.php|67b10db5a38e46bec959a853db8cf827
+/includes/class-lengow-crud.php|aab3e1438a5f978a44352ed9d6dfa57b
 /includes/class-lengow-marketplace.php|1ce1f7e2008c4d20edada89acdbd5f7f
 /includes/class-lengow-import.php|19893b847c7dd1f1b0769be43bd97ca2
 /includes/class-lengow-translation.php|b6ecddbcb919556c98caa8f2637794c4

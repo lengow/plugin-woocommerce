@@ -184,9 +184,15 @@ class Lengow_Crud {
 			}
 		}
 		$prepare_query = empty( $args ) ? $query : $wpdb->prepare( $query, $args );
-		$result        = $single ? $wpdb->get_row( $prepare_query ) : $wpdb->get_results( $prepare_query );
+		if ( $single ) {
+			$result = $wpdb->get_row( $prepare_query );
+			$return = $result ? $result : false;
+		} else {
+			$result = $wpdb->get_results( $prepare_query );
+			$return = $result ? $result : array();
+		}
 
-		return $result ? $result : false;
+		return $return;
 	}
 
 	/**
