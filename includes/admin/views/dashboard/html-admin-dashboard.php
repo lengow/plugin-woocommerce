@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php echo $locale->t( 'menu.preprod_active' ); ?>
         </div>
 	<?php endif; ?>
-	<?php if ( $merchant_status['type'] === 'free_trial' && ! $merchant_status['expired'] ) : ?>
+	<?php if ( 'free_trial' === $merchant_status['type'] && ! $merchant_status['expired'] ) : ?>
         <p class="text-right" id="menucountertrial">
 			<?php echo $locale->t( 'menu.counter', array( 'counter' => $merchant_status['day'] ) ); ?>
             <a href="http://my.lengow.io/" target="_blank">
@@ -46,10 +46,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <img src="/wp-content/plugins/lengow-woocommerce/assets/images/home-orders.png"
                          class="img-responsive">
                     <h2>
-                        <?php echo $locale->t( 'dashboard.screen.orders_title' ); ?>
-                        <?php if ( $total_pending_order > 0 ) : ?>
+						<?php echo $locale->t( 'dashboard.screen.orders_title' ); ?>
+						<?php if ( $total_pending_order > 0 ) : ?>
                             <span class="lgw-label lgw-label red"><?php echo $total_pending_order; ?></span>
-                        <?php endif; ?>
+						<?php endif; ?>
                     </h2>
                     <p><?php echo $locale->t( 'dashboard.screen.orders_text' ); ?></p>
                 </div>

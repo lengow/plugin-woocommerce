@@ -413,7 +413,7 @@ class Lengow_Export {
 	 * Set legacy fields or not.
 	 */
 	private function _set_legacy_fields() {
-		if ( is_null( $this->_legacy ) ) {
+		if ( null === $this->_legacy ) {
 			$merchant_status = Lengow_Sync::get_status_account();
 			if ( $merchant_status && isset( $merchant_status['legacy'] ) ) {
 				$this->_legacy = $merchant_status['legacy'];
@@ -433,7 +433,7 @@ class Lengow_Export {
 		if ( $format ) {
 			$this->_format = ! in_array( $format, Lengow_Feed::$available_formats ) ? null : $format;
 		}
-		if ( is_null( $this->_format ) ) {
+		if ( null === $this->_format ) {
 			$this->_format = Lengow_Configuration::get( 'lengow_export_format' );
 		}
 	}
@@ -507,7 +507,7 @@ class Lengow_Export {
 		foreach ( $products as $p ) {
 			$product_data = array();
 			if ( (int) $p->id_product_attribute > 0 ) {
-				if ( (int) $p->id_product === 0 ) {
+				if ( 0 === (int) $p->id_product ) {
 					continue;
 				}
 				$product = new Lengow_Product( (int) $p->id_product_attribute );
@@ -524,7 +524,7 @@ class Lengow_Export {
 			// write parent product.
 			$feed->write( 'body', $product_data, $is_first, $max_character );
 			$product_count ++;
-			if ( $product_count > 0 && $product_count % 50 === 0 ) {
+			if ( $product_count > 0 && 0 === $product_count % 50 ) {
 				Lengow_Main::log(
 					'Export',
 					Lengow_Main::set_log_message(
@@ -549,7 +549,7 @@ class Lengow_Export {
 		}
 		if ( ! $this->_stream ) {
 			$feed_url = $feed->get_url();
-			if ( $feed_url && php_sapi_name() !== 'cli' ) {
+			if ( $feed_url && 'cli' !== php_sapi_name() ) {
 				Lengow_Main::log(
 					'Export',
 					Lengow_Main::set_log_message(
@@ -686,17 +686,17 @@ class Lengow_Export {
 						WHERE meta_key = \'_manage_stock\' AND meta_value = \'no\')  
 			))';
 		}
-		if ( count( $this->_product_types ) > 0 && ! $variation ) {
+		if ( ! empty( $this->_product_types ) && ! $variation ) {
 			$where[] = 't.name IN (\'' . join( "','", $this->_product_types ) . '\')';
 		}
-		if ( count( $this->_product_ids ) > 0 ) {
+		if ( ! empty( $this->_product_ids ) ) {
 			if ( $variation ) {
 				$where[] = 'p.post_parent IN (' . join( ',', $this->_product_ids ) . ')';
 			} else {
 				$where[] = 'p.id IN (' . join( ',', $this->_product_ids ) . ')';
 			}
 		}
-		if ( count( $where ) > 0 ) {
+		if ( ! empty( $where ) ) {
 			$query .= ' WHERE ' . join( ' AND ', $where );
 		}
 		$query .= ' ORDER BY id_product ASC';

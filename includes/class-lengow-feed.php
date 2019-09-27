@@ -140,7 +140,7 @@ class Lengow_Feed {
 			case 'header':
 				if ( $this->_stream ) {
 					header( $this->_get_html_header() );
-					if ( $this->_format === 'csv' ) {
+					if ( 'csv' === $this->_format ) {
 						header( 'Content-Disposition: attachment; filename=feed.csv' );
 					}
 				}
@@ -227,7 +227,7 @@ class Lengow_Feed {
 			case 'xml':
 				$content = '<product>';
 				foreach ( $data as $field => $value ) {
-					$field = self::format_fields( $field, 'xml', $this->_legacy);
+					$field   = self::format_fields( $field, 'xml', $this->_legacy );
 					$content .= '<' . $field . '><![CDATA[' . $value . ']]></' . $field . '>' . self::EOL;
 				}
 				$content .= '</product>' . self::EOL;
@@ -244,14 +244,14 @@ class Lengow_Feed {
 
 				return $content;
 			case 'yaml':
-				if ( $max_character % 2 === 1 ) {
+				if ( 1 === $max_character % 2 ) {
 					$max_character = $max_character + 1;
 				} else {
 					$max_character = $max_character + 2;
 				}
 				$content = '  ' . self::PROTECTION . 'product' . self::PROTECTION . ':' . self::EOL;
 				foreach ( $data as $field => $value ) {
-					$field = self::format_fields( $field, 'yaml', $this->_legacy );
+					$field   = self::format_fields( $field, 'yaml', $this->_legacy );
 					$content .= '    ' . self::PROTECTION . $field . self::PROTECTION . ':';
 					$content .= $this->_indent_yaml( $field, $max_character ) . (string) $value . self::EOL;
 				}

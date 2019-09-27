@@ -163,7 +163,7 @@ class Lengow_Main {
 		if ( strlen( $ips ) > 0 && ( (bool) Lengow_Configuration::get( 'lengow_ip_enabled' ) || $toolbox ) ) {
 			$ips            = trim( str_replace( array( "\r\n", ',', '-', '|', ' ' ), ';', $ips ), ';' );
 			$ips            = array_filter( explode( ';', $ips ) );
-			$authorized_ips = count( $ips ) > 0 ? array_merge( $ips, self::$_ips_lengow ) : self::$_ips_lengow;
+			$authorized_ips = ! empty( $ips ) ? array_merge( $ips, self::$_ips_lengow ) : self::$_ips_lengow;
 		} else {
 			$authorized_ips = self::$_ips_lengow;
 		}
@@ -272,7 +272,7 @@ class Lengow_Main {
 	 * @return Lengow_Log|false
 	 */
 	public static function get_log_instance() {
-		if ( is_null( self::$log ) ) {
+		if ( null === self::$log ) {
 			try {
 				self::$log = new Lengow_Log();
 			} catch ( Lengow_Exception $e ) {
@@ -313,7 +313,7 @@ class Lengow_Main {
 	 * @return string
 	 */
 	public static function set_log_message( $key, $params = null ) {
-		if ( is_null( $params ) || ( is_array( $params ) && empty( $params ) ) ) {
+		if ( null === $params || ( is_array( $params ) && empty( $params ) ) ) {
 			return $key;
 		}
 		$all_params = array();
@@ -339,7 +339,7 @@ class Lengow_Main {
 		if ( preg_match( '/^(([a-z\_]*\.){1,3}[a-z\_]*)(\[(.*)\]|)$/', $message, $result ) ) {
 			if ( isset( $result[1] ) ) {
 				$key = $result[1];
-				if ( isset( $result[4] ) && is_null( $params ) ) {
+				if ( isset( $result[4] ) && null === $params ) {
 					$str_param  = $result[4];
 					$all_params = explode( '|', $str_param );
 					foreach ( $all_params as $param ) {
@@ -361,7 +361,7 @@ class Lengow_Main {
 	 * @param string $type last import type (cron or manual)
 	 */
 	public static function update_date_import( $type ) {
-		if ( $type === 'cron' ) {
+		if ( 'cron' === $type ) {
 			Lengow_Configuration::update_value( 'lengow_last_import_cron', time() );
 		} else {
 			Lengow_Configuration::update_value( 'lengow_last_import_manual', time() );

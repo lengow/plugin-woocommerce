@@ -83,7 +83,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			add_action( 'init', array( $this, 'init' ) );
 			add_action( 'plugins_loaded', array( $this, 'init_lengow_payment' ) );
 
-			if ( isset( $_GET['page'] ) && $_GET['page'] === 'lengow' ) {
+			if ( isset( $_GET['page'] ) && 'lengow' === $_GET['page'] ) {
 				add_action( 'admin_enqueue_scripts', array( $this, 'add_scripts' ) );
 				add_filter( 'pre_site_transient_update_core', array( $this, 'remove_core_updates' ) );
 				add_filter( 'pre_site_transient_update_plugins', array( $this, 'remove_core_updates' ) );
@@ -121,6 +121,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/class-lengow-check.php' );
 				include_once( 'includes/class-lengow-configuration.php' );
 				include_once( 'includes/class-lengow-connector.php' );
+				include_once( 'includes/class-lengow-crud.php' );
 				include_once( 'includes/class-lengow-exception.php' );
 				include_once( 'includes/class-lengow-export.php' );
 				include_once( 'includes/class-lengow-feed.php' );
@@ -132,6 +133,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/class-lengow-main.php' );
 				include_once( 'includes/class-lengow-marketplace.php' );
 				include_once( 'includes/class-lengow-order.php' );
+				include_once( 'includes/class-lengow-order-error.php' );
 				include_once( 'includes/class-lengow-product.php' );
 				include_once( 'includes/class-lengow-sync.php' );
 				include_once( 'includes/class-lengow-translation.php' );

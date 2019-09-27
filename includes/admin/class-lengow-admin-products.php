@@ -79,7 +79,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 			switch ( $action ) {
 				case 'change_option_selected':
 					$state = isset( $_POST['state'] ) ? $_POST['state'] : null;
-					if ( $state !== null ) {
+					if ( null !== $state ) {
 						Lengow_Configuration::update_value(
 							'lengow_selection_enabled',
 							$state
@@ -98,7 +98,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 				case 'select_product':
 					$state     = isset( $_POST['state'] ) ? $_POST['state'] : null;
 					$productId = isset( $_POST['id_product'] ) ? $_POST['id_product'] : null;
-					if ( $state !== null ) {
+					if ( null !== $state ) {
 						Lengow_Product::publish( $productId, $state );
 						echo json_encode( self::reload_total() );
 					}
@@ -108,7 +108,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 					$select_all    = isset( $_POST['select_all'] ) ? $_POST['select_all'] : null;
 					$export_action = isset( $_POST['export_action'] ) ? $_POST['export_action'] : null;
 					$data          = array();
-					if ( $select_all === 'true' ) {
+					if ( 'true' === $select_all ) {
 						$all_products = get_posts(
 							array(
 								'numberposts' => - 1,
@@ -119,7 +119,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 							$all[] = $value->ID;
 						}
 						foreach ( $all as $id ) {
-							if ( $export_action === 'add_to_export' ) {
+							if ( 'add_to_export' === $export_action ) {
 								Lengow_Product::publish( $id, 1 );
 							} else {
 								Lengow_Product::publish( $id, 0 );
@@ -131,7 +131,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 						$data = array_merge( $data, self::reload_total() );
 					} elseif ( $selection ) {
 						foreach ( $selection as $product ) {
-							if ( $export_action === 'add_to_export' ) {
+							if ( 'add_to_export' === $export_action ) {
 								Lengow_Product::publish( $product, 1 );
 							} else {
 								Lengow_Product::publish( $product, 0 );
@@ -180,7 +180,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 		$this->data            = $this->get_products();
 		usort( $this->data, array( &$this, 'usort_reorder' ) );
 		// pagination.
-		$per_page     = 10;
+		$per_page     = 20;
 		$current_page = $this->get_pagenum();
 		$total_items  = count( $this->data );
 		$data         = array_slice( $this->data, ( ( $current_page - 1 ) * $per_page ), $per_page );
@@ -373,7 +373,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 		$result = strcmp( $a[ $order_by ], $b[ $order_by ] );
 
 		// send final sort direction to usort.
-		return $order === 'asc' ? $result : - $result;
+		return 'asc' === $order ? $result : - $result;
 	}
 
 	/**
@@ -438,7 +438,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 						$products_data = implode( ',', $products_categories );
 						break;
 					case '_stock_status':
-						$products_data = get_post_meta( $post->ID, $key, true ) === 'instock'
+						$products_data = 'instock' === get_post_meta( $post->ID, $key, true )
 							? $this->locale->t( 'product.table.in_stock' )
 							: $this->locale->t( 'product.table.out_of_stock' );
 						break;
@@ -450,10 +450,10 @@ class Lengow_Admin_Products extends WP_List_Table {
 						// use woocommerce 2.0.0 function get_product(ID) to check type.
 						$wc_product       = Lengow_Product::get_product( $post->ID );
 						$product_type     = Lengow_Product::get_product_type( $wc_product );
-						$downloadable     = get_post_meta( $post->ID, '_downloadable', true ) === 'yes'
+						$downloadable     = 'yes' === get_post_meta( $post->ID, '_downloadable', true )
 							? $this->locale->t( 'product.table.type_downloadable' )
 							: false;
-						$virtual          = get_post_meta( $post->ID, '_virtual', true ) === 'yes'
+						$virtual          = 'yes' === get_post_meta( $post->ID, '_virtual', true )
 							? $this->locale->t( 'product.table.type_virtual' )
 							: false;
 						$sub_product_type = false;

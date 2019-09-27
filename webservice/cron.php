@@ -44,22 +44,24 @@
 require( dirname( dirname( dirname( dirname( dirname( $_SERVER['SCRIPT_FILENAME'] ) ) ) ) ) . '/wp-load.php' );
 
 // dependencies
-require_once( '../includes/class-lengow-main.php' );
-require_once( '../includes/class-lengow-sync.php' );
+require_once( '../includes/class-lengow-check.php' );
+require_once( '../includes/class-lengow-configuration.php' );
+require_once( '../includes/class-lengow-connector.php' );
+require_once( '../includes/class-lengow-crud.php' );
+require_once( '../includes/class-lengow-exception.php' );
 require_once( '../includes/class-lengow-export.php' );
+require_once( '../includes/class-lengow-feed.php' );
+require_once( '../includes/class-lengow-file.php' );
 require_once( '../includes/class-lengow-import.php' );
 require_once( '../includes/class-lengow-import-order.php' );
-require_once( '../includes/class-lengow-connector.php' );
+require_once( '../includes/class-lengow-log.php' );
+require_once( '../includes/class-lengow-main.php' );
 require_once( '../includes/class-lengow-marketplace.php' );
 require_once( '../includes/class-lengow-order.php' );
+require_once( '../includes/class-lengow-order-error.php' );
 require_once( '../includes/class-lengow-product.php' );
-require_once( '../includes/class-lengow-file.php' );
-require_once( '../includes/class-lengow-feed.php' );
-require_once( '../includes/class-lengow-log.php' );
+require_once( '../includes/class-lengow-sync.php' );
 require_once( '../includes/class-lengow-translation.php' );
-require_once( '../includes/class-lengow-configuration.php' );
-require_once( '../includes/class-lengow-check.php' );
-require_once( '../includes/class-lengow-exception.php' );
 
 // check if WooCommerce plugin is activated.
 if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
@@ -90,18 +92,18 @@ if ( ! Lengow_Main::check_webservice_access( $token ) ) {
 	wp_die( $errorMessage, '', array( 'response' => 403 ) );
 }
 
-if ( isset( $_GET['get_sync'] ) && $_GET['get_sync'] == 1 ) {
+if ( isset( $_GET['get_sync'] ) && 1 == $_GET['get_sync'] ) {
 	echo json_encode( Lengow_Sync::get_sync_data() );
 } else {
 	$force = isset( $_GET['force'] ) ? (bool) $_GET['force'] : false;
 	// get sync action if exists.
 	$sync = isset( $_GET['sync'] ) ? $_GET['sync'] : false;
 	// sync catalogs id between Lengow and Shopware
-	if ( ! $sync || $sync === 'catalog' ) {
+	if ( ! $sync || 'catalog' === $sync ) {
 		Lengow_Sync::sync_catalog( $force );
 	}
 	// sync orders between Lengow and WooCommerce.
-	if ( ! $sync || $sync === 'order' ) {
+	if ( ! $sync || 'order' === $sync ) {
 		// array of params for import order
 		$params = array( 'type' => 'cron' );
 		if ( isset( $_GET['preprod_mode'] ) ) {
@@ -135,19 +137,19 @@ if ( isset( $_GET['get_sync'] ) && $_GET['get_sync'] == 1 ) {
 		$import->exec();
 	}
 	// sync options between Lengow and WooCommerce.
-	if ( ! $sync || $sync === 'cms_option' ) {
+	if ( ! $sync || 'cms_option' === $sync ) {
 		Lengow_Sync::set_cms_option( $force );
 	}
 	// sync marketplaces between Lengow and WooCommerce.
-	if ( $sync === 'marketplace' ) {
+	if ( 'marketplace' === $sync ) {
 		Lengow_Sync::get_marketplaces( $force );
 	}
 	// sync status account between Lengow and WooCommerce.
-	if ( $sync === 'status_account' ) {
+	if ( 'status_account' === $sync ) {
 		Lengow_Sync::get_status_account( $force );
 	}
 	// sync statistics between Lengow and WooCommerce.
-	if ( $sync === 'statistic' ) {
+	if ( 'statistic' === $sync ) {
 		Lengow_Sync::get_statistic( $force );
 	}
 	// sync option is not valid.

@@ -188,6 +188,8 @@ fr:
       no_billing_address: "Erreur Lengow : pas d'adresse de facturation dans cette commande."
       no_country_for_delivery_address: "Erreur Lengow : l'adresse de livraison ne contient pas de pays."
       no_product: "Erreur Lengow : pas de produit dans cette commande."
+      no_change_rate: "Erreur Lengow : pas de taux de change valide à appliquer sur les prix"
+      no_currency: "Erreur Lengow : pas de devise dans cette commande"
       check_logs: "Retrouvez tout l'historique des logs sur <a href=%{link}>cette page</a>"
     exception:
       no_connection_webservice: "la connexion ne se fait pas avec Lengow"
