@@ -164,6 +164,8 @@ lengow_log.error.no_country_for_billing_address|Erreur Lengow : l'adresse de fac
 lengow_log.error.no_billing_address|Erreur Lengow : pas d'adresse de facturation dans cette commande.
 lengow_log.error.no_country_for_delivery_address|Erreur Lengow : l'adresse de livraison ne contient pas de pays.
 lengow_log.error.no_product|Erreur Lengow : pas de produit dans cette commande.
+lengow_log.error.no_change_rate|Erreur Lengow : pas de taux de change valide à appliquer sur les prix
+lengow_log.error.no_currency|Erreur Lengow : pas de devise dans cette commande
 lengow_log.error.check_logs|Retrouvez tout l'historique des logs sur <a href=%{link}>cette page</a>
 lengow_log.exception.no_connection_webservice|la connexion ne se fait pas avec Lengow
 lengow_log.exception.error_lengow_webservice|L'API Lengow : %{error_code} - %{error_message}

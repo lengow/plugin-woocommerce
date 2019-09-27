@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <div class="lgw-col-8" style="padding:0;">
             <div id="lengow_last_importation">
                 <p>
-					<?php if ( $order_collection['last_import_type'] !== 'none' ) : ?>
+					<?php if ( 'none' !== $order_collection['last_import_type'] ) : ?>
 						<?php echo $locale->t( 'order.screen.last_order_importation' ); ?>
                         :
                         <b><span id="lengow_last_import_date"><?php echo $order_collection['last_import_date']; ?></span></b>

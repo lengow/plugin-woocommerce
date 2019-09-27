@@ -141,7 +141,7 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 						<?php $file_name = explode( '.', $file['name'] ); ?>
 						<?php echo date_format( date_create( $file_name[0] ), 'd F Y' ); ?></option>
 				<?php endforeach; ?>
-				<?php if ( count( $list_file ) > 0 ) : ?>
+				<?php if ( ! empty( $list_file ) ) : ?>
                     <option
                             value="<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_settings' ); ?>&action=download_all">
 						<?php echo $locale->t( 'global_setting.screen.download_all_files' ); ?>

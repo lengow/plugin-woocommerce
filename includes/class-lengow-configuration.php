@@ -38,7 +38,7 @@ class Lengow_Configuration {
 	 */
 	public static function get_keys() {
 		static $keys = null;
-		if ( $keys === null ) {
+		if ( null === $keys ) {
 			$locale = new Lengow_Translation();
 			$keys   = array(
 				'lengow_token'                          => array(
@@ -336,7 +336,8 @@ class Lengow_Configuration {
 	 */
 	public static function set_active_shop() {
 		$shop_is_active   = self::shop_is_active();
-		$shop_has_catalog = count( self::get_catalog_ids() ) > 0;
+		$catalog_ids      = self::get_catalog_ids();
+		$shop_has_catalog = ! empty( $catalog_ids );
 		self::update_value( 'lengow_store_enabled', $shop_has_catalog );
 
 		return $shop_is_active !== $shop_has_catalog ? true : false;
@@ -388,8 +389,8 @@ class Lengow_Configuration {
 	 */
 	public static function migrate_product_selection() {
 		$export_all_product = self::get( 'lengow_export_all_product' );
-		if ( $export_all_product !== false ) {
-			$value = ( $export_all_product === '' || $export_all_product === '0' ) ? 1 : 0;
+		if ( false !== $export_all_product ) {
+			$value = ( '' === $export_all_product || '0' === $export_all_product ) ? 1 : 0;
 			self::update_value( 'lengow_selection_enabled', $value );
 			self::delete( 'lengow_export_all_product' );
 		}
@@ -400,7 +401,7 @@ class Lengow_Configuration {
 	 */
 	public static function migrate_product_types() {
 		$old_product_types = self::get( 'lengow_export_type' );
-		if ( $old_product_types !== false ) {
+		if ( false !== $old_product_types ) {
 			$old_product_types = json_decode( $old_product_types, true );
 			if ( is_array( $old_product_types ) ) {
 				self::update_value( 'lengow_product_types', $old_product_types );

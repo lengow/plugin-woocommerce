@@ -122,7 +122,7 @@ class Lengow_Log extends Lengow_File {
 	public static function download( $file = null ) {
 		if ( $file && preg_match( '/^logs-([0-9]{4}-[0-9]{2}-[0-9]{2})\.txt$/', $file, $match ) ) {
 			$filename = LENGOW_PLUGIN_PATH . '/' . self::$lengow_log_folder . '/' . $file;
-			$handle   = fopen( $filename, "r" );
+			$handle   = fopen( $filename, 'r' );
 			$contents = fread( $handle, filesize( $filename ) );
 			header( 'Content-type: text/plain' );
 			header( 'Content-Disposition: attachment; filename="' . $match[1] . '.txt"' );
@@ -133,7 +133,7 @@ class Lengow_Log extends Lengow_File {
 			header( 'Content-type: text/plain; charset=UTF-8' );
 			header( 'Content-Disposition: attachment; filename="logs.txt"' );
 			foreach ( $files as $file ) {
-				$handle   = fopen( $file['full_path'], "r" );
+				$handle   = fopen( $file['full_path'], 'r' );
 				$contents = fread( $handle, filesize( $file['full_path'] ) );
 				echo $contents;
 			}

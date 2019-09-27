@@ -79,8 +79,8 @@ class Lengow_Admin {
 		$is_new_merchant     = Lengow_Connector::is_new_merchant();
 		$total_pending_order = Lengow_Order::get_total_order_by_status( 'waiting_shipment' );
 		if ( $this->current_tab != $this->_default_tab
-		     && ! ( $merchant_status['type'] === 'free_trial' && $merchant_status['expired'] )
-		     && $merchant_status['type'] !== 'bad_payer'
+		     && ! ( 'free_trial' === $merchant_status['type'] && $merchant_status['expired'] )
+		     && 'bad_payer' !== $merchant_status['type']
 		     && ! $is_new_merchant
 		) {
 			include_once 'views/html-admin-header.php';

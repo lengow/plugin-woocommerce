@@ -164,6 +164,8 @@ lengow_log.error.no_country_for_billing_address|Lengow error: billing address do
 lengow_log.error.no_billing_address|Lengow error: no billing address in the order
 lengow_log.error.no_country_for_delivery_address|Lengow error: delivery address does not contain the country
 lengow_log.error.no_product|Lengow error: no product in the order
+lengow_log.error.no_change_rate|Lengow error: no exchange rates available for order prices
+lengow_log.error.no_currency|Lengow error: no currency in the order
 lengow_log.error.check_logs|You can check logs on <a href=%{link}>this page</a>
 lengow_log.exception.no_connection_webservice|connection did not work with the Lengow webservice
 lengow_log.exception.error_lengow_webservice|Lengow webservice: %{error_code} - %{error_message}
@@ -199,7 +201,11 @@ log.import.connector_get_order|get order with order ID: %{marketplace_sku} and m
 log.import.connector_get_all_order|get orders between %{date_from} and %{date_to} for catalogs ID: %{catalog_id}
 log.import.find_one_order|%{nb_order} order found for order ID: %{marketplace_sku} and markeplace: %{marketplace_name} with account ID: %{account_id}
 log.import.find_all_orders|%{nb_order} order(s) found with account ID: %{account_id}
+log.import.error_already_created|%{decoded_message} (created on the %{date_message})
+log.import.external_id_exist|already imported in a WooCommerce with the order ID %{order_id}
 log.import.order_already_decremented|order already decremented
+log.import.rewrite_processing_fee|rewrite amount without processing fee
+log.import.rewrite_shipping_cost|rewrite amount without shipping cost
 log.import.order_shipped_by_marketplace|order shipped by %{marketplace_name}
 log.import.current_order_state_unavailable|current order's status [%{order_state_marketplace}] makes it unavailable to import for marketplace %{marketplace_name}
 log.import.order_successfully_decremented|order successfully decremented

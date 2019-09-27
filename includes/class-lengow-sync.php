@@ -126,7 +126,7 @@ class Lengow_Sync {
 		}
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_catalog_update' );
-			if ( ! is_null( $updated_at )
+			if ( null !== $updated_at
 			     && ( time() - strtotime( $updated_at ) ) < self::$_cache_times['catalog']
 			) {
 				return false;
@@ -199,7 +199,7 @@ class Lengow_Sync {
 		}
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_last_option_update' );
-			if ( ! is_null( $updated_at )
+			if ( null !== $updated_at
 			     && ( time() - strtotime( $updated_at ) ) < self::$_cache_times['cms_option']
 			) {
 				return false;
@@ -222,7 +222,7 @@ class Lengow_Sync {
 	public static function get_status_account( $force = false ) {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_last_account_status_update' );
-			if ( ! is_null( $updated_at )
+			if ( null !== $updated_at
 			     && ( time() - strtotime( $updated_at ) ) < self::$_cache_times['status_account']
 			) {
 				return json_decode( Lengow_Configuration::get( 'lengow_account_status' ), true );
@@ -234,7 +234,7 @@ class Lengow_Sync {
 				'type'    => $result->isFreeTrial ? 'free_trial' : '',
 				'day'     => (int) $result->leftDaysBeforeExpired < 0 ? 0 : (int) $result->leftDaysBeforeExpired,
 				'expired' => (bool) $result->isExpired,
-				'legacy'  => $result->accountVersion === 'v2' ? true : false,
+				'legacy'  => 'v2' === $result->accountVersion ? true : false,
 			);
 			Lengow_Configuration::update_value( 'lengow_account_status', json_encode( $status ) );
 			Lengow_Configuration::update_value( 'lengow_last_account_status_update', date( 'Y-m-d H:i:s' ) );
@@ -259,7 +259,7 @@ class Lengow_Sync {
 	public static function get_statistic( $force = false ) {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_last_order_statistic_update' );
-			if ( ! is_null( $updated_at )
+			if ( null !== $updated_at
 			     && ( time() - strtotime( $updated_at ) ) < self::$_cache_times['statistic']
 			) {
 				return json_decode( Lengow_Configuration::get( 'lengow_order_statistic' ), true );
@@ -322,7 +322,7 @@ class Lengow_Sync {
 		$file_path = Lengow_Marketplace::get_file_path();
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_marketplace_update' );
-			if ( ! is_null( $updated_at )
+			if ( null !== $updated_at
 			     && ( time() - strtotime( $updated_at ) ) < self::$_cache_times['marketplace']
 			     && file_exists( $file_path )
 			) {

@@ -119,7 +119,7 @@ class Lengow_Admin_Orders {
 				array( 'url' => admin_url( 'admin.php?page=lengow&tab=lengow_admin_settings' ) )
 			);
 		}
-		if ( count( $warning_messages ) > 0 ) {
+		if ( ! empty( $warning_messages ) ) {
 			$warning_message = join( '<br/>', $warning_messages );
 		} else {
 			$warning_message = false;

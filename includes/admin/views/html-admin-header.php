@@ -15,14 +15,14 @@ if ( isset( $_GET['tab'] ) ) {
         </a>
     </li>
     <li role="presentation"
-        class="<?php echo ( isset( $current_page ) && $current_page === 'lengow_admin_products' ) ? 'active' : ''; ?>">
+        class="<?php echo ( isset( $current_page ) && 'lengow_admin_products' === $current_page ) ? 'active' : ''; ?>">
         <a href="
 			<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_admin_products' ); ?>">
 			<?php echo $locale->t( 'menu.product' ); ?>
         </a>
     </li>
     <li role="presentation"
-        class="<?php echo ( isset( $current_page ) && $current_page === 'lengow_admin_orders' ) ? 'active' : ''; ?>"
+        class="<?php echo ( isset( $current_page ) && 'lengow_admin_orders' === $current_page ) ? 'active' : ''; ?>"
         id="js-menugotoimport">
         <a href="
 			<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_admin_orders' ); ?>">
@@ -32,7 +32,7 @@ if ( isset( $_GET['tab'] ) ) {
 			<?php endif; ?>
         </a>
     </li>
-    <li class="lengow_float_right <?php echo ( isset( $current_page ) && $current_page === 'lengow_admin_settings' ) ? 'active' : ''; ?>"
+    <li class="lengow_float_right <?php echo ( isset( $current_page ) && 'lengow_admin_settings' === $current_page ) ? 'active' : ''; ?>"
         id="menugotosetting">
         <a href="<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_admin_settings' ); ?>"
            class="lengow_link_tooltip"
@@ -40,7 +40,7 @@ if ( isset( $_GET['tab'] ) ) {
             <i class="fa fa-cog fa-2x"></i>
         </a>
     </li>
-    <li class="lengow_float_right <?php echo ( isset( $current_page ) && $current_page === 'lengow_admin_help' ) ? 'active' : ''; ?>"
+    <li class="lengow_float_right <?php echo ( isset( $current_page ) && 'lengow_admin_help' === $current_page ) ? 'active' : ''; ?>"
         id="menugotohelp">
         <a href="<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_admin_help' ); ?>"
            class="lengow_link_tooltip"
@@ -53,7 +53,7 @@ if ( isset( $_GET['tab'] ) ) {
 			<?php echo $locale->t( 'menu.jump_to_lengow' ); ?>
         </a>
     </li>
-	<?php if ( $merchant_status['type'] === 'free_trial' && ! $merchant_status['expired'] ) : ?>
+	<?php if ( 'free_trial' === $merchant_status['type'] && ! $merchant_status['expired'] ) : ?>
         <li class="lengow_float_right" id="menucountertrial">
             <div class="lgw-block">
 				<?php echo $locale->t( 'menu.counter', array( 'counter' => $merchant_status['day'] ) ); ?>

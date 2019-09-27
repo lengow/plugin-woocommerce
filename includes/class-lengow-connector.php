@@ -333,7 +333,7 @@ class Lengow_Connector {
 			throw new Lengow_Exception( $timeout );
 		}
 		curl_close( $ch );
-		if ( $result === false ) {
+		if ( false === $result ) {
 			$error_curl    = Lengow_Main::set_log_message(
 				'log.connector.error_curl',
 				array(
@@ -359,7 +359,7 @@ class Lengow_Connector {
 	 */
 	public static function is_new_merchant() {
 		list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
-		if ( ! is_null( $account_id ) && ! is_null( $access_token ) && ! is_null( $secret_token ) ) {
+		if ( null !== $account_id && null !== $access_token && null !== $secret_token ) {
 			return false;
 		}
 
@@ -376,7 +376,7 @@ class Lengow_Connector {
 			return false;
 		}
 		list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
-		if ( is_null( $account_id ) || $account_id === 0 || ! is_numeric( $account_id ) ) {
+		if ( null === $account_id || 0 === $account_id || ! is_numeric( $account_id ) ) {
 			return false;
 		}
 		$connector = new Lengow_Connector( $access_token, $secret_token );
@@ -408,7 +408,7 @@ class Lengow_Connector {
 		}
 		try {
 			list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
-			if ( is_null( $account_id ) ) {
+			if ( null === $account_id ) {
 				return false;
 			}
 			$connector = new Lengow_Connector( $access_token, $secret_token );

@@ -29,8 +29,9 @@ if ( ! defined( 'ABSPATH' ) || ! Lengow_Install::is_installation_in_progress() )
 //                         lengow_product
 // *********************************************************
 
-if ( Lengow_Install::check_table_exists( 'lengow_product' ) ) {
-	if ( ! Lengow_Install::check_index_exists( 'lengow_product', 'product_id' ) ) {
-		$wpdb->query( 'ALTER TABLE ' . $wpdb->prefix . 'lengow_product ADD INDEX(`product_id`)' );
+$table = Lengow_Crud::LENGOW_PRODUCT;
+if ( Lengow_Install::check_table_exists( $table ) ) {
+	if ( ! Lengow_Install::check_index_exists( $table, 'product_id' ) ) {
+		$wpdb->query( 'ALTER TABLE ' . $wpdb->prefix . $table .' ADD INDEX(`product_id`)' );
 	}
 }
