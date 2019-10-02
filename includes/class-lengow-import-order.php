@@ -137,6 +137,11 @@ class Lengow_Import_Order {
 	private $_sent_marketplace = false;
 
 	/**
+	 * @var string marketplace comment.
+	 */
+	private $_message;
+
+	/**
 	 * Construct the import manager.
 	 *
 	 * @param $params array Optional options
@@ -296,7 +301,7 @@ class Lengow_Import_Order {
 			? (string) $this->_order_data->billing_address->email
 			: (string) $this->_package_data->delivery->email;
 		// get order comment from marketplace.
-		$message = $this->_get_order_comment();
+		$this->_message = $this->_get_order_comment();
 		// update Lengow order with new data
 		Lengow_Order::update(
 			$this->_order_lengow_id,
@@ -313,7 +318,7 @@ class Lengow_Import_Order {
 				'sent_marketplace'     => (int) $this->_sent_marketplace,
 				'delivery_country_iso' => (string) $this->_package_data->delivery->common_country_iso_a2,
 				'order_lengow_state'   => $this->_order_state_lengow,
-				'message'              => $message,
+				'message'              => $this->_message,
 				'extra'                => json_encode( $this->_order_data ),
 			)
 		);
@@ -366,6 +371,10 @@ class Lengow_Import_Order {
 			if ( ! $user ) {
 				$user = $this->_create_user( $billing_address, $shipping_address );
 			}
+			// create a WooCommerce cart.
+			/*$this->_create_cart( $products );*/
+			// create a WooCommerce order.
+			$this->_create_order( $user, $billing_address, $shipping_address );
 
 			// decrement product stock.
 			$this->_decrease_stock( $products );
@@ -713,6 +722,89 @@ class Lengow_Import_Order {
 		do_action( 'woocommerce_customer_save_address', $user->ID );
 
 		return $user;
+	}
+
+	/**
+	 * Create woocommerce cart
+	 *
+	 * @param array $products Product list
+	 *
+	 * @throws Exception|Lengow_Exception
+	 */
+	private function _create_cart( $products ) {
+		global $woocommerce;
+
+		$woocommerce->cart        = new WC_Cart();
+		$woocommerce->cart->taxes = array();
+		if ( Lengow_Main::compare_version('2.1') ) {
+			wc_clear_notices();
+		}
+		foreach ( $products as $id => $product ) {
+			$product_id   = explode( '_', $id );
+			$variation_id = isset( $product_id[1] ) ? (int) $product_id[1] : null;
+			$woocommerce->cart->add_to_cart( (int) $product_id[0], $product['quantity'], $variation_id );
+		}
+		if ( Lengow_Main::compare_version('2.1') ) {
+			if ( wc_notice_count( 'error' ) > 0 ) {
+				foreach ( wc_get_notices( 'error' ) as $error ) {
+					throw new Lengow_Exception(
+						Lengow_Main::set_log_message( 'lengow_log.exception.woocommerce_customer_not_saved' )
+					);
+				}
+			}
+		} else {
+			if ( $woocommerce->error_count() > 0 ) {
+				foreach ( $woocommerce->get_errors() as $error ) {
+					throw new Lengow_Exception(
+						Lengow_Main::set_log_message( 'lengow_log.exception.woocommerce_customer_not_saved' )
+					);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Create WooCommerce order.
+	 *
+	 * @param WP_User $user Current user
+	 * @param Lengow_Address $billing_address Lengow billing address
+	 * @param Lengow_Address $shipping_address Lengow shipping address
+	 *
+	 * @return integer
+	 */
+	private function _create_order( $user, $billing_address, $shipping_address ) {
+		$new_order_data = array(
+			'post_type'     => 'shop_order',
+			'post_title'    => sprintf(
+				__( 'Order &ndash; %s', 'woocommerce' ),
+				strftime( _x( '%b %d, %Y @ %I:%M %p', 'Order date parsed by strftime', 'woocommerce' ) )
+			),
+			'post_status'   => 'publish',
+			'ping_status'   => 'closed',
+			'post_excerpt'  => (string) $this->_message,
+			'post_author'   => 1,
+			'post_password' => uniqid( 'order_' )
+		);
+		$order_data = apply_filters( 'woocommerce_new_order_data', $new_order_data);
+		$order_id   = wp_insert_post( $order_data, true );
+		if ( is_wp_error( $order_id ) ) {
+			// TODO add exception
+			die();
+		}
+		do_action( 'woocommerce_new_order', $order_id );
+		// get billing data formatted for WooCommerce address.
+		$billing_data  = $billing_address->get_formatted_data();
+		$shipping_data = $shipping_address->get_formatted_data();
+		// adds shipping and billing addresses to an order.
+		foreach ( $billing_data as $key => $field ) {
+			update_post_meta( $order_id, '_'. $key, $field );
+		}
+		foreach ( $shipping_data as $key => $field ) {
+			update_post_meta( $order_id, '_'. $key, $field );
+		}
+		update_post_meta( $order_id, '_customer_user', absint( $user->ID ) );
+
+		return $order_id;
 	}
 
 	/**
