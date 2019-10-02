@@ -199,3 +199,4 @@ en:
       product_list_is_empty: "order could not be saved"
       product_not_be_found: "product ID %{product_id} could not be found"
       product_is_a_parent: "product ID %{product_id} is variable. Product variation is needed"
+      woocommerce_customer_not_saved: "WARNING! Customer could NOT be saved in Wordpress user table"

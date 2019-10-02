@@ -44,6 +44,7 @@
 require( dirname( dirname( dirname( dirname( dirname( $_SERVER['SCRIPT_FILENAME'] ) ) ) ) ) . '/wp-load.php' );
 
 // dependencies
+require_once( '../includes/class-lengow-address.php' );
 require_once( '../includes/class-lengow-check.php' );
 require_once( '../includes/class-lengow-configuration.php' );
 require_once( '../includes/class-lengow-connector.php' );

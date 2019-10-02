@@ -199,3 +199,4 @@ fr:
       product_list_is_empty: "La commande ne peut être sauvegardée."
       product_not_be_found: "Le produit %{product_id} n'a pu être trouvé."
       product_is_a_parent: "Le produit %{product_id}  est un ID parent. Les déclinaisons du produit sont nécessaires."
+      woocommerce_customer_not_saved: "ATTENTION ! Le client n'a pas pu être sauvegardé dans la table user de Wordpress"

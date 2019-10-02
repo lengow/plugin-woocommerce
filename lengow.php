@@ -118,6 +118,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 */
 		public function includes() {
 			if ( is_admin() ) {
+				include_once( 'includes/class-lengow-address.php' );
 				include_once( 'includes/class-lengow-check.php' );
 				include_once( 'includes/class-lengow-configuration.php' );
 				include_once( 'includes/class-lengow-connector.php' );
