@@ -429,6 +429,22 @@ class Lengow_Main {
 	}
 
 	/**
+	 * Clean phone number.
+	 *
+	 * @param string $phone phone number to clean
+	 *
+	 * @return string
+	 */
+	public static function clean_phone( $phone ) {
+		$replace = array( '.', ' ', '-', '/' );
+		if ( ! $phone ) {
+			return '';
+		}
+
+		return str_replace( $replace, '', preg_replace( '/[^0-9]*/', '', $phone ) );
+	}
+
+	/**
 	 * Clean data.
 	 *
 	 * @param string $str the content

@@ -36,6 +36,7 @@ en:
       order_already_decremented: "order already decremented"
       rewrite_processing_fee: "rewrite amount without processing fee"
       rewrite_shipping_cost: "rewrite amount without shipping cost"
+      generate_unique_email: "generate a unique email %{email}"
       order_shipped_by_marketplace: "order shipped by %{marketplace_name}"
       current_order_state_unavailable: "current order's status [%{order_state_marketplace}] makes it unavailable to import for marketplace %{marketplace_name}"
       order_successfully_decremented: "order successfully decremented"

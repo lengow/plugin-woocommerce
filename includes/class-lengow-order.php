@@ -32,6 +32,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Order {
 
 	/**
+	 * @var integer order process state for order imported
+	 */
+	const PROCESS_STATE_IMPORT = 1;
+
+	/**
+	 * @var integer order process state for order finished
+	 */
+	const PROCESS_STATE_FINISH = 2;
+
+	/**
 	 * @var integer Lengow order record id.
 	 */
 	public $id;
@@ -237,6 +247,28 @@ class Lengow_Order {
 		$data['updated_at'] = date( 'Y-m-d H:i:s' );
 
 		return Lengow_Crud::update( Lengow_Crud::LENGOW_ORDER, $data, array( 'id' => $order_lengow_id ) );
+	}
+
+	/**
+	 * Get order process state.
+	 *
+	 * @param string $state state to be matched
+	 *
+	 * @return integer
+	 */
+	public static function get_order_process_state( $state ) {
+		switch ( $state ) {
+			case 'accepted':
+			case 'waiting_shipment':
+			default:
+				return self::PROCESS_STATE_IMPORT;
+			case 'shipped':
+			case 'closed':
+			case 'refused':
+			case 'canceled':
+			case 'refunded':
+				return self::PROCESS_STATE_FINISH;
+		}
 	}
 
 	/**

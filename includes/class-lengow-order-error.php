@@ -70,7 +70,7 @@ class Lengow_Order_Error {
 	public static function update( $order_error_id, $data = array() ) {
 		$data['updated_at'] = date( 'Y-m-d H:i:s' );
 
-		return Lengow_Crud::update( Lengow_Crud::LENGOW_ORDER_ERROR, array( 'id' => $order_error_id ), $data );
+		return Lengow_Crud::update( Lengow_Crud::LENGOW_ORDER_ERROR, $data, array( 'id' => $order_error_id ) );
 	}
 
 	/**
@@ -92,17 +92,42 @@ class Lengow_Order_Error {
             LEFT JOIN ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . ' lo ON loe.order_lengow_id = lo.id
             WHERE lo.marketplace_sku = %s
             AND lo.delivery_address_id = %d
+            AND lo.is_in_error = %d
             AND loe.type = %d
             AND loe.is_finished = %d
         ';
 		$results          = $wpdb->get_results(
-			$wpdb->prepare( $query, array( $marketplace_sku, $delivery_address_id, $order_error_type, 0 ) )
+			$wpdb->prepare( $query, array( $marketplace_sku, $delivery_address_id, 1, $order_error_type, 0 ) )
 		);
 		if ( $results ) {
 			return $results[0];
 		}
 
 		return false;
+	}
+
+	/**
+	 * Removes all order logs
+	 *
+	 * @param integer $idOrderLengow Lengow order id
+	 * @param string|null $type order log type (import or send)
+	 *
+	 * @return boolean
+	 */
+	public static function finish_order_errors($idOrderLengow, $type = null) {
+		$where = array('order_lengow_id' => $idOrderLengow);
+		if ($type) {
+			$where['type'] = self::get_order_error_type( $type );
+		}
+		$order_errors = Lengow_Crud::read(Lengow_Crud::LENGOW_ORDER_ERROR, $where, false);
+		$update_success = 0;
+		foreach ($order_errors as $order_error) {
+			$result = self::update($order_error->id, array('is_finished' => 1));
+			if ($result) {
+				$update_success++;
+			}
+		}
+		return count($order_errors) === $update_success ? true : false;
 	}
 
 	/**

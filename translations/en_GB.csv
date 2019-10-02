@@ -174,6 +174,7 @@ lengow_log.exception.marketplace_not_present|Lengow error: %{marketplace_name} d
 lengow_log.exception.product_list_is_empty|order could not be saved
 lengow_log.exception.product_not_be_found|product ID %{product_id} could not be found
 lengow_log.exception.product_is_a_parent|product ID %{product_id} is variable. Product variation is needed
+lengow_log.exception.woocommerce_customer_not_saved|WARNING! Customer could NOT be saved in Wordpress user table
 log.install.install_start|## start install for version %{version} ##
 log.install.install_end|## end install for version %{version} ##
 log.install.table_created|adding table %{name} in database
@@ -206,6 +207,7 @@ log.import.external_id_exist|already imported in a WooCommerce with the order ID
 log.import.order_already_decremented|order already decremented
 log.import.rewrite_processing_fee|rewrite amount without processing fee
 log.import.rewrite_shipping_cost|rewrite amount without shipping cost
+log.import.generate_unique_email|generate a unique email %{email}
 log.import.order_shipped_by_marketplace|order shipped by %{marketplace_name}
 log.import.current_order_state_unavailable|current order's status [%{order_state_marketplace}] makes it unavailable to import for marketplace %{marketplace_name}
 log.import.order_successfully_decremented|order successfully decremented

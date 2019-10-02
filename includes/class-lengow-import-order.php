@@ -234,9 +234,18 @@ class Lengow_Import_Order {
 		);
 		// if order is cancelled or new -> skip.
 		if ( ! Lengow_Import::check_state( $this->_order_state_marketplace, $this->_marketplace ) ) {
-
-			// TODO check and complete an order not imported if it is canceled or refunded
-
+			$order_process_state = Lengow_Order::get_order_process_state( $this->_order_state_lengow );
+			// check and complete an order not imported if it is canceled or refunded.
+			if ( $this->_order_lengow_id && $order_process_state === Lengow_Order::PROCESS_STATE_FINISH ) {
+				Lengow_Order_Error::finish_order_errors( $this->_order_lengow_id );
+				Lengow_Order::update(
+					$this->_order_lengow_id,
+					array(
+						'order_lengow_state'  => $this->_order_state_lengow,
+						'order_process_state' => $order_process_state,
+					)
+				);
+			}
 			Lengow_Main::log(
 				'Import',
 				Lengow_Main::set_log_message(
@@ -326,22 +335,46 @@ class Lengow_Import_Order {
 					return false;
 				}
 			}
-			// get products.
+			// get a product list.
 			$products = $this->_get_products();
 			if ( empty( $products ) ) {
 				throw new Lengow_Exception(
 					Lengow_Main::set_log_message( 'lengow_log.exception.product_list_is_empty' )
 				);
-			} else {
-				// decrement product stock.
-				$this->_decrease_stock( $products );
-				Lengow_Main::log(
-					'Import',
-					Lengow_Main::set_log_message( 'log.import.order_successfully_decremented' ),
-					$this->_log_output,
-					$this->_marketplace_sku
-				);
 			}
+			// get fictitious email for user creation.
+			$user_email = $this->_get_user_email();
+			// get billing and shipping addresses for the user and the order.
+			$billing_address = new Lengow_Address(
+				$this->_order_data->billing_address,
+				Lengow_Address::TYPE_BILLING
+			);
+			$billing_address->set_data( 'email', $user_email );
+			$shipping_address = new Lengow_Address(
+				$this->_package_data->delivery,
+				Lengow_Address::TYPE_SHIPPING,
+				$this->_carrier_id_relay
+			);
+			$shipping_address->set_data( 'email', $user_email );
+			$billing_phone = $billing_address->get_data( 'phone' );
+			if ( empty( $billing_phone ) ) {
+				$shipping_phone = $shipping_address->get_data( 'phone' );
+				$billing_address->set_data( 'phone', $shipping_phone );
+			}
+			// get or create a Wordpress user.
+			$user = get_user_by( 'email', $user_email );
+			if ( ! $user ) {
+				$user = $this->_create_user( $billing_address, $shipping_address );
+			}
+
+			// decrement product stock.
+			$this->_decrease_stock( $products );
+			Lengow_Main::log(
+				'Import',
+				Lengow_Main::set_log_message( 'log.import.order_successfully_decremented' ),
+				$this->_log_output,
+				$this->_marketplace_sku
+			);
 		} catch ( Lengow_Exception $e ) {
 			$error_message = $e->getMessage();
 		} catch ( Exception $e ) {
@@ -617,6 +650,69 @@ class Lengow_Import_Order {
 		}
 
 		return $products;
+	}
+
+	/**
+	 * Get fictitious email for user creation.
+	 *
+	 * @return string
+	 */
+	private function _get_user_email() {
+		$domain = implode( '.', array_slice( explode( '.', parse_url( get_site_url(), PHP_URL_HOST ) ), - 2 ) );
+		$domain = preg_match( '`^([\w]+)\.([a-z]+)$`', $domain ) ? $domain : 'lengow.com';
+		$email  = $this->_marketplace_sku . '-' . $this->_marketplace->name . '@' . $domain;
+		Lengow_Main::log(
+			'Import',
+			Lengow_Main::set_log_message( 'log.import.generate_unique_email', array( 'email' => $email ) ),
+			$this->_log_output,
+			$this->_marketplace_sku
+		);
+
+		return $email;
+	}
+
+	/**
+	 * Create Wordpress user with billing and shipping addresses.
+	 *
+	 * @param Lengow_Address $billing_address Lengow billing address
+	 * @param Lengow_Address $shipping_address Lengow shipping address
+	 *
+	 * @return WP_User|false
+	 * @throws Lengow_Exception Woocommerce customer not saved
+	 *
+	 */
+	private function _create_user( $billing_address, $shipping_address ) {
+		// create Wordpress user.
+		$user_email        = $billing_address->get_data( 'email' );
+		$new_customer_data = array(
+			'user_login' => strlen( $user_email ) > 60 ? substr( $user_email, - 60 ) : $user_email,
+			'user_pass'  => wp_generate_password( 32, false ),
+			'user_email' => $user_email,
+			'role'       => 'customer',
+			'first_name' => $billing_address->get_data( 'first_name' ),
+			'last_name'  => $billing_address->get_data( 'last_name' ),
+		);
+		$user_id           = wp_insert_user( apply_filters( 'woocommerce_new_customer_data', $new_customer_data ) );
+		if ( is_wp_error( $user_id ) ) {
+			throw new Lengow_Exception(
+				Lengow_Main::set_log_message( 'lengow_log.exception.woocommerce_customer_not_saved' )
+			);
+		}
+		$user = get_user_by( 'id', $user_id );
+		do_action( 'woocommerce_created_customer', $user_id );
+		// get billing data formatted for WooCommerce address.
+		$billing_data  = $billing_address->get_formatted_data();
+		$shipping_data = $shipping_address->get_formatted_data();
+		// adds shipping and billing addresses to a user.
+		foreach ( $billing_data as $key => $field ) {
+			update_user_meta( $user->ID, $key, $field );
+		}
+		foreach ( $shipping_data as $key => $field ) {
+			update_user_meta( $user->ID, $key, $field );
+		}
+		do_action( 'woocommerce_customer_save_address', $user->ID );
+
+		return $user;
 	}
 
 	/**
