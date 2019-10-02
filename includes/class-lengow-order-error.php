@@ -127,7 +127,7 @@ class Lengow_Order_Error {
 				$update_success++;
 			}
 		}
-		return count($order_errors) === $update_success ? true : false;
+		return $update_success === count($order_errors) ? true : false;
 	}
 
 	/**

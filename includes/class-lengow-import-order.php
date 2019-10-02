@@ -236,7 +236,7 @@ class Lengow_Import_Order {
 		if ( ! Lengow_Import::check_state( $this->_order_state_marketplace, $this->_marketplace ) ) {
 			$order_process_state = Lengow_Order::get_order_process_state( $this->_order_state_lengow );
 			// check and complete an order not imported if it is canceled or refunded.
-			if ( $this->_order_lengow_id && $order_process_state === Lengow_Order::PROCESS_STATE_FINISH ) {
+			if ( $this->_order_lengow_id && Lengow_Order::PROCESS_STATE_FINISH === $order_process_state ) {
 				Lengow_Order_Error::finish_order_errors( $this->_order_lengow_id );
 				Lengow_Order::update(
 					$this->_order_lengow_id,

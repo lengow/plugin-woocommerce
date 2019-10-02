@@ -1,6 +1,6 @@
 <?php
 /**
- * All options to create billing and delivery address
+ * All options to create billing and delivery addresses
  *
  * Copyright 2019 Lengow SAS
  *
