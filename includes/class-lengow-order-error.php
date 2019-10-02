@@ -107,31 +107,32 @@ class Lengow_Order_Error {
 	}
 
 	/**
-	 * Removes all order logs
+	 * Removes all order logs.
 	 *
 	 * @param integer $idOrderLengow Lengow order id
 	 * @param string|null $type order log type (import or send)
 	 *
 	 * @return boolean
 	 */
-	public static function finish_order_errors($idOrderLengow, $type = null) {
-		$where = array('order_lengow_id' => $idOrderLengow);
-		if ($type) {
+	public static function finish_order_errors( $idOrderLengow, $type = null ) {
+		$where = array( 'order_lengow_id' => $idOrderLengow );
+		if ( $type ) {
 			$where['type'] = self::get_order_error_type( $type );
 		}
-		$order_errors = Lengow_Crud::read(Lengow_Crud::LENGOW_ORDER_ERROR, $where, false);
+		$order_errors   = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER_ERROR, $where, false );
 		$update_success = 0;
-		foreach ($order_errors as $order_error) {
-			$result = self::update($order_error->id, array('is_finished' => 1));
-			if ($result) {
-				$update_success++;
+		foreach ( $order_errors as $order_error ) {
+			$result = self::update( $order_error->id, array( 'is_finished' => 1 ) );
+			if ( $result ) {
+				$update_success ++;
 			}
 		}
-		return $update_success === count($order_errors) ? true : false;
+
+		return $update_success === count( $order_errors ) ? true : false;
 	}
 
 	/**
-	 * Return order error type value
+	 * Return order error type value.
 	 *
 	 * @param string $type order error type (import or send)
 	 *
