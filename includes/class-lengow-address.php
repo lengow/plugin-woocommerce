@@ -171,12 +171,12 @@ class Lengow_Address {
 	 * @param string|null $relay_id relay id
 	 */
 	public function __construct( $data, $type, $relay_id = null ) {
-		$address_data   = $this->_extract_address_data_from_api( $data );
-		$names          = $this->_get_names( $address_data );
-		$address_fields = $this->_get_address_fields( $address_data, $relay_id );
-		$state          = $this->_get_state( $address_data );
-		$phone_number   = $this->_get_phone_number( $address_data );
 		// set all generic fields for WooCommerce Address.
+		$address_data      = $this->_extract_address_data_from_api( $data );
+		$names             = $this->_get_names( $address_data );
+		$address_fields    = $this->_get_address_fields( $address_data, $relay_id );
+		$state             = $this->_get_state( $address_data );
+		$phone_number      = $this->_get_phone_number( $address_data );
 		$this->_type       = $type;
 		$this->_first_name = ucfirst( strtolower( $names['firstname'] ) );
 		$this->_last_name  = ucfirst( strtolower( $names['lastname'] ) );
