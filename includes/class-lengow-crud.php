@@ -103,6 +103,7 @@ class Lengow_Crud {
 			'carrier_id_relay'     => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
 			'sent_marketplace'     => array( 'required' => false, 'updated' => true, 'format' => '%d' ),
 			'is_in_error'          => array( 'required' => false, 'updated' => true, 'format' => '%d' ),
+			'is_reimported'        => array( 'required' => false, 'updated' => true, 'format' => '%d' ),
 			'message'              => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
 			'created_at'           => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
 			'updated_at'           => array( 'required' => false, 'updated' => true, 'format' => '%s' ),

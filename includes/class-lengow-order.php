@@ -32,14 +32,49 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Order {
 
 	/**
-	 * @var integer order process state for order imported
+	 * @var integer order process state for order imported.
 	 */
 	const PROCESS_STATE_IMPORT = 1;
 
 	/**
-	 * @var integer order process state for order finished
+	 * @var integer order process state for order finished.
 	 */
 	const PROCESS_STATE_FINISH = 2;
+
+	/**
+	 * @var string order state accepted.
+	 */
+	const STATE_ACCEPTED = 'accepted';
+
+	/**
+	 * @var string order state waiting_shipment.
+	 */
+	const STATE_WAITING_SHIPMENT = 'waiting_shipment';
+
+	/**
+	 * @var string order state shipped.
+	 */
+	const STATE_SHIPPED = 'shipped';
+
+	/**
+	 * @var string order state closed.
+	 */
+	const STATE_CLOSED = 'closed';
+
+	/**
+	 * @var string order state refused.
+	 */
+	const STATE_REFUSED = 'refused';
+
+	/**
+	 * @var string order state canceled.
+	 */
+	const STATE_CANCELED = 'canceled';
+
+	/**
+	 * @var string order state refunded.
+	 */
+	const STATE_REFUNDED = 'refunded';
 
 	/**
 	 * @var integer Lengow order record id.
@@ -258,17 +293,92 @@ class Lengow_Order {
 	 */
 	public static function get_order_process_state( $state ) {
 		switch ( $state ) {
-			case 'accepted':
-			case 'waiting_shipment':
+			case self::STATE_ACCEPTED:
+			case self::STATE_WAITING_SHIPMENT:
 			default:
 				return self::PROCESS_STATE_IMPORT;
-			case 'shipped':
-			case 'closed':
-			case 'refused':
-			case 'canceled':
-			case 'refunded':
+			case self::STATE_SHIPPED:
+			case self::STATE_CLOSED:
+			case self::STATE_REFUSED:
+			case self::STATE_CANCELED:
+			case self::STATE_REFUNDED:
 				return self::PROCESS_STATE_FINISH;
 		}
+	}
+
+	/**
+	 * Get WooCommerce state id corresponding to the current order state.
+	 *
+	 * @param string $order_state_marketplace order state marketplace
+	 * @param Lengow_Marketplace $marketplace Lengow marketplace instance
+	 * @param boolean $shipped_by_mp order shipped by marketplace
+	 *
+	 * @return string
+	 */
+	public static function get_woocommerce_state( $order_state_marketplace, $marketplace, $shipped_by_mp ) {
+		if ( $shipped_by_mp ) {
+			$order_state = 'shipped_by_mp';
+		} elseif ( $marketplace->get_state_lengow( $order_state_marketplace ) === self::STATE_SHIPPED
+		           || $marketplace->get_state_lengow( $order_state_marketplace ) === self::STATE_CLOSED
+		) {
+			$order_state = self::STATE_SHIPPED;
+		} else {
+			$order_state = self::STATE_WAITING_SHIPMENT;
+		}
+
+		return self::get_order_state( $order_state );
+	}
+
+	/**
+	 * Get the matching WooCommerce order state to the one given.
+	 *
+	 * @param string $state state to be matched
+	 *
+	 * @return string
+	 */
+	public static function get_order_state( $state ) {
+		switch ( $state ) {
+			case self::STATE_ACCEPTED:
+			case self::STATE_WAITING_SHIPMENT:
+			default:
+				$order_state = Lengow_Configuration::get( 'lengow_id_waiting_shipment' );
+				break;
+			case self::STATE_SHIPPED:
+			case self::STATE_CLOSED:
+				$order_state = Lengow_Configuration::get( 'lengow_id_shipped' );
+				break;
+			case self::STATE_REFUSED:
+			case self::STATE_CANCELED:
+				$order_state = Lengow_Configuration::get( 'lengow_id_cancel' );
+				break;
+			case 'shipped_by_mp':
+				$order_state = Lengow_Configuration::get( 'lengow_id_shipped_by_mp' );
+				break;
+		}
+
+		return $order_state;
+	}
+
+	/**
+	 * Get compatibility for WooCommerce order id.
+	 *
+	 * @param WC_Order $order WooCommerce order instance
+	 *
+	 * @return integer
+	 */
+	public static function get_order_id( $order ) {
+		return Lengow_Main::compare_version( '3.0' ) ? $order->get_id() : (int) $order->id;
+	}
+
+	/**
+	 * Get compatibility for WooCommerce order status.
+	 *
+	 * @param WC_Order $order WooCommerce order instance
+	 *
+	 * @return string
+	 */
+	public static function get_order_status( $order ) {
+		return Lengow_Main::compare_version( '3.0' ) ? 'wc-' . $order->get_status() : $order->status;
 	}
 
 	/**
@@ -346,6 +456,30 @@ class Lengow_Order {
 	}
 
 	/**
+	 * Get id from WooCommerce order id.
+	 *
+	 * @param integer $order_id WooCommerce order id
+	 *
+	 * @return integer|false
+	 */
+	public static function get_id_from_order_id( $order_id ) {
+		global $wpdb;
+
+		$query           = '
+			SELECT id FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . '
+			WHERE order_id = %d
+		';
+		$order_lengow_id = $wpdb->get_var(
+			$wpdb->prepare( $query, array( $order_id ) )
+		);
+		if ( $order_lengow_id ) {
+			return (int) $order_lengow_id;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Get id from Lengow delivery address id.
 	 *
 	 * @param integer $order_id WooCommerce order id
@@ -372,19 +506,19 @@ class Lengow_Order {
 	}
 
 	/**
-	 * Get marketplace name by WooCommerce order id.
+	 * Get marketplace label by WooCommerce order id.
 	 *
 	 * @param integer $order_id WooCommerce order id
 	 *
 	 * @return string|false
 	 */
-	public static function get_marketplace_name_by_order_id( $order_id ) {
+	public static function get_marketplace_label_by_order_id( $order_id ) {
 		global $wpdb;
 		if ( null === $order_id ) {
 			return false;
 		}
 		$query            = '
-			SELECT marketplace_name FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . '
+			SELECT marketplace_label FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . '
 			WHERE order_id = %d
 		';
 		$marketplace_name = $wpdb->get_var(
@@ -412,5 +546,68 @@ class Lengow_Order {
 		);
 
 		return (int) $total;
+	}
+
+	/**
+	 * Update order state to marketplace state.
+	 *
+	 * @param WC_Order $order WooCommerce order instance
+	 * @param Lengow_Order $order_lengow Lengow order instance
+	 * @param string $order_lengow_state Lengow order status
+	 * @param mixed $package_data package data
+	 *
+	 * @return string|false
+	 */
+	public static function update_state( $order, $order_lengow, $order_lengow_state, $package_data ) {
+		// finish actions if lengow order is shipped, closed, cancel or refunded.
+		$order_process_state = self::get_order_process_state( $order_lengow_state );
+		// update Lengow order if necessary.
+		$params = [];
+		if ( self::PROCESS_STATE_FINISH === $order_process_state ) {
+			// TODO finish all actions.
+			Lengow_Order_Error::finish_order_errors( $order_lengow->id, 'send' );
+			if ( $order_process_state !== $order_lengow->order_process_state ) {
+				$params['order_process_state'] = $order_process_state;
+			}
+			if ( $order_lengow->is_in_error ) {
+				$params['is_in_error'] = 0;
+			}
+		}
+		if ( $order_lengow_state !== $order_lengow->order_lengow_state ) {
+			$params['order_lengow_state'] = $order_lengow_state;
+			if ( ! empty( $package_data->delivery->trackings ) ) {
+				$tracking                   = $package_data->delivery->trackings[0];
+				$params['carrier']          = null !== $tracking->carrier ? (string) $tracking->carrier : null;
+				$params['carrier_tracking'] = null !== $tracking->number ? (string) $tracking->number : null;
+				$params['carrier_id_relay'] = null !== $tracking->relay->id ? (string) $tracking->relay->id : null;
+			}
+		}
+		if ( ! empty( $params ) ) {
+			self::update( $order_lengow->id, $params );
+		}
+		// update WooCommerce order's status only if in accepted, waiting_shipment, shipped, closed or cancel.
+		$order_status           = self::get_order_status( $order );
+		$waiting_shipment_state = self::get_order_state( self::STATE_WAITING_SHIPMENT );
+		$shipped_state          = self::get_order_state( self::STATE_SHIPPED );
+		$canceled_state         = self::get_order_state( self::STATE_CANCELED );
+		if ( self::get_order_state( $order_lengow_state ) !== $order_status ) {
+			if ( $order_status === $waiting_shipment_state
+			     && in_array( $order_lengow_state, array( self::STATE_SHIPPED, self::STATE_CLOSED ) )
+			) {
+				$order->update_status( $shipped_state );
+
+				return self::STATE_SHIPPED;
+			} else {
+				if ( ( $order_status === $waiting_shipment_state || $order_status === $shipped_state )
+				     && in_array( $order_lengow_state, array( self::STATE_CANCELED, self::STATE_REFUSED ) )
+				) {
+					$order->update_status( $canceled_state );
+
+					return self::STATE_CANCELED;
+				}
+			}
+		}
+
+		return false;
 	}
 }

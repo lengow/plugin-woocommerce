@@ -32,12 +32,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Import {
 
 	/**
-	 * @var integer max import days for old versions
+	 * @var integer max import days for old versions.
 	 */
 	const MIN_IMPORT_DAYS = 1;
 
 	/**
-	 * @var integer max import days for old versions
+	 * @var integer max import days for old versions.
 	 */
 	const MAX_IMPORT_DAYS = 10;
 
@@ -45,9 +45,9 @@ class Lengow_Import {
 	 * @var array valid states lengow to create a Lengow order.
 	 */
 	public static $lengow_states = array(
-		'waiting_shipment',
-		'shipped',
-		'closed',
+		Lengow_Order::STATE_WAITING_SHIPMENT,
+		Lengow_Order::STATE_SHIPPED,
+		Lengow_Order::STATE_CLOSED,
 	);
 
 	/**
@@ -189,10 +189,11 @@ class Lengow_Import {
 	 * @return array|false
 	 */
 	public function exec() {
-		$order_new   = 0;
-		$order_error = 0;
-		$error       = false;
-		$sync_ok     = true;
+		$order_new    = 0;
+		$order_update = 0;
+		$order_error  = 0;
+		$error        = false;
+		$sync_ok      = true;
 		// clean logs.
 		Lengow_Main::clean_log();
 		if ( self::is_in_process() && ! $this->_preprod_mode && ! $this->_import_one_order ) {
@@ -267,8 +268,9 @@ class Lengow_Import {
 						} elseif ( $total_orders > 0 ) {
 							$result = $this->_import_orders( $orders );
 							if ( ! $this->_import_one_order ) {
-								$order_new   += $result['order_new'];
-								$order_error += $result['order_error'];
+								$order_new    += $result['order_new'];
+								$order_update += $result['order_update'];
+								$order_error  += $result['order_error'];
 							}
 						}
 					}
@@ -304,6 +306,14 @@ class Lengow_Import {
 					Lengow_Main::log(
 						'Import',
 						Lengow_Main::set_log_message(
+							'lengow_log.error.nb_order_updated',
+							array( 'nb_order' => $order_update )
+						),
+						$this->_log_output
+					);
+					Lengow_Main::log(
+						'Import',
+						Lengow_Main::set_log_message(
 							'lengow_log.error.nb_order_with_error',
 							array( 'nb_order' => $order_error )
 						),
@@ -329,9 +339,10 @@ class Lengow_Import {
 			return $result;
 		} else {
 			return array(
-				'order_new'   => $order_new,
-				'order_error' => $order_error,
-				'error'       => $error,
+				'order_new'    => $order_new,
+				'order_update' => $order_update,
+				'order_error'  => $order_error,
+				'error'        => $error,
 			);
 		}
 	}
@@ -343,8 +354,11 @@ class Lengow_Import {
 	 */
 	private function _check_credentials() {
 		if ( Lengow_Connector::is_valid_auth() ) {
-			list( $this->_account_id, $this->_access_token, $this->_secret_token ) = Lengow_Configuration::get_access_id();
-			$this->_connector = new Lengow_Connector( $this->_access_token, $this->_secret_token );
+			list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
+			$this->_account_id   = $account_id;
+			$this->_access_token = $access_token;
+			$this->_secret_token = $secret_token;
+			$this->_connector    = new Lengow_Connector( $access_token, $secret_token );
 
 			return true;
 		}
@@ -489,6 +503,7 @@ class Lengow_Import {
 	 */
 	protected function _import_orders( $orders ) {
 		$order_new       = 0;
+		$order_update    = 0;
 		$order_error     = 0;
 		$import_finished = false;
 
@@ -581,6 +596,8 @@ class Lengow_Import {
 				if ( isset( $order ) ) {
 					if ( isset( $order['order_new'] ) && $order['order_new'] ) {
 						$order_new ++;
+					} elseif ( isset( $order['order_update'] ) && $order['order_update'] ) {
+						$order_update ++;
 					} elseif ( isset( $order['order_error'] ) && $order['order_error'] ) {
 						$order_error ++;
 					}
@@ -600,8 +617,9 @@ class Lengow_Import {
 		}
 
 		return array(
-			'order_new'   => $order_new,
-			'order_error' => $order_error,
+			'order_new'    => $order_new,
+			'order_update' => $order_update,
+			'order_error'  => $order_error,
 		);
 	}
 
