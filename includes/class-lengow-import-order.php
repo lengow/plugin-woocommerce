@@ -360,7 +360,6 @@ class Lengow_Import_Order {
 				Lengow_Address::TYPE_SHIPPING,
 				$this->_carrier_id_relay
 			);
-			//
 			$billing_email = $billing_address->get_data( 'email' );
 			if ( empty( $billing_email ) ) {
 				$shipping_email = $shipping_address->get_data( 'email' );
