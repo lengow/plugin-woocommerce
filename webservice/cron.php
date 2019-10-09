@@ -60,6 +60,7 @@ require_once( '../includes/class-lengow-main.php' );
 require_once( '../includes/class-lengow-marketplace.php' );
 require_once( '../includes/class-lengow-order.php' );
 require_once( '../includes/class-lengow-order-error.php' );
+require_once( '../includes/class-lengow-order-line.php' );
 require_once( '../includes/class-lengow-product.php' );
 require_once( '../includes/class-lengow-sync.php' );
 require_once( '../includes/class-lengow-translation.php' );

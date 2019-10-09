@@ -90,14 +90,16 @@ class Lengow_Admin_Orders {
 				array( 'nb_order' => (int) $return['order_new'] )
 			);
 		}
+		if ( isset( $return['order_update'] ) && $return['order_update'] > 0 ) {
+			$messages[] = $locale->t(
+				'lengow_log.error.nb_order_updated',
+				array( 'nb_order' => (int) $return['order_update'] )
+			);
+		}
 		if ( isset( $return['order_error'] ) && $return['order_error'] > 0 ) {
 			$messages[] = $locale->t(
 				'lengow_log.error.nb_order_with_error',
 				array( 'nb_order' => (int) $return['order_error'] )
-			);
-			$messages[] = $locale->t(
-				'lengow_log.error.check_logs',
-				array( 'link' => admin_url( 'admin.php?page=lengow&tab=lengow_admin_settings' ) )
 			);
 		}
 		if ( empty( $messages ) ) {

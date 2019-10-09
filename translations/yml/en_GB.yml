@@ -9,6 +9,7 @@ en:
     state_technical_error: "Technical error - Lengow"
     lengow_payment_title: "Lengow payment"
     lengow_payment_description: "Automatic payment for all orders from Lengow"
+    processing_fee: "Processing fees"
   menu:
     product: "Products"
     order: "Orders"
@@ -179,9 +180,10 @@ en:
   lengow_log:
     error:
       rest_time_to_import: "Please wait %{rest_time} seconds before re-importing orders"
-      nb_order_imported: "%{nb_order} order(s) decreased"
+      nb_order_imported: "%{nb_order} order(s) imported"
+      nb_order_updated: "%{nb_order} order(s) updated"
       nb_order_with_error: "%{nb_order} order(s) with errors"
-      no_notification: "No new notification about your stock"
+      no_notification: "No new notification on order"
       credentials_not_valid: "Account ID, token access or secret token are not valid"
       no_catalog_for_shop: "No catalog ID valid for the shop"
       no_country_for_billing_address: "Lengow error: billing address does not contain the country"
@@ -190,7 +192,6 @@ en:
       no_product: "Lengow error: no product in the order"
       no_change_rate: "Lengow error: no exchange rates available for order prices"
       no_currency: "Lengow error: no currency in the order"
-      check_logs: "You can check logs on <a href=%{link}>this page</a>"
     exception:
       no_connection_webservice: "connection did not work with the Lengow webservice"
       error_lengow_webservice: "Lengow webservice: %{error_code} - %{error_message}"
@@ -200,3 +201,4 @@ en:
       product_not_be_found: "product ID %{product_id} could not be found"
       product_is_a_parent: "product ID %{product_id} is variable. Product variation is needed"
       woocommerce_customer_not_saved: "WARNING! Customer could NOT be saved in Wordpress user table"
+      woocommerce_order_not_saved: "WARNING! Order could NOT be saved in Wordpress post table"
