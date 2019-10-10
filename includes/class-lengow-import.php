@@ -589,11 +589,29 @@ class Lengow_Import {
 					unset( $error_message );
 					continue;
 				}
-				// if re-import order -> return order information.
-				if ( isset( $order ) && $this->_import_one_order ) {
-					return $order;
-				}
 				if ( isset( $order ) ) {
+					// sync to lengow if no preprod_mode.
+					if ( ! $this->_preprod_mode && isset( $order['order_new'] ) && $order['order_new'] ) {
+						$order_lengow = new Lengow_Order( $order['order_lengow_id'] );
+						$synchro      = Lengow_Order::synchronize_order( $order_lengow, $this->_connector );
+						if ( $synchro ) {
+							$synchroMessage = Lengow_Main::set_log_message(
+								'log.import.order_synchronized_with_lengow',
+								array( 'order_id' => $order['order_id'] )
+							);
+						} else {
+							$synchroMessage = Lengow_Main::set_log_message(
+								'log.import.order_not_synchronized_with_lengow',
+								array( 'order_id' => $order['order_id'] )
+							);
+						}
+						Lengow_Main::log( 'Import', $synchroMessage, $this->_log_output, $marketplace_sku );
+						unset( $order_lengow );
+					}
+					// if re-import order -> return order information.
+					if ( $this->_import_one_order ) {
+						return $order;
+					}
 					if ( isset( $order['order_new'] ) && $order['order_new'] ) {
 						$order_new ++;
 					} elseif ( isset( $order['order_update'] ) && $order['order_update'] ) {

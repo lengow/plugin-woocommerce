@@ -232,6 +232,8 @@ log.import.product_not_saved|WARNING! Product ID %{product_id} could not be adde
 log.import.shipping_not_saved|WARNING! Shipping costs could not be added to the WooCommerce order - %{error_message}
 log.import.tax_not_saved|WARNING! Tax could not be added to the WooCommerce order - %{error_message}
 log.import.processing_fee_not_saved|WARNING! Processing fees could not be added to the WooCommerce order - %{error_message}
+log.import.order_synchronized_with_lengow|order successfully synchronised with Lengow webservice (ORDER ID %{order_id})
+log.import.order_not_synchronized_with_lengow|WARNING ! Order could NOT be synchronised with Lengow webservice (ORDER ID %{order_id})
 log.connector.call_api|call %{curl_url}
 log.connector.error_api|API call failed - %{error_code}
 log.connector.timeout_api|API call has been blocked by a timeout

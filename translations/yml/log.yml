@@ -59,6 +59,8 @@ en:
       shipping_not_saved: "WARNING! Shipping costs could not be added to the WooCommerce order - %{error_message}"
       tax_not_saved: "WARNING! Tax could not be added to the WooCommerce order - %{error_message}"
       processing_fee_not_saved: "WARNING! Processing fees could not be added to the WooCommerce order - %{error_message}"
+      order_synchronized_with_lengow: "order successfully synchronised with Lengow webservice (ORDER ID %{order_id})"
+      order_not_synchronized_with_lengow: "WARNING ! Order could NOT be synchronised with Lengow webservice (ORDER ID %{order_id})"
     connector:
       call_api: "call %{curl_url}"
       error_api: "API call failed - %{error_code}"
