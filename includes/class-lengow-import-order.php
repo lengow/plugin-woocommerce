@@ -360,7 +360,7 @@ class Lengow_Import_Order {
 				Lengow_Address::TYPE_SHIPPING,
 				$this->_carrier_id_relay
 			);
-			$billing_email = $billing_address->get_data( 'email' );
+			$billing_email    = $billing_address->get_data( 'email' );
 			if ( empty( $billing_email ) ) {
 				$shipping_email = $shipping_address->get_data( 'email' );
 				$billing_address->set_data( 'email', $shipping_email );
@@ -433,7 +433,7 @@ class Lengow_Import_Order {
 			return $this->_return_result( 'error', $this->_order_lengow_id );
 		}
 
-		return $this->_return_result( 'new', $this->_order_lengow_id );
+		return $this->_return_result( 'new', $this->_order_lengow_id, Lengow_Order::get_order_id( $order ) );
 	}
 
 	/**

@@ -430,6 +430,29 @@ class Lengow_Order {
 	}
 
 	/**
+	 * Get order id from lengow orders table.
+	 *
+	 * @param string $marketplace_sku Lengow marketplace sku
+	 * @param string $marketplace_name marketplace name
+	 *
+	 * @return array
+	 */
+	public static function get_all_order_id_from_lengow_orders( $marketplace_sku, $marketplace_name ) {
+		global $wpdb;
+
+		$query = '
+			SELECT order_id FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . '
+			WHERE marketplace_sku = %s
+			AND marketplace_name = %s
+		';
+		$results = $wpdb->get_results(
+			$wpdb->prepare( $query, array( $marketplace_sku, $marketplace_name ) )
+		);
+
+		return $results ? $results : array();
+	}
+
+	/**
 	 * Get ID record from lengow orders table.
 	 *
 	 * @param string $marketplace_sku Lengow id
@@ -605,6 +628,58 @@ class Lengow_Order {
 
 					return self::STATE_CANCELED;
 				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Synchronize order with Lengow API.
+	 *
+	 * @param Lengow_Order $order_lengow Lengow order instance
+	 * @param Lengow_Connector|null $connector Lengow connector instance
+	 *
+	 * @return boolean
+	 */
+	public static function synchronize_order( $order_lengow, $connector = null ) {
+		list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
+		if ( null === $connector ) {
+			if ( Lengow_Connector::is_valid_auth() ) {
+				$connector = new Lengow_Connector( $access_token, $secret_token );
+			} else {
+				return false;
+			}
+		}
+		$results = self::get_all_order_id_from_lengow_orders(
+			$order_lengow->marketplace_sku,
+			$order_lengow->marketplace_name
+		);
+		if ( $results ) {
+			$woocommerce_order_ids = array();
+			foreach ( $results as $result ) {
+				$woocommerce_order_ids[] = $result->order_id;
+			}
+			try {
+				$return = $connector->patch(
+					'/v3.0/orders/moi/',
+					array(
+						'account_id'           => $account_id,
+						'marketplace_order_id' => $order_lengow->marketplace_sku,
+						'marketplace'          => $order_lengow->marketplace_name,
+						'merchant_order_id'    => $woocommerce_order_ids,
+					)
+				);
+			} catch ( Exception $e ) {
+				return false;
+			}
+			if ( null === $return
+			     || ( isset( $return['detail'] ) && 'Pas trouvé.' === $return['detail'] )
+			     || isset( $return['error'] )
+			) {
+				return false;
+			} else {
+				return true;
 			}
 		}
 
