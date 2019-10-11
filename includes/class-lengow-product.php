@@ -267,9 +267,7 @@ class Lengow_Product {
 	 * @return WC_Product
 	 */
 	public static function get_product( $product_id ) {
-		return Lengow_Main::get_woocommerce_version() < '3.0'
-			? get_product( $product_id )
-			: wc_get_product( $product_id );
+		return Lengow_Main::compare_version( '3.0' ) ? wc_get_product( $product_id ) : get_product( $product_id );
 	}
 
 	/**
@@ -280,7 +278,7 @@ class Lengow_Product {
 	 * @return string
 	 */
 	public static function get_product_type( $product ) {
-		return Lengow_Main::get_woocommerce_version() < '3.0' ? $product->product_type : $product->get_type();
+		return Lengow_Main::compare_version( '3.0' ) ? $product->get_type() : $product->product_type;
 	}
 
 	/**
@@ -291,10 +289,10 @@ class Lengow_Product {
 	 * @return integer
 	 */
 	public static function get_product_id( $product ) {
-		if ( Lengow_Main::get_woocommerce_version() < '3.0' ) {
-			$product_id = $product->id;
-		} else {
+		if ( Lengow_Main::compare_version( '3.0' ) ) {
 			$product_id = 'variation' === $product->get_type() ? $product->get_parent_id() : $product->get_id();
+		} else {
+			$product_id = $product->id;
 		}
 
 		return (int) $product_id;
@@ -308,10 +306,10 @@ class Lengow_Product {
 	 * @return integer|null
 	 */
 	public static function get_variation_id( $product ) {
-		if ( Lengow_Main::get_woocommerce_version() < '3.0' ) {
-			$variation_id = 'variation' === $product->product_type ? $product->variation_id : null;
-		} else {
+		if ( Lengow_Main::compare_version( '3.0' ) ) {
 			$variation_id = 'variation' === $product->get_type() ? $product->get_id() : null;
+		} else {
+			$variation_id = 'variation' === $product->product_type ? $product->variation_id : null;
 		}
 
 		return null !== $variation_id ? (int) $variation_id : null;
@@ -327,7 +325,7 @@ class Lengow_Product {
 	 * @return WC_Product|null
 	 */
 	public static function get_product_parent( $product, $product_type ) {
-		return Lengow_Main::get_woocommerce_version() > '3.0' && 'variation' === $product_type
+		return Lengow_Main::compare_version( '3.0' ) && 'variation' === $product_type
 			? wc_get_product( $product->get_parent_id() )
 			: null;
 	}
@@ -341,9 +339,7 @@ class Lengow_Product {
 	 * @return string
 	 */
 	public static function get_regular_price( $product ) {
-		return Lengow_Main::get_woocommerce_version() < '3.0'
-			? $product->regular_price
-			: $product->get_regular_price();
+		return Lengow_Main::compare_version( '3.0' ) ? $product->get_regular_price() : $product->regular_price;
 	}
 
 	/**
@@ -354,9 +350,7 @@ class Lengow_Product {
 	 * @return string
 	 */
 	public static function get_stock_status( $product ) {
-		return Lengow_Main::get_woocommerce_version() < '3.0'
-			? $product->stock_status
-			: $product->get_stock_status();
+		return Lengow_Main::compare_version( '3.0' ) ? $product->get_stock_status() : $product->stock_status;
 	}
 
 	/**
@@ -370,13 +364,13 @@ class Lengow_Product {
 	 */
 	public static function get_gallery_image_ids( $product, $product_parent, $product_type ) {
 		if ( 'variation' === $product_type && $product_parent ) {
-			$gallery_image_ids = Lengow_Main::get_woocommerce_version() < '3.0'
-				? $product_parent->product_image_gallery
-				: $product_parent->get_gallery_image_ids();
+			$gallery_image_ids = Lengow_Main::compare_version( '3.0' )
+				? $product_parent->get_gallery_image_ids()
+				: $product_parent->product_image_gallery;
 		} else {
-			$gallery_image_ids = Lengow_Main::get_woocommerce_version() < '3.0'
-				? $product->product_image_gallery
-				: $product->get_gallery_image_ids();
+			$gallery_image_ids = Lengow_Main::compare_version( '3.0' )
+				? $product->get_gallery_image_ids()
+				: $product->product_image_gallery;
 		}
 		$gallery_image_ids = is_array( $gallery_image_ids ) ? $gallery_image_ids : explode( ',', $gallery_image_ids );
 
@@ -413,9 +407,9 @@ class Lengow_Product {
 	 * @return string
 	 */
 	public static function get_description( $product, $product_parent, $product_type ) {
-		if ( Lengow_Main::get_woocommerce_version() < '2.5' ) {
+		if ( Lengow_Main::compare_version( '2.5', '<' ) ) {
 			$description = $product->post->post_content;
-		} else if ( Lengow_Main::get_woocommerce_version() < '3.0' ) {
+		} else if ( Lengow_Main::compare_version( '3.0', '<' ) ) {
 			if ( 'variation' === $product_type && null !== $product->get_variation_description() ) {
 				$description = $product->get_variation_description();
 			} else {
@@ -442,31 +436,17 @@ class Lengow_Product {
 	 * @return string
 	 */
 	public static function get_short_description( $product, $product_parent, $product_type ) {
-		if ( Lengow_Main::get_woocommerce_version() < '3.0' ) {
-			$short_description = $product->post->post_excerpt;
-		} else {
+		if ( Lengow_Main::compare_version( '3.0' ) ) {
 			if ( 'variation' === $product_type && null === $product->get_short_description() && $product_parent ) {
 				$short_description = $product_parent->get_short_description();
 			} else {
 				$short_description = $product->get_short_description();
 			}
+		} else {
+			$short_description = $product->post->post_excerpt;
 		}
 
 		return $short_description;
-	}
-
-	/**
-	 * Decrease product stock.
-	 *
-	 * @param WC_Product $product WooCommerce product instance
-	 * @param integer $quantity quantity to reduce
-	 *
-	 * @return integer
-	 */
-	public static function reduce_product_stock( $product, $quantity ) {
-		return Lengow_Main::get_woocommerce_version() < '3.0'
-			? $product->reduce_stock( $quantity )
-			: wc_update_product_stock( $product, $quantity, 'decrease' );
 	}
 
 	/**
@@ -541,12 +521,12 @@ class Lengow_Product {
 	 * @param string $marketplace_sku Lengow id of current order
 	 * @param boolean $log_output see log or not
 	 *
-	 * @return integer|false
+	 * @return WC_Product|false
 	 * @throws Lengow_Exception If product is a variable
 	 *
 	 */
 	public static function match_product( $product_datas, $marketplace_sku, $log_output ) {
-		$product_id      = false;
+		$product         = false;
 		$api_product_ids = array(
 			'merchant_product_id'    => $product_datas['merchant_product_id']->id,
 			'marketplace_product_id' => $product_datas['marketplace_product_id'],
@@ -561,6 +541,7 @@ class Lengow_Product {
 			if ( empty( $attribute_value ) ) {
 				continue;
 			}
+			$product_id = false;
 			// search by field if exists.
 			if ( $product_field ) {
 				$product_id = self::search_product( $attribute_value, $product_field );
@@ -573,8 +554,8 @@ class Lengow_Product {
 				}
 			}
 			if ( $product_id ) {
-				$lengow_product = self::get_product( $product_id );
-				if ( 'variable' === self::get_product_type( $lengow_product ) ) {
+				$product = self::get_product( $product_id );
+				if ( 'variable' === self::get_product_type( $product ) ) {
 					throw new Lengow_Exception(
 						Lengow_Main::set_log_message(
 							'lengow_log.exception.product_is_a_parent',
@@ -595,12 +576,11 @@ class Lengow_Product {
 					$log_output,
 					$marketplace_sku
 				);
-				unset( $lengow_product );
 				break;
 			}
 		}
 
-		return $product_id;
+		return $product;
 	}
 
 	/**

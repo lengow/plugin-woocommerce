@@ -37,11 +37,16 @@ include_once( 'class-lengow-translation.php' );
 class WC_Lengow_Payment_Gateway extends WC_Payment_Gateway {
 
 	/**
+	 * @var string Lengow payment gateway id.
+	 */
+	const PAYMENT_LENGOW_ID = 'lengow_payment_gateway';
+
+	/**
 	 * Construct WC_Lengow_Payment_Gateway.
 	 */
 	public function __construct() {
 		$locale                   = new Lengow_Translation();
-		$this->id                 = 'lengow_payment_gateway';
+		$this->id                 = self::PAYMENT_LENGOW_ID;
 		$this->has_fields         = false;
 		$this->title              = $locale->t( 'module.lengow_payment_title' );
 		$this->method_title       = $locale->t( 'module.lengow_payment_title' );
@@ -60,7 +65,7 @@ class WC_Lengow_Payment_Gateway extends WC_Payment_Gateway {
 		global $post;
 
 		if ( isset( $post->ID ) ) {
-			$marketplace_name = Lengow_Order::get_marketplace_name_by_order_id( $post->ID );
+			$marketplace_name = Lengow_Order::get_marketplace_label_by_order_id( $post->ID );
 			if ( $marketplace_name ) {
 				return $marketplace_name;
 			}

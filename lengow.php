@@ -135,6 +135,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/class-lengow-marketplace.php' );
 				include_once( 'includes/class-lengow-order.php' );
 				include_once( 'includes/class-lengow-order-error.php' );
+				include_once( 'includes/class-lengow-order-line.php' );
 				include_once( 'includes/class-lengow-product.php' );
 				include_once( 'includes/class-lengow-sync.php' );
 				include_once( 'includes/class-lengow-translation.php' );
