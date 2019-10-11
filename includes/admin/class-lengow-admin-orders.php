@@ -35,6 +35,11 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 class Lengow_Admin_Orders extends WP_List_Table {
 
 	/**
+	 * @var array with all countries;
+	 */
+	private $countries;
+
+	/**
 	 * @var array all order datas.
 	 */
 	private $data;
@@ -259,6 +264,11 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 * @return array
 	 */
 	private function get_orders() {
+		if ( empty($this->countries) ) {
+			// get countries
+			$countries_instance = new WC_Countries;
+			$this->countries = $countries_instance->countries;
+		}
 		$results = array();
 		$keys    = array(
 			'id',
@@ -311,11 +321,17 @@ class Lengow_Admin_Orders extends WP_List_Table {
 						$orders_data = $order->order_date;
 						break;
 					case 'country' :
-						$wc_country = new WC_Countries;
-						$orders_data = '<img src="/wp-content/plugins/lengow-woocommerce/assets/images/flag/' . $order->delivery_country_iso . '.png"
+						if ( $this->countries[ $order->delivery_country_iso ] ) {
+							$orders_data = '<img src="/wp-content/plugins/lengow-woocommerce/assets/images/flag/' . $order->delivery_country_iso . '.png"
                                 class="lengow_link_tooltip"
-                                data-original-title="' . $wc_country->countries[ $order->delivery_country_iso ] . '"/>';
-						break;
+                                data-original-title="' . $this->countries[ $order->delivery_country_iso ] . '"/>';
+							break;
+						} else {
+							$orders_data = '<img src="/wp-content/plugins/lengow-woocommerce/assets/images/flag/OTHERS.png"
+                                class="lengow_link_tooltip"
+                                data-original-title="OTHERS"/>';
+							break;
+						}
 					case 'quantity' :
 						$orders_data = $order->order_item;
 						break;
