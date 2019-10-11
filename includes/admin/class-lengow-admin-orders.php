@@ -465,7 +465,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	}
 
 	/**
-	 * Return checbox with order_id.
+	 * Return checkbox with order_id.
 	 *
 	 * @param object $order
 	 *
