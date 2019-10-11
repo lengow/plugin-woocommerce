@@ -100,7 +100,7 @@ order.table.id|ID
 order.table.action|Action
 order.table.lengow_status|Statut Lengow
 order.table.marketplace|Marketplace
-order.table.id_order|ID commande
+order.table.order_id|commande ID
 order.table.customer|Client
 order.table.reference|Référence
 order.table.date|Date

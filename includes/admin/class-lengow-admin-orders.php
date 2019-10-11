@@ -35,7 +35,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 class Lengow_Admin_Orders extends WP_List_Table {
 
 	/**
-	 * @var array with all countries;
+	 * @var array with all countries.
 	 */
 	private $countries;
 
@@ -221,7 +221,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			'action'      => $this->locale->t( 'order.table.action' ),
 			'status'      => $this->locale->t( 'order.table.lengow_status' ),
 			'marketplace' => $this->locale->t( 'order.table.marketplace' ),
-			'id_order'    => $this->locale->t( 'order.table.id_order' ),
+			'order_id'    => $this->locale->t( 'order.table.order_id' ),
 			'customer'    => $this->locale->t( 'order.table.customer' ),
 			'reference'   => $this->locale->t( 'order.table.reference' ),
 			'date'        => $this->locale->t( 'order.table.date' ),
@@ -246,7 +246,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			'action'      => array( 'action', false ),
 			'status'      => array( 'status', false ),
 			'marketplace' => array( 'marketplace', false ),
-			'id_order'    => array( 'id_order', false ),
+			'order_id'    => array( 'order_id', false ),
 			'customer'    => array( 'customer', false ),
 			'reference'   => array( 'reference', false ),
 			'date'        => array( 'date', true ),
@@ -275,7 +275,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			'action',
 			'status',
 			'marketplace',
-			'id_order',
+			'order_id',
 			'customer',
 			'reference',
 			'date',
@@ -308,14 +308,14 @@ class Lengow_Admin_Orders extends WP_List_Table {
 					case 'marketplace' :
 						$orders_data = $order->marketplace_label;
 						break;
-					case 'id_order' :
+					case 'order_id' :
 						$orders_data = $order->marketplace_sku;
 						break;
 					case 'customer' :
 						$orders_data = $order->customer_name;
 						break;
 					case 'reference' :
-						$orders_data = '<a href="/wp-admin/post.php?post=' . $order->order_id . '&action=edit">' . $order->order_id . '</a>';
+						$orders_data = '<a href=' . admin_url() . 'post.php?post=' . $order->order_id . '&action=edit>' . $order->order_id . '</a>';
 						break;
 					case 'date' :
 						$orders_data = $order->order_date;
@@ -336,7 +336,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 						$orders_data = $order->order_item;
 						break;
 					case 'total' :
-						$orders_data = $order->total_paid . get_woocommerce_currency_symbol();
+						$orders_data = $order->total_paid . get_woocommerce_currency_symbol($order->currency);
 						break;
 					default :
 						$orders_data = null;
@@ -416,7 +416,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	}
 
 	/**
-	 * Construct request and return orders
+	 * Construct request and return orders.
 	 *
 	 * @param string $search search
 	 *
@@ -451,7 +451,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	}
 
 	/**
-	 * Test if orders are present for
+	 * Test if orders are present for display.
 	 *
 	 * @return int
 	 */
@@ -464,6 +464,13 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		return $result;
 	}
 
+	/**
+	 * Return checbox with id_order.
+	 *
+	 * @param object $order
+	 *
+	 * @return string|void
+	 */
 	public function column_cb( $order ) {
 		return sprintf(
 			'<input type="checkbox" id="js-lengow_order_checkbox"

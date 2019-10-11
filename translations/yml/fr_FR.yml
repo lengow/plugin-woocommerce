@@ -114,7 +114,7 @@ fr:
       action: "Action"
       lengow_status: "Statut Lengow"
       marketplace: "Marketplace"
-      id_order: "ID commande"
+      order_id: "commande ID"
       customer: "Client"
       reference: "Référence"
       date: "Date"

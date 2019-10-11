@@ -114,7 +114,7 @@ en:
       action: "Action"
       lengow_status: "Lengow status"
       marketplace: "Marketplace"
-      id_order: "ID order"
+      order_id: "order ID"
       customer: 'Customer'
       reference: "Reference"
       date: "Date"
