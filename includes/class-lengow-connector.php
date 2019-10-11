@@ -89,9 +89,9 @@ class Lengow_Connector {
 	/**
 	 * Connection to the API.
 	 *
+	 * @return array|false
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return array|false
 	 */
 	public function connect() {
 		$data = $this->call_action(
@@ -120,9 +120,9 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @return mixed
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return mixed
 	 */
 	public function call( $method, $array = array(), $type = 'GET', $format = 'json', $body = '' ) {
 		$this->connect();
@@ -143,9 +143,9 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @return mixed
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return mixed
 	 */
 	public function get( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'GET', $format, $body );
@@ -159,9 +159,9 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @return mixed
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return mixed
 	 */
 	public function post( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'POST', $format, $body );
@@ -175,9 +175,9 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @return mixed
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return mixed
 	 */
 	public function put( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'PUT', $format, $body );
@@ -191,9 +191,9 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @return mixed
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return mixed
 	 */
 	public function patch( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'PATCH', $format, $body );
@@ -208,9 +208,9 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @return mixed
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return mixed
 	 */
 	private function call_action( $api, $args, $type, $format = 'json', $body = '' ) {
 		$result = $this->make_request( $type, $api, $args, $this->_token, $body );
@@ -248,9 +248,9 @@ class Lengow_Connector {
 	 * @param string $token temporary access token
 	 * @param string $body body datas for request
 	 *
+	 * @return mixed
 	 * @throws Lengow_Exception Get curl error
 	 *
-	 * @return mixed
 	 */
 	protected function make_request( $type, $url, $args, $token, $body = '' ) {
 		// define CURLE_OPERATION_TIMEDOUT for old php versions.

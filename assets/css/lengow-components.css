@@ -768,6 +768,39 @@ select.multiple-select option {
   white-space: nowrap;
 }
 
+/* TABLE WP */
+#lengow_order_grid .wp-list-table .column-country {
+  width: 5%;
+}
+
+#lengow_order_grid .wp-list-table .column-quantity {
+  width: 7%;
+}
+
+#lengow_order_grid .wp-list-table .column-total {
+  width: 6%;
+}
+
+#lengow_order_grid .wp-list-table .column-id_order {
+  width: 12%;
+}
+
+#lengow_order_grid #current-page-selector {
+  width: auto;
+}
+
+#lengow_order_grid .tablenav {
+  margin-bottom: 25px;
+}
+
+#lengow_order_grid .tablenav .current-page {
+  width: 20%;
+}
+
+#lengow_wrapper_messages {
+  display: inline-block;
+}
+
 /*************************************************/
 /*                    TOOLTIP                    */
 /*************************************************/

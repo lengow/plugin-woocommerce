@@ -90,7 +90,7 @@ class Lengow_Admin {
 				Lengow_Admin_Products::html_display();
 				break;
 			case 'lengow_admin_orders':
-				Lengow_Admin_Orders::display();
+				Lengow_Admin_Orders::html_display();
 				break;
 			case 'lengow_admin_order_settings':
 				Lengow_Admin_Order_Settings::display();
