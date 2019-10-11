@@ -22,6 +22,19 @@
     $(document).ready(function () {
 
         /**
+         * Thing to do on load and after reload
+         */
+        function loadReload() {
+            /**
+             * Adapts the width of the status column
+             */
+            var column = $('.column-status');
+            column.width(column.width() + 50);
+        }
+
+        loadReload();
+
+        /**
          * Ajax to synchronize stock
          */
         $('#lengow_import_orders').on('click', function() {
@@ -41,12 +54,16 @@
                     $("#lengow_wrapper_messages").html(data.message);
                     $("#lengow_last_import_date").html(data.last_importation);
                     $("#lengow_import_orders").html(data.import_orders);
+                    $("#container_lengow_grid").load(location.href + ' #lengow_order_grid', function() {
+                        loadReload();
 
-                    $('#lengow_charge_import_order').fadeOut(150);
+                        $('#lengow_charge_import_order').fadeOut(150);
 
-                    setTimeout(function(){
-                        $('#lengow_wrapper_messages').fadeIn(250);
-                    }, 300);
+                        setTimeout(function(){
+                            $('#lengow_wrapper_messages').fadeIn(250);
+                        }, 300);
+
+                    });
                 },
                 error: function(content) {
                     $('#lengow_charge_import_order').fadeOut(150);

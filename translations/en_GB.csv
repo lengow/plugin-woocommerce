@@ -84,6 +84,28 @@ order.screen.last_order_importation|Last synchronization
 order.screen.no_order_importation|No synchronisation for now
 order.screen.button_update_orders|Synchronize Orders
 order.screen.preprod_warning_message|You are in pre-production mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>
+order.screen.status_not_synchronized|Not synchronized
+order.screen.status_accepted|Accepted
+order.screen.status_waiting_shipment|Waiting for shipment
+order.screen.status_shipped|Shipped
+order.screen.status_closed|Closed
+order.screen.status_refunded|Refunded
+order.screen.status_canceled|Canceled
+order.screen.status_shipped_by_mkp|Shipped by Marketplace
+order.screen.no_order_title|The best is yet to come!
+order.screen.no_order_description|Your products have great visibility and your sales are about to prosper!
+order.table.button_search|Search
+order.table.id|ID
+order.table.action|Action
+order.table.lengow_status|Lengow status
+order.table.marketplace|Marketplace
+order.table.id_order|ID order
+order.table.customer|Customer
+order.table.reference|Reference
+order.table.date|Date
+order.table.country|Country
+order.table.quantity|Quantity
+order.table.total|Total
 order_setting.screen.default_shipping_method_title|Manage shipping methods
 order_setting.screen.default_shipping_method_description|Select the default shipping method that you would like to apply to your orders
 order_setting.screen.order_status_title|Order Status

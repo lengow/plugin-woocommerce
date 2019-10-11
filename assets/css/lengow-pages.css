@@ -130,8 +130,9 @@ body.lgw-home-iframe .lgw-content-section p {
 
 #lengow_order_wrapper {
   min-width: 1100px;
-  max-width: 1400px;
   width: auto;
+  margin-left: 60px;
+  margin-right: 60px;
 }
 
 #lengow_order_wrapper,
@@ -142,10 +143,6 @@ body.lgw-home-iframe .lgw-content-section p {
 #lengow_order_wrapper #lgw-preprod,
 #lengow_order_setting_wrapper #lgw-preprod {
   top: 110px;
-}
-
-#lengow_wrapper_messages {
-  max-width: 600px;
 }
 
 #lengow_charge_import_order {
@@ -164,4 +161,16 @@ body.lgw-home-iframe .lgw-content-section p {
 }
 #lengow_charge_import_order p {
   font-size: 24px;
+}
+
+#lengow_no_order_message {
+  height: 300px;
+  padding: 130px 30px 30px 30px;
+  text-align: center;
+  font-size: 18px;
+  color: #828282;
+}
+
+#lengow_order_header {
+  margin-bottom: 70px;
 }
