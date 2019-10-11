@@ -22,19 +22,19 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="lgw-col-8" style="padding:0;">
                 <div id="lengow_last_importation">
                     <p>
-                        <?php if ( 'none' !== $order_collection['last_import_type'] ) : ?>
-                            <?php echo $locale->t( 'order.screen.last_order_importation' ); ?>
+						<?php if ( 'none' !== $order_collection['last_import_type'] ) : ?>
+							<?php echo $locale->t( 'order.screen.last_order_importation' ); ?>
                             :
                             <b><span id="lengow_last_import_date"><?php echo $order_collection['last_import_date']; ?></span></b>
-                        <?php else: ?>
-                            <?php echo $locale->t( 'order.screen.no_order_importation' ); ?>
-                        <?php endif; ?>
+						<?php else: ?>
+							<?php echo $locale->t( 'order.screen.no_order_importation' ); ?>
+						<?php endif; ?>
                     </p>
                 </div>
             </div>
             <div class="pull-right text-right lgw-col-3">
                 <a id="lengow_import_orders" class="lgw-btn btn no-margin-top">
-                    <?php echo $locale->t( 'order.screen.button_update_orders' ); ?>
+					<?php echo $locale->t( 'order.screen.button_update_orders' ); ?>
                 </a>
             </div>
         </div>
@@ -52,18 +52,18 @@ if ( ! defined( 'ABSPATH' ) ) {
         <!-- ORDERS GRID -->
         <div id="container_lengow_grid">
             <div id="lengow_order_grid">
-                <?php
-                    if (Lengow_Admin_Orders::count_orders() > 0) {
-                        Lengow_Admin_Orders::render_lengow_list();
-                    } else { ?>
-                        <div id="lengow_no_order_block">
-                            <div id="lengow_no_order_message" class="text-center">
-                                <h2 class="no-margin"><?php echo $locale->t( 'order.screen.no_order_title' ); ?></h2>
-                                <p><?php echo $locale->t( 'order.screen.no_order_description' ); ?></p>
-                            </div>
+				<?php
+				if ( Lengow_Admin_Orders::count_orders() > 0 ) {
+					Lengow_Admin_Orders::render_lengow_list();
+				} else { ?>
+                    <div id="lengow_no_order_block">
+                        <div id="lengow_no_order_message" class="text-center">
+                            <h2 class="no-margin"><?php echo $locale->t( 'order.screen.no_order_title' ); ?></h2>
+                            <p><?php echo $locale->t( 'order.screen.no_order_description' ); ?></p>
                         </div>
-                    <?php }
-                ?>
+                    </div>
+				<?php }
+				?>
             </div>
         </div>
         <!-- /ORDERS GRID -->

@@ -22,11 +22,11 @@
     $(document).ready(function () {
 
         /**
-         * Thing to do on load and after reload
+         * Thing to do on load and after reload.
          */
         function loadReload() {
             /**
-             * Adapts the width of the status column
+             * Adapts the width of the status column.
              */
             var column = $('.column-status');
             column.width(column.width() + 50);
@@ -35,7 +35,7 @@
         loadReload();
 
         /**
-         * Ajax to synchronize stock
+         * Ajax to synchronize stock.
          */
         $('#lengow_import_orders').on('click', function() {
             var data = {

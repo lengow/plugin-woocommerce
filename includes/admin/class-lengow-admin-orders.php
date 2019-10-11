@@ -264,10 +264,10 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 * @return array
 	 */
 	private function get_orders() {
-		if ( empty($this->countries) ) {
-			// get countries
+		if ( empty( $this->countries ) ) {
+			// get countries.
 			$countries_instance = new WC_Countries;
-			$this->countries = $countries_instance->countries;
+			$this->countries    = $countries_instance->countries;
 		}
 		$results = array();
 		$keys    = array(
@@ -458,7 +458,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	public static function count_orders() {
 		global $wpdb;
 
-		$query = 'SELECT count(*) FROM ' . $wpdb->prefix . 'lengow_orders';
+		$query  = 'SELECT count(*) FROM ' . $wpdb->prefix . 'lengow_orders';
 		$result = $wpdb->get_var( $query );
 
 		return $result;
