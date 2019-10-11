@@ -400,7 +400,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			case 'action':
 			case 'status':
 			case 'marketplace':
-			case 'id_order':
+			case 'order_id':
 			case 'customer':
 			case 'reference':
 			case 'date':
@@ -465,7 +465,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	}
 
 	/**
-	 * Return checbox with id_order.
+	 * Return checbox with order_id.
 	 *
 	 * @param object $order
 	 *
