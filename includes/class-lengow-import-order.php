@@ -885,6 +885,7 @@ class Lengow_Import_Order {
 			'post_excerpt'  => (string) $this->_message,
 			'post_author'   => 1,
 			'post_password' => uniqid( 'wc_order_' ),
+			'post_date'     => get_date_from_gmt( $this->_order_date ),
 			'post_date_gmt' => $this->_order_date,
 		);
 		$order_data     = apply_filters( 'woocommerce_new_order_data', $new_order_data );
