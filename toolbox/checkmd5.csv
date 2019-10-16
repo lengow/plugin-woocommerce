@@ -1,4 +1,4 @@
-/lengow.php|f771ae9782b2483e5259a2ccb44fba67
+/lengow.php|4f3108e25988b3c57a4ac8dfca01a0f1
 /config/index.php|d41d8cd98f00b204e9800998ecf8427e
 /assets/js/bootstrap.min.js|bed31fb959612a0a77d8e87b9d0b3683
 /assets/js/select2.js|fc6ada6e297531c8e4e3e3f3edc79207
@@ -14,6 +14,7 @@
 /assets/css/font-awesome.css|bf4b58c946c9234e4a6b9f7a70d38006
 /assets/css/select2.css|8969ac4614d64a13dfc32e1eb4e731f7
 /assets/css/lengow-pages.css|4edb6c4675b2906d38943755224cf53d
+/assets/css/lengow-infos-order.css|1b8275630d7b62ecd859f319af1a39e5
 /assets/css/lengow-components.css|1df272db3bc0264f7939d0f540efe376
 /assets/css/tagit.css|b68adfd33603afaf5adc32d92b8ba991
 /assets/css/lengow-layout.css|db61b4df6e74f39904a060ad4f0265e4
@@ -120,7 +121,6 @@
 /assets/images/flag/CL.png|6e05e10bbad0945a6a0ac4f72de351bd
 /assets/images/flag/NC.png|cc1fc719aa70170cf59aa97989f32fca
 /assets/images/flag/NA.png|17f102547f2ad6154227108af755dad2
-/assets/images/flag/index.php|eb18f895c85303c2ced77482ec4ab525
 /assets/images/flag/CG.png|fd66daf57f1a96e802ba44b07ce712c8
 /assets/images/flag/MO.png|9e22cff886b227b7c66a7299cee60c4a
 /assets/images/flag/AX.png|6bfdcba08d5eac28c8b2f444d403fbd7
@@ -289,6 +289,7 @@
 /assets/fonts/fontawesome-webfont.svg|f775f9cca88e21d45bebe185b27c0e5b
 /includes/class-lengow-exception.php|fb9efab995d3be2b906dc627b7fe2666
 /includes/class-lengow-file.php|2c7863f444270e42fb6097cef29640f1
+/includes/class-lengow-hook.php|4f6ef963c8392241702e6e6c357eec07
 /includes/class-lengow-order-error.php|73852863f0be00e6657c22b9be7c31d8
 /includes/admin/class-lengow-admin-order-settings.php|c3810126feb19fa564d1e4955b30fddd
 /includes/admin/class-lengow-admin-dashboard.php|f5cc3121545e42e5aac5a36f63843781
@@ -300,17 +301,18 @@
 /includes/admin/views/dashboard/html-admin-status.php|7ec7d0b17b27dc5c94c16cc4423f9bfa
 /includes/admin/views/dashboard/html-admin-new.php|81c46d099aad50fd675089a9ad178645
 /includes/admin/views/dashboard/html-admin-dashboard.php|cf5793cfe74d54489f02870ff44bea93
+/includes/admin/views/order-woocommerce/html-infos-order-woocommerce.php|e6b4248158588921a6ff05fb595e2e19
 /includes/admin/views/html-admin-header.php|debf6d4e9873cb503dd130401a2121fc
 /includes/admin/views/legals/html-admin-legals.php|0f4dd34f1ab4dae7122c71a0035297c7
 /includes/admin/views/html-admin-header-order.php|133e2638703d42ea8e01eee83b917780
 /includes/admin/views/html-admin-footer.php|acbe44b29e1a6a7ac00c7c88923ab616
 /includes/admin/views/products/html-admin-products.php|5371e61908e226af0c04b2956a315bf6
-/includes/admin/class-lengow-admin-orders.php|07ac5a84afbeb804fef737d4e2cb7caa
+/includes/admin/class-lengow-admin-orders.php|28e37f17a6914e2b8fe4f8afafbb34a8
 /includes/admin/class-lengow-admin-main-settings.php|5ed9a94e2be9569634239451e2fb769f
 /includes/admin/class-lengow-admin-products.php|963c6b521d5e73fe7e7836087c5b0e71
 /includes/admin/class-lengow-admin-help.php|da715322cba5b48ca90d1359fa3beb05
 /includes/admin/class-lengow-admin-legals.php|ca2a0ca03b95f63a01c051d92674b83d
-/includes/class-lengow-order.php|8eb74c006e855f03398543ba03c38d4b
+/includes/class-lengow-order.php|7657f4ceb6ff9f93007cf60a7cec0e6c
 /includes/class-lengow-translation.php|b6ecddbcb919556c98caa8f2637794c4
 /includes/class-lengow-main.php|0ea08ed73381084c3320e7acc74080ce
 /includes/class-lengow-export.php|a5159202c0635315986d1e481cc3ea34
