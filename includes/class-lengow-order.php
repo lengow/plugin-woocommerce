@@ -440,7 +440,7 @@ class Lengow_Order {
 	public static function get_all_order_id_from_lengow_orders( $marketplace_sku, $marketplace_name ) {
 		global $wpdb;
 
-		$query = '
+		$query   = '
 			SELECT order_id FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . '
 			WHERE marketplace_sku = %s
 			AND marketplace_name = %s
@@ -684,5 +684,27 @@ class Lengow_Order {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Check if order come from lengow
+	 *
+	 * @param integer $order_id Wordpress order id
+	 *
+	 * @return boolean
+	 */
+	public static function is_lengow_order( $order_id ) {
+		global $wpdb;
+		if ( $order_id == null || ! is_integer( $order_id ) ) {
+			return false;
+		}
+		$count = $wpdb->get_var(
+			$wpdb->prepare(
+				'SELECT COUNT(*) FROM ' . $wpdb->prefix . 'lengow_orders WHERE `order_id` = %d',
+				$order_id
+			)
+		);
+
+		return ( $count > 0 ? true : false );
 	}
 }

@@ -127,6 +127,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/class-lengow-export.php' );
 				include_once( 'includes/class-lengow-feed.php' );
 				include_once( 'includes/class-lengow-file.php' );
+				include_once( 'includes/class-lengow-hook.php' );
 				include_once( 'includes/class-lengow-import.php' );
 				include_once( 'includes/class-lengow-import-order.php' );
 				include_once( 'includes/class-lengow-install.php' );
@@ -179,6 +180,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 						break;
 				}
 				$this->lengow_admin = new Lengow_Admin();
+				add_action( 'add_meta_boxes_shop_order', array( "Lengow_Hook", 'adding_shop_order_meta_boxes' ) );
 			}
 		}
 
