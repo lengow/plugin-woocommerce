@@ -318,7 +318,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 						$orders_data = '<a href=' . admin_url() . 'post.php?post=' . $order->order_id . '&action=edit>' . $order->order_id . '</a>';
 						break;
 					case 'date' :
-						$orders_data = $order->order_date;
+						$orders_data = get_date_from_gmt( $order->order_date );
 						break;
 					case 'country' :
 						if ( $this->countries[ $order->delivery_country_iso ] ) {
