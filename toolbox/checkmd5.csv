@@ -309,7 +309,7 @@
 /includes/admin/views/products/html-admin-products.php|5371e61908e226af0c04b2956a315bf6
 /includes/admin/class-lengow-admin-orders.php|0ab3d609c15c45ec319f82b9824815f9
 /includes/admin/class-lengow-admin-main-settings.php|5ed9a94e2be9569634239451e2fb769f
-/includes/admin/class-lengow-order-info.php|36b6f96f1aa57e115d7b1df028ac34d4
+/includes/admin/class-lengow-order-info.php|63e6dc5b272728c8e9f42765ddd7dea6
 /includes/admin/class-lengow-admin-products.php|963c6b521d5e73fe7e7836087c5b0e71
 /includes/admin/class-lengow-admin-help.php|da715322cba5b48ca90d1359fa3beb05
 /includes/admin/class-lengow-admin-legals.php|ca2a0ca03b95f63a01c051d92674b83d
@@ -343,5 +343,5 @@
 /upgrade/update_2.0.1.php|50c87d6cfae3cbcf1c8caec09e34a40b
 /upgrade/update_2.2.0.php|31fe588fb586e2956e2b4ed2e1d0f978
 /upgrade/update_2.0.0.php|38a4e6842028ab981f6695ce70247083
-/webservice/cron.php|845877725fb321faa8f0a8cbfd2d81ce
+/webservice/cron.php|22580af1caf3a5401fbbb0741377c8fa
 /webservice/export.php|30f7903fac6f90ca7838575563effd38

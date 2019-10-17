@@ -64,6 +64,7 @@ require_once( '../includes/class-lengow-order-line.php' );
 require_once( '../includes/class-lengow-product.php' );
 require_once( '../includes/class-lengow-sync.php' );
 require_once( '../includes/class-lengow-translation.php' );
+require_once( '../includes/class-lengow-hook.php' );
 
 // check if WooCommerce plugin is activated.
 if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {

@@ -42,6 +42,5 @@ class Lengow_Order_Info {
 		} catch ( Exception $e ) {
 			echo $e->getMessage();
 		}
-
 	}
 }
