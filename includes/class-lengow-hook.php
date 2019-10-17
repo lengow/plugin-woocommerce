@@ -46,6 +46,4 @@ class Lengow_Hook {
 			);
 		}
 	}
-
-
 }
