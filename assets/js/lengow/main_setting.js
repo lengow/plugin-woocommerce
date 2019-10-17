@@ -21,14 +21,14 @@
 (function ($) {
     $(document).ready(function () {
 
-        // multibox selection
+        // multibox selection.
         $(".js-multiple-select").select2({
             closeOnSelect: false
         });
         $(".js-select").select2();
 
 
-        // submit form
+        // submit form.
         $( ".lengow_form" ).submit(function( event ) {
             event.preventDefault();
             var form = this;
@@ -42,7 +42,20 @@
             }, 1000);
         });
 
-        // enable authorized ip
+        // enable report mail.
+        $("input[name='lengow_report_mail_enabled']").on('change', function () {
+            displayReportMailAddress();
+        });
+
+        function displayReportMailAddress() {
+            if ($("input[name='lengow_report_mail_enabled'][type='checkbox']").prop('checked')) {
+                $('#lengow_wrapper_report_mail_address').slideDown(150);
+            } else {
+                $('#lengow_wrapper_report_mail_address').slideUp(150);
+            }
+        }
+
+        // enable authorized ip.
         $("input[name='lengow_ip_enabled']").on('change', function () {
             displayAuthorizedIpMode();
         });
@@ -55,7 +68,7 @@
             }
         }
 
-        // enable preprod mode
+        // enable preprod mode.
         $("input[name='lengow_preprod_enabled']").on('change', function () {
             displayPreProdMode();
         });
@@ -68,7 +81,7 @@
             }
         }
 
-        // download logs
+        // download logs.
         $('.js-log-select').change(function(){
             if ($('.js-log-select').val() !== null) {
                 $(".js-log-btn-download" ).show();

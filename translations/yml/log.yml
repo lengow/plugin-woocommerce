@@ -12,6 +12,9 @@ en:
       setting_reset: "all Lengow settings were reset"
       setting_updated: "all Lengow settings were updated"
       setting_change: "%{key} - old value %{old_value} replaced with %{value}"
+    mail_report:
+      send_mail_to: "report email sent to %{email}"
+      unable_send_mail_to: "unable to send report email to %{email}"
     export:
       start: "## start export ##"
       end: "## end export ##"

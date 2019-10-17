@@ -134,6 +134,17 @@ class Lengow_Configuration {
 					'shop'  => true,
 					'label' => $locale->t( 'lengow_settings.lengow_last_export_title' ),
 				),
+				'lengow_report_mail_enabled'            => array(
+					'global'        => true,
+					'label'         => $locale->t( 'lengow_settings.lengow_report_mail_enabled_title' ),
+					'default_value' => 1,
+				),
+				'lengow_report_mail_address'            => array(
+					'global'        => true,
+					'placeholder'   => $locale->t( 'lengow_settings.lengow_report_mail_address_title' ),
+					'legend'        => $locale->t( 'lengow_settings.lengow_report_mail_address_legend' ),
+					'default_value' => '',
+				),
 				'lengow_import_default_shipping_method' => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_import_default_shipping_method_title' ),
@@ -341,6 +352,28 @@ class Lengow_Configuration {
 		self::update_value( 'lengow_store_enabled', $shop_has_catalog );
 
 		return $shop_is_active !== $shop_has_catalog ? true : false;
+	}
+
+	/**
+	 * Get Report Email Address for error report.
+	 *
+	 * @return array
+	 */
+	public static function get_report_email_address() {
+		$report_email_address = [];
+		$emails               = self::get( 'lengow_report_mail_address' );
+		$emails               = trim( str_replace( array( "\r\n", ',', ' ' ), ';', $emails ), ';' );
+		$emails               = explode( ';', $emails );
+		foreach ( $emails as $email ) {
+			if ( strlen( $email ) > 0 && is_email( $email ) ) {
+				$report_email_address[] = $email;
+			}
+		}
+		if ( empty( $report_email_address ) ) {
+			$report_email_address[] = self::get( 'admin_email' );
+		}
+
+		return $report_email_address;
 	}
 
 	/**

@@ -67,7 +67,7 @@ class Lengow_Log extends Lengow_File {
 	 */
 	public function write( $category, $message = '', $display = false, $marketplace_sku = null ) {
 		$decoded_message = Lengow_Main::decode_log_message( $message, 'en_GB' );
-		$log             = date( 'Y-m-d H:i:s' );
+		$log             = get_date_from_gmt( date( 'Y-m-d H:i:s' ) );
 		$log             .= ' - ' . ( empty( $category ) ? '' : '[' . $category . '] ' );
 		$log             .= '' . ( empty( $marketplace_sku ) ? '' : 'order ' . $marketplace_sku . ' : ' );
 		$log             .= $decoded_message . "\r\n";

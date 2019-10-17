@@ -107,6 +107,27 @@ class Lengow_Order_Error {
 	}
 
 	/**
+	 * Get all order errors not yet sent by email.
+	 *
+	 * @return array|false
+	 */
+	public static function get_all_order_error_not_sent() {
+		global $wpdb;
+		$query   = '
+			SELECT lo.marketplace_sku, loe.message, loe.id
+			FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER_ERROR . ' loe
+            LEFT JOIN ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . ' lo ON loe.order_lengow_id = lo.id
+            WHERE loe.is_finished = %d
+            AND loe.mail = %d
+        ';
+		$results = $wpdb->get_results(
+			$wpdb->prepare( $query, array( 0, 0 ) )
+		);
+
+		return $results ? $results : false;
+	}
+
+	/**
 	 * Removes all order logs.
 	 *
 	 * @param integer $idOrderLengow Lengow order id

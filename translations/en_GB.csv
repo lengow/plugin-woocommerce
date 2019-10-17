@@ -114,6 +114,7 @@ order_setting.screen.order_status_description|Match your Lengow order status to 
 order_setting.screen.import_setting_title|Order import
 order_setting.screen.import_setting_description|Manage your import settings for marketplace orders here
 order_setting.screen.nb_days|days
+global_setting.screen.notification_alert_title|Notifications & alerts
 global_setting.screen.security_title|Security
 global_setting.screen.preprod_mode_title|Pre-production Mode
 global_setting.screen.preprod_mode_description|Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY
@@ -163,6 +164,9 @@ lengow_settings.lengow_export_format_title|Export the default format
 lengow_settings.lengow_export_file_enabled_title|Export in a file
 lengow_settings.lengow_export_file_enabled_legend|You should use this option if you have 3,000 products or more
 lengow_settings.lengow_last_export_title|Last export
+lengow_settings.lengow_report_mail_enabled_title|I would like to be notified when there are issues regarding order and action synchronisation
+lengow_settings.lengow_report_mail_address_title|Mail for the report email
+lengow_settings.lengow_report_mail_address_legend|To add several emails, use " ; " to separate them
 lengow_settings.lengow_import_default_shipping_method_title|Default import shipping method
 lengow_settings.lengow_id_waiting_shipment_title|Orders in preparation
 lengow_settings.lengow_id_shipped_title|Shipped orders
@@ -199,6 +203,9 @@ lengow_log.exception.product_not_be_found|product ID %{product_id} could not be 
 lengow_log.exception.product_is_a_parent|product ID %{product_id} is variable. Product variation is needed
 lengow_log.exception.woocommerce_customer_not_saved|WARNING! Customer could NOT be saved in Wordpress user table
 lengow_log.exception.woocommerce_order_not_saved|WARNING! Order could NOT be saved in Wordpress post table
+lengow_log.mail_report.subject_report_mail|Lengow imports errors
+lengow_log.mail_report.order|Order %{marketplace_sku}
+lengow_log.mail_report.no_error_in_report_mail|no error message, contact support via https://supportlengow.zendesk.com/agent/
 log.install.install_start|## start install for version %{version} ##
 log.install.install_end|## end install for version %{version} ##
 log.install.table_created|adding table %{name} in database
@@ -209,6 +216,8 @@ log.install.add_upgrade_version|adding SQL patch required for the plugin version
 log.setting.setting_reset|all Lengow settings were reset
 log.setting.setting_updated|all Lengow settings were updated
 log.setting.setting_change|%{key} - old value %{old_value} replaced with %{value}
+log.mail_report.send_mail_to|report email sent to %{email}
+log.mail_report.unable_send_mail_to|unable to send report email to %{email}
 log.export.start|## start export ##
 log.export.end|## end export ##
 log.export.nb_product_found|%{nb_product} product(s) found

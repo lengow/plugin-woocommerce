@@ -785,4 +785,54 @@ class Lengow_Main {
 
 		return preg_replace( $patterns, $replacements, $str );
 	}
+
+	/**
+	 * Check logs table and send mail for order not imported correctly.
+	 *
+	 * @param boolean $log_output see log or not
+	 */
+	public static function send_mail_alert( $log_output = false ) {
+		// recovery of all errors not yet sent by email.
+		$order_errors = Lengow_Order_Error::get_all_order_error_not_sent();
+		if ( $order_errors ) {
+			// construction of the report e-mail.
+			$subject   = self::decode_log_message( 'lengow_log.mail_report.subject_report_mail' );
+			$support   = self::decode_log_message( 'lengow_log.mail_report.no_error_in_report_mail' );
+			$mail_body = '<h2>' . $subject . '</h2><p><ul>';
+			foreach ( $order_errors as $order_error ) {
+				$order     = self::decode_log_message(
+					'lengow_log.mail_report.order',
+					null,
+					array( 'marketplace_sku' => $order_error->marketplace_sku )
+				);
+				$message   = '' !== $order_error->message
+					? self::decode_log_message( $order_error->message )
+					: $support;
+				$mail_body .= '<li>' . $order . ' - ' . $message . '</li>';
+				Lengow_Order_Error::update( (int) $order_error->id, array( 'mail' => 1 ) );
+				unset( $order, $message );
+			}
+			$mail_body .= '</ul></p>';
+			// send an email foreach email address.
+			$emails = Lengow_Configuration::get_report_email_address();
+			foreach ( $emails as $email ) {
+				if ( strlen( $email ) > 0 ) {
+					$mail_sent = wp_mail( $email, $subject, $mail_body );
+					if ( ! $mail_sent ) {
+						self::log(
+							'MailReport',
+							self::set_log_message( 'log.mail_report.unable_send_mail_to', array( 'email' => $email ) ),
+							$log_output
+						);
+					} else {
+						self::log(
+							'MailReport',
+							self::set_log_message( 'log.mail_report.send_mail_to', array( 'email' => $email ) ),
+							$log_output
+						);
+					}
+				}
+			}
+		}
+	}
 }
