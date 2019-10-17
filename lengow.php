@@ -148,6 +148,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/admin/class-lengow-admin-orders.php' );
 				include_once( 'includes/admin/class-lengow-admin-products.php' );
 				include_once( 'includes/admin/class-lengow-admin-main-settings.php' );
+				include_once( 'includes/admin/class-lengow-order-info.php' );
 			}
 		}
 
@@ -161,6 +162,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				add_action( 'admin_action_dashboard_get_process', array( 'Lengow_Admin_Dashboard', 'get_process' ) );
 				add_action( 'wp_ajax_post_process_dashboard', array( 'Lengow_Admin_Dashboard', 'post_process' ) );
 				add_action( 'wp_ajax_post_process_orders', array( 'Lengow_Admin_Orders', 'post_process' ) );
+				// display info on woocommerce orders.
+				add_action( 'add_meta_boxes_shop_order', array( 'Lengow_Hook', 'adding_shop_order_meta_boxes' ) );
 				// init lengow technical error status.
 				if ( Lengow_Main::compare_version( '2.2' ) ) {
 					$this->init_lengow_technical_error_status();
@@ -180,7 +183,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 						break;
 				}
 				$this->lengow_admin = new Lengow_Admin();
-				add_action( 'add_meta_boxes_shop_order', array( "Lengow_Hook", 'adding_shop_order_meta_boxes' ) );
 			}
 		}
 

@@ -1,8 +1,8 @@
 <?php
 /**
- * Lengow Hooks.
+ * Woocommerce Order Info
  *
- * Copyright 2019 Lengow SAS
+ * Copyright 2017 Lengow SAS
  *
  * NOTICE OF LICENSE
  *
@@ -18,8 +18,7 @@
  * @package     lengow-woocommerce
  * @subpackage  includes
  * @author      Team Connector <team-connector@lengow.com>
- * @copyright   2019 Lengow SAS
- * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
+ * @copyright   2017 Lengow SAS
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,25 +26,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Lengow_Hook Class.
+ * Lengow_Order_Info Class.
  */
-class Lengow_Hook {
+class Lengow_Order_Info {
 
 	/**
-	 * Add Meta box for Lengow Order.
+	 * Display Lengow Order data.
 	 *
 	 * @param WP_Post $post Wordpress Post instance
 	 */
-	public static function adding_shop_order_meta_boxes( $post ) {
-		if ( Lengow_Order::get_id_from_order_id( (int) $post->ID ) ) {
-			$locale = new Lengow_Translation();
-			add_meta_box(
-				'lengow-shipping-infos',
-				$locale->t( 'order_infos.box_title' ),
-				array( 'Lengow_Order_Info', 'display_lengow_order_infos_meta_box' )
-			);
+	public static function display_lengow_order_infos_meta_box( $post ) {
+		try {
+			$lengow_order = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'order_id' => (int) $post->ID ) );
+			include_once( 'views/order-info/html-order-info.php' );
+		} catch ( Exception $e ) {
+			echo $e->getMessage();
 		}
+
 	}
-
-
 }

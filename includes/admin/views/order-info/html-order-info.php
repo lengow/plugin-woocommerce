@@ -10,7 +10,6 @@ $locale = new Lengow_Translation();
 
 <style>
     <?php include WP_PLUGIN_DIR . '/lengow-woocommerce/assets/css/lengow-infos-order.css'  ?>
-    <?php include WP_PLUGIN_DIR . '/lengow-woocommerce/assets/css/font-awesome.css' ?>
 </style>
 <div id="lgw-box-order-infos">
     <ul>
@@ -61,7 +60,7 @@ $locale = new Lengow_Translation();
         <hr>
         <li>
             <span class="lgw-order-title"><?php echo $locale->t( 'order_infos.imported_date' ); ?></span>
-            <span class="lgw-order-label"><?php echo $lengow_order->created_at; ?></span>
+            <span class="lgw-order-label"><?php echo get_date_from_gmt($lengow_order->created_at); ?></span>
         </li>
     </ul>
     <ul>
