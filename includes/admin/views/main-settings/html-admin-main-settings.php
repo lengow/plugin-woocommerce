@@ -20,6 +20,33 @@ $list_file = $logs ? array_reverse( $logs ) : array();
     <form class="lengow_form" method="POST">
         <input type="hidden" name="action" value="process">
         <div class="lgw-box">
+            <h2><?php echo $locale->t( 'global_setting.screen.notification_alert_title' ); ?></h2>
+            <div class="form-group">
+                <div class="lgw-switch <?php echo (bool) $values['lengow_report_mail_enabled'] ? 'checked' : ''; ?>">
+                    <label>
+                        <div>
+                            <span></span>
+                            <input type="hidden" name="lengow_report_mail_enabled" value="0">
+                            <input name="lengow_report_mail_enabled"
+                                   type="checkbox"
+								<?php echo (bool) $values['lengow_report_mail_enabled'] ? 'checked' : ''; ?> />
+                        </div>
+						<?php echo $keys['lengow_report_mail_enabled']['label']; ?>
+                    </label>
+                </div>
+            </div>
+            <div id="lengow_wrapper_report_mail_address"
+				<?php echo (bool) $values['lengow_report_mail_enabled'] ? '' : 'style="display:none;"'; ?>>
+                <div class="form-group">
+                    <input type="text" name="lengow_report_mail_address" class="form-control"
+                           placeholder="<?php echo $keys['lengow_report_mail_address']['placeholder']; ?>"
+                           value="<?php echo $values['lengow_report_mail_address']; ?>"/>
+                    <span class="legend blue-frame"
+                          style="display:block;"><?php echo $keys['lengow_report_mail_address']['legend']; ?></span>
+                </div>
+            </div>
+        </div>
+        <div class="lgw-box">
             <h2><?php echo $locale->t( 'global_setting.screen.export_title' ); ?></h2>
             <label class="control-label"><?php echo $keys['lengow_product_types']['label']; ?></label>
             <div class="form-group">
@@ -58,7 +85,8 @@ $list_file = $logs ? array_reverse( $logs ) : array();
                 <span class="legend blue-frame"
                       style="display:block;"><?php echo $keys['lengow_ip_enabled']['legend']; ?></span>
             </div>
-            <div id="lengow_wrapper_authorized_ip" <?php echo (bool) $values['lengow_ip_enabled'] ? '' : 'style="display:none;"'; ?>>
+            <div id="lengow_wrapper_authorized_ip"
+				<?php echo (bool) $values['lengow_ip_enabled'] ? '' : 'style="display:none;"'; ?>>
                 <div class="grey-frame">
                     <div class="form-group">
                         <label class="control-label"><?php echo $keys['lengow_authorized_ip']['label']; ?></label>
@@ -85,7 +113,8 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 					<?php echo $keys['lengow_preprod_enabled']['label']; ?>
                 </label>
             </div>
-            <div id="lengow_wrapper_preprod" <?php echo (bool) $values['lengow_preprod_enabled'] ? '' : 'style="display:none;"'; ?>>
+            <div id="lengow_wrapper_preprod"
+				<?php echo (bool) $values['lengow_preprod_enabled'] ? '' : 'style="display:none;"'; ?>>
                 <div class="grey-frame">
                     <div class="form-group">
                         <label class="control-label"><?php echo $keys['lengow_account_id']['label']; ?></label>

@@ -332,6 +332,13 @@ class Lengow_Import {
 				Lengow_Main::set_log_message( 'log.import.end', array( 'type' => $this->_type_import ) ),
 				$this->_log_output
 			);
+			// sending email in error for orders and actions.
+			if ( (bool) Lengow_Configuration::get( 'lengow_report_mail_enabled' )
+			     && ! $this->_preprod_mode
+			     && ! $this->_import_one_order
+			) {
+				Lengow_Main::send_mail_alert( $this->_log_output );
+			}
 		}
 		if ( $this->_import_one_order ) {
 			$result['error'] = $error;
@@ -416,8 +423,8 @@ class Lengow_Import {
 				Lengow_Main::set_log_message(
 					'log.import.connector_get_all_order',
 					array(
-						'date_from'  => date( 'Y-m-d H:i:s', strtotime( $date_from ) ),
-						'date_to'    => date( 'Y-m-d H:i:s', strtotime( $date_to ) ),
+						'date_from'  => get_date_from_gmt( date( 'Y-m-d H:i:s', strtotime( $date_from ) ) ),
+						'date_to'    => get_date_from_gmt( date( 'Y-m-d H:i:s', strtotime( $date_to ) ) ),
 						'catalog_id' => implode( ', ', $this->_shop_catalog_ids ),
 					)
 				),

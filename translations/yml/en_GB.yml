@@ -132,6 +132,7 @@ en:
       nb_days: "days"
   global_setting:
     screen:
+      notification_alert_title: "Notifications & alerts"
       security_title: "Security"
       preprod_mode_title: "Pre-production Mode"
       preprod_mode_description: "Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY"
@@ -186,6 +187,9 @@ en:
     lengow_export_file_enabled_title: "Export in a file"
     lengow_export_file_enabled_legend: "You should use this option if you have 3,000 products or more"
     lengow_last_export_title: "Last export"
+    lengow_report_mail_enabled_title: "I would like to be notified when there are issues regarding order and action synchronisation"
+    lengow_report_mail_address_title: "Mail for the report email"
+    lengow_report_mail_address_legend: "To add several emails, use \" ; \" to separate them"
     lengow_import_default_shipping_method_title: "Default import shipping method"
     lengow_id_waiting_shipment_title: "Orders in preparation"
     lengow_id_shipped_title: "Shipped orders"
@@ -225,6 +229,10 @@ en:
       product_is_a_parent: "product ID %{product_id} is variable. Product variation is needed"
       woocommerce_customer_not_saved: "WARNING! Customer could NOT be saved in Wordpress user table"
       woocommerce_order_not_saved: "WARNING! Order could NOT be saved in Wordpress post table"
+    mail_report:
+      subject_report_mail: "Lengow imports errors"
+      order: "Order %{marketplace_sku}"
+      no_error_in_report_mail: "no error message, contact support via https://supportlengow.zendesk.com/agent/"
   order_infos:
     marketplace_sku: "Marketplace SKU"
     marketplace: "Marketplace"
