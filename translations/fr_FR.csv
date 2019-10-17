@@ -206,3 +206,21 @@ lengow_log.exception.woocommerce_order_not_saved|ATTENTION ! La commande n'a pas
 lengow_log.mail_report.subject_report_mail|Erreur de l'import Lengow
 lengow_log.mail_report.order|Commande %{marketplace_sku}
 lengow_log.mail_report.no_error_in_report_mail|Pas de message d'erreur, contacter le support via https://supportlengow.zendesk.com/agent/
+order_infos.marketplace_sku|Marketplace SKU
+order_infos.marketplace|Marketplace
+order_infos.currency|Devise
+order_infos.total|Total
+order_infos.commission|Commission
+order_infos.address_id|Adresse ID
+order_infos.customer_name|Nom du client
+order_infos.customer_email|Email client
+order_infos.message|Message
+order_infos.imported_date|Importée à
+order_infos.shipped_by_marketplace|Expédiée par la place de marché
+order_infos.relay_id|ID du point relais
+order_infos.carrier_method|Méthode de transport
+order_infos.tracking_number|Numéro de tracking
+order_infos.json_format|Format JSON
+order_infos.box_title|Lengow informations
+order_infos.boolean_yes|Oui
+order_infos.boolean_no|Non

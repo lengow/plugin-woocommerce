@@ -1,4 +1,4 @@
-/lengow.php|f771ae9782b2483e5259a2ccb44fba67
+/lengow.php|73e2129fa038f765093f042576fb9342
 /config/index.php|d41d8cd98f00b204e9800998ecf8427e
 /assets/images/home-orders.png|db05b21ec6b166d844b42c0e807cb265
 /assets/images/lengow-white.png|0324647d065652cd15282d7fac4ef8ff
@@ -271,6 +271,7 @@
 /assets/css/lengow-layout.css|db61b4df6e74f39904a060ad4f0265e4
 /assets/css/select2.css|8969ac4614d64a13dfc32e1eb4e731f7
 /assets/css/lengow-pages.css|4edb6c4675b2906d38943755224cf53d
+/assets/css/lengow-infos-order.css|1b8275630d7b62ecd859f319af1a39e5
 /assets/fonts/fontawesome-webfont.ttf|a3de2170e4e9df77161ea5d3f31b2668
 /assets/fonts/fontawesome-webfont.woff|a35720c2fed2c7f043bc7e4ffb45e073
 /assets/fonts/fontawesome-webfont.woff2|db812d8a70a4e88e888744c1c9a27e89
@@ -286,7 +287,7 @@
 /assets/js/lengow/orders.js|69d72280e7317fd5310426521013e865
 /assets/js/lengow/main_setting.js|73bc7af976eca3d222b4d49a38bc7501
 /assets/js/lengow/order_setting.js|6289c42d1a5eb446984faa7e113dbf09
-/includes/class-lengow-order.php|8eb74c006e855f03398543ba03c38d4b
+/includes/class-lengow-order.php|fa3fca103a7e4d2f1da3d97ac4eedcbb
 /includes/class-lengow-feed.php|05f03585d61731875aa33aceee23be91
 /includes/class-lengow-export.php|a5159202c0635315986d1e481cc3ea34
 /includes/class-lengow-check.php|04e2fafeff73e272f6b6183dde9de748
@@ -306,6 +307,8 @@
 /includes/admin/class-lengow-admin-dashboard.php|f5cc3121545e42e5aac5a36f63843781
 /includes/admin/class-lengow-admin-orders.php|0ab3d609c15c45ec319f82b9824815f9
 /includes/admin/class-lengow-admin-order-settings.php|c3810126feb19fa564d1e4955b30fddd
+/includes/admin/class-lengow-order-info.php|63e6dc5b272728c8e9f42765ddd7dea6
+/includes/admin/views/order-info/html-order-info.php|80d34e81a8a4f0b7ed9a436718baa61a
 /includes/admin/views/html-admin-header.php|debf6d4e9873cb503dd130401a2121fc
 /includes/admin/views/legals/html-admin-legals.php|0f4dd34f1ab4dae7122c71a0035297c7
 /includes/admin/views/orders/html-admin-orders.php|748b68717f2f577de9d0470b94c73bfd
@@ -328,6 +331,7 @@
 /includes/class-lengow-product.php|245332cacc0ff23b1ab434773e917e8e
 /includes/class-lengow-file.php|2c7863f444270e42fb6097cef29640f1
 /includes/class-lengow-payment.php|ef21fc1cf0cd44eda6137291e07e3cfc
+/includes/class-lengow-hook.php|d1f67b458494f19dc3468f92b9de5350
 /languages/lengow-fr_FR.mo|6f968e5b0b7561c9408381b850c44415
 /languages/lengow-fr_FR.po|748a3a41182fe741efd5580e47367b5f
 /toolbox/checksum.php|734fee2430077f75e26b2e7e3b704199
@@ -339,5 +343,5 @@
 /upgrade/update_2.2.0.php|31fe588fb586e2956e2b4ed2e1d0f978
 /upgrade/update_2.0.1.php|50c87d6cfae3cbcf1c8caec09e34a40b
 /upgrade/update_2.0.0.php|38a4e6842028ab981f6695ce70247083
-/webservice/cron.php|845877725fb321faa8f0a8cbfd2d81ce
+/webservice/cron.php|22580af1caf3a5401fbbb0741377c8fa
 /webservice/export.php|30f7903fac6f90ca7838575563effd38
