@@ -199,3 +199,21 @@ lengow_log.exception.product_not_be_found|Le produit %{product_id} n'a pu être 
 lengow_log.exception.product_is_a_parent|Le produit %{product_id}  est un ID parent. Les déclinaisons du produit sont nécessaires.
 lengow_log.exception.woocommerce_customer_not_saved|ATTENTION ! Le client n'a pas pu être sauvegardé dans la table user de Wordpress
 lengow_log.exception.woocommerce_order_not_saved|ATTENTION ! La commande n'a pas pu être sauvegardée dans la table post de Wordpress
+order_infos.marketplace_sku|Marketplace SKU
+order_infos.marketplace|Marketplace
+order_infos.currency|Devise
+order_infos.total|Total
+order_infos.commission|Commission
+order_infos.address_id|Adresse ID
+order_infos.customer_name|Nom du client
+order_infos.customer_email|Email client
+order_infos.message|Message
+order_infos.imported_date|Importée à
+order_infos.shipped_by_marketplace|Expédiée par la place de marché
+order_infos.relay_id|ID du point relais
+order_infos.carrier_method|Méthode de transport
+order_infos.tracking_number|Numéro de tracking
+order_infos.json_format|Format JSON
+order_infos.box_title|Lengow informations
+order_infos.boolean_yes|Oui
+order_infos.boolean_no|Non

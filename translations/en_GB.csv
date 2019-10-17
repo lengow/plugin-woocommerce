@@ -199,6 +199,24 @@ lengow_log.exception.product_not_be_found|product ID %{product_id} could not be 
 lengow_log.exception.product_is_a_parent|product ID %{product_id} is variable. Product variation is needed
 lengow_log.exception.woocommerce_customer_not_saved|WARNING! Customer could NOT be saved in Wordpress user table
 lengow_log.exception.woocommerce_order_not_saved|WARNING! Order could NOT be saved in Wordpress post table
+order_infos.marketplace_sku|Marketplace SKU
+order_infos.marketplace|Marketplace
+order_infos.currency|Currency
+order_infos.total|Total
+order_infos.commission|Commission
+order_infos.address_id|Address ID
+order_infos.customer_name|Customer name
+order_infos.customer_email|Customer email
+order_infos.message|Message
+order_infos.imported_date|Imported at
+order_infos.shipped_by_marketplace|Shipped by marketplace
+order_infos.relay_id|ID relay
+order_infos.carrier_method|Carrier method
+order_infos.tracking_number|Tracking number
+order_infos.json_format|JSON format
+order_infos.box_title|Lengow informations
+order_infos.boolean_yes|Yes
+order_infos.boolean_no|No
 log.install.install_start|## start install for version %{version} ##
 log.install.install_end|## end install for version %{version} ##
 log.install.table_created|adding table %{name} in database

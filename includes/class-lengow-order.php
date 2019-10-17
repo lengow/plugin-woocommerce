@@ -440,7 +440,7 @@ class Lengow_Order {
 	public static function get_all_order_id_from_lengow_orders( $marketplace_sku, $marketplace_name ) {
 		global $wpdb;
 
-		$query = '
+		$query   = '
 			SELECT order_id FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . '
 			WHERE marketplace_sku = %s
 			AND marketplace_name = %s
