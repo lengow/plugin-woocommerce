@@ -206,24 +206,31 @@ lengow_log.exception.woocommerce_order_not_saved|WARNING! Order could NOT be sav
 lengow_log.mail_report.subject_report_mail|Lengow imports errors
 lengow_log.mail_report.order|Order %{marketplace_sku}
 lengow_log.mail_report.no_error_in_report_mail|no error message, contact support via https://supportlengow.zendesk.com/agent/
-order_infos.marketplace_sku|Marketplace SKU
-order_infos.marketplace|Marketplace
-order_infos.currency|Currency
-order_infos.total|Total
-order_infos.commission|Commission
-order_infos.address_id|Address ID
-order_infos.customer_name|Customer name
-order_infos.customer_email|Customer email
-order_infos.message|Message
-order_infos.imported_date|Imported at
-order_infos.shipped_by_marketplace|Shipped by marketplace
-order_infos.relay_id|ID relay
-order_infos.carrier_method|Carrier method
-order_infos.tracking_number|Tracking number
-order_infos.json_format|JSON format
-order_infos.box_title|Lengow informations
-order_infos.boolean_yes|Yes
-order_infos.boolean_no|No
+meta_box.order_info.marketplace_sku|Marketplace SKU
+meta_box.order_info.marketplace|Marketplace
+meta_box.order_info.currency|Currency
+meta_box.order_info.total|Total
+meta_box.order_info.commission|Commission
+meta_box.order_info.address_id|Delivery Address ID
+meta_box.order_info.customer_name|Customer name
+meta_box.order_info.customer_email|Customer email
+meta_box.order_info.message|Message
+meta_box.order_info.imported_date|Imported at
+meta_box.order_info.shipped_by_marketplace|Shipped by marketplace
+meta_box.order_info.relay_id|ID relay
+meta_box.order_info.carrier|Carrier from marketplace
+meta_box.order_info.carrier_method|Shipping method from marketplace
+meta_box.order_info.tracking_number|Tracking number
+meta_box.order_info.json_format|JSON format
+meta_box.order_info.box_title|Lengow informations
+meta_box.order_info.boolean_yes|Yes
+meta_box.order_info.boolean_no|No
+meta_box.order_shipping.box_title|Lengow shipping informations
+meta_box.order_shipping.carrier|Carrier:
+meta_box.order_shipping.custom_carrier|Custom carrier:
+meta_box.order_shipping.tracking_number|Tracking number:
+meta_box.order_shipping.tracking_url|tracking url:
+meta_box.order_shipping.choose_a_carrier|Choose a carrier...
 log.install.install_start|## start install for version %{version} ##
 log.install.install_end|## end install for version %{version} ##
 log.install.table_created|adding table %{name} in database

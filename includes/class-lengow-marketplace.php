@@ -194,4 +194,61 @@ class Lengow_Marketplace {
 
 		return null;
 	}
+
+	/**
+	 * Get the action with parameters.
+	 *
+	 * @param string $name action's name
+	 *
+	 * @return array|false
+	 */
+	public function get_action( $name ) {
+		if ( array_key_exists( $name, $this->actions ) ) {
+			return $this->actions[ $name ];
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check if marketplace accept custom carrier code.
+	 *
+	 * @return boolean
+	 */
+	public function accept_custom_carrier() {
+		$marketplace_arguments = $this->get_marketplace_arguments( 'ship' );
+		if ( array_key_exists( 'carrier_name', $marketplace_arguments )
+		     || array_key_exists( 'custom_carrier', $marketplace_arguments )
+		) {
+			return true;
+		} elseif ( array_key_exists( 'carrier', $this->arg_values )
+		           && $this->arg_values['carrier']['accept_free_values']
+		) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get all marketplace arguments for a specific action.
+	 *
+	 * @param string $action Lengow order actions type (ship or cancel)
+	 *
+	 * @return array
+	 */
+	public function get_marketplace_arguments( $action ) {
+		$actions = $this->get_action( $action );
+		if ( isset( $actions['args'] ) && isset( $actions['optional_args'] ) ) {
+			$marketplace_arguments = array_merge( $actions['args'], $actions['optional_args'] );
+		} elseif ( ! isset( $actions['args'] ) && isset( $actions['optional_args'] ) ) {
+			$marketplace_arguments = $actions['optional_args'];
+		} elseif ( isset( $actions['args'] ) ) {
+			$marketplace_arguments = $actions['args'];
+		} else {
+			$marketplace_arguments = array();
+		}
+
+		return $marketplace_arguments;
+	}
 }

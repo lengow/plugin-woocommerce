@@ -206,21 +206,22 @@ lengow_log.exception.woocommerce_order_not_saved|ATTENTION ! La commande n'a pas
 lengow_log.mail_report.subject_report_mail|Erreur de l'import Lengow
 lengow_log.mail_report.order|Commande %{marketplace_sku}
 lengow_log.mail_report.no_error_in_report_mail|Pas de message d'erreur, contacter le support via https://supportlengow.zendesk.com/agent/
-order_infos.marketplace_sku|Marketplace SKU
-order_infos.marketplace|Marketplace
-order_infos.currency|Devise
-order_infos.total|Total
-order_infos.commission|Commission
-order_infos.address_id|Adresse ID
-order_infos.customer_name|Nom du client
-order_infos.customer_email|Email client
-order_infos.message|Message
-order_infos.imported_date|Importée à
-order_infos.shipped_by_marketplace|Expédiée par la place de marché
-order_infos.relay_id|ID du point relais
-order_infos.carrier_method|Méthode de transport
-order_infos.tracking_number|Numéro de tracking
-order_infos.json_format|Format JSON
-order_infos.box_title|Lengow informations
-order_infos.boolean_yes|Oui
-order_infos.boolean_no|Non
+meta_box.order_info.marketplace_sku|Marketplace SKU
+meta_box.order_info.marketplace|Marketplace
+meta_box.order_info.currency|Devise
+meta_box.order_info.total|Total
+meta_box.order_info.commission|Commission
+meta_box.order_info.address_id|ID d'adresse de livraison
+meta_box.order_info.customer_name|Nom du client
+meta_box.order_info.customer_email|Email client
+meta_box.order_info.message|Message
+meta_box.order_info.imported_date|Importée à
+meta_box.order_info.shipped_by_marketplace|Expédiée par la place de marché
+meta_box.order_info.relay_id|ID du point relais
+meta_box.order_info.carrier|Transporteur des places de marché
+meta_box.order_info.carrier_method|Mode d'expédition des places de marché
+meta_box.order_info.tracking_number|Numéro de tracking
+meta_box.order_info.json_format|Format JSON
+meta_box.order_info.box_title|Lengow informations
+meta_box.order_info.boolean_yes|Oui
+meta_box.order_info.boolean_no|Non

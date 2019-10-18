@@ -1,8 +1,8 @@
 <?php
 /**
- * Woocommerce Order Info
+ * WooCommerce Box Order Shipping
  *
- * Copyright 2017 Lengow SAS
+ * Copyright 2019 Lengow SAS
  *
  * NOTICE OF LICENSE
  *
@@ -18,7 +18,7 @@
  * @package     lengow-woocommerce
  * @subpackage  includes
  * @author      Team Connector <team-connector@lengow.com>
- * @copyright   2017 Lengow SAS
+ * @copyright   2019 Lengow SAS
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,19 +26,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Lengow_Order_Info Class.
+ * Lengow_Box_Order_Shipping Class.
  */
-class Lengow_Order_Info {
+class Lengow_Box_Order_Shipping {
 
 	/**
-	 * Display Lengow Order data.
+	 * Display Lengow Box Order infos.
 	 *
 	 * @param WP_Post $post Wordpress Post instance
 	 */
-	public static function display_lengow_order_infos_meta_box( $post ) {
+	public static function html_display( $post ) {
 		try {
-			$lengow_order = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'order_id' => (int) $post->ID ) );
-			include_once( 'views/order-info/html-order-info.php' );
+			$order_lengow = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'order_id' => $post->ID ) );
+			$marketplace  = Lengow_Main::get_marketplace_singleton( $order_lengow->marketplace_name );
+			wp_nonce_field( 'lengow_woocommerce_custom_box', 'lengow_woocommerce_custom_box_nonce' );
+			include_once( 'views/box-order-shipping/html-order-shipping.php' );
 		} catch ( Exception $e ) {
 			echo $e->getMessage();
 		}
