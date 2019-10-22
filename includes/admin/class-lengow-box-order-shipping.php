@@ -42,7 +42,7 @@ class Lengow_Box_Order_Shipping {
 			wp_nonce_field( 'lengow_woocommerce_custom_box', 'lengow_woocommerce_custom_box_nonce' );
 			include_once( 'views/box-order-shipping/html-order-shipping.php' );
 		} catch ( Exception $e ) {
-			echo $e->getMessage();
+			echo Lengow_Main::decode_log_message( $e->getMessage() );
 		}
 	}
 }

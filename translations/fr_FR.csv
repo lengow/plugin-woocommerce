@@ -215,13 +215,21 @@ meta_box.order_info.address_id|ID d'adresse de livraison
 meta_box.order_info.customer_name|Nom du client
 meta_box.order_info.customer_email|Email client
 meta_box.order_info.message|Message
-meta_box.order_info.imported_date|Importée à
+meta_box.order_info.imported_date|Importée le
 meta_box.order_info.shipped_by_marketplace|Expédiée par la place de marché
 meta_box.order_info.relay_id|ID du point relais
 meta_box.order_info.carrier|Transporteur des places de marché
 meta_box.order_info.carrier_method|Mode d'expédition des places de marché
 meta_box.order_info.tracking_number|Numéro de tracking
 meta_box.order_info.json_format|Format JSON
-meta_box.order_info.box_title|Lengow informations
+meta_box.order_info.box_title|Informations Lengow
 meta_box.order_info.boolean_yes|Oui
 meta_box.order_info.boolean_no|Non
+meta_box.order_shipping.box_title|Informations d'envoi Lengow
+meta_box.order_shipping.carrier|Transporteur
+meta_box.order_shipping.custom_carrier|Transporteur personnalisé
+meta_box.order_shipping.tracking_number|Numéro de suivi
+meta_box.order_shipping.tracking_url|Url de suivi
+meta_box.order_shipping.choose_a_carrier|Sélectionnez un code transporteur...
+meta_box.order_shipping.required|requis
+meta_box.order_shipping.or_use|ou utiliser...

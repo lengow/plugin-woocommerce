@@ -211,6 +211,23 @@ class Lengow_Marketplace {
 	}
 
 	/**
+	 * Check if an argument is required.
+	 *
+	 * @param string $argument argument name
+	 * @param string $action Lengow order actions type (ship or cancel)
+	 *
+	 * @return boolean
+	 */
+	public function argument_is_required($argument, $action = 'ship') {
+		$actions = $this->get_action($action);
+		if (isset($actions['args']) && in_array($argument, $actions['args'])) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Check if marketplace accept custom carrier code.
 	 *
 	 * @return boolean
@@ -222,6 +239,27 @@ class Lengow_Marketplace {
 		) {
 			return true;
 		} elseif ( array_key_exists( 'carrier', $this->arg_values )
+		           && $this->arg_values['carrier']['accept_free_values']
+		) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check if custom carrier code is required.
+	 *
+	 * @return boolean
+	 */
+	public function custom_carrier_is_required() {
+		$actions = $this->get_action('ship');
+		if ( isset( $actions['args'] ) &&
+		     (in_array( 'carrier_name', $actions['args'] ) || in_array( 'custom_carrier', $actions['args'] ))
+		) {
+			return true;
+		} elseif ( isset( $actions['args'] )
+		           && in_array( 'carrier', $actions['args'] )
 		           && $this->arg_values['carrier']['accept_free_values']
 		) {
 			return true;

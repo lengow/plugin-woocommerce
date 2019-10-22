@@ -40,7 +40,7 @@ class Lengow_Box_Order_Info {
 			$order_lengow = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'order_id' => $post->ID ) );
 			include_once( 'views/box-order-info/html-order-info.php' );
 		} catch ( Exception $e ) {
-			echo $e->getMessage();
+			echo Lengow_Main::decode_log_message( $e->getMessage() );
 		}
 	}
 }

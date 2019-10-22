@@ -226,11 +226,13 @@ meta_box.order_info.box_title|Lengow informations
 meta_box.order_info.boolean_yes|Yes
 meta_box.order_info.boolean_no|No
 meta_box.order_shipping.box_title|Lengow shipping informations
-meta_box.order_shipping.carrier|Carrier:
-meta_box.order_shipping.custom_carrier|Custom carrier:
-meta_box.order_shipping.tracking_number|Tracking number:
-meta_box.order_shipping.tracking_url|tracking url:
-meta_box.order_shipping.choose_a_carrier|Choose a carrier...
+meta_box.order_shipping.carrier|Carrier
+meta_box.order_shipping.custom_carrier|Custom carrier
+meta_box.order_shipping.tracking_number|Tracking number
+meta_box.order_shipping.tracking_url|Tracking url
+meta_box.order_shipping.choose_a_carrier|Select a carrier code...
+meta_box.order_shipping.required|required
+meta_box.order_shipping.or_use|or use...
 log.install.install_start|## start install for version %{version} ##
 log.install.install_end|## end install for version %{version} ##
 log.install.table_created|adding table %{name} in database
