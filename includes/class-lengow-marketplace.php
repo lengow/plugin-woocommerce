@@ -218,9 +218,9 @@ class Lengow_Marketplace {
 	 *
 	 * @return boolean
 	 */
-	public function argument_is_required($argument, $action = 'ship') {
-		$actions = $this->get_action($action);
-		if (isset($actions['args']) && in_array($argument, $actions['args'])) {
+	public function argument_is_required( $argument, $action = 'ship' ) {
+		$actions = $this->get_action( $action );
+		if ( isset( $actions['args'] ) && in_array( $argument, $actions['args'] ) ) {
 			return true;
 		}
 
@@ -253,9 +253,9 @@ class Lengow_Marketplace {
 	 * @return boolean
 	 */
 	public function custom_carrier_is_required() {
-		$actions = $this->get_action('ship');
+		$actions = $this->get_action( 'ship' );
 		if ( isset( $actions['args'] ) &&
-		     (in_array( 'carrier_name', $actions['args'] ) || in_array( 'custom_carrier', $actions['args'] ))
+		     ( in_array( 'carrier_name', $actions['args'] ) || in_array( 'custom_carrier', $actions['args'] ) )
 		) {
 			return true;
 		} elseif ( isset( $actions['args'] )
