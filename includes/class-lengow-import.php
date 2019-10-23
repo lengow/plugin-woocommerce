@@ -363,7 +363,7 @@ class Lengow_Import {
 				Lengow_Main::send_mail_alert( $this->_log_output );
 			}
 		}
-		// save global error
+		// save global error.
 		if ( $error ) {
 			if ( isset( $this->_order_lengow_id ) && $this->_order_lengow_id ) {
 				$order_error = new Lengow_Order_Error();
