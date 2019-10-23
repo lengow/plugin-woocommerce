@@ -83,6 +83,20 @@ class Lengow_Admin_Orders extends WP_List_Table {
 					$data['last_importation'] = $order_collection['last_import_date'];
 					echo json_encode( $data );
 					break;
+				case 're_import':
+					$id_order_lengow = isset( $_POST['order_id'] ) ? $_POST['order_id'] : null;
+					if ( ! $id_order_lengow ) {
+						break;
+					}
+					$return                   = Lengow_Order::re_import_order( $id_order_lengow );
+					$data                     = array();
+					$message                  = $lengow_admin_orders->load_message( $return );
+					$order_collection         = $lengow_admin_orders->assign_last_importation_infos();
+					$data['message']          = join( '<br/>', $message );
+					$data['import_orders']    = $locale->t( 'order.screen.button_update_orders' );
+					$data['last_importation'] = $order_collection['last_import_date'];
+					echo json_encode( $data );
+					break;
 			}
 			exit();
 		}
@@ -298,7 +312,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 						$orders_data = $order->id;
 						break;
 					case 'action' :
-						$orders_data = 'action';
+						$orders_data = $this->get_actions( $order );
 						break;
 					case 'status' :
 						$orders_data = '<span class="lgw-label lgw-label-' . $order->order_lengow_state . '">'
@@ -315,7 +329,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 						$orders_data = $order->customer_name;
 						break;
 					case 'reference' :
-						$orders_data = '<a href=' . admin_url() . 'post.php?post=' . $order->order_id . '&action=edit>' . $order->order_id . '</a>';
+						$orders_data = '<a href="' . admin_url() . 'post.php?post=' . $order->order_id . '&action=edit" target="_blank">' . $order->order_id . '</a>';
 						break;
 					case 'date' :
 						$orders_data = get_date_from_gmt( $order->order_date );
@@ -336,7 +350,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 						$orders_data = $order->order_item;
 						break;
 					case 'total' :
-						$orders_data = $order->total_paid . get_woocommerce_currency_symbol($order->currency);
+						$orders_data = wc_price( $order->total_paid, array( 'currency' => $order->currency ) );
 						break;
 					default :
 						$orders_data = null;
@@ -426,7 +440,22 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		global $wpdb;
 		$array_search = array();
 
-		$query = 'SELECT * FROM ' . $wpdb->prefix . 'lengow_orders';
+		$fields = array(
+			'orders.id',
+			'orders.order_lengow_state',
+			'orders.marketplace_label',
+			'orders.marketplace_sku',
+			'orders.customer_name',
+			'orders.order_id',
+			'orders.order_date',
+			'orders.delivery_country_iso',
+			'orders.order_item',
+			'orders.total_paid',
+			'orders.currency',
+		);
+
+		$query = 'SELECT ' . join( ', ', $fields ) .
+		         ' FROM ' . $wpdb->prefix . 'lengow_orders AS orders';
 
 		if ( ! empty( $search ) ) {
 			// Changes $search for LIKE %% use.
@@ -477,5 +506,43 @@ class Lengow_Admin_Orders extends WP_List_Table {
 				name="order[]" value="%s" class="js-lengow_selection"/>',
 			$order['id']
 		);
+	}
+
+	/**
+	 * Process to get actions.
+	 *
+	 * @param $order_lengow
+	 *
+	 * @return string
+	 */
+	public function get_actions( $order_lengow ) {
+		$orders_data = '';
+		if ( Lengow_Order::PROCESS_STATE_FINISH !== (int) $order_lengow->order_lengow_state ) {
+			$error_messages = array();
+			$order_errors   = Lengow_Order_Error::get_order_errors( $order_lengow->id, null, false );
+			if ( ! empty( $order_errors ) ) {
+				foreach ( $order_errors as $error ) {
+					if ( '' !== $error->message ) {
+						$error_messages[] = Lengow_Main::clean_data( Lengow_Main::decode_log_message( $error->message ) );
+					} else {
+						$error_messages[] = Lengow_Main::decode_log_message( 'order.screen.no_error_message' );
+					}
+				}
+
+				$message = Lengow_Main::decode_log_message( 'order.screen.order_not_imported' )
+				           . '<br/>' . join( '<br/>', $error_messages );
+
+				$value       = '<a href="#"
+									class="lengow_re_import lengow_link_tooltip lgw-btn lgw-btn-white"
+				                    data-action="re_import"
+				                    data-order="' . $order_lengow->id . '"
+				                    data-html="true"
+				                    data-original-title="' . $message . '">'
+				               . Lengow_Main::decode_log_message( 'order.screen.not_imported' ) . ' <i class="fa fa-refresh"></i></a>';
+				$orders_data = $value;
+			}
+		}
+
+		return $orders_data;
 	}
 }

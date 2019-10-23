@@ -131,14 +131,19 @@ class Lengow_Import {
 	private $_secret_token;
 
 	/**
-	 * @var Lengow_Connector Lengow connector instance
+	 * @var Lengow_Connector Lengow connector instance.
 	 */
 	private $_connector;
 
 	/**
-	 * @var array shop catalog ids for import
+	 * @var array shop catalog ids for import.
 	 */
 	private $_shop_catalog_ids = array();
+
+	/**
+	 * @var integer Lengow order id.
+	 */
+	private $_order_lengow_id;
 
 	/**
 	 * Construct the import manager.
@@ -150,7 +155,7 @@ class Lengow_Import {
 	 * string  created_from        import of orders since
 	 * string  created_to          import of orders until
 	 * integer delivery_address_id Lengow delivery address id to import
-	 * integer shop_id             shop id for current import
+	 * integer order_lengow_id     Lengow order id in Woocommerce
 	 * integer days                import period
 	 * integer limit               number of orders to import
 	 * boolean log_output          display log messages
@@ -165,6 +170,9 @@ class Lengow_Import {
 			$this->_import_one_order = true;
 			if ( isset( $params['delivery_address_id'] ) && '' !== $params['delivery_address_id'] ) {
 				$this->_delivery_address_id = $params['delivery_address_id'];
+			}
+			if ( isset( $params['order_lengow_id'] ) ) {
+				$this->_order_lengow_id = $params['order_lengow_id'];
 			}
 		} else {
 			// recovering the time interval.
@@ -266,6 +274,9 @@ class Lengow_Import {
 						if ( $total_orders <= 0 && $this->_import_one_order ) {
 							throw new Lengow_Exception( 'lengow_log.exception.order_not_found' );
 						} elseif ( $total_orders > 0 ) {
+							if ( null !== $this->_order_lengow_id ) {
+								Lengow_Order_Error::finish_order_errors( $this->_order_lengow_id );
+							}
 							$result = $this->_import_orders( $orders );
 							if ( ! $this->_import_one_order ) {
 								$order_new    += $result['order_new'];
@@ -281,7 +292,16 @@ class Lengow_Import {
 					                 . '" ' . $e->getFile() . ' | ' . $e->getLine();
 				}
 				if ( isset( $error_message ) ) {
-					$sync_ok         = false;
+					$sync_ok = false;
+					if ( null !== $this->_order_lengow_id ) {
+						Lengow_Order_Error::finish_order_errors( $this->_order_lengow_id );
+						Lengow_Order_Error::create(
+							array(
+								'order_lengow_id' => $this->_order_lengow_id,
+								'message'         => $error_message,
+							)
+						);
+					}
 					$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 					Lengow_Main::log(
 						'Import',
@@ -338,6 +358,18 @@ class Lengow_Import {
 			     && ! $this->_import_one_order
 			) {
 				Lengow_Main::send_mail_alert( $this->_log_output );
+			}
+		}
+		// save global error.
+		if ( $error ) {
+			if ( isset( $this->_order_lengow_id ) && $this->_order_lengow_id ) {
+				Lengow_Order_Error::finish_order_errors( $this->_order_lengow_id );
+				Lengow_Order_Error::create(
+					array(
+						'order_lengow_id' => $this->_order_lengow_id,
+						'message'         => $error,
+					)
+				);
 			}
 		}
 		if ( $this->_import_one_order ) {

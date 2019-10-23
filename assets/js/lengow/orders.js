@@ -30,14 +30,15 @@
              */
             var column = $('.column-status');
             column.width(column.width() + 50);
+            init_tooltip();
         }
 
         loadReload();
 
         /**
-         * Ajax to synchronize stock.
+         * Ajax to synchronize orders.
          */
-        $('#lengow_import_orders').on('click', function() {
+        $('#lengow_import_orders').on('click', function () {
             var data = {
                 action: 'post_process_orders',
                 do_action: 'import_all'
@@ -49,28 +50,60 @@
                 url: ajaxurl,
                 type: 'POST',
                 data: data,
-                success: function(content) {
+                success: function (content) {
                     var data = JSON.parse(content);
-                    $("#lengow_wrapper_messages").html(data.message);
-                    $("#lengow_last_import_date").html(data.last_importation);
-                    $("#lengow_import_orders").html(data.import_orders);
-                    $("#container_lengow_grid").load(location.href + ' #lengow_order_grid', function() {
-                        loadReload();
-
+                    $("#container_lengow_grid").load(location.href + ' #lengow_order_grid', function () {
                         $('#lengow_charge_import_order').fadeOut(150);
-
-                        setTimeout(function(){
-                            $('#lengow_wrapper_messages').fadeIn(250);
-                        }, 300);
-
+                        reload_informations(data, true);
+                        loadReload();
                     });
                 },
-                error: function(content) {
+                error: function (content) {
                     $('#lengow_charge_import_order').fadeOut(150);
                 }
             });
         });
 
-    });
+        /**
+         * Ajax to synchronize one order.
+         */
+        $(document).on('click', '.lengow_re_import', function () {
+            var data = {
+                action: 'post_process_orders',
+                do_action: 're_import',
+                order_id: $(this).attr('data-order')
+            };
+            $('.lengow_tooltip').fadeOut(150);
+            $('#lengow_charge_import_order').fadeIn(150);
 
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: data,
+                success: function (content) {
+                    var data = JSON.parse(content);
+                    $("#container_lengow_grid").load(location.href + ' #lengow_order_grid', function () {
+                        reload_informations(data, true);
+                        loadReload();
+                    });
+                },
+                error: function (content) {
+                    $('#lengow_charge_import_order').fadeOut(150);
+                }
+            });
+        });
+
+        function reload_informations(informations, show_messages) {
+            var lengow_wrapper_message = $('#lengow_wrapper_messages');
+            $('#lengow_last_import_date').html(informations.last_importation);
+            $('#lengow_import_orders').html(informations.import_orders);
+            lengow_wrapper_message.html(informations.message);
+            $('#lengow_charge_import_order').fadeOut(150);
+            if (show_messages) {
+                lengow_wrapper_message.fadeIn(150);
+            } else {
+                lengow_wrapper_message.hide();
+            }
+        }
+    });
 })(jQuery);

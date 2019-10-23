@@ -174,3 +174,17 @@ body.lgw-home-iframe .lgw-content-section p {
 #lengow_order_header {
   margin-bottom: 70px;
 }
+
+#lengow_order_grid td, #lengow_order_grid th {
+  vertical-align: middle;
+}
+
+#lengow_order_grid .column-action {
+  width: 15%;
+}
+
+#lengow_order_grid lgw-label {
+  display: block;
+  text-align: center;
+  margin: 20%;
+}
