@@ -141,7 +141,7 @@ class Lengow_Import {
 	private $_shop_catalog_ids = array();
 
 	/**
-	 * @var Lengow order id.
+	 * @var integer Lengow order id.
 	 */
 	private $_order_lengow_id;
 
@@ -275,8 +275,7 @@ class Lengow_Import {
 							throw new Lengow_Exception( 'lengow_log.exception.order_not_found' );
 						} elseif ( $total_orders > 0 ) {
 							if ( ! is_null( $this->_order_lengow_id ) ) {
-								$order_error = new Lengow_Order_Error();
-								$order_error->finish_order_errors( $this->_order_lengow_id );
+								Lengow_Order_Error::finish_order_errors( $this->_order_lengow_id );
 							}
 							$result = $this->_import_orders( $orders );
 							if ( ! $this->_import_one_order ) {
@@ -295,13 +294,11 @@ class Lengow_Import {
 				if ( isset( $error_message ) ) {
 					$sync_ok = false;
 					if ( ! is_null( $this->_order_lengow_id ) ) {
-						$order_error = new Lengow_Order_Error();
-						$order_error->finish_order_errors( $this->_order_lengow_id );
-						$order_error->create(
+						Lengow_Order_Error::finish_order_errors( $this->_order_lengow_id );
+						Lengow_Order_Error::create(
 							array(
 								'order_lengow_id' => $this->_order_lengow_id,
 								'message'         => $error_message,
-								'type'            => Lengow_Order_Error::ERROR_TYPE_IMPORT,
 							)
 						);
 					}
@@ -366,13 +363,11 @@ class Lengow_Import {
 		// save global error.
 		if ( $error ) {
 			if ( isset( $this->_order_lengow_id ) && $this->_order_lengow_id ) {
-				$order_error = new Lengow_Order_Error();
-				$order_error->finish_order_errors( $this->_order_lengow_id );
-				$order_error->create(
+				Lengow_Order_Error::finish_order_errors( $this->_order_lengow_id );
+				Lengow_Order_Error::create(
 					array(
 						'order_lengow_id' => $this->_order_lengow_id,
 						'message'         => $error,
-						'type'            => Lengow_Order_Error::ERROR_TYPE_IMPORT,
 					)
 				);
 			}

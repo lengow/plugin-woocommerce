@@ -694,9 +694,10 @@ class Lengow_Order {
 	 * @return array|false
 	 */
 	public static function re_import_order( $order_lengow_id ) {
-		if ( self::is_order_import( $order_lengow_id ) ) {
-			$order_lengow = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'id' => $order_lengow_id ) );
-			$import       = new Lengow_Import(
+		$order_lengow = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'id' => $order_lengow_id ) );
+
+		if ( $order_lengow ) {
+			$import  = new Lengow_Import(
 				array(
 					'order_lengow_id'     => $order_lengow->order_id,
 					'marketplace_sku'     => $order_lengow->marketplace_sku,
@@ -705,25 +706,11 @@ class Lengow_Order {
 					'log_output'          => false,
 				)
 			);
-			$results      = $import->exec();
+			$results = $import->exec();
 
 			return $results;
 		}
 
 		return false;
-	}
-
-	/**
-	 * Check if order is already imported.
-	 *
-	 * @param integer $order_lengow_id Lengow order id
-	 *
-	 * @return boolean
-	 */
-	public static function is_order_import( $order_lengow_id ) {
-		$order = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'id' => $order_lengow_id ) );
-
-		return count( $order );
-
 	}
 }

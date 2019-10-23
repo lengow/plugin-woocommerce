@@ -83,7 +83,7 @@
                 success: function (content) {
                     var data = JSON.parse(content);
                     $("#container_lengow_grid").load(location.href + ' #lengow_order_grid', function () {
-                        reload_informations(data, false);
+                        reload_informations(data, true);
                         loadReload();
                     });
                 },

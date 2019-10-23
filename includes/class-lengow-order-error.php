@@ -30,15 +30,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Lengow_Order_Error Class.
  */
 class Lengow_Order_Error {
-	/**
-	 * @var integer order log import type.
-	 */
-	const TYPE_LOG_IMPORT = 1;
-
-	/**
-	 * @var integer order log send type.
-	 */
-	const TYPE_LOG_SEND = 2;
 
 	/**
 	 * @var integer order error type import.
@@ -183,56 +174,26 @@ class Lengow_Order_Error {
 	}
 
 	/**
-	 * Check if log already exists for the given order.
+	 * Check if errors already exists for the given order.
 	 *
-	 * @param string $idOrderLengow Lengow order id
-	 * @param string $type order log type (import or send)
-	 * @param boolean $finished log finished (true or false)
+	 * @param string $order_lengow_id Lengow order id
+	 * @param string $type order error type (import or send)
+	 * @param boolean $finished error finished (true or false)
 	 *
 	 * @return array|false
 	 */
-	public static function get_order_logs( $idOrderLengow, $type = null, $finished = null ) {
-		$logType = self::get_order_log_type( $type );
-		if ( ! is_null( $logType ) ) {
-			$andType = ' AND `type` = \'' . (int) $logType . '\'';
-		} else {
-			$andType = '';
+	public static function get_order_errors( $order_lengow_id, $type = null, $finished = null ) {
+		$errorType               = self::get_order_error_type( $type );
+		$args                    = array();
+		$args['order_lengow_id'] = $order_lengow_id;
+		if ( ! is_null( $errorType ) ) {
+			$args['type'] = $errorType;
 		}
-
 		if ( ! is_null( $finished ) ) {
-			$andFinished = ( $finished ? ' AND `is_finished` = 1' : ' AND `is_finished` = 0' );
-		} else {
-			$andFinished = '';
+			$args['is_finished'] = $finished;
 		}
+		$results = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER_ERROR, $args, false );
 
-		global $wpdb;
-		// check if log already exists for the given order id
-		$query = 'SELECT `id`, `is_finished`, `message`, `created_at`, `type` FROM `' . $wpdb->prefix . 'lengow_order_error`
-            WHERE `order_lengow_id` = \'' . (int) $idOrderLengow . '\'' . $andType . $andFinished;
-
-		return $wpdb->get_results( $query );
-	}
-
-	/**
-	 * Return type value.
-	 *
-	 * @param string $type order log type (import or send)
-	 *
-	 * @return integer|null
-	 */
-	public static function get_order_log_type( $type = null ) {
-		switch ( $type ) {
-			case 'import':
-				$logType = self::TYPE_LOG_IMPORT;
-				break;
-			case 'send':
-				$logType = self::TYPE_LOG_SEND;
-				break;
-			default:
-				$logType = null;
-				break;
-		}
-
-		return $logType;
+		return $results;
 	}
 }
