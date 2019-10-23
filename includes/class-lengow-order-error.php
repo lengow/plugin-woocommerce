@@ -186,8 +186,7 @@ class Lengow_Order_Error {
 		$args                    = array();
 		$args['order_lengow_id'] = $order_lengow_id;
 		if ( null !== $type ) {
-			$errorType    = self::get_order_error_type( $type );
-			$args['type'] = $errorType;
+			$args['type'] = self::get_order_error_type( $type );
 		}
 		if ( null !== $finished ) {
 			$args['is_finished'] = $finished;
