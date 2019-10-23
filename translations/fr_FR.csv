@@ -79,11 +79,13 @@ product.table.in_stock|En stock
 product.table.out_of_stock|Hors stock
 product.table.type_downloadable|Téléchargeable
 product.table.type_virtual|Virtuel
-order.screen.import_charge_first|Commandes en cours de récupération...
+order.screen.import_charge_first|Commande(s) en cours de récupération...
 order.screen.import_charge_second|Restez avec nous, cela ne va pas durer longtemps (2 min d'attente en moyenne)
 order.screen.last_order_importation|Dernière synchronisation
 order.screen.no_order_importation|Aucune synchronisation pour le moment
 order.screen.button_update_orders|Synchroniser les commandes
+order.screen.not_imported|Pas importée
+order.screen.order_not_imported|Votre commande n'a pas été importée dans Woocommerce.
 order.screen.preprod_warning_message|Vous êtes en mode préproduction. Vous pouvez importer vos commandes mais les interactions avec Lengow ne sont pas possibles. <a href=%{url}>Retourner en mode production ?</a>
 order.screen.status_not_synchronized|Non synchronisé
 order.screen.status_accepted|Accepté
