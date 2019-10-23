@@ -183,13 +183,13 @@ class Lengow_Order_Error {
 	 * @return array|false
 	 */
 	public static function get_order_errors( $order_lengow_id, $type = null, $finished = null ) {
-		$errorType               = self::get_order_error_type( $type );
 		$args                    = array();
 		$args['order_lengow_id'] = $order_lengow_id;
-		if ( ! is_null( $errorType ) ) {
+		if ( null !== $type ) {
+			$errorType    = self::get_order_error_type( $type );
 			$args['type'] = $errorType;
 		}
-		if ( ! is_null( $finished ) ) {
+		if ( null !== $finished ) {
 			$args['is_finished'] = $finished;
 		}
 		$results = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER_ERROR, $args, false );
