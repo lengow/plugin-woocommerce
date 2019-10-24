@@ -551,9 +551,14 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			'order.screen.order_with_error',
 			array( 'nb_order' => Lengow_Order::get_total_order_in_error() )
 		);
-		$data['order_to_be_sent'] = $locale->t( 'order.screen.order_to_be_sent', array(
-			'nb_order' => Lengow_Order::get_total_order_by_status( Lengow_Order::STATE_WAITING_SHIPMENT )
-		) );
+		$data['order_to_be_sent'] = $locale->t(
+			'order.screen.order_to_be_sent',
+			array(
+				'nb_order' => Lengow_Order::get_total_order_by_status(
+					Lengow_Order::STATE_WAITING_SHIPMENT
+				)
+			)
+		);
 		$data['message']          = join( '<br/>', $message );
 		$data['import_orders']    = $locale->t( 'order.screen.button_update_orders' );
 		$data['last_importation'] = $order_collection['last_import_date'];
