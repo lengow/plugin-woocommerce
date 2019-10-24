@@ -94,6 +94,8 @@ en:
     screen:
       import_charge_first: "Retrieving your order(s)..."
       import_charge_second: "Please bear with us; this will not take long (2 min average waiting time)"
+      order_with_error: "You have %{nb_order} order(s) with errors"
+      order_to_be_sent: "You have %{nb_order} order(s) waiting to be sent"
       last_order_importation: "Last synchronization"
       no_order_importation: "No synchronisation for now"
       button_update_orders: "Synchronize Orders"

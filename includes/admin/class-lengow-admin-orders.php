@@ -65,37 +65,14 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 * Process Post Parameters.
 	 */
 	public static function post_process() {
-		$lengow_admin_orders = new Lengow_Admin_Orders();
-		$locale              = new Lengow_Translation();
-		$action              = isset( $_POST['do_action'] ) ? $_POST['do_action'] : false;
+		$action = isset( $_POST['do_action'] ) ? $_POST['do_action'] : false;
 		if ( $action ) {
 			switch ( $action ) {
 				case 'import_all':
-					$import                   = new Lengow_Import(
-						array( 'log_output' => false )
-					);
-					$return                   = $import->exec();
-					$message                  = $lengow_admin_orders->load_message( $return );
-					$order_collection         = $lengow_admin_orders->assign_last_importation_infos();
-					$data                     = array();
-					$data['message']          = join( '<br/>', $message );
-					$data['import_orders']    = $locale->t( 'order.screen.button_update_orders' );
-					$data['last_importation'] = $order_collection['last_import_date'];
-					echo json_encode( $data );
+					self::do_action( 'import_all' );
 					break;
 				case 're_import':
-					$id_order_lengow = isset( $_POST['order_id'] ) ? $_POST['order_id'] : null;
-					if ( ! $id_order_lengow ) {
-						break;
-					}
-					$return                   = Lengow_Order::re_import_order( $id_order_lengow );
-					$data                     = array();
-					$message                  = $lengow_admin_orders->load_message( $return );
-					$order_collection         = $lengow_admin_orders->assign_last_importation_infos();
-					$data['message']          = join( '<br/>', $message );
-					$data['import_orders']    = $locale->t( 'order.screen.button_update_orders' );
-					$data['last_importation'] = $order_collection['last_import_date'];
-					echo json_encode( $data );
+					self::do_action( 're_import' );
 					break;
 			}
 			exit();
@@ -350,7 +327,11 @@ class Lengow_Admin_Orders extends WP_List_Table {
 						$orders_data = $order->order_item;
 						break;
 					case 'total' :
-						$orders_data = wc_price( $order->total_paid, array( 'currency' => $order->currency ) );
+						if ( Lengow_Main::compare_version( '2.1.0', '<' ) ) {
+							$orders_data = $order->total_paid . get_woocommerce_currency_symbol( $order->currency );
+						} else {
+							$orders_data = wc_price( $order->total_paid, array( 'currency' => $order->currency ) );
+						}
 						break;
 					default :
 						$orders_data = null;
@@ -544,5 +525,43 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		}
 
 		return $orders_data;
+	}
+
+	/**
+	 *  Manage actions for post_process.
+	 *
+	 * @param $action
+	 */
+	private static function do_action( $action ) {
+		$lengow_admin_orders = new Lengow_Admin_Orders();
+		$locale              = new Lengow_Translation();
+		if ( 'import_all' === $action ) {
+			$import = new Lengow_Import(
+				array( 'log_output' => false )
+			);
+			$return = $import->exec();
+		} elseif ( 're_import' === $action ) {
+			$id_order_lengow = isset( $_POST['order_id'] ) ? $_POST['order_id'] : null;
+			$return          = Lengow_Order::re_import_order( $id_order_lengow );
+		}
+		$data                     = array();
+		$message                  = $lengow_admin_orders->load_message( $return );
+		$order_collection         = $lengow_admin_orders->assign_last_importation_infos();
+		$data['order_with_error'] = $locale->t(
+			'order.screen.order_with_error',
+			array( 'nb_order' => Lengow_Order::get_total_order_in_error() )
+		);
+		$data['order_to_be_sent'] = $locale->t(
+			'order.screen.order_to_be_sent',
+			array(
+				'nb_order' => Lengow_Order::get_total_order_by_status(
+					Lengow_Order::STATE_WAITING_SHIPMENT
+				)
+			)
+		);
+		$data['message']          = join( '<br/>', $message );
+		$data['import_orders']    = $locale->t( 'order.screen.button_update_orders' );
+		$data['last_importation'] = $order_collection['last_import_date'];
+		echo json_encode( $data );
 	}
 }

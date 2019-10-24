@@ -81,6 +81,8 @@ product.table.type_downloadable|Downloadable
 product.table.type_virtual|Virtual
 order.screen.import_charge_first|Retrieving your order(s)...
 order.screen.import_charge_second|Please bear with us; this will not take long (2 min average waiting time)
+order.screen.order_with_error|You have %{nb_order} order(s) with errors
+order.screen.order_to_be_sent|You have %{nb_order} order(s) waiting to be sent
 order.screen.last_order_importation|Last synchronization
 order.screen.no_order_importation|No synchronisation for now
 order.screen.button_update_orders|Synchronize Orders
