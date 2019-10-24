@@ -172,4 +172,27 @@ class Lengow_Order_Error {
 
 		return $error_type;
 	}
+
+	/**
+	 * Check if errors already exists for the given order.
+	 *
+	 * @param string $order_lengow_id Lengow order id
+	 * @param string $type order error type (import or send)
+	 * @param boolean $finished error finished (true or false)
+	 *
+	 * @return array|false
+	 */
+	public static function get_order_errors( $order_lengow_id, $type = null, $finished = null ) {
+		$args                    = array();
+		$args['order_lengow_id'] = $order_lengow_id;
+		if ( null !== $type ) {
+			$args['type'] = self::get_order_error_type( $type );
+		}
+		if ( null !== $finished ) {
+			$args['is_finished'] = $finished;
+		}
+		$results = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER_ERROR, $args, false );
+
+		return $results;
+	}
 }

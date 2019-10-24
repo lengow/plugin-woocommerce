@@ -687,6 +687,34 @@ class Lengow_Order {
 	}
 
 	/**
+	 * Re Import Order.
+	 *
+	 * @param integer $order_lengow_id Lengow order id
+	 *
+	 * @return array|false
+	 */
+	public static function re_import_order( $order_lengow_id ) {
+		$order_lengow = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'id' => $order_lengow_id ) );
+
+		if ( $order_lengow ) {
+			$import  = new Lengow_Import(
+				array(
+					'order_lengow_id'     => $order_lengow->order_id,
+					'marketplace_sku'     => $order_lengow->marketplace_sku,
+					'marketplace_name'    => $order_lengow->marketplace_name,
+					'delivery_address_id' => $order_lengow->delivery_address_id,
+					'log_output'          => false,
+				)
+			);
+			$results = $import->exec();
+
+			return $results;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Check and change the name of the marketplace for v3 compatibility.
 	 *
 	 * @param Lengow_Connector|null $connector Lengow connector instance

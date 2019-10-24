@@ -92,11 +92,13 @@ en:
       type_virtual: "Virtual"
   order:
     screen:
-      import_charge_first: "Retrieving your orders..."
+      import_charge_first: "Retrieving your order(s)..."
       import_charge_second: "Please bear with us; this will not take long (2 min average waiting time)"
       last_order_importation: "Last synchronization"
       no_order_importation: "No synchronisation for now"
       button_update_orders: "Synchronize Orders"
+      not_imported: "not imported"
+      order_not_imported: "Order has not been imported into Woocommerce"
       preprod_warning_message: "You are in pre-production mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>"
       status_not_synchronized: "Not synchronized"
       status_accepted: "Accepted"
