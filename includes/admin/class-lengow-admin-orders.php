@@ -329,9 +329,9 @@ class Lengow_Admin_Orders extends WP_List_Table {
 					case 'total' :
 						if ( Lengow_Main::compare_version( '2.1.0', '<' ) ) {
 							$orders_data = $order->total_paid . get_woocommerce_currency_symbol( $order->currency );
-							break;
+						} else {
+							$orders_data = wc_price( $order->total_paid, array( 'currency' => $order->currency ) );
 						}
-						$orders_data = wc_price( $order->total_paid, array( 'currency' => $order->currency ) );
 						break;
 					default :
 						$orders_data = null;
@@ -547,9 +547,10 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		$data                     = array();
 		$message                  = $lengow_admin_orders->load_message( $return );
 		$order_collection         = $lengow_admin_orders->assign_last_importation_infos();
-		$data['order_with_error'] = $locale->t( 'order.screen.order_with_error', array(
-			'nb_order' => Lengow_Order::get_total_order_in_error()
-		) );
+		$data['order_with_error'] = $locale->t(
+			'order.screen.order_with_error',
+			array( 'nb_order' => Lengow_Order::get_total_order_in_error() )
+		);
 		$data['order_to_be_sent'] = $locale->t( 'order.screen.order_to_be_sent', array(
 			'nb_order' => Lengow_Order::get_total_order_by_status( Lengow_Order::STATE_WAITING_SHIPMENT )
 		) );

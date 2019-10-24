@@ -22,16 +22,24 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="lgw-col-8" style="padding:0;">
                 <div id="lengow_order_with_error">
                     <p>
-                        <?php echo $locale->t('order.screen.order_with_error', array(
-                                'nb_order' => Lengow_Order::get_total_order_in_error()
-                        )) ?>
+						<?php echo $locale->t(
+							'order.screen.order_with_error',
+							array(
+								'nb_order' => Lengow_Order::get_total_order_in_error()
+							)
+						) ?>
                     </p>
                 </div>
                 <div id="lengow_order_to_be_sent">
                     <p>
-                        <?php echo $locale->t('order.screen.order_to_be_sent', array(
-	                        'nb_order' => Lengow_Order::get_total_order_by_status( Lengow_Order::STATE_WAITING_SHIPMENT )
-                        )) ?>
+						<?php echo $locale->t(
+							'order.screen.order_to_be_sent',
+							array(
+								'nb_order' => Lengow_Order::get_total_order_by_status(
+									Lengow_Order::STATE_WAITING_SHIPMENT
+								)
+							)
+						) ?>
                     </p>
                 </div>
                 <div id="lengow_last_importation">
