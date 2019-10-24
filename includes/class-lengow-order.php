@@ -713,4 +713,15 @@ class Lengow_Order {
 
 		return false;
 	}
+
+	/**
+	 * Get total orders in error.
+	 **
+	 * @return integer
+	 */
+	public static function get_total_order_in_error() {
+		$result = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'is_in_error' => 1 ), false );
+
+		return count($result);
+	}
 }
