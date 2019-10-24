@@ -274,7 +274,7 @@ class Lengow_Import {
 						if ( $total_orders <= 0 && $this->_import_one_order ) {
 							throw new Lengow_Exception( 'lengow_log.exception.order_not_found' );
 						} elseif ( $total_orders > 0 ) {
-							if ( ! is_null( $this->_order_lengow_id ) ) {
+							if ( null !== $this->_order_lengow_id ) {
 								Lengow_Order_Error::finish_order_errors( $this->_order_lengow_id );
 							}
 							$result = $this->_import_orders( $orders );
@@ -293,7 +293,7 @@ class Lengow_Import {
 				}
 				if ( isset( $error_message ) ) {
 					$sync_ok = false;
-					if ( ! is_null( $this->_order_lengow_id ) ) {
+					if ( null !== $this->_order_lengow_id ) {
 						Lengow_Order_Error::finish_order_errors( $this->_order_lengow_id );
 						Lengow_Order_Error::create(
 							array(

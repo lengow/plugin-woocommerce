@@ -503,7 +503,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			$order_errors   = Lengow_Order_Error::get_order_errors( $order_lengow->id, null, false );
 			if ( ! empty( $order_errors ) ) {
 				foreach ( $order_errors as $error ) {
-					if ( $error->message != '' ) {
+					if ( '' !== $error->message ) {
 						$error_messages[] = Lengow_Main::clean_data( Lengow_Main::decode_log_message( $error->message ) );
 					} else {
 						$error_messages[] = Lengow_Main::decode_log_message( 'order.screen.no_error_message' );
