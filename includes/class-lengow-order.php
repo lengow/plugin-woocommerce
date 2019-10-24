@@ -635,6 +635,33 @@ class Lengow_Order {
 	}
 
 	/**
+	 * Re Import Order.
+	 *
+	 * @param integer $order_lengow_id Lengow order id
+	 *
+	 * @return array|false
+	 */
+	public static function re_import_order( $order_lengow_id ) {
+		$order_lengow = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'id' => $order_lengow_id ) );
+		if ( $order_lengow ) {
+			$import  = new Lengow_Import(
+				array(
+					'order_lengow_id'     => $order_lengow->order_id,
+					'marketplace_sku'     => $order_lengow->marketplace_sku,
+					'marketplace_name'    => $order_lengow->marketplace_name,
+					'delivery_address_id' => $order_lengow->delivery_address_id,
+					'log_output'          => false,
+				)
+			);
+			$results = $import->exec();
+
+			return $results;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Synchronize order with Lengow API.
 	 *
 	 * @param Lengow_Connector|null $connector Lengow connector instance
@@ -681,34 +708,6 @@ class Lengow_Order {
 			} else {
 				return true;
 			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Re Import Order.
-	 *
-	 * @param integer $order_lengow_id Lengow order id
-	 *
-	 * @return array|false
-	 */
-	public static function re_import_order( $order_lengow_id ) {
-		$order_lengow = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'id' => $order_lengow_id ) );
-
-		if ( $order_lengow ) {
-			$import  = new Lengow_Import(
-				array(
-					'order_lengow_id'     => $order_lengow->order_id,
-					'marketplace_sku'     => $order_lengow->marketplace_sku,
-					'marketplace_name'    => $order_lengow->marketplace_name,
-					'delivery_address_id' => $order_lengow->delivery_address_id,
-					'log_output'          => false,
-				)
-			);
-			$results = $import->exec();
-
-			return $results;
 		}
 
 		return false;
@@ -813,7 +812,6 @@ class Lengow_Order {
 			}
 		} catch ( Lengow_Exception $e ) {
 			$error_message = $e->getMessage();
-			var_dump($error_message);
 		} catch ( Exception $e ) {
 			$error_message = '[WooCommerce error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
 		}

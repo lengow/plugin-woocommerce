@@ -270,7 +270,7 @@ log.import.end|## end %{type} import ##
 log.import.preprod_mode_active|warning ! Pre-prod mode is activated
 log.import.connector_get_order|get order with order ID: %{marketplace_sku} and marketplace: %{marketplace_name}
 log.import.connector_get_all_order|get orders between %{date_from} and %{date_to} for catalogs ID: %{catalog_id}
-log.import.find_one_order|%{nb_order} order found for order ID: %{marketplace_sku} and markeplace: %{marketplace_name} with account ID: %{account_id}
+log.import.find_one_order|%{nb_order} order found for order ID: %{marketplace_sku} and marketplace: %{marketplace_name} with account ID: %{account_id}
 log.import.find_all_orders|%{nb_order} order(s) found with account ID: %{account_id}
 log.import.error_already_created|%{decoded_message} (created on the %{date_message})
 log.import.external_id_exist|already imported in a WooCommerce with the order ID %{order_id}
@@ -310,7 +310,6 @@ log.order_action.action_send|action %{action} was successfully sent (ORDER ID %{
 log.order_action.action_not_send|WARNING ! action %{action} could not be sent (ORDER ID %{order_id})
 log.order_action.action_saved|call tracking saved in lengow_actions table
 log.order_action.call_tracking|call tracking with parameters: %{parameters}
-log.order_action.can_not_load_order|order action failed - Can't load order
 log.order_action.call_action_failed|order action failed - %{decoded_message}
 log.connector.call_api|call %{curl_url}
 log.connector.error_api|API call failed - %{error_code}

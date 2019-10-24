@@ -169,10 +169,10 @@ class Lengow_Import {
 			$this->_limit            = 1;
 			$this->_import_one_order = true;
 			if ( isset( $params['delivery_address_id'] ) && '' !== $params['delivery_address_id'] ) {
-				$this->_delivery_address_id = $params['delivery_address_id'];
+				$this->_delivery_address_id = (int) $params['delivery_address_id'];
 			}
 			if ( isset( $params['order_lengow_id'] ) ) {
-				$this->_order_lengow_id = $params['order_lengow_id'];
+				$this->_order_lengow_id = (int) $params['order_lengow_id'];
 			}
 		} else {
 			// recovering the time interval.
