@@ -362,7 +362,7 @@ class Lengow_Sync {
 			if ( file_exists( $file_path ) ) {
 				$marketplaces_data = file_get_contents( $file_path );
 				if ( $marketplaces_data ) {
-					return json_encode( $marketplaces_data );
+					return json_decode( $marketplaces_data );
 				}
 			}
 		}

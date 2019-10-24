@@ -600,7 +600,7 @@ class Lengow_Import {
 					// sync to lengow if no preprod_mode.
 					if ( ! $this->_preprod_mode && isset( $order['order_new'] ) && $order['order_new'] ) {
 						$order_lengow = new Lengow_Order( $order['order_lengow_id'] );
-						$synchro      = Lengow_Order::synchronize_order( $order_lengow, $this->_connector );
+						$synchro      = $order_lengow->synchronize_order( $this->_connector );
 						if ( $synchro ) {
 							$synchroMessage = Lengow_Main::set_log_message(
 								'log.import.order_synchronized_with_lengow',

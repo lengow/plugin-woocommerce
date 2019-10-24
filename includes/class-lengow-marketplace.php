@@ -42,6 +42,14 @@ class Lengow_Marketplace {
 	public static $marketplaces = false;
 
 	/**
+	 * @var array all valid actions.
+	 */
+	public static $valid_actions = array(
+		Lengow_Action::TYPE_SHIP,
+		Lengow_Action::TYPE_CANCEL,
+	);
+
+	/**
 	 * @var mixed the current marketplace.
 	 */
 	public $marketplace;
@@ -99,7 +107,7 @@ class Lengow_Marketplace {
 	 * @throws Lengow_Exception If marketplace not present
 	 */
 	public function __construct( $name ) {
-		$this->_load_api_marketplace();
+		self::load_api_marketplace();
 		$this->name = strtolower( $name );
 		if ( ! isset( self::$marketplaces->{$this->name} ) ) {
 			throw new Lengow_Exception(
@@ -163,10 +171,26 @@ class Lengow_Marketplace {
 	/**
 	 * Load the json configuration of all marketplaces.
 	 */
-	private function _load_api_marketplace() {
+	public static function load_api_marketplace() {
 		if ( ! self::$marketplaces ) {
 			self::$marketplaces = Lengow_Sync::get_marketplaces();
 		}
+	}
+
+	/**
+	 * Check if marketplace name exist.
+	 *
+	 * @param string $name the name of the marketplace
+	 *
+	 * @return boolean
+	 */
+	public static function marketplace_exist( $name ) {
+		self::load_api_marketplace();
+		if ( self::$marketplaces && isset( self::$marketplaces->{$name} ) ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -218,7 +242,7 @@ class Lengow_Marketplace {
 	 *
 	 * @return boolean
 	 */
-	public function argument_is_required( $argument, $action = 'ship' ) {
+	public function argument_is_required( $argument, $action = Lengow_Action::TYPE_SHIP ) {
 		$actions = $this->get_action( $action );
 		if ( isset( $actions['args'] ) && in_array( $argument, $actions['args'] ) ) {
 			return true;
@@ -233,13 +257,13 @@ class Lengow_Marketplace {
 	 * @return boolean
 	 */
 	public function accept_custom_carrier() {
-		$marketplace_arguments = $this->get_marketplace_arguments( 'ship' );
-		if ( array_key_exists( 'carrier_name', $marketplace_arguments )
-		     || array_key_exists( 'custom_carrier', $marketplace_arguments )
+		$marketplace_arguments = $this->get_marketplace_arguments( Lengow_Action::TYPE_SHIP );
+		if ( array_key_exists( Lengow_Action::ARG_CARRIER_NAME, $marketplace_arguments )
+		     || array_key_exists( Lengow_Action::ARG_CUSTOM_CARRIER, $marketplace_arguments )
 		) {
 			return true;
-		} elseif ( array_key_exists( 'carrier', $this->arg_values )
-		           && $this->arg_values['carrier']['accept_free_values']
+		} elseif ( array_key_exists( Lengow_Action::ARG_CARRIER, $this->arg_values )
+		           && $this->arg_values[ Lengow_Action::ARG_CARRIER ]['accept_free_values']
 		) {
 			return true;
 		}
@@ -253,16 +277,61 @@ class Lengow_Marketplace {
 	 * @return boolean
 	 */
 	public function custom_carrier_is_required() {
-		$actions = $this->get_action( 'ship' );
+		$actions = $this->get_action( Lengow_Action::TYPE_SHIP );
 		if ( isset( $actions['args'] ) &&
-		     ( in_array( 'carrier_name', $actions['args'] ) || in_array( 'custom_carrier', $actions['args'] ) )
+		     ( in_array( Lengow_Action::ARG_CARRIER_NAME, $actions['args'] )
+		       || in_array( Lengow_Action::ARG_CUSTOM_CARRIER, $actions['args'] )
+		     )
 		) {
 			return true;
 		} elseif ( isset( $actions['args'] )
-		           && in_array( 'carrier', $actions['args'] )
-		           && $this->arg_values['carrier']['accept_free_values']
+		           && in_array( Lengow_Action::ARG_CARRIER, $actions['args'] )
+		           && $this->arg_values[ Lengow_Action::ARG_CARRIER ]['accept_free_values']
 		) {
 			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get the default value for argument.
+	 *
+	 * @param string $name argument's name
+	 *
+	 * @return string|false
+	 */
+	public function get_default_value( $name ) {
+		if ( array_key_exists( $name, $this->arg_values ) ) {
+			$defaultValue = $this->arg_values[ $name ]['default_value'];
+			if ( ! empty( $defaultValue ) ) {
+				return $defaultValue;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Is marketplace contain order Line.
+	 *
+	 * @param string $action Lengow order actions type (ship or cancel)
+	 *
+	 * @return boolean
+	 */
+	public function contain_order_line( $action ) {
+		if ( isset( $this->actions[ $action ] ) ) {
+			$actions = $this->actions[ $action ];
+			if ( isset( $actions['args'] ) && is_array( $actions['args'] ) ) {
+				if ( in_array( Lengow_Action::ARG_LINE, $actions['args'] ) ) {
+					return true;
+				}
+			}
+			if ( isset( $actions['optional_args'] ) && is_array( $actions['optional_args'] ) ) {
+				if ( in_array( Lengow_Action::ARG_LINE, $actions['optional_args'] ) ) {
+					return true;
+				}
+			}
 		}
 
 		return false;
@@ -288,5 +357,206 @@ class Lengow_Marketplace {
 		}
 
 		return $marketplace_arguments;
+	}
+
+	/**
+	 * Call API action and create action in lengow_actions table
+	 *
+	 * @param string $action Lengow order actions type (ship or cancel)
+	 * @param Lengow_Order $order_lengow Lengow order instance
+	 * @param string|null $order_line_id Lengow order line id
+	 *
+	 * @return boolean
+	 */
+	public function call_action( $action, $order_lengow, $order_line_id = null ) {
+		try {
+			// check the action and order data.
+			$this->_check_action( $action );
+			$this->_check_order_data( $order_lengow );
+			// get all required and optional arguments for a specific marketplace.
+			$marketplace_arguments = $this->get_marketplace_arguments( $action );
+			// get all available values from an order
+			$params = $this->_get_all_params( $action, $order_lengow, $marketplace_arguments );
+			// check required arguments and clean value for empty optionals arguments.
+			$params = $this->_check_and_clean_params( $action, $params );
+			// complete the values with the specific values of the account.
+			if ( ! is_null( $order_line_id ) ) {
+				$params[ Lengow_Action::ARG_LINE ] = $order_line_id;
+			}
+			$params[ Lengow_Action::ARG_MARKETPLACE_ORDER_ID ] = $order_lengow->marketplace_sku;
+			$params[ Lengow_Action::ARG_MARKETPLACE ]          = $order_lengow->marketplace_name;
+			$params[ Lengow_Action::ARG_ACTION_TYPE ]          = $action;
+			// checks whether the action is already created to not return an action.
+			$can_send_action = Lengow_Action::can_send_action( $params, $order_lengow );
+			if ( $can_send_action ) {
+				// send a new action on the order via the Lengow API.
+				Lengow_Action::send_action( $params, $order_lengow );
+			}
+		} catch ( Lengow_Exception $e ) {
+			$error_message = $e->getMessage();
+		} catch ( Exception $e ) {
+			$error_message = '[WooCommerce Error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
+		}
+		if ( isset( $error_message ) ) {
+			if ( Lengow_Order::PROCESS_STATE_FINISH !== $order_lengow->order_process_state ) {
+				Lengow_Order_Error::create(
+					array(
+						'order_lengow_id' => $order_lengow->id,
+						'message'         => $error_message,
+						'type'            => Lengow_Order_Error::ERROR_TYPE_SEND,
+					)
+				);
+			}
+			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en' );
+			Lengow_Main::log(
+				'API-OrderAction',
+				Lengow_Main::set_log_message(
+					'log.order_action.call_action_failed',
+					array( 'decoded_message' => $decoded_message )
+				),
+				false,
+				$order_lengow->marketplace_sku
+			);
+
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check if the action is valid and present on the marketplace.
+	 *
+	 * @param string $action Lengow order actions type (ship or cancel)
+	 *
+	 * @throws Lengow_Exception action not valid / marketplace action not present
+	 */
+	private function _check_action( $action ) {
+		if ( ! in_array( $action, self::$valid_actions ) ) {
+			throw new Lengow_Exception(
+				Lengow_Main::set_log_message( 'lengow_log.exception.action_not_valid', array( 'action' => $action ) )
+			);
+		}
+		if ( ! $this->get_action( $action ) ) {
+			throw new Lengow_Exception(
+				Lengow_Main::set_log_message(
+					'lengow_log.exception.marketplace_action_not_present',
+					array( 'action' => $action )
+				)
+			);
+		}
+	}
+
+	/**
+	 * Check if the essential data of the order are present.
+	 *
+	 * @param Lengow_Order $order_lengow Lengow order instance
+	 *
+	 * @throws Lengow_Exception marketplace sku is required / marketplace name is required
+	 */
+	private function _check_order_data( $order_lengow ) {
+		if ( 0 === strlen( $order_lengow->marketplace_sku ) ) {
+			throw new Lengow_Exception(
+				Lengow_Main::set_log_message( 'lengow_log.exception.marketplace_sku_require' )
+			);
+		}
+		if ( 0 === strlen( $order_lengow->marketplace_name ) ) {
+			throw new Lengow_Exception(
+				Lengow_Main::set_log_message( 'lengow_log.exception.marketplace_name_require' )
+			);
+		}
+	}
+
+	/**
+	 * Get all available values from an order
+	 *
+	 * @param string $action Lengow order actions type (ship or cancel)
+	 * @param Lengow_Order $order_lengow Lengow order instance
+	 * @param array $marketplace_arguments All marketplace arguments for a specific action
+	 *
+	 * @return array
+	 */
+	private function _get_all_params( $action, $order_lengow, $marketplace_arguments ) {
+		$params         = [];
+		$actions        = $this->get_action( $action );
+		$order_id       = $order_lengow->order_id;
+		$carrier        = (string) get_post_meta( $order_id, '_lengow_carrier', true );
+		$custom_carrier = (string) get_post_meta( $order_id, '_lengow_custom_carrier', true );
+		if ( null !== $order_lengow->carrier && strlen( $order_lengow->carrier ) > 0 ) {
+			$carrier_code = $order_lengow->carrier;
+		} else {
+			$carrier_code = strlen( $carrier ) > 0 ? $carrier : $custom_carrier;
+		}
+		// get all order informations
+		foreach ( $marketplace_arguments as $arg ) {
+			switch ( $arg ) {
+				case Lengow_Action::ARG_TRACKING_NUMBER:
+					$params[ $arg ] = (string) get_post_meta( $order_id, '_lengow_tracking_number', true );
+					break;
+				case Lengow_Action::ARG_CARRIER:
+				case Lengow_Action::ARG_CARRIER_NAME:
+				case Lengow_Action::ARG_SHIPPING_METHOD:
+				case Lengow_Action::ARG_CUSTOM_CARRIER:
+					$params[ $arg ] = $carrier_code;
+					break;
+				case Lengow_Action::ARG_TRACKING_URL:
+					$params[ $arg ] = (string) get_post_meta( $order_id, '_lengow_tracking_url', true );
+					break;
+				case Lengow_Action::ARG_SHIPPING_PRICE:
+					$shipping       = (float) get_post_meta( $order_id, '_order_shipping', true );
+					$shipping_tax   = (float) get_post_meta( $order_id, '_order_shipping_tax', true );
+					$params[ $arg ] = $shipping + $shipping_tax;
+					break;
+				case Lengow_Action::ARG_SHIPPING_DATE:
+				case Lengow_Action::ARG_DELIVERY_DATE:
+					$params[ $arg ] = date( 'c' );
+					break;
+				default:
+					if ( isset( $actions['optional_args'] ) && in_array( $arg, $actions['optional_args'] ) ) {
+						continue;
+					}
+					$default_value  = $this->get_default_value( $arg );
+					$param_value    = $default_value ? $default_value : $arg . ' not available';
+					$params[ $arg ] = $param_value;
+					break;
+			}
+		}
+
+		return $params;
+	}
+
+	/**
+	 * Check required parameters and delete empty parameters.
+	 *
+	 * @param string $action Lengow order actions type (ship or cancel)
+	 * @param array $params all available values
+	 *
+	 * @return array
+	 * @throws Exception argument is required
+	 *
+	 */
+	private function _check_and_clean_params( $action, $params ) {
+		$actions = $this->get_action( $action );
+		if ( isset( $actions['args'] ) ) {
+			foreach ( $actions['args'] as $arg ) {
+				if ( ! isset( $params[ $arg ] ) || 0 === strlen( $params[ $arg ] ) ) {
+					throw new Lengow_Exception(
+						Lengow_Main::set_log_message(
+							'lengow_log.exception.arg_is_required',
+							array( 'arg_name' => $arg )
+						)
+					);
+				}
+			}
+		}
+		if ( isset( $actions['optional_args'] ) ) {
+			foreach ( $actions['optional_args'] as $arg ) {
+				if ( isset( $params[ $arg ] ) && 0 === strlen( $params[ $arg ] ) ) {
+					unset( $params[ $arg ] );
+				}
+			}
+		}
+
+		return $params;
 	}
 }

@@ -64,7 +64,8 @@ class Lengow_Hook {
 	 * @return integer|false
 	 */
 	public static function save_lengow_shipping( $post_id ) {
-		if ( Lengow_Order::get_id_from_order_id( $post_id ) ) {
+		$order_lengow_id = Lengow_Order::get_id_from_order_id( $post_id );
+		if ( $order_lengow_id ) {
 			// check if our nonce is set.
 			if ( ! isset( $_POST['lengow_woocommerce_custom_box_nonce'] ) ) {
 				return $post_id;
@@ -81,7 +82,17 @@ class Lengow_Hook {
 			if ( ! current_user_can( 'edit_post', $post_id ) ) {
 				return $post_id;
 			}
-			// save Lengow shipping data.
+			// load WooCommerce order.
+			$order = new WC_Order( $post_id );
+			// get old WooCommerce order status and Lengow shipping data.
+			$old_order_status    = Lengow_Order::get_order_status( $order );
+			$old_tracking_number = get_post_meta( $post_id, '_lengow_tracking_number', true );
+			$old_carrier         = get_post_meta( $post_id, '_lengow_carrier', true );
+			$old_custom_carrier  = get_post_meta( $post_id, '_lengow_custom_carrier', true );
+			$old_tracking_url    = get_post_meta( $post_id, '_lengow_tracking_url', true );
+			// get new WooCommerce order status.
+			$order_status = sanitize_text_field( $_POST['order_status'] );
+			// get new Lengow shipping data.
 			$carrier         = isset ( $_POST['lengow_carrier'] )
 				? sanitize_text_field( $_POST['lengow_carrier'] )
 				: '';
@@ -94,10 +105,38 @@ class Lengow_Hook {
 			$tracking_url    = isset ( $_POST['lengow_tracking_url'] )
 				? sanitize_text_field( $_POST['lengow_tracking_url'] )
 				: '';
-			update_post_meta( $post_id, '_lengow_carrier', $carrier );
-			update_post_meta( $post_id, '_lengow_custom_carrier', $custom_carrier );
-			update_post_meta( $post_id, '_lengow_tracking_number', $tracking_number );
-			update_post_meta( $post_id, '_lengow_tracking_url', $tracking_url );
+			// save Lengow shipping data only if they changed.
+			$shipping_data_updated = false;
+			if ( $carrier !== $old_carrier ) {
+				update_post_meta( $post_id, '_lengow_carrier', $carrier );
+				$shipping_data_updated = true;
+			}
+			if ( $custom_carrier !== $old_custom_carrier ) {
+				update_post_meta( $post_id, '_lengow_custom_carrier', $custom_carrier );
+				$shipping_data_updated = true;
+			}
+			if ( $tracking_number !== $old_tracking_number ) {
+				update_post_meta( $post_id, '_lengow_tracking_number', $tracking_number );
+				$shipping_data_updated = true;
+			}
+			if ( $tracking_url !== $old_tracking_url ) {
+				update_post_meta( $post_id, '_lengow_tracking_url', $tracking_url );
+				$shipping_data_updated = true;
+			}
+			// sending an API call for sending or canceling an order.
+			$shipped_state  = Lengow_Order::get_order_state( Lengow_Order::STATE_SHIPPED );
+			$canceled_state = Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED );
+			if ( $order_status !== $old_order_status
+			     || ($shipping_data_updated && $order_status === $shipped_state)
+			) {
+				$order_lengow = new Lengow_Order( $order_lengow_id );
+				if ( $order_status === $shipped_state ) {
+					$order_lengow->call_action( Lengow_Action::TYPE_SHIP );
+				} elseif ( $order_status === $canceled_state ) {
+					$order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
+				}
+				unset( $order_lengow );
+			}
 		}
 
 		return $post_id;

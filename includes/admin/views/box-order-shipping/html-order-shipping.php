@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /** @var Lengow_Marketplace $marketplace */
 $locale                = new Lengow_Translation();
 $carriers              = $marketplace->carriers;
-$marketplace_arguments = $marketplace->get_marketplace_arguments( 'ship' );
+$marketplace_arguments = $marketplace->get_marketplace_arguments( Lengow_Action::TYPE_SHIP );
 $accept_custom_carrier = $marketplace->accept_custom_carrier();
 $carrier               = get_post_meta( $post->ID, '_lengow_carrier', true );
 $carrier               = strlen( $carrier ) > 0 ? $carrier : $order_lengow->carrier;
@@ -23,7 +23,7 @@ $tracking_url          = get_post_meta( $post->ID, '_lengow_tracking_url', true 
 </style>
 <div id="lgw-box-order-shipping">
     <ul class="order_shipping submitbox">
-	    <?php if ( array_key_exists( 'tracking_number', $marketplace_arguments ) ) : ?>
+	    <?php if ( array_key_exists( Lengow_Action::ARG_TRACKING_NUMBER, $marketplace_arguments ) ) : ?>
             <li>
                 <label for="lengow_tracking_number">
 				    <?php echo $locale->t( 'meta_box.order_shipping.tracking_number' ); ?>
@@ -73,7 +73,7 @@ $tracking_url          = get_post_meta( $post->ID, '_lengow_tracking_url', true 
                        value="<?php echo $custom_carrier; ?>"/>
             </li>
 		<?php endif; ?>
-		<?php if ( array_key_exists( 'tracking_url', $marketplace_arguments ) ) : ?>
+		<?php if ( array_key_exists( Lengow_Action::ARG_TRACKING_URL, $marketplace_arguments ) ) : ?>
             <li>
                 <label for="lengow_tracking_url">
 					<?php echo $locale->t( 'meta_box.order_shipping.tracking_url' ); ?>
