@@ -31,6 +31,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Lengow_Hook {
 
+    /**
+     * @var boolean indicates if an order has changed status.
+     */
+    public static $order_status_changed = false;
+
 	/**
 	 * Add meta box for orders created by Lengow.
 	 *
@@ -51,7 +56,8 @@ class Lengow_Hook {
 				$locale->t( 'meta_box.order_shipping.box_title' ),
 				array( 'Lengow_Box_Order_Shipping', 'html_display' ),
 				'shop_order',
-				'side'
+				'side',
+                'high'
 			);
 		}
 	}
@@ -80,6 +86,18 @@ class Lengow_Hook {
 		}
 	}
 
+    /**
+     * Check if order status changed for a WooCommerce order.
+     *
+     * @param integer $order_id WooCommerce order id
+     */
+    public static function order_status_changed( $order_id ) {
+        $order_lengow_id = Lengow_Order::get_id_from_order_id( $order_id );
+        if ( $order_lengow_id ) {
+            self::$order_status_changed = true;
+        }
+    }
+
 	/**
 	 * Update status on Lengow.
 	 *
@@ -88,6 +106,9 @@ class Lengow_Hook {
 	 * @return integer|false
 	 */
 	public static function save_lengow_shipping( $post_id ) {
+        if ( 'shop_order' !== get_post_type( $post_id ) ) {
+            return false;
+        }
 		$order_lengow_id = Lengow_Order::get_id_from_order_id( $post_id );
 		if ( $order_lengow_id ) {
 			// check if our nonce is set.
@@ -106,10 +127,7 @@ class Lengow_Hook {
 			if ( ! current_user_can( 'edit_post', $post_id ) ) {
 				return $post_id;
 			}
-			// load WooCommerce order.
-			$order = new WC_Order( $post_id );
-			// get old WooCommerce order status and Lengow shipping data.
-			$old_order_status    = Lengow_Order::get_order_status( $order );
+			// get old Lengow shipping data.
 			$old_tracking_number = get_post_meta( $post_id, '_lengow_tracking_number', true );
 			$old_carrier         = get_post_meta( $post_id, '_lengow_carrier', true );
 			$old_custom_carrier  = get_post_meta( $post_id, '_lengow_custom_carrier', true );
@@ -150,9 +168,7 @@ class Lengow_Hook {
 			// sending an API call for sending or canceling an order.
 			$shipped_state  = Lengow_Order::get_order_state( Lengow_Order::STATE_SHIPPED );
 			$canceled_state = Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED );
-			if ( $order_status !== $old_order_status
-			     || ( $shipping_data_updated && $order_status === $shipped_state )
-			) {
+			if ( self::$order_status_changed || ( $shipping_data_updated && $order_status === $shipped_state ) ) {
 				$order_lengow = new Lengow_Order( $order_lengow_id );
 				// do nothing if the order is closed.
 				if ( ! $order_lengow->is_closed() ) {
@@ -164,6 +180,7 @@ class Lengow_Hook {
 				}
 				unset( $order_lengow );
 			}
+            self::$order_status_changed = false;
 		}
 
 		return $post_id;
