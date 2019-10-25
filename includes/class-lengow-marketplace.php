@@ -369,6 +369,10 @@ class Lengow_Marketplace {
 	 * @return boolean
 	 */
 	public function call_action( $action, $order_lengow, $order_line_id = null ) {
+		// do nothing if the order is closed.
+		if ( $order_lengow->is_closed() ) {
+			return false;
+		}
 		try {
 			// check the action and order data.
 			$this->_check_action( $action );
@@ -398,16 +402,14 @@ class Lengow_Marketplace {
 			$error_message = '[WooCommerce Error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
 		}
 		if ( isset( $error_message ) ) {
-			if ( Lengow_Order::PROCESS_STATE_FINISH !== $order_lengow->order_process_state ) {
-				Lengow_Order_Error::create(
-					array(
-						'order_lengow_id' => $order_lengow->id,
-						'message'         => $error_message,
-						'type'            => Lengow_Order_Error::ERROR_TYPE_SEND,
-					)
-				);
-			}
-			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en' );
+			Lengow_Order_Error::create(
+				array(
+					'order_lengow_id' => $order_lengow->id,
+					'message'         => $error_message,
+					'type'            => Lengow_Order_Error::ERROR_TYPE_SEND,
+				)
+			);
+			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 			Lengow_Main::log(
 				'API-OrderAction',
 				Lengow_Main::set_log_message(

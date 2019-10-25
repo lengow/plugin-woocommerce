@@ -351,7 +351,7 @@ class Lengow_Sync {
 					'Import',
 					Lengow_Main::set_log_message(
 						'log.import.marketplace_update_failed',
-						array( 'decoded_message' => Lengow_Main::decode_log_message( $e->getMessage(), 'en' ) )
+						array( 'decoded_message' => Lengow_Main::decode_log_message( $e->getMessage(), 'en_GB' ) )
 					)
 				);
 			}

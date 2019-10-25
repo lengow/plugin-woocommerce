@@ -34,9 +34,9 @@ class Lengow_Connector {
 	/**
 	 * @var string url of the API Lengow.
 	 */
-	const LENGOW_API_URL = 'https://api.lengow.io';
+	// const LENGOW_API_URL = 'https://api.lengow.io';
 	// const LENGOW_API_URL = 'https://api.lengow.net';
-	// const LENGOW_API_URL = 'http://api.lengow.rec';
+	const LENGOW_API_URL = 'http://api.lengow.rec';
 	// const LENGOW_API_URL = 'http://10.100.1.82:8081';
 
 	/**
@@ -230,10 +230,9 @@ class Lengow_Connector {
 		switch ( $format ) {
 			case 'json':
 				return json_decode( $data, true );
-			case 'csv':
-				return $data;
 			case 'xml':
 				return simplexml_load_string( $data );
+			case 'csv':
 			case 'stream':
 				return $data;
 		}

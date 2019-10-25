@@ -166,6 +166,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				add_action( 'wp_ajax_post_process_orders', array( 'Lengow_Admin_Orders', 'post_process' ) );
 				// order actions.
 				add_action( 'save_post_shop_order', array( 'Lengow_Hook', 'save_lengow_shipping' ) );
+				add_action( 'woocommerce_email', array( 'Lengow_Hook', 'unhook_woocommerce_mail' ) );
 				add_action( 'add_meta_boxes_shop_order', array( 'Lengow_Hook', 'adding_shop_order_meta_boxes' ) );
 				// init lengow technical error status.
 				if ( Lengow_Main::compare_version( '2.2' ) ) {

@@ -165,6 +165,11 @@ class Lengow_Action {
 	 *
 	 */
 	public static function can_send_action( $params, $order_lengow ) {
+		// do nothing if the order is closed.
+		if ($order_lengow->is_closed()) {
+			return false;
+		}
+		// check if an action with the same parameters has already been sent.
 		$send_action = true;
 		$get_params  = array_merge( $params, array( 'queued' => 'True' ) );
 		// array key deletion for GET verification.
@@ -181,6 +186,7 @@ class Lengow_Action {
 			foreach ( $result->results as $row ) {
 				$action = Lengow_Crud::read( Lengow_Crud::LENGOW_ACTION, array( 'action_id' => (int) $row->id ) );
 				if ( $action ) {
+					// if the action already exists, the number of retries is increased.
 					$update = self::update( $action->id, array( 'retry' => (int) $action->retry + 1 ) );
 					if ( $update ) {
 						$send_action = false;
@@ -222,7 +228,7 @@ class Lengow_Action {
 						'action_type'    => $params[ self::ARG_ACTION_TYPE ],
 						'action_id'      => $result->id,
 						'order_line_sku' => isset( $params[ self::ARG_LINE ] ) ? $params[ self::ARG_LINE ] : null,
-						'parameters'     => $params,
+						'parameters'     => json_encode( $params ),
 					)
 				);
 			} else {

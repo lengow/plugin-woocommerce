@@ -572,6 +572,17 @@ class Lengow_Order {
 	}
 
 	/**
+	 * Get total orders in error.
+	 **
+	 * @return integer
+	 */
+	public static function get_total_order_in_error() {
+		$result = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'is_in_error' => 1 ), false );
+
+		return count($result);
+	}
+
+	/**
 	 * Update order state to marketplace state.
 	 *
 	 * @param WC_Order $order WooCommerce order instance
@@ -646,7 +657,7 @@ class Lengow_Order {
 		if ( $order_lengow ) {
 			$import  = new Lengow_Import(
 				array(
-					'order_lengow_id'     => $order_lengow->order_id,
+					'order_lengow_id'     => $order_lengow->id,
 					'marketplace_sku'     => $order_lengow->marketplace_sku,
 					'marketplace_name'    => $order_lengow->marketplace_name,
 					'delivery_address_id' => $order_lengow->delivery_address_id,
@@ -760,6 +771,19 @@ class Lengow_Order {
 	}
 
 	/**
+	 * Check if the Lengow order is closed.
+	 *
+	 * @return boolean
+	 */
+	public function is_closed() {
+		if (self::PROCESS_STATE_FINISH === $this->order_process_state) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Send an action for a specific order.
 	 *
 	 * @param string $action Lengow Actions type (ship or cancel)
@@ -767,6 +791,10 @@ class Lengow_Order {
 	 * @return boolean
 	 */
 	public function call_action( $action ) {
+		// do nothing if the order is closed.
+		if ( $this->is_closed() ) {
+			return false;
+		}
 		$success = true;
 		Lengow_Main::log(
 			'API-OrderAction',
@@ -816,16 +844,14 @@ class Lengow_Order {
 			$error_message = '[WooCommerce error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
 		}
 		if ( isset( $error_message ) ) {
-			if ( self::PROCESS_STATE_FINISH !== $this->order_process_state ) {
-				Lengow_Order_Error::create(
-					array(
-						'order_lengow_id' => $this->id,
-						'message'         => $error_message,
-						'type'            => Lengow_Order_Error::ERROR_TYPE_SEND,
-					)
-				);
-			}
-			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en' );
+			Lengow_Order_Error::create(
+				array(
+					'order_lengow_id' => $this->id,
+					'message'         => $error_message,
+					'type'            => Lengow_Order_Error::ERROR_TYPE_SEND,
+				)
+			);
+			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 			Lengow_Main::log(
 				'API-OrderAction',
 				Lengow_Main::set_log_message(

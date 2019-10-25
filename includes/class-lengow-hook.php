@@ -57,6 +57,30 @@ class Lengow_Hook {
 	}
 
 	/**
+	 * Disable all customer mails if order came from Lengow.
+	 *
+	 * @param WC_Emails $email_class WooCommerce email instance
+	 */
+	public static function unhook_woocommerce_mail( $email_class ) {
+		global $post;
+
+		if ( Lengow_Order::get_id_from_order_id( $post->ID ) ) {
+			remove_action(
+				'woocommerce_order_status_pending_to_processing_notification',
+				array( &$email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' )
+			);
+			remove_action(
+				'woocommerce_order_status_pending_to_on-hold_notification',
+				array( &$email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' )
+			);
+			remove_action(
+				'woocommerce_order_status_completed_notification',
+				array( &$email_class->emails['WC_Email_Customer_Completed_Order'], 'trigger' )
+			);
+		}
+	}
+
+	/**
 	 * Update status on Lengow.
 	 *
 	 * @param integer $post_id Wordpress current post id
@@ -127,13 +151,16 @@ class Lengow_Hook {
 			$shipped_state  = Lengow_Order::get_order_state( Lengow_Order::STATE_SHIPPED );
 			$canceled_state = Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED );
 			if ( $order_status !== $old_order_status
-			     || ($shipping_data_updated && $order_status === $shipped_state)
+			     || ( $shipping_data_updated && $order_status === $shipped_state )
 			) {
 				$order_lengow = new Lengow_Order( $order_lengow_id );
-				if ( $order_status === $shipped_state ) {
-					$order_lengow->call_action( Lengow_Action::TYPE_SHIP );
-				} elseif ( $order_status === $canceled_state ) {
-					$order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
+				// do nothing if the order is closed.
+				if ( ! $order_lengow->is_closed() ) {
+					if ( $order_status === $shipped_state ) {
+						$order_lengow->call_action( Lengow_Action::TYPE_SHIP );
+					} elseif ( $order_status === $canceled_state ) {
+						$order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
+					}
 				}
 				unset( $order_lengow );
 			}
