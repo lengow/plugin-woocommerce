@@ -31,11 +31,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Lengow_Hook {
 
-    /**
-     * @var boolean indicates if an order has changed status.
-     */
-    public static $order_status_changed = false;
-
 	/**
 	 * Add meta box for orders created by Lengow.
 	 *
@@ -86,18 +81,6 @@ class Lengow_Hook {
 		}
 	}
 
-    /**
-     * Check if order status changed for a WooCommerce order.
-     *
-     * @param integer $order_id WooCommerce order id
-     */
-    public static function order_status_changed( $order_id ) {
-        $order_lengow_id = Lengow_Order::get_id_from_order_id( $order_id );
-        if ( $order_lengow_id ) {
-            self::$order_status_changed = true;
-        }
-    }
-
 	/**
 	 * Update status on Lengow.
 	 *
@@ -127,11 +110,6 @@ class Lengow_Hook {
 			if ( ! current_user_can( 'edit_post', $post_id ) ) {
 				return $post_id;
 			}
-			// get old Lengow shipping data.
-			$old_tracking_number = get_post_meta( $post_id, '_lengow_tracking_number', true );
-			$old_carrier         = get_post_meta( $post_id, '_lengow_carrier', true );
-			$old_custom_carrier  = get_post_meta( $post_id, '_lengow_custom_carrier', true );
-			$old_tracking_url    = get_post_meta( $post_id, '_lengow_tracking_url', true );
 			// get new WooCommerce order status.
 			$order_status = sanitize_text_field( $_POST['order_status'] );
 			// get new Lengow shipping data.
@@ -147,40 +125,22 @@ class Lengow_Hook {
 			$tracking_url    = isset ( $_POST['lengow_tracking_url'] )
 				? sanitize_text_field( $_POST['lengow_tracking_url'] )
 				: '';
-			// save Lengow shipping data only if they changed.
-			$shipping_data_updated = false;
-			if ( $carrier !== $old_carrier ) {
-				update_post_meta( $post_id, '_lengow_carrier', $carrier );
-				$shipping_data_updated = true;
-			}
-			if ( $custom_carrier !== $old_custom_carrier ) {
-				update_post_meta( $post_id, '_lengow_custom_carrier', $custom_carrier );
-				$shipping_data_updated = true;
-			}
-			if ( $tracking_number !== $old_tracking_number ) {
-				update_post_meta( $post_id, '_lengow_tracking_number', $tracking_number );
-				$shipping_data_updated = true;
-			}
-			if ( $tracking_url !== $old_tracking_url ) {
-				update_post_meta( $post_id, '_lengow_tracking_url', $tracking_url );
-				$shipping_data_updated = true;
-			}
-			// sending an API call for sending or canceling an order.
-			$shipped_state  = Lengow_Order::get_order_state( Lengow_Order::STATE_SHIPPED );
-			$canceled_state = Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED );
-			if ( self::$order_status_changed || ( $shipping_data_updated && $order_status === $shipped_state ) ) {
-				$order_lengow = new Lengow_Order( $order_lengow_id );
-				// do nothing if the order is closed.
-				if ( ! $order_lengow->is_closed() ) {
-					if ( $order_status === $shipped_state ) {
-						$order_lengow->call_action( Lengow_Action::TYPE_SHIP );
-					} elseif ( $order_status === $canceled_state ) {
-						$order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
-					}
+			// save Lengow shipping data.
+			update_post_meta( $post_id, '_lengow_carrier', $carrier );
+			update_post_meta( $post_id, '_lengow_custom_carrier', $custom_carrier );
+			update_post_meta( $post_id, '_lengow_tracking_number', $tracking_number );
+			update_post_meta( $post_id, '_lengow_tracking_url', $tracking_url );
+			$order_lengow = new Lengow_Order( $order_lengow_id );
+			// do nothing if the order is closed or an action is being processed.
+			if ( ! $order_lengow->is_closed() && ! $order_lengow->has_an_action_in_progress() ) {
+				// sending an API call for sending or canceling an order.
+				if ( $order_status === Lengow_Order::get_order_state( Lengow_Order::STATE_SHIPPED ) ) {
+					$order_lengow->call_action( Lengow_Action::TYPE_SHIP );
+				} elseif ( $order_status === Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED ) ) {
+					$order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
 				}
-				unset( $order_lengow );
 			}
-            self::$order_status_changed = false;
+			unset( $order_lengow );
 		}
 
 		return $post_id;

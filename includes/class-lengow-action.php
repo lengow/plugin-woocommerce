@@ -155,6 +155,24 @@ class Lengow_Action {
 	}
 
 	/**
+	 * Find active actions by order id.
+	 *
+	 * @param integer $order_id WooCommerce order id
+	 * @param string|null $action_type action type (ship or cancel)
+	 *
+	 * @return array|false
+	 */
+	public static function get_active_action_by_order_id( $order_id, $action_type = null ) {
+		$where = array( 'order_id' => $order_id, 'state' => self::STATE_NEW );
+		if ( null !== $action_type ) {
+			$where['action_type'] = $action_type;
+		}
+		$actions = Lengow_Crud::read( Lengow_Crud::LENGOW_ACTION, $where, false );
+
+		return ! empty( $actions ) ? $actions : false;
+	}
+
+	/**
 	 * Indicates whether an action can be created if it does not already exist.
 	 *
 	 * @param array $params all available values
@@ -166,7 +184,7 @@ class Lengow_Action {
 	 */
 	public static function can_send_action( $params, $order_lengow ) {
 		// do nothing if the order is closed.
-		if ($order_lengow->is_closed()) {
+		if ( $order_lengow->is_closed() ) {
 			return false;
 		}
 		// check if an action with the same parameters has already been sent.
@@ -211,7 +229,7 @@ class Lengow_Action {
 	}
 
 	/**
-	 * Send a new action on the order via the Lengow API
+	 * Send a new action on the order via the Lengow API.
 	 *
 	 * @param array $params all available values
 	 * @param Lengow_Order $order_lengow Lengow order instance

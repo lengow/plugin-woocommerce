@@ -579,7 +579,7 @@ class Lengow_Order {
 	public static function get_total_order_in_error() {
 		$result = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'is_in_error' => 1 ), false );
 
-		return count($result);
+		return count( $result );
 	}
 
 	/**
@@ -771,16 +771,27 @@ class Lengow_Order {
 	}
 
 	/**
-	 * Check if the Lengow order is closed.
+	 * Check if order is closed.
 	 *
 	 * @return boolean
 	 */
 	public function is_closed() {
-		if (self::PROCESS_STATE_FINISH === $this->order_process_state) {
+		if ( self::PROCESS_STATE_FINISH === $this->order_process_state ) {
 			return true;
 		}
 
 		return false;
+	}
+
+	/**
+	 * Check if order has an action in progress.
+	 *
+	 * @return boolean
+	 */
+	public function has_an_action_in_progress() {
+		$actions = Lengow_Action::get_active_action_by_order_id( $this->order_id );
+
+		return ! $actions ? false : true;
 	}
 
 	/**

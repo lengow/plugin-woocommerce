@@ -313,7 +313,7 @@ class Lengow_Marketplace {
 	}
 
 	/**
-	 * Is marketplace contain order Line.
+	 * Is marketplace contain order line.
 	 *
 	 * @param string $action Lengow order actions type (ship or cancel)
 	 *
@@ -360,7 +360,7 @@ class Lengow_Marketplace {
 	}
 
 	/**
-	 * Call API action and create action in lengow_actions table
+	 * Call API action and create action in lengow_actions table.
 	 *
 	 * @param string $action Lengow order actions type (ship or cancel)
 	 * @param Lengow_Order $order_lengow Lengow order instance
@@ -379,7 +379,7 @@ class Lengow_Marketplace {
 			$this->_check_order_data( $order_lengow );
 			// get all required and optional arguments for a specific marketplace.
 			$marketplace_arguments = $this->get_marketplace_arguments( $action );
-			// get all available values from an order
+			// get all available values from an order.
 			$params = $this->_get_all_params( $action, $order_lengow, $marketplace_arguments );
 			// check required arguments and clean value for empty optionals arguments.
 			$params = $this->_check_and_clean_params( $action, $params );
@@ -470,7 +470,7 @@ class Lengow_Marketplace {
 	}
 
 	/**
-	 * Get all available values from an order
+	 * Get all available values from an order.
 	 *
 	 * @param string $action Lengow order actions type (ship or cancel)
 	 * @param Lengow_Order $order_lengow Lengow order instance
@@ -489,7 +489,7 @@ class Lengow_Marketplace {
 		} else {
 			$carrier_code = strlen( $carrier ) > 0 ? $carrier : $custom_carrier;
 		}
-		// get all order informations
+		// get all order informations.
 		foreach ( $marketplace_arguments as $arg ) {
 			switch ( $arg ) {
 				case Lengow_Action::ARG_TRACKING_NUMBER:
