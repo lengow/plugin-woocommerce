@@ -169,10 +169,10 @@ class Lengow_Import {
 			$this->_limit            = 1;
 			$this->_import_one_order = true;
 			if ( isset( $params['delivery_address_id'] ) && '' !== $params['delivery_address_id'] ) {
-				$this->_delivery_address_id = $params['delivery_address_id'];
+				$this->_delivery_address_id = (int) $params['delivery_address_id'];
 			}
 			if ( isset( $params['order_lengow_id'] ) ) {
-				$this->_order_lengow_id = $params['order_lengow_id'];
+				$this->_order_lengow_id = (int) $params['order_lengow_id'];
 			}
 		} else {
 			// recovering the time interval.
@@ -632,7 +632,7 @@ class Lengow_Import {
 					// sync to lengow if no preprod_mode.
 					if ( ! $this->_preprod_mode && isset( $order['order_new'] ) && $order['order_new'] ) {
 						$order_lengow = new Lengow_Order( $order['order_lengow_id'] );
-						$synchro      = Lengow_Order::synchronize_order( $order_lengow, $this->_connector );
+						$synchro      = $order_lengow->synchronize_order( $this->_connector );
 						if ( $synchro ) {
 							$synchroMessage = Lengow_Main::set_log_message(
 								'log.import.order_synchronized_with_lengow',

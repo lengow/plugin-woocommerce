@@ -80,6 +80,44 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	}
 
 	/**
+	 *  Manage actions for post_process.
+	 *
+	 * @param $action
+	 */
+	private static function do_action( $action ) {
+		$lengow_admin_orders = new Lengow_Admin_Orders();
+		$locale              = new Lengow_Translation();
+		if ( 'import_all' === $action ) {
+			$import = new Lengow_Import(
+				array( 'log_output' => false )
+			);
+			$return = $import->exec();
+		} elseif ( 're_import' === $action ) {
+			$id_order_lengow = isset( $_POST['order_id'] ) ? $_POST['order_id'] : null;
+			$return          = Lengow_Order::re_import_order( $id_order_lengow );
+		}
+		$data                     = array();
+		$message                  = $lengow_admin_orders->load_message( $return );
+		$order_collection         = $lengow_admin_orders->assign_last_importation_infos();
+		$data['order_with_error'] = $locale->t(
+			'order.screen.order_with_error',
+			array( 'nb_order' => Lengow_Order::get_total_order_in_error() )
+		);
+		$data['order_to_be_sent'] = $locale->t(
+			'order.screen.order_to_be_sent',
+			array(
+				'nb_order' => Lengow_Order::get_total_order_by_status(
+					Lengow_Order::STATE_WAITING_SHIPMENT
+				)
+			)
+		);
+		$data['message']          = join( '<br/>', $message );
+		$data['import_orders']    = $locale->t( 'order.screen.button_update_orders' );
+		$data['last_importation'] = $order_collection['last_import_date'];
+		echo json_encode( $data );
+	}
+
+	/**
 	 * Generate message array (new, update and errors).
 	 *
 	 * @param array $return import informations
@@ -525,43 +563,5 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		}
 
 		return $orders_data;
-	}
-
-	/**
-	 *  Manage actions for post_process.
-	 *
-	 * @param $action
-	 */
-	private static function do_action( $action ) {
-		$lengow_admin_orders = new Lengow_Admin_Orders();
-		$locale              = new Lengow_Translation();
-		if ( 'import_all' === $action ) {
-			$import = new Lengow_Import(
-				array( 'log_output' => false )
-			);
-			$return = $import->exec();
-		} elseif ( 're_import' === $action ) {
-			$id_order_lengow = isset( $_POST['order_id'] ) ? $_POST['order_id'] : null;
-			$return          = Lengow_Order::re_import_order( $id_order_lengow );
-		}
-		$data                     = array();
-		$message                  = $lengow_admin_orders->load_message( $return );
-		$order_collection         = $lengow_admin_orders->assign_last_importation_infos();
-		$data['order_with_error'] = $locale->t(
-			'order.screen.order_with_error',
-			array( 'nb_order' => Lengow_Order::get_total_order_in_error() )
-		);
-		$data['order_to_be_sent'] = $locale->t(
-			'order.screen.order_to_be_sent',
-			array(
-				'nb_order' => Lengow_Order::get_total_order_by_status(
-					Lengow_Order::STATE_WAITING_SHIPMENT
-				)
-			)
-		);
-		$data['message']          = join( '<br/>', $message );
-		$data['import_orders']    = $locale->t( 'order.screen.button_update_orders' );
-		$data['last_importation'] = $order_collection['last_import_date'];
-		echo json_encode( $data );
 	}
 }

@@ -351,7 +351,7 @@ class Lengow_Sync {
 					'Import',
 					Lengow_Main::set_log_message(
 						'log.import.marketplace_update_failed',
-						array( 'decoded_message' => Lengow_Main::decode_log_message( $e->getMessage(), 'en' ) )
+						array( 'decoded_message' => Lengow_Main::decode_log_message( $e->getMessage(), 'en_GB' ) )
 					)
 				);
 			}
@@ -362,7 +362,7 @@ class Lengow_Sync {
 			if ( file_exists( $file_path ) ) {
 				$marketplaces_data = file_get_contents( $file_path );
 				if ( $marketplaces_data ) {
-					return json_encode( $marketplaces_data );
+					return json_decode( $marketplaces_data );
 				}
 			}
 		}

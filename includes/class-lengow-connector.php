@@ -230,10 +230,9 @@ class Lengow_Connector {
 		switch ( $format ) {
 			case 'json':
 				return json_decode( $data, true );
-			case 'csv':
-				return $data;
 			case 'xml':
 				return simplexml_load_string( $data );
+			case 'csv':
 			case 'stream':
 				return $data;
 		}

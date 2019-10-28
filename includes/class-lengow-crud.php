@@ -86,7 +86,7 @@ class Lengow_Crud {
 			'delivery_address_id'  => array( 'required' => true, 'updated' => false, 'format' => '%d' ),
 			'delivery_country_iso' => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
 			'marketplace_sku'      => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
-			'marketplace_name'     => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
+			'marketplace_name'     => array( 'required' => true, 'updated' => true, 'format' => '%s' ),
 			'marketplace_label'    => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
 			'order_lengow_state'   => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
 			'order_process_state'  => array( 'required' => false, 'updated' => true, 'format' => '%d' ),

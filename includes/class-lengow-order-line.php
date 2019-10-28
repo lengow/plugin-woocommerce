@@ -42,4 +42,27 @@ class Lengow_Order_Line {
 	public static function create( $data = array() ) {
 		return Lengow_Crud::create( Lengow_Crud::LENGOW_ORDER_LINE, $data );
 	}
+
+	/**
+	 * Get all order line ids by WooCommerce order id.
+	 *
+	 * @param integer $order_id WooCommerce order id
+	 * @param string $output Optional. Any of ARRAY_A | ARRAY_N | OBJECT | OBJECT_K constants.
+	 *
+	 * @return array|false
+	 */
+	public static function get_all_order_line_id_by_order_id( $order_id, $output = OBJECT ) {
+		global $wpdb;
+
+		$query   = '
+			SELECT order_line_id FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER_LINE . '
+			WHERE order_id = %d
+		';
+		$results = $wpdb->get_results(
+			$wpdb->prepare( $query, array( $order_id ) ),
+			$output
+		);
+
+		return $results ? $results : false;
+	}
 }
