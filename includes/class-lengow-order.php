@@ -222,7 +222,7 @@ class Lengow_Order {
 	 * @param integer $id Lengow order id
 	 */
 	public function __construct( $id ) {
-		$row = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'id' => $id ) );
+		$row = self::get( array( 'id' => $id ) );
 		if ( $row ) {
 			$this->id                   = (int) $row->id;
 			$this->order_id             = null !== $row->order_id ? (int) $row->order_id : null;
@@ -253,6 +253,19 @@ class Lengow_Order {
 			$this->updated_at           = $row->updated_at;
 			$this->extra                = $row->extra;
 		}
+	}
+
+	/**
+	 * Get Lengow order.
+	 *
+	 * @param array $where a named array of WHERE clauses
+	 * @param boolean $single get a single result or not
+	 *
+	 * @return false|object[]|object
+	 *
+	 */
+	public static function get( $where = array(), $single = true ) {
+		return Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, $where, $single );
 	}
 
 	/**
@@ -572,6 +585,17 @@ class Lengow_Order {
 	}
 
 	/**
+	 * Get total orders in error.
+	 **
+	 * @return integer
+	 */
+	public static function get_total_order_in_error() {
+		$result = self::get( array( 'is_in_error' => 1 ), false );
+
+		return count( $result );
+	}
+
+	/**
 	 * Update order state to marketplace state.
 	 *
 	 * @param WC_Order $order WooCommerce order instance
@@ -587,8 +611,8 @@ class Lengow_Order {
 		// update Lengow order if necessary.
 		$params = [];
 		if ( self::PROCESS_STATE_FINISH === $order_process_state ) {
-			// TODO finish all actions.
-			Lengow_Order_Error::finish_order_errors( $order_lengow->id, 'send' );
+			Lengow_Action::finish_all_actions( Lengow_Order::get_order_id( $order ) );
+			Lengow_Order_Error::finish_order_errors( $order_lengow->id, Lengow_Order_Error::ERROR_TYPE_SEND );
 			if ( $order_process_state !== $order_lengow->order_process_state ) {
 				$params['order_process_state'] = $order_process_state;
 			}
@@ -635,14 +659,62 @@ class Lengow_Order {
 	}
 
 	/**
+	 * Re Import Order.
+	 *
+	 * @param integer $order_lengow_id Lengow order id
+	 *
+	 * @return array|false
+	 */
+	public static function re_import_order( $order_lengow_id ) {
+		$order_lengow = self::get( array( 'id' => $order_lengow_id ) );
+		if ( $order_lengow ) {
+			$import  = new Lengow_Import(
+				array(
+					'order_lengow_id'     => $order_lengow->id,
+					'marketplace_sku'     => $order_lengow->marketplace_sku,
+					'marketplace_name'    => $order_lengow->marketplace_name,
+					'delivery_address_id' => $order_lengow->delivery_address_id,
+					'log_output'          => false,
+				)
+			);
+			$results = $import->exec();
+
+			return $results;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Create an error and update the order in error.
+	 *
+	 * @param integer $order_lengow_id Lengow order id
+	 * @param string $message error message
+	 * @param string $type order error type (import or send)
+	 *
+	 * @return array|false
+	 */
+	public static function add_order_error( $order_lengow_id, $message, $type = null ) {
+		$error_created = Lengow_Order_Error::create(
+			array(
+				'order_lengow_id' => $order_lengow_id,
+				'message'         => $message,
+				'type'            => null === $type ? Lengow_Order_Error::ERROR_TYPE_IMPORT : $type,
+			)
+		);
+		$order_updated = Lengow_Order::update( $order_lengow_id, array( 'is_in_error' => 1 ) );
+
+		return ( $error_created && $order_updated ) ? true : false;
+	}
+
+	/**
 	 * Synchronize order with Lengow API.
 	 *
-	 * @param Lengow_Order $order_lengow Lengow order instance
 	 * @param Lengow_Connector|null $connector Lengow connector instance
 	 *
 	 * @return boolean
 	 */
-	public static function synchronize_order( $order_lengow, $connector = null ) {
+	public function synchronize_order( $connector = null ) {
 		list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
 		if ( null === $connector ) {
 			if ( Lengow_Connector::is_valid_auth() ) {
@@ -651,22 +723,23 @@ class Lengow_Order {
 				return false;
 			}
 		}
-		$results = self::get_all_order_id_from_lengow_orders(
-			$order_lengow->marketplace_sku,
-			$order_lengow->marketplace_name
-		);
+		$results = self::get_all_order_id_from_lengow_orders( $this->marketplace_sku, $this->marketplace_name );
 		if ( $results ) {
 			$woocommerce_order_ids = array();
 			foreach ( $results as $result ) {
 				$woocommerce_order_ids[] = $result->order_id;
+			}
+			// compatibility V2.
+			if ( ! Lengow_Marketplace::marketplace_exist( $this->marketplace_name ) && null !== $this->feed_id ) {
+				$this->check_and_change_marketplace_name( $connector );
 			}
 			try {
 				$return = $connector->patch(
 					'/v3.0/orders/moi/',
 					array(
 						'account_id'           => $account_id,
-						'marketplace_order_id' => $order_lengow->marketplace_sku,
-						'marketplace'          => $order_lengow->marketplace_name,
+						'marketplace_order_id' => $this->marketplace_sku,
+						'marketplace'          => $this->marketplace_name,
 						'merchant_order_id'    => $woocommerce_order_ids,
 					)
 				);
@@ -687,41 +760,204 @@ class Lengow_Order {
 	}
 
 	/**
-	 * Re Import Order.
+	 * Check and change the name of the marketplace for v3 compatibility.
 	 *
-	 * @param integer $order_lengow_id Lengow order id
+	 * @param Lengow_Connector|null $connector Lengow connector instance
 	 *
-	 * @return array|false
+	 * @return boolean
 	 */
-	public static function re_import_order( $order_lengow_id ) {
-		$order_lengow = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'id' => $order_lengow_id ) );
-
-		if ( $order_lengow ) {
-			$import  = new Lengow_Import(
+	public function check_and_change_marketplace_name( $connector = null ) {
+		list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
+		if ( null === $connector ) {
+			if ( Lengow_Connector::is_valid_auth() ) {
+				$connector = new Lengow_Connector( $access_token, $secret_token );
+			} else {
+				return false;
+			}
+		}
+		try {
+			$return = $connector->get(
+				'/v3.0/orders',
 				array(
-					'order_lengow_id'     => $order_lengow->order_id,
-					'marketplace_sku'     => $order_lengow->marketplace_sku,
-					'marketplace_name'    => $order_lengow->marketplace_name,
-					'delivery_address_id' => $order_lengow->delivery_address_id,
-					'log_output'          => false,
-				)
+					'marketplace_order_id' => $this->marketplace_sku,
+					'account_id'           => $account_id,
+				),
+				'stream'
 			);
-			$results = $import->exec();
+		} catch ( Exception $e ) {
+			return false;
+		}
+		if ( null === $return ) {
+			return false;
+		}
+		$results = json_decode( $return );
+		if ( isset( $results->error ) ) {
+			return false;
+		}
+		foreach ( $results->results as $order ) {
+			$new_marketplace_name = (string) $order->marketplace;
+			if ( $new_marketplace_name !== $this->marketplace_name ) {
+				self::update( $this->id, array( 'marketplace_name' => $new_marketplace_name ) );
+				$this->marketplace_name = $new_marketplace_name;
+			}
+		}
 
-			return $results;
+		return true;
+	}
+
+	/**
+	 * Check if order is closed.
+	 *
+	 * @return boolean
+	 */
+	public function is_closed() {
+		if ( self::PROCESS_STATE_FINISH === $this->order_process_state ) {
+			return true;
 		}
 
 		return false;
 	}
 
 	/**
-	 * Get total orders in error.
-	 **
-	 * @return integer
+	 * Check if order has an action in progress.
+	 *
+	 * @return boolean
 	 */
-	public static function get_total_order_in_error() {
-		$result = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'is_in_error' => 1 ), false );
+	public function has_an_action_in_progress() {
+		$actions = Lengow_Action::get_active_action_by_order_id( $this->order_id );
 
-		return count($result);
+		return ! $actions ? false : true;
+	}
+
+	/**
+	 * Send an action for a specific order.
+	 *
+	 * @param string $action Lengow Actions type (ship or cancel)
+	 *
+	 * @return boolean
+	 */
+	public function call_action( $action ) {
+		// do nothing if the order is closed.
+		if ( $this->is_closed() ) {
+			return false;
+		}
+		$success = true;
+		Lengow_Main::log(
+			'API-OrderAction',
+			Lengow_Main::set_log_message(
+				'log.order_action.try_to_send_action',
+				array(
+					'action'   => $action,
+					'order_id' => $this->order_id,
+				)
+			),
+			false,
+			$this->marketplace_sku
+		);
+		// finish all order logs send.
+		Lengow_Order_Error::finish_order_errors( $this->id, Lengow_Order_Error::ERROR_TYPE_SEND );
+		try {
+			// compatibility V2.
+			if ( ! Lengow_Marketplace::marketplace_exist( $this->marketplace_name ) && null !== $this->feed_id ) {
+				$this->check_and_change_marketplace_name();
+			}
+			$marketplace = Lengow_Main::get_marketplace_singleton( $this->marketplace_name );
+			if ( $marketplace->contain_order_line( $action ) ) {
+				$order_lines = false;
+				$order_lines = Lengow_Order_Line::get_all_order_line_id_by_order_id( $this->order_id, ARRAY_A );
+				// compatibility V2 and security.
+				if ( ! $order_lines ) {
+					$order_lines = $this->get_order_line_by_api();
+				}
+				if ( ! $order_lines ) {
+					throw new Lengow_Exception(
+						Lengow_Main::set_log_message( 'lengow_log.exception.order_line_required' )
+					);
+				}
+				$results = array();
+				foreach ( $order_lines as $order_line ) {
+					$results[] = true;
+					$results[] = $marketplace->call_action( $action, $this, $order_line['order_line_id'] );
+				}
+				$success = ! in_array( false, $results );
+			} else {
+				$success = true;
+				$success = $marketplace->call_action( $action, $this );
+			}
+		} catch ( Lengow_Exception $e ) {
+			$error_message = $e->getMessage();
+		} catch ( Exception $e ) {
+			$error_message = '[WooCommerce error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
+		}
+		if ( isset( $error_message ) ) {
+			Lengow_Order::add_order_error( $this->id, $error_message, Lengow_Order_Error::ERROR_TYPE_SEND );
+			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
+			Lengow_Main::log(
+				'API-OrderAction',
+				Lengow_Main::set_log_message(
+					'log.order_action.call_action_failed',
+					array( 'decoded_message' => $decoded_message )
+				),
+				false,
+				$this->marketplace_sku
+			);
+			$success = false;
+		}
+
+		if ( $success ) {
+			$message = Lengow_Main::set_log_message(
+				'log.order_action.action_send',
+				array(
+					'action'   => $action,
+					'order_id' => $this->order_id,
+				)
+			);
+		} else {
+			$message = Lengow_Main::set_log_message(
+				'log.order_action.action_not_send',
+				array(
+					'action'   => $action,
+					'order_id' => $this->order_id,
+				)
+			);
+		}
+		Lengow_Main::log( 'API-OrderAction', $message, false, $this->marketplace_sku );
+
+		return $success;
+	}
+
+	/**
+	 * Get order line by API.
+	 *
+	 * @return array|false
+	 */
+	public function get_order_line_by_api() {
+		$order_lines = array();
+		$results     = Lengow_Connector::query_api(
+			'get',
+			'/v3.0/orders',
+			array(
+				'marketplace_order_id' => $this->marketplace_sku,
+				'marketplace'          => $this->marketplace_name,
+			)
+		);
+		if ( isset( $results->count ) && 0 === (int) $results->count ) {
+			return false;
+		}
+		$order_data = $results->results[0];
+		foreach ( $order_data->packages as $package ) {
+			$product_lines = array();
+			foreach ( $package->cart as $product ) {
+				$product_lines[] = array( 'order_line_id' => (string) $product->marketplace_order_line_id );
+			}
+			if ( 0 === $this->delivery_address_id ) {
+				return ! empty( $product_lines ) ? $product_lines : false;
+			} else {
+				$order_lines[ (int) $package->delivery->id ] = $product_lines;
+			}
+		}
+		$return = $order_lines[ $this->delivery_address_id ];
+
+		return ! empty( $return ) ? $return : false;
 	}
 }

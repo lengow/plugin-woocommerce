@@ -145,6 +145,43 @@ class Lengow_Product {
 	}
 
 	/**
+	 * Get Lengow product.
+	 *
+	 * @param array $where a named array of WHERE clauses
+	 * @param boolean $single get a single result or not
+	 *
+	 * @return false|object[]|object
+	 *
+	 */
+	public static function get( $where = array(), $single = true ) {
+		return Lengow_Crud::read( Lengow_Crud::LENGOW_PRODUCT, $where, $single );
+	}
+
+	/**
+	 * Create Lengow product.
+	 *
+	 * @param array $data Lengow order data
+	 *
+	 * @return boolean
+	 *
+	 */
+	public static function create( $data = array() ) {
+		return Lengow_Crud::create( Lengow_Crud::LENGOW_PRODUCT, $data );
+	}
+
+	/**
+	 * Delete Lengow product.
+	 *
+	 * @param array $where a named array of WHERE clauses
+	 *
+	 * @return boolean
+	 *
+	 */
+	public static function delete( $where = array() ) {
+		return Lengow_Crud::delete( Lengow_Crud::LENGOW_PRODUCT, $where );
+	}
+
+	/**
 	 * Get data of product.
 	 *
 	 * @param string $name field name
@@ -646,11 +683,11 @@ class Lengow_Product {
 	 */
 	public static function publish( $product_id, $value ) {
 		if ( ! $value ) {
-			Lengow_Crud::delete( Lengow_Crud::LENGOW_PRODUCT, array( 'product_id' => ( (int) $product_id ) ) );
+			self::delete( array( 'product_id' => ( (int) $product_id ) ) );
 		} else {
-			$result = Lengow_Crud::read( Lengow_Crud::LENGOW_PRODUCT, array( 'product_id' => ( (int) $product_id ) ) );
+			$result = self::get( array( 'product_id' => ( (int) $product_id ) ) );
 			if ( ! $result ) {
-				Lengow_Crud::create( Lengow_Crud::LENGOW_PRODUCT, array( 'product_id' => ( (int) $product_id ) ) );
+				self::create( array( 'product_id' => ( (int) $product_id ) ) );
 			}
 		}
 
@@ -663,7 +700,7 @@ class Lengow_Product {
 	 * @return array
 	 */
 	public static function get_lengow_products() {
-		$results  = Lengow_Crud::read( Lengow_Crud::LENGOW_PRODUCT, array(), false );
+		$results  = self::get( array(), false );
 		$products = array();
 		foreach ( $results as $value ) {
 			$products[ $value->product_id ] = $value->product_id;
@@ -680,7 +717,7 @@ class Lengow_Product {
 	 * @return boolean
 	 */
 	public static function is_lengow_product( $product_id ) {
-		$result = Lengow_Crud::read( Lengow_Crud::LENGOW_PRODUCT, array( 'product_id' => ( (int) $product_id ) ) );
+		$result = self::get( array( 'product_id' => ( (int) $product_id ) ) );
 		if ( $result ) {
 			return true;
 		}

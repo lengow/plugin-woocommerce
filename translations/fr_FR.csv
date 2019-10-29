@@ -87,13 +87,13 @@ order.screen.no_order_will_be_sent|Les rapport d'erreurs de vos commandes ne ser
 order.screen.change_this|Vous voulez modifier cela ?
 order.screen.import_charge_first|Commande(s) en cours de récupération...
 order.screen.import_charge_second|Restez avec nous, cela ne va pas durer longtemps (2 min d'attente en moyenne)
-order.screen.last_order_importation|Dernière synchronisation
 order.screen.order_with_error|Vous avez %{nb_order} commande(s) en erreur
 order.screen.order_to_be_sent|Vous avez %{nb_order} commande(s) en attente d'expédition
+order.screen.last_order_importation|Dernière synchronisation
 order.screen.no_order_importation|Aucune synchronisation pour le moment
 order.screen.button_update_orders|Synchroniser les commandes
 order.screen.not_imported|Pas importée
-order.screen.order_not_imported|Votre commande n'a pas été importée dans Woocommerce.
+order.screen.order_not_imported|Votre commande n'a pas été importée dans WooCommerce
 order.screen.preprod_warning_message|Vous êtes en mode préproduction. Vous pouvez importer vos commandes mais les interactions avec Lengow ne sont pas possibles. <a href=%{url}>Retourner en mode production ?</a>
 order.screen.status_not_synchronized|Non synchronisé
 order.screen.status_accepted|Accepté
@@ -198,21 +198,30 @@ lengow_log.error.nb_order_with_error|%{nb_order} commande(s) avec erreurs
 lengow_log.error.no_notification|Pas de nouvelle notification sur vos commandes
 lengow_log.error.credentials_not_valid|Votre identifiant de compte, votre jeton d'accès ou votre jeton secret ne sont pas valides
 lengow_log.error.no_catalog_for_shop|Aucun identifiant de catalogue valide pour la boutique
-lengow_log.error.no_country_for_billing_address|Erreur Lengow : l'adresse de facturation ne contient pas de pays.
-lengow_log.error.no_billing_address|Erreur Lengow : pas d'adresse de facturation dans cette commande.
-lengow_log.error.no_country_for_delivery_address|Erreur Lengow : l'adresse de livraison ne contient pas de pays.
-lengow_log.error.no_product|Erreur Lengow : pas de produit dans cette commande.
+lengow_log.error.no_country_for_billing_address|Erreur Lengow : l'adresse de facturation ne contient pas de pays
+lengow_log.error.no_billing_address|Erreur Lengow : pas d'adresse de facturation dans cette commande
+lengow_log.error.no_country_for_delivery_address|Erreur Lengow : l'adresse de livraison ne contient pas de pays
+lengow_log.error.no_product|Erreur Lengow : pas de produit dans cette commande
 lengow_log.error.no_change_rate|Erreur Lengow : pas de taux de change valide à appliquer sur les prix
 lengow_log.error.no_currency|Erreur Lengow : pas de devise dans cette commande
 lengow_log.exception.no_connection_webservice|la connexion ne se fait pas avec Lengow
 lengow_log.exception.error_lengow_webservice|L'API Lengow : %{error_code} - %{error_message}
-lengow_log.exception.order_not_found|Erreur Lengow : la commande n'a pas été trouvée dans le flux Lengow.
-lengow_log.exception.marketplace_not_present|Erreur Lengow : la place de marché %{marketplace_name} n’apparaît pas dans la liste des places de marché.
-lengow_log.exception.product_list_is_empty|La commande ne peut être sauvegardée.
-lengow_log.exception.product_not_be_found|Le produit %{product_id} n'a pu être trouvé.
-lengow_log.exception.product_is_a_parent|Le produit %{product_id}  est un ID parent. Les déclinaisons du produit sont nécessaires.
-lengow_log.exception.woocommerce_customer_not_saved|ATTENTION ! Le client n'a pas pu être sauvegardé dans la table user de Wordpress
-lengow_log.exception.woocommerce_order_not_saved|ATTENTION ! La commande n'a pas pu être sauvegardée dans la table post de Wordpress
+lengow_log.exception.order_not_found|Erreur Lengow : la commande n'a pas été trouvée dans le flux Lengow
+lengow_log.exception.marketplace_not_present|Erreur Lengow : la place de marché %{marketplace_name} n’apparaît pas dans la liste des places de marché
+lengow_log.exception.order_line_required|numéro de la ligne de commande requis, non trouvé dans la commande
+lengow_log.exception.action_not_valid|l'action %{action} n'est pas valide
+lengow_log.exception.marketplace_action_not_present|l'action %{action} n'est pas présente pour cette place de marché
+lengow_log.exception.marketplace_sku_require|la référence commande marketplace est requise
+lengow_log.exception.marketplace_name_require|le nom de la place de marché est requis
+lengow_log.exception.arg_is_required|envoi d'action impossible : %{arg_name} est requis
+lengow_log.exception.action_not_created|création d'action impossible : %{error_message}
+lengow_log.exception.action_not_created_api|création d'action impossible car l'API Lengow n'est pas disponible. Réessayez de nouveau
+lengow_log.exception.action_is_too_old|l'action est trop ancienne. Réessayez de nouveau
+lengow_log.exception.product_list_is_empty|impossible de récupérer les produits de la commande
+lengow_log.exception.product_not_be_found|le produit %{product_id} n'a pu être trouvé
+lengow_log.exception.product_is_a_parent|le produit %{product_id}  est un ID parent. Les déclinaisons du produit sont nécessaires
+lengow_log.exception.woocommerce_customer_not_saved|ATTENTION ! Le client n'a pas pu être sauvegardé dans la table user de WordPress
+lengow_log.exception.woocommerce_order_not_saved|ATTENTION ! La commande n'a pas pu être sauvegardée dans la table post de WordPress
 lengow_log.mail_report.subject_report_mail|Erreur de l'import Lengow
 lengow_log.mail_report.order|Commande %{marketplace_sku}
 lengow_log.mail_report.no_error_in_report_mail|Pas de message d'erreur, contacter le support via https://supportlengow.zendesk.com/agent/

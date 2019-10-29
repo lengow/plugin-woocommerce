@@ -51,7 +51,32 @@ class Lengow_Hook {
 				$locale->t( 'meta_box.order_shipping.box_title' ),
 				array( 'Lengow_Box_Order_Shipping', 'html_display' ),
 				'shop_order',
-				'side'
+				'side',
+                'high'
+			);
+		}
+	}
+
+	/**
+	 * Disable all customer mails if order came from Lengow.
+	 *
+	 * @param WC_Emails $email_class WooCommerce email instance
+	 */
+	public static function unhook_woocommerce_mail( $email_class ) {
+		global $post;
+
+		if ( Lengow_Order::get_id_from_order_id( $post->ID ) ) {
+			remove_action(
+				'woocommerce_order_status_pending_to_processing_notification',
+				array( &$email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' )
+			);
+			remove_action(
+				'woocommerce_order_status_pending_to_on-hold_notification',
+				array( &$email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' )
+			);
+			remove_action(
+				'woocommerce_order_status_completed_notification',
+				array( &$email_class->emails['WC_Email_Customer_Completed_Order'], 'trigger' )
 			);
 		}
 	}
@@ -64,7 +89,11 @@ class Lengow_Hook {
 	 * @return integer|false
 	 */
 	public static function save_lengow_shipping( $post_id ) {
-		if ( Lengow_Order::get_id_from_order_id( $post_id ) ) {
+        if ( 'shop_order' !== get_post_type( $post_id ) ) {
+            return false;
+        }
+		$order_lengow_id = Lengow_Order::get_id_from_order_id( $post_id );
+		if ( $order_lengow_id ) {
 			// check if our nonce is set.
 			if ( ! isset( $_POST['lengow_woocommerce_custom_box_nonce'] ) ) {
 				return $post_id;
@@ -81,7 +110,9 @@ class Lengow_Hook {
 			if ( ! current_user_can( 'edit_post', $post_id ) ) {
 				return $post_id;
 			}
-			// save Lengow shipping data.
+			// get new WooCommerce order status.
+			$order_status = sanitize_text_field( $_POST['order_status'] );
+			// get new Lengow shipping data.
 			$carrier         = isset ( $_POST['lengow_carrier'] )
 				? sanitize_text_field( $_POST['lengow_carrier'] )
 				: '';
@@ -94,10 +125,22 @@ class Lengow_Hook {
 			$tracking_url    = isset ( $_POST['lengow_tracking_url'] )
 				? sanitize_text_field( $_POST['lengow_tracking_url'] )
 				: '';
+			// save Lengow shipping data.
 			update_post_meta( $post_id, '_lengow_carrier', $carrier );
 			update_post_meta( $post_id, '_lengow_custom_carrier', $custom_carrier );
 			update_post_meta( $post_id, '_lengow_tracking_number', $tracking_number );
 			update_post_meta( $post_id, '_lengow_tracking_url', $tracking_url );
+			$order_lengow = new Lengow_Order( $order_lengow_id );
+			// do nothing if the order is closed or an action is being processed.
+			if ( ! $order_lengow->is_closed() && ! $order_lengow->has_an_action_in_progress() ) {
+				// sending an API call for sending or canceling an order.
+				if ( $order_status === Lengow_Order::get_order_state( Lengow_Order::STATE_SHIPPED ) ) {
+					$order_lengow->call_action( Lengow_Action::TYPE_SHIP );
+				} elseif ( $order_status === Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED ) ) {
+					$order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
+				}
+			}
+			unset( $order_lengow );
 		}
 
 		return $post_id;

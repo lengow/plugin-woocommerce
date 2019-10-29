@@ -44,6 +44,7 @@
 require( dirname( dirname( dirname( dirname( dirname( $_SERVER['SCRIPT_FILENAME'] ) ) ) ) ) . '/wp-load.php' );
 
 // dependencies
+require_once( '../includes/class-lengow-action.php' );
 require_once( '../includes/class-lengow-address.php' );
 require_once( '../includes/class-lengow-check.php' );
 require_once( '../includes/class-lengow-configuration.php' );
@@ -102,11 +103,11 @@ if ( isset( $_GET['get_sync'] ) && 1 == $_GET['get_sync'] ) {
 	// get sync action if exists.
 	$sync = isset( $_GET['sync'] ) ? $_GET['sync'] : false;
 	// sync catalogs id between Lengow and Shopware
-	if ( ! $sync || 'catalog' === $sync ) {
+	if ( ! $sync || Lengow_Sync::SYNC_CATALOG === $sync ) {
 		Lengow_Sync::sync_catalog( $force );
 	}
 	// sync orders between Lengow and WooCommerce.
-	if ( ! $sync || 'order' === $sync ) {
+	if ( ! $sync || Lengow_Sync::SYNC_ORDER === $sync ) {
 		// array of params for import order
 		$params = array( 'type' => 'cron' );
 		if ( isset( $_GET['preprod_mode'] ) ) {
@@ -139,20 +140,25 @@ if ( isset( $_GET['get_sync'] ) && 1 == $_GET['get_sync'] ) {
 		$import = new Lengow_Import( $params );
 		$import->exec();
 	}
+	// sync actions between Lengow and WooCommerce.
+	if ( ! $sync || Lengow_Sync::SYNC_ACTION === $sync ) {
+		Lengow_Action::check_finish_action();
+		Lengow_Action::check_old_action();
+	}
 	// sync options between Lengow and WooCommerce.
-	if ( ! $sync || 'cms_option' === $sync ) {
+	if ( ! $sync || Lengow_Sync::SYNC_CMS_OPTION === $sync ) {
 		Lengow_Sync::set_cms_option( $force );
 	}
 	// sync marketplaces between Lengow and WooCommerce.
-	if ( 'marketplace' === $sync ) {
+	if ( Lengow_Sync::SYNC_MARKETPLACE === $sync ) {
 		Lengow_Sync::get_marketplaces( $force );
 	}
 	// sync status account between Lengow and WooCommerce.
-	if ( 'status_account' === $sync ) {
+	if ( Lengow_Sync::SYNC_STATUS_ACCOUNT === $sync ) {
 		Lengow_Sync::get_status_account( $force );
 	}
 	// sync statistics between Lengow and WooCommerce.
-	if ( 'statistic' === $sync ) {
+	if ( Lengow_Sync::SYNC_STATISTIC === $sync ) {
 		Lengow_Sync::get_statistic( $force );
 	}
 	// sync option is not valid.

@@ -118,6 +118,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 */
 		public function includes() {
 			if ( is_admin() ) {
+				include_once( 'includes/class-lengow-action.php' );
 				include_once( 'includes/class-lengow-address.php' );
 				include_once( 'includes/class-lengow-check.php' );
 				include_once( 'includes/class-lengow-configuration.php' );
@@ -164,7 +165,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				add_action( 'wp_ajax_post_process_dashboard', array( 'Lengow_Admin_Dashboard', 'post_process' ) );
 				add_action( 'wp_ajax_post_process_orders', array( 'Lengow_Admin_Orders', 'post_process' ) );
 				// order actions.
-				add_action( 'save_post_shop_order', array( 'Lengow_Hook', 'save_lengow_shipping' ) );
+				add_action( 'save_post', array( 'Lengow_Hook', 'save_lengow_shipping' ) );
+				add_action( 'woocommerce_email', array( 'Lengow_Hook', 'unhook_woocommerce_mail' ) );
 				add_action( 'add_meta_boxes_shop_order', array( 'Lengow_Hook', 'adding_shop_order_meta_boxes' ) );
 				// init lengow technical error status.
 				if ( Lengow_Main::compare_version( '2.2' ) ) {

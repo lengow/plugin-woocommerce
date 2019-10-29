@@ -93,7 +93,7 @@ order.screen.last_order_importation|Last synchronization
 order.screen.no_order_importation|No synchronisation for now
 order.screen.button_update_orders|Synchronize Orders
 order.screen.not_imported|not imported
-order.screen.order_not_imported|Order has not been imported into Woocommerce
+order.screen.order_not_imported|Order has not been imported into WooCommerce
 order.screen.preprod_warning_message|You are in pre-production mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>
 order.screen.status_not_synchronized|Not synchronized
 order.screen.status_accepted|Accepted
@@ -208,11 +208,20 @@ lengow_log.exception.no_connection_webservice|connection did not work with the L
 lengow_log.exception.error_lengow_webservice|Lengow webservice: %{error_code} - %{error_message}
 lengow_log.exception.order_not_found|Lengow error: order cannot be found in Lengow feed
 lengow_log.exception.marketplace_not_present|Lengow error: %{marketplace_name} does not feature in the marketplace list
-lengow_log.exception.product_list_is_empty|order could not be saved
+lengow_log.exception.order_line_required|order line is required but cannot be not found in order
+lengow_log.exception.action_not_valid|action %{action} is not valid
+lengow_log.exception.marketplace_action_not_present|marketplace actions %{action} are not present
+lengow_log.exception.marketplace_sku_require|marketplace order reference is required
+lengow_log.exception.marketplace_name_require|marketplace name is required
+lengow_log.exception.arg_is_required|can't send action: %{arg_name} is required
+lengow_log.exception.action_not_created|can't create action: %{error_message}
+lengow_log.exception.action_not_created_api|can't create action because Lengow API is unavailable. Please retry
+lengow_log.exception.action_is_too_old|order action is too old. Please retry the call
+lengow_log.exception.product_list_is_empty|can't retrieve order products
 lengow_log.exception.product_not_be_found|product ID %{product_id} could not be found
 lengow_log.exception.product_is_a_parent|product ID %{product_id} is variable. Product variation is needed
-lengow_log.exception.woocommerce_customer_not_saved|WARNING! Customer could NOT be saved in Wordpress user table
-lengow_log.exception.woocommerce_order_not_saved|WARNING! Order could NOT be saved in Wordpress post table
+lengow_log.exception.woocommerce_customer_not_saved|WARNING! Customer could NOT be saved in WordPress user table
+lengow_log.exception.woocommerce_order_not_saved|WARNING! Order could NOT be saved in WordPress post table
 lengow_log.mail_report.subject_report_mail|Lengow imports errors
 lengow_log.mail_report.order|Order %{marketplace_sku}
 lengow_log.mail_report.no_error_in_report_mail|no error message, contact support via https://supportlengow.zendesk.com/agent/
@@ -270,7 +279,7 @@ log.import.end|## end %{type} import ##
 log.import.preprod_mode_active|warning ! Pre-prod mode is activated
 log.import.connector_get_order|get order with order ID: %{marketplace_sku} and marketplace: %{marketplace_name}
 log.import.connector_get_all_order|get orders between %{date_from} and %{date_to} for catalogs ID: %{catalog_id}
-log.import.find_one_order|%{nb_order} order found for order ID: %{marketplace_sku} and markeplace: %{marketplace_name} with account ID: %{account_id}
+log.import.find_one_order|%{nb_order} order found for order ID: %{marketplace_sku} and marketplace: %{marketplace_name} with account ID: %{account_id}
 log.import.find_all_orders|%{nb_order} order(s) found with account ID: %{account_id}
 log.import.error_already_created|%{decoded_message} (created on the %{date_message})
 log.import.external_id_exist|already imported in a WooCommerce with the order ID %{order_id}
@@ -302,6 +311,14 @@ log.import.tax_not_saved|WARNING! Tax could not be added to the WooCommerce orde
 log.import.processing_fee_not_saved|WARNING! Processing fees could not be added to the WooCommerce order - %{error_message}
 log.import.order_synchronized_with_lengow|order successfully synchronised with Lengow webservice (ORDER ID %{order_id})
 log.import.order_not_synchronized_with_lengow|WARNING ! Order could NOT be synchronised with Lengow webservice (ORDER ID %{order_id})
+log.order_action.check_completed_action|check completed actions
+log.order_action.check_old_action|check and finish old actions
+log.order_action.check_action_not_sent|check actions not sent
+log.order_action.try_to_send_action|try to send %{action} action (ORDER ID %{order_id})
+log.order_action.action_send|action %{action} was successfully sent (ORDER ID %{order_id})
+log.order_action.action_not_send|WARNING ! action %{action} could not be sent (ORDER ID %{order_id})
+log.order_action.call_tracking|call tracking with parameters: %{parameters}
+log.order_action.call_action_failed|order action failed - %{decoded_message}
 log.connector.call_api|call %{curl_url}
 log.connector.error_api|API call failed - %{error_code}
 log.connector.timeout_api|API call has been blocked by a timeout
@@ -332,8 +349,8 @@ toolbox.index.checksum_message|Plugin files check
 toolbox.index.checksum_help|Some files have been changed by the customer
 toolbox.index.checksum_help_label|Go to Checksum page
 toolbox.index.global_information|Global information
-toolbox.index.wordpress_version|Wordpress version
-toolbox.index.woocommerce_version|Woocommerce version
+toolbox.index.wordpress_version|WordPress version
+toolbox.index.woocommerce_version|WooCommerce version
 toolbox.index.plugin_version|Plugin version
 toolbox.index.ip_server|Server IP
 toolbox.index.ip_enabled|Authorisation by IP enabled
