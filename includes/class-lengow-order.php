@@ -222,7 +222,7 @@ class Lengow_Order {
 	 * @param integer $id Lengow order id
 	 */
 	public function __construct( $id ) {
-		$row = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'id' => $id ) );
+		$row = self::get( array( 'id' => $id ) );
 		if ( $row ) {
 			$this->id                   = (int) $row->id;
 			$this->order_id             = null !== $row->order_id ? (int) $row->order_id : null;
@@ -253,6 +253,19 @@ class Lengow_Order {
 			$this->updated_at           = $row->updated_at;
 			$this->extra                = $row->extra;
 		}
+	}
+
+	/**
+	 * Get Lengow order.
+	 *
+	 * @param array $where a named array of WHERE clauses
+	 * @param boolean $single get a single result or not
+	 *
+	 * @return false|object[]|object
+	 *
+	 */
+	public static function get( $where = array(), $single = true ) {
+		return Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, $where, $single );
 	}
 
 	/**
@@ -577,7 +590,7 @@ class Lengow_Order {
 	 * @return integer
 	 */
 	public static function get_total_order_in_error() {
-		$result = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'is_in_error' => 1 ), false );
+		$result = self::get( array( 'is_in_error' => 1 ), false );
 
 		return count( $result );
 	}
@@ -598,8 +611,8 @@ class Lengow_Order {
 		// update Lengow order if necessary.
 		$params = [];
 		if ( self::PROCESS_STATE_FINISH === $order_process_state ) {
-			// TODO finish all actions.
-			Lengow_Order_Error::finish_order_errors( $order_lengow->id, 'send' );
+			Lengow_Action::finish_all_actions( Lengow_Order::get_order_id( $order ) );
+			Lengow_Order_Error::finish_order_errors( $order_lengow->id, Lengow_Order_Error::ERROR_TYPE_SEND );
 			if ( $order_process_state !== $order_lengow->order_process_state ) {
 				$params['order_process_state'] = $order_process_state;
 			}
@@ -653,7 +666,7 @@ class Lengow_Order {
 	 * @return array|false
 	 */
 	public static function re_import_order( $order_lengow_id ) {
-		$order_lengow = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, array( 'id' => $order_lengow_id ) );
+		$order_lengow = self::get( array( 'id' => $order_lengow_id ) );
 		if ( $order_lengow ) {
 			$import  = new Lengow_Import(
 				array(
@@ -670,6 +683,28 @@ class Lengow_Order {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Create an error and update the order in error.
+	 *
+	 * @param integer $order_lengow_id Lengow order id
+	 * @param string $message error message
+	 * @param string $type order error type (import or send)
+	 *
+	 * @return array|false
+	 */
+	public static function add_order_error( $order_lengow_id, $message, $type = null ) {
+		$error_created = Lengow_Order_Error::create(
+			array(
+				'order_lengow_id' => $order_lengow_id,
+				'message'         => $message,
+				'type'            => null === $type ? Lengow_Order_Error::ERROR_TYPE_IMPORT : $type,
+			)
+		);
+		$order_updated = Lengow_Order::update( $order_lengow_id, array( 'is_in_error' => 1 ) );
+
+		return ( $error_created && $order_updated ) ? true : false;
 	}
 
 	/**
@@ -820,7 +855,7 @@ class Lengow_Order {
 			$this->marketplace_sku
 		);
 		// finish all order logs send.
-		Lengow_Order_Error::finish_order_errors( $this->id, 'send' );
+		Lengow_Order_Error::finish_order_errors( $this->id, Lengow_Order_Error::ERROR_TYPE_SEND );
 		try {
 			// compatibility V2.
 			if ( ! Lengow_Marketplace::marketplace_exist( $this->marketplace_name ) && null !== $this->feed_id ) {
@@ -855,13 +890,7 @@ class Lengow_Order {
 			$error_message = '[WooCommerce error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
 		}
 		if ( isset( $error_message ) ) {
-			Lengow_Order_Error::create(
-				array(
-					'order_lengow_id' => $this->id,
-					'message'         => $error_message,
-					'type'            => Lengow_Order_Error::ERROR_TYPE_SEND,
-				)
-			);
+			Lengow_Order::add_order_error( $this->id, $error_message, Lengow_Order_Error::ERROR_TYPE_SEND );
 			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 			Lengow_Main::log(
 				'API-OrderAction',

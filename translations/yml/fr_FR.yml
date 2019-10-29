@@ -236,6 +236,7 @@ fr:
       arg_is_required: "envoi d'action impossible : %{arg_name} est requis"
       action_not_created: "création d'action impossible : %{error_message}"
       action_not_created_api: "création d'action impossible car l'API Lengow n'est pas disponible. Réessayez de nouveau"
+      action_is_too_old: "l'action est trop ancienne. Réessayez de nouveau"
       product_list_is_empty: "impossible de récupérer les produits de la commande"
       product_not_be_found: "le produit %{product_id} n'a pu être trouvé"
       product_is_a_parent: "le produit %{product_id}  est un ID parent. Les déclinaisons du produit sont nécessaires"

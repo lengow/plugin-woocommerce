@@ -42,6 +42,19 @@ class Lengow_Order_Error {
 	const ERROR_TYPE_SEND = 2;
 
 	/**
+	 * Get Lengow order error.
+	 *
+	 * @param array $where a named array of WHERE clauses
+	 * @param boolean $single get a single result or not
+	 *
+	 * @return false|object[]|object
+	 *
+	 */
+	public static function get( $where = array(), $single = true ) {
+		return Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER_ERROR, $where, $single );
+	}
+
+	/**
 	 * Create Lengow order error.
 	 *
 	 * @param array $data Lengow order error data
@@ -78,14 +91,14 @@ class Lengow_Order_Error {
 	 *
 	 * @param string $marketplace_sku Lengow marketplace sku
 	 * @param integer $delivery_address_id Lengow delivery address id
-	 * @param string $type order error type (import or send)
+	 * @param integer|null $type order error type (import or send)
 	 *
 	 * @return array|false
 	 */
-	public static function order_is_in_error( $marketplace_sku, $delivery_address_id, $type = 'import' ) {
+	public static function order_is_in_error( $marketplace_sku, $delivery_address_id, $type = null ) {
 		global $wpdb;
 
-		$order_error_type = self::get_order_error_type( $type );
+		$order_error_type = null === $type ? self::ERROR_TYPE_IMPORT : $type;
 		$query            = '
 			SELECT loe.message, loe.created_at
 			FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER_ERROR . ' loe
@@ -128,19 +141,19 @@ class Lengow_Order_Error {
 	}
 
 	/**
-	 * Removes all order logs.
+	 * Finish all order errors.
 	 *
-	 * @param integer $idOrderLengow Lengow order id
-	 * @param string|null $type order log type (import or send)
+	 * @param integer $order_lengow_id Lengow order id
+	 * @param integer|null $type order log type (import or send)
 	 *
 	 * @return boolean
 	 */
-	public static function finish_order_errors( $idOrderLengow, $type = null ) {
-		$where = array( 'order_lengow_id' => $idOrderLengow );
-		if ( $type ) {
-			$where['type'] = self::get_order_error_type( $type );
+	public static function finish_order_errors( $order_lengow_id, $type = null ) {
+		$where = array( 'order_lengow_id' => $order_lengow_id );
+		if ( null !== $type ) {
+			$where['type'] = $type;
 		}
-		$order_errors   = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER_ERROR, $where, false );
+		$order_errors   = self::get( $where, false );
 		$update_success = 0;
 		foreach ( $order_errors as $order_error ) {
 			$result = self::update( $order_error->id, array( 'is_finished' => 1 ) );
@@ -153,45 +166,23 @@ class Lengow_Order_Error {
 	}
 
 	/**
-	 * Return order error type value.
-	 *
-	 * @param string $type order error type (import or send)
-	 *
-	 * @return integer|null
-	 */
-	public static function get_order_error_type( $type ) {
-		switch ( $type ) {
-			case 'import':
-			default:
-				$error_type = self::ERROR_TYPE_IMPORT;
-				break;
-			case 'send':
-				$error_type = self::ERROR_TYPE_SEND;
-				break;
-		}
-
-		return $error_type;
-	}
-
-	/**
 	 * Check if errors already exists for the given order.
 	 *
 	 * @param string $order_lengow_id Lengow order id
-	 * @param string $type order error type (import or send)
+	 * @param integer $type order error type (import or send)
 	 * @param boolean $finished error finished (true or false)
 	 *
 	 * @return array|false
 	 */
 	public static function get_order_errors( $order_lengow_id, $type = null, $finished = null ) {
-		$args                    = array();
-		$args['order_lengow_id'] = $order_lengow_id;
+		$where = array( 'order_lengow_id' => $order_lengow_id );
 		if ( null !== $type ) {
-			$args['type'] = self::get_order_error_type( $type );
+			$where['type'] = $type;
 		}
 		if ( null !== $finished ) {
-			$args['is_finished'] = $finished;
+			$where['is_finished'] = (int) $finished;
 		}
-		$results = Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER_ERROR, $args, false );
+		$results = self::get( $where, false );
 
 		return $results;
 	}

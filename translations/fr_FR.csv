@@ -210,6 +210,7 @@ lengow_log.exception.marketplace_name_require|le nom de la place de marché est 
 lengow_log.exception.arg_is_required|envoi d'action impossible : %{arg_name} est requis
 lengow_log.exception.action_not_created|création d'action impossible : %{error_message}
 lengow_log.exception.action_not_created_api|création d'action impossible car l'API Lengow n'est pas disponible. Réessayez de nouveau
+lengow_log.exception.action_is_too_old|l'action est trop ancienne. Réessayez de nouveau
 lengow_log.exception.product_list_is_empty|impossible de récupérer les produits de la commande
 lengow_log.exception.product_not_be_found|le produit %{product_id} n'a pu être trouvé
 lengow_log.exception.product_is_a_parent|le produit %{product_id}  est un ID parent. Les déclinaisons du produit sont nécessaires
