@@ -21,6 +21,8 @@
 (function ($) {
     $(document).ready(function () {
 
+        var orders = [];
+
         /**
          * Thing to do on load and after reload.
          */
@@ -31,6 +33,10 @@
             var column = $('.column-status');
             column.width(column.width() + 50);
             init_tooltip();
+            $('.js-lengow_selection_order:checked, #cb-select-all-1').each(function () {
+                $(this).attr('checked', false);
+            });
+            $('.js-lengow_toolbar').hide();
         }
 
         loadReload();
@@ -55,8 +61,8 @@
                     $("#container_lengow_grid").load(location.href + ' #lengow_order_grid', function () {
                         $('#lengow_charge_import_order').fadeOut(150);
                         reload_informations(data, true);
-                        loadReload();
                     });
+                    loadReload();
                 },
                 error: function (content) {
                     $('#lengow_charge_import_order').fadeOut(150);
@@ -84,13 +90,74 @@
                     var data = JSON.parse(content);
                     $("#container_lengow_grid").load(location.href + ' #lengow_order_grid', function () {
                         reload_informations(data, false);
-                        loadReload();
                     });
+                    loadReload();
                 },
                 error: function (content) {
                     $('#lengow_charge_import_order').fadeOut(150);
                 }
             });
+        });
+
+        /**
+         * Mass action to reimport or resend orders
+         */
+        $('.js-lengow_reimport_mass_action , .js-lengow_resend_mass_action').on('click', function () {
+            $('#lengow_charge_import_order').fadeIn(150);
+
+            var do_action = $(this).attr('data-action'),
+                orders = [];
+
+            // find all checked orders.
+            $('#js-lengow_order_checkbox:checked').each(function () {
+                orders.push($(this).attr('value'));
+            });
+
+            var data = {
+                action: 'post_process_orders',
+                do_action: do_action,
+                orders: orders
+            };
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: data,
+                success: function (content) {
+                    var data = JSON.parse(content);
+                    reload_informations(data, true);
+                    loadReload();
+                },
+                error: function (content) {
+                    $('#lengow_charge_import_order').fadeOut(150);
+                }
+            });
+        });
+
+        /**
+         * Check select all checkbox to display lengow toolbar and lengow select all products
+         */
+        $(document).on('click', '#cb-select-all-1', function () {
+            if ($(this).prop('checked')) {
+                $('.js-lengow_toolbar').show();
+            } else {
+                $('.js-lengow_toolbar').hide();
+            }
+        });
+
+        /**
+         * Check for display mass actions
+         */
+        $(document).on('click', '.js-lengow_selection_order', function () {
+            var findOrderSelected = false;
+
+            $('.js-lengow_selection_order:checked').each(function () {
+                findOrderSelected = true;
+                $('.js-lengow_toolbar').show();
+            });
+
+            if (!findOrderSelected) {
+                $('.js-lengow_toolbar').hide();
+            }
         });
 
         function reload_informations(informations, show_messages) {

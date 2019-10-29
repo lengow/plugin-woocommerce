@@ -79,6 +79,12 @@ product.table.in_stock|In stock
 product.table.out_of_stock|Out of stock
 product.table.type_downloadable|Downloadable
 product.table.type_virtual|Virtual
+order.screen.button_reimport_order|Re-import Orders
+order.screen.mass_action_reimport_success|A total of %{1} order(s) in %{2} selected have been imported
+order.screen.button_resend_order|Resend Actions
+order.screen.all_order_will_be_sent_to|All order issue reports will be sent by mail to
+order.screen.no_order_will_be_sent|No order issue reports will be sent by mail
+order.screen.change_this|Change this?
 order.screen.import_charge_first|Retrieving your order(s)...
 order.screen.import_charge_second|Please bear with us; this will not take long (2 min average waiting time)
 order.screen.order_with_error|You have %{nb_order} order(s) with errors

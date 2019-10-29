@@ -92,6 +92,12 @@ en:
       type_virtual: "Virtual"
   order:
     screen:
+      button_reimport_order: "Re-import Orders"
+      mass_action_reimport_success: "A total of %{1} order(s) in %{2} selected have been imported"
+      button_resend_order: "Resend Actions"
+      all_order_will_be_sent_to: "All order issue reports will be sent by mail to"
+      no_order_will_be_sent: "No order issue reports will be sent by mail"
+      change_this: "Change this?"
       import_charge_first: "Retrieving your order(s)..."
       import_charge_second: "Please bear with us; this will not take long (2 min average waiting time)"
       order_with_error: "You have %{nb_order} order(s) with errors"

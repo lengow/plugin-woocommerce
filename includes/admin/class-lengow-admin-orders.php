@@ -57,6 +57,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		$warning_message     = $lengow_admin_orders->assign_warning_messages();
 		$order_collection    = $lengow_admin_orders->assign_last_importation_infos();
 		$locale              = new Lengow_Translation();
+		$report_emails       = implode( ', ', Lengow_Configuration::get_report_email_address() );
 		include_once 'views/html-admin-header-order.php';
 		include_once 'views/orders/html-admin-orders.php';
 	}
@@ -73,6 +74,9 @@ class Lengow_Admin_Orders extends WP_List_Table {
 					break;
 				case 're_import':
 					self::do_action( 're_import' );
+					break;
+				case 'reimport_mass_action':
+					self::do_action( 'reimport_mass_action' );
 					break;
 			}
 			exit();
@@ -433,6 +437,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			'orders.order_item',
 			'orders.total_paid',
 			'orders.currency',
+			'orders.is_in_error'
 		);
 
 		$query = 'SELECT ' . join( ', ', $fields ) .
@@ -482,11 +487,13 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 * @return string|void
 	 */
 	public function column_cb( $order ) {
-		return sprintf(
-			'<input type="checkbox" id="js-lengow_order_checkbox"
-				name="order[]" value="%s" class="js-lengow_selection"/>',
-			$order['id']
-		);
+		if ( '' !== $order['action'] ) {
+			return sprintf(
+				'<input type="checkbox" id="js-lengow_order_checkbox"
+				name="order[' . $order['id'] . ']" value="%s" class="js-lengow_selection_order"/>',
+				$order['id']
+			);
+		}
 	}
 
 	/**
@@ -498,29 +505,31 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 */
 	public function get_actions( $order_lengow ) {
 		$orders_data = '';
-		if ( Lengow_Order::PROCESS_STATE_FINISH !== (int) $order_lengow->order_lengow_state ) {
-			$error_messages = array();
-			$order_errors   = Lengow_Order_Error::get_order_errors( $order_lengow->id, null, false );
-			if ( ! empty( $order_errors ) ) {
-				foreach ( $order_errors as $error ) {
-					if ( '' !== $error->message ) {
-						$error_messages[] = Lengow_Main::clean_data( Lengow_Main::decode_log_message( $error->message ) );
-					} else {
-						$error_messages[] = Lengow_Main::decode_log_message( 'order.screen.no_error_message' );
+		if ( $order_lengow->is_in_error ) {
+			if ( Lengow_Order::PROCESS_STATE_FINISH !== (int) $order_lengow->order_lengow_state ) {
+				$error_messages = array();
+				$order_errors   = Lengow_Order_Error::get_order_errors( $order_lengow->id, null, false );
+				if ( ! empty( $order_errors ) ) {
+					foreach ( $order_errors as $error ) {
+						if ( '' !== $error->message ) {
+							$error_messages[] = Lengow_Main::clean_data( Lengow_Main::decode_log_message( $error->message ) );
+						} else {
+							$error_messages[] = Lengow_Main::decode_log_message( 'order.screen.no_error_message' );
+						}
 					}
+
+					$message = Lengow_Main::decode_log_message( 'order.screen.order_not_imported' )
+					           . '<br/>' . join( '<br/>', $error_messages );
+
+					$value       = '<a href="#"
+										class="lengow_re_import lengow_link_tooltip lgw-btn lgw-btn-white"
+					                    data-action="re_import"
+					                    data-order="' . $order_lengow->id . '"
+					                    data-html="true"
+					                    data-original-title="' . $message . '">'
+					               . Lengow_Main::decode_log_message( 'order.screen.not_imported' ) . ' <i class="fa fa-refresh"></i></a>';
+					$orders_data = $value;
 				}
-
-				$message = Lengow_Main::decode_log_message( 'order.screen.order_not_imported' )
-				           . '<br/>' . join( '<br/>', $error_messages );
-
-				$value       = '<a href="#"
-									class="lengow_re_import lengow_link_tooltip lgw-btn lgw-btn-white"
-				                    data-action="re_import"
-				                    data-order="' . $order_lengow->id . '"
-				                    data-html="true"
-				                    data-original-title="' . $message . '">'
-				               . Lengow_Main::decode_log_message( 'order.screen.not_imported' ) . ' <i class="fa fa-refresh"></i></a>';
-				$orders_data = $value;
 			}
 		}
 
@@ -535,17 +544,31 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	private static function do_action( $action ) {
 		$lengow_admin_orders = new Lengow_Admin_Orders();
 		$locale              = new Lengow_Translation();
+		$data                = array();
 		if ( 'import_all' === $action ) {
-			$import = new Lengow_Import(
+			$import  = new Lengow_Import(
 				array( 'log_output' => false )
 			);
-			$return = $import->exec();
+			$return  = $import->exec();
+			$message = $lengow_admin_orders->load_message( $return );
 		} elseif ( 're_import' === $action ) {
 			$id_order_lengow = isset( $_POST['order_id'] ) ? $_POST['order_id'] : null;
 			$return          = Lengow_Order::re_import_order( $id_order_lengow );
+			$message         = $lengow_admin_orders->load_message( $return );
+		} elseif ( 'reimport_mass_action' === $action ) {
+			$orders      = isset( $_POST['orders'] ) ? $_POST['orders'] : null;
+			$totalReSent = 0;
+			foreach ( $orders as $order ) {
+				$result = Lengow_Order::re_import_order( $order );
+				if ( $result && isset( $result['order_new'] ) && $result['order_new'] ) {
+					$totalReSent ++;
+				}
+			}
+			$message[] = $locale->t( 'order.screen.mass_action_reimport_success', array(
+				'1' => $totalReSent,
+				'2' => count( $orders ),
+			) );
 		}
-		$data                     = array();
-		$message                  = $lengow_admin_orders->load_message( $return );
 		$order_collection         = $lengow_admin_orders->assign_last_importation_infos();
 		$data['order_with_error'] = $locale->t(
 			'order.screen.order_with_error',
