@@ -92,6 +92,12 @@ fr:
       type_virtual: "Virtuel"
   order:
     screen:
+      button_reimport_order: "Réimporter mes commandes"
+      mass_action_reimport_success: "%{1} commande(s) sur %{2} ont été importée(s)"
+      button_resend_order: "Renvoyer mes actions"
+      all_order_will_be_sent_to: "Les rapports d'erreurs de vos commandes seront envoyés par email à"
+      no_order_will_be_sent: "Les rapport d'erreurs de vos commandes ne seront pas envoyés par email"
+      change_this: "Vous voulez modifier cela ?"
       import_charge_first: "Commande(s) en cours de récupération..."
       import_charge_second: "Restez avec nous, cela ne va pas durer longtemps (2 min d'attente en moyenne)"
       order_with_error: "Vous avez %{nb_order} commande(s) en erreur"

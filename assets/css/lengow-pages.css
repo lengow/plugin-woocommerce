@@ -172,7 +172,8 @@ body.lgw-home-iframe .lgw-content-section p {
 }
 
 #lengow_order_header {
-  margin-bottom: 90px;
+  margin-bottom: 10px;
+  height: 140px;
 }
 
 #lengow_order_grid td, #lengow_order_grid th {
@@ -180,11 +181,30 @@ body.lgw-home-iframe .lgw-content-section p {
 }
 
 #lengow_order_grid .column-action {
-  width: 15%;
+  width: 12%;
+  text-align: center;
 }
 
-#lengow_order_grid lgw-label {
-  display: block;
+#lengow_order_grid .lgw-label {
+  padding: 0 5px;
+}
+
+#lengow_order_grid .column-status {
   text-align: center;
-  margin: 20%;
+}
+
+#lengow_order_grid #current-page-selector {
+  height: 28px;
+}
+
+#lengow_order_grid .lgw-btn {
+  margin: 0;
+}
+
+#lengow_order_grid tbody tr {
+  height: 60px;
+}
+
+#lengow_order_wrapper .js-lengow_toolbar {
+  position: absolute;
 }

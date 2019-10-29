@@ -53,6 +53,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php endif; ?>
                     </p>
                 </div>
+                <p>
+					<?php if ( (bool) Lengow_Configuration::get( 'lengow_report_mail_enabled' ) ) {
+						echo $locale->t( 'order.screen.all_order_will_be_sent_to' ) . ' ' . $report_emails;
+					} else {
+						echo $locale->t( 'order.screen.no_order_will_be_sent' ) .
+						     ' (<a href="' . admin_url( 'admin.php?page=lengow&tab=lengow_admin_settings' ) .
+						     '">' . $locale->t( 'order.screen.change_this' ) . '</a>)';
+					}
+					?>
+                <p>
             </div>
             <div class="pull-right text-right lgw-col-3">
                 <a id="lengow_import_orders" class="lgw-btn btn no-margin-top">
@@ -60,17 +70,20 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </a>
             </div>
         </div>
-        <!-- UPDATE ORDERS -->
-        <div id="lengow_charge_import_order" style="display:none;">
-            <div class="lgw-ajax-loading mod-synchronise-order">
-                <div class="lgw-ajax-loading-ball1"></div>
-                <div class="lgw-ajax-loading-ball2"></div>
-            </div>
-            <p id="lengow_charge_lign1"><?php echo $locale->t( 'order.screen.import_charge_first' ); ?></p>
-            <p id="lengow_charge_lign2"><?php echo $locale->t( 'order.screen.import_charge_second' ); ?></p>
-        </div>
         <!-- /UPDATE ORDERS -->
         <div id="lengow_wrapper_messages" class="blue-frame" style="display:none;"></div>
+        <div class="js-lengow_toolbar" style="display: none;">
+            <a href="#"
+               data-action="reimport_mass_action"
+               class="lgw-btn js-lengow_reimport_mass_action">
+                <i class="fa fa-download"></i> <?php echo $locale->t( 'order.screen.button_reimport_order' ); ?>
+            </a>
+            <a href="#"
+               data-action="resend_mass_action"
+               class="lgw-btn js-lengow_resend_mass_action">
+                <i class="fa fa-arrow-right"></i> <?php echo $locale->t( 'order.screen.button_resend_order' ); ?>
+            </a>
+        </div>
         <!-- ORDERS GRID -->
         <div id="container_lengow_grid">
             <div id="lengow_order_grid">
@@ -89,5 +102,14 @@ if ( ! defined( 'ABSPATH' ) ) {
             </div>
         </div>
         <!-- /ORDERS GRID -->
+        <!-- UPDATE ORDERS -->
+        <div id="lengow_charge_import_order" style="display:none;">
+            <div class="lgw-ajax-loading mod-synchronise-order">
+                <div class="lgw-ajax-loading-ball1"></div>
+                <div class="lgw-ajax-loading-ball2"></div>
+            </div>
+            <p id="lengow_charge_lign1"><?php echo $locale->t( 'order.screen.import_charge_first' ); ?></p>
+            <p id="lengow_charge_lign2"><?php echo $locale->t( 'order.screen.import_charge_second' ); ?></p>
+        </div>
     </div>
 </div>
