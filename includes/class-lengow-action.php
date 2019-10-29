@@ -186,7 +186,7 @@ class Lengow_Action {
 	}
 
 	/**
-	 * Get all active actions
+	 * Get all active actions.
 	 *
 	 * @return array|false
 	 */
@@ -197,7 +197,7 @@ class Lengow_Action {
 	}
 
 	/**
-	 * Finish action
+	 * Finish action.
 	 *
 	 * @param integer $action_id Lengow action id
 	 *
@@ -208,7 +208,7 @@ class Lengow_Action {
 	}
 
 	/**
-	 * Removes all actions for one order WooCommerce
+	 * Removes all actions for one order WooCommerce.
 	 *
 	 * @param integer $order_id WooCommerce order id
 	 * @param string|null $action_type action type (ship or cancel)
@@ -436,7 +436,7 @@ class Lengow_Action {
 	}
 
 	/**
-	 * Remove old actions > 3 days
+	 * Remove old actions > 3 days.
 	 *
 	 * @return boolean
 	 */
