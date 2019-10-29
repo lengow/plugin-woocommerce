@@ -387,9 +387,9 @@ class Lengow_Action {
 			}
 			$api_action = $api_actions[ $action_id ];
 			if ( isset( $api_action->queued ) && isset( $api_action->processed ) && isset( $api_action->errors ) ) {
-				if ( $api_action->queued == false ) {
+				if ( false == $api_action->queued ) {
 					// order action is waiting to return from the marketplace.
-					if ( $api_action->processed == false && empty( $api_action->errors ) ) {
+					if ( false == $api_action->processed && empty( $api_action->errors ) ) {
 						continue;
 					}
 					// finish action in lengow_action table.
