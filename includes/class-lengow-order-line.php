@@ -32,6 +32,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Order_Line {
 
 	/**
+	 * Get Lengow order line.
+	 *
+	 * @param array $where a named array of WHERE clauses
+	 * @param boolean $single get a single result or not
+	 *
+	 * @return false|object[]|object
+	 *
+	 */
+	public static function get( $where = array(), $single = true ) {
+		return Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER_LINE, $where, $single );
+	}
+
+	/**
 	 * Create Lengow order line.
 	 *
 	 * @param array $data Lengow order line data

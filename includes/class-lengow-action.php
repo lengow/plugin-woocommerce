@@ -125,6 +125,19 @@ class Lengow_Action {
 	);
 
 	/**
+	 * Get Lengow action.
+	 *
+	 * @param array $where a named array of WHERE clauses
+	 * @param boolean $single get a single result or not
+	 *
+	 * @return false|object[]|object
+	 *
+	 */
+	public static function get( $where = array(), $single = true ) {
+		return Lengow_Crud::read( Lengow_Crud::LENGOW_ACTION, $where, $single );
+	}
+
+	/**
 	 * Create Lengow action.
 	 *
 	 * @param array $data Lengow action data
@@ -167,9 +180,56 @@ class Lengow_Action {
 		if ( null !== $action_type ) {
 			$where['action_type'] = $action_type;
 		}
-		$actions = Lengow_Crud::read( Lengow_Crud::LENGOW_ACTION, $where, false );
+		$actions = self::get( $where, false );
 
 		return ! empty( $actions ) ? $actions : false;
+	}
+
+	/**
+	 * Get all active actions.
+	 *
+	 * @return array|false
+	 */
+	public static function get_all_active_actions() {
+		$actions = self::get( array( 'state' => self::STATE_NEW ), false );
+
+		return ! empty( $actions ) ? $actions : false;
+	}
+
+	/**
+	 * Finish action.
+	 *
+	 * @param integer $action_id Lengow action id
+	 *
+	 * @return boolean
+	 */
+	public static function finish_action( $action_id ) {
+		return self::update( $action_id, array( 'state' => self::STATE_FINISH ) );
+	}
+
+	/**
+	 * Removes all actions for one order WooCommerce.
+	 *
+	 * @param integer $order_id WooCommerce order id
+	 * @param string|null $action_type action type (ship or cancel)
+	 *
+	 * @return boolean
+	 */
+	public static function finish_all_actions( $order_id, $action_type = null ) {
+		$active_action = self::get_active_action_by_order_id( $order_id, $action_type );
+		if ( $active_action ) {
+			$update_success = 0;
+			foreach ( $active_action as $action ) {
+				$result = self::finish_action( $action->id );
+				if ( $result ) {
+					$update_success ++;
+				}
+			}
+
+			return $update_success === count( $active_action ) ? true : false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -202,7 +262,7 @@ class Lengow_Action {
 		}
 		if ( isset( $result->count ) && $result->count > 0 ) {
 			foreach ( $result->results as $row ) {
-				$action = Lengow_Crud::read( Lengow_Crud::LENGOW_ACTION, array( 'action_id' => (int) $row->id ) );
+				$action = self::get( array( 'action_id' => (int) $row->id ) );
 				if ( $action ) {
 					// if the action already exists, the number of retries is increased.
 					$update = self::update( $action->id, array( 'retry' => (int) $action->retry + 1 ) );
@@ -273,5 +333,175 @@ class Lengow_Action {
 			false,
 			$order_lengow->marketplace_sku
 		);
+	}
+
+	/**
+	 * Check if active actions are finished.
+	 *
+	 * @return boolean
+	 */
+	public static function check_finish_action() {
+		if ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
+			return false;
+		}
+		Lengow_Main::log(
+			'API-OrderAction',
+			Lengow_Main::set_log_message( 'log.order_action.check_completed_action' )
+		);
+		$active_actions = self::get_all_active_actions();
+		if ( ! $active_actions ) {
+			return true;
+		}
+		// get all actions with API for 3 days.
+		$page        = 1;
+		$api_actions = array();
+		do {
+			$results = Lengow_Connector::query_api(
+				'get',
+				'/v3.0/orders/actions/',
+				array(
+					'updated_from' => date( 'c', strtotime( date( 'Y-m-d' ) . ' -3days' ) ),
+					'updated_to'   => date( 'c' ),
+					'page'         => $page,
+				)
+			);
+			if ( ! is_object( $results ) || isset( $results->error ) ) {
+				break;
+			}
+			// construct array actions.
+			foreach ( $results->results as $action ) {
+				if ( isset( $action->id ) ) {
+					$api_actions[ $action->id ] = $action;
+				}
+			}
+			$page ++;
+		} while ( null !== $results->next );
+		if ( empty( $api_actions ) ) {
+			return false;
+		}
+		// check foreach action if is complete.
+		foreach ( $active_actions as $action ) {
+			$action_id = (int) $action->action_id;
+			if ( ! isset( $api_actions[ $action_id ] ) ) {
+				continue;
+			}
+			$api_action = $api_actions[ $action_id ];
+			if ( isset( $api_action->queued ) && isset( $api_action->processed ) && isset( $api_action->errors ) ) {
+				if ( false == $api_action->queued ) {
+					// order action is waiting to return from the marketplace.
+					if ( false == $api_action->processed && empty( $api_action->errors ) ) {
+						continue;
+					}
+					// finish action in lengow_action table.
+					self::finish_action( $action->id );
+					$order_lengow_id = Lengow_Order::get_id_from_order_id( $action->order_id );
+					$order_lengow    = new Lengow_Order( $order_lengow_id );
+					// finish all order logs send.
+					Lengow_Order_Error::finish_order_errors( $order_lengow->id, Lengow_Order_Error::ERROR_TYPE_SEND );
+					if ( $order_lengow->is_in_error ) {
+						Lengow_Order::update( $order_lengow->id, array( 'is_in_error' => 0 ) );
+					}
+					if ( ! $order_lengow->is_closed() ) {
+						// if action is accepted -> close order and finish all order actions.
+						if ( true == $api_action->processed && empty( $api_action->errors ) ) {
+							Lengow_Order::update(
+								$order_lengow->id,
+								array( 'order_process_state' => Lengow_Order::PROCESS_STATE_FINISH )
+							);
+							self::finish_all_actions( $order_lengow->order_id );
+						} else {
+							// if action is denied -> create order logs and finish all order actions.
+							Lengow_Order::add_order_error(
+								$order_lengow->id,
+								$api_action->errors,
+								Lengow_Order_Error::ERROR_TYPE_SEND
+							);
+							Lengow_Main::log(
+								'API-OrderAction',
+								Lengow_Main::set_log_message(
+									'log.order_action.call_action_failed',
+									array( 'decoded_message' => $api_action->errors )
+								),
+								false,
+								$order_lengow->marketplace_sku
+							);
+						}
+					}
+					unset( $order_lengow );
+				}
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Remove old actions > 3 days.
+	 *
+	 * @return boolean
+	 */
+	public static function check_old_action() {
+		if ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
+			return false;
+		}
+		Lengow_Main::log( 'API-OrderAction', Lengow_Main::set_log_message( 'log.order_action.check_old_action' ) );
+		// get all old order action (+ 3 days).
+		$actions = self::get_old_actions();
+		if ( $actions ) {
+			foreach ( $actions as $action ) {
+				// finish action in lengow_action table.
+				self::finish_action( $action->id );
+				$order_lengow_id = Lengow_Order::get_id_from_order_id( $action->order_id );
+				$order_lengow    = new Lengow_Order( $order_lengow_id );
+				// finish all order logs send.
+				Lengow_Order_Error::finish_order_errors( $order_lengow->id, Lengow_Order_Error::ERROR_TYPE_SEND );
+				if ( $order_lengow->is_in_error ) {
+					Lengow_Order::update( $order_lengow->id, array( 'is_in_error' => 0 ) );
+				}
+				if ( ! $order_lengow->is_closed() ) {
+					// if action is denied -> create order error.
+					$error_message = Lengow_Main::set_log_message( 'lengow_log.exception.action_is_too_old' );
+					Lengow_Order::add_order_error(
+						$order_lengow->id,
+						$error_message,
+						Lengow_Order_Error::ERROR_TYPE_SEND
+					);
+					$decodedMessage = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
+					Lengow_Main::log(
+						'API-OrderAction',
+						Lengow_Main::set_log_message(
+							'log.order_action.call_action_failed',
+							array( 'decoded_message' => $decodedMessage )
+						),
+						false,
+						$order_lengow->marketplace_sku
+					);
+				}
+				unset( $order_lengow );
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Get old untreated actions of more than 3 days.
+	 *
+	 * @return array|false
+	 */
+	public static function get_old_actions() {
+		global $wpdb;
+
+		$date    = date( 'Y-m-d H:i:s', strtotime( '-3 days', time() ) );
+		$query   = '
+			SELECT * FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ACTION . '
+			WHERE created_at <= %s
+			AND state = %d
+		';
+		$results = $wpdb->get_results(
+			$wpdb->prepare( $query, array( $date, self::STATE_NEW ) )
+		);
+
+		return $results ? $results : false;
 	}
 }

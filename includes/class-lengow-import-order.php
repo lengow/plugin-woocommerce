@@ -405,12 +405,7 @@ class Lengow_Import_Order {
 			$error_message = '[WooCommerce error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
 		}
 		if ( isset( $error_message ) ) {
-			Lengow_Order_Error::create(
-				array(
-					'order_lengow_id' => $this->_order_lengow_id,
-					'message'         => $error_message,
-				)
-			);
+			Lengow_Order::add_order_error( $this->_order_lengow_id, $error_message );
 			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 			Lengow_Main::log(
 				'Import',
@@ -426,7 +421,6 @@ class Lengow_Import_Order {
 				array(
 					'order_lengow_state' => $this->_order_state_lengow,
 					'is_reimported'      => 0,
-					'is_in_error'        => 1,
 				)
 			);
 
@@ -597,6 +591,7 @@ class Lengow_Import_Order {
 					$this->_marketplace_sku
 				);
 			};
+			Lengow_Order::update( $this->_order_lengow_id, array( 'is_in_error' => 1 ) );
 
 			return false;
 		}

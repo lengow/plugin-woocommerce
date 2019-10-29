@@ -402,13 +402,7 @@ class Lengow_Marketplace {
 			$error_message = '[WooCommerce Error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
 		}
 		if ( isset( $error_message ) ) {
-			Lengow_Order_Error::create(
-				array(
-					'order_lengow_id' => $order_lengow->id,
-					'message'         => $error_message,
-					'type'            => Lengow_Order_Error::ERROR_TYPE_SEND,
-				)
-			);
+			Lengow_Order::add_order_error( $order_lengow->id, $error_message, Lengow_Order_Error::ERROR_TYPE_SEND );
 			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 			Lengow_Main::log(
 				'API-OrderAction',

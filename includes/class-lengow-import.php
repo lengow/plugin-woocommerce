@@ -295,12 +295,7 @@ class Lengow_Import {
 					$sync_ok = false;
 					if ( null !== $this->_order_lengow_id ) {
 						Lengow_Order_Error::finish_order_errors( $this->_order_lengow_id );
-						Lengow_Order_Error::create(
-							array(
-								'order_lengow_id' => $this->_order_lengow_id,
-								'message'         => $error_message,
-							)
-						);
+						Lengow_Order::add_order_error( $this->_order_lengow_id, $error_message );
 					}
 					$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 					Lengow_Main::log(
@@ -352,6 +347,11 @@ class Lengow_Import {
 				Lengow_Main::set_log_message( 'log.import.end', array( 'type' => $this->_type_import ) ),
 				$this->_log_output
 			);
+			// check if order action is finish (ship or cancel).
+			if ( ! $this->_preprod_mode && ! $this->_import_one_order && 'manual' === $this->_type_import ) {
+				Lengow_Action::check_finish_action();
+				Lengow_Action::check_old_action();
+			}
 			// sending email in error for orders and actions.
 			if ( (bool) Lengow_Configuration::get( 'lengow_report_mail_enabled' )
 			     && ! $this->_preprod_mode
@@ -364,12 +364,7 @@ class Lengow_Import {
 		if ( $error ) {
 			if ( isset( $this->_order_lengow_id ) && $this->_order_lengow_id ) {
 				Lengow_Order_Error::finish_order_errors( $this->_order_lengow_id );
-				Lengow_Order_Error::create(
-					array(
-						'order_lengow_id' => $this->_order_lengow_id,
-						'message'         => $error,
-					)
-				);
+				Lengow_Order::add_order_error( $this->_order_lengow_id, $error );
 			}
 		}
 		if ( $this->_import_one_order ) {
