@@ -26,7 +26,7 @@
         /**
          * Thing to do on load and after reload.
          */
-        function loadReload() {
+        function load_reload() {
             /**
              * Adapts the width of the status column.
              */
@@ -39,7 +39,7 @@
             $('.js-lengow_toolbar').hide();
         }
 
-        loadReload();
+        load_reload();
 
         /**
          * Ajax to synchronize orders.
@@ -62,7 +62,7 @@
                         $('#lengow_charge_import_order').fadeOut(150);
                         reload_informations(data, true);
                     });
-                    loadReload();
+                    load_reload();
                 },
                 error: function (content) {
                     $('#lengow_charge_import_order').fadeOut(150);
@@ -91,7 +91,7 @@
                     $("#container_lengow_grid").load(location.href + ' #lengow_order_grid', function () {
                         reload_informations(data, false);
                     });
-                    loadReload();
+                    load_reload();
                 },
                 error: function (content) {
                     $('#lengow_charge_import_order').fadeOut(150);
@@ -100,7 +100,7 @@
         });
 
         /**
-         * Mass action to reimport or resend orders
+         * Mass action to reimport or resend orders.
          */
         $('.js-lengow_reimport_mass_action , .js-lengow_resend_mass_action').on('click', function () {
             $('#lengow_charge_import_order').fadeIn(150);
@@ -125,7 +125,7 @@
                 success: function (content) {
                     var data = JSON.parse(content);
                     reload_informations(data, true);
-                    loadReload();
+                    load_reload();
                 },
                 error: function (content) {
                     $('#lengow_charge_import_order').fadeOut(150);
@@ -134,7 +134,7 @@
         });
 
         /**
-         * Check select all checkbox to display lengow toolbar and lengow select all products
+         * Check select all checkbox to display lengow toolbar and lengow select all products.
          */
         $(document).on('click', '#cb-select-all-1', function () {
             if ($(this).prop('checked')) {
@@ -145,17 +145,17 @@
         });
 
         /**
-         * Check for display mass actions
+         * Check for display mass actions.
          */
         $(document).on('click', '.js-lengow_selection_order', function () {
-            var findOrderSelected = false;
+            var find_order_selected = false;
 
             $('.js-lengow_selection_order:checked').each(function () {
-                findOrderSelected = true;
+                find_order_selected = true;
                 $('.js-lengow_toolbar').show();
             });
 
-            if (!findOrderSelected) {
+            if (!find_order_selected) {
                 $('.js-lengow_toolbar').hide();
             }
         });

@@ -92,6 +92,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		$lengow_admin_orders = new Lengow_Admin_Orders();
 		$locale              = new Lengow_Translation();
 		$data                = array();
+		$message = array();
 		if ( 'import_all' === $action ) {
 			$import  = new Lengow_Import(
 				array( 'log_output' => false )
@@ -104,17 +105,19 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			$message         = $lengow_admin_orders->load_message( $return );
 		} elseif ( 'reimport_mass_action' === $action ) {
 			$orders      = isset( $_POST['orders'] ) ? $_POST['orders'] : null;
-			$totalReSent = 0;
-			foreach ( $orders as $order ) {
-				$result = Lengow_Order::re_import_order( $order );
-				if ( $result && isset( $result['order_new'] ) && $result['order_new'] ) {
-					$totalReSent ++;
+			$total_reimport = 0;
+			if ( $orders ) {
+				foreach ( $orders as $order ) {
+					$result = Lengow_Order::re_import_order( $order );
+					if ( $result && isset( $result['order_new'] ) && $result['order_new'] ) {
+						$total_reimport ++;
+					}
 				}
+				$message[] = $locale->t( 'order.screen.mass_action_reimport_success', array(
+					'1' => $total_reimport,
+					'2' => count( $orders ),
+				) );
 			}
-			$message[] = $locale->t( 'order.screen.mass_action_reimport_success', array(
-				'1' => $totalReSent,
-				'2' => count( $orders ),
-			) );
 		}
 		$order_collection         = $lengow_admin_orders->assign_last_importation_infos();
 		$data['order_with_error'] = $locale->t(
@@ -557,7 +560,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 */
 	public function get_actions( $order_lengow ) {
 		$orders_data = '';
-		if ( $order_lengow->is_in_error ) {
+		if ( (bool) $order_lengow->is_in_error ) {
 			if ( Lengow_Order::PROCESS_STATE_FINISH !== (int) $order_lengow->order_lengow_state ) {
 				$error_messages = array();
 				$order_errors   = Lengow_Order_Error::get_order_errors( $order_lengow->id, null, false );
