@@ -92,7 +92,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		$lengow_admin_orders = new Lengow_Admin_Orders();
 		$locale              = new Lengow_Translation();
 		$data                = array();
-		$message = array();
+		$message             = array();
 		if ( 'import_all' === $action ) {
 			$import  = new Lengow_Import(
 				array( 'log_output' => false )
@@ -104,7 +104,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			$return          = Lengow_Order::re_import_order( $id_order_lengow );
 			$message         = $lengow_admin_orders->load_message( $return );
 		} elseif ( 'reimport_mass_action' === $action ) {
-			$orders      = isset( $_POST['orders'] ) ? $_POST['orders'] : null;
+			$orders         = isset( $_POST['orders'] ) ? $_POST['orders'] : null;
 			$total_reimport = 0;
 			if ( $orders ) {
 				foreach ( $orders as $order ) {
