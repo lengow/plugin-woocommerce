@@ -75,8 +75,14 @@ class Lengow_Admin_Orders extends WP_List_Table {
 				case 're_import':
 					self::do_action( 're_import' );
 					break;
+				case 're_send':
+					self::do_action( 're_send' );
+					break;
 				case 'reimport_mass_action':
 					self::do_action( 'reimport_mass_action' );
+					break;
+				case 'resend_mass_action':
+					self::do_action( 'resend_mass_action' );
 					break;
 			}
 			exit();
@@ -100,9 +106,21 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			$return  = $import->exec();
 			$message = $lengow_admin_orders->load_message( $return );
 		} elseif ( 're_import' === $action ) {
-			$id_order_lengow = isset( $_POST['order_id'] ) ? $_POST['order_id'] : null;
-			$return          = Lengow_Order::re_import_order( $id_order_lengow );
+			$order_lengow_id = isset( $_POST['order_id'] ) ? $_POST['order_id'] : null;
+			$return          = Lengow_Order::re_import_order( $order_lengow_id );
 			$message         = $lengow_admin_orders->load_message( $return );
+		} elseif ( 're_send' === $action ) {
+			$order_lengow_id = isset( $_POST['order_id'] ) ? $_POST['order_id'] : null;
+			if ( null !== $order_lengow_id ) {
+				$order_lengow = new Lengow_Order( $order_lengow_id );
+				$order_status = Lengow_Order::get_woocommerce_order_status($order_lengow->id);
+				// sending an API call for sending or canceling an order.
+				if ( $order_status === Lengow_Order::get_order_state( Lengow_Order::STATE_SHIPPED ) ) {
+					$order_lengow->call_action( Lengow_Action::TYPE_SHIP );
+				} elseif ( $order_status === Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED ) ) {
+					$order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
+				}
+			}
 		} elseif ( 'reimport_mass_action' === $action ) {
 			$orders         = isset( $_POST['orders'] ) ? $_POST['orders'] : null;
 			$total_reimport = 0;
@@ -118,6 +136,10 @@ class Lengow_Admin_Orders extends WP_List_Table {
 					'2' => count( $orders ),
 				) );
 			}
+		} elseif ( 'resend_mass_action' === $action ) {
+			echo json_encode( 'lapin' );
+
+			return;
 		}
 		$order_collection         = $lengow_admin_orders->assign_last_importation_infos();
 		$data['order_with_error'] = $locale->t(
@@ -492,7 +514,8 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			'orders.order_item',
 			'orders.total_paid',
 			'orders.currency',
-			'orders.is_in_error'
+			'orders.is_in_error',
+			'orders.order_process_state',
 		);
 
 		$query = 'SELECT ' . join( ', ', $fields ) .
@@ -559,35 +582,63 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 * @return string
 	 */
 	public function get_actions( $order_lengow ) {
-		$orders_data = '';
-		if ( (bool) $order_lengow->is_in_error ) {
-			if ( Lengow_Order::PROCESS_STATE_FINISH !== (int) $order_lengow->order_lengow_state ) {
-				$error_messages = array();
-				$order_errors   = Lengow_Order_Error::get_order_errors( $order_lengow->id, null, false );
-				if ( ! empty( $order_errors ) ) {
-					foreach ( $order_errors as $error ) {
-						if ( '' !== $error->message ) {
-							$error_messages[] = Lengow_Main::clean_data( Lengow_Main::decode_log_message( $error->message ) );
-						} else {
-							$error_messages[] = Lengow_Main::decode_log_message( 'order.screen.no_error_message' );
-						}
+		$locale = new Lengow_Translation();
+		$orders_data    = '';
+		$error_messages = array();
+		$order_state  = (int) $order_lengow->order_process_state;
+		// check if order is not finished and is in error.
+		if ( (bool) $order_lengow->is_in_error && Lengow_Order::PROCESS_STATE_FINISH !== $order_state ) {
+			$order_errors = Lengow_Order_Error::get_order_errors( $order_lengow->id, Lengow_Order_Error::ERROR_TYPE_IMPORT, false );
+			if ( ! empty( $order_errors ) ) {
+				foreach ( $order_errors as $error ) {
+					if ( '' !== $error->message ) {
+						$error_messages[] = Lengow_Main::clean_data( Lengow_Main::decode_log_message( $error->message ) );
+					} else {
+						$error_messages[] = Lengow_Main::decode_log_message( 'order.table.no_error_message' );
 					}
-
-					$message = Lengow_Main::decode_log_message( 'order.screen.order_not_imported' )
+				}
+				if ( Lengow_Order::PROCESS_STATE_NOT_IMPORTED === $order_state ) {
+					$message = Lengow_Main::decode_log_message( 'order.table.order_not_imported' )
 					           . '<br/>' . join( '<br/>', $error_messages );
 
 					$value       = '<a href="#"
-										class="lengow_re_import lengow_link_tooltip lgw-btn lgw-btn-white"
-					                    data-action="re_import"
-					                    data-order="' . $order_lengow->id . '"
-					                    data-html="true"
-					                    data-original-title="' . $message . '">'
-					               . Lengow_Main::decode_log_message( 'order.screen.not_imported' ) . ' <i class="fa fa-refresh"></i></a>';
+									class="lengow_action lengow_link_tooltip lgw-btn lgw-btn-white"
+				                    data-action="re_import"
+				                    data-order="' . $order_lengow->id . '"
+				                    data-html="true"
+				                    data-original-title="' . $message . '">'
+					               . Lengow_Main::decode_log_message( 'order.table.not_imported' ) . ' <i class="fa fa-refresh"></i></a>';
+					$orders_data = $value;
+				} else {
+					$message = Lengow_Main::decode_log_message( 'order.table.action_sent_not_work' )
+					           . '<br/>' . join( '<br/>', $error_messages );
+
+					$value       = '<a href="#"
+									class="lengow_action lengow_link_tooltip lgw-btn lgw-btn-white"
+				                    data-action="re_send"
+				                    data-order="' . $order_lengow->id . '"
+				                    data-html="true"
+				                    data-original-title="' . $message . '">'
+					               . Lengow_Main::decode_log_message( 'order.table.not_sent' ) . ' <i class="fa fa-refresh"></i></a>';
 					$orders_data = $value;
 				}
 			}
-		}
+		} else {
+			if ($order_lengow->order_id && Lengow_Order::PROCESS_STATE_IMPORT === $order_state) {
+				$last_action = Lengow_Action::get_last_order_action_type($order_lengow->order_id);
+				if ($last_action) {
+					$message = $locale->t( 'order.table.action_sent', array('1' => $last_action) );
+					$value = '<a class="lengow_action lengow_link_tooltip lgw-btn lgw-btn-white lgw-link-disabled"
+				                    data-order="' . $order_lengow->id . '"
+				                    data-action="' . 'none' . '"
+				                    data-original-title="' . $message . '"
+				                    >
+					               Action sent</a>';
+					$orders_data = $value;
+				}
+			}
 
+		}
 		return $orders_data;
 	}
 }

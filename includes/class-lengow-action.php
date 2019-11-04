@@ -197,6 +197,23 @@ class Lengow_Action {
 	}
 
 	/**
+	 * Get last order action type.
+	 *
+	 * @param $order_id
+	 *
+	 * @return bool|string
+	 */
+	public static function get_last_order_action_type($order_id) {
+		$where = array( 'order_id' => $order_id, 'state' => self::STATE_NEW );
+		$actions = self::get($where, false);
+		if (!$actions) {
+			return false;
+		}
+		$last_action = end($actions);
+		return (string)$last_action->action_type;
+	}
+
+	/**
 	 * Finish action.
 	 *
 	 * @param integer $action_id Lengow action id

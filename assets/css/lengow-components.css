@@ -801,6 +801,12 @@ select.multiple-select option {
   display: inline-block;
 }
 
+/* LINK */
+#lengow_order_grid .lgw-link-disabled:hover {
+  cursor: default;
+  color: inherit;
+}
+
 /*************************************************/
 /*                    TOOLTIP                    */
 /*************************************************/

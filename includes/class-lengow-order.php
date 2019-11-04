@@ -32,6 +32,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Order {
 
 	/**
+	 * @var integer order process state for order not imported.
+	 */
+	const PROCESS_STATE_NOT_IMPORTED = 0;
+
+	/**
 	 * @var integer order process state for order imported.
 	 */
 	const PROCESS_STATE_IMPORT = 1;
@@ -959,5 +964,20 @@ class Lengow_Order {
 		$return = $order_lines[ $this->delivery_address_id ];
 
 		return ! empty( $return ) ? $return : false;
+	}
+
+	/**
+	 * Get status of Woocommerce order.
+	 *
+	 * @param integer $id Lengow order id
+	 *
+	 * @return bool|string
+	 */
+	public static function get_woocommerce_order_status($id) {
+		$order = self::get(array('id' => $id));
+		if ($order->order_id) {
+			return get_post_status($order->order_id);
+		}
+		return false;
 	}
 }

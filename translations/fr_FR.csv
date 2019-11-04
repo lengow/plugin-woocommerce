@@ -81,6 +81,7 @@ product.table.type_downloadable|Téléchargeable
 product.table.type_virtual|Virtuel
 order.screen.button_reimport_order|Réimporter mes commandes
 order.screen.mass_action_reimport_success|%{1} commande(s) sur %{2} ont été importée(s)
+order.screen.mass_action_resend_success|%{1} commande(s) sur %{2} ont été envoyée(s)
 order.screen.button_resend_order|Renvoyer mes actions
 order.screen.all_order_will_be_sent_to|Les rapports d'erreurs de vos commandes seront envoyés par email à
 order.screen.no_order_will_be_sent|Les rapport d'erreurs de vos commandes ne seront pas envoyés par email
@@ -92,8 +93,6 @@ order.screen.order_to_be_sent|Vous avez %{nb_order} commande(s) en attente d'exp
 order.screen.last_order_importation|Dernière synchronisation
 order.screen.no_order_importation|Aucune synchronisation pour le moment
 order.screen.button_update_orders|Synchroniser les commandes
-order.screen.not_imported|Pas importée
-order.screen.order_not_imported|Votre commande n'a pas été importée dans WooCommerce
 order.screen.preprod_warning_message|Vous êtes en mode préproduction. Vous pouvez importer vos commandes mais les interactions avec Lengow ne sont pas possibles. <a href=%{url}>Retourner en mode production ?</a>
 order.screen.status_not_synchronized|Non synchronisé
 order.screen.status_accepted|Accepté
@@ -117,6 +116,12 @@ order.table.date|Date
 order.table.country|Pays
 order.table.quantity|Quantité
 order.table.total|Total
+order.table.order_not_imported|Votre commande n'a pas été importée dans WooCommerce
+order.table.action_sent_not_work|L'action envoyée à la place de marché ne fonctionne pas
+order.table.no_error_message|Erreur non identifiée, merci de contacter le support Lengow pour plus d'informations
+order.table.not_imported|Pas importée
+order.table.not_sent|pas envoyée
+order.table.action_sent|Action %{1}  envoyée
 order_setting.screen.default_shipping_method_title|Gérez les méthodes de livraison
 order_setting.screen.default_shipping_method_description|Sélectionnez la méthode de livraison par défaut à appliquer à vos commandes
 order_setting.screen.order_status_title|Statut des commandes

@@ -73,10 +73,15 @@
         /**
          * Ajax to synchronize one order.
          */
-        $(document).on('click', '.lengow_re_import', function () {
+        $(document).on('click', '.lengow_action', function (e) {
+            e.preventDefault();
+            var do_action = $(this).attr('data-action');
+            if (do_action === 'none') {
+                return;
+            }
             var data = {
                 action: 'post_process_orders',
-                do_action: 're_import',
+                do_action: do_action,
                 order_id: $(this).attr('data-order')
             };
             $('.lengow_tooltip').fadeOut(150);
@@ -90,8 +95,8 @@
                     var data = JSON.parse(content);
                     $("#container_lengow_grid").load(location.href + ' #lengow_order_grid', function () {
                         reload_informations(data, false);
+                        load_reload();
                     });
-                    load_reload();
                 },
                 error: function (content) {
                     $('#lengow_charge_import_order').fadeOut(150);
@@ -118,11 +123,13 @@
                 do_action: do_action,
                 orders: orders
             };
+            console.log(data);
             $.ajax({
                 url: ajaxurl,
                 type: 'POST',
                 data: data,
                 success: function (content) {
+                    console.log(content);
                     var data = JSON.parse(content);
                     reload_informations(data, true);
                     load_reload();
