@@ -123,13 +123,11 @@
                 do_action: do_action,
                 orders: orders
             };
-            console.log(data);
             $.ajax({
                 url: ajaxurl,
                 type: 'POST',
                 data: data,
                 success: function (content) {
-                    console.log(content);
                     var data = JSON.parse(content);
                     reload_informations(data, true);
                     load_reload();

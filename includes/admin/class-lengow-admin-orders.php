@@ -137,9 +137,30 @@ class Lengow_Admin_Orders extends WP_List_Table {
 				) );
 			}
 		} elseif ( 'resend_mass_action' === $action ) {
-			echo json_encode( 'lapin' );
-
-			return;
+			$orders         = isset( $_POST['orders'] ) ? $_POST['orders'] : null;
+			$total_resend = 0;
+			if ( $orders ) {
+				foreach ( $orders as $order ) {
+					$result = false;
+					$order_lengow = new Lengow_Order( $order );
+					if ($order_lengow->order_id) {
+						$order_status = Lengow_Order::get_woocommerce_order_status($order_lengow->id);
+						// sending an API call for sending or canceling an order.
+						if ( $order_status === Lengow_Order::get_order_state( Lengow_Order::STATE_SHIPPED ) ) {
+							$result = $order_lengow->call_action( Lengow_Action::TYPE_SHIP );
+						} elseif ( $order_status === Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED ) ) {
+							$result = $order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
+						}
+						if ( $result ) {
+							$total_resend ++;
+						}
+					}
+				}
+				$message[] = $locale->t( 'order.screen.mass_action_resend_success', array(
+					'1' => $total_resend,
+					'2' => count( $orders ),
+				) );
+			}
 		}
 		$order_collection         = $lengow_admin_orders->assign_last_importation_infos();
 		$data['order_with_error'] = $locale->t(
