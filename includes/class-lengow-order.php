@@ -601,6 +601,54 @@ class Lengow_Order {
 	}
 
 	/**
+	 * Get all unset orders.
+	 *
+	 * @return array|false
+	 */
+	public static function get_unsent_orders() {
+		global $wpdb;
+
+		if (Lengow_Main::compare_version( '2.2' )) {
+			$query   = '
+				SELECT lo.id as order_lengow_id, p.ID as order_id, p.post_status as order_status
+				FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . ' lo
+				LEFT JOIN ' . $wpdb->posts . ' p ON p.ID = lo.order_id
+	            WHERE lo.order_process_state = %d
+	            AND lo.is_in_error = %d
+	            AND p.post_status IN (%s,%s)
+	            AND p.post_modified >= %s
+	        ';
+		} else {
+			$query   = '
+				SELECT lo.id as order_lengow_id, p.ID as order_id, t.slug as order_status
+				FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . ' lo
+				LEFT JOIN ' . $wpdb->posts . ' p ON p.ID = lo.order_id
+				LEFT JOIN ' . $wpdb->term_relationships . ' tr ON tr.object_id = p.ID
+				LEFT JOIN ' . $wpdb->term_taxonomy . ' tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
+				LEFT JOIN ' . $wpdb->terms . ' t ON t.term_id = tt.term_id
+	            WHERE lo.order_process_state = %d
+	            AND lo.is_in_error = %d
+	            AND t.slug IN (%s,%s)
+	            AND p.post_modified >= %s
+	        ';
+		}
+		$results = $wpdb->get_results(
+			$wpdb->prepare(
+				$query,
+				array(
+					self::PROCESS_STATE_IMPORT,
+					0,
+					self::get_order_state( self::STATE_SHIPPED ),
+					self::get_order_state( self::STATE_CANCELED ),
+					date( 'Y-m-d H:i:s', strtotime( '-5 days', time() ) ),
+				)
+			)
+		);
+
+		return $results ? $results : false;
+	}
+
+	/**
 	 * Update order state to marketplace state.
 	 *
 	 * @param WC_Order $order WooCommerce order instance
