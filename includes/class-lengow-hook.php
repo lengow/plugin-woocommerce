@@ -27,6 +27,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Dependencies for front office
+ */
+include_once( 'class-lengow-configuration.php' );
+include_once( 'class-lengow-main.php' );
+include_once( 'class-lengow-product.php' );
+include_once( 'class-lengow-order.php' );
+
+/**
  * Lengow_Hook Class.
  */
 class Lengow_Hook {
@@ -52,7 +60,7 @@ class Lengow_Hook {
 				array( 'Lengow_Box_Order_Shipping', 'html_display' ),
 				'shop_order',
 				'side',
-                'high'
+				'high'
 			);
 		}
 	}
@@ -89,9 +97,9 @@ class Lengow_Hook {
 	 * @return integer|false
 	 */
 	public static function save_lengow_shipping( $post_id ) {
-        if ( 'shop_order' !== get_post_type( $post_id ) ) {
-            return false;
-        }
+		if ( 'shop_order' !== get_post_type( $post_id ) ) {
+			return false;
+		}
 		$order_lengow_id = Lengow_Order::get_id_from_order_id( $post_id );
 		if ( $order_lengow_id ) {
 			// check if our nonce is set.
@@ -144,5 +152,20 @@ class Lengow_Hook {
 		}
 
 		return $post_id;
+	}
+
+	/**
+	 * Adding simple tracker Lengow on footer when order is confirmed.
+	 */
+	public static function render_lengow_tracker() {
+		global $wp;
+
+		if ( is_checkout() && (bool) Lengow_Configuration::get( 'lengow_tracking_enabled' ) ) {
+			if ( isset( $wp->query_vars['order-received'] ) ) {
+				$order_id = (int) $wp->query_vars['order-received'];
+				$order    = new WC_Order( $order_id );
+				Lengow_Tracker::html_display( $order );
+			}
+		}
 	}
 }

@@ -99,6 +99,42 @@ $list_file = $logs ? array_reverse( $logs ) : array();
             </div>
         </div>
         <div class="lgw-box">
+            <h2><?php echo $locale->t( 'global_setting.screen.tracker_title' ); ?></h2>
+            <p><?php echo $locale->t( 'global_setting.screen.tracker_description' ); ?></p>
+            <div class="form-group">
+                <div class="lgw-switch <?php echo (bool) $values['lengow_tracking_enabled'] ? 'checked' : ''; ?>">
+                    <label>
+                        <div>
+                            <span></span>
+                            <input type="hidden" name="lengow_tracking_enabled" value="0">
+                            <input name="lengow_tracking_enabled"
+                                   type="checkbox"
+							    <?php echo (bool) $values['lengow_tracking_enabled'] ? 'checked' : ''; ?> />
+                        </div>
+					    <?php echo $keys['lengow_tracking_enabled']['label']; ?>
+                    </label>
+                </div>
+            </div>
+            <div id="lengow_wrapper_tracking_id"
+			    <?php echo (bool) $values['lengow_tracking_enabled'] ? '' : 'style="display:none;"'; ?>>
+                <div class="grey-frame">
+                    <div class="form-group">
+                        <label class="control-label"><?php echo $keys['lengow_tracking_id']['label']; ?></label>
+                        <select class="js-log-select js-select lengow_select" name="lengow_tracking_id">
+		                    <?php foreach ( Lengow_Main::$tracker_choice_id as $id => $label ) : ?>
+                                <option value="<?php echo $id; ?>" <?php echo $values['lengow_tracking_id'] === $id ? 'selected' : ''; ?>>
+				                    <?php echo $label; ?>
+                                </option>
+		                    <?php endforeach; ?>
+                        </select>
+
+                        <span class="legend blue-frame"
+                              style="display:block;"><?php echo $keys['lengow_tracking_id']['legend']; ?></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="lgw-box">
             <h2 class="margin-s"><?php echo $locale->t( 'global_setting.screen.preprod_mode_title' ); ?></h2>
             <p><?php echo $locale->t( 'global_setting.screen.preprod_mode_description' ); ?></p>
             <div class="lgw-switch <?php echo (bool) $values['lengow_preprod_enabled'] ? 'checked' : ''; ?>">
