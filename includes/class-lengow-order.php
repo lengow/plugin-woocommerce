@@ -608,8 +608,8 @@ class Lengow_Order {
 	public static function get_unsent_orders() {
 		global $wpdb;
 
-		if (Lengow_Main::compare_version( '2.2' )) {
-			$query   = '
+		if ( Lengow_Main::compare_version( '2.2' ) ) {
+			$query = '
 				SELECT lo.id as order_lengow_id, p.ID as order_id, p.post_status as order_status
 				FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . ' lo
 				LEFT JOIN ' . $wpdb->posts . ' p ON p.ID = lo.order_id
@@ -619,7 +619,7 @@ class Lengow_Order {
 	            AND p.post_modified >= %s
 	        ';
 		} else {
-			$query   = '
+			$query = '
 				SELECT lo.id as order_lengow_id, p.ID as order_id, t.slug as order_status
 				FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . ' lo
 				LEFT JOIN ' . $wpdb->posts . ' p ON p.ID = lo.order_id
@@ -1021,11 +1021,12 @@ class Lengow_Order {
 	 *
 	 * @return bool|string
 	 */
-	public static function get_woocommerce_order_status($id) {
-		$order = self::get(array('id' => $id));
-		if ($order->order_id) {
-			return get_post_status($order->order_id);
+	public static function get_woocommerce_order_status( $id ) {
+		$order = self::get( array( 'id' => $id ) );
+		if ( $order->order_id ) {
+			return get_post_status( $order->order_id );
 		}
+
 		return false;
 	}
 }

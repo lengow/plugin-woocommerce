@@ -34,7 +34,7 @@ class Lengow_Connector {
 	/**
 	 * @var string url of the API Lengow.
 	 */
-	const LENGOW_API_URL = 'https://api.lengow.io';
+	// const LENGOW_API_URL = 'https://api.lengow.io';
 	// const LENGOW_API_URL = 'https://api.lengow.net';
 	// const LENGOW_API_URL = 'http://api.lengow.rec';
 	// const LENGOW_API_URL = 'http://10.100.1.82:8081';

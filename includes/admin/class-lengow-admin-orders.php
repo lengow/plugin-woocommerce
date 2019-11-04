@@ -113,7 +113,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			$order_lengow_id = isset( $_POST['order_id'] ) ? $_POST['order_id'] : null;
 			if ( null !== $order_lengow_id ) {
 				$order_lengow = new Lengow_Order( $order_lengow_id );
-				$order_status = Lengow_Order::get_woocommerce_order_status($order_lengow->id);
+				$order_status = Lengow_Order::get_woocommerce_order_status( $order_lengow->id );
 				// sending an API call for sending or canceling an order.
 				if ( $order_status === Lengow_Order::get_order_state( Lengow_Order::STATE_SHIPPED ) ) {
 					$order_lengow->call_action( Lengow_Action::TYPE_SHIP );
@@ -137,14 +137,14 @@ class Lengow_Admin_Orders extends WP_List_Table {
 				) );
 			}
 		} elseif ( 'resend_mass_action' === $action ) {
-			$orders         = isset( $_POST['orders'] ) ? $_POST['orders'] : null;
+			$orders       = isset( $_POST['orders'] ) ? $_POST['orders'] : null;
 			$total_resend = 0;
 			if ( $orders ) {
 				foreach ( $orders as $order ) {
-					$result = false;
+					$result       = false;
 					$order_lengow = new Lengow_Order( $order );
-					if ($order_lengow->order_id) {
-						$order_status = Lengow_Order::get_woocommerce_order_status($order_lengow->id);
+					if ( $order_lengow->order_id ) {
+						$order_status = Lengow_Order::get_woocommerce_order_status( $order_lengow->id );
 						// sending an API call for sending or canceling an order.
 						if ( $order_status === Lengow_Order::get_order_state( Lengow_Order::STATE_SHIPPED ) ) {
 							$result = $order_lengow->call_action( Lengow_Action::TYPE_SHIP );
@@ -603,10 +603,10 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 * @return string
 	 */
 	public function get_actions( $order_lengow ) {
-		$locale = new Lengow_Translation();
+		$locale         = new Lengow_Translation();
 		$orders_data    = '';
 		$error_messages = array();
-		$order_state  = (int) $order_lengow->order_process_state;
+		$order_state    = (int) $order_lengow->order_process_state;
 		// check if order is not finished and is in error.
 		if ( (bool) $order_lengow->is_in_error && Lengow_Order::PROCESS_STATE_FINISH !== $order_state ) {
 			$order_errors = Lengow_Order_Error::get_order_errors( $order_lengow->id, Lengow_Order_Error::ERROR_TYPE_IMPORT, false );
@@ -645,11 +645,11 @@ class Lengow_Admin_Orders extends WP_List_Table {
 				}
 			}
 		} else {
-			if ($order_lengow->order_id && Lengow_Order::PROCESS_STATE_IMPORT === $order_state) {
-				$last_action = Lengow_Action::get_last_order_action_type($order_lengow->order_id);
-				if ($last_action) {
-					$message = $locale->t( 'order.table.action_sent', array('1' => $last_action) );
-					$value = '<a class="lengow_action lengow_link_tooltip lgw-btn lgw-btn-white lgw-link-disabled"
+			if ( $order_lengow->order_id && Lengow_Order::PROCESS_STATE_IMPORT === $order_state ) {
+				$last_action = Lengow_Action::get_last_order_action_type( $order_lengow->order_id );
+				if ( $last_action ) {
+					$message     = $locale->t( 'order.table.action_sent', array( '1' => $last_action ) );
+					$value       = '<a class="lengow_action lengow_link_tooltip lgw-btn lgw-btn-white lgw-link-disabled"
 				                    data-order="' . $order_lengow->id . '"
 				                    data-action="' . 'none' . '"
 				                    data-original-title="' . $message . '"
@@ -660,6 +660,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			}
 
 		}
+
 		return $orders_data;
 	}
 }
