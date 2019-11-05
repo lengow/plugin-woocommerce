@@ -746,18 +746,16 @@ class Lengow_Order {
 	 * @return bool
 	 */
 	public static function re_send_order( $order_lengow_id ) {
-		$order_lengow = self::get( array( 'id' => $order_lengow_id ) );
+		$order_lengow = New Lengow_Order( $order_lengow_id );
 		if ( $order_lengow->order_id ) {
 			$order_wc     = new WC_Order( $order_lengow->order_id );
 			$order_status = self::get_order_status( $order_wc );
 			// sending an API call for sending or canceling an order.
 			if ( self::get_order_state( Lengow_Order::STATE_SHIPPED ) === $order_status ) {
-				$order_lengow->call_action( Lengow_Action::TYPE_SHIP );
+				return $order_lengow->call_action( Lengow_Action::TYPE_SHIP );
 			} else {
-				$order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
+				return $order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
 			}
-
-			return true;
 		}
 
 		return false;

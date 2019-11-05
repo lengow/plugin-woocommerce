@@ -108,13 +108,14 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		} elseif ( 're_import' === $action ) {
 			$order_lengow_id = isset( $_POST['order_id'] ) ? $_POST['order_id'] : null;
 			if ( null !== $order_lengow_id ) {
-				$return  = Lengow_Order::re_import_order( $order_lengow_id );
-				$message = $lengow_admin_orders->load_message( $return );
+				Lengow_Order::re_import_order( $order_lengow_id );
 			}
 		} elseif ( 're_send' === $action ) {
 			$order_lengow_id = isset( $_POST['order_id'] ) ? $_POST['order_id'] : null;
 			if ( null !== $order_lengow_id ) {
-				Lengow_Order::re_send_order( $order_lengow_id );
+				$return = Lengow_Order::re_send_order( $order_lengow_id );
+				echo json_encode($return);
+				return;
 			}
 		} elseif ( 'reimport_mass_action' === $action ) {
 			$orders_lengow_ids = isset( $_POST['orders'] ) ? $_POST['orders'] : null;

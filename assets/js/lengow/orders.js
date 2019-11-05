@@ -89,6 +89,7 @@
                 type: 'POST',
                 data: data,
                 success: function (content) {
+                    console.log(content);
                     var data = JSON.parse(content);
                     $('#container_lengow_grid').load(location.href + ' #lengow_order_grid', function () {
                         reload_informations(data, false);
