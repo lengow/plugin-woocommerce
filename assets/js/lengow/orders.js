@@ -58,8 +58,8 @@
                     $("#container_lengow_grid").load(location.href + ' #lengow_order_grid', function () {
                         $('#lengow_charge_import_order').fadeOut(150);
                         reload_informations(data, true);
+                        load_reload();
                     });
-                    load_reload();
                 },
                 error: function (content) {
                     $('#lengow_charge_import_order').fadeOut(150);
@@ -92,8 +92,8 @@
                     var data = JSON.parse(content);
                     $('#container_lengow_grid').load(location.href + ' #lengow_order_grid', function () {
                         reload_informations(data, false);
+                        load_reload();
                     });
-                    load_reload();
                 },
                 error: function (content) {
                     $('#lengow_charge_import_order').fadeOut(150);
@@ -128,8 +128,8 @@
                     var data = JSON.parse(content);
                     $('#container_lengow_grid').load(location.href + ' #lengow_order_grid', function () {
                         reload_informations(data, true);
+                        load_reload();
                     });
-                    load_reload();
                 },
                 error: function (content) {
                     $('#lengow_charge_import_order').fadeOut(150);

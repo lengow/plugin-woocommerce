@@ -93,8 +93,8 @@ fr:
   order:
     screen:
       button_reimport_order: "Réimporter mes commandes"
-      mass_action_reimport_success: "%{1} commande(s) sur %{2} ont été importée(s)"
-      mass_action_resend_success: "%{1} commande(s) sur %{2} ont été envoyée(s)"
+      mass_action_reimport_success: "%{order_reimported} commande(s) sur %{order_total} ont été importée(s)"
+      mass_action_resend_success: "%{order_resent} commande(s) sur %{order_total} ont été envoyée(s)"
       button_resend_order: "Renvoyer mes actions"
       all_order_will_be_sent_to: "Les rapports d'erreurs de vos commandes seront envoyés par email à"
       no_order_will_be_sent: "Les rapport d'erreurs de vos commandes ne seront pas envoyés par email"
@@ -124,7 +124,7 @@ fr:
       lengow_status: "Statut Lengow"
       marketplace: "Marketplace"
       order_id: "Commande ID"
-      customer: "Client"
+      customer: 'Client'
       reference: "Référence"
       date: "Date"
       country: "Pays"
@@ -133,9 +133,9 @@ fr:
       order_not_imported: "Votre commande n'a pas été importée dans WooCommerce"
       action_sent_not_work: "L'action envoyée à la place de marché ne fonctionne pas"
       no_error_message: "Erreur non identifiée, merci de contacter le support Lengow pour plus d'informations"
-      not_imported: "Pas importée"
+      not_imported: "pas importée"
       not_sent: "pas envoyée"
-      action_sent: "Action %{1}  envoyée"
+      action_sent: "action %{action_type} envoyée"
   order_setting:
     screen:
       default_shipping_method_title: "Gérez les méthodes de livraison"
@@ -149,6 +149,8 @@ fr:
     screen:
       notification_alert_title: "Notifications & alertes"
       security_title: "Sécurité"
+      tracker_title: "Tracker Lengow"
+      tracker_description: "Ce tracker vous permet de récupérer les statistiques de commandes de votre site directement sur la plateforme Lengow."
       preprod_mode_title: "Mode préproduction"
       preprod_mode_description: "Utilisez la pré-production pour tester et simuler des commandes fictives. Pour rappel, vous devez activer ces paramètres UNIQUEMENT sur votre serveur de préproduction."
       log_file_title: "Fichiers de Log"
@@ -194,6 +196,9 @@ fr:
     lengow_ip_enable_legend: "Activez cette option si vous voulez sécuriser votre export par ip. Par défaut, votre export est sécurisé par une clé unique."
     lengow_authorized_ip_title: "IP autorisée(s)"
     lengow_authorized_ip_legend: "Listez ici les IP autorisées à accéder à votre flux d'export.\nSéparez-les par ' ; '"
+    lengow_tracking_enabled_title: "Activer le tracking Lengow"
+    lengow_tracking_id_title: "ID Tracking Lengow"
+    lengow_tracking_id_legend: "Le nom de l'identifiant unique indiqué dans Lengow"
     lengow_selection_enabled_title: "Exporter seulement la sélection"
     lengow_selection_enabled_legend: "Activez cette option si vous ne voulez pas exporter tous vos produits disponibles. Sélectionnez ensuite les produits un par un."
     lengow_product_types_title: "Type de produit à exporter"

@@ -93,8 +93,8 @@ en:
   order:
     screen:
       button_reimport_order: "Re-import Orders"
-      mass_action_reimport_success: "A total of %{1} order(s) in %{2} selected have been imported"
-      mass_action_resend_success: "A total of %{1} order(s) in %{2} selected have been sent."
+      mass_action_reimport_success: "A total of %{order_reimported} order(s) in %{order_total} selected have been imported"
+      mass_action_resend_success: "A total of %{order_resent} order(s) in %{order_total} selected have been sent"
       button_resend_order: "Resend Actions"
       all_order_will_be_sent_to: "All order issue reports will be sent by mail to"
       no_order_will_be_sent: "No order issue reports will be sent by mail"
@@ -135,7 +135,7 @@ en:
       no_error_message: "Unidentified error, please contact Lengow's support team for more information"
       not_imported: "not imported"
       not_sent: "not sent"
-      action_sent: "action %{1} sent"
+      action_sent: "action %{action_type} sent"
   order_setting:
     screen:
       default_shipping_method_title: "Manage shipping methods"
