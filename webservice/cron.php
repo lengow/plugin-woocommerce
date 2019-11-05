@@ -144,6 +144,7 @@ if ( isset( $_GET['get_sync'] ) && 1 == $_GET['get_sync'] ) {
 	if ( ! $sync || Lengow_Sync::SYNC_ACTION === $sync ) {
 		Lengow_Action::check_finish_action();
 		Lengow_Action::check_old_action();
+		Lengow_Action::check_action_not_sent();
 	}
 	// sync options between Lengow and WooCommerce.
 	if ( ! $sync || Lengow_Sync::SYNC_CMS_OPTION === $sync ) {

@@ -197,6 +197,23 @@ class Lengow_Action {
 	}
 
 	/**
+	 * Get last order action type.
+	 *
+	 * @param $order_id
+	 *
+	 * @return bool|string
+	 */
+	public static function get_last_order_action_type( $order_id ) {
+		$actions = self::get_active_action_by_order_id( $order_id );
+		if ( ! $actions ) {
+			return false;
+		}
+		$last_action = end( $actions );
+
+		return $last_action->action_type;
+	}
+
+	/**
 	 * Finish action.
 	 *
 	 * @param integer $action_id Lengow action id
@@ -503,5 +520,33 @@ class Lengow_Action {
 		);
 
 		return $results ? $results : false;
+	}
+
+	/**
+	 * Check if actions are not sent.
+	 *
+	 * @return boolean
+	 */
+	public static function check_action_not_sent() {
+		if ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
+			return false;
+		}
+		Lengow_Main::log( 'API-OrderAction', Lengow_Main::set_log_message( 'log.order_action.check_action_not_sent' ) );
+		// get unsent orders.
+		$unsent_orders = Lengow_Order::get_unsent_orders();
+		if ( $unsent_orders ) {
+			foreach ( $unsent_orders as $unsent_order ) {
+				if ( ! self::get_active_action_by_order_id( $unsent_order->order_id ) ) {
+					$canceled_state = Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED );
+					$action         = $canceled_state === $unsent_order->order_status
+						? self::TYPE_CANCEL
+						: self::TYPE_SHIP;
+					$order_lengow   = new Lengow_Order( $unsent_order->order_lengow_id );
+					$order_lengow->call_action( $action );
+				}
+			}
+		}
+
+		return true;
 	}
 }

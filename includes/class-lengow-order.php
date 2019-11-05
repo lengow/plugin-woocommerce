@@ -32,6 +32,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Order {
 
 	/**
+	 * @var integer order process state for order not imported.
+	 */
+	const PROCESS_STATE_NOT_IMPORTED = 0;
+
+	/**
 	 * @var integer order process state for order imported.
 	 */
 	const PROCESS_STATE_IMPORT = 1;
@@ -596,6 +601,54 @@ class Lengow_Order {
 	}
 
 	/**
+	 * Get all unset orders.
+	 *
+	 * @return array|false
+	 */
+	public static function get_unsent_orders() {
+		global $wpdb;
+
+		if ( Lengow_Main::compare_version( '2.2' ) ) {
+			$query = '
+				SELECT lo.id as order_lengow_id, p.ID as order_id, p.post_status as order_status
+				FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . ' lo
+				LEFT JOIN ' . $wpdb->posts . ' p ON p.ID = lo.order_id
+	            WHERE lo.order_process_state = %d
+	            AND lo.is_in_error = %d
+	            AND p.post_status IN (%s,%s)
+	            AND p.post_modified >= %s
+	        ';
+		} else {
+			$query = '
+				SELECT lo.id as order_lengow_id, p.ID as order_id, t.slug as order_status
+				FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . ' lo
+				LEFT JOIN ' . $wpdb->posts . ' p ON p.ID = lo.order_id
+				LEFT JOIN ' . $wpdb->term_relationships . ' tr ON tr.object_id = p.ID
+				LEFT JOIN ' . $wpdb->term_taxonomy . ' tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
+				LEFT JOIN ' . $wpdb->terms . ' t ON t.term_id = tt.term_id
+	            WHERE lo.order_process_state = %d
+	            AND lo.is_in_error = %d
+	            AND t.slug IN (%s,%s)
+	            AND p.post_modified >= %s
+	        ';
+		}
+		$results = $wpdb->get_results(
+			$wpdb->prepare(
+				$query,
+				array(
+					self::PROCESS_STATE_IMPORT,
+					0,
+					self::get_order_state( self::STATE_SHIPPED ),
+					self::get_order_state( self::STATE_CANCELED ),
+					date( 'Y-m-d H:i:s', strtotime( '-5 days', time() ) ),
+				)
+			)
+		);
+
+		return $results ? $results : false;
+	}
+
+	/**
 	 * Update order state to marketplace state.
 	 *
 	 * @param WC_Order $order WooCommerce order instance
@@ -680,6 +733,29 @@ class Lengow_Order {
 			$results = $import->exec();
 
 			return $results;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Resend an action.
+	 *
+	 * @param $order_lengow_id
+	 *
+	 * @return bool
+	 */
+	public static function re_send_order( $order_lengow_id ) {
+		$order_lengow = New Lengow_Order( $order_lengow_id );
+		if ( $order_lengow->order_id ) {
+			$order_wc     = new WC_Order( $order_lengow->order_id );
+			$order_status = self::get_order_status( $order_wc );
+			// sending an API call for sending or canceling an order.
+			if ( self::get_order_state( Lengow_Order::STATE_SHIPPED ) === $order_status ) {
+				return $order_lengow->call_action( Lengow_Action::TYPE_SHIP );
+			} else {
+				return $order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
+			}
 		}
 
 		return false;

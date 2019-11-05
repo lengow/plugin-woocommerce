@@ -351,6 +351,7 @@ class Lengow_Import {
 			if ( ! $this->_preprod_mode && ! $this->_import_one_order && 'manual' === $this->_type_import ) {
 				Lengow_Action::check_finish_action();
 				Lengow_Action::check_old_action();
+				Lengow_Action::check_action_not_sent();
 			}
 			// sending email in error for orders and actions.
 			if ( (bool) Lengow_Configuration::get( 'lengow_report_mail_enabled' )

@@ -94,6 +94,7 @@ fr:
     screen:
       button_reimport_order: "Réimporter mes commandes"
       mass_action_reimport_success: "%{1} commande(s) sur %{2} ont été importée(s)"
+      mass_action_resend_success: "%{1} commande(s) sur %{2} ont été envoyée(s)"
       button_resend_order: "Renvoyer mes actions"
       all_order_will_be_sent_to: "Les rapports d'erreurs de vos commandes seront envoyés par email à"
       no_order_will_be_sent: "Les rapport d'erreurs de vos commandes ne seront pas envoyés par email"
@@ -105,8 +106,6 @@ fr:
       last_order_importation: "Dernière synchronisation"
       no_order_importation: "Aucune synchronisation pour le moment"
       button_update_orders: "Synchroniser les commandes"
-      not_imported: "Pas importée"
-      order_not_imported: "Votre commande n'a pas été importée dans WooCommerce"
       preprod_warning_message: "Vous êtes en mode préproduction. Vous pouvez importer vos commandes mais les interactions avec Lengow ne sont pas possibles. <a href=%{url}>Retourner en mode production ?</a>"
       status_not_synchronized: "Non synchronisé"
       status_accepted: "Accepté"
@@ -131,6 +130,12 @@ fr:
       country: "Pays"
       quantity: "Quantité"
       total: "Total"
+      order_not_imported: "Votre commande n'a pas été importée dans WooCommerce"
+      action_sent_not_work: "L'action envoyée à la place de marché ne fonctionne pas"
+      no_error_message: "Erreur non identifiée, merci de contacter le support Lengow pour plus d'informations"
+      not_imported: "Pas importée"
+      not_sent: "pas envoyée"
+      action_sent: "Action %{1}  envoyée"
   order_setting:
     screen:
       default_shipping_method_title: "Gérez les méthodes de livraison"
