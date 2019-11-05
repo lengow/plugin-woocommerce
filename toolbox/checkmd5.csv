@@ -6,7 +6,7 @@
 /assets/js/lengow/order_setting.js|6289c42d1a5eb446984faa7e113dbf09
 /assets/js/lengow/main_setting.js|73bc7af976eca3d222b4d49a38bc7501
 /assets/js/lengow/products.js|48777d25da2a7032f19c79b5d867202d
-/assets/js/lengow/orders.js|54944414d01f51dd79ceb737a377e6ed
+/assets/js/lengow/orders.js|e3381d6c4e079d0f9ad74f99043f198c
 /assets/js/lengow/home.js|d3069a4edda15efbe4504e0d2ffe8c99
 /assets/js/bootstrap_v3.min.js|5869c96cc8f19086aee625d670d741f9
 /assets/css/lengow-box-order.css|29fde45d13962f24750746dc3733d1e8
@@ -310,7 +310,7 @@
 /includes/admin/views/box-order-info/html-order-info.php|6ccf0c9290c170f015cb4fc32b04b587
 /includes/admin/views/html-admin-footer.php|acbe44b29e1a6a7ac00c7c88923ab616
 /includes/admin/views/products/html-admin-products.php|5371e61908e226af0c04b2956a315bf6
-/includes/admin/class-lengow-admin-orders.php|80eaf02841ad81cbda9a48ecb12f124f
+/includes/admin/class-lengow-admin-orders.php|f55585831620a987ef6158827f7cca5d
 /includes/admin/class-lengow-admin-main-settings.php|5ed9a94e2be9569634239451e2fb769f
 /includes/admin/class-lengow-admin-products.php|963c6b521d5e73fe7e7836087c5b0e71
 /includes/admin/class-lengow-admin-help.php|da715322cba5b48ca90d1359fa3beb05
@@ -322,7 +322,7 @@
 /includes/class-lengow-payment.php|ef21fc1cf0cd44eda6137291e07e3cfc
 /includes/class-lengow-feed.php|05f03585d61731875aa33aceee23be91
 /includes/class-lengow-import-order.php|f878d65e82f903c19dfcb5d245f61ea4
-/includes/class-lengow-connector.php|66362e5299d8ef67315173176a17c006
+/includes/class-lengow-connector.php|b810c4252d9ac83c79c227f61a777c1d
 /includes/class-lengow-order-line.php|63adfd6ec43c2054ff6ca3884594008a
 /includes/class-lengow-marketplace.php|a7ec4f1f1bd923737512671d720d3ad7
 /includes/class-lengow-sync.php|10dbb02ae7ec3cd085df48da0cd09fce
