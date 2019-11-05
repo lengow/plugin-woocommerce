@@ -2,14 +2,20 @@ module.name|Lengow
 module.plugin_name|Lengow for WooCommerce
 module.plugin_uri|http://www.lengow.com
 module.description|Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
-module.version|2.0.1
+module.version|2.2.0
 module.author|Lengow
+module.state_technical_error|Technical error - Lengow
+module.lengow_payment_title|Lengow payment
+module.lengow_payment_description|Automatic payment for all orders from Lengow
+module.processing_fee|Processing fees
 menu.product|Products
-menu.order|Stock management
+menu.order|Orders
 menu.jump_to_lengow|Jump to Lengow
 menu.preprod_active|Pre-production mode
 menu.counter|Trial period: %{counter} day(s) left.
 menu.upgrade_account|Subscribe
+menu.order_overview|Overview
+menu.order_parameter|Settings
 menu.help|Help
 menu.global_parameter|General settings
 footer.legals|Legal notices
@@ -18,6 +24,8 @@ dashboard.screen.welcome_back|Hi! Welcome back!
 dashboard.screen.go_to_lengow|Go to Lengow
 dashboard.screen.products_title|Products
 dashboard.screen.products_text|Take a look at all available products so that you can prepare your catalogue
+dashboard.screen.orders_title|Orders
+dashboard.screen.orders_text|Manage your orders directly on your WooCommerce dashboard
 dashboard.screen.settings_title|Settings
 dashboard.screen.settings_text|Configure your WooCommerce plugin main settings
 dashboard.screen.partner_business|Lengow, your business partner
@@ -71,14 +79,60 @@ product.table.in_stock|In stock
 product.table.out_of_stock|Out of stock
 product.table.type_downloadable|Downloadable
 product.table.type_virtual|Virtual
-order.screen.import_charge_first|Retrieving your orders...
+order.screen.button_reimport_order|Re-import Orders
+order.screen.mass_action_reimport_success|A total of %{order_reimported} order(s) in %{order_total} selected have been imported
+order.screen.mass_action_resend_success|A total of %{order_resent} order(s) in %{order_total} selected have been sent
+order.screen.button_resend_order|Resend Actions
+order.screen.all_order_will_be_sent_to|All order issue reports will be sent by mail to
+order.screen.no_order_will_be_sent|No order issue reports will be sent by mail
+order.screen.change_this|Change this?
+order.screen.import_charge_first|Retrieving your order(s)...
 order.screen.import_charge_second|Please bear with us; this will not take long (2 min average waiting time)
+order.screen.order_with_error|You have %{nb_order} order(s) with errors
+order.screen.order_to_be_sent|You have %{nb_order} order(s) waiting to be sent
 order.screen.last_order_importation|Last synchronization
 order.screen.no_order_importation|No synchronisation for now
-order.screen.button_update_orders|Synchronize Stock
-order.screen.order_synchronize_disabled|The option to decrease stocks in your WooCommerce backoffice is not activated; please visit <a href=%{url}>this page</a> to do it.
-order.screen.preprod_warning_message|You are in pre-production mode. You can synchronize your stock but no interaction with Lengow is possible. <a href=%{url}>Change this</a>
-global_setting.screen.main_setting_title|Main Setting
+order.screen.button_update_orders|Synchronize Orders
+order.screen.preprod_warning_message|You are in pre-production mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>
+order.screen.status_not_synchronized|Not synchronized
+order.screen.status_accepted|Accepted
+order.screen.status_waiting_shipment|Waiting for shipment
+order.screen.status_shipped|Shipped
+order.screen.status_closed|Closed
+order.screen.status_refunded|Refunded
+order.screen.status_canceled|Canceled
+order.screen.status_shipped_by_mkp|Shipped by Marketplace
+order.screen.no_order_title|The best is yet to come!
+order.screen.no_order_description|Your products have great visibility and your sales are about to prosper!
+order.table.button_search|Search
+order.table.id|ID
+order.table.action|Action
+order.table.lengow_status|Lengow status
+order.table.marketplace|Marketplace
+order.table.order_id|order ID
+order.table.customer|Customer
+order.table.reference|Reference
+order.table.date|Date
+order.table.country|Country
+order.table.quantity|Quantity
+order.table.total|Total
+order.table.order_not_imported|Order has not been imported into WooCommerce
+order.table.action_sent_not_work|Action sent to the marketplace didn't work
+order.table.no_error_message|Unidentified error, please contact Lengow's support team for more information
+order.table.not_imported|not imported
+order.table.not_sent|not sent
+order.table.action_sent|action %{action_type} sent
+order_setting.screen.default_shipping_method_title|Manage shipping methods
+order_setting.screen.default_shipping_method_description|Select the default shipping method that you would like to apply to your orders
+order_setting.screen.order_status_title|Order Status
+order_setting.screen.order_status_description|Match your Lengow order status to retrieve them in your orders easily
+order_setting.screen.import_setting_title|Order import
+order_setting.screen.import_setting_description|Manage your import settings for marketplace orders here
+order_setting.screen.nb_days|days
+global_setting.screen.notification_alert_title|Notifications & alerts
+global_setting.screen.security_title|Security
+global_setting.screen.tracker_title|Lengow tracker
+global_setting.screen.tracker_description|This tracker allows you to retrieve order statistics generated on your site directly in Lengow.
 global_setting.screen.preprod_mode_title|Pre-production Mode
 global_setting.screen.preprod_mode_description|Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY
 global_setting.screen.log_file_title|Log Files
@@ -87,9 +141,6 @@ global_setting.screen.button_download_file|Download
 global_setting.screen.button_save|Save changes
 global_setting.screen.setting_saving|Saving...
 global_setting.screen.setting_saved|Saved!
-global_setting.screen.import_setting_title|Stock management
-global_setting.screen.import_setting_description|All your orders are centralized in your Lengow platform : choose here if you want to synchronize your orders in order to decrease your products stock in your WooCommerce backoffice
-global_setting.screen.nb_days|days
 global_setting.screen.export_title|Export Setting
 global_setting.screen.product_types_title|Product type to export
 global_setting.screen.please_choose_log|Please choose a log file...
@@ -122,6 +173,9 @@ lengow_settings.lengow_ip_enable_title|Enable authorisation by IP
 lengow_settings.lengow_ip_enable_legend|Enable this option if you want your export to be secured by IP. By default, your export is secured by a unique key.
 lengow_settings.lengow_authorized_ip_title|Authorised IPs
 lengow_settings.lengow_authorized_ip_legend|Authorise IP to get access to your export feed.<br />Separate them ' ; '
+lengow_settings.lengow_tracking_enabled_title|Activate Lengow tracking
+lengow_settings.lengow_tracking_id_title|Lengow Tracking ID
+lengow_settings.lengow_tracking_id_legend|The name of the unique identifier entered in the Lengow
 lengow_settings.lengow_selection_enabled_title|Export the selection only
 lengow_settings.lengow_selection_enabled_legend|Activate this option if you do not want to export all available products. Then, select only the products you want to export
 lengow_settings.lengow_product_types_title|Product type to export
@@ -130,34 +184,84 @@ lengow_settings.lengow_export_format_title|Export the default format
 lengow_settings.lengow_export_file_enabled_title|Export in a file
 lengow_settings.lengow_export_file_enabled_legend|You should use this option if you have 3,000 products or more
 lengow_settings.lengow_last_export_title|Last export
-lengow_settings.lengow_import_days_title|Re-import all orders made since:
+lengow_settings.lengow_report_mail_enabled_title|I would like to be notified when there are issues regarding order and action synchronisation
+lengow_settings.lengow_report_mail_address_title|Mail for the report email
+lengow_settings.lengow_report_mail_address_legend|To add several emails, use " ; " to separate them
+lengow_settings.lengow_import_default_shipping_method_title|Default import shipping method
+lengow_settings.lengow_id_waiting_shipment_title|Orders in preparation
+lengow_settings.lengow_id_shipped_title|Shipped orders
+lengow_settings.lengow_id_cancel_title|Cancelled orders
+lengow_settings.lengow_id_shipped_by_mp_title|Orders shipped by marketplace
+lengow_settings.lengow_import_days_title|Synchronize all orders updated since
 lengow_settings.lengow_import_days_legend|Import orders from ... days and decrease your stock
-lengow_settings.lengow_import_ship_mp_enabled_title|Decrease my stock with the orders sent by marketplaces
-lengow_settings.lengow_import_ship_mp_enabled_legend|Use this option to take into account your orders sent by marketplaces on your stock in your WooCommerce backoffice
+lengow_settings.lengow_import_ship_mp_enabled_title|Import orders shipped by marketplaces
+lengow_settings.lengow_import_stock_ship_mp_title|I want to decrease my stock
+lengow_settings.lengow_import_stock_ship_mp_legend|Use this option to take marketplaces orders into account for your WooCommerce backoffice
 lengow_settings.lengow_preprod_enabled_title|Activate Pre-production Mode
 lengow_settings.lengow_import_in_progress_title|Import in progress
 lengow_settings.lengow_last_import_manual_title|Last manual import
 lengow_settings.lengow_last_import_cron_title|Last Cron import
-lengow_settings.lengow_import_enabled_title|Activate stock synchronisation
-lengow_settings.lengow_import_enabled_legend|Use this option to decrease stocks in your WooCommerce backoffice. Go to the stock management page if you want to launch a manual synchronisation.
 lengow_log.error.rest_time_to_import|Please wait %{rest_time} seconds before re-importing orders
-lengow_log.error.nb_order_imported|%{nb_order} order(s) decreased
+lengow_log.error.nb_order_imported|%{nb_order} order(s) imported
+lengow_log.error.nb_order_updated|%{nb_order} order(s) updated
 lengow_log.error.nb_order_with_error|%{nb_order} order(s) with errors
-lengow_log.error.no_notification|No new notification about your stock
+lengow_log.error.no_notification|No new notification on order
 lengow_log.error.credentials_not_valid|Account ID, token access or secret token are not valid
 lengow_log.error.no_catalog_for_shop|No catalog ID valid for the shop
 lengow_log.error.no_country_for_billing_address|Lengow error: billing address does not contain the country
 lengow_log.error.no_billing_address|Lengow error: no billing address in the order
 lengow_log.error.no_country_for_delivery_address|Lengow error: delivery address does not contain the country
 lengow_log.error.no_product|Lengow error: no product in the order
-lengow_log.error.check_logs|You can check logs on <a href=%{link}>this page</a>
+lengow_log.error.no_change_rate|Lengow error: no exchange rates available for order prices
+lengow_log.error.no_currency|Lengow error: no currency in the order
 lengow_log.exception.no_connection_webservice|connection did not work with the Lengow webservice
 lengow_log.exception.error_lengow_webservice|Lengow webservice: %{error_code} - %{error_message}
 lengow_log.exception.order_not_found|Lengow error: order cannot be found in Lengow feed
 lengow_log.exception.marketplace_not_present|Lengow error: %{marketplace_name} does not feature in the marketplace list
-lengow_log.exception.product_list_is_empty|order could not be saved
+lengow_log.exception.order_line_required|order line is required but cannot be not found in order
+lengow_log.exception.action_not_valid|action %{action} is not valid
+lengow_log.exception.marketplace_action_not_present|marketplace actions %{action} are not present
+lengow_log.exception.marketplace_sku_require|marketplace order reference is required
+lengow_log.exception.marketplace_name_require|marketplace name is required
+lengow_log.exception.arg_is_required|can't send action: %{arg_name} is required
+lengow_log.exception.action_not_created|can't create action: %{error_message}
+lengow_log.exception.action_not_created_api|can't create action because Lengow API is unavailable. Please retry
+lengow_log.exception.action_is_too_old|order action is too old. Please retry the call
+lengow_log.exception.product_list_is_empty|can't retrieve order products
 lengow_log.exception.product_not_be_found|product ID %{product_id} could not be found
 lengow_log.exception.product_is_a_parent|product ID %{product_id} is variable. Product variation is needed
+lengow_log.exception.woocommerce_customer_not_saved|WARNING! Customer could NOT be saved in WordPress user table
+lengow_log.exception.woocommerce_order_not_saved|WARNING! Order could NOT be saved in WordPress post table
+lengow_log.mail_report.subject_report_mail|Lengow imports errors
+lengow_log.mail_report.order|Order %{marketplace_sku}
+lengow_log.mail_report.no_error_in_report_mail|no error message, contact support via https://supportlengow.zendesk.com/agent/
+meta_box.order_info.marketplace_sku|Marketplace SKU
+meta_box.order_info.marketplace|Marketplace
+meta_box.order_info.currency|Currency
+meta_box.order_info.total|Total
+meta_box.order_info.commission|Commission
+meta_box.order_info.address_id|Delivery Address ID
+meta_box.order_info.customer_name|Customer name
+meta_box.order_info.customer_email|Customer email
+meta_box.order_info.message|Message
+meta_box.order_info.imported_date|Imported at
+meta_box.order_info.shipped_by_marketplace|Shipped by marketplace
+meta_box.order_info.relay_id|ID relay
+meta_box.order_info.carrier|Carrier from marketplace
+meta_box.order_info.carrier_method|Shipping method from marketplace
+meta_box.order_info.tracking_number|Tracking number
+meta_box.order_info.json_format|JSON format
+meta_box.order_info.box_title|Lengow informations
+meta_box.order_info.boolean_yes|Yes
+meta_box.order_info.boolean_no|No
+meta_box.order_shipping.box_title|Lengow shipping informations
+meta_box.order_shipping.carrier|Carrier
+meta_box.order_shipping.custom_carrier|Custom carrier
+meta_box.order_shipping.tracking_number|Tracking number
+meta_box.order_shipping.tracking_url|Tracking url
+meta_box.order_shipping.choose_a_carrier|Select a carrier code...
+meta_box.order_shipping.required|required
+meta_box.order_shipping.or_use|or use...
 log.install.install_start|## start install for version %{version} ##
 log.install.install_end|## end install for version %{version} ##
 log.install.table_created|adding table %{name} in database
@@ -168,6 +272,8 @@ log.install.add_upgrade_version|adding SQL patch required for the plugin version
 log.setting.setting_reset|all Lengow settings were reset
 log.setting.setting_updated|all Lengow settings were updated
 log.setting.setting_change|%{key} - old value %{old_value} replaced with %{value}
+log.mail_report.send_mail_to|report email sent to %{email}
+log.mail_report.unable_send_mail_to|unable to send report email to %{email}
 log.export.start|## start export ##
 log.export.end|## end export ##
 log.export.nb_product_found|%{nb_product} product(s) found
@@ -178,18 +284,24 @@ log.export.error_unable_to_find_product|unable to find product (ID %{product_id}
 log.export.error_unable_to_create_folder|unable to create folder %{folder_path}. Make sure it is writable
 log.export.error_unable_to_create_file|unable to create file %{file_name} in %{folder_name}
 log.export.error_folder_not_writable|export file generation did not end properly. Please make sure the export folder is writable
-log.import.import_not_active|Order synchronisation is not activated in Lengow's settings
 log.import.start|## start %{type} import ##
 log.import.end|## end %{type} import ##
 log.import.preprod_mode_active|warning ! Pre-prod mode is activated
 log.import.connector_get_order|get order with order ID: %{marketplace_sku} and marketplace: %{marketplace_name}
 log.import.connector_get_all_order|get orders between %{date_from} and %{date_to} for catalogs ID: %{catalog_id}
-log.import.find_one_order|%{nb_order} order found for order ID: %{marketplace_sku} and markeplace: %{marketplace_name} with account ID: %{account_id}
+log.import.find_one_order|%{nb_order} order found for order ID: %{marketplace_sku} and marketplace: %{marketplace_name} with account ID: %{account_id}
 log.import.find_all_orders|%{nb_order} order(s) found with account ID: %{account_id}
-log.import.order_already_decremented|order already decremented
+log.import.error_already_created|%{decoded_message} (created on the %{date_message})
+log.import.external_id_exist|already imported in a WooCommerce with the order ID %{order_id}
+log.import.order_already_imported|order already imported (ORDER ID %{order_id})
+log.import.order_ready_to_reimport|order ready to be re-imported (ORDER ID %{order_id})
+log.import.order_state_updated|order's status has been updated to %{state_name}
+log.import.rewrite_processing_fee|rewrite amount without processing fee
+log.import.rewrite_shipping_cost|rewrite amount without shipping cost
+log.import.generate_unique_email|generate a unique email %{email}
 log.import.order_shipped_by_marketplace|order shipped by %{marketplace_name}
 log.import.current_order_state_unavailable|current order's status [%{order_state_marketplace}] makes it unavailable to import for marketplace %{marketplace_name}
-log.import.order_successfully_decremented|order successfully decremented
+log.import.order_successfully_imported|order successfully imported (ORDER ID %{order_id})
 log.import.import_failed|import failed - %{decoded_message}
 log.import.marketplace_update_failed|marketplace update failed - %{decoded_message}
 log.import.order_import_failed|import order failed - %{decoded_message}
@@ -197,11 +309,26 @@ log.import.error_no_package|import order failed - Lengow error: no package in th
 log.import.error_wrong_package_number|import order failed - wrong package number
 log.import.error_no_delivery_address|import order failed - Lengow error: no delivery address in the order
 log.import.product_be_found|product ID %{product_id} found with field %{attribute_name} (%{attribute_value})
-log.import.product_state_canceled|product ID %{product_id} could not be added to cart - status: %{state_product}
+log.import.product_state_canceled|product ID %{product_id} could not be added to cart - status: %{product_state}
 log.import.lengow_order_saved|order saved in Lengow orders table
-log.import.lengow_order_not_saved|warning ! Order could NOT be saved in Lengow orders table
-log.import.stock_decreased|stock updated for product ID %{product_id} from %{initial_stock} to %{new_stock}
-log.import.stock_no_managed|product ID %{product_id} not managed in stock
+log.import.lengow_order_not_saved|WARNING! Order could NOT be saved in Lengow orders table
+log.import.lengow_order_updated|order updated in Lengow orders table
+log.import.lengow_order_not_updated|WARNING! Order could NOT be updated in Lengow orders table
+log.import.lengow_order_line_saved|save order lines product: %{order_line_saved}
+log.import.product_not_saved|WARNING! Product ID %{product_id} could not be added to the WooCommerce order - %{error_message}
+log.import.shipping_not_saved|WARNING! Shipping costs could not be added to the WooCommerce order - %{error_message}
+log.import.tax_not_saved|WARNING! Tax could not be added to the WooCommerce order - %{error_message}
+log.import.processing_fee_not_saved|WARNING! Processing fees could not be added to the WooCommerce order - %{error_message}
+log.import.order_synchronized_with_lengow|order successfully synchronised with Lengow webservice (ORDER ID %{order_id})
+log.import.order_not_synchronized_with_lengow|WARNING ! Order could NOT be synchronised with Lengow webservice (ORDER ID %{order_id})
+log.order_action.check_completed_action|check completed actions
+log.order_action.check_old_action|check and finish old actions
+log.order_action.check_action_not_sent|check actions not sent
+log.order_action.try_to_send_action|try to send %{action} action (ORDER ID %{order_id})
+log.order_action.action_send|action %{action} was successfully sent (ORDER ID %{order_id})
+log.order_action.action_not_send|WARNING ! action %{action} could not be sent (ORDER ID %{order_id})
+log.order_action.call_tracking|call tracking with parameters: %{parameters}
+log.order_action.call_action_failed|order action failed - %{decoded_message}
 log.connector.call_api|call %{curl_url}
 log.connector.error_api|API call failed - %{error_code}
 log.connector.timeout_api|API call has been blocked by a timeout
@@ -232,8 +359,8 @@ toolbox.index.checksum_message|Plugin files check
 toolbox.index.checksum_help|Some files have been changed by the customer
 toolbox.index.checksum_help_label|Go to Checksum page
 toolbox.index.global_information|Global information
-toolbox.index.wordpress_version|Wordpress version
-toolbox.index.woocommerce_version|Woocommerce version
+toolbox.index.wordpress_version|WordPress version
+toolbox.index.woocommerce_version|WooCommerce version
 toolbox.index.plugin_version|Plugin version
 toolbox.index.ip_server|Server IP
 toolbox.index.ip_enabled|Authorisation by IP enabled

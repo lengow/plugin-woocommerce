@@ -1,0 +1,59 @@
+/*************************************************/
+/*                ORDERS INFO                    */
+/*************************************************/
+#lgw-box-order-info {
+    display: flex;
+    color: #777;
+}
+
+#lgw-box-order-info ul {
+    margin: auto;
+    width: 40%;
+    padding: 20px;
+}
+
+#lgw-box-order-info ul .lgw-order-label {
+    float: right;
+}
+
+#lgw-box-order-info ul .lgw-order-title {
+    font-weight: bold;
+}
+
+#lgw-box-order-info ul textarea {
+    color: #555;
+    margin-top: 10px;
+    width: 100%;
+    height: 120px;
+    background-color: #f9f9f9;
+}
+
+/*************************************************/
+/*              ORDERS SHIPPING                  */
+/*************************************************/
+
+#lgw-box-order-shipping {
+    color: #777;
+}
+
+#lgw-box-order-shipping label {
+    display: block;
+    padding: 0 0 3px;
+}
+
+#lgw-box-order-shipping label span.required {
+    font-size: 10px;
+    vertical-align: top;
+    color: #dc3232;
+}
+
+#lgw-box-order-shipping input,
+#lgw-box-order-shipping select {
+    width: 100%;
+    color: #777;
+}
+
+#lgw-box-order-shipping span.or-use {
+    display: block;
+    margin: 10px 0;
+}

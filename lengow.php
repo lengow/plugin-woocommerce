@@ -16,7 +16,7 @@
  *
  * @category  Lengow
  * @package   lengow-woocommerce
- * @author    Team module <team-module@lengow.com>
+ * @author    Team Connector <team-connector@lengow.com>
  * @copyright 2017 Lengow SAS
  * @license   https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
@@ -26,24 +26,24 @@
  * Plugin Name: Lengow for WooCommerce
  * Plugin URI: http://www.lengow.com
  * Description: Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
- * Version: 2.1.1
+ * Version: 2.2.0
  * Author: Lengow
  * Author URI: http://www.lengow.com
  * Requires at least: 3.5
- * Tested up to: 4.6
+ * Tested up to: 5.2
  *
  * Text Domain: lengow
  * Domain Path: /languages
  */
 
-// Prevent direct access.
+// prevent direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 global $wp_version;
 
-// Check if WooCommerce is active.
+// check if WooCommerce is active.
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 
 	/**
@@ -54,7 +54,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		/**
 		 * @var string current version of plugin.
 		 */
-		public $version = '2.1.1';
+		public $version = '2.2.0';
 
 		/**
 		 * @var string plugin name.
@@ -81,13 +81,15 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		private function _init_hooks() {
 			register_activation_hook( __FILE__, array( 'Lengow_Install', 'install' ) );
 			add_action( 'init', array( $this, 'init' ) );
-
-			if ( isset( $_GET['page'] ) && $_GET['page'] === 'lengow' ) {
+			add_action( 'plugins_loaded', array( $this, 'init_lengow_payment' ) );
+			if ( isset( $_GET['page'] ) && 'lengow' === $_GET['page'] ) {
 				add_action( 'admin_enqueue_scripts', array( $this, 'add_scripts' ) );
 				add_filter( 'pre_site_transient_update_core', array( $this, 'remove_core_updates' ) );
 				add_filter( 'pre_site_transient_update_plugins', array( $this, 'remove_core_updates' ) );
 				add_filter( 'pre_site_transient_update_themes', array( $this, 'remove_core_updates' ) );
 			}
+			// Lengow tracker.
+			add_action( 'wp_footer', array( 'Lengow_Hook', 'render_lengow_tracker' ), 100 );
 		}
 
 		/**
@@ -103,8 +105,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		/**
 		 * Define constant if not already set.
 		 *
-		 * @param  string $name constant name
-		 * @param  string|boolean $value constant value
+		 * @param string $name constant name
+		 * @param string|boolean $value constant value
 		 */
 		private function _define( $name, $value ) {
 			if ( ! defined( $name ) ) {
@@ -117,9 +119,12 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 */
 		public function includes() {
 			if ( is_admin() ) {
+				include_once( 'includes/class-lengow-action.php' );
+				include_once( 'includes/class-lengow-address.php' );
 				include_once( 'includes/class-lengow-check.php' );
 				include_once( 'includes/class-lengow-configuration.php' );
 				include_once( 'includes/class-lengow-connector.php' );
+				include_once( 'includes/class-lengow-crud.php' );
 				include_once( 'includes/class-lengow-exception.php' );
 				include_once( 'includes/class-lengow-export.php' );
 				include_once( 'includes/class-lengow-feed.php' );
@@ -131,17 +136,24 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/class-lengow-main.php' );
 				include_once( 'includes/class-lengow-marketplace.php' );
 				include_once( 'includes/class-lengow-order.php' );
+				include_once( 'includes/class-lengow-order-error.php' );
+				include_once( 'includes/class-lengow-order-line.php' );
 				include_once( 'includes/class-lengow-product.php' );
 				include_once( 'includes/class-lengow-sync.php' );
 				include_once( 'includes/class-lengow-translation.php' );
 				include_once( 'includes/admin/class-lengow-admin.php' );
 				include_once( 'includes/admin/class-lengow-admin-dashboard.php' );
-				include_once( 'includes/admin/class-lengow-admin-settings.php' );
 				include_once( 'includes/admin/class-lengow-admin-help.php' );
 				include_once( 'includes/admin/class-lengow-admin-legals.php' );
-				include_once( 'includes/admin/class-lengow-admin-products.php' );
+				include_once( 'includes/admin/class-lengow-admin-order-settings.php' );
 				include_once( 'includes/admin/class-lengow-admin-orders.php' );
+				include_once( 'includes/admin/class-lengow-admin-products.php' );
+				include_once( 'includes/admin/class-lengow-admin-main-settings.php' );
+				include_once( 'includes/admin/class-lengow-box-order-info.php' );
+				include_once( 'includes/admin/class-lengow-box-order-shipping.php' );
 			}
+			include_once( 'includes/class-lengow-hook.php' );
+			include_once( 'includes/frontend/class-lengow-tracker.php' );
 		}
 
 		/**
@@ -154,7 +166,14 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				add_action( 'admin_action_dashboard_get_process', array( 'Lengow_Admin_Dashboard', 'get_process' ) );
 				add_action( 'wp_ajax_post_process_dashboard', array( 'Lengow_Admin_Dashboard', 'post_process' ) );
 				add_action( 'wp_ajax_post_process_orders', array( 'Lengow_Admin_Orders', 'post_process' ) );
-
+				// order actions.
+				add_action( 'save_post', array( 'Lengow_Hook', 'save_lengow_shipping' ) );
+				add_action( 'woocommerce_email', array( 'Lengow_Hook', 'unhook_woocommerce_mail' ) );
+				add_action( 'add_meta_boxes_shop_order', array( 'Lengow_Hook', 'adding_shop_order_meta_boxes' ) );
+				// init lengow technical error status.
+				if ( Lengow_Main::compare_version( '2.2' ) ) {
+					$this->init_lengow_technical_error_status();
+				}
 				// check logs download to prevent the occurrence of the wordpress html header.
 				$download = null;
 				if ( isset( $_GET['action'] ) ) {
@@ -174,21 +193,80 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 
 		/**
+		 * Init the Lengow Payment Method.
+		 *
+		 */
+		public function init_lengow_payment() {
+			add_filter( 'woocommerce_payment_gateways', array( $this, 'add_lengow_gateway_class' ) );
+			include_once( 'includes/class-lengow-payment.php' );
+		}
+
+		/**
+		 * Add the Lengow Payment gateway.
+		 *
+		 * @param array $methods All methods
+		 *
+		 * @return array
+		 */
+		public function add_lengow_gateway_class( $methods ) {
+			$methods[] = 'WC_Lengow_Payment_Gateway';
+
+			return $methods;
+		}
+
+		/**
+		 * Init the Lengow technical error status.
+		 *
+		 */
+		public function init_lengow_technical_error_status() {
+			$locale = new Lengow_Translation();
+			register_post_status(
+				'wc-lengow-error',
+				array(
+					'label'                     => $locale->t( 'module.state_technical_error' ),
+					'public'                    => true,
+					'exclude_from_search'       => false,
+					'show_in_admin_all_list'    => true,
+					'show_in_admin_status_list' => true,
+					'label_count'               => _n_noop(
+						$locale->t( 'module.state_technical_error' ) . ' <span class="count">(%s)</span>',
+						$locale->t( 'module.state_technical_error' ) . ' <span class="count">(%s)</span>'
+					),
+				)
+			);
+			add_filter( 'wc_order_statuses', array( $this, 'add_lengow_technical_error_status' ) );
+		}
+
+		/**
+		 * Add the Lengow technical error status.
+		 *
+		 * @param array $order_statuses All order statuses
+		 *
+		 * @return array
+		 */
+		public function add_lengow_technical_error_status( $order_statuses ) {
+			$locale                            = new Lengow_Translation();
+			$order_statuses['wc-lengow-error'] = $locale->t( 'module.state_technical_error' );
+
+			return $order_statuses;
+		}
+
+		/**
 		 * Add CSS and JS.
 		 */
 		public function add_scripts() {
-			wp_register_style( 'lengow_component_css', plugins_url( '/assets/css/lengow-components.css', __FILE__ ) );
 			wp_register_style( 'lengow_font_awesome', plugins_url( '/assets/css/font-awesome.css', __FILE__ ) );
 			wp_register_style( 'lengow_select2_css', plugins_url( '/assets/css/select2.css', __FILE__ ) );
-			wp_register_style( 'lengow_pages_css', plugins_url( '/assets/css/lengow-pages.css', __FILE__ ) );
+			wp_register_style( 'lengow_layout_css', plugins_url( '/assets/css/lengow-layout.css', __FILE__ ) );
+			wp_register_style( 'lengow_components_css', plugins_url( '/assets/css/lengow-components.css', __FILE__ ) );
 			wp_register_style(
 				'lengow_admin_css',
-				plugins_url( '/assets/css/lengow-layout.css', __FILE__ ),
+				plugins_url( '/assets/css/lengow-pages.css', __FILE__ ),
 				array(
 					'lengow_font_awesome',
 					'lengow_select2_css',
-					'lengow_component_css',
-					'lengow_pages_css',
+					'lengow_layout_css',
+					'lengow_components_css',
 				)
 			);
 			wp_enqueue_style( 'lengow_admin_css' );
@@ -198,7 +276,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			} else {
 				wp_register_script( 'lengow_boostrap_js', plugins_url( '/assets/js/bootstrap.min.js', __FILE__ ) );
 			}
-			wp_register_script( 'lengow_settings_js', plugins_url( '/assets/js/lengow/main_setting.js', __FILE__ ) );
+			wp_register_script( 'lengow_main_settings', plugins_url( '/assets/js/lengow/main_setting.js', __FILE__ ) );
+			wp_register_script(
+				'lengow_order_settings',
+				plugins_url( '/assets/js/lengow/order_setting.js', __FILE__ )
+			);
 			wp_register_script( 'lengow_select2', plugins_url( '/assets/js/select2.js', __FILE__ ) );
 			wp_register_script( 'lengow_products', plugins_url( '/assets/js/lengow/products.js', __FILE__ ) );
 			wp_register_script( 'lengow_home', plugins_url( '/assets/js/lengow/home.js', __FILE__ ) );
@@ -213,11 +295,12 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					'lengow_select2',
 					'lengow_home',
 					'lengow_orders',
-					'lengow_settings_js',
+					'lengow_main_settings',
+					'lengow_order_settings',
 				)
 			);
 			wp_enqueue_script( 'lengow_admin_js' );
-			// Must be added to instantiate admin-ajax.php.
+			// must be added to instantiate admin-ajax.php.
 			wp_localize_script( 'lengow_admin_js', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
 		}
 
@@ -236,7 +319,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 	}
 
-	// Start module.
+	// start module.
 	$GLOBALS['lengow'] = new Lengow();
 	if ( $wp_version <= '4.0.0' ) {
 		$GLOBALS['hook_suffix'] = 'toplevel_page_lengow';

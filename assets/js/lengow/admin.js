@@ -20,7 +20,7 @@
 
 (function ($) {
     $(document).ready(function () {
-        /* SWITCH TOGGLE */
+        // switch toggle
         jQuery('body').on('change', '.lgw-switch', function(event) {
             var check = $(this);
             var checked = check.find('input').prop('checked');

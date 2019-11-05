@@ -15,10 +15,10 @@
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
  * @category    Lengow
- * @package        lengow-woocommerce
- * @subpackage    includes
- * @author        Team module <team-module@lengow.com>
- * @copyright    2017 Lengow SAS
+ * @package     lengow-woocommerce
+ * @subpackage  includes
+ * @author      Team Connector <team-connector@lengow.com>
+ * @copyright   2017 Lengow SAS
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -47,7 +47,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 * Display products page.
 	 */
 	public static function html_display() {
-		// Need to instantiate a class because this method must be static.
+		// need to instantiate a class because this method must be static.
 		$lengow_admin_products         = new Lengow_Admin_Products();
 		$lengow_admin_products->locale = new Lengow_Translation();
 		$locale                        = $lengow_admin_products->locale;
@@ -79,7 +79,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 			switch ( $action ) {
 				case 'change_option_selected':
 					$state = isset( $_POST['state'] ) ? $_POST['state'] : null;
-					if ( $state !== null ) {
+					if ( null !== $state ) {
 						Lengow_Configuration::update_value(
 							'lengow_selection_enabled',
 							$state
@@ -98,7 +98,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 				case 'select_product':
 					$state     = isset( $_POST['state'] ) ? $_POST['state'] : null;
 					$productId = isset( $_POST['id_product'] ) ? $_POST['id_product'] : null;
-					if ( $state !== null ) {
+					if ( null !== $state ) {
 						Lengow_Product::publish( $productId, $state );
 						echo json_encode( self::reload_total() );
 					}
@@ -108,7 +108,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 					$select_all    = isset( $_POST['select_all'] ) ? $_POST['select_all'] : null;
 					$export_action = isset( $_POST['export_action'] ) ? $_POST['export_action'] : null;
 					$data          = array();
-					if ( $select_all === 'true' ) {
+					if ( 'true' === $select_all ) {
 						$all_products = get_posts(
 							array(
 								'numberposts' => - 1,
@@ -119,7 +119,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 							$all[] = $value->ID;
 						}
 						foreach ( $all as $id ) {
-							if ( $export_action === 'add_to_export' ) {
+							if ( 'add_to_export' === $export_action ) {
 								Lengow_Product::publish( $id, 1 );
 							} else {
 								Lengow_Product::publish( $id, 0 );
@@ -131,7 +131,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 						$data = array_merge( $data, self::reload_total() );
 					} elseif ( $selection ) {
 						foreach ( $selection as $product ) {
-							if ( $export_action === 'add_to_export' ) {
+							if ( 'add_to_export' === $export_action ) {
 								Lengow_Product::publish( $product, 1 );
 							} else {
 								Lengow_Product::publish( $product, 0 );
@@ -155,7 +155,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 *
 	 */
 	public static function render_lengow_list() {
-		// Need to instantiate a class because this method must be static.
+		// need to instantiate a class because this method must be static.
 		$lengow_admin_products         = new Lengow_Admin_Products();
 		$lengow_admin_products->locale = new Lengow_Translation();
 		$lengow_admin_products->prepare_items();
@@ -180,7 +180,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 		$this->data            = $this->get_products();
 		usort( $this->data, array( &$this, 'usort_reorder' ) );
 		// pagination.
-		$per_page     = 10;
+		$per_page     = 20;
 		$current_page = $this->get_pagenum();
 		$total_items  = count( $this->data );
 		$data         = array_slice( $this->data, ( ( $current_page - 1 ) * $per_page ), $per_page );
@@ -227,7 +227,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 * @return array
 	 */
 	public function column_default( $item, $column_name ) {
-		// To avoid the need to create a method for each column there is column_default.
+		// to avoid the need to create a method for each column there is column_default.
 		// that will process any column for which no special method is defined.
 		switch ( $column_name ) {
 			case 'ID':
@@ -255,8 +255,8 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 */
 	public function get_sortable_columns() {
 		$sortable_columns = array(
-			// The second parameter in the value array takes care of a possible pre-ordered column.
-			// If the value is true the column is assumed to be ordered ascending.
+			// the second parameter in the value array takes care of a possible pre-ordered column.
+			// if the value is true the column is assumed to be ordered ascending.
 			// if the value is false the column is assumed descending or unordered.
 			'ID'            => array( 'ID', true ),
 			'image'         => array( 'image', false ),
@@ -363,17 +363,17 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 * @return string
 	 */
 	private function usort_reorder( $a, $b ) {
-		// If no sort, default to ID.
+		// if no sort, default to ID.
 		$order_by = ! empty( $_GET['orderby'] ) ? $_GET['orderby'] : 'ID';
 
-		// If no order, default to asc.
+		// if no order, default to asc.
 		$order = ! empty( $_GET['order'] ) ? $_GET['order'] : 'asc';
 
-		// Determine sort order.
+		// determine sort order.
 		$result = strcmp( $a[ $order_by ], $b[ $order_by ] );
 
-		// Send final sort direction to usort.
-		return $order === 'asc' ? $result : - $result;
+		// send final sort direction to usort.
+		return 'asc' === $order ? $result : - $result;
 	}
 
 	/**
@@ -438,7 +438,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 						$products_data = implode( ',', $products_categories );
 						break;
 					case '_stock_status':
-						$products_data = get_post_meta( $post->ID, $key, true ) === 'instock'
+						$products_data = 'instock' === get_post_meta( $post->ID, $key, true )
 							? $this->locale->t( 'product.table.in_stock' )
 							: $this->locale->t( 'product.table.out_of_stock' );
 						break;
@@ -447,13 +447,13 @@ class Lengow_Admin_Products extends WP_List_Table {
 						$products_data = $price . ' ' . get_woocommerce_currency_symbol();
 						break;
 					case 'product_type':
-						// Use woocommerce 2.0.0 function get_product(ID) to check type.
+						// use woocommerce 2.0.0 function get_product(ID) to check type.
 						$wc_product       = Lengow_Product::get_product( $post->ID );
 						$product_type     = Lengow_Product::get_product_type( $wc_product );
-						$downloadable     = get_post_meta( $post->ID, '_downloadable', true ) === 'yes'
+						$downloadable     = 'yes' === get_post_meta( $post->ID, '_downloadable', true )
 							? $this->locale->t( 'product.table.type_downloadable' )
 							: false;
-						$virtual          = get_post_meta( $post->ID, '_virtual', true ) === 'yes'
+						$virtual          = 'yes' === get_post_meta( $post->ID, '_virtual', true )
 							? $this->locale->t( 'product.table.type_virtual' )
 							: false;
 						$sub_product_type = false;
@@ -492,7 +492,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 */
 	private function search( $text, $input_id ) {
 		echo '<form id="post-filter" method="post">';
-		// The hidden element is needed to load the right page.
+		// the hidden element is needed to load the right page.
 		echo '<input type="hidden" name="page" value="lengow_list" />';
 		echo $this->search_box( $text, $input_id );
 		echo '</form>';

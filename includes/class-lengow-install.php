@@ -17,7 +17,7 @@
  * @category    Lengow
  * @package     lengow-woocommerce
  * @subpackage  includes
- * @author      Team module <team-module@lengow.com>
+ * @author      Team Connector <team-connector@lengow.com>
  * @copyright   2017 Lengow SAS
  * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
@@ -63,6 +63,7 @@ class Lengow_Install {
 		'lengow_api_key',
 		'lengow_default_carrier',
 		'lengow_import_cron',
+		'lengow_import_enabled',
 		'lengow_time_import_start',
 		'LENGOW_MP_CONF',
 	);
@@ -78,7 +79,7 @@ class Lengow_Install {
 		);
 		$old_version = Lengow_Configuration::get( 'lengow_version' );
 		$old_version = $old_version ? $old_version : false;
-		$old_version = $old_version === LENGOW_VERSION ? false : $old_version;
+		$old_version = LENGOW_VERSION === $old_version ? false : $old_version;
 		Lengow_Install::update( $old_version );
 		Lengow_Main::log(
 			'Install',
@@ -148,11 +149,11 @@ class Lengow_Install {
 	public static function create_lengow_tables() {
 		global $wpdb;
 		// create table lengow_product.
-		$name = 'lengow_product';
+		$name = Lengow_Crud::LENGOW_PRODUCT;
 		if ( ! self::check_table_exists( $name ) ) {
 			$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . $name . ' (
 				`id` INTEGER(11) NOT NULL AUTO_INCREMENT,
-				`product_id` bigint(20) NOT NULL,
+				`product_id` BIGINT(20) NOT NULL,
 				PRIMARY KEY (`id`),
 				INDEX (`product_id`)
 				) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
@@ -168,25 +169,122 @@ class Lengow_Install {
 			);
 		}
 
-		// Create table lengow_orders.
-		$name = 'lengow_orders';
+		// create table lengow_orders.
+		$name = Lengow_Crud::LENGOW_ORDER;
 		if ( ! self::check_table_exists( $name ) ) {
 			$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . $name . ' (
 				`id` INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-				`delivery_address_id` int(11) NOT NULL,
-				`marketplace_sku` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-				`marketplace_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-				`order_date` datetime NOT NULL,
-				`created_at` datetime NOT NULL,
-				`extra` longtext COLLATE utf8_unicode_ci,
-				`id_flux` INTEGER(11) UNSIGNED NULL,
-				`id_order` INTEGER(11) UNSIGNED NULL,
-				`total_paid` DECIMAL(17,2) UNSIGNED NULL,
-				`message` TEXT,
-				`carrier` VARCHAR(100),
-				`tracking` VARCHAR(100),
+				`order_id` INTEGER(11) UNSIGNED NULL,
+				`feed_id` INTEGER(11) UNSIGNED NULL,
+				`delivery_address_id` INTEGER(11) NOT NULL,
+				`delivery_country_iso` VARCHAR(3) NULL,
+				`marketplace_sku` VARCHAR(100) NOT NULL,
+				`marketplace_name` VARCHAR(100) NOT NULL,
+				`marketplace_label` VARCHAR(100) NULL DEFAULT NULL,
+                `order_lengow_state` VARCHAR(100) NOT NULL,
+                `order_process_state` INTEGER(11) UNSIGNED NOT NULL DEFAULT 0,
+				`order_date` DATETIME NOT NULL,
+				`order_item` INTEGER(11) UNSIGNED NULL,
+                `currency` VARCHAR(3) NULL DEFAULT NULL,
+                `total_paid` DECIMAL(17,2) UNSIGNED NULL,
+				`commission` DECIMAL(17,2) UNSIGNED NULL,
+				`customer_name` VARCHAR(255) NULL DEFAULT NULL,
+                `customer_email` VARCHAR(255) NULL DEFAULT NULL,
+				`carrier` VARCHAR(100) NULL DEFAULT NULL,
+				`carrier_method` VARCHAR(100) NULL DEFAULT NULL,
+				`carrier_tracking` VARCHAR(100) NULL DEFAULT NULL,
+				`carrier_id_relay` VARCHAR(100) NULL DEFAULT NULL,
+				`sent_marketplace` TINYINT(1) NOT NULL DEFAULT 0,
+				`is_in_error` TINYINT(1) NOT NULL DEFAULT 1,
+				`is_reimported` TINYINT(1) NOT NULL DEFAULT 0,
+				`message` TEXT NULL DEFAULT NULL,
+				`created_at` DATETIME NOT NULL,
+				`updated_at` DATETIME NULL DEFAULT NULL,
+				`extra` LONGTEXT NULL DEFAULT NULL,
 				PRIMARY KEY (`id`),
-				INDEX (`id_order`)
+				INDEX (`order_id`),
+				INDEX (`feed_id`),
+                INDEX (`marketplace_sku`),
+                INDEX (`marketplace_name`)
+				) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+			dbDelta( $sql );
+			Lengow_Main::log(
+				'Install',
+				Lengow_Main::set_log_message( 'log.install.table_created', array( 'name' => $name ) )
+			);
+		} else {
+			Lengow_Main::log(
+				'Install',
+				Lengow_Main::set_log_message( 'log.install.table_already_created', array( 'name' => $name ) )
+			);
+		}
+
+		// create table lengow_order_line.
+		$name =  Lengow_Crud::LENGOW_ORDER_LINE;
+		if ( ! self::check_table_exists( $name ) ) {
+			$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . $name . ' (
+				`id` INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `order_id` INTEGER(11) UNSIGNED NOT NULL,
+                `order_line_id` VARCHAR(100) NOT NULL,
+                `product_id` INTEGER(11) UNSIGNED NOT NULL,
+                PRIMARY KEY(`id`),
+                INDEX (`order_id`)
+				) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+			dbDelta( $sql );
+			Lengow_Main::log(
+				'Install',
+				Lengow_Main::set_log_message( 'log.install.table_created', array( 'name' => $name ) )
+			);
+		} else {
+			Lengow_Main::log(
+				'Install',
+				Lengow_Main::set_log_message( 'log.install.table_already_created', array( 'name' => $name ) )
+			);
+		}
+
+		// create table lengow_order_error.
+		$name = Lengow_Crud::LENGOW_ORDER_ERROR;
+		if ( ! self::check_table_exists( $name ) ) {
+			$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . $name . ' (
+				`id` INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `order_lengow_id` INTEGER(11) UNSIGNED NOT NULL,
+                `message` TEXT NULL DEFAULT NULL,
+                `type` INTEGER(11) UNSIGNED NOT NULL,
+                `is_finished` TINYINT(1) NOT NULL DEFAULT 0,
+                `mail` TINYINT(1) NOT NULL DEFAULT 0,
+                `created_at` DATETIME NOT NULL,
+				`updated_at` DATETIME NULL DEFAULT NULL,
+                PRIMARY KEY(`id`),
+                INDEX (`order_lengow_id`)
+				) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+			dbDelta( $sql );
+			Lengow_Main::log(
+				'Install',
+				Lengow_Main::set_log_message( 'log.install.table_created', array( 'name' => $name ) )
+			);
+		} else {
+			Lengow_Main::log(
+				'Install',
+				Lengow_Main::set_log_message( 'log.install.table_already_created', array( 'name' => $name ) )
+			);
+		}
+
+		// create table lengow_action.
+		$name = Lengow_Crud::LENGOW_ACTION;
+		if ( ! self::check_table_exists( $name ) ) {
+			$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . $name . ' (
+				`id` INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `order_id` INTEGER(11) UNSIGNED NOT NULL,
+                `action_id` INTEGER(11) UNSIGNED NOT NULL,
+                `order_line_sku` VARCHAR(100) NULL DEFAULT NULL,
+                `action_type` VARCHAR(32) NOT NULL,
+                `retry` SMALLINT(5) UNSIGNED NOT NULL DEFAULT 0,
+                `parameters` TEXT NOT NULL,
+                `state` SMALLINT(5) UNSIGNED NOT NULL,
+                `created_at` DATETIME NOT NULL,
+				`updated_at` DATETIME NULL DEFAULT NULL,
+                PRIMARY KEY(`id`),
+                INDEX (`order_id`)
 				) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 			dbDelta( $sql );
 			Lengow_Main::log(
@@ -236,7 +334,7 @@ class Lengow_Install {
 		global $wpdb;
 		$result = $wpdb->get_results( 'SHOW COLUMNS FROM ' . $wpdb->prefix . $table . ' LIKE \'' . $field . '\'' );
 
-		return count( $result ) > 0 ? true : false;
+		return ! empty( $result ) ? true : false;
 	}
 
 	/**
@@ -266,7 +364,7 @@ class Lengow_Install {
 			'SHOW INDEXES FROM ' . $wpdb->prefix . $table . ' WHERE `Key_name` = \'' . $index . '\''
 		);
 
-		return count( $result ) > 0 ? true : false;
+		return ! empty( $result ) ? true : false;
 	}
 
 	/**
@@ -299,7 +397,7 @@ class Lengow_Install {
 	 */
 	public static function rename_configuration_key( $old_name, $new_name ) {
 		$temp_value = Lengow_Configuration::get( $old_name );
-		if ( $temp_value !== false ) {
+		if ( false !== $temp_value ) {
 			Lengow_Configuration::update_value( $new_name, $temp_value );
 			Lengow_Configuration::delete( $old_name );
 		}

@@ -17,7 +17,7 @@
  * @category    Lengow
  * @package     lengow-woocommerce
  * @subpackage  includes
- * @author      Team module <team-module@lengow.com>
+ * @author      Team Connector <team-connector@lengow.com>
  * @copyright   2017 Lengow SAS
  * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
@@ -128,8 +128,8 @@ class Lengow_Translation {
 		}
 		$translation = array();
 		if ( file_exists( $filename ) ) {
-			if ( ( $handle = fopen( $filename, "r" ) ) !== false ) {
-				while ( ( $data = fgetcsv( $handle, 1000, "|" ) ) !== false ) {
+			if ( false !== ( $handle = fopen( $filename, 'r' ) ) ) {
+				while ( false !== ( $data = fgetcsv( $handle, 1000, '|' ) ) ) {
 					$translation[ $data[0] ] = $data[1];
 				}
 				fclose( $handle );
@@ -137,6 +137,6 @@ class Lengow_Translation {
 		}
 		self::$translation[ $iso_code ] = $translation;
 
-		return count( $translation ) > 0;
+		return ! empty( $translation );
 	}
 }

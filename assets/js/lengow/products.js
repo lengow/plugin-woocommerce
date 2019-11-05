@@ -37,7 +37,7 @@
             var action = $(this).attr('data-action'),
             state = $(this).prop('checked'),
             data = {
-                //action call php function
+                // action call php function
                 action: 'post_process',
                 state: state ? 1 : 0,
                 do_action: action
@@ -45,8 +45,8 @@
 
             $.ajax({
                 url: ajaxurl,
-                type: "POST",
-                dataType: "JSON",
+                type: 'POST',
+                dataType: 'json',
                 data: data,
                 success: function (content) {
                     var selector = $('.js-lengow_feed_block_footer_content');
@@ -80,8 +80,8 @@
                 };
             $.ajax({
                 url: ajaxurl,
-                type: "POST",
-                dataType: "JSON",
+                type: 'POST',
+                dataType: 'json',
                 data: data,
                 success: function(content) {
                     reloadTotal(content);
@@ -113,7 +113,7 @@
                 check = $('#js-select_all_shop').prop('checked'),
                 products = [];
 
-            //find all checked products
+            // find all checked products
             $('#js-lengow_product_checkbox:checked').each(function() {
                 products.push($(this).attr('value'));
             });
@@ -128,7 +128,7 @@
             if (!check || (check && confirm(message))) {
                 $.ajax({
                     url: ajaxurl,
-                    type: "POST",
+                    type: 'POST',
                     data: data,
                     success: function(content) {
                         var data = JSON.parse(content);
@@ -136,7 +136,7 @@
                             alert(data.message);
                         } else {
                             $.each(data.product_id, function (idx, p_id) {
-                                if (export_action == 'add_to_export'){
+                                if (export_action === 'add_to_export'){
                                     $("#js-lengow_product_" + p_id + "").parents(".lgw-switch").addClass("checked");
                                     $('.js-lengow_switch_product').prop("checked", true);
                                 } else {

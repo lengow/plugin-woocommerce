@@ -17,7 +17,7 @@
  * @category    Lengow
  * @package     lengow-woocommerce
  * @subpackage  webservice
- * @author      Team module <team-module@lengow.com>
+ * @author      Team Connector <team-connector@lengow.com>
  * @copyright   2017 Lengow SAS
  */
 
@@ -58,7 +58,7 @@ require_once( '../includes/class-lengow-connector.php' );
 require_once( '../includes/class-lengow-exception.php' );
 require_once( '../includes/class-lengow-sync.php' );
 
-// Check if WooCommerce plugin is activated.
+// check if WooCommerce plugin is activated.
 if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 	wp_die( 'WooCommerce plugin is not active', '', array( 'response' => 400 ) );
 }
@@ -126,9 +126,9 @@ $export = new Lengow_Export(
 
 if ( $get_params ) {
 	echo $export->get_export_params();
-} elseif ( $mode === 'size' ) {
+} elseif ( 'size' === $mode ) {
 	echo $export->get_total_export_product();
-} elseif ( $mode === 'total' ) {
+} elseif ( 'total' === $mode ) {
 	echo $export->get_total_product();
 } else {
 	$export->exec();

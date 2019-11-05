@@ -1,8 +1,8 @@
 <?php
 /**
- * Admin setting page
+ * Admin order setting page
  *
- * Copyright 2017 Lengow SAS
+ * Copyright 2019 Lengow SAS
  *
  * NOTICE OF LICENSE
  *
@@ -10,15 +10,15 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * at your option) any later version.
- * 
+ *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
- * @category   	Lengow
- * @package    	lengow-woocommerce
- * @subpackage 	includes
- * @author     	Team module <team-module@lengow.com>
- * @copyright  	2017 Lengow SAS
+ * @category    Lengow
+ * @package     lengow-woocommerce
+ * @subpackage  includes
+ * @author      Team Connector <team-connector@lengow.com>
+ * @copyright   2019 Lengow SAS
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,16 +26,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Lengow_Admin_Settings Class.
+ * Lengow_Admin_Orders Class.
  */
-class Lengow_Admin_Settings {
+class Lengow_Admin_Order_Settings {
 
 	/**
-	 * Display settings page.
+	 * Display admin orders page.
 	 */
 	public static function display() {
-		$locale = new Lengow_Translation();
-		include_once 'views/settings/html-admin-settings.php';
+		$lengow_admin_orders = new Lengow_Admin_Order_Settings();
+		$locale              = new Lengow_Translation();
+		include_once 'views/html-admin-header-order.php';
+		include_once 'views/order-settings/html-admin-order-settings.php';
 	}
 
 	/**
@@ -51,7 +53,7 @@ class Lengow_Admin_Settings {
 		switch ( $action ) {
 			case 'process':
 				foreach ( $_POST as $key => $value ) {
-					if ( $value === 'on' ) {
+					if ( 'on' === $value ) {
 						$value = 1;
 					}
 					if ( Lengow_Configuration::get( $key ) != $value ) {
