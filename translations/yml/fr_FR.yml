@@ -124,7 +124,7 @@ fr:
       lengow_status: "Statut Lengow"
       marketplace: "Marketplace"
       order_id: "Commande ID"
-      customer: 'Client'
+      customer: "Client"
       reference: "Référence"
       date: "Date"
       country: "Pays"
