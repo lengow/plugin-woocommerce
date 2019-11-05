@@ -119,8 +119,8 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			$orders_lengow_ids = isset( $_POST['orders'] ) ? $_POST['orders'] : null;
 			$total_reimport    = 0;
 			if ( $orders_lengow_ids ) {
-				foreach ( $orders_lengow_ids as $order ) {
-					$result = Lengow_Order::re_import_order( $order );
+				foreach ( $orders_lengow_ids as $order_lengow_id ) {
+					$result = Lengow_Order::re_import_order( $order_lengow_id );
 					if ( $result && isset( $result['order_new'] ) && $result['order_new'] ) {
 						$total_reimport ++;
 					}
