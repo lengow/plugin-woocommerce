@@ -204,14 +204,13 @@ class Lengow_Action {
 	 * @return bool|string
 	 */
 	public static function get_last_order_action_type( $order_id ) {
-		$where   = array( 'order_id' => $order_id, 'state' => self::STATE_NEW );
-		$actions = self::get( $where, false );
+		$actions = self::get_active_action_by_order_id( $order_id );
 		if ( ! $actions ) {
 			return false;
 		}
 		$last_action = end( $actions );
 
-		return (string) $last_action->action_type;
+		return $last_action->action_type;
 	}
 
 	/**
