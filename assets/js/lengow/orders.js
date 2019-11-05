@@ -20,9 +20,6 @@
 
 (function ($) {
     $(document).ready(function () {
-
-        var orders = [];
-
         /**
          * Thing to do on load and after reload.
          */

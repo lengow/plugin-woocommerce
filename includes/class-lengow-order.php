@@ -739,6 +739,31 @@ class Lengow_Order {
 	}
 
 	/**
+	 * Resend an action.
+	 *
+	 * @param $order_lengow_id
+	 *
+	 * @return bool
+	 */
+	public static function re_send_order( $order_lengow_id ) {
+		$order_lengow = self::get( array( 'id' => $order_lengow_id ) );
+		if ( $order_lengow->order_id ) {
+			$order_wc     = new WC_Order( $order_lengow->order_id );
+			$order_status = self::get_order_status( $order_wc );
+			// sending an API call for sending or canceling an order.
+			if ( self::get_order_state( Lengow_Order::STATE_SHIPPED ) === $order_status ) {
+				$order_lengow->call_action( Lengow_Action::TYPE_SHIP );
+			} else {
+				$order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Create an error and update the order in error.
 	 *
 	 * @param integer $order_lengow_id Lengow order id
@@ -1012,21 +1037,5 @@ class Lengow_Order {
 		$return = $order_lines[ $this->delivery_address_id ];
 
 		return ! empty( $return ) ? $return : false;
-	}
-
-	/**
-	 * Get status of Woocommerce order.
-	 *
-	 * @param integer $id Lengow order id
-	 *
-	 * @return bool|string
-	 */
-	public static function get_woocommerce_order_status( $id ) {
-		$order = self::get( array( 'id' => $id ) );
-		if ( $order->order_id ) {
-			return get_post_status( $order->order_id );
-		}
-
-		return false;
 	}
 }
