@@ -58,6 +58,8 @@ en:
       lengow_order_updated: "order updated in Lengow orders table"
       lengow_order_not_updated: "WARNING! Order could NOT be updated in Lengow orders table"
       lengow_order_line_saved: "save order lines product: %{order_line_saved}"
+      quantity_back_shipped_by_marketplace: "adding quantity back to stock (order shipped by marketplace)"
+      quantity_back_reimported_order: "adding quantity back to stock (order is re-imported)"
       product_not_saved: "WARNING! Product ID %{product_id} could not be added to the WooCommerce order - %{error_message}"
       shipping_not_saved: "WARNING! Shipping costs could not be added to the WooCommerce order - %{error_message}"
       tax_not_saved: "WARNING! Tax could not be added to the WooCommerce order - %{error_message}"

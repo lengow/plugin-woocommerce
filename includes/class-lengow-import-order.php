@@ -329,7 +329,6 @@ class Lengow_Import_Order {
 		try {
 			// check if the order is shipped by marketplace.
 			if ( $this->_sent_marketplace ) {
-				// if decrease stocks from mp option is disabled.
 				Lengow_Main::log(
 					'Import',
 					Lengow_Main::set_log_message(
@@ -340,6 +339,15 @@ class Lengow_Import_Order {
 					$this->_marketplace_sku
 				);
 				if ( ! Lengow_Configuration::get( 'lengow_import_ship_mp_enabled' ) ) {
+					Lengow_Order::update(
+						$this->_order_lengow_id,
+						array(
+							'order_process_state' => Lengow_Order::PROCESS_STATE_FINISH,
+							'is_in_error'         => 0,
+							'is_reimported'       => 0,
+						)
+					);
+
 					return false;
 				}
 			}
@@ -978,11 +986,24 @@ class Lengow_Import_Order {
 			$this->_sent_marketplace
 		);
 		$order->update_status( $order_state );
-		// reduce stock levels.
-		if ( Lengow_Main::compare_version( '3.0' ) ) {
-			wc_reduce_stock_levels( Lengow_Order::get_order_id( $order ) );
+		// don't reduce stock for re-import order and order shipped by marketplace.
+		if ( $this->_is_reimported
+		     || ( $this->_sent_marketplace && ! (bool) Lengow_Configuration::get( 'lengow_import_stock_ship_mp' ) )
+		) {
+			if ( $this->_is_reimported ) {
+				$logMessage = Lengow_Main::set_log_message( 'log.import.quantity_back_reimported_order' );
+			} else {
+				$logMessage = Lengow_Main::set_log_message( 'log.import.quantity_back_shipped_by_marketplace' );
+			}
+			Lengow_Main::log( 'Import', $logMessage, $this->_log_output, $this->_marketplace_sku );
+			if ( Lengow_Main::compare_version( '3.0' ) ) {
+				wc_increase_stock_levels( Lengow_Order::get_order_id( $order ) );
+			}
 		} else {
-			$order->reduce_order_stock();
+			// reduce stock levels for old versions.
+			if ( ! Lengow_Main::compare_version( '3.0' ) ) {
+				$order->reduce_order_stock();
+			}
 		}
 
 		return $order;
