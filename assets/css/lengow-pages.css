@@ -194,21 +194,21 @@ body.lgw-home-iframe .lgw-content-section p {
 }
 
 #lengow_order_grid .column-status {
-text-align: center;
+  text-align: center;
 }
 
 #lengow_order_grid #current-page-selector {
-height: 28px;
+  height: 28px;
 }
 
 #lengow_order_grid .lgw-btn {
-margin: 0;
+  margin: 0;
 }
 
 #lengow_order_grid tbody tr {
-height: 60px;
+  height: 60px;
 }
 
 #lengow_order_wrapper .js-lengow_toolbar {
-position: absolute;
+  position: absolute;
 }
