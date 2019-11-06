@@ -37,10 +37,26 @@ class Lengow_Box_Order_Info {
 	 */
 	public static function html_display( $post ) {
 		try {
-			$order_lengow = Lengow_Order::get( array( 'order_id' => $post->ID ) );
+			$order_lengow_id = Lengow_Order::get_id_from_order_id($post->ID);
+			$order_lengow = New Lengow_Order($order_lengow_id);
+			$action_type = $order_lengow->order_lengow_state == Lengow_Order::STATE_CANCELED
+				? 'cancel'
+				: 'ship';
+			$locale = new Lengow_Translation();
 			include_once( 'views/box-order-info/html-order-info.php' );
 		} catch ( Exception $e ) {
 			echo Lengow_Main::decode_log_message( $e->getMessage() );
+		}
+	}
+
+	public function post_process() {
+		$action = isset( $_POST['do_action'] ) ? $_POST['do_action'] : false;
+		if ( $action ) {
+			switch ( $action ) {
+				case 'resend_ship':
+					echo json_encode('success');
+			}
+		exit();
 		}
 	}
 }

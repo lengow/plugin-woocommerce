@@ -104,6 +104,11 @@ order.screen.status_canceled|Annulé
 order.screen.status_shipped_by_mkp|Expédié par la place de marché
 order.screen.no_order_title|Le meilleur est encore à venir !
 order.screen.no_order_description|Vos produits sont bien visibles, vos ventes sont sur le point de décoller
+order.screen.cancel_and_reimport|Ré-importer la commande
+order.screen.check_cancel_and_reimport|Vous voulez vous vraiment réimporter la commande ?
+order.screen.synchronize_id|Synchronisez l'ID
+order.screen.resend_action|Renvoyer l'action
+order.screen.check_resend_action|Vous voulez vous vraiment passer la commande en %{action} ?
 order.table.button_search|Rechercher
 order.table.id|ID
 order.table.action|Action

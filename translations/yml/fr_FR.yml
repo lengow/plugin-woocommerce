@@ -117,6 +117,13 @@ fr:
       status_shipped_by_mkp: "Expédié par la place de marché"
       no_order_title: "Le meilleur est encore à venir !"
       no_order_description: "Vos produits sont bien visibles, vos ventes sont sur le point de décoller"
+      cancel_and_reimport: "Ré-importer la commande"
+      check_cancel_and_reimport: "Vous voulez vous vraiment réimporter la commande ?"
+      synchronize_id: "Synchronisez l'ID"
+      resend_action: "Renvoyer l'action"
+      resend_action_success: "L'action a été envoyée"
+      resend_action_error: "L'envoi de l'action a échoué"
+      check_resend_action: "Voulez vous vraiment envoyer une action %{action} ?"
     table:
       button_search: "Rechercher"
       id: "ID"

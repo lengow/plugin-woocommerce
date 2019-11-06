@@ -5,12 +5,23 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-$locale = new Lengow_Translation();
 ?>
 
 <style>
     <?php include WP_PLUGIN_DIR . '/lengow-woocommerce/assets/css/lengow-box-order.css'  ?>
 </style>
+
+<button id="lgw-order-resend"
+        data-message = "<?php echo $locale->t('order.screen.check_resend_action', array(
+                'action' => $action_type
+        ) );?>"
+        data-success = ""
+        data-error = ""
+        data-action="resend_<?php echo $action_type ?>"
+        type="button">
+    <?php echo $locale->t('order.screen.resend_action');?>
+</button>
+
 <div id="lgw-box-order-info">
     <ul>
         <li>
@@ -103,3 +114,5 @@ $locale = new Lengow_Translation();
         </li>
     </ul>
 </div>
+
+<script><?php include WP_PLUGIN_DIR . '/lengow-woocommerce/assets/js/lengow/order_box.js' ?></script>
