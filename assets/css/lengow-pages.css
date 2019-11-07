@@ -186,7 +186,11 @@ body.lgw-home-iframe .lgw-content-section p {
 }
 
 #lengow_order_grid .lgw-label {
-  padding: 0 5px;
+  padding: 0 7px;
+  white-space: normal;
+  height: auto;
+  text-align: center;
+  border-radius: 10px;
 }
 
 #lengow_order_grid .column-status {
