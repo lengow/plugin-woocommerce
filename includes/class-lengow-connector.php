@@ -34,9 +34,9 @@ class Lengow_Connector {
 	/**
 	 * @var string url of the API Lengow.
 	 */
-	// const LENGOW_API_URL = 'https://api.lengow.io';
+	const LENGOW_API_URL = 'https://api.lengow.io';
 	// const LENGOW_API_URL = 'https://api.lengow.net';
-	const LENGOW_API_URL = 'http://api.lengow.rec';
+	// const LENGOW_API_URL = 'http://api.lengow.rec';
 	// const LENGOW_API_URL = 'http://10.100.1.82:8081';
 
 	/**
@@ -326,7 +326,9 @@ class Lengow_Connector {
 			$timeout       = Lengow_Main::set_log_message( 'log.connector.timeout_api' );
 			$error_message = Lengow_Main::set_log_message(
 				'log.connector.error_api',
-				array( 'error_code' => Lengow_Main::decode_log_message( $timeout, 'en_GB' ) )
+				array(
+					'error_code' => Lengow_Main::decode_log_message( $timeout, Lengow_Translation::DEFAULT_ISO_CODE ),
+				)
 			);
 			Lengow_Main::log( Lengow_Log::CODE_CONNECTOR, $error_message );
 			throw new Lengow_Exception( $timeout );
@@ -342,7 +344,12 @@ class Lengow_Connector {
 			);
 			$error_message = Lengow_Main::set_log_message(
 				'log.connector.error_api',
-				array( 'error_code' => Lengow_Main::decode_log_message( $error_curl, 'en_GB' ) )
+				array(
+					'error_code' => Lengow_Main::decode_log_message(
+						$error_curl,
+						Lengow_Translation::DEFAULT_ISO_CODE
+					),
+				)
 			);
 			Lengow_Main::log( Lengow_Log::CODE_CONNECTOR, $error_message );
 			throw new Lengow_Exception( $error_curl );

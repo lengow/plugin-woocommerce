@@ -393,7 +393,12 @@ class Lengow_Sync {
 					Lengow_Log::CODE_IMPORT,
 					Lengow_Main::set_log_message(
 						'log.import.marketplace_update_failed',
-						array( 'decoded_message' => Lengow_Main::decode_log_message( $e->getMessage(), 'en_GB' ) )
+						array(
+							'decoded_message' => Lengow_Main::decode_log_message(
+								$e->getMessage(),
+								Lengow_Translation::DEFAULT_ISO_CODE
+							),
+						)
 					),
 					$log_output
 				);

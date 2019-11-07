@@ -307,7 +307,10 @@ class Lengow_Import {
 						Lengow_Order_Error::finish_order_errors( $this->_order_lengow_id );
 						Lengow_Order::add_order_error( $this->_order_lengow_id, $error_message );
 					}
-					$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
+					$decoded_message = Lengow_Main::decode_log_message(
+						$error_message,
+						Lengow_Translation::DEFAULT_ISO_CODE
+					);
 					Lengow_Main::log(
 						Lengow_Log::CODE_IMPORT,
 						Lengow_Main::set_log_message(
@@ -621,7 +624,10 @@ class Lengow_Import {
 					                 . '" ' . $e->getFile() . ' | ' . $e->getLine();
 				}
 				if ( isset( $error_message ) ) {
-					$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
+					$decoded_message = Lengow_Main::decode_log_message(
+						$error_message,
+						Lengow_Translation::DEFAULT_ISO_CODE
+					);
 					Lengow_Main::log(
 						Lengow_Log::CODE_IMPORT,
 						Lengow_Main::set_log_message(

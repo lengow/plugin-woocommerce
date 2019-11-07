@@ -492,7 +492,10 @@ class Lengow_Action {
 						$error_message,
 						Lengow_Order_Error::ERROR_TYPE_SEND
 					);
-					$decodedMessage = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
+					$decodedMessage = Lengow_Main::decode_log_message(
+						$error_message,
+						Lengow_Translation::DEFAULT_ISO_CODE
+					);
 					Lengow_Main::log(
 						Lengow_Log::CODE_ACTION,
 						Lengow_Main::set_log_message(

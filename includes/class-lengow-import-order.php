@@ -200,7 +200,10 @@ class Lengow_Import_Order {
 		// if order error exists and not finished.
 		$order_error = Lengow_Order_Error::order_is_in_error( $this->_marketplace_sku, $this->_delivery_address_id );
 		if ( $order_error ) {
-			$decoded_message = Lengow_Main::decode_log_message( $order_error->message, 'en_GB' );
+			$decoded_message = Lengow_Main::decode_log_message(
+				$order_error->message,
+				Lengow_Translation::DEFAULT_ISO_CODE
+			);
 			Lengow_Main::log(
 				Lengow_Log::CODE_IMPORT,
 				Lengow_Main::set_log_message(
@@ -429,7 +432,7 @@ class Lengow_Import_Order {
 		}
 		if ( isset( $error_message ) ) {
 			Lengow_Order::add_order_error( $this->_order_lengow_id, $error_message );
-			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
+			$decoded_message = Lengow_Main::decode_log_message( $error_message, Lengow_Translation::DEFAULT_ISO_CODE );
 			Lengow_Main::log(
 				Lengow_Log::CODE_IMPORT,
 				Lengow_Main::set_log_message(
@@ -603,7 +606,10 @@ class Lengow_Import_Order {
 						'message'         => $error_message,
 					)
 				);
-				$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
+				$decoded_message = Lengow_Main::decode_log_message(
+					$error_message,
+					Lengow_Translation::DEFAULT_ISO_CODE
+				);
 				Lengow_Main::log(
 					Lengow_Log::CODE_IMPORT,
 					Lengow_Main::set_log_message(

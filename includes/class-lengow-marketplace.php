@@ -403,7 +403,7 @@ class Lengow_Marketplace {
 		}
 		if ( isset( $error_message ) ) {
 			Lengow_Order::add_order_error( $order_lengow->id, $error_message, Lengow_Order_Error::ERROR_TYPE_SEND );
-			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
+			$decoded_message = Lengow_Main::decode_log_message( $error_message, Lengow_Translation::DEFAULT_ISO_CODE );
 			Lengow_Main::log(
 				Lengow_Log::CODE_ACTION,
 				Lengow_Main::set_log_message(

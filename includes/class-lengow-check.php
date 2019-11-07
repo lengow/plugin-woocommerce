@@ -41,7 +41,7 @@ class Lengow_Check {
 	 */
 	public function __construct() {
 		$this->_locale                      = new Lengow_Translation();
-		Lengow_Translation::$force_iso_code = 'en_GB';
+		Lengow_Translation::$force_iso_code = Lengow_Translation::DEFAULT_ISO_CODE;
 	}
 
 	/**

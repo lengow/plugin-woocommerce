@@ -304,7 +304,7 @@ class Lengow_Export {
 			$error_message = '[Wordpress error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
 		}
 		if ( isset( $error_message ) ) {
-			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
+			$decoded_message = Lengow_Main::decode_log_message( $error_message, Lengow_Translation::DEFAULT_ISO_CODE );
 			Lengow_Main::log(
 				Lengow_Log::CODE_EXPORT,
 				Lengow_Main::set_log_message(
