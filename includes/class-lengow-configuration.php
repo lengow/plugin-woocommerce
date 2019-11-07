@@ -81,6 +81,17 @@ class Lengow_Configuration {
 					'label'  => $locale->t( 'lengow_settings.lengow_authorized_ip_title' ),
 					'legend' => $locale->t( 'lengow_settings.lengow_authorized_ip_legend' ),
 				),
+				'lengow_tracking_enabled'               => array(
+					'global'        => true,
+					'label'         => $locale->t( 'lengow_settings.lengow_tracking_enabled_title' ),
+					'default_value' => 0,
+				),
+				'lengow_tracking_id'                    => array(
+					'global'        => true,
+					'label'         => $locale->t( 'lengow_settings.lengow_tracking_id_title' ),
+					'legend'        => $locale->t( 'lengow_settings.lengow_tracking_id_legend' ),
+					'default_value' => 'id',
+				),
 				'lengow_last_order_statistic_update'    => array(
 					'global' => true,
 				),

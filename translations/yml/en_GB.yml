@@ -93,8 +93,8 @@ en:
   order:
     screen:
       button_reimport_order: "Re-import Orders"
-      mass_action_reimport_success: "A total of %{1} order(s) in %{2} selected have been imported"
-      mass_action_resend_success: "A total of %{1} order(s) in %{2} selected have been sent."
+      mass_action_reimport_success: "A total of %{order_reimported} order(s) in %{order_total} selected have been imported"
+      mass_action_resend_success: "A total of %{order_resent} order(s) in %{order_total} selected have been sent"
       button_resend_order: "Resend Actions"
       all_order_will_be_sent_to: "All order issue reports will be sent by mail to"
       no_order_will_be_sent: "No order issue reports will be sent by mail"
@@ -142,7 +142,7 @@ en:
       no_error_message: "Unidentified error, please contact Lengow's support team for more information"
       not_imported: "not imported"
       not_sent: "not sent"
-      action_sent: "action %{1} sent"
+      action_sent: "action %{action_type} sent"
   order_setting:
     screen:
       default_shipping_method_title: "Manage shipping methods"
@@ -156,6 +156,8 @@ en:
     screen:
       notification_alert_title: "Notifications & alerts"
       security_title: "Security"
+      tracker_title: "Lengow tracker"
+      tracker_description: "This tracker allows you to retrieve order statistics generated on your site directly in Lengow."
       preprod_mode_title: "Pre-production Mode"
       preprod_mode_description: "Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY"
       log_file_title: "Log Files"
@@ -201,6 +203,9 @@ en:
     lengow_ip_enable_legend: "Enable this option if you want your export to be secured by IP. By default, your export is secured by a unique key."
     lengow_authorized_ip_title: "Authorised IPs"
     lengow_authorized_ip_legend: "Authorise IP to get access to your export feed.\nSeparate them ' ; '"
+    lengow_tracking_enabled_title: "Activate Lengow tracking"
+    lengow_tracking_id_title: "Lengow Tracking ID"
+    lengow_tracking_id_legend: "The name of the unique identifier entered in the Lengow"
     lengow_selection_enabled_title: "Export the selection only"
     lengow_selection_enabled_legend: "Activate this option if you do not want to export all available products. Then, select only the products you want to export"
     lengow_product_types_title: "Product type to export"

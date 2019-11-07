@@ -80,8 +80,8 @@ product.table.out_of_stock|Out of stock
 product.table.type_downloadable|Downloadable
 product.table.type_virtual|Virtual
 order.screen.button_reimport_order|Re-import Orders
-order.screen.mass_action_reimport_success|A total of %{1} order(s) in %{2} selected have been imported
-order.screen.mass_action_resend_success|A total of %{1} order(s) in %{2} selected have been sent.
+order.screen.mass_action_reimport_success|A total of %{order_reimported} order(s) in %{order_total} selected have been imported
+order.screen.mass_action_resend_success|A total of %{order_resent} order(s) in %{order_total} selected have been sent
 order.screen.button_resend_order|Resend Actions
 order.screen.all_order_will_be_sent_to|All order issue reports will be sent by mail to
 order.screen.no_order_will_be_sent|No order issue reports will be sent by mail
@@ -128,7 +128,7 @@ order.table.action_sent_not_work|Action sent to the marketplace didn't work
 order.table.no_error_message|Unidentified error, please contact Lengow's support team for more information
 order.table.not_imported|not imported
 order.table.not_sent|not sent
-order.table.action_sent|action %{1} sent
+order.table.action_sent|action %{action_type} sent
 order_setting.screen.default_shipping_method_title|Manage shipping methods
 order_setting.screen.default_shipping_method_description|Select the default shipping method that you would like to apply to your orders
 order_setting.screen.order_status_title|Order Status
@@ -138,6 +138,8 @@ order_setting.screen.import_setting_description|Manage your import settings for 
 order_setting.screen.nb_days|days
 global_setting.screen.notification_alert_title|Notifications & alerts
 global_setting.screen.security_title|Security
+global_setting.screen.tracker_title|Lengow tracker
+global_setting.screen.tracker_description|This tracker allows you to retrieve order statistics generated on your site directly in Lengow.
 global_setting.screen.preprod_mode_title|Pre-production Mode
 global_setting.screen.preprod_mode_description|Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY
 global_setting.screen.log_file_title|Log Files
@@ -178,6 +180,9 @@ lengow_settings.lengow_ip_enable_title|Enable authorisation by IP
 lengow_settings.lengow_ip_enable_legend|Enable this option if you want your export to be secured by IP. By default, your export is secured by a unique key.
 lengow_settings.lengow_authorized_ip_title|Authorised IPs
 lengow_settings.lengow_authorized_ip_legend|Authorise IP to get access to your export feed.<br />Separate them ' ; '
+lengow_settings.lengow_tracking_enabled_title|Activate Lengow tracking
+lengow_settings.lengow_tracking_id_title|Lengow Tracking ID
+lengow_settings.lengow_tracking_id_legend|The name of the unique identifier entered in the Lengow
 lengow_settings.lengow_selection_enabled_title|Export the selection only
 lengow_settings.lengow_selection_enabled_legend|Activate this option if you do not want to export all available products. Then, select only the products you want to export
 lengow_settings.lengow_product_types_title|Product type to export
@@ -317,6 +322,8 @@ log.import.lengow_order_not_saved|WARNING! Order could NOT be saved in Lengow or
 log.import.lengow_order_updated|order updated in Lengow orders table
 log.import.lengow_order_not_updated|WARNING! Order could NOT be updated in Lengow orders table
 log.import.lengow_order_line_saved|save order lines product: %{order_line_saved}
+log.import.quantity_back_shipped_by_marketplace|adding quantity back to stock (order shipped by marketplace)
+log.import.quantity_back_reimported_order|adding quantity back to stock (order is re-imported)
 log.import.product_not_saved|WARNING! Product ID %{product_id} could not be added to the WooCommerce order - %{error_message}
 log.import.shipping_not_saved|WARNING! Shipping costs could not be added to the WooCommerce order - %{error_message}
 log.import.tax_not_saved|WARNING! Tax could not be added to the WooCommerce order - %{error_message}

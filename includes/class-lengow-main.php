@@ -96,6 +96,14 @@ class Lengow_Main {
 	);
 
 	/**
+	 * @var array product ids available to track products.
+	 */
+	public static $tracker_choice_id = array(
+		'id'  => 'Product ID',
+		'sku' => 'Product SKU',
+	);
+
+	/**
 	 * Get export webservice links.
 	 *
 	 * @return string

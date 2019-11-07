@@ -82,13 +82,14 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			register_activation_hook( __FILE__, array( 'Lengow_Install', 'install' ) );
 			add_action( 'init', array( $this, 'init' ) );
 			add_action( 'plugins_loaded', array( $this, 'init_lengow_payment' ) );
-
 			if ( isset( $_GET['page'] ) && 'lengow' === $_GET['page'] ) {
 				add_action( 'admin_enqueue_scripts', array( $this, 'add_scripts' ) );
 				add_filter( 'pre_site_transient_update_core', array( $this, 'remove_core_updates' ) );
 				add_filter( 'pre_site_transient_update_plugins', array( $this, 'remove_core_updates' ) );
 				add_filter( 'pre_site_transient_update_themes', array( $this, 'remove_core_updates' ) );
 			}
+			// Lengow tracker.
+			add_action( 'wp_footer', array( 'Lengow_Hook', 'render_lengow_tracker' ), 100 );
 		}
 
 		/**
@@ -128,7 +129,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/class-lengow-export.php' );
 				include_once( 'includes/class-lengow-feed.php' );
 				include_once( 'includes/class-lengow-file.php' );
-				include_once( 'includes/class-lengow-hook.php' );
 				include_once( 'includes/class-lengow-import.php' );
 				include_once( 'includes/class-lengow-import-order.php' );
 				include_once( 'includes/class-lengow-install.php' );
@@ -152,6 +152,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/admin/class-lengow-box-order-info.php' );
 				include_once( 'includes/admin/class-lengow-box-order-shipping.php' );
 			}
+			include_once( 'includes/class-lengow-hook.php' );
+			include_once( 'includes/frontend/class-lengow-tracker.php' );
 		}
 
 		/**

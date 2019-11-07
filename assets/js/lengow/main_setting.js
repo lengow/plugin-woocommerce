@@ -68,6 +68,19 @@
             }
         }
 
+        // enable tracking ip.
+        $("input[name='lengow_tracking_enabled']").on('change', function () {
+            displayTrackingIdMode();
+        });
+
+        function displayTrackingIdMode() {
+            if ($("input[name='lengow_tracking_enabled'][type='checkbox']").prop('checked')) {
+                $('#lengow_wrapper_tracking_id').slideDown(150);
+            } else {
+                $('#lengow_wrapper_tracking_id').slideUp(150);
+            }
+        }
+
         // enable preprod mode.
         $("input[name='lengow_preprod_enabled']").on('change', function () {
             displayPreProdMode();
