@@ -108,7 +108,9 @@ order.screen.cancel_and_reimport|Ré-importer la commande
 order.screen.check_cancel_and_reimport|Vous voulez vous vraiment réimporter la commande ?
 order.screen.synchronize_id|Synchronisez l'ID
 order.screen.resend_action|Renvoyer l'action
-order.screen.check_resend_action|Vous voulez vous vraiment passer la commande en %{action} ?
+order.screen.resend_action_success|L'action a été envoyée
+order.screen.resend_action_error|L'envoi de l'action a échoué
+order.screen.check_resend_action|Voulez vous vraiment envoyer une action %{action} ?
 order.table.button_search|Rechercher
 order.table.id|ID
 order.table.action|Action

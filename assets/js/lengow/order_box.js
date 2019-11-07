@@ -22,19 +22,20 @@
     $(document).ready(function () {
         $(document).on('click', '#lgw-order-resend', function () {
             if (confirm($(this).attr('data-message'))) {
+                var success = $(this).attr('data-success');
+                var error = $(this).attr('data-error');
                 var data = {
                     action: 'post_process_order_box',
                     do_action: $(this).attr('data-action'),
+                    order_lengow_id: $(this).attr('data-id'),
                 };
                 $.ajax({
                     url: ajaxurl,
                     type: 'POST',
                     data: data,
                     success: function (content) {
-                        console.log(content);
                         var data = JSON.parse(content);
-                        console.log(data);
-                        alert('c\'est good');
+                        data.success ? alert(success) : alert(error);
                     }
                 });
             }

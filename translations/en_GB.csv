@@ -108,6 +108,8 @@ order.screen.cancel_and_reimport|Re-import order
 order.screen.check_cancel_and_reimport|Do you really want to re-import the order?
 order.screen.synchronize_id|Synchronize ID
 order.screen.resend_action|Resend Action
+order.screen.resend_action_success|The action has been sent
+order.screen.resend_action_error|Sending the action failed
 order.screen.check_resend_action|Do you really want to %{action} the order?
 order.table.button_search|Search
 order.table.id|ID

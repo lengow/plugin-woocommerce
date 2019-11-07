@@ -10,18 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 <style>
     <?php include WP_PLUGIN_DIR . '/lengow-woocommerce/assets/css/lengow-box-order.css'  ?>
 </style>
-
-<button id="lgw-order-resend"
-        data-message = "<?php echo $locale->t('order.screen.check_resend_action', array(
-                'action' => $action_type
-        ) );?>"
-        data-success = ""
-        data-error = ""
-        data-action="resend_<?php echo $action_type ?>"
-        type="button">
-    <?php echo $locale->t('order.screen.resend_action');?>
-</button>
-
 <div id="lgw-box-order-info">
     <ul>
         <li>
@@ -71,7 +59,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <hr>
         <li>
             <span class="lgw-order-title"><?php echo $locale->t( 'meta_box.order_info.imported_date' ); ?></span>
-            <span class="lgw-order-label"><?php echo get_date_from_gmt($order_lengow->created_at); ?></span>
+            <span class="lgw-order-label"><?php echo get_date_from_gmt( $order_lengow->created_at ); ?></span>
         </li>
     </ul>
     <ul>
@@ -98,12 +86,12 @@ if ( ! defined( 'ABSPATH' ) ) {
         <li>
             <span class="lgw-order-title"><?php echo $locale->t( 'meta_box.order_info.shipped_by_marketplace' ); ?></span>
             <span class="lgw-order-label"><?php
-			    if ( $order_lengow->sent_marketplace ) {
-				    echo $locale->t( 'meta_box.order_info.boolean_yes' );
-			    } else {
-				    echo $locale->t( 'meta_box.order_info.boolean_no' );
-			    }
-			    ?>
+				if ( $order_lengow->sent_marketplace ) {
+					echo $locale->t( 'meta_box.order_info.boolean_yes' );
+				} else {
+					echo $locale->t( 'meta_box.order_info.boolean_no' );
+				}
+				?>
             </span>
         </li>
         <hr>
@@ -114,5 +102,25 @@ if ( ! defined( 'ABSPATH' ) ) {
         </li>
     </ul>
 </div>
+
+<!-- ACTION BUTTONS -->
+<?php if ( ! $preprod ) { ?>
+    <div id="lgw-box-order-buttons">
+		<?php if ( $can_send_action ) { ?>
+            <button id="lgw-order-resend"
+                    class="button-primary"
+                    data-message="<?php echo $locale->t( 'order.screen.check_resend_action', array(
+				        'action' => $action_type
+			        ) ); ?>"
+                    data-success="<?php echo $locale->t( 'order.screen.resend_action_success' ); ?>"
+                    data-error="<?php echo $locale->t( 'order.screen.resend_action_error' ); ?>"
+                    data-action="resend_<?php echo $action_type ?>"
+                    data-id="<?php echo $order_lengow->id ?>"
+                    type="button">
+				<?php echo $locale->t( 'order.screen.resend_action' ); ?>
+            </button>
+		<?php } ?>
+    </div>
+<?php } ?>
 
 <script><?php include WP_PLUGIN_DIR . '/lengow-woocommerce/assets/js/lengow/order_box.js' ?></script>
