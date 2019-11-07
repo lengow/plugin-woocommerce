@@ -405,7 +405,7 @@ class Lengow_Marketplace {
 			Lengow_Order::add_order_error( $order_lengow->id, $error_message, Lengow_Order_Error::ERROR_TYPE_SEND );
 			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 			Lengow_Main::log(
-				'API-OrderAction',
+				Lengow_Log::CODE_ACTION,
 				Lengow_Main::set_log_message(
 					'log.order_action.call_action_failed',
 					array( 'decoded_message' => $decoded_message )

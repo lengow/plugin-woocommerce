@@ -163,7 +163,7 @@ class Lengow_Check {
 			: date( 'Y-m-d H:i:s', $last_import['timestamp'] );
 		if ( 'none' === $last_import['type'] ) {
 			$last_import_type = $this->_locale->t( 'toolbox.index.last_import_none' );
-		} elseif ( 'cron' === $last_import['type'] ) {
+		} elseif ( Lengow_Import::TYPE_CRON === $last_import['type'] ) {
 			$last_import_type = $this->_locale->t( 'toolbox.index.last_import_cron' );
 		} else {
 			$last_import_type = $this->_locale->t( 'toolbox.index.last_import_manual' );

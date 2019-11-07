@@ -74,7 +74,7 @@ class Lengow_Install {
 	 */
 	public static function install() {
 		Lengow_Main::log(
-			'Install',
+			Lengow_Log::CODE_INSTALL,
 			Lengow_Main::set_log_message( 'log.install.install_start', array( 'version' => LENGOW_VERSION ) )
 		);
 		$old_version = Lengow_Configuration::get( 'lengow_version' );
@@ -82,7 +82,7 @@ class Lengow_Install {
 		$old_version = LENGOW_VERSION === $old_version ? false : $old_version;
 		Lengow_Install::update( $old_version );
 		Lengow_Main::log(
-			'Install',
+			Lengow_Log::CODE_INSTALL,
 			Lengow_Main::set_log_message( 'log.install.install_end', array( 'version' => LENGOW_VERSION ) )
 		);
 	}
@@ -100,7 +100,7 @@ class Lengow_Install {
 		if ( $old_version ) {
 			self::$old_version = $old_version;
 			Lengow_Main::log(
-				'Install',
+				Lengow_Log::CODE_INSTALL,
 				Lengow_Main::set_log_message(
 					'log.install.update_start',
 					array( 'old_version' => $old_version, 'new_version' => LENGOW_VERSION )
@@ -117,7 +117,7 @@ class Lengow_Install {
 			include LENGOW_PLUGIN_PATH . '/upgrade/' . $file;
 			$number_version = preg_replace( '/update_|\.php$/', '', $file );
 			Lengow_Main::log(
-				'Install',
+				Lengow_Log::CODE_INSTALL,
 				Lengow_Main::set_log_message( 'log.install.add_upgrade_version', array( 'version' => $number_version ) )
 			);
 		}
@@ -132,7 +132,7 @@ class Lengow_Install {
 		self::set_installation_status( false );
 		if ( $old_version ) {
 			Lengow_Main::log(
-				'Install',
+				Lengow_Log::CODE_INSTALL,
 				Lengow_Main::set_log_message(
 					'log.install.update_end',
 					array( 'old_version' => $old_version, 'new_version' => LENGOW_VERSION )
@@ -159,12 +159,12 @@ class Lengow_Install {
 				) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 			dbDelta( $sql );
 			Lengow_Main::log(
-				'Install',
+				Lengow_Log::CODE_INSTALL,
 				Lengow_Main::set_log_message( 'log.install.table_created', array( 'name' => $name ) )
 			);
 		} else {
 			Lengow_Main::log(
-				'Install',
+				Lengow_Log::CODE_INSTALL,
 				Lengow_Main::set_log_message( 'log.install.table_already_created', array( 'name' => $name ) )
 			);
 		}
@@ -209,18 +209,18 @@ class Lengow_Install {
 				) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 			dbDelta( $sql );
 			Lengow_Main::log(
-				'Install',
+				Lengow_Log::CODE_INSTALL,
 				Lengow_Main::set_log_message( 'log.install.table_created', array( 'name' => $name ) )
 			);
 		} else {
 			Lengow_Main::log(
-				'Install',
+				Lengow_Log::CODE_INSTALL,
 				Lengow_Main::set_log_message( 'log.install.table_already_created', array( 'name' => $name ) )
 			);
 		}
 
 		// create table lengow_order_line.
-		$name =  Lengow_Crud::LENGOW_ORDER_LINE;
+		$name = Lengow_Crud::LENGOW_ORDER_LINE;
 		if ( ! self::check_table_exists( $name ) ) {
 			$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . $name . ' (
 				`id` INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -232,12 +232,12 @@ class Lengow_Install {
 				) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 			dbDelta( $sql );
 			Lengow_Main::log(
-				'Install',
+				Lengow_Log::CODE_INSTALL,
 				Lengow_Main::set_log_message( 'log.install.table_created', array( 'name' => $name ) )
 			);
 		} else {
 			Lengow_Main::log(
-				'Install',
+				Lengow_Log::CODE_INSTALL,
 				Lengow_Main::set_log_message( 'log.install.table_already_created', array( 'name' => $name ) )
 			);
 		}
@@ -259,12 +259,12 @@ class Lengow_Install {
 				) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 			dbDelta( $sql );
 			Lengow_Main::log(
-				'Install',
+				Lengow_Log::CODE_INSTALL,
 				Lengow_Main::set_log_message( 'log.install.table_created', array( 'name' => $name ) )
 			);
 		} else {
 			Lengow_Main::log(
-				'Install',
+				Lengow_Log::CODE_INSTALL,
 				Lengow_Main::set_log_message( 'log.install.table_already_created', array( 'name' => $name ) )
 			);
 		}
@@ -288,12 +288,12 @@ class Lengow_Install {
 				) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 			dbDelta( $sql );
 			Lengow_Main::log(
-				'Install',
+				Lengow_Log::CODE_INSTALL,
 				Lengow_Main::set_log_message( 'log.install.table_created', array( 'name' => $name ) )
 			);
 		} else {
 			Lengow_Main::log(
-				'Install',
+				Lengow_Log::CODE_INSTALL,
 				Lengow_Main::set_log_message( 'log.install.table_already_created', array( 'name' => $name ) )
 			);
 		}

@@ -29,7 +29,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Lengow_Log Class.
  */
-class Lengow_Log extends Lengow_File {
+class Lengow_Log {
+
+	/**
+	 * @var string install log code.
+	 */
+	const CODE_INSTALL = 'Install';
+
+	/**
+	 * @var string setting log code.
+	 */
+	const CODE_SETTING = 'Setting';
+
+	/**
+	 * @var string connector log code.
+	 */
+	const CODE_CONNECTOR = 'Connector';
+
+	/**
+	 * @var string export log code.
+	 */
+	const CODE_EXPORT = 'Export';
+
+	/**
+	 * @var string import log code.
+	 */
+	const CODE_IMPORT = 'Import';
+
+	/**
+	 * @var string action log code.
+	 */
+	const CODE_ACTION = 'Action';
 
 	/**
 	 * @var string name of logs folder.
@@ -50,11 +80,9 @@ class Lengow_Log extends Lengow_File {
 	 */
 	public function __construct( $file_name = null ) {
 		if ( empty( $file_name ) ) {
-			$this->file_name = 'logs-' . date( 'Y-m-d' ) . '.txt';
-		} else {
-			$this->file_name = $file_name;
+			$file_name = 'logs-' . date( 'Y-m-d' ) . '.txt';
 		}
-		$this->_file = new Lengow_File( self::$lengow_log_folder, $this->file_name );
+		$this->_file = new Lengow_File( self::$lengow_log_folder, $file_name );
 	}
 
 	/**

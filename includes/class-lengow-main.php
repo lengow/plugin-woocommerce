@@ -369,7 +369,7 @@ class Lengow_Main {
 	 * @param string $type last import type (cron or manual)
 	 */
 	public static function update_date_import( $type ) {
-		if ( 'cron' === $type ) {
+		if ( Lengow_Import::TYPE_CRON === $type ) {
 			Lengow_Configuration::update_value( 'lengow_last_import_cron', time() );
 		} else {
 			Lengow_Configuration::update_value( 'lengow_last_import_manual', time() );
@@ -386,14 +386,14 @@ class Lengow_Main {
 		$timestamp_manual = Lengow_Configuration::get( 'lengow_last_import_manual' );
 		if ( $timestamp_cron && $timestamp_manual ) {
 			if ( (int) $timestamp_cron > (int) $timestamp_manual ) {
-				return array( 'type' => 'cron', 'timestamp' => (int) $timestamp_cron );
+				return array( 'type' => Lengow_Import::TYPE_CRON, 'timestamp' => (int) $timestamp_cron );
 			} else {
-				return array( 'type' => 'manual', 'timestamp' => (int) $timestamp_manual );
+				return array( 'type' => Lengow_Import::TYPE_MANUAL, 'timestamp' => (int) $timestamp_manual );
 			}
 		} elseif ( $timestamp_cron && ! $timestamp_manual ) {
-			return array( 'type' => 'cron', 'timestamp' => (int) $timestamp_cron );
+			return array( 'type' => Lengow_Import::TYPE_CRON, 'timestamp' => (int) $timestamp_cron );
 		} elseif ( $timestamp_manual && ! $timestamp_cron ) {
-			return array( 'type' => 'manual', 'timestamp' => (int) $timestamp_manual );
+			return array( 'type' => Lengow_Import::TYPE_MANUAL, 'timestamp' => (int) $timestamp_manual );
 		}
 
 		return array( 'type' => 'none', 'timestamp' => 'none' );

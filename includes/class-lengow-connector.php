@@ -281,7 +281,7 @@ class Lengow_Connector {
 			case 'GET':
 				$opts[ CURLOPT_URL ] = $url . ( ! empty( $args ) ? '?' . http_build_query( $args ) : '' );
 				Lengow_Main::log(
-					'Connector',
+					Lengow_Log::CODE_CONNECTOR,
 					Lengow_Main::set_log_message(
 						'log.connector.call_api',
 						array( 'curl_url' => $opts[ CURLOPT_URL ] )
@@ -328,7 +328,7 @@ class Lengow_Connector {
 				'log.connector.error_api',
 				array( 'error_code' => Lengow_Main::decode_log_message( $timeout, 'en_GB' ) )
 			);
-			Lengow_Main::log( 'Connector', $error_message );
+			Lengow_Main::log( Lengow_Log::CODE_CONNECTOR, $error_message );
 			throw new Lengow_Exception( $timeout );
 		}
 		curl_close( $ch );
@@ -344,7 +344,7 @@ class Lengow_Connector {
 				'log.connector.error_api',
 				array( 'error_code' => Lengow_Main::decode_log_message( $error_curl, 'en_GB' ) )
 			);
-			Lengow_Main::log( 'Connector', $error_message );
+			Lengow_Main::log( Lengow_Log::CODE_CONNECTOR, $error_message );
 			throw new Lengow_Exception( $error_curl );
 		}
 

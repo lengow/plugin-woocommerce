@@ -919,7 +919,7 @@ class Lengow_Order {
 		}
 		$success = true;
 		Lengow_Main::log(
-			'API-OrderAction',
+			Lengow_Log::CODE_ACTION,
 			Lengow_Main::set_log_message(
 				'log.order_action.try_to_send_action',
 				array(
@@ -969,7 +969,7 @@ class Lengow_Order {
 			Lengow_Order::add_order_error( $this->id, $error_message, Lengow_Order_Error::ERROR_TYPE_SEND );
 			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
 			Lengow_Main::log(
-				'API-OrderAction',
+				Lengow_Log::CODE_ACTION,
 				Lengow_Main::set_log_message(
 					'log.order_action.call_action_failed',
 					array( 'decoded_message' => $decoded_message )
@@ -997,7 +997,7 @@ class Lengow_Order {
 				)
 			);
 		}
-		Lengow_Main::log( 'API-OrderAction', $message, false, $this->marketplace_sku );
+		Lengow_Main::log( Lengow_Log::CODE_ACTION, $message, false, $this->marketplace_sku );
 
 		return $success;
 	}
@@ -1017,7 +1017,7 @@ class Lengow_Order {
 				'marketplace'          => $this->marketplace_name,
 			)
 		);
-		if ( isset( $results->count ) && 0 === (int) $results->count ) {
+		if ( ! isset( $results->count ) || ( isset( $results->count ) && 0 === (int) $results->count ) ) {
 			return false;
 		}
 		$order_data = $results->results[0];
