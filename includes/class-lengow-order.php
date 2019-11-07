@@ -912,7 +912,7 @@ class Lengow_Order {
 	 */
 	public function can_resend_action() {
 		$order = new WC_Order( $this->order_id );
-		if ( ! $this->is_closed() && ! $this->has_an_action_in_progress()) {
+		if ( ! $this->is_closed() && ! $this->has_an_action_in_progress() ) {
 			$status = self::get_order_status( $order );
 			if ( Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED ) === $status ||
 			     Lengow_Order::get_order_state( Lengow_Order::STATE_SHIPPED ) === $status ) {
