@@ -166,6 +166,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				add_action( 'admin_action_dashboard_get_process', array( 'Lengow_Admin_Dashboard', 'get_process' ) );
 				add_action( 'wp_ajax_post_process_dashboard', array( 'Lengow_Admin_Dashboard', 'post_process' ) );
 				add_action( 'wp_ajax_post_process_orders', array( 'Lengow_Admin_Orders', 'post_process' ) );
+				add_action( 'wp_ajax_post_process_order_box', array( 'Lengow_Box_Order_Info', 'post_process' ) );
 				// order actions.
 				add_action( 'save_post', array( 'Lengow_Hook', 'save_lengow_shipping' ) );
 				add_action( 'woocommerce_email', array( 'Lengow_Hook', 'unhook_woocommerce_mail' ) );

@@ -748,8 +748,8 @@ class Lengow_Order {
 	public static function re_send_order( $order_lengow_id ) {
 		$order_lengow = New Lengow_Order( $order_lengow_id );
 		if ( $order_lengow->order_id ) {
-			$order_wc     = new WC_Order( $order_lengow->order_id );
-			$order_status = self::get_order_status( $order_wc );
+			$order        = new WC_Order( $order_lengow->order_id );
+			$order_status = self::get_order_status( $order );
 			// sending an API call for sending or canceling an order.
 			if ( self::get_order_state( Lengow_Order::STATE_SHIPPED ) === $order_status ) {
 				return $order_lengow->call_action( Lengow_Action::TYPE_SHIP );
@@ -906,6 +906,24 @@ class Lengow_Order {
 	}
 
 	/**
+	 * Check if order is in good status for resend and has no action in progress.
+	 *
+	 * @return bool
+	 */
+	public function can_resend_action() {
+		$order = new WC_Order( $this->order_id );
+		if ( ! $this->is_closed() && ! $this->has_an_action_in_progress() ) {
+			$status = self::get_order_status( $order );
+			if ( Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED ) === $status ||
+			     Lengow_Order::get_order_state( Lengow_Order::STATE_SHIPPED ) === $status ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Send an action for a specific order.
 	 *
 	 * @param string $action Lengow Actions type (ship or cancel)
@@ -1036,4 +1054,5 @@ class Lengow_Order {
 
 		return ! empty( $return ) ? $return : false;
 	}
+
 }

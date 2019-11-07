@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Lengow_Admin_Orders Class.
+ * Lengow_Admin_Order_Settings Class.
  */
 class Lengow_Admin_Order_Settings {
 

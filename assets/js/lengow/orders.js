@@ -142,9 +142,11 @@
          */
         $(document).on('click', '#cb-select-all-1', function () {
             if ($(this).prop('checked')) {
-                $('.js-lengow_toolbar').show();
+                $('.js-lengow_selection_order:checked').each(function () {
+                    $('.js-lengow_toolbar, .js-lengow_toolbar a').show();
+                });
             } else {
-                $('.js-lengow_toolbar').hide();
+                $('.js-lengow_toolbar, .js-lengow_toolbar a').hide();
             }
         });
 
@@ -155,11 +157,11 @@
             var find_order_selected = false;
             $('.js-lengow_selection_order:checked').each(function () {
                 find_order_selected = true;
-                $('.js-lengow_toolbar').show();
+                $('.js-lengow_toolbar, .js-lengow_toolbar a').show();
             });
 
             if (!find_order_selected) {
-                $('.js-lengow_toolbar').hide();
+                $('.js-lengow_toolbar, .js-lengow_toolbar a').hide();
             }
         });
 
