@@ -905,9 +905,14 @@ class Lengow_Order {
 		return ! $actions ? false : true;
 	}
 
+	/**
+	 * Check if order is in good status for resend and has no action in progress.
+	 *
+	 * @return bool
+	 */
 	public function can_resend_action() {
 		$order = new WC_Order( $this->order_id );
-		if ( ! $this->has_an_action_in_progress() ) {
+		if ( ! $this->is_closed() && ! $this->has_an_action_in_progress()) {
 			$status = self::get_order_status( $order );
 			if ( Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED ) === $status ||
 			     Lengow_Order::get_order_state( Lengow_Order::STATE_SHIPPED ) === $status ) {

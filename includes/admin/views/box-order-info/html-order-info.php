@@ -104,9 +104,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 </div>
 
 <!-- ACTION BUTTONS -->
-<?php if ( ! $preprod ) { ?>
+<?php if ( ! $preprod ) : ?>
     <div id="lgw-box-order-buttons">
-		<?php if ( $can_send_action ) { ?>
+		<?php if ( $can_send_action ) : ?>
             <button id="lgw-order-resend"
                     class="button-primary"
                     data-message="<?php echo $locale->t( 'order.screen.check_resend_action', array(
@@ -119,8 +119,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                     type="button">
 				<?php echo $locale->t( 'order.screen.resend_action' ); ?>
             </button>
-		<?php } ?>
+		<?php endif ?>
     </div>
-<?php } ?>
+<?php endif ?>
 
 <script><?php include WP_PLUGIN_DIR . '/lengow-woocommerce/assets/js/lengow/order_box.js' ?></script>

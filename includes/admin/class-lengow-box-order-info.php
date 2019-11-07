@@ -40,22 +40,25 @@ class Lengow_Box_Order_Info {
 			$order_lengow_id = Lengow_Order::get_id_from_order_id( $post->ID );
 			$order_lengow    = New Lengow_Order( $order_lengow_id );
 			$can_send_action = $order_lengow->can_resend_action();
-			$action_type = false;
-			if ($can_send_action) {
+			$action_type     = false;
+			if ( $can_send_action ) {
 				$order        = new WC_Order( $order_lengow->order_id );
 				$order_status = Lengow_Order::get_order_status( $order );
-				$action_type     = Lengow_Order::get_order_state(Lengow_Order::STATE_CANCELED) === $order_status
+				$action_type  = $order_status === Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED )
 					? 'cancel'
 					: 'ship';
 			}
-			$locale          = new Lengow_Translation();
-			$preprod         = Lengow_Configuration::get( 'lengow_preprod_enabled' );
+			$locale  = new Lengow_Translation();
+			$preprod = Lengow_Configuration::get( 'lengow_preprod_enabled' );
 			include_once( 'views/box-order-info/html-order-info.php' );
 		} catch ( Exception $e ) {
 			echo Lengow_Main::decode_log_message( $e->getMessage() );
 		}
 	}
 
+	/**
+	 * Process for ajax actions.
+	 */
 	public function post_process() {
 		$data   = array();
 		$action = $_POST['do_action'];
@@ -67,7 +70,7 @@ class Lengow_Box_Order_Info {
 				break;
 			case 'resend_cancel':
 				$order_lengow    = New Lengow_Order( (int) $_POST['order_lengow_id'] );
-				$data['success'] = $order_lengow->call_action( Lengow_Action::TYPE_CANCEL);
+				$data['success'] = $order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
 				echo json_encode( $data );
 				break;
 			default:

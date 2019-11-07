@@ -293,7 +293,7 @@
 /includes/class-lengow-hook.php|ef8292147566dd8c7afeab5af134af8e
 /includes/class-lengow-order-error.php|be2168aa886e59656046bbaebe96ae24
 /includes/admin/class-lengow-admin-order-settings.php|b2a2eb5cf34a95df3052c2d6776d4b83
-/includes/admin/class-lengow-box-order-info.php|77a62fcd63879f686c2e3c3e3a596fc1
+/includes/admin/class-lengow-box-order-info.php|60c1f64f686f404ebde3c5d947f3ba05
 /includes/admin/class-lengow-admin-dashboard.php|f5cc3121545e42e5aac5a36f63843781
 /includes/admin/class-lengow-box-order-shipping.php|ae20b9d352ef609046c19d4bcaff3862
 /includes/admin/class-lengow-admin.php|4af8240a3d34eb2b38862a12ff83841c
@@ -308,7 +308,7 @@
 /includes/admin/views/legals/html-admin-legals.php|0f4dd34f1ab4dae7122c71a0035297c7
 /includes/admin/views/html-admin-header-order.php|133e2638703d42ea8e01eee83b917780
 /includes/admin/views/box-order-shipping/html-order-shipping.php|980a9bca192b7190b0f2eaa51b51714e
-/includes/admin/views/box-order-info/html-order-info.php|a539b01a655f4dbe34a101cbccacaa2f
+/includes/admin/views/box-order-info/html-order-info.php|2e173745d63f478ad93e1674f08f2b24
 /includes/admin/views/html-admin-footer.php|acbe44b29e1a6a7ac00c7c88923ab616
 /includes/admin/views/products/html-admin-products.php|5371e61908e226af0c04b2956a315bf6
 /includes/admin/class-lengow-admin-orders.php|8e7d20385300cfcd7ee8b0455c65b5ca
@@ -316,7 +316,7 @@
 /includes/admin/class-lengow-admin-products.php|963c6b521d5e73fe7e7836087c5b0e71
 /includes/admin/class-lengow-admin-help.php|da715322cba5b48ca90d1359fa3beb05
 /includes/admin/class-lengow-admin-legals.php|ca2a0ca03b95f63a01c051d92674b83d
-/includes/class-lengow-order.php|02510e7f0380691abee9ffbe819dbeb8
+/includes/class-lengow-order.php|b7a8ebc87aea194388f82bdff87ffb30
 /includes/class-lengow-translation.php|b6ecddbcb919556c98caa8f2637794c4
 /includes/class-lengow-main.php|3fb5ef8c76b921d7b16da7f639ab4faf
 /includes/class-lengow-export.php|a5159202c0635315986d1e481cc3ea34
