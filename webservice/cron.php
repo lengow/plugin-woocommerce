@@ -99,22 +99,23 @@ if ( ! Lengow_Main::check_webservice_access( $token ) ) {
 if ( isset( $_GET['get_sync'] ) && 1 == $_GET['get_sync'] ) {
 	echo json_encode( Lengow_Sync::get_sync_data() );
 } else {
-	$force = isset( $_GET['force'] ) ? (bool) $_GET['force'] : false;
+	$force      = isset( $_GET['force'] ) ? (bool) $_GET['force'] : false;
+	$log_output = isset( $_GET['log_output'] ) ? (bool) $_GET['log_output'] : false;
 	// get sync action if exists.
 	$sync = isset( $_GET['sync'] ) ? $_GET['sync'] : false;
-	// sync catalogs id between Lengow and Shopware
+	// sync catalogs id between Lengow and WooCommerce.
 	if ( ! $sync || Lengow_Sync::SYNC_CATALOG === $sync ) {
 		Lengow_Sync::sync_catalog( $force );
 	}
 	// sync orders between Lengow and WooCommerce.
 	if ( ! $sync || Lengow_Sync::SYNC_ORDER === $sync ) {
 		// array of params for import order
-		$params = array( 'type' => 'cron' );
+		$params = array(
+			'type'       => Lengow_Import::TYPE_CRON,
+			'log_output' => $log_output,
+		);
 		if ( isset( $_GET['preprod_mode'] ) ) {
 			$params['preprod_mode'] = (bool) $_GET['preprod_mode'];
-		}
-		if ( isset( $_GET['log_output'] ) ) {
-			$params['log_output'] = (bool) $_GET['log_output'];
 		}
 		if ( isset( $_GET['days'] ) ) {
 			$params['days'] = (int) $_GET['days'];
@@ -142,9 +143,9 @@ if ( isset( $_GET['get_sync'] ) && 1 == $_GET['get_sync'] ) {
 	}
 	// sync actions between Lengow and WooCommerce.
 	if ( ! $sync || Lengow_Sync::SYNC_ACTION === $sync ) {
-		Lengow_Action::check_finish_action();
-		Lengow_Action::check_old_action();
-		Lengow_Action::check_action_not_sent();
+		Lengow_Action::check_finish_action( $log_output );
+		Lengow_Action::check_old_action( $log_output );
+		Lengow_Action::check_action_not_sent( $log_output );
 	}
 	// sync options between Lengow and WooCommerce.
 	if ( ! $sync || Lengow_Sync::SYNC_CMS_OPTION === $sync ) {
@@ -152,7 +153,7 @@ if ( isset( $_GET['get_sync'] ) && 1 == $_GET['get_sync'] ) {
 	}
 	// sync marketplaces between Lengow and WooCommerce.
 	if ( Lengow_Sync::SYNC_MARKETPLACE === $sync ) {
-		Lengow_Sync::get_marketplaces( $force );
+		Lengow_Sync::get_marketplaces( $force, $log_output );
 	}
 	// sync status account between Lengow and WooCommerce.
 	if ( Lengow_Sync::SYNC_STATUS_ACCOUNT === $sync ) {

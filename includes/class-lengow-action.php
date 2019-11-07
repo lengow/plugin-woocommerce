@@ -345,7 +345,7 @@ class Lengow_Action {
 			$param_list .= ! $param_list ? '"' . $param . '": ' . $value : ' -- "' . $param . '": ' . $value;
 		}
 		Lengow_Main::log(
-			'API-OrderAction',
+			Lengow_Log::CODE_ACTION,
 			Lengow_Main::set_log_message( 'log.order_action.call_tracking', array( 'parameters' => $param_list ) ),
 			false,
 			$order_lengow->marketplace_sku
@@ -355,15 +355,18 @@ class Lengow_Action {
 	/**
 	 * Check if active actions are finished.
 	 *
+	 * @param boolean $log_output see log or not
+	 *
 	 * @return boolean
 	 */
-	public static function check_finish_action() {
+	public static function check_finish_action( $log_output = false ) {
 		if ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
 			return false;
 		}
 		Lengow_Main::log(
-			'API-OrderAction',
-			Lengow_Main::set_log_message( 'log.order_action.check_completed_action' )
+			Lengow_Log::CODE_ACTION,
+			Lengow_Main::set_log_message( 'log.order_action.check_completed_action' ),
+			$log_output
 		);
 		$active_actions = self::get_all_active_actions();
 		if ( ! $active_actions ) {
@@ -434,12 +437,12 @@ class Lengow_Action {
 								Lengow_Order_Error::ERROR_TYPE_SEND
 							);
 							Lengow_Main::log(
-								'API-OrderAction',
+								Lengow_Log::CODE_ACTION,
 								Lengow_Main::set_log_message(
 									'log.order_action.call_action_failed',
 									array( 'decoded_message' => $api_action->errors )
 								),
-								false,
+								$log_output,
 								$order_lengow->marketplace_sku
 							);
 						}
@@ -455,13 +458,19 @@ class Lengow_Action {
 	/**
 	 * Remove old actions > 3 days.
 	 *
+	 * @param boolean $log_output see log or not
+	 *
 	 * @return boolean
 	 */
-	public static function check_old_action() {
+	public static function check_old_action( $log_output = false ) {
 		if ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
 			return false;
 		}
-		Lengow_Main::log( 'API-OrderAction', Lengow_Main::set_log_message( 'log.order_action.check_old_action' ) );
+		Lengow_Main::log(
+			Lengow_Log::CODE_ACTION,
+			Lengow_Main::set_log_message( 'log.order_action.check_old_action' ),
+			$log_output
+		);
 		// get all old order action (+ 3 days).
 		$actions = self::get_old_actions();
 		if ( $actions ) {
@@ -483,14 +492,17 @@ class Lengow_Action {
 						$error_message,
 						Lengow_Order_Error::ERROR_TYPE_SEND
 					);
-					$decodedMessage = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
+					$decodedMessage = Lengow_Main::decode_log_message(
+						$error_message,
+						Lengow_Translation::DEFAULT_ISO_CODE
+					);
 					Lengow_Main::log(
-						'API-OrderAction',
+						Lengow_Log::CODE_ACTION,
 						Lengow_Main::set_log_message(
 							'log.order_action.call_action_failed',
 							array( 'decoded_message' => $decodedMessage )
 						),
-						false,
+						$log_output,
 						$order_lengow->marketplace_sku
 					);
 				}
@@ -525,13 +537,19 @@ class Lengow_Action {
 	/**
 	 * Check if actions are not sent.
 	 *
+	 * @param boolean $log_output see log or not
+	 *
 	 * @return boolean
 	 */
-	public static function check_action_not_sent() {
+	public static function check_action_not_sent( $log_output = false ) {
 		if ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
 			return false;
 		}
-		Lengow_Main::log( 'API-OrderAction', Lengow_Main::set_log_message( 'log.order_action.check_action_not_sent' ) );
+		Lengow_Main::log(
+			Lengow_Log::CODE_ACTION,
+			Lengow_Main::set_log_message( 'log.order_action.check_action_not_sent' ),
+			$log_output
+		);
 		// get unsent orders.
 		$unsent_orders = Lengow_Order::get_unsent_orders();
 		if ( $unsent_orders ) {
