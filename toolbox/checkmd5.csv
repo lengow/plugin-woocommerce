@@ -3,7 +3,7 @@
 /assets/js/bootstrap.min.js|bed31fb959612a0a77d8e87b9d0b3683
 /assets/js/select2.js|fc6ada6e297531c8e4e3e3f3edc79207
 /assets/js/lengow/admin.js|e8440205134d93ee2d7997a07e5ac11c
-/assets/js/lengow/order_box.js|eb5180d04bcfb69d952b8e28005560f2
+/assets/js/lengow/order_box.js|e695c2df04e935d8af5e30db0e5ef926
 /assets/js/lengow/order_setting.js|6289c42d1a5eb446984faa7e113dbf09
 /assets/js/lengow/main_setting.js|a95a1d551206285c6961f4862d81813f
 /assets/js/lengow/products.js|48777d25da2a7032f19c79b5d867202d
@@ -293,7 +293,7 @@
 /includes/class-lengow-hook.php|ef8292147566dd8c7afeab5af134af8e
 /includes/class-lengow-order-error.php|be2168aa886e59656046bbaebe96ae24
 /includes/admin/class-lengow-admin-order-settings.php|b2a2eb5cf34a95df3052c2d6776d4b83
-/includes/admin/class-lengow-box-order-info.php|60c1f64f686f404ebde3c5d947f3ba05
+/includes/admin/class-lengow-box-order-info.php|f52ad171a04afc0748ff10006aa44429
 /includes/admin/class-lengow-admin-dashboard.php|f5cc3121545e42e5aac5a36f63843781
 /includes/admin/class-lengow-box-order-shipping.php|ae20b9d352ef609046c19d4bcaff3862
 /includes/admin/class-lengow-admin.php|4af8240a3d34eb2b38862a12ff83841c
@@ -308,7 +308,7 @@
 /includes/admin/views/legals/html-admin-legals.php|0f4dd34f1ab4dae7122c71a0035297c7
 /includes/admin/views/html-admin-header-order.php|133e2638703d42ea8e01eee83b917780
 /includes/admin/views/box-order-shipping/html-order-shipping.php|980a9bca192b7190b0f2eaa51b51714e
-/includes/admin/views/box-order-info/html-order-info.php|2e173745d63f478ad93e1674f08f2b24
+/includes/admin/views/box-order-info/html-order-info.php|602c56f565fa9a5c87a3e78bf53842c7
 /includes/admin/views/html-admin-footer.php|acbe44b29e1a6a7ac00c7c88923ab616
 /includes/admin/views/products/html-admin-products.php|5371e61908e226af0c04b2956a315bf6
 /includes/admin/class-lengow-admin-orders.php|8e7d20385300cfcd7ee8b0455c65b5ca
@@ -325,7 +325,7 @@
 /includes/frontend/class-lengow-tracker.php|770350b95ec0a6bca3cbf664391e10cd
 /includes/class-lengow-feed.php|05f03585d61731875aa33aceee23be91
 /includes/class-lengow-import-order.php|e545aa9bc3ee37c71defe0741fb49d7a
-/includes/class-lengow-connector.php|b810c4252d9ac83c79c227f61a777c1d
+/includes/class-lengow-connector.php|66362e5299d8ef67315173176a17c006
 /includes/class-lengow-order-line.php|63adfd6ec43c2054ff6ca3884594008a
 /includes/class-lengow-marketplace.php|a7ec4f1f1bd923737512671d720d3ad7
 /includes/class-lengow-sync.php|10dbb02ae7ec3cd085df48da0cd09fce

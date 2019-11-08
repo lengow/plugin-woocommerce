@@ -119,10 +119,13 @@ en:
       no_order_description: "Your products have great visibility and your sales are about to prosper!"
       cancel_and_reimport: "Re-import order"
       check_cancel_and_reimport: "Do you really want to re-import the order?"
+      check_synchronize: "Do you want to synchronize ID ?"
       synchronize_id: "Synchronize ID"
       resend_action: "Resend Action"
       resend_action_success: "The action has been sent"
       resend_action_error: "Sending the action failed"
+      synchronize_action_success: "Synchronize success"
+      synchronize_action_error: "Synchronize failed"
       check_resend_action: "Do you really want to %{action} the order?"
     table:
       button_search: "Search"
