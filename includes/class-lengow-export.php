@@ -270,7 +270,11 @@ class Lengow_Export {
 		try {
 			// clean logs.
 			Lengow_Main::clean_log();
-			Lengow_Main::log( 'Export', Lengow_Main::set_log_message( 'log.export.start' ), $this->_log_output );
+			Lengow_Main::log(
+				Lengow_Log::CODE_EXPORT,
+				Lengow_Main::set_log_message( 'log.export.start' ),
+				$this->_log_output
+			);
 			// set legacy fields option.
 			$this->_set_legacy_fields();
 			// get fields to export.
@@ -278,7 +282,7 @@ class Lengow_Export {
 			// get products to be exported.
 			$products = $this->_get_export_ids();
 			Lengow_Main::log(
-				'Export',
+				Lengow_Log::CODE_EXPORT,
 				Lengow_Main::set_log_message(
 					'log.export.nb_product_found',
 					array( 'nb_product' => count( $products ) )
@@ -290,7 +294,7 @@ class Lengow_Export {
 				Lengow_Configuration::update_value( 'lengow_last_export', time() );
 			}
 			Lengow_Main::log(
-				'Export',
+				Lengow_Log::CODE_EXPORT,
 				Lengow_Main::set_log_message( 'log.export.end' ),
 				$this->_log_output
 			);
@@ -300,9 +304,9 @@ class Lengow_Export {
 			$error_message = '[Wordpress error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
 		}
 		if ( isset( $error_message ) ) {
-			$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
+			$decoded_message = Lengow_Main::decode_log_message( $error_message, Lengow_Translation::DEFAULT_ISO_CODE );
 			Lengow_Main::log(
-				'Export',
+				Lengow_Log::CODE_EXPORT,
 				Lengow_Main::set_log_message(
 					'log.export.export_failed',
 					array( 'decoded_message' => $decoded_message )
@@ -526,7 +530,7 @@ class Lengow_Export {
 			$product_count ++;
 			if ( $product_count > 0 && 0 === $product_count % 50 ) {
 				Lengow_Main::log(
-					'Export',
+					Lengow_Log::CODE_EXPORT,
 					Lengow_Main::set_log_message(
 						'log.export.count_product',
 						array( 'product_count' => $product_count )
@@ -551,7 +555,7 @@ class Lengow_Export {
 			$feed_url = $feed->get_url();
 			if ( $feed_url && 'cli' !== php_sapi_name() ) {
 				Lengow_Main::log(
-					'Export',
+					Lengow_Log::CODE_EXPORT,
 					Lengow_Main::set_log_message(
 						'log.export.your_feed_available_here',
 						array( 'feed_url' => $feed_url )

@@ -32,14 +32,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Translation {
 
 	/**
+	 * @var string default iso code.
+	 */
+	const DEFAULT_ISO_CODE = 'en_GB';
+
+	/**
 	 * @var array|null all translations.
 	 */
 	protected static $translation = null;
-
-	/**
-	 * @var string fallback iso code.
-	 */
-	public $fallback_iso_code = 'en_GB';
 
 	/**
 	 * @var string|null iso code.
@@ -80,11 +80,11 @@ class Lengow_Translation {
 		if ( isset( self::$translation[ $iso_code ][ $message ] ) ) {
 			return $this->translate_final( self::$translation[ $iso_code ][ $message ], $args );
 		} else {
-			if ( ! isset( self::$translation[ $this->fallback_iso_code ] ) ) {
-				$this->load_file( $this->fallback_iso_code );
+			if ( ! isset( self::$translation[ self::DEFAULT_ISO_CODE ] ) ) {
+				$this->load_file( self::DEFAULT_ISO_CODE );
 			}
-			if ( isset( self::$translation[ $this->fallback_iso_code ][ $message ] ) ) {
-				return $this->translate_final( self::$translation[ $this->fallback_iso_code ][ $message ], $args );
+			if ( isset( self::$translation[ self::DEFAULT_ISO_CODE ][ $message ] ) ) {
+				return $this->translate_final( self::$translation[ self::DEFAULT_ISO_CODE ][ $message ], $args );
 			} else {
 				return 'Missing Translation [' . $message . ']';
 			}

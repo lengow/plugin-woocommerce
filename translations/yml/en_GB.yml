@@ -133,7 +133,7 @@ en:
       action: "Action"
       lengow_status: "Lengow status"
       marketplace: "Marketplace"
-      order_id: "order ID"
+      order_id: "Order ID"
       customer: 'Customer'
       reference: "Reference"
       date: "Date"

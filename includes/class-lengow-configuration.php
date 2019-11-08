@@ -410,9 +410,9 @@ class Lengow_Configuration {
 			}
 		}
 		if ( $overwrite ) {
-			Lengow_Main::log( 'Setting', Lengow_Main::set_log_message( 'log.setting.setting_reset' ) );
+			Lengow_Main::log( Lengow_Log::CODE_SETTING, Lengow_Main::set_log_message( 'log.setting.setting_reset' ) );
 		} else {
-			Lengow_Main::log( 'Setting', Lengow_Main::set_log_message( 'log.setting.setting_updated' ) );
+			Lengow_Main::log( Lengow_Log::CODE_SETTING, Lengow_Main::set_log_message( 'log.setting.setting_updated' ) );
 		}
 
 		return true;
@@ -506,7 +506,7 @@ class Lengow_Configuration {
 					$old_value = preg_replace( "/[a-zA-Z0-9]/", '*', $old_value );
 				}
 				Lengow_Main::log(
-					'Setting',
+					Lengow_Log::CODE_SETTING,
 					Lengow_Main::set_log_message(
 						'log.setting.setting_change',
 						array(

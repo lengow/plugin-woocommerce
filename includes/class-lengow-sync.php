@@ -356,10 +356,11 @@ class Lengow_Sync {
 	 * Get marketplace data.
 	 *
 	 * @param boolean $force force cache update
+	 * @param boolean $log_output see log or not
 	 *
 	 * @return array|false
 	 */
-	public static function get_marketplaces( $force = false ) {
+	public static function get_marketplaces( $force = false, $log_output = false ) {
 		$file_path = Lengow_Marketplace::get_file_path();
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_marketplace_update' );
@@ -389,11 +390,17 @@ class Lengow_Sync {
 				Lengow_Configuration::update_value( 'lengow_marketplace_update', date( 'Y-m-d H:i:s' ) );
 			} catch ( Lengow_Exception $e ) {
 				Lengow_Main::log(
-					'Import',
+					Lengow_Log::CODE_IMPORT,
 					Lengow_Main::set_log_message(
 						'log.import.marketplace_update_failed',
-						array( 'decoded_message' => Lengow_Main::decode_log_message( $e->getMessage(), 'en_GB' ) )
-					)
+						array(
+							'decoded_message' => Lengow_Main::decode_log_message(
+								$e->getMessage(),
+								Lengow_Translation::DEFAULT_ISO_CODE
+							),
+						)
+					),
+					$log_output
 				);
 			}
 

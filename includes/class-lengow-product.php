@@ -601,7 +601,7 @@ class Lengow_Product {
 					);
 				}
 				Lengow_Main::log(
-					'Import',
+					Lengow_Log::CODE_IMPORT,
 					Lengow_Main::set_log_message(
 						'log.import.product_be_found',
 						array(
