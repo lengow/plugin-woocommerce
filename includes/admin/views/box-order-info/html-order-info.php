@@ -120,6 +120,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php echo $locale->t( 'order.screen.resend_action' ); ?>
             </button>
 		<?php endif ?>
+        <button id="lgw-order-synchronize"
+                class="button-primary"
+                data-message="<?php echo $locale->t( 'order.screen.check_synchronize' ); ?>"
+                data-success="<?php echo $locale->t( 'order.screen.synchronize_action_success' ); ?>"
+                data-error="<?php echo $locale->t( 'order.screen.synchronize_action_error' ); ?>"
+                data-action="synchronize"
+                data-id="<?php echo $order_lengow->id ?>"
+                type="button">
+			<?php echo $locale->t( 'order.screen.synchronize_id' ); ?>
+        </button>
     </div>
 <?php endif ?>
 

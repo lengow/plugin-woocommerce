@@ -20,7 +20,7 @@
 
 (function ($) {
     $(document).ready(function () {
-        $(document).on('click', '#lgw-order-resend', function () {
+        $(document).on('click', '#lgw-order-resend, #lgw-order-synchronize', function () {
             if (confirm($(this).attr('data-message'))) {
                 var success = $(this).attr('data-success');
                 var error = $(this).attr('data-error');
