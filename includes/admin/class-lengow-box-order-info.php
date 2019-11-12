@@ -73,6 +73,11 @@ class Lengow_Box_Order_Info {
 				$data['success'] = $order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
 				echo json_encode( $data );
 				break;
+			case 'synchronize':
+				$order_lengow    = New Lengow_Order( (int) $_POST['order_lengow_id'] );
+				$data['success'] = $order_lengow->synchronize_order();
+				echo json_encode( $data );
+				break;
 			default:
 				break;
 		}
