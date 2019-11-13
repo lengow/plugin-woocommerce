@@ -1,5 +1,5 @@
 <?php
-/*/**
+/**
  * Admin product page
  *
  * Copyright 2017 Lengow SAS
