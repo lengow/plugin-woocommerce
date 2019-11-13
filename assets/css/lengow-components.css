@@ -785,16 +785,24 @@ select.multiple-select option {
   width: 12%;
 }
 
-#lengow_order_grid #current-page-selector {
+#lengow_order_grid #current-page-selector,
+#lengow_product_grid #current-page-selector {
   width: auto;
 }
 
-#lengow_order_grid .tablenav {
+#lengow_order_grid .tablenav,
+#lengow_product_grid .tablenav {
   margin-bottom: 25px;
 }
 
-#lengow_order_grid .tablenav .current-page {
+#lengow_order_grid .tablenav .current-page,
+#lengow_product_grid .tablenav .current-page{
   width: 20%;
+}
+
+#lengow_order_grid #current-page-selector,
+#lengow_product_grid #current-page-selector {
+  height: 28px;
 }
 
 #lengow_wrapper_messages {

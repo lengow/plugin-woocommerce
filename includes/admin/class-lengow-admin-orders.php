@@ -70,19 +70,19 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		if ( $action ) {
 			switch ( $action ) {
 				case 'import_all':
-					self::do_action( 'import_all' );
+					self::_do_action( 'import_all' );
 					break;
 				case 're_import':
-					self::do_action( 're_import' );
+					self::_do_action( 're_import' );
 					break;
 				case 're_send':
-					self::do_action( 're_send' );
+					self::_do_action( 're_send' );
 					break;
 				case 'reimport_mass_action':
-					self::do_action( 'reimport_mass_action' );
+					self::_do_action( 'reimport_mass_action' );
 					break;
 				case 'resend_mass_action':
-					self::do_action( 'resend_mass_action' );
+					self::_do_action( 'resend_mass_action' );
 					break;
 			}
 			exit();
@@ -94,7 +94,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 *
 	 * @param $action
 	 */
-	private static function do_action( $action ) {
+	private static function _do_action( $action ) {
 		$lengow_admin_orders = new Lengow_Admin_Orders();
 		$locale              = new Lengow_Translation();
 		$data                = array();
@@ -248,8 +248,10 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 */
 	public static function render_lengow_list() {
 		// need to instantiate a class because this method must be static.
-		$lengow_admin_orders         = new Lengow_Admin_Orders();
-		$lengow_admin_orders->locale = new Lengow_Translation();
+		$countries_instance             = new WC_Countries;
+		$lengow_admin_orders            = new Lengow_Admin_Orders();
+		$lengow_admin_orders->locale    = new Lengow_Translation();
+		$lengow_admin_orders->countries = $countries_instance->countries;
 		$lengow_admin_orders->prepare_items();
 		$lengow_admin_orders->search(
 			$lengow_admin_orders->locale->t( 'order.table.button_search' ),
@@ -269,8 +271,8 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		// $hidden defines the hidden columns.
 		$hidden                = array();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
-		$this->data            = $this->get_orders();
-		usort( $this->data, array( &$this, 'usort_reorder' ) );
+		$this->data            = $this->_get_orders();
+		usort( $this->data, array( &$this, '_usort_reorder' ) );
 		// pagination.
 		$per_page     = 20;
 		$current_page = $this->get_pagenum();
@@ -311,6 +313,35 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	}
 
 	/**
+	 * Define all columns for specific method.
+	 *
+	 * @param array $item order datas
+	 * @param string $column_name column name
+	 *
+	 * @return array
+	 */
+	public function column_default( $item, $column_name ) {
+		// to avoid the need to create a method for each column there is column_default.
+		// that will process any column for which no special method is defined.
+		switch ( $column_name ) {
+			case 'action':
+			case 'status':
+			case 'marketplace':
+			case 'order_id':
+			case 'customer':
+			case 'reference':
+			case 'date':
+			case 'country':
+			case 'quantity':
+			case 'total':
+				return $item[ $column_name ];
+				break;
+			default:
+				break;
+		}
+	}
+
+	/**
 	 * Get all sortable columns.
 	 *
 	 * @return array
@@ -336,16 +367,42 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	}
 
 	/**
+	 * Return checkbox with order_id.
+	 *
+	 * @param object $order
+	 *
+	 * @return string|void
+	 */
+	public function column_cb( $order ) {
+		if ( '' !== $order['action'] ) {
+			return sprintf(
+				'<input type="checkbox" id="js-lengow_order_checkbox"
+				name="order[' . $order['id'] . ']" value="%s" class="js-lengow_selection_order"/>',
+				$order['id']
+			);
+		}
+	}
+
+	/**
+	 * Search box.
+	 *
+	 * @param string $text text for search
+	 * @param string $input_id id for search
+	 */
+	public function search( $text, $input_id ) {
+		echo '<form id="post-filter" method="post">';
+		// the hidden element is needed to load the right page.
+		echo '<input type="hidden" name="page" value="lengow_list" />';
+		echo $this->search_box( $text, $input_id );
+		echo '</form>';
+	}
+
+	/**
 	 * Get all orders meta.
 	 *
 	 * @return array
 	 */
-	private function get_orders() {
-		if ( empty( $this->countries ) ) {
-			// get countries.
-			$countries_instance = new WC_Countries;
-			$this->countries    = $countries_instance->countries;
-		}
+	private function _get_orders() {
 		$results = array();
 		$keys    = array(
 			'id',
@@ -360,14 +417,13 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			'quantity',
 			'total',
 		);
-
 		// filter by search box.
 		if ( isset( $_POST['s'] ) ) {
-			$orders = $this->request_get_orders( $_POST['s'] );
+			$orders = $this->_request_get_orders( $_POST['s'] );
 		} else {
-			$orders = $this->request_get_orders();
+			$orders = $this->_request_get_orders();
 		}
-
+		// get order data.
 		foreach ( $keys as $key ) {
 			foreach ( $orders as $order ) {
 				switch ( $key ) {
@@ -402,9 +458,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 						$orders_data = $order->order_item;
 						break;
 					case 'total' :
-						$orders_data = Lengow_Main::compare_version( '2.1.0', '<' )
-							? $order->total_paid . get_woocommerce_currency_symbol( $order->currency )
-							: wc_price( $order->total_paid, array( 'currency' => $order->currency ) );
+						$orders_data = $this->_display_total( $order );
 						break;
 					default :
 						$orders_data = null;
@@ -425,62 +479,16 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 *
 	 * @return string
 	 */
-	private function usort_reorder( $a, $b ) {
+	private function _usort_reorder( $a, $b ) {
 		// if no sort, default to status.
 		$order_by = ! empty( $_GET['orderby'] ) ? $_GET['orderby'] : 'date';
-
 		// if no order, default to asc.
 		$order = ! empty( $_GET['order'] ) ? $_GET['order'] : 'asc';
-
 		// determine sort order.
 		$result = strcmp( $a[ $order_by ], $b[ $order_by ] );
 
 		// send final sort direction to usort.
 		return 'desc' === $order ? $result : - $result;
-	}
-
-	/**
-	 * Search box.
-	 *
-	 * @param string $text text for search
-	 * @param string $input_id id for search
-	 */
-	private function search( $text, $input_id ) {
-		echo '<form id="post-filter" method="post">';
-		// the hidden element is needed to load the right page.
-		echo '<input type="hidden" name="page" value="lengow_list" />';
-		echo $this->search_box( $text, $input_id );
-		echo '</form>';
-	}
-
-	/**
-	 * Define all columns for specific method.
-	 *
-	 * @param array $item order datas
-	 * @param string $column_name column name
-	 *
-	 * @return array
-	 */
-	public function column_default( $item, $column_name ) {
-		// to avoid the need to create a method for each column there is column_default.
-		// that will process any column for which no special method is defined.
-		switch ( $column_name ) {
-			case 'action':
-			case 'status':
-			case 'marketplace':
-			case 'order_id':
-			case 'customer':
-			case 'reference':
-			case 'date':
-			case 'country':
-			case 'quantity':
-			case 'total':
-				return $item[ $column_name ];
-				break;
-			default:
-				break;
-
-		}
 	}
 
 	/**
@@ -490,11 +498,10 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	public function request_get_orders( $search = null ) {
+	private function _request_get_orders( $search = null ) {
 		global $wpdb;
 		$array_search = array();
-
-		$fields = array(
+		$fields       = array(
 			'orders.id',
 			'orders.order_lengow_state',
 			'orders.marketplace_label',
@@ -510,16 +517,12 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			'orders.order_process_state',
 			'orders.sent_marketplace',
 		);
-
-		$query = 'SELECT ' . join( ', ', $fields ) .
-		         ' FROM ' . $wpdb->prefix . 'lengow_orders AS orders';
-
+		$query        = 'SELECT ' . join( ', ', $fields ) . ' FROM ' . $wpdb->prefix . 'lengow_orders AS orders';
 		if ( ! empty( $search ) ) {
 			// changes $search for LIKE %% use.
 			$search        = '%' . $search . '%';
 			$search_fields = [ 'marketplace_label', 'marketplace_sku', 'order_id', 'customer_name' ];
 			$conditions    = array();
-
 			foreach ( $search_fields as $search_field ) {
 				$conditions[] = $search_field . ' LIKE ' . '%s';
 			}
@@ -551,23 +554,6 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	}
 
 	/**
-	 * Return checkbox with order_id.
-	 *
-	 * @param object $order
-	 *
-	 * @return string|void
-	 */
-	public function column_cb( $order ) {
-		if ( '' !== $order['action'] ) {
-			return sprintf(
-				'<input type="checkbox" id="js-lengow_order_checkbox"
-				name="order[' . $order['id'] . ']" value="%s" class="js-lengow_selection_order"/>',
-				$order['id']
-			);
-		}
-	}
-
-	/**
 	 * Generate Lengow actions.
 	 *
 	 * @param Object $order_lengow Lengow order row
@@ -581,9 +567,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		$order_process_state = (int) $order_lengow->order_process_state;
 		// check if order is not finished and is in error.
 		if ( (bool) $order_lengow->is_in_error && Lengow_Order::PROCESS_STATE_FINISH !== $order_process_state ) {
-			$order_errors = Lengow_Order_Error::get_order_errors( $order_lengow->id,
-				Lengow_Order_Error::ERROR_TYPE_IMPORT,
-				false );
+			$order_errors = Lengow_Order_Error::get_order_errors( $order_lengow->id, null, false );
 			if ( ! empty( $order_errors ) ) {
 				foreach ( $order_errors as $error ) {
 					if ( '' !== $error->message ) {
@@ -697,5 +681,18 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		}
 
 		return $return;
+	}
+
+	/**
+	 * Generate total.
+	 *
+	 * @param Object $order_lengow Lengow order row
+	 *
+	 * @return string
+	 */
+	private function _display_total( $order_lengow ) {
+		return Lengow_Main::compare_version( '2.1.0', '<' )
+			? $order_lengow->total_paid . get_woocommerce_currency_symbol( $order_lengow->currency )
+			: wc_price( $order_lengow->total_paid, array( 'currency' => $order_lengow->currency ) );;
 	}
 }
