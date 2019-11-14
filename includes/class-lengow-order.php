@@ -396,7 +396,10 @@ class Lengow_Order {
 	 * @return string
 	 */
 	public static function get_order_status( $order ) {
-		return Lengow_Main::compare_version( '3.0' ) ? 'wc-' . $order->get_status() : $order->status;
+		$status = Lengow_Main::compare_version( '3.0' ) ? $order->get_status() : $order->status;
+		$status = Lengow_Main::compare_version( '2.2' ) ? 'wc-' . $status : $status;
+
+		return $status;
 	}
 
 	/**
