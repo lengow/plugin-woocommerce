@@ -130,6 +130,15 @@ if ( ! defined( 'ABSPATH' ) ) {
                 type="button">
 			<?php echo $locale->t( 'order.screen.synchronize_id' ); ?>
         </button>
+        <button id="lgw-order-reimport"
+                class="button-primary"
+                data-message="<?php echo $locale->t( 'order.screen.check_cancel_and_reimport' ); ?>"
+                data-error="<?php echo $locale->t( 'order.screen.cancel_and_reimport_action_error' ); ?>"
+                data-action="reimport"
+                data-id="<?php echo $order_lengow->id ?>"
+                type="button">
+			<?php echo $locale->t( 'order.screen.cancel_and_reimport' ); ?>
+        </button>
     </div>
 <?php endif ?>
 

@@ -1055,4 +1055,43 @@ class Lengow_Order {
 		return ! empty( $return ) ? $return : false;
 	}
 
+	/**
+	 * Reimport order and pass current order in technical error.
+	 *
+	 * @return bool|int
+	 */
+	public function cancel_and_reimport_order() {
+		$update = self::update( $this->id, array( 'is_reimported' => true ) );
+		if ( ! $update ) {
+			return false;
+		}
+
+		$import = new Lengow_Import(
+			array(
+				'order_lengow_id'     => $this->id,
+				'marketplace_sku'     => $this->marketplace_sku,
+				'marketplace_name'    => $this->marketplace_name,
+				'delivery_address_id' => $this->delivery_address_id
+			)
+		);
+		$result = $import->exec();
+		if ( ( isset( $result['order_id'] ) && $this->id != $result['order_id'] )
+		     && ( isset( $result['order_new'] ) && $result['order_new'] ) ) {
+			$this->set_state_to_error();
+
+			return (int) $result['order_id'];
+		}
+
+		return false;
+	}
+
+	/**
+	 * Pass order in technical error.
+	 */
+	public function set_state_to_error() {
+		if ( Lengow_Main::compare_version( '2.2' ) ) {
+			$order = new WC_Order( $this->order_id );
+			$order->update_status( Lengow::STATE_LENGOW_TECHNICAL_ERROR );
+		}
+	}
 }

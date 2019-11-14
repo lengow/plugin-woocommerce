@@ -118,6 +118,7 @@ en:
       no_order_title: "The best is yet to come!"
       no_order_description: "Your products have great visibility and your sales are about to prosper!"
       cancel_and_reimport: "Re-import order"
+      cancel_and_reimport_action_error: "Reimport failed"
       check_cancel_and_reimport: "Do you really want to re-import the order?"
       check_synchronize: "Do you want to synchronize ID ?"
       synchronize_id: "Synchronize ID"

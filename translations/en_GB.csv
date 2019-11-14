@@ -105,6 +105,7 @@ order.screen.status_shipped_by_mkp|Shipped by Marketplace
 order.screen.no_order_title|The best is yet to come!
 order.screen.no_order_description|Your products have great visibility and your sales are about to prosper!
 order.screen.cancel_and_reimport|Re-import order
+order.screen.cancel_and_reimport_action_error|Reimport failed
 order.screen.check_cancel_and_reimport|Do you really want to re-import the order?
 order.screen.check_synchronize|Do you want to synchronize ID ?
 order.screen.synchronize_id|Synchronize ID

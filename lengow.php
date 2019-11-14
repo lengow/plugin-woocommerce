@@ -52,6 +52,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	class Lengow {
 
 		/**
+		 * @var string order state technical error Lengow.
+		 */
+		const STATE_LENGOW_TECHNICAL_ERROR = 'wc-lengow-error';
+
+		/**
 		 * @var string current version of plugin.
 		 */
 		public $version = '2.2.0';
@@ -222,7 +227,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		public function init_lengow_technical_error_status() {
 			$locale = new Lengow_Translation();
 			register_post_status(
-				'wc-lengow-error',
+				self::STATE_LENGOW_TECHNICAL_ERROR,
 				array(
 					'label'                     => $locale->t( 'module.state_technical_error' ),
 					'public'                    => true,

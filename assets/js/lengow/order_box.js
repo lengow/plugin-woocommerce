@@ -40,5 +40,29 @@
                 });
             }
         });
+
+        $(document).on('click', '#lgw-order-reimport', function () {
+            if (confirm($(this).attr('data-message'))) {
+                var error = $(this).attr('data-error');
+                var data = {
+                    action: 'post_process_order_box',
+                    do_action: $(this).attr('data-action'),
+                    order_lengow_id: $(this).attr('data-id'),
+                };
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: data,
+                    success: function (content) {
+                        var data = JSON.parse(content);
+                        if (!data.success) {
+                            alert(error);
+                        } else {
+                            document.location.href = data.url.replace('&amp;', '&');
+                        }
+                    }
+                });
+            }
+        });
     });
 })(jQuery);

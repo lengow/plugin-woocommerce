@@ -105,6 +105,7 @@ order.screen.status_shipped_by_mkp|Expédié par la place de marché
 order.screen.no_order_title|Le meilleur est encore à venir !
 order.screen.no_order_description|Vos produits sont bien visibles, vos ventes sont sur le point de décoller
 order.screen.cancel_and_reimport|Ré-importer la commande
+order.screen.cancel_and_reimport_action_error|Le réimport a échoué
 order.screen.check_cancel_and_reimport|Vous voulez vous vraiment réimporter la commande ?
 order.screen.check_synchronize|Voulez-vous synchroniser l'ID ?
 order.screen.synchronize_id|Synchroniser l'ID
