@@ -117,11 +117,19 @@ body.lgw-home-iframe .lgw-content-section p {
 /*                    PRODUCTS                   */
 /*************************************************/
 
-#lengow_feed_wrapper,
-#lengow_feed_table {
+#lengow_feed_wrapper {
   min-width: 900px;
   max-width: 1400px;
   width: auto;
+}
+
+#lengow_feed_table .js-lengow_toolbar {
+  position: absolute;
+}
+
+#lengow_feed_table .js-lengow_select_all {
+  display: inline-block;
+  margin-left: 10px;
 }
 
 /*************************************************/
@@ -131,8 +139,8 @@ body.lgw-home-iframe .lgw-content-section p {
 #lengow_order_wrapper {
   min-width: 1100px;
   width: auto;
-  margin-left: 60px;
-  margin-right: 60px;
+  margin-left: 40px;
+  margin-right: 40px;
 }
 
 #lengow_order_wrapper,
@@ -195,10 +203,6 @@ body.lgw-home-iframe .lgw-content-section p {
 
 #lengow_order_grid .column-status {
   text-align: center;
-}
-
-#lengow_order_grid #current-page-selector {
-  height: 28px;
 }
 
 #lengow_order_grid .lgw-btn {
