@@ -252,7 +252,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 */
 		public function add_lengow_technical_error_status( $order_statuses ) {
 			$locale                            = new Lengow_Translation();
-			$order_statuses['wc-lengow-error'] = $locale->t( 'module.state_technical_error' );
+			$order_statuses[self::STATE_LENGOW_TECHNICAL_ERROR] = $locale->t( 'module.state_technical_error' );
 
 			return $order_statuses;
 		}

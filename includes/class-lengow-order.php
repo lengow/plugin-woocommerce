@@ -1078,7 +1078,7 @@ class Lengow_Order {
 			)
 		);
 		$result = $import->exec();
-		if ( ( isset( $result['order_id'] ) && $this->id != $result['order_id'] )
+		if ( ( isset( $result['order_id'] ) && $this->id !== $result['order_id'] )
 		     && ( isset( $result['order_new'] ) && $result['order_new'] ) ) {
 			$this->set_state_to_error();
 
