@@ -60,27 +60,33 @@ class Lengow_Box_Order_Info {
 	 * Process for ajax actions.
 	 */
 	public function post_process() {
-		$data   = array();
-		$action = $_POST['do_action'];
+		$data         = array();
+		$action       = $_POST['do_action'];
+		$order_lengow = New Lengow_Order( (int) $_POST['order_lengow_id'] );
 		switch ( $action ) {
 			case 'resend_ship':
-				$order_lengow    = New Lengow_Order( (int) $_POST['order_lengow_id'] );
 				$data['success'] = $order_lengow->call_action( Lengow_Action::TYPE_SHIP );
-				echo json_encode( $data );
 				break;
 			case 'resend_cancel':
-				$order_lengow    = New Lengow_Order( (int) $_POST['order_lengow_id'] );
 				$data['success'] = $order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
-				echo json_encode( $data );
 				break;
 			case 'synchronize':
-				$order_lengow    = New Lengow_Order( (int) $_POST['order_lengow_id'] );
 				$data['success'] = $order_lengow->synchronize_order();
-				echo json_encode( $data );
+				break;
+			case 'reimport':
+				$new_id_order = $order_lengow->cancel_and_reimport_order();
+				if ( $new_id_order ) {
+					$data['success'] = $new_id_order;
+					$data['url']     = get_edit_post_link( $new_id_order );
+				} else {
+					$data['success'] = false;
+				}
 				break;
 			default:
+				$data['success'] = false;
 				break;
 		}
+		echo json_encode( $data );
 		exit();
 	}
 }
