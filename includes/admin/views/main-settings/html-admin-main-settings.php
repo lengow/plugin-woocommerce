@@ -120,7 +120,7 @@ $list_file = $logs ? array_reverse( $logs ) : array();
                 <div class="grey-frame">
                     <div class="form-group">
                         <label class="control-label"><?php echo $keys['lengow_tracking_id']['label']; ?></label>
-                        <select class="js-log-select js-select lengow_select" name="lengow_tracking_id">
+                        <select class="js-select lengow_select" name="lengow_tracking_id">
 		                    <?php foreach ( Lengow_Main::$tracker_choice_id as $id => $label ) : ?>
                                 <option value="<?php echo $id; ?>" <?php echo $values['lengow_tracking_id'] === $id ? 'selected' : ''; ?>>
 				                    <?php echo $label; ?>
