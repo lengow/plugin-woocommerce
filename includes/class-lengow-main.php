@@ -237,7 +237,7 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Get version of woocommerce.
+	 * Get version of Woocommerce.
 	 *
 	 * @return string
 	 */

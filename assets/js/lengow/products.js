@@ -21,7 +21,8 @@
 (function ($) {
     $(document).ready(function () {
         /**
-         * Refresh total product/product exported
+         * Refresh total product/product exported.
+         *
          * @param data Number of products exported and total products
          */
         function reloadTotal(data) {
@@ -30,7 +31,7 @@
         }
 
         /**
-         * Ajax for switch options (product variations / out of stock / specific product)
+         * Ajax for switch options (product variations / out of stock / specific product).
          */
         $('.js-lengow_switch_option').on('change', function (e) {
             e.preventDefault();
@@ -65,7 +66,7 @@
         });
 
         /**
-         * Checkbox to include a product in export (lengow column)
+         * Checkbox to include a product in export (lengow column).
          */
         $('.js-lengow_switch_product').on('change', function (e) {
             e.preventDefault();
@@ -90,7 +91,7 @@
         });
 
         /**
-         * Check select all checkbox to display lengow toolbar and lengow select all products
+         * Check select all checkbox to display lengow toolbar and lengow select all products.
          */
         $('#cb-select-all-1 ,#cb-select-all-2').on('click', function () {
             if ($(this).prop('checked')) {
@@ -106,7 +107,7 @@
         });
 
         /**
-         * Mass action to export products or not
+         * Mass action to export products or not.
          */
         $('.js-lengow_add_to_export , .js-lengow_remove_from_export').on('click', function () {
             var message = $(this).attr('data-message'),
@@ -155,7 +156,7 @@
         });
 
         /**
-         * Check for display mass actions
+         * Check for display mass actions.
          */
         $('.js-lengow_selection').on('click', function () {
 
@@ -176,7 +177,7 @@
         });
 
         /**
-         * Check all checkbox when check lengow select all table
+         * Check all checkbox when check lengow select all table.
          */
         $('#js-select_all_shop').on('click', function () {
             $('.js-lengow_selection').attr('checked', true);

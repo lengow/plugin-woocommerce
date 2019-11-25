@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Dependencies for front office
+ * Dependencies for front office.
  */
 include_once( 'class-lengow-translation.php' );
 

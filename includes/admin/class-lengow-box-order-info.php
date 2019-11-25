@@ -44,7 +44,7 @@ class Lengow_Box_Order_Info {
 			if ( $can_send_action ) {
 				$order        = new WC_Order( $order_lengow->order_id );
 				$order_status = Lengow_Order::get_order_status( $order );
-				$action_type  = $order_status === Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED )
+				$action_type  = Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED ) === $order_status
 					? 'cancel'
 					: 'ship';
 			}

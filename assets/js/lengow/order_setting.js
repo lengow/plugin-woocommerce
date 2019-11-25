@@ -20,9 +20,10 @@
 
 (function ($) {
     $(document).ready(function () {
-
-        // submit form
-        $( ".lengow_form" ).submit(function( event ) {
+        /**
+         * Submit form.
+         */
+        $(".lengow_form").submit(function (event) {
             event.preventDefault();
             var form = this;
 
@@ -35,7 +36,9 @@
             }, 1000);
         });
 
-        // enable stock mp
+        /**
+         * Enable stock mp.
+         */
         $("input[name='lengow_import_ship_mp_enabled']").on('change', function () {
             displayStockMP();
         });

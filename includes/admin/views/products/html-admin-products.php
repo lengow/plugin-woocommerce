@@ -72,7 +72,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 									   array( 'nb' => $shop['select_all'] ) ); ?>"
                                    class="lgw-btn lgw-btn-red js-lengow_remove_from_export">
                                     <i class="fa fa-minus"></i>
-                                    <?php echo $locale->t( 'product.screen.remove_from_export' ); ?>
+									<?php echo $locale->t( 'product.screen.remove_from_export' ); ?>
                                 </a>
                                 <a href="#"
                                    data-export-action="add_to_export"
@@ -81,7 +81,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 									   array( 'nb' => $shop['select_all'] ) ); ?>"
                                    class="lgw-btn js-lengow_add_to_export">
                                     <i class="fa fa-plus"></i>
-                                    <?php echo $locale->t( 'product.screen.add_from_export' ); ?>
+									<?php echo $locale->t( 'product.screen.add_from_export' ); ?>
                                 </a>
                                 <div class="js-lengow_select_all">
                                     <input type="checkbox" id="js-select_all_shop">

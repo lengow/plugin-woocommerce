@@ -20,6 +20,9 @@
 
 (function ($) {
     $(document).ready(function () {
+        /**
+         * Resend action or resynchronize order.
+         */
         $(document).on('click', '#lgw-order-resend, #lgw-order-synchronize', function () {
             if (confirm($(this).attr('data-message'))) {
                 var success = $(this).attr('data-success');
@@ -41,6 +44,9 @@
             }
         });
 
+        /**
+         * Reimport order.
+         */
         $(document).on('click', '#lgw-order-reimport', function () {
             if (confirm($(this).attr('data-message'))) {
                 var error = $(this).attr('data-error');

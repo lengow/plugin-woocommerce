@@ -21,15 +21,16 @@
 (function ($) {
     $(document).ready(function () {
 
-        // multibox selection.
         $(".js-multiple-select").select2({
             closeOnSelect: false
         });
         $(".js-select").select2();
 
 
-        // submit form.
-        $( ".lengow_form" ).submit(function( event ) {
+        /**
+         * Submit form.
+         */
+        $(".lengow_form").submit(function (event) {
             event.preventDefault();
             var form = this;
 
@@ -42,7 +43,9 @@
             }, 1000);
         });
 
-        // enable report mail.
+        /**
+         * Enable report mail.
+         */
         $("input[name='lengow_report_mail_enabled']").on('change', function () {
             displayReportMailAddress();
         });
@@ -55,7 +58,9 @@
             }
         }
 
-        // enable authorized ip.
+        /**
+         * Enable authorized ip.
+         */
         $("input[name='lengow_ip_enabled']").on('change', function () {
             displayAuthorizedIpMode();
         });
@@ -68,7 +73,9 @@
             }
         }
 
-        // enable tracking ip.
+        /**
+         * Enable tracking ip.
+         */
         $("input[name='lengow_tracking_enabled']").on('change', function () {
             displayTrackingIdMode();
         });
@@ -81,7 +88,9 @@
             }
         }
 
-        // enable preprod mode.
+        /**
+         * Enable preprod mode.
+         */
         $("input[name='lengow_preprod_enabled']").on('change', function () {
             displayPreProdMode();
         });
@@ -94,14 +103,16 @@
             }
         }
 
-        // download logs.
-        $('.js-log-select').change(function(){
+        /**
+         * Download log.
+         */
+        $('.js-log-select').change(function () {
             if ($('.js-log-select').val() !== null) {
-                $(".js-log-btn-download" ).show();
+                $(".js-log-btn-download").show();
             }
         });
 
-        $('.js-log-btn-download').on('click', function() {
+        $('.js-log-btn-download').on('click', function () {
             if ($('.js-log-select').val() !== null) {
                 window.location.href = $('.js-log-select').val();
             }

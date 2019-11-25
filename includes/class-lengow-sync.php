@@ -149,12 +149,12 @@ class Lengow_Sync {
 				}
 			}
 		}
-		// save last update date for a specific settings (change synchronisation interval time)
+		// save last update date for a specific settings (change synchronisation interval time).
 		Lengow_Configuration::update_value( 'lengow_last_setting_update', date( 'Y-m-d H:i:s' ) );
 	}
 
 	/**
-	 * Sync Lengow catalogs for order synchronisation
+	 * Sync Lengow catalogs for order synchronisation.
 	 *
 	 * @param boolean $force Force cache Update
 	 *
@@ -192,7 +192,7 @@ class Lengow_Sync {
 				}
 			}
 		}
-		// save last update date for a specific settings (change synchronisation interval time)
+		// save last update date for a specific settings (change synchronisation interval time).
 		if ( $setting_updated ) {
 			Lengow_Configuration::update_value( 'lengow_last_setting_update', date( 'Y-m-d H:i:s' ) );
 		}
@@ -291,7 +291,7 @@ class Lengow_Sync {
 	}
 
 	/**
-	 * Get Statistic.
+	 * Get statistic.
 	 *
 	 * @param boolean $force Force cache Update
 	 *

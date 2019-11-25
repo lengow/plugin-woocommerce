@@ -60,7 +60,7 @@ class Lengow_Marketplace {
 	public $name;
 
 	/**
-	 * @var string the name of the marketplace
+	 * @var string the name of the marketplace.
 	 */
 	public $label_name;
 
@@ -194,7 +194,7 @@ class Lengow_Marketplace {
 	}
 
 	/**
-	 * Get marketplaces.json path
+	 * Get marketplaces.json path.
 	 *
 	 * @return string
 	 */
@@ -205,7 +205,7 @@ class Lengow_Marketplace {
 	}
 
 	/**
-	 * Get the real lengow's state.
+	 * Get the real Lengow's state.
 	 *
 	 * @param string $name the marketplace state
 	 *
