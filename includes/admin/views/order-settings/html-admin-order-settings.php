@@ -26,7 +26,7 @@ $shipping_methods = Lengow_Main::get_shipping_methods();
                 <br/>
                 <div class="form-group lengow_import_default_shipping_method">
                     <label><?php echo $keys['lengow_import_default_shipping_method']['label']; ?></label>
-                    <select class="js-log-select js-select lengow_select" name="lengow_import_default_shipping_method">
+                    <select class="js-select lengow_select" name="lengow_import_default_shipping_method">
 						<?php foreach ( $shipping_methods as $shipping_method => $label ) : ?>
                             <option value="<?php echo $shipping_method; ?>" <?php echo $values['lengow_import_default_shipping_method'] === $shipping_method ? 'selected' : ''; ?>>
 								<?php echo $label; ?>
@@ -41,7 +41,7 @@ $shipping_methods = Lengow_Main::get_shipping_methods();
                 <br/>
                 <div class="form-group lengow_id_waiting_shipment">
                     <label><?php echo $keys['lengow_id_waiting_shipment']['label']; ?></label>
-                    <select class="js-log-select js-select lengow_select" name="lengow_id_waiting_shipment">
+                    <select class="js-select lengow_select" name="lengow_id_waiting_shipment">
 						<?php foreach ( $order_statuses as $order_status => $label ) : ?>
                             <option value="<?php echo $order_status; ?>" <?php echo $values['lengow_id_waiting_shipment'] === $order_status ? 'selected' : ''; ?>>
 								<?php echo $label; ?>
@@ -51,7 +51,7 @@ $shipping_methods = Lengow_Main::get_shipping_methods();
                 </div>
                 <div class="form-group lengow_id_shipped">
                     <label><?php echo $keys['lengow_id_shipped']['label']; ?></label>
-                    <select class="js-log-select js-select lengow_select" name="lengow_id_shipped">
+                    <select class="js-select lengow_select" name="lengow_id_shipped">
 						<?php foreach ( $order_statuses as $order_status => $label ) : ?>
                             <option value="<?php echo $order_status; ?>" <?php echo $values['lengow_id_shipped'] === $order_status ? 'selected' : ''; ?>>
 								<?php echo $label; ?>
@@ -61,7 +61,7 @@ $shipping_methods = Lengow_Main::get_shipping_methods();
                 </div>
                 <div class="form-group lengow_id_cancel">
                     <label><?php echo $keys['lengow_id_cancel']['label']; ?></label>
-                    <select class="js-log-select js-select lengow_select" name="lengow_id_cancel">
+                    <select class="js-select lengow_select" name="lengow_id_cancel">
 						<?php foreach ( $order_statuses as $order_status => $label ) : ?>
                             <option value="<?php echo $order_status; ?>" <?php echo $values['lengow_id_cancel'] === $order_status ? 'selected' : ''; ?>>
 								<?php echo $label; ?>
@@ -71,7 +71,7 @@ $shipping_methods = Lengow_Main::get_shipping_methods();
                 </div>
                 <div class="form-group lengow_id_shipped_by_mp">
                     <label><?php echo $keys['lengow_id_shipped_by_mp']['label']; ?></label>
-                    <select class="js-log-select js-select lengow_select" name="lengow_id_shipped_by_mp">
+                    <select class="js-select lengow_select" name="lengow_id_shipped_by_mp">
 						<?php foreach ( $order_statuses as $order_status => $label ) : ?>
                             <option value="<?php echo $order_status; ?>" <?php echo $values['lengow_id_shipped_by_mp'] === $order_status ? 'selected' : ''; ?>>
 								<?php echo $label; ?>
