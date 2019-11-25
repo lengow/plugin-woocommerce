@@ -45,7 +45,7 @@
 // init wordpress.
 require( dirname( dirname( dirname( dirname( dirname( $_SERVER['SCRIPT_FILENAME'] ) ) ) ) ) . '/wp-load.php' );
 
-// dependencies
+// dependencies.
 require_once( '../includes/class-lengow-main.php' );
 require_once( '../includes/class-lengow-export.php' );
 require_once( '../includes/class-lengow-product.php' );
@@ -72,10 +72,10 @@ if ( ! in_array(
 	wp_die( 'Lengow plugin is not active', '', array( 'response' => 400 ) );
 }
 
-// get token for authorisation
+// get token for authorisation.
 $token = isset( $_GET['token'] ) ? $_GET['token'] : '';
 
-// check webservices access
+// check webservices access.
 if ( ! Lengow_Main::check_webservice_access( $token ) ) {
 	if ( (bool) Lengow_Configuration::get( 'lengow_ip_enabled' ) ) {
 		$errorMessage = 'Unauthorized access for IP: ' . $_SERVER['REMOTE_ADDR'];

@@ -40,10 +40,10 @@
 @set_time_limit( 0 );
 @ini_set( 'memory_limit', '512M' );
 
-// init wordpress
+// init wordpress.
 require( dirname( dirname( dirname( dirname( dirname( $_SERVER['SCRIPT_FILENAME'] ) ) ) ) ) . '/wp-load.php' );
 
-// dependencies
+// dependencies.
 require_once( '../includes/class-lengow-action.php' );
 require_once( '../includes/class-lengow-address.php' );
 require_once( '../includes/class-lengow-check.php' );
@@ -81,10 +81,10 @@ if ( ! in_array(
 	wp_die( 'Lengow plugin is not active', '', array( 'response' => 400 ) );
 }
 
-// get token for authorisation
+// get token for authorisation.
 $token = isset( $_GET['token'] ) ? $_GET['token'] : '';
 
-// check webservices access
+// check webservices access.
 if ( ! Lengow_Main::check_webservice_access( $token ) ) {
 	if ( Lengow_Configuration::get( 'lengow_ip_enabled' ) ) {
 		$errorMessage = 'Unauthorized access for IP: ' . $_SERVER['REMOTE_ADDR'];
@@ -109,7 +109,7 @@ if ( isset( $_GET['get_sync'] ) && 1 == $_GET['get_sync'] ) {
 	}
 	// sync orders between Lengow and WooCommerce.
 	if ( ! $sync || Lengow_Sync::SYNC_ORDER === $sync ) {
-		// array of params for import order
+		// array of params for import order.
 		$params = array(
 			'type'       => Lengow_Import::TYPE_CRON,
 			'log_output' => $log_output,

@@ -111,5 +111,6 @@ if ( ! defined( 'ABSPATH' ) ) {
             <p id="lengow_charge_lign1"><?php echo $locale->t( 'order.screen.import_charge_first' ); ?></p>
             <p id="lengow_charge_lign2"><?php echo $locale->t( 'order.screen.import_charge_second' ); ?></p>
         </div>
+        <!-- /UPDATE ORDERS -->
     </div>
 </div>

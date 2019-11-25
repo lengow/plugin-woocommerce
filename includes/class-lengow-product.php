@@ -93,27 +93,27 @@ class Lengow_Product {
 	private $_product_parent;
 
 	/**
-	 * @var integer product id
+	 * @var integer product id.
 	 */
 	private $_product_id;
 
 	/**
-	 * @var integer variation id
+	 * @var integer variation id.
 	 */
 	private $_variation_id;
 
 	/**
-	 * @var string product type
+	 * @var string product type.
 	 */
 	private $_product_type;
 
 	/**
-	 * @var array all product prices
+	 * @var array all product prices.
 	 */
 	private $_prices;
 
 	/**
-	 * @var array all product images
+	 * @var array all product images.
 	 */
 	private $_images;
 
@@ -354,7 +354,7 @@ class Lengow_Product {
 
 
 	/**
-	 * Get parent product for variation
+	 * Get parent product for variation.
 	 *
 	 * @param WC_Product $product WooCommerce product instance
 	 * @param string $product_type WooCommerce product type
@@ -552,7 +552,7 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Match product with api datas.
+	 * Match product with API datas.
 	 *
 	 * @param mixed $product_datas all product datas
 	 * @param string $marketplace_sku Lengow id of current order

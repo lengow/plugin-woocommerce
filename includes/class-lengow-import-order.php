@@ -92,7 +92,7 @@ class Lengow_Import_Order {
 	private $_first_package;
 
 	/**
-	 * @var boolean re-import order
+	 * @var boolean re-import order.
 	 */
 	private $_is_reimported = false;
 
@@ -132,22 +132,22 @@ class Lengow_Import_Order {
 	private $_order_item;
 
 	/**
-	 * @var string|null carrier
+	 * @var string|null carrier.
 	 */
 	private $_carrier = null;
 
 	/**
-	 * @var string|null carrier method
+	 * @var string|null carrier method.
 	 */
 	private $_carrier_method = null;
 
 	/**
-	 * @var string|null carrier tracking number
+	 * @var string|null carrier tracking number.
 	 */
 	private $_carrier_tracking = null;
 
 	/**
-	 * @var string|null carrier relay id
+	 * @var string|null carrier relay id.
 	 */
 	private $_carrier_id_relay = null;
 
@@ -323,7 +323,7 @@ class Lengow_Import_Order {
 			: (string) $this->_package_data->delivery->email;
 		// get order comment from marketplace.
 		$this->_message = $this->_get_order_comment();
-		// update Lengow order with new data
+		// update Lengow order with new data.
 		Lengow_Order::update(
 			$this->_order_lengow_id,
 			array(
@@ -498,7 +498,7 @@ class Lengow_Import_Order {
 		$order_lengow_id = Lengow_Order::get_id_from_order_id( $order_id );
 		$order_lengow    = new Lengow_Order( $order_lengow_id );
 		$result          = array( 'order_lengow_id' => $order_lengow->id );
-		// Lengow -> cancel and reimport order
+		// Lengow -> cancel and reimport order.
 		if ( $order_lengow->is_reimported ) {
 			Lengow_Main::log(
 				Lengow_Log::CODE_IMPORT,
@@ -654,7 +654,7 @@ class Lengow_Import_Order {
 	}
 
 	/**
-	 * Get order amount
+	 * Get order amount.
 	 *
 	 * @return float
 	 */
@@ -716,7 +716,7 @@ class Lengow_Import_Order {
 	}
 
 	/**
-	 * Get customer name
+	 * Get customer name.
 	 *
 	 * @return string
 	 */

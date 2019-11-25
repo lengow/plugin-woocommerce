@@ -166,7 +166,7 @@ class Lengow_Address {
 	/**
 	 * Construct.
 	 *
-	 * @param object $data address data from api
+	 * @param object $data address data from API
 	 * @param string $type address type (billing or shipping)
 	 * @param string|null $relay_id relay id
 	 */

@@ -37,12 +37,12 @@ class Lengow_Install {
 	public static $installation_status;
 
 	/**
-	 * @var string old version for update scripts
+	 * @var string old version for update scripts.
 	 */
 	public static $old_version;
 
 	/**
-	 * @var array old configuration keys to remove
+	 * @var array old configuration keys to remove.
 	 */
 	public static $old_configuration_keys = array(
 		'lengow_export_attributes',
@@ -338,7 +338,7 @@ class Lengow_Install {
 	}
 
 	/**
-	 * Checks if a field exists in BDD and Dropped It.
+	 * Checks if a field exists in BDD and dropped it.
 	 *
 	 * @param string $table Lengow table
 	 * @param string $field Lengow field
@@ -368,7 +368,7 @@ class Lengow_Install {
 	}
 
 	/**
-	 * Checks if a index exists in BDD and Dropped It.
+	 * Checks if a index exists in BDD and dropped it.
 	 *
 	 * @param string $table Lengow table
 	 * @param string $index Lengow index
@@ -381,7 +381,7 @@ class Lengow_Install {
 	}
 
 	/**
-	 * Delete old configuration keys
+	 * Delete old configuration keys.
 	 */
 	public static function remove_old_configuration_keys() {
 		foreach ( self::$old_configuration_keys as $configuration ) {

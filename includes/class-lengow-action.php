@@ -117,7 +117,7 @@ class Lengow_Action {
 	const ARG_DELIVERY_DATE = 'delivery_date';
 
 	/**
-	 * @var array Parameters to delete for Get call.
+	 * @var array Parameters to delete for GET call.
 	 */
 	public static $get_params_to_delete = array(
 		self::ARG_SHIPPING_DATE,
@@ -399,7 +399,7 @@ class Lengow_Action {
 		if ( empty( $api_actions ) ) {
 			return false;
 		}
-		// check foreach action if is complete.
+		// check foreach action if it's complete.
 		foreach ( $active_actions as $action ) {
 			$action_id = (int) $action->action_id;
 			if ( ! isset( $api_actions[ $action_id ] ) ) {

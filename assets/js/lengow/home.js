@@ -48,7 +48,7 @@
                 syncIframe.src = '//cms.lengow.rec/';
                 // syncIframe.src = '//cms.lengow.dev/';
             }
-            syncIframe.src = syncIframe.src+'?lang='+isoCode+'&clientType=woocommerce';
+            syncIframe.src = syncIframe.src + '?lang=' + isoCode + '&clientType=woocommerce';
             $('#frame_loader').hide();
             $('#lengow_iframe').show();
         }
@@ -79,7 +79,7 @@
                         type: 'POST',
                         data: {do_action: 'sync', data: event.data.parameters, action: 'post_process_dashboard'},
                         dataType: 'script',
-                        success: function() {
+                        success: function () {
                             location.reload();
                         }
                     });

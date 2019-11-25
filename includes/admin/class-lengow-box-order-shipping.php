@@ -39,7 +39,7 @@ class Lengow_Box_Order_Shipping {
 		try {
 			$order_lengow_id = Lengow_Order::get_id_from_order_id( $post->ID );
 			$order_lengow    = new Lengow_Order( $order_lengow_id );
-			// compatibility V2.
+			// compatibility v2.
 			if ( ! Lengow_Marketplace::marketplace_exist( $order_lengow->marketplace_name )
 			     && null !== $order_lengow->feed_id
 			) {

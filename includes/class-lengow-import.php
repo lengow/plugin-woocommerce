@@ -86,22 +86,22 @@ class Lengow_Import {
 	private $_limit = 0;
 
 	/**
-	 * @var string|false imports orders updated since
+	 * @var string|false imports orders updated since.
 	 */
 	protected $_updated_from = false;
 
 	/**
-	 * @var string|false imports orders updated until
+	 * @var string|false imports orders updated until.
 	 */
 	protected $_updated_to = false;
 
 	/**
-	 * @var string|false imports orders created since
+	 * @var string|false imports orders created since.
 	 */
 	protected $_created_from = false;
 
 	/**
-	 * @var string|false imports orders created until
+	 * @var string|false imports orders created until.
 	 */
 	protected $_created_to = false;
 
@@ -698,7 +698,7 @@ class Lengow_Import {
 	}
 
 	/**
-	 * Get Import period
+	 * Get Import period.
 	 *
 	 * @param integer|false $days Import period
 	 * @param string|false $created_from Import of orders since
@@ -720,9 +720,9 @@ class Lengow_Import {
 			$this->_created_from = $date_from;
 			$this->_created_to   = $date_to;
 		} else {
-			// order recovery updated since ... days
+			// order recovery updated since ... days.
 			$import_days = (int) Lengow_Configuration::get( 'lengow_import_days' );
-			// add security for older versions of the plugin
+			// add security for older versions of the plugin.
 			$import_days = $import_days < self::MIN_IMPORT_DAYS ? self::MIN_IMPORT_DAYS : $import_days;
 			$import_days = $import_days > self::MAX_IMPORT_DAYS ? self::MAX_IMPORT_DAYS : $import_days;
 			if ( $days ) {

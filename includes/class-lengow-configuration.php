@@ -247,7 +247,7 @@ class Lengow_Configuration {
 	/**
 	 * Update Lengow value by shop.
 	 *
-	 * @param string $key lengow configuration key
+	 * @param string $key Lengow configuration key
 	 * @param mixed $value configuration value
 	 */
 	public static function update_value( $key, $value ) {
@@ -257,7 +257,7 @@ class Lengow_Configuration {
 	/**
 	 * Delete Lengow value by shop.
 	 *
-	 * @param string $key lengow configuration key
+	 * @param string $key Lengow configuration key
 	 */
 	public static function delete( $key ) {
 		delete_option( $key );
@@ -301,7 +301,7 @@ class Lengow_Configuration {
 	}
 
 	/**
-	 * Get catalog ids.
+	 * Get catalogs ids.
 	 *
 	 * @return array
 	 */
@@ -516,7 +516,7 @@ class Lengow_Configuration {
 						)
 					)
 				);
-				// Save last update date for a specific settings (change synchronisation interval time)
+				// save last update date for a specific settings (change synchronisation interval time).
 				if ( isset( $setting['update'] ) && $setting['update'] ) {
 					self::update_value( 'lengow_last_setting_update', date( 'Y-m-d H:i:s' ) );
 				}

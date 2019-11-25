@@ -165,6 +165,9 @@
             }
         });
 
+        /**
+         * Display informations for header.
+         */
         function reload_informations(informations, show_messages) {
             var lengow_wrapper_message = $('#lengow_wrapper_messages');
             $("#lengow_order_with_error").html(informations.order_with_error);

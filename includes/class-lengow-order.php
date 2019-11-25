@@ -808,7 +808,7 @@ class Lengow_Order {
 			foreach ( $results as $result ) {
 				$woocommerce_order_ids[] = $result->order_id;
 			}
-			// compatibility V2.
+			// compatibility v2.
 			if ( ! Lengow_Marketplace::marketplace_exist( $this->marketplace_name ) && null !== $this->feed_id ) {
 				$this->check_and_change_marketplace_name( $connector );
 			}
@@ -954,7 +954,7 @@ class Lengow_Order {
 		// finish all order logs send.
 		Lengow_Order_Error::finish_order_errors( $this->id, Lengow_Order_Error::ERROR_TYPE_SEND );
 		try {
-			// compatibility V2.
+			// compatibility v2.
 			if ( ! Lengow_Marketplace::marketplace_exist( $this->marketplace_name ) && null !== $this->feed_id ) {
 				$this->check_and_change_marketplace_name();
 			}
@@ -962,7 +962,7 @@ class Lengow_Order {
 			if ( $marketplace->contain_order_line( $action ) ) {
 				$order_lines = false;
 				$order_lines = Lengow_Order_Line::get_all_order_line_id_by_order_id( $this->order_id, ARRAY_A );
-				// compatibility V2 and security.
+				// compatibility v2 and security.
 				if ( ! $order_lines ) {
 					$order_lines = $this->get_order_line_by_api();
 				}
