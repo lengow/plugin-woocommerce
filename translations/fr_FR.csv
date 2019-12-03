@@ -84,7 +84,7 @@ order.screen.mass_action_reimport_success|%{order_reimported} commande(s) sur %{
 order.screen.mass_action_resend_success|%{order_resent} commande(s) sur %{order_total} ont été envoyée(s)
 order.screen.button_resend_order|Renvoyer mes actions
 order.screen.all_order_will_be_sent_to|Les rapports d'erreurs de vos commandes seront envoyés par email à
-order.screen.no_order_will_be_sent|Les rapport d'erreurs de vos commandes ne seront pas envoyés par email
+order.screen.no_order_will_be_sent|Les rapports d'erreurs de vos commandes ne seront pas envoyés par email
 order.screen.change_this|Vous voulez modifier cela ?
 order.screen.import_charge_first|Commande(s) en cours de récupération...
 order.screen.import_charge_second|Restez avec nous, cela ne va pas durer longtemps (2 min d'attente en moyenne)
