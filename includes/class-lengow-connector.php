@@ -68,11 +68,13 @@ class Lengow_Connector {
 	 * @var array lengow url for curl timeout.
 	 */
 	private $_lengow_urls = array(
-		'/v3.0/orders'       => 20,
-		'/v3.0/marketplaces' => 15,
-		'/v3.0/plans'        => 5,
-		'/v3.0/stats'        => 5,
-		'/v3.1/cms'          => 5,
+		'/v3.0/orders'          => 20,
+		'/v3.0/orders/moi/'     => 10,
+		'/v3.0/orders/actions/' => 15,
+		'/v3.0/marketplaces'    => 15,
+		'/v3.0/plans'           => 5,
+		'/v3.0/stats'           => 5,
+		'/v3.1/cms'             => 5,
 	);
 
 	/**
