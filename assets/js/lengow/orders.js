@@ -37,7 +37,7 @@
         }
 
         load_reload();
-        show_select_all();
+        hide_select_all();
 
         /**
          * Ajax to synchronize orders.
@@ -165,13 +165,12 @@
         });
 
         /**
-         * Display checkbox select all or not.
+         * Hide select all checkbox when there is no action on the order.
          */
-        function show_select_all() {
+        function hide_select_all() {
             var order_action_exist = false;
             $('.js-lengow_selection_order').each(function () {
                 order_action_exist = true;
-                $('#lengow_order_grid #cb-select-all-1,  #lengow_order_grid #cb-select-all-2').show();
             });
             if (!order_action_exist) {
                 $('#lengow_order_grid #cb-select-all-1,  #lengow_order_grid #cb-select-all-2').hide();
