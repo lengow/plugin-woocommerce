@@ -95,13 +95,9 @@
          */
         $('#cb-select-all-1 ,#cb-select-all-2').on('click', function () {
             if ($(this).prop('checked')) {
-                $('.js-lengow_toolbar').show();
-                $('.js-lengow_toolbar a').show();
-                $('.js-lengow_select_all').show();
+                $('.js-lengow_toolbar, .js-lengow_toolbar a, .js-lengow_select_all').show();
             } else {
-                $('.js-lengow_toolbar').hide();
-                $('.js-lengow_toolbar a').hide();
-                $('.js-lengow_select_all').hide();
+                $('.js-lengow_toolbar, .js-lengow_toolbar a, .js-lengow_select_all').hide();
                 $('#js-select_all_shop').attr('checked', false);
             }
         });
@@ -159,20 +155,16 @@
          * Check for display mass actions.
          */
         $('.js-lengow_selection').on('click', function () {
-
             if ($(this).prop('checked') == false) {
                 $('#js-select_all_shop').attr('checked', false);
             }
-
             var findProductSelected = false;
-
             $('.js-lengow_selection:checked').each(function () {
                 findProductSelected = true;
-                $('.js-lengow_toolbar a').show();
+                $('.js-lengow_toolbar, .js-lengow_toolbar a, .js-lengow_select_all').show();
             });
-
             if (!findProductSelected) {
-                $('.js-lengow_toolbar a').hide();
+                $('.js-lengow_toolbar, .js-lengow_toolbar a, .js-lengow_select_all').hide();
             }
         });
 
