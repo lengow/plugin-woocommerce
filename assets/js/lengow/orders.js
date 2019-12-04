@@ -37,6 +37,7 @@
         }
 
         load_reload();
+        show_select_all();
 
         /**
          * Ajax to synchronize orders.
@@ -138,13 +139,11 @@
         });
 
         /**
-         * Check select all checkbox to display lengow toolbar and lengow select all products.
+         * Check select all checkbox to display lengow toolbar and lengow select all orders.
          */
-        $(document).on('click', '#cb-select-all-1', function () {
+        $('#lengow_order_grid #cb-select-all-1 , #lengow_order_grid #cb-select-all-2').on('click', function () {
             if ($(this).prop('checked')) {
-                $('.js-lengow_selection_order:checked').each(function () {
-                    $('.js-lengow_toolbar, .js-lengow_toolbar a').show();
-                });
+                $('.js-lengow_toolbar, .js-lengow_toolbar a').show();
             } else {
                 $('.js-lengow_toolbar, .js-lengow_toolbar a').hide();
             }
@@ -164,6 +163,20 @@
                 $('.js-lengow_toolbar, .js-lengow_toolbar a').hide();
             }
         });
+
+        /**
+         * Display checkbox select all or not.
+         */
+        function show_select_all() {
+            var order_action_exist = false;
+            $('.js-lengow_selection_order').each(function () {
+                order_action_exist = true;
+                $('#lengow_order_grid #cb-select-all-1,  #lengow_order_grid #cb-select-all-2').show();
+            });
+            if (!order_action_exist) {
+                $('#lengow_order_grid #cb-select-all-1,  #lengow_order_grid #cb-select-all-2').hide();
+            }
+        }
 
         /**
          * Display informations for header.

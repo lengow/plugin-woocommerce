@@ -93,7 +93,7 @@
         /**
          * Check select all checkbox to display lengow toolbar and lengow select all products.
          */
-        $('#cb-select-all-1 ,#cb-select-all-2').on('click', function () {
+        $('#lengow_product_grid #cb-select-all-1 ,#lengow_product_grid #cb-select-all-2').on('click', function () {
             if ($(this).prop('checked')) {
                 $('.js-lengow_toolbar, .js-lengow_toolbar a, .js-lengow_select_all').show();
             } else {
