@@ -15,10 +15,10 @@
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
  * @category    Lengow
- * @package        lengow-woocommerce
- * @subpackage    includes
- * @author        Team module <team-module@lengow.com>
- * @copyright    2017 Lengow SAS
+ * @package     lengow-woocommerce
+ * @subpackage  includes
+ * @author      Team Connector <team-connector@lengow.com>
+ * @copyright   2017 Lengow SAS
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -34,20 +34,20 @@ class Lengow_Admin_Dashboard {
 	 * Display dashboard page.
 	 */
 	public static function display() {
-		$keys            = Lengow_Configuration::get_keys();
-		$locale          = new Lengow_Translation();
-		$stats           = Lengow_Sync::get_statistic();
-		$merchant_status = Lengow_Sync::get_status_account();
-		$is_new_merchant = Lengow_Connector::is_new_merchant();
-		$is_sync         = isset( $_GET['isSync'] ) ? $_GET['isSync'] : false;
-		$locale_iso_code = strtolower( substr( get_locale(), 0, 2 ) );
-
-		$refresh_status = admin_url( 'admin.php?action=dashboard_get_process&do_action=refresh_status' );
+		$keys                = Lengow_Configuration::get_keys();
+		$locale              = new Lengow_Translation();
+		$stats               = Lengow_Sync::get_statistic();
+		$merchant_status     = Lengow_Sync::get_status_account();
+		$is_new_merchant     = Lengow_Connector::is_new_merchant();
+		$is_sync             = isset( $_GET['isSync'] ) ? $_GET['isSync'] : false;
+		$locale_iso_code     = strtolower( substr( get_locale(), 0, 2 ) );
+		$total_pending_order = Lengow_Order::get_total_order_by_status( 'waiting_shipment' );
+		$refresh_status      = admin_url( 'admin.php?action=dashboard_get_process&do_action=refresh_status' );
 
 		if ( $is_new_merchant || $is_sync ) {
 			include_once 'views/dashboard/html-admin-new.php';
-		} elseif ( ( $merchant_status['type'] === 'free_trial' && $merchant_status['expired'] )
-		           || $merchant_status['type'] === 'bad_payer'
+		} elseif ( ( 'free_trial' === $merchant_status['type'] && $merchant_status['expired'] )
+		           || 'bad_payer' === $merchant_status['type']
 		) {
 			include_once 'views/dashboard/html-admin-status.php';
 		} else {

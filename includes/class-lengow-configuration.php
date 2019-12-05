@@ -15,11 +15,11 @@
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
  * @category    Lengow
- * @package        lengow-woocommerce
- * @subpackage    includes
- * @author        Team module <team-module@lengow.com>
- * @copyright    2017 Lengow SAS
- * @license        https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
+ * @package     lengow-woocommerce
+ * @subpackage  includes
+ * @author      Team Connector <team-connector@lengow.com>
+ * @copyright   2017 Lengow SAS
+ * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -38,135 +38,181 @@ class Lengow_Configuration {
 	 */
 	public static function get_keys() {
 		static $keys = null;
-		if ( $keys === null ) {
+		if ( null === $keys ) {
 			$locale = new Lengow_Translation();
 			$keys   = array(
-				'lengow_token'                       => array(
+				'lengow_token'                          => array(
 					'global' => true,
 					'shop'   => true,
 					'label'  => $locale->t( 'lengow_settings.lengow_token_title' ),
 				),
-				'lengow_store_enabled'               => array(
+				'lengow_store_enabled'                  => array(
 					'shop'  => true,
 					'label' => $locale->t( 'lengow_settings.lengow_store_active_title' ),
 				),
-				'lengow_account_id'                  => array(
+				'lengow_account_id'                     => array(
 					'global' => true,
 					'label'  => $locale->t( 'lengow_settings.lengow_account_id_title' ),
 				),
-				'lengow_access_token'                => array(
+				'lengow_access_token'                   => array(
 					'global' => true,
 					'label'  => $locale->t( 'lengow_settings.lengow_access_token_title' ),
 					'secret' => true,
 				),
-				'lengow_secret_token'                => array(
+				'lengow_secret_token'                   => array(
 					'global' => true,
 					'label'  => $locale->t( 'lengow_settings.lengow_secret_token_title' ),
 					'secret' => true,
 				),
-				'lengow_catalog_id'                  => array(
+				'lengow_catalog_id'                     => array(
 					'shop'   => true,
 					'label'  => $locale->t( 'lengow_settings.lengow_catalog_id_title' ),
 					'legend' => $locale->t( 'lengow_settings.lengow_catalog_id_legend' ),
 					'update' => true,
 				),
-				'lengow_ip_enabled'                  => array(
+				'lengow_ip_enabled'                     => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_ip_enable_title' ),
 					'legend'        => $locale->t( 'lengow_settings.lengow_ip_enable_legend' ),
 					'default_value' => 0,
 				),
-				'lengow_authorized_ip'               => array(
+				'lengow_authorized_ip'                  => array(
 					'global' => true,
 					'label'  => $locale->t( 'lengow_settings.lengow_authorized_ip_title' ),
 					'legend' => $locale->t( 'lengow_settings.lengow_authorized_ip_legend' ),
 				),
-				'lengow_last_order_statistic_update' => array(
+				'lengow_tracking_enabled'               => array(
+					'global'        => true,
+					'label'         => $locale->t( 'lengow_settings.lengow_tracking_enabled_title' ),
+					'default_value' => 0,
+				),
+				'lengow_tracking_id'                    => array(
+					'global'        => true,
+					'label'         => $locale->t( 'lengow_settings.lengow_tracking_id_title' ),
+					'legend'        => $locale->t( 'lengow_settings.lengow_tracking_id_legend' ),
+					'default_value' => 'id',
+				),
+				'lengow_last_order_statistic_update'    => array(
 					'global' => true,
 				),
-				'lengow_order_statistic'             => array(
+				'lengow_order_statistic'                => array(
 					'export' => false,
 					'global' => true,
 				),
-				'lengow_last_option_update'          => array(
+				'lengow_last_option_update'             => array(
 					'global' => true,
 				),
-				'lengow_last_account_status_update'  => array(
+				'lengow_last_account_status_update'     => array(
 					'global' => true,
 				),
-				'lengow_account_status'              => array(
+				'lengow_account_status'                 => array(
 					'export' => false,
 					'global' => true,
 				),
-				'lengow_catalog_update'              => array(
+				'lengow_catalog_update'                 => array(
 					'global' => true,
 				),
-				'lengow_marketplace_update'          => array(
+				'lengow_marketplace_update'             => array(
 					'global' => true,
 				),
-				'lengow_last_setting_update'         => array(
+				'lengow_last_setting_update'            => array(
 					'global' => true,
 				),
-				'lengow_selection_enabled'           => array(
+				'lengow_selection_enabled'              => array(
 					'shop'          => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_selection_enabled_title' ),
 					'legend'        => $locale->t( 'lengow_settings.lengow_selection_enabled_legend' ),
 					'default_value' => 0,
 				),
-				'lengow_export_format'               => array(
+				'lengow_export_format'                  => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_export_format_title' ),
 					'default_value' => 'csv',
 				),
-				'lengow_export_file_enabled'         => array(
+				'lengow_export_file_enabled'            => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_export_file_enabled_title' ),
 					'legend'        => $locale->t( 'lengow_settings.lengow_export_file_enabled_legend' ),
 					'default_value' => 0,
 				),
-				'lengow_product_types'               => array(
+				'lengow_product_types'                  => array(
 					'shop'          => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_product_types_title' ),
 					'legend'        => $locale->t( 'lengow_settings.lengow_product_types_legend' ),
 					'default_value' => array( 'simple', 'variable', 'external', 'grouped' ),
 				),
-				'lengow_last_export'                 => array(
+				'lengow_last_export'                    => array(
 					'shop'  => true,
 					'label' => $locale->t( 'lengow_settings.lengow_last_export_title' ),
 				),
-				'lengow_import_enabled'              => array(
+				'lengow_report_mail_enabled'            => array(
 					'global'        => true,
-					'label'         => $locale->t( 'lengow_settings.lengow_import_enabled_title' ),
-					'legend'        => $locale->t( 'lengow_settings.lengow_import_enabled_legend' ),
-					'default_value' => 0,
+					'label'         => $locale->t( 'lengow_settings.lengow_report_mail_enabled_title' ),
+					'default_value' => 1,
 				),
-				'lengow_import_days'                 => array(
+				'lengow_report_mail_address'            => array(
+					'global'        => true,
+					'placeholder'   => $locale->t( 'lengow_settings.lengow_report_mail_address_title' ),
+					'legend'        => $locale->t( 'lengow_settings.lengow_report_mail_address_legend' ),
+					'default_value' => '',
+				),
+				'lengow_import_default_shipping_method' => array(
+					'global'        => true,
+					'label'         => $locale->t( 'lengow_settings.lengow_import_default_shipping_method_title' ),
+					'default_value' => 'flat_rate',
+				),
+				'lengow_id_waiting_shipment'            => array(
+					'global'        => true,
+					'label'         => $locale->t( 'lengow_settings.lengow_id_waiting_shipment_title' ),
+					'default_value' => Lengow_Main::compare_version( '2.2' ) ? 'wc-on-hold' : 'on-hold',
+				),
+				'lengow_id_shipped'                     => array(
+					'global'        => true,
+					'label'         => $locale->t( 'lengow_settings.lengow_id_shipped_title' ),
+					'default_value' => Lengow_Main::compare_version( '2.2' ) ? 'wc-completed' : 'completed',
+				),
+				'lengow_id_cancel'                      => array(
+					'global'        => true,
+					'label'         => $locale->t( 'lengow_settings.lengow_id_cancel_title' ),
+					'default_value' => Lengow_Main::compare_version( '2.2' ) ? 'wc-cancelled' : 'cancelled',
+				),
+				'lengow_id_shipped_by_mp'               => array(
+					'global'        => true,
+					'label'         => $locale->t( 'lengow_settings.lengow_id_shipped_by_mp_title' ),
+					'default_value' => Lengow_Main::compare_version( '2.2' ) ? 'wc-completed' : 'completed',
+				),
+				'lengow_import_days'                    => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_import_days_title' ),
 					'legend'        => $locale->t( 'lengow_settings.lengow_import_days_legend' ),
 					'default_value' => 3,
 					'update'        => true,
 				),
-				'lengow_import_ship_mp_enabled'      => array(
+				'lengow_import_ship_mp_enabled'         => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_import_ship_mp_enabled_title' ),
-					'legend'        => $locale->t( 'lengow_settings.lengow_import_ship_mp_enabled_legend' ),
 					'default_value' => 0,
 				),
-				'lengow_preprod_enabled'             => array(
+				'lengow_import_stock_ship_mp'           => array(
+					'global'        => true,
+					'label'         => $locale->t( 'lengow_settings.lengow_import_stock_ship_mp_title' ),
+					'legend'        => $locale->t( 'lengow_settings.lengow_import_stock_ship_mp_legend' ),
+					'default_value' => 0,
+				),
+				'lengow_preprod_enabled'                => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_preprod_enabled_title' ),
 					'default_value' => 0,
 				),
-				'lengow_import_in_progress'          => array(
+				'lengow_import_in_progress'             => array(
 					'global' => true,
 					'label'  => $locale->t( 'lengow_settings.lengow_import_in_progress_title' ),
 				),
-				'lengow_last_import_manual'          => array(
+				'lengow_last_import_manual'             => array(
 					'global' => true,
 					'label'  => $locale->t( 'lengow_settings.lengow_last_import_manual_title' ),
 				),
-				'lengow_last_import_cron'            => array(
+				'lengow_last_import_cron'               => array(
 					'global' => true,
 					'label'  => $locale->t( 'lengow_settings.lengow_last_import_cron_title' ),
 				),
@@ -201,7 +247,7 @@ class Lengow_Configuration {
 	/**
 	 * Update Lengow value by shop.
 	 *
-	 * @param string $key lengow configuration key
+	 * @param string $key Lengow configuration key
 	 * @param mixed $value configuration value
 	 */
 	public static function update_value( $key, $value ) {
@@ -211,7 +257,7 @@ class Lengow_Configuration {
 	/**
 	 * Delete Lengow value by shop.
 	 *
-	 * @param string $key lengow configuration key
+	 * @param string $key Lengow configuration key
 	 */
 	public static function delete( $key ) {
 		delete_option( $key );
@@ -255,7 +301,7 @@ class Lengow_Configuration {
 	}
 
 	/**
-	 * Get catalog ids.
+	 * Get catalogs ids.
 	 *
 	 * @return array
 	 */
@@ -312,10 +358,33 @@ class Lengow_Configuration {
 	 */
 	public static function set_active_shop() {
 		$shop_is_active   = self::shop_is_active();
-		$shop_has_catalog = count( self::get_catalog_ids() ) > 0;
+		$catalog_ids      = self::get_catalog_ids();
+		$shop_has_catalog = ! empty( $catalog_ids );
 		self::update_value( 'lengow_store_enabled', $shop_has_catalog );
 
 		return $shop_is_active !== $shop_has_catalog ? true : false;
+	}
+
+	/**
+	 * Get Report Email Address for error report.
+	 *
+	 * @return array
+	 */
+	public static function get_report_email_address() {
+		$report_email_address = [];
+		$emails               = self::get( 'lengow_report_mail_address' );
+		$emails               = trim( str_replace( array( "\r\n", ',', ' ' ), ';', $emails ), ';' );
+		$emails               = explode( ';', $emails );
+		foreach ( $emails as $email ) {
+			if ( strlen( $email ) > 0 && is_email( $email ) ) {
+				$report_email_address[] = $email;
+			}
+		}
+		if ( empty( $report_email_address ) ) {
+			$report_email_address[] = self::get( 'admin_email' );
+		}
+
+		return $report_email_address;
 	}
 
 	/**
@@ -341,9 +410,9 @@ class Lengow_Configuration {
 			}
 		}
 		if ( $overwrite ) {
-			Lengow_Main::log( 'Setting', Lengow_Main::set_log_message( 'log.setting.setting_reset' ) );
+			Lengow_Main::log( Lengow_Log::CODE_SETTING, Lengow_Main::set_log_message( 'log.setting.setting_reset' ) );
 		} else {
-			Lengow_Main::log( 'Setting', Lengow_Main::set_log_message( 'log.setting.setting_updated' ) );
+			Lengow_Main::log( Lengow_Log::CODE_SETTING, Lengow_Main::set_log_message( 'log.setting.setting_updated' ) );
 		}
 
 		return true;
@@ -364,8 +433,8 @@ class Lengow_Configuration {
 	 */
 	public static function migrate_product_selection() {
 		$export_all_product = self::get( 'lengow_export_all_product' );
-		if ( $export_all_product !== false ) {
-			$value = ( $export_all_product === '' || $export_all_product === '0' ) ? 1 : 0;
+		if ( false !== $export_all_product ) {
+			$value = ( '' === $export_all_product || '0' === $export_all_product ) ? 1 : 0;
 			self::update_value( 'lengow_selection_enabled', $value );
 			self::delete( 'lengow_export_all_product' );
 		}
@@ -376,7 +445,7 @@ class Lengow_Configuration {
 	 */
 	public static function migrate_product_types() {
 		$old_product_types = self::get( 'lengow_export_type' );
-		if ( $old_product_types !== false ) {
+		if ( false !== $old_product_types ) {
 			$old_product_types = json_decode( $old_product_types, true );
 			if ( is_array( $old_product_types ) ) {
 				self::update_value( 'lengow_product_types', $old_product_types );
@@ -437,7 +506,7 @@ class Lengow_Configuration {
 					$old_value = preg_replace( "/[a-zA-Z0-9]/", '*', $old_value );
 				}
 				Lengow_Main::log(
-					'Setting',
+					Lengow_Log::CODE_SETTING,
 					Lengow_Main::set_log_message(
 						'log.setting.setting_change',
 						array(
@@ -447,7 +516,7 @@ class Lengow_Configuration {
 						)
 					)
 				);
-				// Save last update date for a specific settings (change synchronisation interval time)
+				// save last update date for a specific settings (change synchronisation interval time).
 				if ( isset( $setting['update'] ) && $setting['update'] ) {
 					self::update_value( 'lengow_last_setting_update', date( 'Y-m-d H:i:s' ) );
 				}

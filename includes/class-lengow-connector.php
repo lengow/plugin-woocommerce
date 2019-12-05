@@ -17,7 +17,7 @@
  * @category    Lengow
  * @package     lengow-woocommerce
  * @subpackage  includes
- * @author      Team module <team-module@lengow.com>
+ * @author      Team Connector <team-connector@lengow.com>
  * @copyright   2017 Lengow SAS
  * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
@@ -68,11 +68,13 @@ class Lengow_Connector {
 	 * @var array lengow url for curl timeout.
 	 */
 	private $_lengow_urls = array(
-		'/v3.0/orders'       => 20,
-		'/v3.0/marketplaces' => 15,
-		'/v3.0/plans'        => 5,
-		'/v3.0/stats'        => 5,
-		'/v3.1/cms'          => 5,
+		'/v3.0/orders'          => 20,
+		'/v3.0/orders/moi/'     => 10,
+		'/v3.0/orders/actions/' => 15,
+		'/v3.0/marketplaces'    => 15,
+		'/v3.0/plans'           => 5,
+		'/v3.0/stats'           => 5,
+		'/v3.1/cms'             => 5,
 	);
 
 	/**
@@ -89,9 +91,9 @@ class Lengow_Connector {
 	/**
 	 * Connection to the API.
 	 *
+	 * @return array|false
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return array|false
 	 */
 	public function connect() {
 		$data = $this->call_action(
@@ -120,9 +122,9 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @return mixed
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return mixed
 	 */
 	public function call( $method, $array = array(), $type = 'GET', $format = 'json', $body = '' ) {
 		$this->connect();
@@ -143,9 +145,9 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @return mixed
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return mixed
 	 */
 	public function get( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'GET', $format, $body );
@@ -159,9 +161,9 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @return mixed
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return mixed
 	 */
 	public function post( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'POST', $format, $body );
@@ -175,9 +177,9 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @return mixed
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return mixed
 	 */
 	public function put( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'PUT', $format, $body );
@@ -191,9 +193,9 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @return mixed
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return mixed
 	 */
 	public function patch( $method, $array = array(), $format = 'json', $body = '' ) {
 		return $this->call( $method, $array, 'PATCH', $format, $body );
@@ -208,9 +210,9 @@ class Lengow_Connector {
 	 * @param string $format return format of API
 	 * @param string $body body datas for request
 	 *
+	 * @return mixed
 	 * @throws Lengow_Exception Get Curl error
 	 *
-	 * @return mixed
 	 */
 	private function call_action( $api, $args, $type, $format = 'json', $body = '' ) {
 		$result = $this->make_request( $type, $api, $args, $this->_token, $body );
@@ -230,10 +232,9 @@ class Lengow_Connector {
 		switch ( $format ) {
 			case 'json':
 				return json_decode( $data, true );
-			case 'csv':
-				return $data;
 			case 'xml':
 				return simplexml_load_string( $data );
+			case 'csv':
 			case 'stream':
 				return $data;
 		}
@@ -248,9 +249,9 @@ class Lengow_Connector {
 	 * @param string $token temporary access token
 	 * @param string $body body datas for request
 	 *
+	 * @return mixed
 	 * @throws Lengow_Exception Get curl error
 	 *
-	 * @return mixed
 	 */
 	protected function make_request( $type, $url, $args, $token, $body = '' ) {
 		// define CURLE_OPERATION_TIMEDOUT for old php versions.
@@ -282,7 +283,7 @@ class Lengow_Connector {
 			case 'GET':
 				$opts[ CURLOPT_URL ] = $url . ( ! empty( $args ) ? '?' . http_build_query( $args ) : '' );
 				Lengow_Main::log(
-					'Connector',
+					Lengow_Log::CODE_CONNECTOR,
 					Lengow_Main::set_log_message(
 						'log.connector.call_api',
 						array( 'curl_url' => $opts[ CURLOPT_URL ] )
@@ -327,13 +328,15 @@ class Lengow_Connector {
 			$timeout       = Lengow_Main::set_log_message( 'log.connector.timeout_api' );
 			$error_message = Lengow_Main::set_log_message(
 				'log.connector.error_api',
-				array( 'error_code' => Lengow_Main::decode_log_message( $timeout, 'en_GB' ) )
+				array(
+					'error_code' => Lengow_Main::decode_log_message( $timeout, Lengow_Translation::DEFAULT_ISO_CODE ),
+				)
 			);
-			Lengow_Main::log( 'Connector', $error_message );
+			Lengow_Main::log( Lengow_Log::CODE_CONNECTOR, $error_message );
 			throw new Lengow_Exception( $timeout );
 		}
 		curl_close( $ch );
-		if ( $result === false ) {
+		if ( false === $result ) {
 			$error_curl    = Lengow_Main::set_log_message(
 				'log.connector.error_curl',
 				array(
@@ -343,9 +346,14 @@ class Lengow_Connector {
 			);
 			$error_message = Lengow_Main::set_log_message(
 				'log.connector.error_api',
-				array( 'error_code' => Lengow_Main::decode_log_message( $error_curl, 'en_GB' ) )
+				array(
+					'error_code' => Lengow_Main::decode_log_message(
+						$error_curl,
+						Lengow_Translation::DEFAULT_ISO_CODE
+					),
+				)
 			);
-			Lengow_Main::log( 'Connector', $error_message );
+			Lengow_Main::log( Lengow_Log::CODE_CONNECTOR, $error_message );
 			throw new Lengow_Exception( $error_curl );
 		}
 
@@ -359,7 +367,7 @@ class Lengow_Connector {
 	 */
 	public static function is_new_merchant() {
 		list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
-		if ( ! is_null( $account_id ) && ! is_null( $access_token ) && ! is_null( $secret_token ) ) {
+		if ( null !== $account_id && null !== $access_token && null !== $secret_token ) {
 			return false;
 		}
 
@@ -376,7 +384,7 @@ class Lengow_Connector {
 			return false;
 		}
 		list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
-		if ( is_null( $account_id ) || $account_id === 0 || ! is_numeric( $account_id ) ) {
+		if ( null === $account_id || 0 === $account_id || ! is_numeric( $account_id ) ) {
 			return false;
 		}
 		$connector = new Lengow_Connector( $access_token, $secret_token );
@@ -408,7 +416,7 @@ class Lengow_Connector {
 		}
 		try {
 			list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
-			if ( is_null( $account_id ) ) {
+			if ( null === $account_id ) {
 				return false;
 			}
 			$connector = new Lengow_Connector( $access_token, $secret_token );

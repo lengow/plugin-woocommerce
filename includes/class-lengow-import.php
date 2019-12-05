@@ -17,7 +17,7 @@
  * @category    Lengow
  * @package     lengow-woocommerce
  * @subpackage  includes
- * @author      Team module <team-module@lengow.com>
+ * @author      Team Connector <team-connector@lengow.com>
  * @copyright   2017 Lengow SAS
  * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
@@ -32,17 +32,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Import {
 
 	/**
-	 * @var integer max import days for old versions
+	 * @var integer max import days for old versions.
+	 */
+	const MIN_IMPORT_DAYS = 1;
+
+	/**
+	 * @var integer max import days for old versions.
 	 */
 	const MAX_IMPORT_DAYS = 10;
+
+	/**
+	 * @var string manual import type.
+	 */
+	const TYPE_MANUAL = 'manual';
+
+	/**
+	 * @var integer cron import type.
+	 */
+	const TYPE_CRON = 'cron';
 
 	/**
 	 * @var array valid states lengow to create a Lengow order.
 	 */
 	public static $lengow_states = array(
-		'waiting_shipment',
-		'shipped',
-		'closed',
+		Lengow_Order::STATE_WAITING_SHIPMENT,
+		Lengow_Order::STATE_SHIPPED,
+		Lengow_Order::STATE_CLOSED,
 	);
 
 	/**
@@ -71,22 +86,22 @@ class Lengow_Import {
 	private $_limit = 0;
 
 	/**
-	 * @var string|false imports orders updated since
+	 * @var string|false imports orders updated since.
 	 */
 	protected $_updated_from = false;
 
 	/**
-	 * @var string|false imports orders updated until
+	 * @var string|false imports orders updated until.
 	 */
 	protected $_updated_to = false;
 
 	/**
-	 * @var string|false imports orders created since
+	 * @var string|false imports orders created since.
 	 */
 	protected $_created_from = false;
 
 	/**
-	 * @var string|false imports orders created until
+	 * @var string|false imports orders created until.
 	 */
 	protected $_created_to = false;
 
@@ -126,14 +141,19 @@ class Lengow_Import {
 	private $_secret_token;
 
 	/**
-	 * @var Lengow_Connector Lengow connector instance
+	 * @var Lengow_Connector Lengow connector instance.
 	 */
 	private $_connector;
 
 	/**
-	 * @var array shop catalog ids for import
+	 * @var array shop catalog ids for import.
 	 */
 	private $_shop_catalog_ids = array();
+
+	/**
+	 * @var integer Lengow order id.
+	 */
+	private $_order_lengow_id;
 
 	/**
 	 * Construct the import manager.
@@ -145,7 +165,7 @@ class Lengow_Import {
 	 * string  created_from        import of orders since
 	 * string  created_to          import of orders until
 	 * integer delivery_address_id Lengow delivery address id to import
-	 * integer shop_id             shop id for current import
+	 * integer order_lengow_id     Lengow order id in Woocommerce
 	 * integer days                import period
 	 * integer limit               number of orders to import
 	 * boolean log_output          display log messages
@@ -158,8 +178,11 @@ class Lengow_Import {
 			$this->_marketplace_name = $params['marketplace_name'];
 			$this->_limit            = 1;
 			$this->_import_one_order = true;
-			if ( isset( $params['delivery_address_id'] ) && $params['delivery_address_id'] != '' ) {
-				$this->_delivery_address_id = $params['delivery_address_id'];
+			if ( isset( $params['delivery_address_id'] ) && '' !== $params['delivery_address_id'] ) {
+				$this->_delivery_address_id = (int) $params['delivery_address_id'];
+			}
+			if ( isset( $params['order_lengow_id'] ) ) {
+				$this->_order_lengow_id = (int) $params['order_lengow_id'];
 			}
 		} else {
 			// recovering the time interval.
@@ -174,7 +197,7 @@ class Lengow_Import {
 		$this->_preprod_mode = isset( $params['preprod_mode'] )
 			? $params['preprod_mode']
 			: (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' );
-		$this->_type_import  = isset( $params['type'] ) ? $params['type'] : 'manual';
+		$this->_type_import  = isset( $params['type'] ) ? $params['type'] : self::TYPE_MANUAL;
 		$this->_log_output   = isset( $params['log_output'] ) ? $params['log_output'] : false;
 	}
 
@@ -184,19 +207,11 @@ class Lengow_Import {
 	 * @return array|false
 	 */
 	public function exec() {
-		if ( ! (bool) Lengow_Configuration::get( 'lengow_import_enabled' ) ) {
-			Lengow_Main::log(
-				'Import',
-				Lengow_Main::set_log_message( 'log.import.import_not_active' ),
-				$this->_log_output
-			);
-
-			return false;
-		}
-		$order_new   = 0;
-		$order_error = 0;
-		$error       = false;
-		$sync_ok     = true;
+		$order_new    = 0;
+		$order_update = 0;
+		$order_error  = 0;
+		$error        = false;
+		$sync_ok      = true;
 		// clean logs.
 		Lengow_Main::clean_log();
 		if ( self::is_in_process() && ! $this->_preprod_mode && ! $this->_import_one_order ) {
@@ -204,26 +219,26 @@ class Lengow_Import {
 				'lengow_log.error.rest_time_to_import',
 				array( 'rest_time' => self::rest_time_to_import() )
 			);
-			Lengow_Main::log( 'Import', $error, $this->_log_output );
+			Lengow_Main::log( Lengow_Log::CODE_IMPORT, $error, $this->_log_output );
 		} elseif ( ! $this->_check_credentials() ) {
 			$error = Lengow_Main::set_log_message( 'lengow_log.error.credentials_not_valid' );
-			Lengow_Main::log( 'Import', $error, $this->_log_output );
+			Lengow_Main::log( Lengow_Log::CODE_IMPORT, $error, $this->_log_output );
 		} else {
 			if ( ! $this->_import_one_order ) {
 				self::set_in_process();
 			}
-			// check Lengow catalogs for order synchronisation
-			if ( ! $this->_import_one_order && $this->_type_import === 'manual' ) {
+			// check Lengow catalogs for order synchronisation.
+			if ( ! $this->_import_one_order && self::TYPE_MANUAL === $this->_type_import ) {
 				Lengow_Sync::sync_catalog();
 			}
 			Lengow_Main::log(
-				'Import',
+				Lengow_Log::CODE_IMPORT,
 				Lengow_Main::set_log_message( 'log.import.start', array( 'type' => $this->_type_import ) ),
 				$this->_log_output
 			);
 			if ( $this->_preprod_mode ) {
 				Lengow_Main::log(
-					'Import',
+					Lengow_Log::CODE_IMPORT,
 					Lengow_Main::set_log_message( 'log.import.preprod_mode_active' ),
 					$this->_log_output
 				);
@@ -233,7 +248,7 @@ class Lengow_Import {
 					// check shop catalog ids.
 					if ( ! $this->_check_catalog_ids() ) {
 						$error_catalog_ids = Lengow_Main::set_log_message( 'lengow_log.error.no_catalog_for_shop' );
-						Lengow_Main::log( 'Import', $error_catalog_ids, $this->_log_output );
+						Lengow_Main::log( Lengow_Log::CODE_IMPORT, $error_catalog_ids, $this->_log_output );
 						$error = $error_catalog_ids;
 					} else {
 						// get orders from Lengow API.
@@ -241,7 +256,7 @@ class Lengow_Import {
 						$total_orders = count( $orders );
 						if ( $this->_import_one_order ) {
 							Lengow_Main::log(
-								'Import',
+								Lengow_Log::CODE_IMPORT,
 								Lengow_Main::set_log_message(
 									'log.import.find_one_order',
 									array(
@@ -255,7 +270,7 @@ class Lengow_Import {
 							);
 						} else {
 							Lengow_Main::log(
-								'Import',
+								Lengow_Log::CODE_IMPORT,
 								Lengow_Main::set_log_message(
 									'log.import.find_all_orders',
 									array(
@@ -269,10 +284,14 @@ class Lengow_Import {
 						if ( $total_orders <= 0 && $this->_import_one_order ) {
 							throw new Lengow_Exception( 'lengow_log.exception.order_not_found' );
 						} elseif ( $total_orders > 0 ) {
+							if ( null !== $this->_order_lengow_id ) {
+								Lengow_Order_Error::finish_order_errors( $this->_order_lengow_id );
+							}
 							$result = $this->_import_orders( $orders );
 							if ( ! $this->_import_one_order ) {
-								$order_new   += $result['order_new'];
-								$order_error += $result['order_error'];
+								$order_new    += $result['order_new'];
+								$order_update += $result['order_update'];
+								$order_error  += $result['order_error'];
 							}
 						}
 					}
@@ -283,10 +302,17 @@ class Lengow_Import {
 					                 . '" ' . $e->getFile() . ' | ' . $e->getLine();
 				}
 				if ( isset( $error_message ) ) {
-					$sync_ok         = false;
-					$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
+					$sync_ok = false;
+					if ( null !== $this->_order_lengow_id ) {
+						Lengow_Order_Error::finish_order_errors( $this->_order_lengow_id );
+						Lengow_Order::add_order_error( $this->_order_lengow_id, $error_message );
+					}
+					$decoded_message = Lengow_Main::decode_log_message(
+						$error_message,
+						Lengow_Translation::DEFAULT_ISO_CODE
+					);
 					Lengow_Main::log(
-						'Import',
+						Lengow_Log::CODE_IMPORT,
 						Lengow_Main::set_log_message(
 							'log.import.import_failed',
 							array( 'decoded_message' => $decoded_message )
@@ -298,7 +324,7 @@ class Lengow_Import {
 				}
 				if ( ! $this->_import_one_order ) {
 					Lengow_Main::log(
-						'Import',
+						Lengow_Log::CODE_IMPORT,
 						Lengow_Main::set_log_message(
 							'lengow_log.error.nb_order_imported',
 							array( 'nb_order' => $order_new )
@@ -306,7 +332,15 @@ class Lengow_Import {
 						$this->_log_output
 					);
 					Lengow_Main::log(
-						'Import',
+						Lengow_Log::CODE_IMPORT,
+						Lengow_Main::set_log_message(
+							'lengow_log.error.nb_order_updated',
+							array( 'nb_order' => $order_update )
+						),
+						$this->_log_output
+					);
+					Lengow_Main::log(
+						Lengow_Log::CODE_IMPORT,
 						Lengow_Main::set_log_message(
 							'lengow_log.error.nb_order_with_error',
 							array( 'nb_order' => $order_error )
@@ -322,10 +356,30 @@ class Lengow_Import {
 			// finish import process.
 			self::set_end();
 			Lengow_Main::log(
-				'Import',
+				Lengow_Log::CODE_IMPORT,
 				Lengow_Main::set_log_message( 'log.import.end', array( 'type' => $this->_type_import ) ),
 				$this->_log_output
 			);
+			// check if order action is finish (ship or cancel).
+			if ( ! $this->_preprod_mode && ! $this->_import_one_order && self::TYPE_MANUAL === $this->_type_import ) {
+				Lengow_Action::check_finish_action( $this->_log_output );
+				Lengow_Action::check_old_action( $this->_log_output );
+				Lengow_Action::check_action_not_sent( $this->_log_output );
+			}
+			// sending email in error for orders and actions.
+			if ( (bool) Lengow_Configuration::get( 'lengow_report_mail_enabled' )
+			     && ! $this->_preprod_mode
+			     && ! $this->_import_one_order
+			) {
+				Lengow_Main::send_mail_alert( $this->_log_output );
+			}
+		}
+		// save global error.
+		if ( $error ) {
+			if ( isset( $this->_order_lengow_id ) && $this->_order_lengow_id ) {
+				Lengow_Order_Error::finish_order_errors( $this->_order_lengow_id );
+				Lengow_Order::add_order_error( $this->_order_lengow_id, $error );
+			}
 		}
 		if ( $this->_import_one_order ) {
 			$result['error'] = $error;
@@ -333,9 +387,10 @@ class Lengow_Import {
 			return $result;
 		} else {
 			return array(
-				'order_new'   => $order_new,
-				'order_error' => $order_error,
-				'error'       => $error,
+				'order_new'    => $order_new,
+				'order_update' => $order_update,
+				'order_error'  => $order_error,
+				'error'        => $error,
 			);
 		}
 	}
@@ -347,8 +402,11 @@ class Lengow_Import {
 	 */
 	private function _check_credentials() {
 		if ( Lengow_Connector::is_valid_auth() ) {
-			list( $this->_account_id, $this->_access_token, $this->_secret_token ) = Lengow_Configuration::get_access_id();
-			$this->_connector = new Lengow_Connector( $this->_access_token, $this->_secret_token );
+			list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
+			$this->_account_id   = $account_id;
+			$this->_access_token = $access_token;
+			$this->_secret_token = $secret_token;
+			$this->_connector    = new Lengow_Connector( $access_token, $secret_token );
 
 			return true;
 		}
@@ -366,7 +424,7 @@ class Lengow_Import {
 			return true;
 		}
 		$catalog_ids = Lengow_Configuration::get_catalog_ids();
-		if ( count( $catalog_ids ) > 0 ) {
+		if ( ! empty( $catalog_ids ) ) {
 			$this->_shop_catalog_ids = $catalog_ids;
 
 			return true;
@@ -388,7 +446,7 @@ class Lengow_Import {
 
 		if ( $this->_import_one_order ) {
 			Lengow_Main::log(
-				'Import',
+				Lengow_Log::CODE_IMPORT,
 				Lengow_Main::set_log_message(
 					'log.import.connector_get_order',
 					array(
@@ -402,12 +460,12 @@ class Lengow_Import {
 			$date_from = $this->_created_from ? $this->_created_from : $this->_updated_from;
 			$date_to   = $this->_created_to ? $this->_created_to : $this->_updated_to;
 			Lengow_Main::log(
-				'Import',
+				Lengow_Log::CODE_IMPORT,
 				Lengow_Main::set_log_message(
 					'log.import.connector_get_all_order',
 					array(
-						'date_from'  => date( 'Y-m-d H:i:s', strtotime( $date_from ) ),
-						'date_to'    => date( 'Y-m-d H:i:s', strtotime( $date_to ) ),
+						'date_from'  => get_date_from_gmt( date( 'Y-m-d H:i:s', strtotime( $date_from ) ) ),
+						'date_to'    => get_date_from_gmt( date( 'Y-m-d H:i:s', strtotime( $date_to ) ) ),
 						'catalog_id' => implode( ', ', $this->_shop_catalog_ids ),
 					)
 				),
@@ -451,7 +509,7 @@ class Lengow_Import {
 					'stream'
 				);
 			}
-			if ( is_null( $results ) ) {
+			if ( null === $results ) {
 				throw new Lengow_Exception(
 					Lengow_Main::set_log_message( 'lengow_log.exception.no_connection_webservice' )
 				);
@@ -473,13 +531,13 @@ class Lengow_Import {
 					)
 				);
 			}
-			// Construct array orders.
+			// construct array orders.
 			foreach ( $results->results as $order ) {
 				$orders[] = $order;
 			}
 			$page ++;
-			$finish = ( is_null( $results->next ) || $this->_import_one_order ) ? true : false;
-		} while ( $finish != true );
+			$finish = ( null === $results->next || $this->_import_one_order ) ? true : false;
+		} while ( true !== $finish );
 
 		return $orders;
 	}
@@ -493,6 +551,7 @@ class Lengow_Import {
 	 */
 	protected function _import_orders( $orders ) {
 		$order_new       = 0;
+		$order_update    = 0;
 		$order_error     = 0;
 		$import_finished = false;
 
@@ -506,9 +565,9 @@ class Lengow_Import {
 				$marketplace_sku .= '--' . time();
 			}
 			// if order contains no package.
-			if ( count( $order_data->packages ) === 0 ) {
+			if ( empty( $order_data->packages ) ) {
 				Lengow_Main::log(
-					'Import',
+					Lengow_Log::CODE_IMPORT,
 					Lengow_Main::set_log_message( 'log.import.error_no_package' ),
 					$this->_log_output,
 					$marketplace_sku
@@ -521,7 +580,7 @@ class Lengow_Import {
 				// check whether the package contains a shipping address.
 				if ( ! isset( $package_data->delivery->id ) ) {
 					Lengow_Main::log(
-						'Import',
+						Lengow_Log::CODE_IMPORT,
 						Lengow_Main::set_log_message( 'log.import.error_no_delivery_address' ),
 						$this->_log_output,
 						$marketplace_sku
@@ -532,11 +591,11 @@ class Lengow_Import {
 				$first_package               = $nb_package > 1 ? false : true;
 				// check the package for re-import order.
 				if ( $this->_import_one_order ) {
-					if ( ! is_null( $this->_delivery_address_id )
+					if ( null !== $this->_delivery_address_id
 					     && $this->_delivery_address_id !== $package_delivery_address_id
 					) {
 						Lengow_Main::log(
-							'Import',
+							Lengow_Log::CODE_IMPORT,
 							Lengow_Main::set_log_message( 'log.import.error_wrong_package_number' ),
 							$this->_log_output,
 							$marketplace_sku
@@ -565,9 +624,12 @@ class Lengow_Import {
 					                 . '" ' . $e->getFile() . ' | ' . $e->getLine();
 				}
 				if ( isset( $error_message ) ) {
-					$decoded_message = Lengow_Main::decode_log_message( $error_message, 'en_GB' );
+					$decoded_message = Lengow_Main::decode_log_message(
+						$error_message,
+						Lengow_Translation::DEFAULT_ISO_CODE
+					);
 					Lengow_Main::log(
-						'Import',
+						Lengow_Log::CODE_IMPORT,
 						Lengow_Main::set_log_message(
 							'log.import.order_import_failed',
 							array( 'decoded_message' => $decoded_message )
@@ -578,13 +640,38 @@ class Lengow_Import {
 					unset( $error_message );
 					continue;
 				}
-				// if re-import order -> return order information.
-				if ( isset( $order ) && $this->_import_one_order ) {
-					return $order;
-				}
 				if ( isset( $order ) ) {
+					// sync to lengow if no preprod_mode.
+					if ( ! $this->_preprod_mode && isset( $order['order_new'] ) && $order['order_new'] ) {
+						$order_lengow = new Lengow_Order( $order['order_lengow_id'] );
+						$synchro      = $order_lengow->synchronize_order( $this->_connector );
+						if ( $synchro ) {
+							$synchroMessage = Lengow_Main::set_log_message(
+								'log.import.order_synchronized_with_lengow',
+								array( 'order_id' => $order['order_id'] )
+							);
+						} else {
+							$synchroMessage = Lengow_Main::set_log_message(
+								'log.import.order_not_synchronized_with_lengow',
+								array( 'order_id' => $order['order_id'] )
+							);
+						}
+						Lengow_Main::log(
+							Lengow_Log::CODE_IMPORT,
+							$synchroMessage,
+							$this->_log_output,
+							$marketplace_sku
+						);
+						unset( $order_lengow );
+					}
+					// if re-import order -> return order information.
+					if ( $this->_import_one_order ) {
+						return $order;
+					}
 					if ( isset( $order['order_new'] ) && $order['order_new'] ) {
 						$order_new ++;
+					} elseif ( isset( $order['order_update'] ) && $order['order_update'] ) {
+						$order_update ++;
 					} elseif ( isset( $order['order_error'] ) && $order['order_error'] ) {
 						$order_error ++;
 					}
@@ -604,13 +691,14 @@ class Lengow_Import {
 		}
 
 		return array(
-			'order_new'   => $order_new,
-			'order_error' => $order_error,
+			'order_new'    => $order_new,
+			'order_update' => $order_update,
+			'order_error'  => $order_error,
 		);
 	}
 
 	/**
-	 * Get Import period
+	 * Get Import period.
 	 *
 	 * @param integer|false $days Import period
 	 * @param string|false $created_from Import of orders since
@@ -632,21 +720,22 @@ class Lengow_Import {
 			$this->_created_from = $date_from;
 			$this->_created_to   = $date_to;
 		} else {
-			// order recovery updated since ... days
+			// order recovery updated since ... days.
 			$import_days = (int) Lengow_Configuration::get( 'lengow_import_days' );
-			// add security for older versions of the plugin
+			// add security for older versions of the plugin.
+			$import_days = $import_days < self::MIN_IMPORT_DAYS ? self::MIN_IMPORT_DAYS : $import_days;
 			$import_days = $import_days > self::MAX_IMPORT_DAYS ? self::MAX_IMPORT_DAYS : $import_days;
 			if ( $days ) {
 				$import_days = $days > self::MAX_IMPORT_DAYS ? self::MAX_IMPORT_DAYS : $days;
 			} else {
 				$last_import         = Lengow_Main::get_last_import();
 				$last_setting_update = Lengow_Configuration::get( 'lengow_last_setting_update' );
-				if ( $last_import['timestamp'] !== 'none'
+				if ( 'none' !== $last_import['timestamp']
 				     && $last_import['timestamp'] > strtotime( $last_setting_update )
 				) {
 					$current_timestamp = time();
 					$interval_day      = (int) ( ( $current_timestamp - $last_import['timestamp'] ) / 86400 );
-					$interval_day      = $interval_day === 0 ? 1 : $interval_day;
+					$interval_day      = 0 === $interval_day ? 1 : $interval_day;
 					$import_days       = $interval_day > $import_days ? $import_days : $interval_day;
 				}
 			}

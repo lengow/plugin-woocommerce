@@ -17,7 +17,7 @@
  * @category    Lengow
  * @package     lengow-woocommerce
  * @subpackage  includes
- * @author      Team module <team-module@lengow.com>
+ * @author      Team Connector <team-connector@lengow.com>
  * @copyright   2017 Lengow SAS
  * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
@@ -29,7 +29,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Lengow_Log Class.
  */
-class Lengow_Log extends Lengow_File {
+class Lengow_Log {
+
+	/**
+	 * @var string install log code.
+	 */
+	const CODE_INSTALL = 'Install';
+
+	/**
+	 * @var string setting log code.
+	 */
+	const CODE_SETTING = 'Setting';
+
+	/**
+	 * @var string connector log code.
+	 */
+	const CODE_CONNECTOR = 'Connector';
+
+	/**
+	 * @var string export log code.
+	 */
+	const CODE_EXPORT = 'Export';
+
+	/**
+	 * @var string import log code.
+	 */
+	const CODE_IMPORT = 'Import';
+
+	/**
+	 * @var string action log code.
+	 */
+	const CODE_ACTION = 'Action';
 
 	/**
 	 * @var string name of logs folder.
@@ -50,11 +80,9 @@ class Lengow_Log extends Lengow_File {
 	 */
 	public function __construct( $file_name = null ) {
 		if ( empty( $file_name ) ) {
-			$this->file_name = 'logs-' . date( 'Y-m-d' ) . '.txt';
-		} else {
-			$this->file_name = $file_name;
+			$file_name = 'logs-' . date( 'Y-m-d' ) . '.txt';
 		}
-		$this->_file = new Lengow_File( self::$lengow_log_folder, $this->file_name );
+		$this->_file = new Lengow_File( self::$lengow_log_folder, $file_name );
 	}
 
 	/**
@@ -66,8 +94,8 @@ class Lengow_Log extends Lengow_File {
 	 * @param string|null $marketplace_sku lengow order id
 	 */
 	public function write( $category, $message = '', $display = false, $marketplace_sku = null ) {
-		$decoded_message = Lengow_Main::decode_log_message( $message, 'en_GB' );
-		$log             = date( 'Y-m-d H:i:s' );
+		$decoded_message = Lengow_Main::decode_log_message( $message, Lengow_Translation::DEFAULT_ISO_CODE );
+		$log             = get_date_from_gmt( date( 'Y-m-d H:i:s' ) );
 		$log             .= ' - ' . ( empty( $category ) ? '' : '[' . $category . '] ' );
 		$log             .= '' . ( empty( $marketplace_sku ) ? '' : 'order ' . $marketplace_sku . ' : ' );
 		$log             .= $decoded_message . "\r\n";
@@ -122,7 +150,7 @@ class Lengow_Log extends Lengow_File {
 	public static function download( $file = null ) {
 		if ( $file && preg_match( '/^logs-([0-9]{4}-[0-9]{2}-[0-9]{2})\.txt$/', $file, $match ) ) {
 			$filename = LENGOW_PLUGIN_PATH . '/' . self::$lengow_log_folder . '/' . $file;
-			$handle   = fopen( $filename, "r" );
+			$handle   = fopen( $filename, 'r' );
 			$contents = fread( $handle, filesize( $filename ) );
 			header( 'Content-type: text/plain' );
 			header( 'Content-Disposition: attachment; filename="' . $match[1] . '.txt"' );
@@ -133,7 +161,7 @@ class Lengow_Log extends Lengow_File {
 			header( 'Content-type: text/plain; charset=UTF-8' );
 			header( 'Content-Disposition: attachment; filename="logs.txt"' );
 			foreach ( $files as $file ) {
-				$handle   = fopen( $file['full_path'], "r" );
+				$handle   = fopen( $file['full_path'], 'r' );
 				$contents = fread( $handle, filesize( $file['full_path'] ) );
 				echo $contents;
 			}

@@ -17,7 +17,7 @@
  * @category    Lengow
  * @package     lengow-woocommerce
  * @subpackage  includes
- * @author      Team module <team-module@lengow.com>
+ * @author      Team Connector <team-connector@lengow.com>
  * @copyright   2017 Lengow SAS
  * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0 GNU General Public License
  */
@@ -96,6 +96,14 @@ class Lengow_Main {
 	);
 
 	/**
+	 * @var array product ids available to track products.
+	 */
+	public static $tracker_choice_id = array(
+		'id'  => 'Product ID',
+		'sku' => 'Product SKU',
+	);
+
+	/**
 	 * Get export webservice links.
 	 *
 	 * @return string
@@ -163,7 +171,7 @@ class Lengow_Main {
 		if ( strlen( $ips ) > 0 && ( (bool) Lengow_Configuration::get( 'lengow_ip_enabled' ) || $toolbox ) ) {
 			$ips            = trim( str_replace( array( "\r\n", ',', '-', '|', ' ' ), ';', $ips ), ';' );
 			$ips            = array_filter( explode( ';', $ips ) );
-			$authorized_ips = count( $ips ) > 0 ? array_merge( $ips, self::$_ips_lengow ) : self::$_ips_lengow;
+			$authorized_ips = ! empty( $ips ) ? array_merge( $ips, self::$_ips_lengow ) : self::$_ips_lengow;
 		} else {
 			$authorized_ips = self::$_ips_lengow;
 		}
@@ -229,7 +237,7 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Get version of woocommerce
+	 * Get version of Woocommerce.
 	 *
 	 * @return string
 	 */
@@ -237,6 +245,18 @@ class Lengow_Main {
 		global $woocommerce;
 
 		return $woocommerce->version;
+	}
+
+	/**
+	 * Compare WooCommerce current version with a specified one.
+	 *
+	 * @param string $version_to_compare version to compare
+	 * @param string $operator operator to compare
+	 *
+	 * @return boolean
+	 */
+	public static function compare_version( $version_to_compare, $operator = '>=' ) {
+		return version_compare( self::get_woocommerce_version(), $version_to_compare, $operator );
 	}
 
 	/**
@@ -260,7 +280,7 @@ class Lengow_Main {
 	 * @return Lengow_Log|false
 	 */
 	public static function get_log_instance() {
-		if ( is_null( self::$log ) ) {
+		if ( null === self::$log ) {
 			try {
 				self::$log = new Lengow_Log();
 			} catch ( Lengow_Exception $e ) {
@@ -301,7 +321,7 @@ class Lengow_Main {
 	 * @return string
 	 */
 	public static function set_log_message( $key, $params = null ) {
-		if ( is_null( $params ) || ( is_array( $params ) && count( $params ) === 0 ) ) {
+		if ( null === $params || ( is_array( $params ) && empty( $params ) ) ) {
 			return $key;
 		}
 		$all_params = array();
@@ -327,7 +347,7 @@ class Lengow_Main {
 		if ( preg_match( '/^(([a-z\_]*\.){1,3}[a-z\_]*)(\[(.*)\]|)$/', $message, $result ) ) {
 			if ( isset( $result[1] ) ) {
 				$key = $result[1];
-				if ( isset( $result[4] ) && is_null( $params ) ) {
+				if ( isset( $result[4] ) && null === $params ) {
 					$str_param  = $result[4];
 					$all_params = explode( '|', $str_param );
 					foreach ( $all_params as $param ) {
@@ -349,7 +369,7 @@ class Lengow_Main {
 	 * @param string $type last import type (cron or manual)
 	 */
 	public static function update_date_import( $type ) {
-		if ( $type === 'cron' ) {
+		if ( Lengow_Import::TYPE_CRON === $type ) {
 			Lengow_Configuration::update_value( 'lengow_last_import_cron', time() );
 		} else {
 			Lengow_Configuration::update_value( 'lengow_last_import_manual', time() );
@@ -366,17 +386,70 @@ class Lengow_Main {
 		$timestamp_manual = Lengow_Configuration::get( 'lengow_last_import_manual' );
 		if ( $timestamp_cron && $timestamp_manual ) {
 			if ( (int) $timestamp_cron > (int) $timestamp_manual ) {
-				return array( 'type' => 'cron', 'timestamp' => (int) $timestamp_cron );
+				return array( 'type' => Lengow_Import::TYPE_CRON, 'timestamp' => (int) $timestamp_cron );
 			} else {
-				return array( 'type' => 'manual', 'timestamp' => (int) $timestamp_manual );
+				return array( 'type' => Lengow_Import::TYPE_MANUAL, 'timestamp' => (int) $timestamp_manual );
 			}
 		} elseif ( $timestamp_cron && ! $timestamp_manual ) {
-			return array( 'type' => 'cron', 'timestamp' => (int) $timestamp_cron );
+			return array( 'type' => Lengow_Import::TYPE_CRON, 'timestamp' => (int) $timestamp_cron );
 		} elseif ( $timestamp_manual && ! $timestamp_cron ) {
-			return array( 'type' => 'manual', 'timestamp' => (int) $timestamp_manual );
+			return array( 'type' => Lengow_Import::TYPE_MANUAL, 'timestamp' => (int) $timestamp_manual );
 		}
 
 		return array( 'type' => 'none', 'timestamp' => 'none' );
+	}
+
+	/**
+	 * Get all order statuses.
+	 *
+	 * @return array
+	 */
+	public static function get_order_statuses() {
+		$order_statuses = array();
+		if ( self::compare_version( '2.2' ) ) {
+			$statuses = wc_get_order_statuses();
+			foreach ( $statuses as $status => $label ) {
+				$order_statuses[ $status ] = __( $label, 'woocommerce' );
+			}
+		} else {
+			$statuses = get_terms( 'shop_order_status', array( 'hide_empty' => 0, 'orderby' => 'id,' ) );
+			foreach ( $statuses as $status ) {
+				$order_statuses[ $status->slug ] = __( $status->name, 'woocommerce' );
+			}
+		}
+
+		return $order_statuses;
+	}
+
+	/**
+	 * Get list of shipping methods.
+	 *
+	 * @return array
+	 */
+	public static function get_shipping_methods() {
+		$wc_shipping = new WC_Shipping();
+		$return      = array();
+		foreach ( $wc_shipping->load_shipping_methods() as $key => $shipping ) {
+			$return[ $key ] = __( $shipping->method_title, 'woocommerce' );
+		}
+
+		return $return;
+	}
+
+	/**
+	 * Clean phone number.
+	 *
+	 * @param string $phone phone number to clean
+	 *
+	 * @return string
+	 */
+	public static function clean_phone( $phone ) {
+		$replace = array( '.', ' ', '-', '/' );
+		if ( ! $phone ) {
+			return '';
+		}
+
+		return str_replace( $replace, '', preg_replace( '/[^0-9]*/', '', $phone ) );
 	}
 
 	/**
@@ -719,5 +792,55 @@ class Lengow_Main {
 		);
 
 		return preg_replace( $patterns, $replacements, $str );
+	}
+
+	/**
+	 * Check logs table and send mail for order not imported correctly.
+	 *
+	 * @param boolean $log_output see log or not
+	 */
+	public static function send_mail_alert( $log_output = false ) {
+		// recovery of all errors not yet sent by email.
+		$order_errors = Lengow_Order_Error::get_all_order_error_not_sent();
+		if ( $order_errors ) {
+			// construction of the report e-mail.
+			$subject   = self::decode_log_message( 'lengow_log.mail_report.subject_report_mail' );
+			$support   = self::decode_log_message( 'lengow_log.mail_report.no_error_in_report_mail' );
+			$mail_body = '<h2>' . $subject . '</h2><p><ul>';
+			foreach ( $order_errors as $order_error ) {
+				$order     = self::decode_log_message(
+					'lengow_log.mail_report.order',
+					null,
+					array( 'marketplace_sku' => $order_error->marketplace_sku )
+				);
+				$message   = '' !== $order_error->message
+					? self::decode_log_message( $order_error->message )
+					: $support;
+				$mail_body .= '<li>' . $order . ' - ' . $message . '</li>';
+				Lengow_Order_Error::update( (int) $order_error->id, array( 'mail' => 1 ) );
+				unset( $order, $message );
+			}
+			$mail_body .= '</ul></p>';
+			// send an email foreach email address.
+			$emails = Lengow_Configuration::get_report_email_address();
+			foreach ( $emails as $email ) {
+				if ( strlen( $email ) > 0 ) {
+					$mail_sent = wp_mail( $email, $subject, $mail_body );
+					if ( ! $mail_sent ) {
+						self::log(
+							'MailReport',
+							self::set_log_message( 'log.mail_report.unable_send_mail_to', array( 'email' => $email ) ),
+							$log_output
+						);
+					} else {
+						self::log(
+							'MailReport',
+							self::set_log_message( 'log.mail_report.send_mail_to', array( 'email' => $email ) ),
+							$log_output
+						);
+					}
+				}
+			}
+		}
 	}
 }

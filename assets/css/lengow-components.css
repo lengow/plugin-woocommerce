@@ -306,9 +306,15 @@
 .lgw-container .form-group>div {
   float: none;
 }
+
 .lgw-container .form-group {
   margin-bottom: 1em;
 }
+
+.lgw-container .form-group .legend {
+  margin-top: 1em;
+}
+
 .lgw-container input[type="text"],
 .lgw-container input[type="number"] {
   outline: none;
@@ -762,6 +768,54 @@ select.multiple-select option {
   white-space: nowrap;
 }
 
+/* TABLE WP */
+#lengow_order_grid .wp-list-table .column-country {
+  width: 7%;
+}
+
+#lengow_order_grid .wp-list-table .column-quantity {
+  width: 7%;
+}
+
+#lengow_order_grid .wp-list-table .column-total {
+  width: 6%;
+}
+
+#lengow_order_grid .wp-list-table .column-id_order {
+  width: 12%;
+}
+
+#lengow_order_grid #current-page-selector,
+#lengow_product_grid #current-page-selector {
+  width: auto;
+}
+
+#lengow_order_grid .tablenav,
+#lengow_product_grid .tablenav {
+  margin-bottom: 25px;
+}
+
+#lengow_order_grid .tablenav .current-page,
+#lengow_product_grid .tablenav .current-page{
+  width: 20%;
+}
+
+#lengow_order_grid #current-page-selector,
+#lengow_product_grid #current-page-selector {
+  height: 28px;
+}
+
+#lengow_wrapper_messages {
+  display: inline-block;
+  min-width: 50%;
+}
+
+/* LINK */
+#lengow_order_grid .lgw-link-disabled:hover {
+  cursor: default;
+  color: inherit;
+}
+
 /*************************************************/
 /*                    TOOLTIP                    */
 /*************************************************/
@@ -1094,4 +1148,60 @@ select.multiple-select option {
   position: absolute;
   top: 30px;
   right: 30px;
+}
+
+/*************************************************/
+/*                   LOADER                      */
+/*************************************************/
+
+.lgw-ajax-loading {
+  margin: 0 auto;
+  padding-top: 35px;
+  position: relative;
+  text-align: center;
+  width: 300px;
+}
+
+.lgw-ajax-loading-ball1,
+.lgw-ajax-loading-ball2 {
+  animation: sk-bounce 2.0s infinite ease-in-out;
+  background-color: hsl(196, 100%, 47%);
+  border-radius: 50%;
+  height: 40px;
+  left: 0;
+  opacity: 0.6;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 40px;
+}
+
+.lgw-ajax-loading-ball2 {
+  animation-delay: -1.0s;
+}
+
+.lgw-ajax-loading-message{
+  color: #464646;
+  font-family: 'Lato', sans-serif;
+  line-height: 1.4;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 15px 0 30px;
+}
+
+.lgw-ajax-loading.mod-synchronise-order {
+  margin-bottom: 30px;
+}
+
+@keyframes sk-bounce {
+
+  0%, 100% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1);
+  }
 }

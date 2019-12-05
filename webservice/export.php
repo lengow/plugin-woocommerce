@@ -17,7 +17,7 @@
  * @category    Lengow
  * @package     lengow-woocommerce
  * @subpackage  webservice
- * @author      Team module <team-module@lengow.com>
+ * @author      Team Connector <team-connector@lengow.com>
  * @copyright   2017 Lengow SAS
  */
 
@@ -45,7 +45,7 @@
 // init wordpress.
 require( dirname( dirname( dirname( dirname( dirname( $_SERVER['SCRIPT_FILENAME'] ) ) ) ) ) . '/wp-load.php' );
 
-// dependencies
+// dependencies.
 require_once( '../includes/class-lengow-main.php' );
 require_once( '../includes/class-lengow-export.php' );
 require_once( '../includes/class-lengow-product.php' );
@@ -58,7 +58,7 @@ require_once( '../includes/class-lengow-connector.php' );
 require_once( '../includes/class-lengow-exception.php' );
 require_once( '../includes/class-lengow-sync.php' );
 
-// Check if WooCommerce plugin is activated.
+// check if WooCommerce plugin is activated.
 if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 	wp_die( 'WooCommerce plugin is not active', '', array( 'response' => 400 ) );
 }
@@ -72,10 +72,10 @@ if ( ! in_array(
 	wp_die( 'Lengow plugin is not active', '', array( 'response' => 400 ) );
 }
 
-// get token for authorisation
+// get token for authorisation.
 $token = isset( $_GET['token'] ) ? $_GET['token'] : '';
 
-// check webservices access
+// check webservices access.
 if ( ! Lengow_Main::check_webservice_access( $token ) ) {
 	if ( (bool) Lengow_Configuration::get( 'lengow_ip_enabled' ) ) {
 		$errorMessage = 'Unauthorized access for IP: ' . $_SERVER['REMOTE_ADDR'];
@@ -126,9 +126,9 @@ $export = new Lengow_Export(
 
 if ( $get_params ) {
 	echo $export->get_export_params();
-} elseif ( $mode === 'size' ) {
+} elseif ( 'size' === $mode ) {
 	echo $export->get_total_export_product();
-} elseif ( $mode === 'total' ) {
+} elseif ( 'total' === $mode ) {
 	echo $export->get_total_product();
 } else {
 	$export->exec();

@@ -28,7 +28,7 @@
             syncIframe.onload = function () {
                 $.ajax({
                     url: ajaxurl,
-                    type: "POST",
+                    type: 'POST',
                     data: {do_action: 'get_sync_data', action: 'post_process_dashboard'},
                     dataType: 'json',
                     success: function (data) {
@@ -48,7 +48,7 @@
                 syncIframe.src = '//cms.lengow.rec/';
                 // syncIframe.src = '//cms.lengow.dev/';
             }
-            syncIframe.src = syncIframe.src+'?lang='+isoCode+'&clientType=woocommerce';
+            syncIframe.src = syncIframe.src + '?lang=' + isoCode + '&clientType=woocommerce';
             $('#frame_loader').hide();
             $('#lengow_iframe').show();
         }
@@ -58,38 +58,38 @@
         function receiveMessage(event) {
             switch (event.data.function) {
                 case 'sync':
-                    // Store lengow information into Wordpress :
+                    // store lengow information into Wordpress :
                     // account_id
                     // access_token
                     // secret_token
                     $.ajax({
                         url: ajaxurl,
-                        type: "POST",
+                        type: 'POST',
                         data: {do_action: 'sync', data: event.data.parameters, action: 'post_process_dashboard'},
                         dataType: 'script'
                     });
                     break;
                 case 'sync_and_reload':
-                    // Store lengow information into Wordpress and reload it
+                    // store lengow information into Wordpress and reload it
                     // account_id
                     // access_token
                     // secret_token
                     $.ajax({
                         url: ajaxurl,
-                        type: "POST",
+                        type: 'POST',
                         data: {do_action: 'sync', data: event.data.parameters, action: 'post_process_dashboard'},
                         dataType: 'script',
-                        success: function() {
+                        success: function () {
                             location.reload();
                         }
                     });
                     break;
                 case 'reload':
-                    // Reload the parent page (after sync is ok)
+                    // reload the parent page (after sync is ok)
                     location.reload();
                     break;
                 case 'cancel':
-                    // Reload Dashboard page
+                    // reload Dashboard page
                     var hrefCancel = location.href.replace('&isSync=true', '');
                     window.location.replace(hrefCancel);
                     break;

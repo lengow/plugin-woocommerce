@@ -15,10 +15,10 @@
  * https://www.gnu.org/licenses/old-licenses/gpl-2.0
  *
  * @category    Lengow
- * @package        lengow-woocommerce
- * @subpackage    includes
- * @author        Team module <team-module@lengow.com>
- * @copyright    2017 Lengow SAS
+ * @package     lengow-woocommerce
+ * @subpackage  includes
+ * @author      Team Connector <team-connector@lengow.com>
+ * @copyright   2017 Lengow SAS
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -39,6 +39,11 @@ class Lengow_Admin_Products extends WP_List_Table {
 	private $data;
 
 	/**
+	 * @var array all products selected.
+	 */
+	private $lengow_product_ids;
+
+	/**
 	 * @var Lengow_Translation Lengow translation instance.
 	 */
 	private $locale;
@@ -47,7 +52,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 * Display products page.
 	 */
 	public static function html_display() {
-		// Need to instantiate a class because this method must be static.
+		// need to instantiate a class because this method must be static.
 		$lengow_admin_products         = new Lengow_Admin_Products();
 		$lengow_admin_products->locale = new Lengow_Translation();
 		$locale                        = $lengow_admin_products->locale;
@@ -64,7 +69,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 			'total_export_product' => $lengow_export->get_total_export_product(),
 			'last_export'          => Lengow_Configuration::get( 'lengow_last_export' ),
 			'option_selected'      => (bool) Lengow_Configuration::get( 'lengow_selection_enabled' ),
-			'select_all'           => count( $lengow_admin_products->get_products() ),
+			'select_all'           => self::_count_products(),
 		);
 		include_once 'views/products/html-admin-products.php';
 	}
@@ -79,7 +84,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 			switch ( $action ) {
 				case 'change_option_selected':
 					$state = isset( $_POST['state'] ) ? $_POST['state'] : null;
-					if ( $state !== null ) {
+					if ( null !== $state ) {
 						Lengow_Configuration::update_value(
 							'lengow_selection_enabled',
 							$state
@@ -91,16 +96,16 @@ class Lengow_Admin_Products extends WP_List_Table {
 						} else {
 							$data['state'] = false;
 						}
-						$result = array_merge( $data, self::reload_total() );
+						$result = array_merge( $data, self::_reload_total() );
 						echo json_encode( $result );
 					}
 					break;
 				case 'select_product':
 					$state     = isset( $_POST['state'] ) ? $_POST['state'] : null;
 					$productId = isset( $_POST['id_product'] ) ? $_POST['id_product'] : null;
-					if ( $state !== null ) {
+					if ( null !== $state ) {
 						Lengow_Product::publish( $productId, $state );
-						echo json_encode( self::reload_total() );
+						echo json_encode( self::_reload_total() );
 					}
 					break;
 				case 'export_mass_action':
@@ -108,7 +113,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 					$select_all    = isset( $_POST['select_all'] ) ? $_POST['select_all'] : null;
 					$export_action = isset( $_POST['export_action'] ) ? $_POST['export_action'] : null;
 					$data          = array();
-					if ( $select_all === 'true' ) {
+					if ( 'true' === $select_all ) {
 						$all_products = get_posts(
 							array(
 								'numberposts' => - 1,
@@ -119,7 +124,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 							$all[] = $value->ID;
 						}
 						foreach ( $all as $id ) {
-							if ( $export_action === 'add_to_export' ) {
+							if ( 'add_to_export' === $export_action ) {
 								Lengow_Product::publish( $id, 1 );
 							} else {
 								Lengow_Product::publish( $id, 0 );
@@ -128,17 +133,17 @@ class Lengow_Admin_Products extends WP_List_Table {
 								$data['product_id'][] = $product;
 							}
 						}
-						$data = array_merge( $data, self::reload_total() );
+						$data = array_merge( $data, self::_reload_total() );
 					} elseif ( $selection ) {
 						foreach ( $selection as $product ) {
-							if ( $export_action === 'add_to_export' ) {
+							if ( 'add_to_export' === $export_action ) {
 								Lengow_Product::publish( $product, 1 );
 							} else {
 								Lengow_Product::publish( $product, 0 );
 							}
 							$data['product_id'][] = $product;
 						}
-						$data = array_merge( $data, self::reload_total() );
+						$data = array_merge( $data, self::_reload_total() );
 					} else {
 						$data['message'] = $locale->t( 'product.screen.no_product_selected' );
 					}
@@ -149,15 +154,15 @@ class Lengow_Admin_Products extends WP_List_Table {
 		}
 	}
 
-
 	/**
 	 * Display lengow product table.
 	 *
 	 */
 	public static function render_lengow_list() {
-		// Need to instantiate a class because this method must be static.
-		$lengow_admin_products         = new Lengow_Admin_Products();
-		$lengow_admin_products->locale = new Lengow_Translation();
+		// need to instantiate a class because this method must be static.
+		$lengow_admin_products                     = new Lengow_Admin_Products();
+		$lengow_admin_products->locale             = new Lengow_Translation();
+		$lengow_admin_products->lengow_product_ids = Lengow_Product::get_lengow_products();
 		$lengow_admin_products->prepare_items();
 		$lengow_admin_products->search(
 			$lengow_admin_products->locale->t( 'product.table.button_search' ),
@@ -177,10 +182,10 @@ class Lengow_Admin_Products extends WP_List_Table {
 		// $sortable defines if the table can be sorted by this column.
 		$sortable              = $this->get_sortable_columns();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
-		$this->data            = $this->get_products();
-		usort( $this->data, array( &$this, 'usort_reorder' ) );
+		$this->data            = $this->_get_products();
+		usort( $this->data, array( &$this, '_usort_reorder' ) );
 		// pagination.
-		$per_page     = 10;
+		$per_page     = 20;
 		$current_page = $this->get_pagenum();
 		$total_items  = count( $this->data );
 		$data         = array_slice( $this->data, ( ( $current_page - 1 ) * $per_page ), $per_page );
@@ -192,7 +197,6 @@ class Lengow_Admin_Products extends WP_List_Table {
 		);
 
 		$this->items = $data;
-
 	}
 
 	/**
@@ -227,7 +231,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 * @return array
 	 */
 	public function column_default( $item, $column_name ) {
-		// To avoid the need to create a method for each column there is column_default.
+		// to avoid the need to create a method for each column there is column_default.
 		// that will process any column for which no special method is defined.
 		switch ( $column_name ) {
 			case 'ID':
@@ -243,10 +247,8 @@ class Lengow_Admin_Products extends WP_List_Table {
 				break;
 			default:
 				break;
-
 		}
 	}
-
 
 	/**
 	 * Get all sortable columns.
@@ -255,8 +257,8 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 */
 	public function get_sortable_columns() {
 		$sortable_columns = array(
-			// The second parameter in the value array takes care of a possible pre-ordered column.
-			// If the value is true the column is assumed to be ordered ascending.
+			// the second parameter in the value array takes care of a possible pre-ordered column.
+			// if the value is true the column is assumed to be ordered ascending.
 			// if the value is false the column is assumed descending or unordered.
 			'ID'            => array( 'ID', true ),
 			'image'         => array( 'image', false ),
@@ -270,6 +272,21 @@ class Lengow_Admin_Products extends WP_List_Table {
 		);
 
 		return $sortable_columns;
+	}
+
+	/**
+	 * Display checkbox.
+	 *
+	 * @param array $product product datas
+	 *
+	 * @return string
+	 */
+	public function column_cb( $product ) {
+		return sprintf(
+			'<input type="checkbox" id="js-lengow_product_checkbox"
+				name="product[]" value="%s"class="js-lengow_selection"/>',
+			$product['ID']
+		);
 	}
 
 	/**
@@ -292,21 +309,6 @@ class Lengow_Admin_Products extends WP_List_Table {
 	}
 
 	/**
-	 * Display checkbox.
-	 *
-	 * @param array $product product datas
-	 *
-	 * @return string
-	 */
-	public function column_cb( $product ) {
-		return sprintf(
-			'<input type="checkbox" id="js-lengow_product_checkbox"
-				name="product[]" value="%s"class="js-lengow_selection"/>',
-			$product['ID']
-		);
-	}
-
-	/**
 	 * Display lengow checkbox.
 	 *
 	 * @param array $product product datas
@@ -314,9 +316,8 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 * @return string
 	 */
 	public function column_lengow( $product ) {
-		$id_lengow_products = Lengow_Product::get_lengow_products();
-		$checked            = isset( $id_lengow_products[ $product['ID'] ] ) ? 'checked' : '';
-		$check              = isset( $id_lengow_products[ $product['ID'] ] ) ? 'checked="checked"' : '';
+		$checked = isset( $this->lengow_product_ids[ $product['ID'] ] ) ? 'checked' : '';
+		$check   = isset( $this->lengow_product_ids[ $product['ID'] ] ) ? 'checked="checked"' : '';
 
 		return sprintf(
 			'<div class="lgw-switch ' . $checked . '">
@@ -340,40 +341,17 @@ class Lengow_Admin_Products extends WP_List_Table {
 	}
 
 	/**
-	 * Reload Total product / Exported product.
+	 * Search box.
 	 *
-	 * @return array
+	 * @param string $text text for search
+	 * @param string $input_id id for search
 	 */
-	public static function reload_total() {
-		$lengow_export = new Lengow_Export( null );
-
-		$result                         = array();
-		$result['total_export_product'] = $lengow_export->get_total_export_product();
-		$result['total_product']        = $lengow_export->get_total_product();
-
-		return $result;
-	}
-
-	/**
-	 * Sort products (default by asc ID).
-	 *
-	 * @param array $a product datas
-	 * @param array $b product datas
-	 *
-	 * @return string
-	 */
-	private function usort_reorder( $a, $b ) {
-		// If no sort, default to ID.
-		$order_by = ! empty( $_GET['orderby'] ) ? $_GET['orderby'] : 'ID';
-
-		// If no order, default to asc.
-		$order = ! empty( $_GET['order'] ) ? $_GET['order'] : 'asc';
-
-		// Determine sort order.
-		$result = strcmp( $a[ $order_by ], $b[ $order_by ] );
-
-		// Send final sort direction to usort.
-		return $order === 'asc' ? $result : - $result;
+	public function search( $text, $input_id ) {
+		echo '<form id="post-filter" method="post">';
+		// the hidden element is needed to load the right page.
+		echo '<input type="hidden" name="page" value="lengow_list" />';
+		echo $this->search_box( $text, $input_id );
+		echo '</form>';
 	}
 
 	/**
@@ -381,7 +359,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	private function get_products() {
+	private function _get_products() {
 		$results = array();
 		$keys    = array(
 			'ID',
@@ -394,25 +372,13 @@ class Lengow_Admin_Products extends WP_List_Table {
 			'product_type',
 			'lengow',
 		);
-
 		// filter by search box.
+		$params = array( 'numberposts' => - 1, 'post_type' => 'product' );
 		if ( isset( $_POST['s'] ) ) {
-			$posts = get_posts(
-				array(
-					'numberposts' => - 1,
-					'post_type'   => 'product',
-					's'           => $_POST['s'],
-				)
-			);
-		} else {
-			$posts = get_posts(
-				array(
-					'numberposts' => - 1,
-					'post_type'   => 'product',
-				)
-			);
+			$params['s'] = $_POST['s'];
 		}
-
+		$posts = get_posts( $params );
+		// get product data.
 		foreach ( $keys as $key ) {
 			foreach ( $posts as $post ) {
 				switch ( $key ) {
@@ -426,56 +392,23 @@ class Lengow_Admin_Products extends WP_List_Table {
 						$products_data = $post->post_title;
 						break;
 					case 'categories':
-						$categories          = wp_get_post_terms(
-							$post->ID,
-							'product_cat',
-							array( 'fields' => 'names' )
-						);
-						$products_categories = array();
-						foreach ( $categories as $value ) {
-							array_push( $products_categories, $value );
-						}
-						$products_data = implode( ',', $products_categories );
+						$products_data = $this->_display_categories( $post );
 						break;
 					case '_stock_status':
-						$products_data = get_post_meta( $post->ID, $key, true ) === 'instock'
-							? $this->locale->t( 'product.table.in_stock' )
-							: $this->locale->t( 'product.table.out_of_stock' );
+						$products_data = $this->_display_stock_status( $post );
 						break;
 					case '_price':
-						$price         = get_post_meta( $post->ID, $key, true );
-						$products_data = $price . ' ' . get_woocommerce_currency_symbol();
+						$products_data = $this->_display_price( $post );
 						break;
 					case 'product_type':
-						// Use woocommerce 2.0.0 function get_product(ID) to check type.
-						$wc_product       = Lengow_Product::get_product( $post->ID );
-						$product_type     = Lengow_Product::get_product_type( $wc_product );
-						$downloadable     = get_post_meta( $post->ID, '_downloadable', true ) === 'yes'
-							? $this->locale->t( 'product.table.type_downloadable' )
-							: false;
-						$virtual          = get_post_meta( $post->ID, '_virtual', true ) === 'yes'
-							? $this->locale->t( 'product.table.type_virtual' )
-							: false;
-						$sub_product_type = false;
-						if ( $downloadable && $virtual ) {
-							$sub_product_type = ' (' . $downloadable . ', ' . $virtual . ')';
-						} elseif ( $downloadable ) {
-							$sub_product_type = ' (' . $downloadable . ')';
-						} elseif ( $virtual ) {
-							$sub_product_type = ' (' . $virtual . ')';
-						}
-
-						if ( $sub_product_type ) {
-							$products_data = ucfirst( $product_type ) . $sub_product_type;
-						} else {
-							$products_data = ucfirst( $product_type );
-						}
+						$products_data = $this->_display_product_type( $post );
 						break;
 					case 'lengow':
-						$products_data = (int) Lengow_Product::is_lengow_product( $post->ID );
+						$products_data = isset( $this->lengow_product_ids[ $post->ID ] ) ? 1 : 0;
 						break;
 					default :
 						$products_data = get_post_meta( $post->ID, $key, true );
+						break;
 				}
 				$results[ $post->ID ][ $key ] = $products_data;
 			}
@@ -485,16 +418,135 @@ class Lengow_Admin_Products extends WP_List_Table {
 	}
 
 	/**
-	 * Search box.
+	 * Sort products (default by asc ID).
 	 *
-	 * @param string $text text for search
-	 * @param string $input_id id for search
+	 * @param array $a product datas
+	 * @param array $b product datas
+	 *
+	 * @return string
 	 */
-	private function search( $text, $input_id ) {
-		echo '<form id="post-filter" method="post">';
-		// The hidden element is needed to load the right page.
-		echo '<input type="hidden" name="page" value="lengow_list" />';
-		echo $this->search_box( $text, $input_id );
-		echo '</form>';
+	private function _usort_reorder( $a, $b ) {
+		// if no sort, default to ID.
+		$order_by = ! empty( $_GET['orderby'] ) ? $_GET['orderby'] : 'ID';
+		// if no order, default to asc.
+		$order = ! empty( $_GET['order'] ) ? $_GET['order'] : 'asc';
+		// determine sort order.
+		$result = strcmp( $a[ $order_by ], $b[ $order_by ] );
+
+		// send final sort direction to usort.
+		return 'asc' === $order ? $result : - $result;
+	}
+
+	/**
+	 * Return the total number of products.
+	 *
+	 * @return int
+	 */
+	private static function _count_products() {
+		global $wpdb;
+
+		$query  = 'SELECT count(ID) FROM ' . $wpdb->posts . ' WHERE post_type = %s';
+		$result = $wpdb->get_var(
+			$wpdb->prepare( $query, array( 'product' ) )
+		);
+
+		return $result;
+	}
+
+	/**
+	 * Reload Total product / Exported product.
+	 *
+	 * @return array
+	 */
+	private static function _reload_total() {
+		$lengow_export = new Lengow_Export( null );
+		$result        = array(
+			'total_export_product' => $lengow_export->get_total_export_product(),
+			'total_product'        => $lengow_export->get_total_product(),
+		);
+
+		return $result;
+	}
+
+	/**
+	 * Generate categories.
+	 *
+	 * @param WP_Post $post WordPress post instance
+	 *
+	 * @return string
+	 */
+	private function _display_categories( $post ) {
+		$categories          = wp_get_post_terms(
+			$post->ID,
+			'product_cat',
+			array( 'fields' => 'names' )
+		);
+		$products_categories = array();
+		foreach ( $categories as $value ) {
+			array_push( $products_categories, $value );
+		}
+
+		return implode( ',', $products_categories );
+	}
+
+	/**
+	 * Generate stock status.
+	 *
+	 * @param WP_Post $post WordPress post instance
+	 *
+	 * @return string
+	 */
+	private function _display_stock_status( $post ) {
+		return 'instock' === get_post_meta( $post->ID, '_stock_status', true )
+			? $this->locale->t( 'product.table.in_stock' )
+			: $this->locale->t( 'product.table.out_of_stock' );;
+	}
+
+	/**
+	 * Generate price.
+	 *
+	 * @param WP_Post $post WordPress post instance
+	 *
+	 * @return string
+	 */
+	private function _display_price( $post ) {
+		$price               = get_post_meta( $post->ID, '_price', true );
+		$price_with_currency = Lengow_Main::compare_version( '2.1.0', '<' )
+			? $price . get_woocommerce_currency_symbol()
+			: wc_price( $price );
+
+		return $price_with_currency;
+	}
+
+	/**
+	 * Generate product type.
+	 *
+	 * @param WP_Post $post WordPress post instance
+	 *
+	 * @return string
+	 */
+	private function _display_product_type( $post ) {
+		$product          = Lengow_Product::get_product( $post->ID );
+		$product_type     = Lengow_Product::get_product_type( $product );
+		$downloadable     = 'yes' === get_post_meta( $post->ID, '_downloadable', true )
+			? $this->locale->t( 'product.table.type_downloadable' )
+			: false;
+		$virtual          = 'yes' === get_post_meta( $post->ID, '_virtual', true )
+			? $this->locale->t( 'product.table.type_virtual' )
+			: false;
+		$sub_product_type = false;
+		if ( $downloadable && $virtual ) {
+			$sub_product_type = ' (' . $downloadable . ', ' . $virtual . ')';
+		} elseif ( $downloadable ) {
+			$sub_product_type = ' (' . $downloadable . ')';
+		} elseif ( $virtual ) {
+			$sub_product_type = ' (' . $virtual . ')';
+		}
+
+		if ( $sub_product_type ) {
+			return ucfirst( $product_type ) . $sub_product_type;
+		} else {
+			return ucfirst( $product_type );
+		}
 	}
 }
