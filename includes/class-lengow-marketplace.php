@@ -509,7 +509,7 @@ class Lengow_Marketplace {
 					break;
 				default:
 					if ( isset( $actions['optional_args'] ) && in_array( $arg, $actions['optional_args'] ) ) {
-						continue;
+						break;
 					}
 					$default_value  = $this->get_default_value( $arg );
 					$param_value    = $default_value ? $default_value : $arg . ' not available';
