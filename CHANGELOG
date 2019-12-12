@@ -3,6 +3,7 @@ Version 2.2.1
 ========================================================
 
     - Feature: Adding compatibility with php 7.3
+    - Bugfix: Change Plugin URI for WordPress validation
 
 ========================================================
 Version 2.2.0

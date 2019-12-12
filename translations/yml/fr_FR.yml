@@ -2,7 +2,8 @@ fr:
   module:
     name: "Lengow"
     plugin_name: "Lengow pour WooCommerce"
-    plugin_uri: "http://www.lengow.com/fr"
+    plugin_uri: "https://www.lengow.com/fr/integrations/woocommerce/"
+    author_uri: "http://www.lengow.com/fr"
     description: "Avec votre module Lengow pour WooCommerce vendez rapidement vos produits sur Amazon, Ebay, Facebook, Google Shopping, Criteo, Bing et d’autres et touchez facilement de nouveaux clients partout dans le monde. Plus de 1 800 canaux marketing vous attendent sur la plateforme Lengow !"
     version: "2.2.1"
     author: "Lengow"
