@@ -86,6 +86,8 @@ cp -rRp $FOLDER $FOLDER_TMP
 remove_files $FOLDER_TMP "dod.md"
 # Remove Readme
 remove_files $FOLDER_TMP "README.md"
+# Remove CHANGELOG
+remove_files $FOLDER_TMP "CHANGELOG"
 # Remove .gitignore
 remove_files $FOLDER_TMP ".gitignore"
 # Remove .git

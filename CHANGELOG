@@ -1,4 +1,13 @@
 ========================================================
+Version 2.2.1
+========================================================
+
+    - Feature: Adding compatibility with php 7.3
+    - Feature: Update of the GNU General Public License in version 3
+    - Feature: Add readme.txt file for WordPress validation
+    - Bugfix: Change Plugin URI for WordPress validation
+
+========================================================
 Version 2.2.0
 ========================================================
 
