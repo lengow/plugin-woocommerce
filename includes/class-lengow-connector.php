@@ -376,7 +376,7 @@ class Lengow_Connector {
 			if ( self::CODE_403 === $e->getCode() ) {
 				Lengow_Main::log(
 					Lengow_Log::CODE_CONNECTOR,
-					Lengow_Main::set_log_message('log.connector.retry_get_token'),
+					Lengow_Main::set_log_message( 'log.connector.retry_get_token' ),
 					$log_output
 				);
 				$this->connect( true, $log_output );

@@ -1,5 +1,5 @@
 <?php
-/*/**
+/**
  * All function to synchronised orders
  *
  * Copyright 2017 Lengow SAS

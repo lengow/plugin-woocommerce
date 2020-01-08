@@ -309,9 +309,9 @@
 /includes/class-lengow-configuration.php|f0f9f28532ebf4a497d68ecbf49b1008
 /includes/class-lengow-file.php|4769716bda8e17fdab0198aeb12186e5
 /includes/class-lengow-translation.php|e3d1b98438d1f669ed2c33338229ae23
-/includes/class-lengow-connector.php|d9dc386231553a1f299ac27965490f0f
+/includes/class-lengow-connector.php|82d48b77f3ce893f7799e068676d9ae4
 /includes/class-lengow-log.php|59357e78b88d18ef7f4007e0d69b315e
-/includes/class-lengow-order.php|f9db542402bc7f09dab22c7461d2b835
+/includes/class-lengow-order.php|ed03fa9bb49d60a5c692234636d8e01a
 /includes/class-lengow-exception.php|1db651b67392bc2c74b0b9fabf9886b4
 /includes/class-lengow-check.php|97499ed927be166addaa05aec95f6e71
 /includes/admin/class-lengow-admin.php|ef96b25f9eb68b00b8322a7e49610fa3
