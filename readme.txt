@@ -45,10 +45,10 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 
 == Changelog ==
 
-= 2.2.2 - xxxx-xx-xx =
+= 2.3.0 - xxxx-xx-xx =
 
 
-= 2.2.1 - 2019-12-12 =
+= 2.2.1 - 2020-01-06 =
 * Feature: Adding compatibility with php 7.3
 * Feature: Update of the GNU General Public License in version 3
 * Feature: Add readme.txt file for WordPress validation
