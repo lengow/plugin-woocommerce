@@ -85,17 +85,17 @@ class Lengow_Connector {
 	const GET = 'GET';
 
 	/**
-	 * @var string request GET.
+	 * @var string request POST.
 	 */
 	const POST = 'POST';
 
 	/**
-	 * @var string request GET.
+	 * @var string request PUT.
 	 */
 	const PUT = 'PUT';
 
 	/**
-	 * @var string request GET.
+	 * @var string request PATCH.
 	 */
 	const PATCH = 'PATCH';
 
