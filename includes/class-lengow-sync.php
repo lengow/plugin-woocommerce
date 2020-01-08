@@ -157,12 +157,13 @@ class Lengow_Sync {
 	 * Sync Lengow catalogs for order synchronisation.
 	 *
 	 * @param boolean $force Force cache Update
+	 * @param boolean $log_output see log or not
 	 *
 	 * @return boolean
 	 */
-	public static function sync_catalog( $force = false ) {
+	public static function sync_catalog( $force = false, $log_output = false ) {
 		$setting_updated = false;
-		if ( Lengow_Connector::is_new_merchant() ) {
+		if ( Lengow_Configuration::is_new_merchant() ) {
 			return false;
 		}
 		if ( ! $force ) {
@@ -173,7 +174,13 @@ class Lengow_Sync {
 				return false;
 			}
 		}
-		$result = Lengow_Connector::query_api( 'get', '/v3.1/cms' );
+		$result = Lengow_Connector::query_api(
+			Lengow_Connector::GET,
+			Lengow_Connector::API_CMS,
+			array(),
+			'',
+			$log_output
+		);
 		if ( isset( $result->cms ) ) {
 			$cms_token = Lengow_Main::get_token();
 			foreach ( $result->cms as $cms ) {
@@ -231,11 +238,12 @@ class Lengow_Sync {
 	 * Set CMS options.
 	 *
 	 * @param boolean $force Force cache Update
+	 * @param boolean $log_output see log or not
 	 *
 	 * @return boolean
 	 */
-	public static function set_cms_option( $force = false ) {
-		if ( Lengow_Connector::is_new_merchant() || (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
+	public static function set_cms_option( $force = false, $log_output = false ) {
+		if ( Lengow_Configuration::is_new_merchant() || (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
 			return false;
 		}
 		if ( ! $force ) {
@@ -247,7 +255,13 @@ class Lengow_Sync {
 			}
 		}
 		$options = json_encode( self::get_option_data() );
-		Lengow_Connector::query_api( 'put', '/v3.1/cms', array(), $options );
+		Lengow_Connector::query_api(
+			Lengow_Connector::PUT,
+			Lengow_Connector::API_CMS,
+			array(),
+			$options,
+			$log_output
+		);
 		Lengow_Configuration::update_value( 'lengow_last_option_update', date( 'Y-m-d H:i:s' ) );
 
 		return true;
@@ -257,10 +271,11 @@ class Lengow_Sync {
 	 * Get Status Account.
 	 *
 	 * @param boolean $force Force cache Update
+	 * @param boolean $log_output see log or not
 	 *
 	 * @return array|false
 	 */
-	public static function get_status_account( $force = false ) {
+	public static function get_status_account( $force = false, $log_output = false ) {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_last_account_status_update' );
 			if ( null !== $updated_at
@@ -269,7 +284,13 @@ class Lengow_Sync {
 				return json_decode( Lengow_Configuration::get( 'lengow_account_status' ), true );
 			}
 		}
-		$result = Lengow_Connector::query_api( 'get', '/v3.0/plans' );
+		$result = Lengow_Connector::query_api(
+			Lengow_Connector::GET,
+			Lengow_Connector::API_PLAN,
+			array(),
+			'',
+			$log_output
+		);
 		if ( isset( $result->isFreeTrial ) ) {
 			$status = array(
 				'type'    => $result->isFreeTrial ? 'free_trial' : '',
@@ -294,10 +315,11 @@ class Lengow_Sync {
 	 * Get statistic.
 	 *
 	 * @param boolean $force Force cache Update
+	 * @param boolean $log_output see log or not
 	 *
 	 * @return array
 	 */
-	public static function get_statistic( $force = false ) {
+	public static function get_statistic( $force = false, $log_output = false ) {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_last_order_statistic_update' );
 			if ( null !== $updated_at
@@ -307,13 +329,15 @@ class Lengow_Sync {
 			}
 		}
 		$result = Lengow_Connector::query_api(
-			'get',
-			'/v3.0/stats',
+			Lengow_Connector::GET,
+			Lengow_Connector::API_STATISTIC,
 			array(
 				'date_from' => date( 'c', strtotime( date( 'Y-m-d' ) . ' -10 years' ) ),
 				'date_to'   => date( 'c' ),
 				'metrics'   => 'year',
-			)
+			),
+			'',
+			$log_output
 		);
 		if ( isset( $result->level0 ) ) {
 			$stats  = $result->level0[0];
@@ -376,7 +400,13 @@ class Lengow_Sync {
 			}
 		}
 		// recovering data with the API.
-		$result = Lengow_Connector::query_api( 'get', '/v3.0/marketplaces' );
+		$result = Lengow_Connector::query_api(
+			Lengow_Connector::GET,
+			Lengow_Connector::API_MARKETPLACE,
+			array(),
+			'',
+			$log_output
+		);
 		if ( $result && is_object( $result ) && ! isset( $result->error ) ) {
 			// updated marketplaces.json file.
 			try {

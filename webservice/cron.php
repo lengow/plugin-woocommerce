@@ -105,7 +105,7 @@ if ( isset( $_GET['get_sync'] ) && 1 == $_GET['get_sync'] ) {
 	$sync = isset( $_GET['sync'] ) ? $_GET['sync'] : false;
 	// sync catalogs id between Lengow and WooCommerce.
 	if ( ! $sync || Lengow_Sync::SYNC_CATALOG === $sync ) {
-		Lengow_Sync::sync_catalog( $force );
+		Lengow_Sync::sync_catalog( $force, $log_output );
 	}
 	// sync orders between Lengow and WooCommerce.
 	if ( ! $sync || Lengow_Sync::SYNC_ORDER === $sync ) {
@@ -149,7 +149,7 @@ if ( isset( $_GET['get_sync'] ) && 1 == $_GET['get_sync'] ) {
 	}
 	// sync options between Lengow and WooCommerce.
 	if ( ! $sync || Lengow_Sync::SYNC_CMS_OPTION === $sync ) {
-		Lengow_Sync::set_cms_option( $force );
+		Lengow_Sync::set_cms_option( $force, $log_output );
 	}
 	// sync marketplaces between Lengow and WooCommerce.
 	if ( Lengow_Sync::SYNC_MARKETPLACE === $sync ) {
@@ -157,11 +157,11 @@ if ( isset( $_GET['get_sync'] ) && 1 == $_GET['get_sync'] ) {
 	}
 	// sync status account between Lengow and WooCommerce.
 	if ( Lengow_Sync::SYNC_STATUS_ACCOUNT === $sync ) {
-		Lengow_Sync::get_status_account( $force );
+		Lengow_Sync::get_status_account( $force, $log_output );
 	}
 	// sync statistics between Lengow and WooCommerce.
 	if ( Lengow_Sync::SYNC_STATISTIC === $sync ) {
-		Lengow_Sync::get_statistic( $force );
+		Lengow_Sync::get_statistic( $force, $log_output );
 	}
 	// sync option is not valid.
 	if ( $sync && ! in_array( $sync, Lengow_Sync::$sync_actions ) ) {

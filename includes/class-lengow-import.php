@@ -401,7 +401,7 @@ class Lengow_Import {
 	 * @return boolean
 	 */
 	private function _check_credentials() {
-		if ( Lengow_Connector::is_valid_auth() ) {
+		if ( Lengow_Connector::is_valid_auth( $this->_log_output ) ) {
 			list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
 			$this->_account_id   = $account_id;
 			$this->_access_token = $access_token;
@@ -473,40 +473,59 @@ class Lengow_Import {
 			);
 		}
 		do {
-			if ( $this->_import_one_order ) {
-				$results = $this->_connector->get(
-					'/v3.0/orders',
-					array(
-						'marketplace_order_id' => $this->_marketplace_sku,
-						'marketplace'          => $this->_marketplace_name,
-						'account_id'           => $this->_account_id,
-						'page'                 => $page,
-					),
-					'stream'
-				);
-			} else {
-				if ( $this->_created_from && $this->_created_to ) {
-					$time_params = array(
-						'marketplace_order_date_from' => $this->_created_from,
-						'marketplace_order_date_to'   => $this->_created_to,
+			try {
+				if ( $this->_import_one_order ) {
+					$results = $this->_connector->get(
+						Lengow_Connector::API_ORDER,
+						array(
+							'marketplace_order_id' => $this->_marketplace_sku,
+							'marketplace'          => $this->_marketplace_name,
+							'account_id'           => $this->_account_id,
+							'page'                 => $page,
+						),
+						Lengow_Connector::FORMAT_STREAM,
+						'',
+						$this->_log_output
 					);
 				} else {
-					$time_params = array(
-						'updated_from' => $this->_updated_from,
-						'updated_to'   => $this->_updated_to,
+					if ( $this->_created_from && $this->_created_to ) {
+						$time_params = array(
+							'marketplace_order_date_from' => $this->_created_from,
+							'marketplace_order_date_to'   => $this->_created_to,
+						);
+					} else {
+						$time_params = array(
+							'updated_from' => $this->_updated_from,
+							'updated_to'   => $this->_updated_to,
+						);
+					}
+					$results = $this->_connector->get(
+						Lengow_Connector::API_ORDER,
+						array_merge(
+							$time_params,
+							array(
+								'catalog_ids' => implode( ',', $this->_shop_catalog_ids ),
+								'account_id'  => $this->_account_id,
+								'page'        => $page,
+							)
+						),
+						Lengow_Connector::FORMAT_STREAM,
+						'',
+						$this->_log_output
 					);
 				}
-				$results = $this->_connector->get(
-					'/v3.0/orders',
-					array_merge(
-						$time_params,
+			} catch ( Exception $e ) {
+				throw new Lengow_Exception(
+					Lengow_Main::set_log_message(
+						'lengow_log.exception.error_lengow_webservice',
 						array(
-							'catalog_ids' => implode( ',', $this->_shop_catalog_ids ),
-							'account_id'  => $this->_account_id,
-							'page'        => $page,
+							'error_code'    => $e->getCode(),
+							'error_message' => Lengow_Main::decode_log_message(
+								$e->getMessage(),
+								Lengow_Translation::DEFAULT_ISO_CODE
+							),
 						)
-					),
-					'stream'
+					)
 				);
 			}
 			if ( null === $results ) {
@@ -518,17 +537,6 @@ class Lengow_Import {
 			if ( ! is_object( $results ) ) {
 				throw new Lengow_Exception(
 					Lengow_Main::set_log_message( 'lengow_log.exception.no_connection_webservice' )
-				);
-			}
-			if ( isset( $results->error ) ) {
-				throw new Lengow_Exception(
-					Lengow_Main::set_log_message(
-						'lengow_log.exception.error_lengow_webservice',
-						array(
-							'error_code'    => $results->error->code,
-							'error_message' => $results->error->message,
-						)
-					)
 				);
 			}
 			// construct array orders.
@@ -644,7 +652,7 @@ class Lengow_Import {
 					// sync to lengow if no preprod_mode.
 					if ( ! $this->_preprod_mode && isset( $order['order_new'] ) && $order['order_new'] ) {
 						$order_lengow = new Lengow_Order( $order['order_lengow_id'] );
-						$synchro      = $order_lengow->synchronize_order( $this->_connector );
+						$synchro      = $order_lengow->synchronize_order( $this->_connector, $this->_log_output );
 						if ( $synchro ) {
 							$synchroMessage = Lengow_Main::set_log_message(
 								'log.import.order_synchronized_with_lengow',

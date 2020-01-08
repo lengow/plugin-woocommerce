@@ -273,7 +273,11 @@ class Lengow_Action {
 				unset( $get_params[ $param ] );
 			}
 		}
-		$result = Lengow_Connector::query_api( 'get', '/v3.0/orders/actions/', $get_params );
+		$result = Lengow_Connector::query_api(
+			Lengow_Connector::GET,
+			Lengow_Connector::API_ORDER_ACTION,
+			$get_params
+		);
 		if ( isset( $result->error ) && isset( $result->error->message ) ) {
 			throw new Lengow_Exception( $result->error->message );
 		}
@@ -315,7 +319,11 @@ class Lengow_Action {
 	 */
 	public static function send_action( $params, $order_lengow ) {
 		if ( ! Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
-			$result = Lengow_Connector::query_api( 'post', '/v3.0/orders/actions/', $params );
+			$result = Lengow_Connector::query_api(
+				Lengow_Connector::POST,
+				Lengow_Connector::API_ORDER_ACTION,
+				$params
+			);
 			if ( isset( $result->id ) ) {
 				self::create(
 					array(
@@ -377,13 +385,15 @@ class Lengow_Action {
 		$api_actions = array();
 		do {
 			$results = Lengow_Connector::query_api(
-				'get',
-				'/v3.0/orders/actions/',
+				Lengow_Connector::GET,
+				Lengow_Connector::API_ORDER_ACTION,
 				array(
 					'updated_from' => date( 'c', strtotime( date( 'Y-m-d' ) . ' -3days' ) ),
 					'updated_to'   => date( 'c' ),
 					'page'         => $page,
-				)
+				),
+				'',
+				$log_output
 			);
 			if ( ! is_object( $results ) || isset( $results->error ) ) {
 				break;
