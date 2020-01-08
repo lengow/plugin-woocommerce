@@ -349,7 +349,8 @@ log.connector.error_curl|Curl error %{error_code} - %{error_message}
 log.connector.token_not_return|no authorization token returned
 log.connector.token_is_empty|the returned authorization token is empty
 log.connector.timeout_api|API call has been blocked by a timeout
-log.connector.retry_get_token|authorization token expired - attempt to recover a new token
+log.connector.api_not_available|Lengow APIs are not available
+log.connector.retry_get_token|API call failed - authorization token expired - attempt to recover a new token
 toolbox.menu.lengow_toolbox|Lengow Toolbox
 toolbox.menu.product|Products
 toolbox.menu.order|Orders

@@ -110,6 +110,11 @@ class Lengow_Connector {
 	const FORMAT_STREAM = 'stream';
 
 	/**
+	 * @var string success code.
+	 */
+	const CODE_200 = 200;
+
+	/**
 	 * @var string forbidden access code.
 	 */
 	const CODE_403 = 403;
@@ -476,9 +481,8 @@ class Lengow_Connector {
 		if ( isset( $url['port'] ) ) {
 			$opts[ CURLOPT_PORT ] = $url['port'];
 		}
-		$opts[ CURLOPT_HEADER ]         = false;
-		$opts[ CURLOPT_RETURNTRANSFER ] = true;
-		$opts[ CURLOPT_VERBOSE ]        = false;
+		$opts[ CURLOPT_HEADER ]  = false;
+		$opts[ CURLOPT_VERBOSE ] = false;
 		if ( isset( $token ) ) {
 			$opts[ CURLOPT_HTTPHEADER ] = array( 'Authorization: ' . $token );
 		}
@@ -529,11 +533,12 @@ class Lengow_Connector {
 			$log_output
 		);
 		curl_setopt_array( $ch, $opts );
-		$result       = curl_exec( $ch );
-		$error_number = curl_errno( $ch );
-		$error_text   = curl_error( $ch );
+		$result            = curl_exec( $ch );
+		$http_code         = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+		$curl_error        = curl_error( $ch );
+		$curl_error_number = curl_errno( $ch );
 		curl_close( $ch );
-		$this->_check_return_request( $api, $result, $error_number, $error_text );
+		$this->_check_return_request( $result, $http_code, $curl_error, $curl_error_number );
 
 		return $result;
 	}
@@ -541,34 +546,44 @@ class Lengow_Connector {
 	/**
 	 * Check return request and generate exception if needed.
 	 *
-	 * @param string $api Lengow method API call
 	 * @param string $result Curl return call
-	 * @param string $error_number Curl error number
-	 * @param string $error_text Curl error text
+	 * @param integer $http_code request http code
+	 * @param string $curl_error Curl error
+	 * @param string $curl_error_number Curl error number
 	 *
 	 * @throws Lengow_Exception
 	 *
 	 */
-	private function _check_return_request( $api, $result, $error_number, $error_text ) {
+	private function _check_return_request( $result, $http_code, $curl_error, $curl_error_number ) {
 		if ( false === $result ) {
 			// recovery of Curl errors.
-			if ( in_array( $error_number, array( CURLE_OPERATION_TIMEDOUT, CURLE_OPERATION_TIMEOUTED ) ) ) {
+			if ( in_array( $curl_error_number, array( CURLE_OPERATION_TIMEDOUT, CURLE_OPERATION_TIMEOUTED ) ) ) {
 				throw new Lengow_Exception(
 					Lengow_Main::set_log_message( 'log.connector.timeout_api' ),
 					self::CODE_504
 				);
 			} else {
-				$curl_error = Lengow_Main::set_log_message(
+				$error = Lengow_Main::set_log_message(
 					'log.connector.error_curl',
-					array( 'error_code' => $error_number, 'error_message' => $error_text )
+					array(
+						'error_code'    => $curl_error_number,
+						'error_message' => $curl_error,
+					)
 				);
-				throw new Lengow_Exception( $curl_error, self::CODE_500 );
+				throw new Lengow_Exception( $error, self::CODE_500 );
 			}
 		} else {
-			$result = $this->_format( $result );
-			// recovery of Lengow Api errors.
-			if ( isset( $result['error'] ) ) {
-				throw new Lengow_Exception( $result['error']['message'], $result['error']['code'] );
+			if ( self::CODE_200 !== $http_code ) {
+				$result = $this->_format( $result );
+				// recovery of Lengow Api errors.
+				if ( isset( $result['error'] ) ) {
+					throw new Lengow_Exception( $result['error']['message'], $http_code );
+				} else {
+					throw new Lengow_Exception(
+						Lengow_Main::set_log_message( 'log.connector.api_not_available' ),
+						$http_code
+					);
+				}
 			}
 		}
 	}
