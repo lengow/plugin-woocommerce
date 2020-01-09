@@ -46,7 +46,7 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 == Changelog ==
 
 = 2.3.0 - xxxx-xx-xx =
-
+* Feature: Refactoring and optimization of the connector class
 
 = 2.2.1 - 2020-01-06 =
 * Feature: Adding compatibility with php 7.3

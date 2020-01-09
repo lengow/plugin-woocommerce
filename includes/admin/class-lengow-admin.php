@@ -76,7 +76,7 @@ class Lengow_Admin {
 	public function lengow_display() {
 		$locale              = new Lengow_Translation();
 		$merchant_status     = Lengow_Sync::get_status_account();
-		$is_new_merchant     = Lengow_Connector::is_new_merchant();
+		$is_new_merchant     = Lengow_Configuration::is_new_merchant();
 		$total_pending_order = Lengow_Order::get_total_order_by_status( Lengow_Order::STATE_WAITING_SHIPMENT );
 		if ( $this->current_tab != $this->_default_tab
 		     && ! ( 'free_trial' === $merchant_status['type'] && $merchant_status['expired'] )
