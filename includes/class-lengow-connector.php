@@ -415,7 +415,7 @@ class Lengow_Connector {
 	}
 
 	/**
-	 * Get authorization token from Middleware
+	 * Get authorization token from Middleware.
 	 *
 	 * @param boolean $log_output see log or not
 	 *
