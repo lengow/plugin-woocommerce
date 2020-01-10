@@ -464,7 +464,7 @@ class Lengow_Connector {
 	 * @throws Lengow_Exception
 	 *
 	 */
-	private function _make_request( $type, $api, $args, $token, $body = '', $log_output = false ) {
+	private function _make_request( $type, $api, $args, $token, $body, $log_output ) {
 		// define CURLE_OPERATION_TIMEDOUT for old php versions.
 		defined( 'CURLE_OPERATION_TIMEDOUT' ) || define( 'CURLE_OPERATION_TIMEDOUT', CURLE_OPERATION_TIMEOUTED );
 		$ch = curl_init();
