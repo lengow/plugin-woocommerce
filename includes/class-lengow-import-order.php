@@ -260,7 +260,7 @@ class Lengow_Import_Order {
     if ( $this->_order_data->anonymized ) {
       Lengow_Main::log(
         'Import',
-        Lengow_Main::set_log_message('log.import.anonymized_order'),
+        Lengow_Main::set_log_message( 'log.import.anonymized_order' ),
         $this->_log_output,
         $this->marketplace_sku
       );
