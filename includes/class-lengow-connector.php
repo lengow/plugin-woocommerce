@@ -222,14 +222,14 @@ class Lengow_Connector {
 	 * Get result for a query Api.
 	 *
 	 * @param string $type request type (GET / POST / PUT / PATCH)
-	 * @param string $url request url
-	 * @param array $params request params
+	 * @param string $api request url
+	 * @param array $args request params
 	 * @param string $body body data for request
 	 * @param boolean $log_output see log or not
 	 *
 	 * @return mixed
 	 */
-	public static function query_api( $type, $url, $params = array(), $body = '', $log_output = false ) {
+	public static function query_api( $type, $api, $args = array(), $body = '', $log_output = false ) {
 		if ( ! in_array( $type, array( self::GET, self::POST, self::PUT, self::PATCH ) ) ) {
 			return false;
 		}
@@ -241,8 +241,8 @@ class Lengow_Connector {
 			$connector = new Lengow_Connector( $access_token, $secret_token );
 			$type      = strtolower( $type );
 			$results   = $connector->$type(
-				$url,
-				array_merge( array( 'account_id' => $account_id ), $params ),
+				$api,
+				array_merge( array( 'account_id' => $account_id ), $args ),
 				self::FORMAT_STREAM,
 				$body,
 				$log_output
@@ -295,7 +295,7 @@ class Lengow_Connector {
 	 * Get API call.
 	 *
 	 * @param string $api Lengow method API call
-	 * @param array $array Lengow method API parameters
+	 * @param array $args Lengow method API parameters
 	 * @param string $format return format of API
 	 * @param string $body body data for request
 	 * @param boolean $log_output see log or not
@@ -304,8 +304,8 @@ class Lengow_Connector {
 	 * @throws Lengow_Exception
 	 *
 	 */
-	public function get( $api, $array = array(), $format = self::FORMAT_JSON, $body = '', $log_output = false ) {
-		return $this->_call( $api, $array, self::GET, $format, $body, $log_output );
+	public function get( $api, $args = array(), $format = self::FORMAT_JSON, $body = '', $log_output = false ) {
+		return $this->_call( $api, $args, self::GET, $format, $body, $log_output );
 	}
 
 	/**
