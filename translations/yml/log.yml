@@ -66,6 +66,7 @@ en:
       processing_fee_not_saved: "WARNING! Processing fees could not be added to the WooCommerce order - %{error_message}"
       order_synchronized_with_lengow: "order successfully synchronised with Lengow webservice (ORDER ID %{order_id})"
       order_not_synchronized_with_lengow: "WARNING ! Order could NOT be synchronised with Lengow webservice (ORDER ID %{order_id})"
+      anonymized_order: "Order is anonymized and has not been imported"
     order_action:
       check_completed_action: "check completed actions"
       check_old_action: "check and finish old actions"
