@@ -324,7 +324,7 @@
 /includes/frontend/views/tracker/html-tracker.php|13d548874392feb557d5f77490f31cd6
 /includes/frontend/class-lengow-tracker.php|c2206bc8203b64f772da0f962bca2a5f
 /includes/class-lengow-feed.php|8cd0af37f119e54f064ccaf863549585
-/includes/class-lengow-import-order.php|dee41744a295f27db119adfbd8b44673
+/includes/class-lengow-import-order.php|2d874b27402c4530fced0a4274432604
 /includes/class-lengow-connector.php|2ae8d252608726522d6954bb2e430539
 /includes/class-lengow-order-line.php|2bcd48a77557cac556ef115c6d9443a7
 /includes/class-lengow-marketplace.php|f26e304c7f4b4f67775c05c1746067e1
