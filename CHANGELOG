@@ -4,6 +4,7 @@ Version 2.3.0
 
     - Feature: Refactoring and optimization of the connector class
     - Feature: [import] Protection of the import of anonymized orders
+    - Feature: Optimization of API calls for synchronisation of orders and actions
 
 ========================================================
 Version 2.2.1

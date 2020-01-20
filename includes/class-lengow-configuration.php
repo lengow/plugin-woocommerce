@@ -224,6 +224,9 @@ class Lengow_Configuration {
 					'global' => true,
 					'label'  => $locale->t( 'lengow_settings.lengow_last_import_cron_title' ),
 				),
+				'lengow_last_action_sync'                => array(
+					'global' => true,
+				),
 			);
 		}
 
