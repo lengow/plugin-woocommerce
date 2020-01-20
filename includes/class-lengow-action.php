@@ -371,7 +371,7 @@ class Lengow_Action {
 	}
 
 	/**
-	 * Get interval time for action synchronisation
+	 * Get interval time for action synchronisation.
 	 *
 	 * @return integer
 	 */
