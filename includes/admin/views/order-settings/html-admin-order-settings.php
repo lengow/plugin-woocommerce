@@ -10,6 +10,8 @@ $keys             = Lengow_Configuration::get_keys();
 $values           = Lengow_Configuration::get_all_values();
 $order_statuses   = Lengow_Main::get_order_statuses();
 $shipping_methods = Lengow_Main::get_shipping_methods();
+$min_import_days  = Lengow_Import::MIN_INTERVAL_TIME / 86400;
+$max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
 ?>
 <div id="lengow_order_setting_wrapper">
     <div class="lgw-container">
@@ -88,7 +90,9 @@ $shipping_methods = Lengow_Main::get_shipping_methods();
                     <label><?php echo $keys['lengow_import_days']['label']; ?></label>
                     <div class="input-group">
                         <input type="number" name="lengow_import_days" class="form-control"
-                               value="<?php echo $values['lengow_import_days']; ?>" min="1" max="10"/>
+                               value="<?php echo $values['lengow_import_days']; ?>"
+                               min="<?php echo $min_import_days; ?>"
+                               max="<?php echo $max_import_days; ?>"/>
                         <div class="input-group-addon">
                             <div class="unit"><?php echo $locale->t( 'order_setting.screen.nb_days' ); ?></div>
                         </div>

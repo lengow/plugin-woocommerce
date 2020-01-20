@@ -117,6 +117,16 @@ class Lengow_Action {
 	const ARG_DELIVERY_DATE = 'delivery_date';
 
 	/**
+	 * @var integer max interval time for action synchronisation (3 days)
+	 */
+	const MAX_INTERVAL_TIME = 259200;
+
+	/**
+	 * @var integer security interval time for action synchronisation (2 hours)
+	 */
+	const SECURITY_INTERVAL_TIME = 7200;
+
+	/**
 	 * @var array Parameters to delete for GET call.
 	 */
 	public static $get_params_to_delete = array(
@@ -361,6 +371,23 @@ class Lengow_Action {
 	}
 
 	/**
+	 * Get interval time for action synchronisation.
+	 *
+	 * @return integer
+	 */
+	public static function get_interval_time() {
+		$interval_time               = self::MAX_INTERVAL_TIME;
+		$last_action_synchronisation = Lengow_Configuration::get( 'lengow_last_action_sync' );
+		if ( $last_action_synchronisation ) {
+			$last_interval_time = time() - (int) $last_action_synchronisation;
+			$last_interval_time = $last_interval_time + self::SECURITY_INTERVAL_TIME;
+			$interval_time      = $last_interval_time > $interval_time ? $interval_time : $last_interval_time;
+		}
+
+		return $interval_time;
+	}
+
+	/**
 	 * Check if active actions are finished.
 	 *
 	 * @param boolean $log_output see log or not
@@ -381,15 +408,29 @@ class Lengow_Action {
 			return true;
 		}
 		// get all actions with API for 3 days.
-		$page        = 1;
-		$api_actions = array();
+		$page          = 1;
+		$api_actions   = array();
+		$interval_time = self::get_interval_time();
+		$date_from     = date( 'c', ( time() - $interval_time ) );
+		$date_to       = date( 'c' );
+		Lengow_Main::log(
+			Lengow_Log::CODE_ACTION,
+			Lengow_Main::set_log_message(
+				'log.import.connector_get_all_action',
+				array(
+					'date_from' => date( 'Y-m-d H:i:s', strtotime( $date_from ) ),
+					'date_to'   => date( 'Y-m-d H:i:s', strtotime( $date_to ) ),
+				)
+			),
+			$log_output
+		);
 		do {
 			$results = Lengow_Connector::query_api(
 				Lengow_Connector::GET,
 				Lengow_Connector::API_ORDER_ACTION,
 				array(
-					'updated_from' => date( 'c', strtotime( date( 'Y-m-d' ) . ' -3days' ) ),
-					'updated_to'   => date( 'c' ),
+					'updated_from' => $date_from,
+					'updated_to'   => $date_to,
 					'page'         => $page,
 				),
 				'',
@@ -461,6 +502,7 @@ class Lengow_Action {
 				}
 			}
 		}
+		Lengow_Configuration::update_value( 'lengow_last_action_sync', time() );
 
 		return true;
 	}
@@ -531,7 +573,7 @@ class Lengow_Action {
 	public static function get_old_actions() {
 		global $wpdb;
 
-		$date    = date( 'Y-m-d H:i:s', strtotime( '-3 days', time() ) );
+		$date    = date( 'Y-m-d H:i:s', ( time() - self::MAX_INTERVAL_TIME ) );
 		$query   = '
 			SELECT * FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ACTION . '
 			WHERE created_at <= %s
