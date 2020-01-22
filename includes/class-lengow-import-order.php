@@ -262,7 +262,7 @@ class Lengow_Import_Order {
 				'Import',
 				Lengow_Main::set_log_message( 'log.import.anonymized_order' ),
 				$this->_log_output,
-				$this->marketplace_sku
+				$this->_marketplace_sku
 			);
 
 			return false;
