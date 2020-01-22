@@ -210,7 +210,7 @@ class Lengow_Import_Order {
 					'log.import.error_already_created',
 					array(
 						'decoded_message' => $decoded_message,
-						'date_message'    => $order_error->created_at,
+						'date_message'    => get_date_from_gmt( $order_error->created_at ),
 					)
 				),
 				$this->_log_output,
@@ -255,17 +255,18 @@ class Lengow_Import_Order {
 		$this->_order_lengow_id = Lengow_Order::get_id_from_lengow_orders(
 			$this->_marketplace_sku,
 			$this->_delivery_address_id
-    );
-    // skip import if the order is anonymized
-    if ( $this->_order_data->anonymized ) {
-      Lengow_Main::log(
-        'Import',
-        Lengow_Main::set_log_message( 'log.import.anonymized_order' ),
-        $this->_log_output,
-        $this->marketplace_sku
-      );
-      return false;
-    }
+		);
+		// skip import if the order is anonymized
+		if ( $this->_order_data->anonymized ) {
+			Lengow_Main::log(
+				'Import',
+				Lengow_Main::set_log_message( 'log.import.anonymized_order' ),
+				$this->_log_output,
+				$this->marketplace_sku
+			);
+
+			return false;
+		}
 		// if order is cancelled or new -> skip.
 		if ( ! Lengow_Import::check_state( $this->_order_state_marketplace, $this->_marketplace ) ) {
 			$order_process_state = Lengow_Order::get_order_process_state( $this->_order_state_lengow );

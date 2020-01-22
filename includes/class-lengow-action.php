@@ -407,19 +407,19 @@ class Lengow_Action {
 		if ( ! $active_actions ) {
 			return true;
 		}
-		// get all actions with API for 3 days.
+		// get all actions with API (max 3 days).
 		$page          = 1;
 		$api_actions   = array();
 		$interval_time = self::get_interval_time();
-		$date_from     = date( 'c', ( time() - $interval_time ) );
-		$date_to       = date( 'c' );
+		$date_from     = time() - $interval_time;
+		$date_to       = time();
 		Lengow_Main::log(
 			Lengow_Log::CODE_ACTION,
 			Lengow_Main::set_log_message(
 				'log.import.connector_get_all_action',
 				array(
-					'date_from' => date( 'Y-m-d H:i:s', strtotime( $date_from ) ),
-					'date_to'   => date( 'Y-m-d H:i:s', strtotime( $date_to ) ),
+					'date_from' => get_date_from_gmt( date( 'Y-m-d H:i:s', $date_from ) ),
+					'date_to'   => get_date_from_gmt( date( 'Y-m-d H:i:s', $date_to ) ),
 				)
 			),
 			$log_output
@@ -429,8 +429,8 @@ class Lengow_Action {
 				Lengow_Connector::GET,
 				Lengow_Connector::API_ORDER_ACTION,
 				array(
-					'updated_from' => $date_from,
-					'updated_to'   => $date_to,
+					'updated_from' => get_date_from_gmt( date( 'Y-m-d H:i:s', $date_from ), 'c' ),
+					'updated_to'   => get_date_from_gmt( date( 'Y-m-d H:i:s', $date_to ), 'c' ),
 					'page'         => $page,
 				),
 				'',

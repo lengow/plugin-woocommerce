@@ -91,22 +91,22 @@ class Lengow_Import {
 	private $_limit = 0;
 
 	/**
-	 * @var string|false imports orders updated since.
+	 * @var integer|false imports orders updated since (timestamp).
 	 */
 	protected $_updated_from = false;
 
 	/**
-	 * @var string|false imports orders updated until.
+	 * @var integer|false imports orders updated until (timestamp).
 	 */
 	protected $_updated_to = false;
 
 	/**
-	 * @var string|false imports orders created since.
+	 * @var integer|false imports orders created since (timestamp).
 	 */
 	protected $_created_from = false;
 
 	/**
-	 * @var string|false imports orders created until.
+	 * @var integer|false imports orders created until (timestamp).
 	 */
 	protected $_created_to = false;
 
@@ -469,8 +469,8 @@ class Lengow_Import {
 				Lengow_Main::set_log_message(
 					'log.import.connector_get_all_order',
 					array(
-						'date_from'  => get_date_from_gmt( date( 'Y-m-d H:i:s', strtotime( $date_from ) ) ),
-						'date_to'    => get_date_from_gmt( date( 'Y-m-d H:i:s', strtotime( $date_to ) ) ),
+						'date_from'  => get_date_from_gmt( date( 'Y-m-d H:i:s', $date_from ) ),
+						'date_to'    => get_date_from_gmt( date( 'Y-m-d H:i:s', $date_to ) ),
 						'catalog_id' => implode( ', ', $this->_shop_catalog_ids ),
 					)
 				),
@@ -495,13 +495,19 @@ class Lengow_Import {
 				} else {
 					if ( $this->_created_from && $this->_created_to ) {
 						$time_params = array(
-							'marketplace_order_date_from' => $this->_created_from,
-							'marketplace_order_date_to'   => $this->_created_to,
+							'marketplace_order_date_from' => get_date_from_gmt(
+								date( 'Y-m-d H:i:s', $this->_created_from ),
+								'c'
+							),
+							'marketplace_order_date_to'   => get_date_from_gmt(
+								date( 'Y-m-d H:i:s', $this->_created_to ),
+								'c'
+							),
 						);
 					} else {
 						$time_params = array(
-							'updated_from' => $this->_updated_from,
-							'updated_to'   => $this->_updated_to,
+							'updated_from' => get_date_from_gmt( date( 'Y-m-d H:i:s', $this->_updated_from ), 'c' ),
+							'updated_to'   => get_date_from_gmt( date( 'Y-m-d H:i:s', $this->_updated_to ), 'c' ),
 						);
 					}
 					$results = $this->_connector->get(
@@ -720,18 +726,13 @@ class Lengow_Import {
 	protected function _set_interval_time( $days, $created_from, $created_to ) {
 		if ( $created_from && $created_to ) {
 			// retrieval of orders created from ... until ...
-			$created_from_timestamp = strtotime( $created_from );
-			$created_to_timestamp   = strtotime( $created_to ) + 86399;
+			$created_from_timestamp = strtotime( get_gmt_from_date( $created_from ) );
+			$created_to_timestamp   = strtotime( get_gmt_from_date( $created_to ) ) + 86399;
 			$interval_time          = (int) ( $created_to_timestamp - $created_from_timestamp );
-			if ( $interval_time > self::MAX_INTERVAL_TIME ) {
-				$date_from = date( 'c', $created_from_timestamp );
-				$date_to   = date( 'c', ( $created_from_timestamp + self::MAX_INTERVAL_TIME ) );
-			} else {
-				$date_from = date( 'c', $created_from_timestamp );
-				$date_to   = date( 'c', $created_to_timestamp );
-			}
-			$this->_created_from = $date_from;
-			$this->_created_to   = $date_to;
+			$this->_created_from    = $created_from_timestamp;
+			$this->_created_to      = $interval_time > self::MAX_INTERVAL_TIME
+				? $created_from_timestamp + self::MAX_INTERVAL_TIME
+				: $created_to_timestamp;
 		} else {
 			if ( $days ) {
 				$interval_time = $days * 86400;
@@ -754,8 +755,8 @@ class Lengow_Import {
 					$interval_time      = $last_interval_time > $interval_time ? $interval_time : $last_interval_time;
 				}
 			}
-			$this->_updated_from = date( 'c', ( time() - $interval_time ) );
-			$this->_updated_to   = date( 'c' );
+			$this->_updated_from = time() - $interval_time;
+			$this->_updated_to   = time();
 		}
 	}
 
