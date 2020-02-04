@@ -294,9 +294,9 @@
 /includes/frontend/class-lengow-tracker.php|c2206bc8203b64f772da0f962bca2a5f
 /includes/frontend/views/tracker/html-tracker.php|13d548874392feb557d5f77490f31cd6
 /includes/class-lengow-crud.php|b87807acc22c4136aa22b741c471fb3b
-/includes/class-lengow-sync.php|48784bea7b2967eb0cec4d2d0a8b3893
+/includes/class-lengow-sync.php|1d65ba684cb545dacdc7d7d0c649c4f7
 /includes/class-lengow-export.php|f4a93df5204c515c9c06ff0d49f87c47
-/includes/class-lengow-product.php|7c41409cb6c88475604f4b02431bccd5
+/includes/class-lengow-product.php|7a534dff8fa342181167b725b8cab0fc
 /includes/class-lengow-import.php|74fb0d3726286465ad3d4d085567ec11
 /includes/class-lengow-install.php|3376612299a8a98227e6dbdf2685509f
 /includes/class-lengow-action.php|f0961bb172ea95caaf199c1e4ff273a8
@@ -304,8 +304,8 @@
 /includes/class-lengow-payment.php|57a687bc8554dac8b5d3df9f7b63aeb2
 /includes/class-lengow-hook.php|5d0b154473c172726ffd99049e7f70d9
 /includes/class-lengow-address.php|dd1544b30922cc70093c09863de6c7ab
-/includes/class-lengow-main.php|4cd19830e22f3b55fd3180f86630bb96
-/includes/class-lengow-marketplace.php|7986d18b94d68c9b0e783fcac6193295
+/includes/class-lengow-main.php|39efc788d6e6337733a1f23b9e25e681
+/includes/class-lengow-marketplace.php|b6d5846247d83566ff90da098d43a625
 /includes/class-lengow-configuration.php|1df230a759b3aa5ca1db2bd18e6940e9
 /includes/class-lengow-file.php|4769716bda8e17fdab0198aeb12186e5
 /includes/class-lengow-translation.php|e3d1b98438d1f669ed2c33338229ae23
@@ -335,7 +335,7 @@
 /includes/admin/views/box-order-shipping/html-order-shipping.php|980a9bca192b7190b0f2eaa51b51714e
 /includes/admin/views/box-order-info/html-order-info.php|b5aa444cd4570e7484f19ca3eb6b941c
 /includes/admin/views/html-admin-header.php|debf6d4e9873cb503dd130401a2121fc
-/includes/admin/class-lengow-admin-orders.php|f8effe0008fa005bbe0859be5207a0c8
+/includes/admin/class-lengow-admin-orders.php|5ce6188913ed2a21d0dbb0212fc3da64
 /includes/admin/class-lengow-admin-legals.php|0a51263bede68ef16b388dcc442ba820
 /includes/admin/class-lengow-admin-help.php|72f5a30f34edbb3427b4ef2a53120e7f
 /languages/lengow-fr_FR.mo|1bf98c8eaa8f4d36e4e45381983b1f26

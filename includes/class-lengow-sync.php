@@ -333,7 +333,7 @@ class Lengow_Sync {
 			Lengow_Connector::API_STATISTIC,
 			array(
 				'date_from' => date( 'c', strtotime( date( 'Y-m-d' ) . ' -10 years' ) ),
-				'date_to'   => get_date_from_gmt( date( 'c' ), 'c' ),
+				'date_to'   => get_date_from_gmt( date( 'Y-m-d H:i:s' ), 'c' ),
 				'metrics'   => 'year',
 			),
 			'',

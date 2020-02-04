@@ -238,6 +238,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			'last_import_date' => $last_import['timestamp'] !== 'none'
 				? Lengow_Main::get_date_in_correct_format( $last_import['timestamp'] )
 				: '',
+            'last_import_type' => $last_import['type'],
 		);
 	}
 

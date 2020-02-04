@@ -414,7 +414,7 @@ class Lengow_Main {
 			$format = 'l d F Y @ H:i';
 		}
 
-		return get_date_from_gmt( date( 'c', $timestamp ), $format );
+		return get_date_from_gmt( date( 'Y-m-d H:i:s', $timestamp ), $format );
 	}
 
 	/**

@@ -751,11 +751,11 @@ class Lengow_Product {
 			$product_id            = 'variation' === $this->_product_type ? $this->_variation_id : $this->_product_id;
 			$sale_price_dates_from = get_post_meta( $product_id, '_sale_price_dates_from', true );
 			$start_date            = '' !== $sale_price_dates_from
-				? get_date_from_gmt( date( 'c', $sale_price_dates_from ) )
+				? get_date_from_gmt( date( 'Y-m-d H:i:s', $sale_price_dates_from ) )
 				: '';
 			$sale_price_dates_to   = get_post_meta( $product_id, '_sale_price_dates_to', true );
 			$end_date              = '' !== $sale_price_dates_to
-				? get_date_from_gmt( date( 'c', $sale_price_dates_to ) )
+				? get_date_from_gmt( date( 'Y-m-d H:i:s', $sale_price_dates_to ) )
 				: '';
 		}
 
