@@ -505,7 +505,7 @@ class Lengow_Marketplace {
 					break;
 				case Lengow_Action::ARG_SHIPPING_DATE:
 				case Lengow_Action::ARG_DELIVERY_DATE:
-					$params[ $arg ] = date( 'c' );
+					$params[ $arg ] = get_date_from_gmt( date( 'Y-m-d H:i:s' ), 'c' );
 					break;
 				default:
 					if ( isset( $actions['optional_args'] ) && in_array( $arg, $actions['optional_args'] ) ) {

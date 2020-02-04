@@ -543,7 +543,7 @@ class Lengow_Configuration {
 				);
 				// save last update date for a specific settings (change synchronisation interval time).
 				if ( isset( $setting['update'] ) && $setting['update'] ) {
-					self::update_value( 'lengow_last_setting_update', date( 'Y-m-d H:i:s' ) );
+					self::update_value( 'lengow_last_setting_update', time() );
 				}
 			}
 		}
