@@ -304,7 +304,7 @@
 /includes/class-lengow-payment.php|57a687bc8554dac8b5d3df9f7b63aeb2
 /includes/class-lengow-hook.php|5d0b154473c172726ffd99049e7f70d9
 /includes/class-lengow-address.php|dd1544b30922cc70093c09863de6c7ab
-/includes/class-lengow-main.php|39efc788d6e6337733a1f23b9e25e681
+/includes/class-lengow-main.php|4966addd61d82bccc45b3fe64ef1ac55
 /includes/class-lengow-marketplace.php|b6d5846247d83566ff90da098d43a625
 /includes/class-lengow-configuration.php|1df230a759b3aa5ca1db2bd18e6940e9
 /includes/class-lengow-file.php|4769716bda8e17fdab0198aeb12186e5
@@ -335,7 +335,7 @@
 /includes/admin/views/box-order-shipping/html-order-shipping.php|980a9bca192b7190b0f2eaa51b51714e
 /includes/admin/views/box-order-info/html-order-info.php|b5aa444cd4570e7484f19ca3eb6b941c
 /includes/admin/views/html-admin-header.php|debf6d4e9873cb503dd130401a2121fc
-/includes/admin/class-lengow-admin-orders.php|5ce6188913ed2a21d0dbb0212fc3da64
+/includes/admin/class-lengow-admin-orders.php|74a6d87afcee5652f8702c804346e215
 /includes/admin/class-lengow-admin-legals.php|0a51263bede68ef16b388dcc442ba820
 /includes/admin/class-lengow-admin-help.php|72f5a30f34edbb3427b4ef2a53120e7f
 /languages/lengow-fr_FR.mo|1bf98c8eaa8f4d36e4e45381983b1f26

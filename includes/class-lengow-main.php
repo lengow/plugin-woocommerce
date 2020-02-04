@@ -400,7 +400,7 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Get date in local date
+	 * Get date in local date.
 	 *
 	 * @param integer $timestamp linux timestamp
 	 * @param boolean $second see seconds or not
