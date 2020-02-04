@@ -160,7 +160,7 @@ class Lengow_Check {
 		$last_import      = Lengow_Main::get_last_import();
 		$last_import_date = 'none' === $last_import['timestamp']
 			? $this->_locale->t( 'toolbox.index.last_import_none' )
-			: date( 'Y-m-d H:i:s', $last_import['timestamp'] );
+			: Lengow_Main::get_date_in_correct_format( $last_import['timestamp'], true );
 		if ( 'none' === $last_import['type'] ) {
 			$last_import_type = $this->_locale->t( 'toolbox.index.last_import_none' );
 		} elseif ( Lengow_Import::TYPE_CRON === $last_import['type'] ) {
@@ -214,7 +214,8 @@ class Lengow_Check {
 		if ( null !== Lengow_Configuration::get( 'lengow_last_export' )
 		     && '' !== Lengow_Configuration::get( 'lengow_last_export' )
 		) {
-			$last_export = date( 'Y-m-d H:i:s', Lengow_Configuration::get( 'lengow_last_export' ) );
+			$last_export_timestamp = (int) Lengow_Configuration::get( 'lengow_last_export' );
+			$last_export           = Lengow_Main::get_date_in_correct_format( $last_export_timestamp, true );
 		} else {
 			$last_export = $this->_locale->t( 'toolbox.index.last_import_none' );
 		}

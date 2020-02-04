@@ -750,11 +750,16 @@ class Lengow_Product {
 		if ( $this->product->is_on_sale() ) {
 			$product_id            = 'variation' === $this->_product_type ? $this->_variation_id : $this->_product_id;
 			$sale_price_dates_from = get_post_meta( $product_id, '_sale_price_dates_from', true );
-			$start_date            = '' !== $sale_price_dates_from ? date( 'Y-m-d H:i:s', $sale_price_dates_from ) : '';
+			$start_date            = '' !== $sale_price_dates_from
+				? get_date_from_gmt( date( 'c', $sale_price_dates_from ) )
+				: '';
 			$sale_price_dates_to   = get_post_meta( $product_id, '_sale_price_dates_to', true );
-			$end_date              = '' !== $sale_price_dates_to ? date( 'Y-m-d H:i:s', $sale_price_dates_to ) : '';
+			$end_date              = '' !== $sale_price_dates_to
+				? get_date_from_gmt( date( 'c', $sale_price_dates_to ) )
+				: '';
 		}
-		$prices = array(
+
+		return array(
 			'price_excl_tax'                 => $price_excl_tax,
 			'price_incl_tax'                 => $price_incl_tax,
 			'price_before_discount_excl_tax' => isset( $price_before_discount_excl_tax )
@@ -769,8 +774,6 @@ class Lengow_Product {
 			'discount_start_date'            => isset( $start_date ) ? $start_date : '',
 			'discount_end_date'              => isset( $end_date ) ? $end_date : '',
 		);
-
-		return $prices;
 	}
 
 	/**
