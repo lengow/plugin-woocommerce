@@ -387,9 +387,9 @@ class Lengow_Marketplace {
 			if ( ! is_null( $order_line_id ) ) {
 				$params[ Lengow_Action::ARG_LINE ] = $order_line_id;
 			}
-			$params[ Lengow_Action::ARG_MARKETPLACE_ORDER_ID ] = $order_lengow->marketplace_sku;
-			$params[ Lengow_Action::ARG_MARKETPLACE ]          = $order_lengow->marketplace_name;
-			$params[ Lengow_Action::ARG_ACTION_TYPE ]          = $action;
+			$params['marketplace_order_id']           = $order_lengow->marketplace_sku;
+			$params['marketplace']                    = $order_lengow->marketplace_name;
+			$params[ Lengow_Action::ARG_ACTION_TYPE ] = $action;
 			// checks whether the action is already created to not return an action.
 			$can_send_action = Lengow_Action::can_send_action( $params, $order_lengow );
 			if ( $can_send_action ) {

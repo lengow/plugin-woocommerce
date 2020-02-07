@@ -52,16 +52,6 @@ class Lengow_Action {
 	const TYPE_CANCEL = 'cancel';
 
 	/**
-	 * @var string action argument marketplace order id.
-	 */
-	const ARG_MARKETPLACE_ORDER_ID = 'marketplace_order_id';
-
-	/**
-	 * @var string action argument marketplace.
-	 */
-	const ARG_MARKETPLACE = 'marketplace';
-
-	/**
 	 * @var string action argument action type.
 	 */
 	const ARG_ACTION_TYPE = 'action_type';
