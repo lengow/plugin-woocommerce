@@ -91,6 +91,11 @@ class Lengow_Import_Order {
 	 */
 	private $_first_package;
 
+    /**
+     * @var boolean import one order var from lengow import.
+     */
+    private $_import_one_order;
+
 	/**
 	 * @var boolean re-import order.
 	 */
@@ -183,6 +188,7 @@ class Lengow_Import_Order {
 		$this->_order_data          = $params['order_data'];
 		$this->_package_data        = $params['package_data'];
 		$this->_first_package       = $params['first_package'];
+		$this->_import_one_order    = $params['import_one_order'];
 		// get marketplace and Lengow order state.
 		$this->_marketplace             = Lengow_Main::get_marketplace_singleton(
 			(string) $this->_order_data->marketplace
@@ -256,17 +262,36 @@ class Lengow_Import_Order {
 			$this->_marketplace_sku,
 			$this->_delivery_address_id
 		);
-		// skip import if the order is anonymized
-		if ( $this->_order_data->anonymized ) {
-			Lengow_Main::log(
-				'Import',
-				Lengow_Main::set_log_message( 'log.import.anonymized_order' ),
-				$this->_log_output,
-				$this->_marketplace_sku
-			);
 
-			return false;
-		}
+		if ( ! $this->_import_one_order ) {
+            // skip import if the order is anonymized
+            if ( $this->_order_data->anonymized ) {
+                Lengow_Main::log(
+                    'Import',
+                    Lengow_Main::set_log_message( 'log.import.anonymized_order' ),
+                    $this->_log_output,
+                    $this->_marketplace_sku
+                );
+
+                return false;
+            }
+
+            // skip import if the order is older than 3 months
+            $date_time_order = new DateTime( $this->_order_date );
+            $interval = $date_time_order->diff( new DateTime() );
+            $months_interval = $interval->m + ( $interval->y * 12 );
+            if ( $months_interval >= 3 ) {
+                Lengow_Main::log(
+                    'Import',
+                    Lengow_Main::set_log_message( 'log.import.old_order' ),
+                    $this->_log_output,
+                    $this->_marketplace_sku
+                );
+
+                return false;
+            }
+        }
+
 		// if order is cancelled or new -> skip.
 		if ( ! Lengow_Import::check_state( $this->_order_state_marketplace, $this->_marketplace ) ) {
 			$order_process_state = Lengow_Order::get_order_process_state( $this->_order_state_lengow );

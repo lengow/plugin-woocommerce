@@ -633,6 +633,7 @@ class Lengow_Import {
 							'order_data'          => $order_data,
 							'package_data'        => $package_data,
 							'first_package'       => $first_package,
+                            'import_one_order'    => $this->_import_one_order,
 						)
 					);
 					$order        = $import_order->import_order();
