@@ -52,11 +52,6 @@ class Lengow_Sync {
 	const SYNC_STATUS_ACCOUNT = 'status_account';
 
 	/**
-	 * @var string sync statistic action.
-	 */
-	const SYNC_STATISTIC = 'statistic';
-
-	/**
 	 * @var string sync marketplace action.
 	 */
 	const SYNC_MARKETPLACE = 'marketplace';
@@ -72,13 +67,12 @@ class Lengow_Sync {
 	const SYNC_ACTION = 'action';
 
 	/**
-	 * @var array cache time for statistic, account status, cms options and marketplace synchronisation.
+	 * @var array cache time for catalog, account status, cms options and marketplace synchronisation.
 	 */
 	protected static $_cache_times = array(
 		self::SYNC_CATALOG        => 21600,
 		self::SYNC_CMS_OPTION     => 86400,
 		self::SYNC_STATUS_ACCOUNT => 86400,
-		self::SYNC_STATISTIC      => 86400,
 		self::SYNC_MARKETPLACE    => 43200,
 	);
 
@@ -89,7 +83,6 @@ class Lengow_Sync {
 		self::SYNC_ORDER,
 		self::SYNC_CMS_OPTION,
 		self::SYNC_STATUS_ACCOUNT,
-		self::SYNC_STATISTIC,
 		self::SYNC_MARKETPLACE,
 		self::SYNC_ACTION,
 		self::SYNC_CATALOG,
@@ -309,71 +302,6 @@ class Lengow_Sync {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Get statistic.
-	 *
-	 * @param boolean $force Force cache Update
-	 * @param boolean $log_output see log or not
-	 *
-	 * @return array
-	 */
-	public static function get_statistic( $force = false, $log_output = false ) {
-		if ( ! $force ) {
-			$updated_at = Lengow_Configuration::get( 'lengow_last_order_statistic_update' );
-			if ( null !== $updated_at
-			     && ( time() - (int) $updated_at ) < self::$_cache_times[ self::SYNC_STATISTIC ]
-			) {
-				return json_decode( Lengow_Configuration::get( 'lengow_order_statistic' ), true );
-			}
-		}
-		$result = Lengow_Connector::query_api(
-			Lengow_Connector::GET,
-			Lengow_Connector::API_STATISTIC,
-			array(
-				'date_from' => date( 'c', strtotime( date( 'Y-m-d' ) . ' -10 years' ) ),
-				'date_to'   => get_date_from_gmt( date( 'Y-m-d H:i:s' ), 'c' ),
-				'metrics'   => 'year',
-			),
-			'',
-			$log_output
-		);
-		if ( isset( $result->level0 ) ) {
-			$stats  = $result->level0[0];
-			$return = array(
-				'total_order' => $stats->revenue,
-				'nb_order'    => (int) $stats->transactions,
-				'currency'    => $result->currency->iso_a3,
-				'available'   => false,
-			);
-		} else {
-			if ( Lengow_Configuration::get( 'lengow_last_order_statistic_update' ) ) {
-				return json_decode( Lengow_Configuration::get( 'lengow_order_statistic' ), true );
-			} else {
-				return array(
-					'total_order' => 0,
-					'nb_order'    => 0,
-					'currency'    => '',
-					'available'   => false,
-				);
-			}
-		}
-		if ( $return['total_order'] > 0 || $return['nb_order'] > 0 ) {
-			$return['available'] = true;
-		}
-		if ( $return['currency']
-		     && get_woocommerce_currency_symbol( $return['currency'] )
-		     && function_exists( 'wc_price' )
-		) {
-			$return['total_order'] = wc_price( $return['total_order'], array( 'currency' => $return['currency'] ) );
-		} else {
-			$return['total_order'] = number_format( $return['total_order'], 2, ',', ' ' );
-		}
-		Lengow_Configuration::update_value( 'lengow_order_statistic', json_encode( $return ) );
-		Lengow_Configuration::update_value( 'lengow_last_order_statistic_update', time() );
-
-		return $return;
 	}
 
 	/**
