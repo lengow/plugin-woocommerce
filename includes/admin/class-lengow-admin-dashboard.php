@@ -36,7 +36,6 @@ class Lengow_Admin_Dashboard {
 	public static function display() {
 		$keys                = Lengow_Configuration::get_keys();
 		$locale              = new Lengow_Translation();
-		$stats               = Lengow_Sync::get_statistic();
 		$merchant_status     = Lengow_Sync::get_status_account();
 		$is_new_merchant     = Lengow_Configuration::is_new_merchant();
 		$is_sync             = isset( $_GET['isSync'] ) ? $_GET['isSync'] : false;
@@ -46,9 +45,7 @@ class Lengow_Admin_Dashboard {
 
 		if ( $is_new_merchant || $is_sync ) {
 			include_once 'views/dashboard/html-admin-new.php';
-		} elseif ( ( 'free_trial' === $merchant_status['type'] && $merchant_status['expired'] )
-		           || 'bad_payer' === $merchant_status['type']
-		) {
+		} elseif ( 'free_trial' === $merchant_status['type'] && $merchant_status['expired'] ) {
 			include_once 'views/dashboard/html-admin-status.php';
 		} else {
 			include_once 'views/dashboard/html-admin-dashboard.php';

@@ -100,13 +100,6 @@ class Lengow_Configuration {
 					'legend'        => $locale->t( 'lengow_settings.lengow_tracking_id_legend' ),
 					'default_value' => 'id',
 				),
-				'lengow_last_order_statistic_update'     => array(
-					'global' => true,
-				),
-				'lengow_order_statistic'                 => array(
-					'export' => false,
-					'global' => true,
-				),
 				'lengow_last_option_update'              => array(
 					'global' => true,
 				),
