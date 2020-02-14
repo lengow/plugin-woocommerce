@@ -846,13 +846,13 @@ class Lengow_Main {
 					$mail_sent = wp_mail( $email, $subject, $mail_body );
 					if ( ! $mail_sent ) {
 						self::log(
-							'MailReport',
+							Lengow_Log::CODE_MAIL_REPORT,
 							self::set_log_message( 'log.mail_report.unable_send_mail_to', array( 'email' => $email ) ),
 							$log_output
 						);
 					} else {
 						self::log(
-							'MailReport',
+							Lengow_Log::CODE_MAIL_REPORT,
 							self::set_log_message( 'log.mail_report.send_mail_to', array( 'email' => $email ) ),
 							$log_output
 						);

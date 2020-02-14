@@ -128,7 +128,7 @@ class Lengow_Configuration {
 				'lengow_export_format'                   => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_export_format_title' ),
-					'default_value' => 'csv',
+					'default_value' => Lengow_Feed::FORMAT_CSV,
 				),
 				'lengow_export_file_enabled'             => array(
 					'global'        => true,
