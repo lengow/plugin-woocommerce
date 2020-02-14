@@ -334,7 +334,7 @@ class Lengow_Feed {
 	 * @throws Lengow_Exception
 	 */
 	public function end() {
-		$this->write( Lengow_Feed::FOOTER );
+		$this->write( self::FOOTER );
 		if ( ! $this->_stream ) {
 			$old_file_name = 'flux.' . $this->_format;
 			$old_file      = new Lengow_File( $this->_export_folder, $old_file_name );
