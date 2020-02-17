@@ -267,7 +267,7 @@ class Lengow_Import_Order {
             // skip import if the order is anonymized
             if ( $this->_order_data->anonymized ) {
                 Lengow_Main::log(
-                    'Import',
+                    Lengow_Log::CODE_IMPORT,
                     Lengow_Main::set_log_message( 'log.import.anonymized_order' ),
                     $this->_log_output,
                     $this->_marketplace_sku
@@ -277,12 +277,12 @@ class Lengow_Import_Order {
             }
 
             // skip import if the order is older than 3 months
-            $date_time_order = new DateTime( $this->_order_date );
+            $date_time_order = new DateTime( $this->_order_data->marketplace_order_date );
             $interval = $date_time_order->diff( new DateTime() );
             $months_interval = $interval->m + ( $interval->y * 12 );
             if ( $months_interval >= 3 ) {
                 Lengow_Main::log(
-                    'Import',
+                    Lengow_Log::CODE_IMPORT,
                     Lengow_Main::set_log_message( 'log.import.old_order' ),
                     $this->_log_output,
                     $this->_marketplace_sku
