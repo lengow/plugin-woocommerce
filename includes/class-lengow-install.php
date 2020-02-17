@@ -66,6 +66,8 @@ class Lengow_Install {
 		'lengow_import_enabled',
 		'lengow_time_import_start',
 		'LENGOW_MP_CONF',
+		'lengow_order_statistic',
+		'lengow_last_order_statistic_update',
 	);
 
 	/**

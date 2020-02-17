@@ -67,29 +67,6 @@ if ( ! defined( 'ABSPATH' ) ) {
             </a>
         </div>
     </div>
-	<?php if ( $stats['available'] ) : ?>
-        <div class="lgw-box text-center">
-            <div class="lgw-col-12 center-block">
-                <img src="/wp-content/plugins/lengow-woocommerce/assets/images/picto-stats.png" class="img-responsive">
-            </div>
-            <h2><?php echo $locale->t( 'dashboard.screen.partner_business' ); ?></h2>
-            <div class="lgw-row lgw-home-stats">
-                <div class="lgw-col-4 lgw-col-offset-2">
-                    <h5><?php echo $locale->t( 'dashboard.screen.stat_turnover' ); ?></h5>
-                    <span class="stats-big-value"><?php echo $stats['total_order']; ?></span>
-                </div>
-                <div class="lgw-col-4">
-                    <h5><?php echo $locale->t( 'dashboard.screen.stat_nb_orders' ); ?></h5>
-                    <span class="stats-big-value"><?php echo $stats['nb_order']; ?></span>
-                </div>
-            </div>
-            <p>
-                <a href="http://my.lengow.io/" target="_blank" class="lgw-btn lgw-btn-white">
-					<?php echo $locale->t( 'dashboard.screen.stat_more_stats' ); ?>
-                </a>
-            </p>
-        </div>
-	<?php endif; ?>
     <div class="lgw-box">
         <h2><?php echo $locale->t( 'dashboard.screen.some_help_title' ); ?></h2>
         <p>
