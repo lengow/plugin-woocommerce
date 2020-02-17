@@ -46,6 +46,11 @@ class Lengow_Import {
 	 */
 	const SECURITY_INTERVAL_TIME = 7200;
 
+    /**
+     * @var integer interval of months for cron synchronisation
+     */
+    const MONTH_INTERVAL_TIME = 3;
+
 	/**
 	 * @var string manual import type.
 	 */

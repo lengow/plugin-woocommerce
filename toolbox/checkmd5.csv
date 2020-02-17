@@ -323,14 +323,14 @@
 /includes/frontend/views/tracker/html-tracker.php|13d548874392feb557d5f77490f31cd6
 /includes/frontend/class-lengow-tracker.php|c2206bc8203b64f772da0f962bca2a5f
 /includes/class-lengow-feed.php|f72def1404b61184b45b756307ffabf6
-/includes/class-lengow-import-order.php|56c4f2e1abdbd71eff7d3fc81726fec4
+/includes/class-lengow-import-order.php|3cb17d64e18b15da70a19bc6a1b069cd
 /includes/class-lengow-connector.php|20f722b63bbe65f669adf5bed833b253
 /includes/class-lengow-order-line.php|2bcd48a77557cac556ef115c6d9443a7
 /includes/class-lengow-marketplace.php|81a59a90f3319dda1ba4b10fdbc3bc8e
 /includes/class-lengow-sync.php|1a76fd5d3bb04715b2bc71d5fffc1cc8
 /includes/class-lengow-address.php|dd1544b30922cc70093c09863de6c7ab
 /includes/class-lengow-action.php|fc8587f3907b2221385791c3bd5d5216
-/includes/class-lengow-import.php|db5861dfdf840b38e15ad1baf123029d
+/includes/class-lengow-import.php|dd5cb686e61822e36e47ea9466e360cf
 /includes/class-lengow-crud.php|b87807acc22c4136aa22b741c471fb3b
 /includes/class-lengow-log.php|31d537f699f7134e5f7908fe7d1cdb2a
 /includes/class-lengow-check.php|0c8966d4df51d7dd054d207e2a113505
