@@ -91,10 +91,10 @@ class Lengow_Import_Order {
 	 */
 	private $_first_package;
 
-    /**
-     * @var boolean import one order var from lengow import.
-     */
-    private $_import_one_order;
+	/**
+	 * @var boolean import one order var from lengow import.
+	 */
+	private $_import_one_order;
 
 	/**
 	 * @var boolean re-import order.
@@ -264,33 +264,33 @@ class Lengow_Import_Order {
 		);
 
 		if ( ! $this->_import_one_order ) {
-            // skip import if the order is anonymized.
-            if ( $this->_order_data->anonymized ) {
-                Lengow_Main::log(
-                    Lengow_Log::CODE_IMPORT,
-                    Lengow_Main::set_log_message( 'log.import.anonymized_order' ),
-                    $this->_log_output,
-                    $this->_marketplace_sku
-                );
+			// skip import if the order is anonymized.
+			if ( $this->_order_data->anonymized ) {
+				Lengow_Main::log(
+					Lengow_Log::CODE_IMPORT,
+					Lengow_Main::set_log_message( 'log.import.anonymized_order' ),
+					$this->_log_output,
+					$this->_marketplace_sku
+				);
 
-                return false;
-            }
+				return false;
+			}
 
-            // skip import if the order is older than 3 months.
-            $date_time_order = new DateTime( $this->_order_data->marketplace_order_date );
-            $interval = $date_time_order->diff( new DateTime() );
-            $months_interval = $interval->m + ( $interval->y * 12 );
-            if ( $months_interval >= Lengow_Import::MONTH_INTERVAL_TIME ) {
-                Lengow_Main::log(
-                    Lengow_Log::CODE_IMPORT,
-                    Lengow_Main::set_log_message( 'log.import.old_order' ),
-                    $this->_log_output,
-                    $this->_marketplace_sku
-                );
+			// skip import if the order is older than 3 months.
+			$date_time_order = new DateTime( $this->_order_data->marketplace_order_date );
+			$interval        = $date_time_order->diff( new DateTime() );
+			$months_interval = $interval->m + ( $interval->y * 12 );
+			if ( $months_interval >= Lengow_Import::MONTH_INTERVAL_TIME ) {
+				Lengow_Main::log(
+					Lengow_Log::CODE_IMPORT,
+					Lengow_Main::set_log_message( 'log.import.old_order' ),
+					$this->_log_output,
+					$this->_marketplace_sku
+				);
 
-                return false;
-            }
-        }
+				return false;
+			}
+		}
 
 		// if order is cancelled or new -> skip.
 		if ( ! Lengow_Import::check_state( $this->_order_state_marketplace, $this->_marketplace ) ) {
