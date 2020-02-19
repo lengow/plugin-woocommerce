@@ -119,6 +119,14 @@ class Lengow_Configuration {
 				'lengow_last_setting_update'             => array(
 					'global' => true,
 				),
+				'lengow_plugin_data_update'              => array(
+					'export' => false,
+					'global' => true,
+				),
+				'lengow_plugin_data'                     => array(
+					'export' => false,
+					'global' => true,
+				),
 				'lengow_selection_enabled'               => array(
 					'shop'          => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_selection_enabled_title' ),

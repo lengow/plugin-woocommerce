@@ -49,7 +49,7 @@ if ( isset( $_GET['tab'] ) ) {
         </a>
     </li>
     <li class="lengow_float_right" id="menugotosolution">
-        <a href="http://my.lengow.io/" target="_blank">
+        <a href="//my.<?php echo Lengow_Connector::LENGOW_URL; ?>" target="_blank">
 			<?php echo $locale->t( 'menu.jump_to_lengow' ); ?>
         </a>
     </li>
@@ -57,8 +57,19 @@ if ( isset( $_GET['tab'] ) ) {
         <li class="lengow_float_right" id="menucountertrial">
             <div class="lgw-block">
 				<?php echo $locale->t( 'menu.counter', array( 'counter' => $merchant_status['day'] ) ); ?>
-                <a href="http://my.lengow.io/" target="_blank">
+                <a href="//my.<?php echo Lengow_Connector::LENGOW_URL; ?>" target="_blank">
 					<?php echo $locale->t( 'menu.upgrade_account' ); ?>
+                </a>
+            </div>
+        </li>
+	<?php endif; ?>
+	<?php if ( $plugin_data && version_compare( LENGOW_VERSION, $plugin_data['version'], '<' ) ) : ?>
+        <li class="lengow_float_right" id="menupluginavailable">
+            <div class="lgw-block">
+				<?php echo $locale->t( 'menu.new_version_available', array( 'version' => $plugin_data['version'] ) ); ?>
+                <a href="//my.<?php echo Lengow_Connector::LENGOW_URL . $plugin_data['download_link'] ?>"
+                   target="_blank">
+					<?php echo $locale->t( 'menu.download_plugin' ); ?>
                 </a>
             </div>
         </li>
