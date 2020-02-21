@@ -179,6 +179,7 @@ class Lengow_Import_Order {
 	 * boolean first_package       it is the first package
 	 *
 	 * @throws Lengow_Exception
+	 *
 	 */
 	public function __construct( $params = array() ) {
 		$this->_preprod_mode        = $params['preprod_mode'];
@@ -201,6 +202,8 @@ class Lengow_Import_Order {
 	 * Create or update order.
 	 *
 	 * @return array|false
+	 * @throws Exception
+	 *
 	 */
 	public function import_order() {
 		// if order error exists and not finished.
@@ -260,6 +263,7 @@ class Lengow_Import_Order {
 		// get a record in the lengow order table.
 		$this->_order_lengow_id = Lengow_Order::get_id_from_lengow_orders(
 			$this->_marketplace_sku,
+			$this->_marketplace->name,
 			$this->_delivery_address_id
 		);
 
@@ -601,6 +605,7 @@ class Lengow_Import_Order {
 		if ( $result ) {
 			$this->_order_lengow_id = Lengow_Order::get_id_from_lengow_orders(
 				$this->_marketplace_sku,
+				$this->_marketplace->name,
 				$this->_delivery_address_id
 			);
 
@@ -789,7 +794,7 @@ class Lengow_Import_Order {
 	 * Get products from the API and check that they exist in WooCommerce database.
 	 *
 	 * @return array
-	 * @throws Lengow_Exception If product is not found
+	 * @throws Lengow_Exception
 	 *
 	 */
 	private function _get_products() {
@@ -884,7 +889,7 @@ class Lengow_Import_Order {
 	 * @param Lengow_Address $shipping_address Lengow shipping address
 	 *
 	 * @return WP_User|false
-	 * @throws Lengow_Exception Woocommerce customer not saved
+	 * @throws Lengow_Exception
 	 *
 	 */
 	private function _create_user( $user_email, $billing_address, $shipping_address ) {

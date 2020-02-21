@@ -477,20 +477,22 @@ class Lengow_Order {
 	 * Get ID record from lengow orders table.
 	 *
 	 * @param string $marketplace_sku Lengow id
+	 * @param string $marketplace_name marketplace name
 	 * @param integer $delivery_address_id delivery address id
 	 *
 	 * @return integer|false
 	 */
-	public static function get_id_from_lengow_orders( $marketplace_sku, $delivery_address_id ) {
+	public static function get_id_from_lengow_orders( $marketplace_sku, $marketplace_name, $delivery_address_id ) {
 		global $wpdb;
 
 		$query           = '
 			SELECT id FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . '
 			WHERE marketplace_sku = %s
+			AND marketplace_name = %s
 			AND delivery_address_id = %d
 		';
 		$order_lengow_id = $wpdb->get_var(
-			$wpdb->prepare( $query, array( $marketplace_sku, $delivery_address_id ) )
+			$wpdb->prepare( $query, array( $marketplace_sku, $marketplace_name, $delivery_address_id ) )
 		);
 		if ( $order_lengow_id ) {
 			return (int) $order_lengow_id;
