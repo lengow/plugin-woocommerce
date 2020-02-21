@@ -16,4 +16,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 </div>
 <input type="hidden" id="lengow_sync_link" value="<?php echo $is_sync; ?>">
 <input type="hidden" id="lengow_lang_iso" value="<?php echo $locale_iso_code; ?>">
+<input type="hidden" id="lengow_url" value="<?php echo Lengow_Connector::LENGOW_URL; ?>">
 <script type="text/javascript">jQuery('body').addClass('lgw-home-iframe');</script>

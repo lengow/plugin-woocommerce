@@ -16,14 +16,14 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <p class="text-center"><?php echo $locale->t( 'status.screen.second_description_end_free_trial' ); ?></p>
                 <p class="text-center"><?php echo $locale->t( 'status.screen.third_description_end_free_trial' ); ?></p>
                 <div class="text-center">
-                    <a href="http://my.lengow.io/" class="lgw-btn" target="_blank">
-                        <?php echo $locale->t( 'status.screen.upgrade_account_button' ); ?>
+                    <a href="//my.<?php echo Lengow_Connector::LENGOW_URL; ?>" class="lgw-btn" target="_blank">
+						<?php echo $locale->t( 'status.screen.upgrade_account_button' ); ?>
                     </a>
                 </div>
                 <div class="text-center">
                     <a href="<?php echo $refresh_status; ?>"
                        class="lgw-box-link">
-                        <?php echo $locale->t( 'status.screen.refresh_action' ); ?>
+						<?php echo $locale->t( 'status.screen.refresh_action' ); ?>
                     </a>
                 </div>
             </div>

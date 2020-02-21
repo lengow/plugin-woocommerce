@@ -12,18 +12,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php echo $locale->t( 'menu.preprod_active' ); ?>
         </div>
 	<?php endif; ?>
-	<?php if ( 'free_trial' === $merchant_status['type'] && ! $merchant_status['expired'] ) : ?>
-        <p class="text-right" id="menucountertrial">
-			<?php echo $locale->t( 'menu.counter', array( 'counter' => $merchant_status['day'] ) ); ?>
-            <a href="http://my.lengow.io/" target="_blank">
-				<?php echo $locale->t( 'menu.upgrade_account' ); ?>
-            </a>
-        </p>
-	<?php endif; ?>
+    <div class="lgw-row">
+        <div class="text-left lgw-col-6" id="alert-plugin-available">
+			<?php if ( $plugin_data && version_compare( LENGOW_VERSION, $plugin_data['version'], '<' ) ) : ?>
+				<?php echo $locale->t( 'menu.new_version_available', array( 'version' => $plugin_data['version'] ) ); ?>
+                <a href="//my.<?php echo Lengow_Connector::LENGOW_URL . $plugin_data['download_link']; ?>"
+                   target="_blank">
+					<?php echo $locale->t( 'menu.download_plugin' ); ?>
+                </a>
+			<?php endif; ?>
+        </div>
+        <div class="text-right lgw-col-6" id="alert-counter-trial">
+			<?php if ( 'free_trial' === $merchant_status['type'] && ! $merchant_status['expired'] ) : ?>
+				<?php echo $locale->t( 'menu.counter', array( 'counter' => $merchant_status['day'] ) ); ?>
+                <a href="//my.<?php echo Lengow_Connector::LENGOW_URL; ?>" target="_blank">
+					<?php echo $locale->t( 'menu.upgrade_account' ); ?>
+                </a>
+			<?php endif; ?>
+        </div>
+    </div>
     <div class="lgw-box lgw-home-header text-center">
         <img src="/wp-content/plugins/lengow-woocommerce/assets/images/lengow-white-big.png" alt="lengow">
         <h1><?php echo $locale->t( 'dashboard.screen.welcome_back' ); ?></h1>
-        <a href="http://my.lengow.io/" class="lgw-btn" target="_blank">
+        <a href="//my.<?php echo Lengow_Connector::LENGOW_URL; ?>" class="lgw-btn" target="_blank">
 			<?php echo $locale->t( 'dashboard.screen.go_to_lengow' ); ?>
         </a>
     </div>

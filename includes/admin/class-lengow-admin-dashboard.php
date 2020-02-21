@@ -34,20 +34,19 @@ class Lengow_Admin_Dashboard {
 	 * Display dashboard page.
 	 */
 	public static function display() {
-		$keys                = Lengow_Configuration::get_keys();
-		$locale              = new Lengow_Translation();
-		$merchant_status     = Lengow_Sync::get_status_account();
-		$is_new_merchant     = Lengow_Configuration::is_new_merchant();
-		$is_sync             = isset( $_GET['isSync'] ) ? $_GET['isSync'] : false;
-		$locale_iso_code     = strtolower( substr( get_locale(), 0, 2 ) );
-		$total_pending_order = Lengow_Order::get_total_order_by_status( 'waiting_shipment' );
-		$refresh_status      = admin_url( 'admin.php?action=dashboard_get_process&do_action=refresh_status' );
-
+		$locale          = new Lengow_Translation();
+		$merchant_status = Lengow_Sync::get_status_account();
+		$is_new_merchant = Lengow_Configuration::is_new_merchant();
+		$is_sync         = isset( $_GET['isSync'] ) ? $_GET['isSync'] : false;
 		if ( $is_new_merchant || $is_sync ) {
+			$locale_iso_code = strtolower( substr( get_locale(), 0, 2 ) );
 			include_once 'views/dashboard/html-admin-new.php';
 		} elseif ( 'free_trial' === $merchant_status['type'] && $merchant_status['expired'] ) {
+			$refresh_status = admin_url( 'admin.php?action=dashboard_get_process&do_action=refresh_status' );
 			include_once 'views/dashboard/html-admin-status.php';
 		} else {
+			$plugin_data         = Lengow_Sync::get_plugin_data();
+			$total_pending_order = Lengow_Order::get_total_order_by_status( 'waiting_shipment' );
 			include_once 'views/dashboard/html-admin-dashboard.php';
 		}
 	}

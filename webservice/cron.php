@@ -159,6 +159,10 @@ if ( isset( $_GET['get_sync'] ) && 1 == $_GET['get_sync'] ) {
 	if ( Lengow_Sync::SYNC_STATUS_ACCOUNT === $sync ) {
 		Lengow_Sync::get_status_account( $force, $log_output );
 	}
+	// sync plugin data between Lengow and WooCommerce.
+	if ( Lengow_Sync::SYNC_PLUGIN_DATA === $sync ) {
+		Lengow_Sync::get_plugin_data( $force, $log_output );
+	}
 	// sync option is not valid.
 	if ( $sync && ! in_array( $sync, Lengow_Sync::$sync_actions ) ) {
 		wp_die( 'Action: ' . $sync . ' is not a valid action', '', array( 'response' => 400 ) );

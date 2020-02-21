@@ -47,6 +47,11 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 
 = 2.3.0 - xxxx-xx-xx =
 * Feature: Refactoring and optimization of the connector class
+* Feature: [import] Protection of the import of anonymized orders
+* Feature: [import] Protection of the import of orders older than 3 months
+* Feature: Optimization of API calls for synchronisation of orders and actions
+* Feature: Display of an alert when the plugin is no longer up to date
+* Bugfix: Refactoring and optimization of dates with the correct locale
 
 = 2.2.1 - 2020-01-06 =
 * Feature: Adding compatibility with php 7.3
