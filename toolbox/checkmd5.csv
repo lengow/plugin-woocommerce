@@ -299,7 +299,7 @@
 /includes/class-lengow-import.php|84b9f327a241cfb2220e8348e8602358
 /includes/class-lengow-install.php|adb6d27c2722e74812ab28eeee1a077d
 /includes/class-lengow-action.php|fc8587f3907b2221385791c3bd5d5216
-/includes/class-lengow-import-order.php|7aa8dc11b9e9ccfb693e46ff5d92e2bb
+/includes/class-lengow-import-order.php|c039bba41f15123380d89cff2d59d8db
 /includes/class-lengow-payment.php|57a687bc8554dac8b5d3df9f7b63aeb2
 /includes/class-lengow-hook.php|5d0b154473c172726ffd99049e7f70d9
 /includes/class-lengow-address.php|dd1544b30922cc70093c09863de6c7ab
@@ -310,7 +310,7 @@
 /includes/class-lengow-translation.php|e3d1b98438d1f669ed2c33338229ae23
 /includes/class-lengow-connector.php|b830a64d9c7a835c559f5c4f60a60754
 /includes/class-lengow-log.php|31d537f699f7134e5f7908fe7d1cdb2a
-/includes/class-lengow-order.php|ed03fa9bb49d60a5c692234636d8e01a
+/includes/class-lengow-order.php|687ca4b6b18e4cf324ceaa53b9853cdc
 /includes/class-lengow-exception.php|1db651b67392bc2c74b0b9fabf9886b4
 /includes/class-lengow-check.php|0c8966d4df51d7dd054d207e2a113505
 /includes/admin/class-lengow-admin.php|d3fe7e7f4e94d999534731b84b99fb7c
