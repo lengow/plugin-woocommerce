@@ -106,7 +106,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 </div>
 
 <!-- ACTION BUTTONS -->
-<?php if ( ! $preprod ) : ?>
+<?php if ( ! $debug_mode ) : ?>
     <div id="lgw-box-order-buttons">
 		<?php if ( $can_send_action ) : ?>
             <button id="lgw-order-resend"

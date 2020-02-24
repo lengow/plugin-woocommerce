@@ -32,7 +32,7 @@
  * string  created_to          import of orders until
  * integer delivery_address_id Lengow delivery address id to import
  * boolean force               Force synchronisation for a specific process
- * boolean preprod_mode        Activate preprod mode
+ * boolean debug_mode          Activate debug mode
  * boolean log_output          See logs (1) or not (0)
  * boolean get_sync            See synchronisation parameters in json format (1) or not (0)
  */
@@ -114,8 +114,8 @@ if ( isset( $_GET['get_sync'] ) && 1 == $_GET['get_sync'] ) {
 			'type'       => Lengow_Import::TYPE_CRON,
 			'log_output' => $log_output,
 		);
-		if ( isset( $_GET['preprod_mode'] ) ) {
-			$params['preprod_mode'] = (bool) $_GET['preprod_mode'];
+		if ( isset( $_GET['debug_mode'] ) ) {
+			$params['debug_mode'] = (bool) $_GET['debug_mode'];
 		}
 		if ( isset( $_GET['days'] ) ) {
 			$params['days'] = (int) $_GET['days'];

@@ -29,13 +29,13 @@
 
         init_tooltip();
 
-        var preprod_exist = $('#lgw-preprod').length;
-        if (preprod_exist > 0) {
-            $("#lengow_feed_wrapper").addClass('activePreprod');
-            $("#lengow_order_wrapper").addClass('activePreprod');
-            $("#lengow_form_order_setting").addClass('activePreprod');
-            $("#lengow_mainsettings_wrapper").addClass('activePreprod');
-            $(".lengow_help_wrapper").addClass('activePreprod');
+        var debug_exist = $('#lgw-debug').length;
+        if (debug_exist > 0) {
+            $("#lengow_feed_wrapper").addClass('activeDebug');
+            $("#lengow_order_wrapper").addClass('activeDebug');
+            $("#lengow_form_order_setting").addClass('activeDebug');
+            $("#lengow_mainsettings_wrapper").addClass('activeDebug');
+            $(".lengow_help_wrapper").addClass('activeDebug');
         }
     });
 })(jQuery);

@@ -208,9 +208,9 @@ class Lengow_Configuration {
 					'legend'        => $locale->t( 'lengow_settings.lengow_import_stock_ship_mp_legend' ),
 					'default_value' => 0,
 				),
-				'lengow_preprod_enabled'                 => array(
+				'lengow_debug_enabled'                   => array(
 					'global'        => true,
-					'label'         => $locale->t( 'lengow_settings.lengow_preprod_enabled_title' ),
+					'label'         => $locale->t( 'lengow_settings.lengow_debug_enabled_title' ),
 					'default_value' => 0,
 				),
 				'lengow_import_in_progress'              => array(
@@ -389,6 +389,15 @@ class Lengow_Configuration {
 		self::update_value( 'lengow_store_enabled', $shop_has_catalog );
 
 		return $shop_is_active !== $shop_has_catalog ? true : false;
+	}
+
+	/**
+	 * Recovers if Debug Mode is active or not.
+	 *
+	 * @return boolean
+	 */
+	public static function debug_mode_is_active() {
+		return (bool) self::get( 'lengow_debug_enabled' );
 	}
 
 	/**

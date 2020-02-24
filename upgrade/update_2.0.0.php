@@ -124,6 +124,6 @@ if ( Lengow_Install::$old_version && Lengow_Install::$old_version < '2.0.0' ) {
 	Lengow_Configuration::check_ip_authorization();
 	// rename old settings.
 	Lengow_Install::rename_configuration_key( 'lengow_export_file', 'lengow_export_file_enabled' );
-	Lengow_Install::rename_configuration_key( 'lengow_debug', 'lengow_preprod_enabled' );
+	Lengow_Install::rename_configuration_key( 'lengow_debug', 'lengow_debug_enabled' );
 	Lengow_Install::rename_configuration_key( 'is_import_processing', 'lengow_import_in_progress' );
 }

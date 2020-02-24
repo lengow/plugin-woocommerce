@@ -15,9 +15,9 @@ $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
 ?>
 <div id="lengow_order_setting_wrapper">
     <div class="lgw-container">
-		<?php if ( (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) : ?>
-            <div id="lgw-preprod" class="adminlengowlegals">
-				<?php echo $locale->t( 'menu.preprod_active' ); ?>
+		<?php if ( Lengow_Configuration::debug_mode_is_active() ) : ?>
+            <div id="lgw-debug" class="adminlengowlegals">
+				<?php echo $locale->t( 'menu.debug_active' ); ?>
             </div>
 		<?php endif; ?>
         <form class="lengow_form" method="POST">

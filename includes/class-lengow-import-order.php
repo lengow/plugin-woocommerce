@@ -47,9 +47,9 @@ class Lengow_Import_Order {
 	const RESULT_ERROR = 'error';
 
 	/**
-	 * @var boolean use preprod mode.
+	 * @var boolean use debug mode.
 	 */
-	private $_preprod_mode = false;
+	private $_debug_mode = false;
 
 	/**
 	 * @var boolean display log messages.
@@ -170,7 +170,7 @@ class Lengow_Import_Order {
 	 * Construct the import manager.
 	 *
 	 * @param $params array Optional options
-	 * boolean preprod_mode        preprod mode
+	 * boolean debug_mode          debug mode
 	 * boolean log_output          display log messages
 	 * string  marketplace_sku     order marketplace sku
 	 * integer delivery_address_id order delivery address id
@@ -182,7 +182,7 @@ class Lengow_Import_Order {
 	 *
 	 */
 	public function __construct( $params = array() ) {
-		$this->_preprod_mode        = $params['preprod_mode'];
+		$this->_debug_mode          = $params['debug_mode'];
 		$this->_log_output          = $params['log_output'];
 		$this->_marketplace_sku     = $params['marketplace_sku'];
 		$this->_delivery_address_id = $params['delivery_address_id'];
@@ -247,7 +247,7 @@ class Lengow_Import_Order {
 		}
 		// checks if an external id already exists.
 		$order_id_woocommerce = $this->_check_external_ids( $this->_order_data->merchant_order_id );
-		if ( $order_id_woocommerce && ! $this->_preprod_mode && ! $this->_is_reimported ) {
+		if ( $order_id_woocommerce && ! $this->_debug_mode && ! $this->_is_reimported ) {
 			Lengow_Main::log(
 				Lengow_Log::CODE_IMPORT,
 				Lengow_Main::set_log_message(

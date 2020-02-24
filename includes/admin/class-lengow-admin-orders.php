@@ -213,9 +213,9 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	public function assign_warning_messages() {
 		$locale           = new Lengow_Translation();
 		$warning_messages = array();
-		if ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
+		if ( Lengow_Configuration::debug_mode_is_active() ) {
 			$warning_messages[] = $locale->t(
-				'order.screen.preprod_warning_message',
+				'order.screen.debug_warning_message',
 				array( 'url' => admin_url( 'admin.php?page=lengow&tab=lengow_admin_settings' ) )
 			);
 		}
