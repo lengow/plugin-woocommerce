@@ -12,7 +12,7 @@ module.processing_fee|Frais de traitement
 menu.product|Produits
 menu.order|Commandes
 menu.jump_to_lengow|Accéder à Lengow
-menu.preprod_active|Mode préproduction
+menu.debug_active|Debug Mode
 menu.counter|Période d'essai : %{counter} jours restants
 menu.upgrade_account|Souscrire
 menu.order_overview|Vue d'ensemble
@@ -86,7 +86,7 @@ order.screen.order_to_be_sent|Vous avez %{nb_order} commande(s) en attente d'exp
 order.screen.last_order_importation|Dernière synchronisation
 order.screen.no_order_importation|Aucune synchronisation pour le moment
 order.screen.button_update_orders|Synchroniser les commandes
-order.screen.preprod_warning_message|Vous êtes en mode préproduction. Vous pouvez importer vos commandes mais les interactions avec Lengow ne sont pas possibles. <a href=%{url}>Retourner en mode production ?</a>
+order.screen.debug_warning_message|Vous êtes en Debug Mode. Vous pouvez importer vos commandes mais les interactions avec Lengow ne sont pas possibles. <a href=%{url}>Désactiver le Debug Mode ?</a>
 order.screen.status_not_synchronized|Non synchronisé
 order.screen.status_accepted|Accepté
 order.screen.status_waiting_shipment|En attente d'expédition
@@ -137,8 +137,8 @@ global_setting.screen.notification_alert_title|Notifications & alertes
 global_setting.screen.security_title|Sécurité
 global_setting.screen.tracker_title|Tracker Lengow
 global_setting.screen.tracker_description|Ce tracker vous permet de récupérer les statistiques de commandes de votre site directement sur la plateforme Lengow.
-global_setting.screen.preprod_mode_title|Mode préproduction
-global_setting.screen.preprod_mode_description|Utilisez la pré-production pour tester et simuler des commandes fictives. Pour rappel, vous devez activer ces paramètres UNIQUEMENT sur votre serveur de préproduction.
+global_setting.screen.debug_mode_title|Debug Mode
+global_setting.screen.debug_mode_description|Utilisez le Debug Mode pour tester et simuler des commandes fictives. Pour rappel, vous devez activer ce paramètre UNIQUEMENT sur votre serveur de préproduction
 global_setting.screen.log_file_title|Fichiers de Log
 global_setting.screen.log_file_description|Retrouvez ci-dessous tout l'historique des logs (commandes importées, messages d'erreurs...). Ils seront sauvegardés ici pendant 20 jours.
 global_setting.screen.button_download_file|Télécharger
@@ -201,7 +201,7 @@ lengow_settings.lengow_import_days_legend|Importez vos commandes depuis ... jour
 lengow_settings.lengow_import_ship_mp_enabled_title|Import des commandes expédiées par les places de marché
 lengow_settings.lengow_import_stock_ship_mp_title|Je veux diminuer mon stock
 lengow_settings.lengow_import_stock_ship_mp_legend|Activez cette option pour prendre en compte les commandes des places de marché sur les stocks de votre backoffice WooCommerce
-lengow_settings.lengow_preprod_enabled_title|Activer le mode préproduction
+lengow_settings.lengow_debug_enabled_title|Activer le Debug Mode
 lengow_settings.lengow_import_in_progress_title|Import en cours
 lengow_settings.lengow_last_import_manual_title|Dernier import manuel
 lengow_settings.lengow_last_import_cron_title|Dernier import CRON

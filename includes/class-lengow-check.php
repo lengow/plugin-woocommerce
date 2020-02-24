@@ -144,8 +144,8 @@ class Lengow_Check {
 			'message' => Lengow_Configuration::get( 'lengow_authorized_ip' ),
 		);
 		$checklist[] = array(
-			'title' => $this->_locale->t( 'toolbox.index.preprod_disabled' ),
-			'state' => (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' ) ? 0 : 1,
+			'title' => $this->_locale->t( 'toolbox.index.debug_disabled' ),
+			'state' => Lengow_Configuration::debug_mode_is_active() ? 0 : 1,
 		);
 
 		return $this->get_admin_content( $checklist );

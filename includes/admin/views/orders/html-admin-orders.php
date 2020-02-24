@@ -7,9 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <div id="lengow_order_wrapper" class="lgw-container">
-	<?php if ( (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) : ?>
-        <div id="lgw-preprod">
-			<?php echo $locale->t( 'menu.preprod_active' ); ?>
+	<?php if ( Lengow_Configuration::debug_mode_is_active() ) : ?>
+        <div id="lgw-debug">
+			<?php echo $locale->t( 'menu.debug_active' ); ?>
         </div>
 	<?php endif; ?>
     <div class="lgw-box row">

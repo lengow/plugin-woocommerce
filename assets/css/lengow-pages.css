@@ -69,7 +69,7 @@ body.lgw-home-iframe .lgw-content-section p {
   display:none;
 }
 
-#lengow_home_wrapper #lgw-preprod {
+#lengow_home_wrapper #lgw-debug {
   top: 0px;
 }
 
@@ -156,8 +156,8 @@ body.lgw-home-iframe .lgw-content-section p {
   padding-top: 60px;
 }
 
-#lengow_order_wrapper #lgw-preprod,
-#lengow_order_setting_wrapper #lgw-preprod {
+#lengow_order_wrapper #lgw-debug,
+#lengow_order_setting_wrapper #lgw-debug {
   top: 110px;
 }
 

@@ -243,7 +243,7 @@ class Lengow_Sync {
 	 * @return boolean
 	 */
 	public static function set_cms_option( $force = false, $log_output = false ) {
-		if ( Lengow_Configuration::is_new_merchant() || (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
+		if ( Lengow_Configuration::is_new_merchant() || (bool) Lengow_Configuration::debug_mode_is_active() ) {
 			return false;
 		}
 		if ( ! $force ) {

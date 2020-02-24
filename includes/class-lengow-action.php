@@ -318,7 +318,7 @@ class Lengow_Action {
 	 * @throws Lengow_Exception
 	 */
 	public static function send_action( $params, $order_lengow ) {
-		if ( ! Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
+		if ( ! Lengow_Configuration::debug_mode_is_active() ) {
 			$result = Lengow_Connector::query_api(
 				Lengow_Connector::POST,
 				Lengow_Connector::API_ORDER_ACTION,
@@ -385,7 +385,7 @@ class Lengow_Action {
 	 * @return boolean
 	 */
 	public static function check_finish_action( $log_output = false ) {
-		if ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
+		if ( Lengow_Configuration::debug_mode_is_active() ) {
 			return false;
 		}
 		Lengow_Main::log(
@@ -505,7 +505,7 @@ class Lengow_Action {
 	 * @return boolean
 	 */
 	public static function check_old_action( $log_output = false ) {
-		if ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
+		if ( Lengow_Configuration::debug_mode_is_active() ) {
 			return false;
 		}
 		Lengow_Main::log(
@@ -584,7 +584,7 @@ class Lengow_Action {
 	 * @return boolean
 	 */
 	public static function check_action_not_sent( $log_output = false ) {
-		if ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
+		if ( Lengow_Configuration::debug_mode_is_active() ) {
 			return false;
 		}
 		Lengow_Main::log(

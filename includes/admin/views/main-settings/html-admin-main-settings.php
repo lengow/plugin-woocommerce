@@ -12,9 +12,9 @@ $logs      = Lengow_Log::get_paths();
 $list_file = $logs ? array_reverse( $logs ) : array();
 ?>
 <div class="lgw-container" id="lengow_mainsettings_wrapper" xmlns="http://www.w3.org/1999/html">
-	<?php if ( (bool) $values['lengow_preprod_enabled'] ) : ?>
-        <div id="lgw-preprod" class="adminlengowmainsetting">
-			<?php echo $locale->t( 'menu.preprod_active' ); ?>
+	<?php if ( (bool) $values['lengow_debug_enabled'] ) : ?>
+        <div id="lgw-debug" class="adminlengowmainsetting">
+			<?php echo $locale->t( 'menu.debug_active' ); ?>
         </div>
 	<?php endif; ?>
     <form class="lengow_form" method="POST">
@@ -135,22 +135,22 @@ $list_file = $logs ? array_reverse( $logs ) : array();
             </div>
         </div>
         <div class="lgw-box">
-            <h2 class="margin-s"><?php echo $locale->t( 'global_setting.screen.preprod_mode_title' ); ?></h2>
-            <p><?php echo $locale->t( 'global_setting.screen.preprod_mode_description' ); ?></p>
-            <div class="lgw-switch <?php echo (bool) $values['lengow_preprod_enabled'] ? 'checked' : ''; ?>">
+            <h2 class="margin-s"><?php echo $locale->t( 'global_setting.screen.debug_mode_title' ); ?></h2>
+            <p><?php echo $locale->t( 'global_setting.screen.debug_mode_description' ); ?></p>
+            <div class="lgw-switch <?php echo (bool) $values['lengow_debug_enabled'] ? 'checked' : ''; ?>">
                 <label>
                     <div>
                         <span></span>
-                        <input type="hidden" name="lengow_preprod_enabled" value="0">
-                        <input name="lengow_preprod_enabled"
+                        <input type="hidden" name="lengow_debug_enabled" value="0">
+                        <input name="lengow_debug_enabled"
                                type="checkbox"
-							<?php echo (bool) $values['lengow_preprod_enabled'] ? 'checked' : ''; ?> />
+							<?php echo (bool) $values['lengow_debug_enabled'] ? 'checked' : ''; ?> />
                     </div>
-					<?php echo $keys['lengow_preprod_enabled']['label']; ?>
+					<?php echo $keys['lengow_debug_enabled']['label']; ?>
                 </label>
             </div>
-            <div id="lengow_wrapper_preprod"
-				<?php echo (bool) $values['lengow_preprod_enabled'] ? '' : 'style="display:none;"'; ?>>
+            <div id="lengow_wrapper_debug"
+				<?php echo (bool) $values['lengow_debug_enabled'] ? '' : 'style="display:none;"'; ?>>
                 <div class="grey-frame">
                     <div class="form-group">
                         <label class="control-label"><?php echo $keys['lengow_account_id']['label']; ?></label>

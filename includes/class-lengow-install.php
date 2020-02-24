@@ -68,6 +68,7 @@ class Lengow_Install {
 		'LENGOW_MP_CONF',
 		'lengow_order_statistic',
 		'lengow_last_order_statistic_update',
+		'lengow_preprod_enabled',
 	);
 
 	/**

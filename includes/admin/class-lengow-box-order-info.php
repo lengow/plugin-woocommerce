@@ -48,8 +48,8 @@ class Lengow_Box_Order_Info {
 					? 'cancel'
 					: 'ship';
 			}
-			$locale  = new Lengow_Translation();
-			$preprod = Lengow_Configuration::get( 'lengow_preprod_enabled' );
+			$locale     = new Lengow_Translation();
+			$debug_mode = Lengow_Configuration::debug_mode_is_active();
 			include_once( 'views/box-order-info/html-order-info.php' );
 		} catch ( Exception $e ) {
 			echo Lengow_Main::decode_log_message( $e->getMessage() );
