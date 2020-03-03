@@ -51,7 +51,9 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 * Feature: [import] Protection of the import of orders older than 3 months
 * Feature: Optimization of API calls for synchronisation of orders and actions
 * Feature: Display of an alert when the plugin is no longer up to date
+* Feature: Renaming from Preprod Mode to Debug Mode
 * Bugfix: Refactoring and optimization of dates with the correct locale
+* Bugfix: [import] Enhanced security for orders that change their marketplace name
 
 = 2.2.1 - 2020-01-06 =
 * Feature: Adding compatibility with php 7.3
