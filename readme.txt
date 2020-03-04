@@ -45,7 +45,7 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 
 == Changelog ==
 
-= 2.3.0 - xxxx-xx-xx =
+= 2.3.0 - 2020-03-04 =
 * Feature: Refactoring and optimization of the connector class
 * Feature: [import] Protection of the import of anonymized orders
 * Feature: [import] Protection of the import of orders older than 3 months
