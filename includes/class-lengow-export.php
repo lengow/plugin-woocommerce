@@ -375,7 +375,7 @@ class Lengow_Export {
 				case 'format':
 					$authorized_value = Lengow_Feed::$available_formats;
 					$type             = 'string';
-					$example          = 'csv';
+					$example          = Lengow_Feed::FORMAT_CSV;
 					break;
 				case 'offset':
 				case 'limit':
@@ -499,7 +499,7 @@ class Lengow_Export {
 	private function _export( $products, $fields ) {
 		$product_count = 0;
 		$feed          = new Lengow_Feed( $this->_stream, $this->_format, $this->_legacy );
-		$feed->write( 'header', $fields );
+		$feed->write( Lengow_Feed::HEADER, $fields );
 		$is_first = true;
 		// get the maximum of character for yaml format.
 		$max_character = 0;
@@ -526,7 +526,7 @@ class Lengow_Export {
 				}
 			}
 			// write parent product.
-			$feed->write( 'body', $product_data, $is_first, $max_character );
+			$feed->write( Lengow_Feed::BODY, $product_data, $is_first, $max_character );
 			$product_count ++;
 			if ( $product_count > 0 && 0 === $product_count % 50 ) {
 				Lengow_Main::log(

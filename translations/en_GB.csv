@@ -3,7 +3,7 @@ module.plugin_name|Lengow for WooCommerce
 module.plugin_uri|https://www.lengow.com/integrations/woocommerce/
 module.author_uri|http://www.lengow.com
 module.description|Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
-module.version|2.2.1
+module.version|2.3.0
 module.author|Lengow
 module.state_technical_error|Technical error - Lengow
 module.lengow_payment_title|Lengow payment
@@ -12,13 +12,15 @@ module.processing_fee|Processing fees
 menu.product|Products
 menu.order|Orders
 menu.jump_to_lengow|Jump to Lengow
-menu.preprod_active|Pre-production mode
+menu.debug_active|Debug Mode
 menu.counter|Trial period: %{counter} day(s) left.
 menu.upgrade_account|Subscribe
 menu.order_overview|Overview
 menu.order_parameter|Settings
 menu.help|Help
 menu.global_parameter|General settings
+menu.new_version_available|A new version %{version} is available!
+menu.download_plugin|Download
 footer.legals|Legal notices
 footer.plugin_lengow|Lengow WooCommerce Plugin
 dashboard.screen.welcome_back|Hi! Welcome back!
@@ -29,10 +31,6 @@ dashboard.screen.orders_title|Orders
 dashboard.screen.orders_text|Manage your orders directly on your WooCommerce dashboard
 dashboard.screen.settings_title|Settings
 dashboard.screen.settings_text|Configure your WooCommerce plugin main settings
-dashboard.screen.partner_business|Lengow, your business partner
-dashboard.screen.stat_turnover|Turnover
-dashboard.screen.stat_nb_orders|Orders
-dashboard.screen.stat_more_stats|Want more stats?
 dashboard.screen.some_help_title|Need some help?
 dashboard.screen.get_in_touch|Get in touch with Lengow.
 dashboard.screen.visit_help_center|Visit our Help Center
@@ -42,12 +40,6 @@ status.screen.subtitle_end_free_trial|You've reached the end of your trial!
 status.screen.first_description_end_free_trial|Your free 15-day trial period on Lengow has now expired. We know that it is sad news, but the best is yet to come! We sincerely hope Lengow has helped you improve your business.
 status.screen.second_description_end_free_trial|Your account will be suspended until you purchase a new subscription. All existing distributions and importations will also be suspended.
 status.screen.third_description_end_free_trial|Don't forget that trial accounts are deleted 30 days after the end of the trial period. Make sure to subscribe so you do not lose the work you've done building channels.
-status.screen.subtitle_bad_payer|Your account has been temporarily shut down
-status.screen.first_description_bad_payer|We are sorry to inform you that we have had to limit access to your account temporarily because the automatic payment of your subscription failed.
-status.screen.second_description_bad_payer|The posting of your catalogue has been suspended. We strongly suggest that you get in touch with us at
-status.screen.phone_bad_payer|or by phone at +44 203 318 2632
-status.screen.third_description_bad_payer|We hope to work with you again in the near future.
-status.screen.facturation_button|View my billing information
 status.screen.upgrade_account_button|It's ok, I'm ready to subscribe!
 status.screen.refresh_action|Refresh my account
 product.screen.nb_exported|products exported
@@ -94,7 +86,7 @@ order.screen.order_to_be_sent|You have %{nb_order} order(s) waiting to be sent
 order.screen.last_order_importation|Last synchronization
 order.screen.no_order_importation|No synchronisation for now
 order.screen.button_update_orders|Synchronize Orders
-order.screen.preprod_warning_message|You are in pre-production mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>
+order.screen.debug_warning_message|You are in Debug Mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>
 order.screen.status_not_synchronized|Not synchronized
 order.screen.status_accepted|Accepted
 order.screen.status_waiting_shipment|Waiting for shipment
@@ -145,8 +137,8 @@ global_setting.screen.notification_alert_title|Notifications & alerts
 global_setting.screen.security_title|Security
 global_setting.screen.tracker_title|Lengow tracker
 global_setting.screen.tracker_description|This tracker allows you to retrieve order statistics generated on your site directly in Lengow.
-global_setting.screen.preprod_mode_title|Pre-production Mode
-global_setting.screen.preprod_mode_description|Use pre-production mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY
+global_setting.screen.debug_mode_title|Debug Mode
+global_setting.screen.debug_mode_description|Use Debug Mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY
 global_setting.screen.log_file_title|Log Files
 global_setting.screen.log_file_description|Find all the maintenance logs below (imported orders, errors reports...). They will be recorded here for 20 days.
 global_setting.screen.button_download_file|Download
@@ -209,7 +201,7 @@ lengow_settings.lengow_import_days_legend|Import orders from ... days and decrea
 lengow_settings.lengow_import_ship_mp_enabled_title|Import orders shipped by marketplaces
 lengow_settings.lengow_import_stock_ship_mp_title|I want to decrease my stock
 lengow_settings.lengow_import_stock_ship_mp_legend|Use this option to take marketplaces orders into account for your WooCommerce backoffice
-lengow_settings.lengow_preprod_enabled_title|Activate Pre-production Mode
+lengow_settings.lengow_debug_enabled_title|Activate Debug Mode
 lengow_settings.lengow_import_in_progress_title|Import in progress
 lengow_settings.lengow_last_import_manual_title|Last manual import
 lengow_settings.lengow_last_import_cron_title|Last Cron import
@@ -298,7 +290,7 @@ log.export.error_unable_to_create_file|unable to create file %{file_name} in %{f
 log.export.error_folder_not_writable|export file generation did not end properly. Please make sure the export folder is writable
 log.import.start|## start %{type} import ##
 log.import.end|## end %{type} import ##
-log.import.preprod_mode_active|warning ! Pre-prod mode is activated
+log.import.debug_mode_active|warning ! Debug Mode is activated
 log.import.connector_get_order|get order with order ID: %{marketplace_sku} and marketplace: %{marketplace_name}
 log.import.connector_get_all_order|get orders between %{date_from} and %{date_to} for catalogs ID: %{catalog_id}
 log.import.find_one_order|%{nb_order} order found for order ID: %{marketplace_sku} and marketplace: %{marketplace_name} with account ID: %{account_id}
@@ -335,6 +327,9 @@ log.import.tax_not_saved|WARNING! Tax could not be added to the WooCommerce orde
 log.import.processing_fee_not_saved|WARNING! Processing fees could not be added to the WooCommerce order - %{error_message}
 log.import.order_synchronized_with_lengow|order successfully synchronised with Lengow webservice (ORDER ID %{order_id})
 log.import.order_not_synchronized_with_lengow|WARNING ! Order could NOT be synchronised with Lengow webservice (ORDER ID %{order_id})
+log.import.anonymized_order|Order is anonymized and has not been imported
+log.import.old_order|Order is older than 3 months and has not been imported
+log.import.connector_get_all_action|get order actions between %{date_from} and %{date_to}
 log.order_action.check_completed_action|check completed actions
 log.order_action.check_old_action|check and finish old actions
 log.order_action.check_action_not_sent|check actions not sent
@@ -343,10 +338,14 @@ log.order_action.action_send|action %{action} was successfully sent (ORDER ID %{
 log.order_action.action_not_send|WARNING ! action %{action} could not be sent (ORDER ID %{order_id})
 log.order_action.call_tracking|call tracking with parameters: %{parameters}
 log.order_action.call_action_failed|order action failed - %{decoded_message}
-log.connector.call_api|call %{curl_url}
-log.connector.error_api|API call failed - %{error_code}
-log.connector.timeout_api|API call has been blocked by a timeout
+log.connector.call_api|call %{call_type} %{curl_url}
+log.connector.error_api|API call failed - %{error_code} - %{error_message}
 log.connector.error_curl|Curl error %{error_code} - %{error_message}
+log.connector.token_not_return|no authorization token returned
+log.connector.token_is_empty|the returned authorization token is empty
+log.connector.timeout_api|API call has been blocked by a timeout
+log.connector.api_not_available|Lengow APIs are not available
+log.connector.retry_get_token|API call failed - authorization token expired - attempt to recover a new token
 toolbox.menu.lengow_toolbox|Lengow Toolbox
 toolbox.menu.product|Products
 toolbox.menu.order|Orders
@@ -379,7 +378,7 @@ toolbox.index.plugin_version|Plugin version
 toolbox.index.ip_server|Server IP
 toolbox.index.ip_enabled|Authorisation by IP enabled
 toolbox.index.ip_authorized|IP authorised
-toolbox.index.preprod_disabled|Pre-production mode disabled
+toolbox.index.debug_disabled|Debug Mode disabled
 toolbox.index.cron_enable|Cron job set in the Crontab module
 toolbox.index.import_information|Import information (Global)
 toolbox.index.global_token|Import token

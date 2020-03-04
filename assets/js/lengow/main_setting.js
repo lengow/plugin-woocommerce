@@ -87,17 +87,17 @@
         }
 
         /**
-         * Enable preprod mode.
+         * Enable debug mode.
          */
-        $("input[name='lengow_preprod_enabled']").on('change', function () {
-            displayPreProdMode();
+        $("input[name='lengow_debug_enabled']").on('change', function () {
+            displayDebugModeMode();
         });
 
-        function displayPreProdMode() {
-            if ($("input[name='lengow_preprod_enabled'][type='checkbox']").prop('checked')) {
-                $('#lengow_wrapper_preprod').slideDown(150);
+        function displayDebugModeMode() {
+            if ($("input[name='lengow_debug_enabled'][type='checkbox']").prop('checked')) {
+                $('#lengow_wrapper_debug').slideDown(150);
             } else {
-                $('#lengow_wrapper_preprod').slideUp(150);
+                $('#lengow_wrapper_debug').slideUp(150);
             }
         }
 

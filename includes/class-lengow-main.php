@@ -400,6 +400,24 @@ class Lengow_Main {
 	}
 
 	/**
+	 * Get date in local date.
+	 *
+	 * @param integer $timestamp linux timestamp
+	 * @param boolean $second see seconds or not
+	 *
+	 * @return string
+	 */
+	public static function get_date_in_correct_format( $timestamp, $second = false ) {
+		if ( $second ) {
+			$format = 'l d F Y @ H:i:s';
+		} else {
+			$format = 'l d F Y @ H:i';
+		}
+
+		return get_date_from_gmt( date( 'Y-m-d H:i:s', $timestamp ), $format );
+	}
+
+	/**
 	 * Get all order statuses.
 	 *
 	 * @return array
@@ -828,13 +846,13 @@ class Lengow_Main {
 					$mail_sent = wp_mail( $email, $subject, $mail_body );
 					if ( ! $mail_sent ) {
 						self::log(
-							'MailReport',
+							Lengow_Log::CODE_MAIL_REPORT,
 							self::set_log_message( 'log.mail_report.unable_send_mail_to', array( 'email' => $email ) ),
 							$log_output
 						);
 					} else {
 						self::log(
-							'MailReport',
+							Lengow_Log::CODE_MAIL_REPORT,
 							self::set_log_message( 'log.mail_report.send_mail_to', array( 'email' => $email ) ),
 							$log_output
 						);

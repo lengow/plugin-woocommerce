@@ -7,23 +7,34 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <div id="lengow_home_wrapper" class="lgw-container">
-	<?php if ( (bool) Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) : ?>
-        <div id="lgw-preprod">
-			<?php echo $locale->t( 'menu.preprod_active' ); ?>
+	<?php if ( Lengow_Configuration::debug_mode_is_active() ) : ?>
+        <div id="lgw-debug">
+			<?php echo $locale->t( 'menu.debug_active' ); ?>
         </div>
 	<?php endif; ?>
-	<?php if ( 'free_trial' === $merchant_status['type'] && ! $merchant_status['expired'] ) : ?>
-        <p class="text-right" id="menucountertrial">
-			<?php echo $locale->t( 'menu.counter', array( 'counter' => $merchant_status['day'] ) ); ?>
-            <a href="http://my.lengow.io/" target="_blank">
-				<?php echo $locale->t( 'menu.upgrade_account' ); ?>
-            </a>
-        </p>
-	<?php endif; ?>
+    <div class="lgw-row">
+        <div class="text-left lgw-col-6" id="alert-plugin-available">
+			<?php if ( $plugin_data && version_compare( LENGOW_VERSION, $plugin_data['version'], '<' ) ) : ?>
+				<?php echo $locale->t( 'menu.new_version_available', array( 'version' => $plugin_data['version'] ) ); ?>
+                <a href="//my.<?php echo Lengow_Connector::LENGOW_URL . $plugin_data['download_link']; ?>"
+                   target="_blank">
+					<?php echo $locale->t( 'menu.download_plugin' ); ?>
+                </a>
+			<?php endif; ?>
+        </div>
+        <div class="text-right lgw-col-6" id="alert-counter-trial">
+			<?php if ( 'free_trial' === $merchant_status['type'] && ! $merchant_status['expired'] ) : ?>
+				<?php echo $locale->t( 'menu.counter', array( 'counter' => $merchant_status['day'] ) ); ?>
+                <a href="//my.<?php echo Lengow_Connector::LENGOW_URL; ?>" target="_blank">
+					<?php echo $locale->t( 'menu.upgrade_account' ); ?>
+                </a>
+			<?php endif; ?>
+        </div>
+    </div>
     <div class="lgw-box lgw-home-header text-center">
         <img src="/wp-content/plugins/lengow-woocommerce/assets/images/lengow-white-big.png" alt="lengow">
         <h1><?php echo $locale->t( 'dashboard.screen.welcome_back' ); ?></h1>
-        <a href="http://my.lengow.io/" class="lgw-btn" target="_blank">
+        <a href="//my.<?php echo Lengow_Connector::LENGOW_URL; ?>" class="lgw-btn" target="_blank">
 			<?php echo $locale->t( 'dashboard.screen.go_to_lengow' ); ?>
         </a>
     </div>
@@ -67,29 +78,6 @@ if ( ! defined( 'ABSPATH' ) ) {
             </a>
         </div>
     </div>
-	<?php if ( $stats['available'] ) : ?>
-        <div class="lgw-box text-center">
-            <div class="lgw-col-12 center-block">
-                <img src="/wp-content/plugins/lengow-woocommerce/assets/images/picto-stats.png" class="img-responsive">
-            </div>
-            <h2><?php echo $locale->t( 'dashboard.screen.partner_business' ); ?></h2>
-            <div class="lgw-row lgw-home-stats">
-                <div class="lgw-col-4 lgw-col-offset-2">
-                    <h5><?php echo $locale->t( 'dashboard.screen.stat_turnover' ); ?></h5>
-                    <span class="stats-big-value"><?php echo $stats['total_order']; ?></span>
-                </div>
-                <div class="lgw-col-4">
-                    <h5><?php echo $locale->t( 'dashboard.screen.stat_nb_orders' ); ?></h5>
-                    <span class="stats-big-value"><?php echo $stats['nb_order']; ?></span>
-                </div>
-            </div>
-            <p>
-                <a href="http://my.lengow.io/" target="_blank" class="lgw-btn lgw-btn-white">
-					<?php echo $locale->t( 'dashboard.screen.stat_more_stats' ); ?>
-                </a>
-            </p>
-        </div>
-	<?php endif; ?>
     <div class="lgw-box">
         <h2><?php echo $locale->t( 'dashboard.screen.some_help_title' ); ?></h2>
         <p>

@@ -52,16 +52,6 @@ class Lengow_Action {
 	const TYPE_CANCEL = 'cancel';
 
 	/**
-	 * @var string action argument marketplace order id.
-	 */
-	const ARG_MARKETPLACE_ORDER_ID = 'marketplace_order_id';
-
-	/**
-	 * @var string action argument marketplace.
-	 */
-	const ARG_MARKETPLACE = 'marketplace';
-
-	/**
 	 * @var string action argument action type.
 	 */
 	const ARG_ACTION_TYPE = 'action_type';
@@ -115,6 +105,16 @@ class Lengow_Action {
 	 * @var string action argument delivery date.
 	 */
 	const ARG_DELIVERY_DATE = 'delivery_date';
+
+	/**
+	 * @var integer max interval time for action synchronisation (3 days)
+	 */
+	const MAX_INTERVAL_TIME = 259200;
+
+	/**
+	 * @var integer security interval time for action synchronisation (2 hours)
+	 */
+	const SECURITY_INTERVAL_TIME = 7200;
 
 	/**
 	 * @var array Parameters to delete for GET call.
@@ -273,7 +273,11 @@ class Lengow_Action {
 				unset( $get_params[ $param ] );
 			}
 		}
-		$result = Lengow_Connector::query_api( 'get', '/v3.0/orders/actions/', $get_params );
+		$result = Lengow_Connector::query_api(
+			Lengow_Connector::GET,
+			Lengow_Connector::API_ORDER_ACTION,
+			$get_params
+		);
 		if ( isset( $result->error ) && isset( $result->error->message ) ) {
 			throw new Lengow_Exception( $result->error->message );
 		}
@@ -314,8 +318,12 @@ class Lengow_Action {
 	 * @throws Lengow_Exception
 	 */
 	public static function send_action( $params, $order_lengow ) {
-		if ( ! Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
-			$result = Lengow_Connector::query_api( 'post', '/v3.0/orders/actions/', $params );
+		if ( ! Lengow_Configuration::debug_mode_is_active() ) {
+			$result = Lengow_Connector::query_api(
+				Lengow_Connector::POST,
+				Lengow_Connector::API_ORDER_ACTION,
+				$params
+			);
 			if ( isset( $result->id ) ) {
 				self::create(
 					array(
@@ -353,6 +361,23 @@ class Lengow_Action {
 	}
 
 	/**
+	 * Get interval time for action synchronisation.
+	 *
+	 * @return integer
+	 */
+	public static function get_interval_time() {
+		$interval_time               = self::MAX_INTERVAL_TIME;
+		$last_action_synchronisation = Lengow_Configuration::get( 'lengow_last_action_sync' );
+		if ( $last_action_synchronisation ) {
+			$last_interval_time = time() - (int) $last_action_synchronisation;
+			$last_interval_time = $last_interval_time + self::SECURITY_INTERVAL_TIME;
+			$interval_time      = $last_interval_time > $interval_time ? $interval_time : $last_interval_time;
+		}
+
+		return $interval_time;
+	}
+
+	/**
 	 * Check if active actions are finished.
 	 *
 	 * @param boolean $log_output see log or not
@@ -360,7 +385,7 @@ class Lengow_Action {
 	 * @return boolean
 	 */
 	public static function check_finish_action( $log_output = false ) {
-		if ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
+		if ( Lengow_Configuration::debug_mode_is_active() ) {
 			return false;
 		}
 		Lengow_Main::log(
@@ -372,18 +397,34 @@ class Lengow_Action {
 		if ( ! $active_actions ) {
 			return true;
 		}
-		// get all actions with API for 3 days.
-		$page        = 1;
-		$api_actions = array();
+		// get all actions with API (max 3 days).
+		$page          = 1;
+		$api_actions   = array();
+		$interval_time = self::get_interval_time();
+		$date_from     = time() - $interval_time;
+		$date_to       = time();
+		Lengow_Main::log(
+			Lengow_Log::CODE_ACTION,
+			Lengow_Main::set_log_message(
+				'log.import.connector_get_all_action',
+				array(
+					'date_from' => get_date_from_gmt( date( 'Y-m-d H:i:s', $date_from ) ),
+					'date_to'   => get_date_from_gmt( date( 'Y-m-d H:i:s', $date_to ) ),
+				)
+			),
+			$log_output
+		);
 		do {
 			$results = Lengow_Connector::query_api(
-				'get',
-				'/v3.0/orders/actions/',
+				Lengow_Connector::GET,
+				Lengow_Connector::API_ORDER_ACTION,
 				array(
-					'updated_from' => date( 'c', strtotime( date( 'Y-m-d' ) . ' -3days' ) ),
-					'updated_to'   => date( 'c' ),
+					'updated_from' => get_date_from_gmt( date( 'Y-m-d H:i:s', $date_from ), 'c' ),
+					'updated_to'   => get_date_from_gmt( date( 'Y-m-d H:i:s', $date_to ), 'c' ),
 					'page'         => $page,
-				)
+				),
+				'',
+				$log_output
 			);
 			if ( ! is_object( $results ) || isset( $results->error ) ) {
 				break;
@@ -451,6 +492,7 @@ class Lengow_Action {
 				}
 			}
 		}
+		Lengow_Configuration::update_value( 'lengow_last_action_sync', time() );
 
 		return true;
 	}
@@ -463,7 +505,7 @@ class Lengow_Action {
 	 * @return boolean
 	 */
 	public static function check_old_action( $log_output = false ) {
-		if ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
+		if ( Lengow_Configuration::debug_mode_is_active() ) {
 			return false;
 		}
 		Lengow_Main::log(
@@ -521,7 +563,7 @@ class Lengow_Action {
 	public static function get_old_actions() {
 		global $wpdb;
 
-		$date    = date( 'Y-m-d H:i:s', strtotime( '-3 days', time() ) );
+		$date    = date( 'Y-m-d H:i:s', ( time() - self::MAX_INTERVAL_TIME ) );
 		$query   = '
 			SELECT * FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ACTION . '
 			WHERE created_at <= %s
@@ -542,7 +584,7 @@ class Lengow_Action {
 	 * @return boolean
 	 */
 	public static function check_action_not_sent( $log_output = false ) {
-		if ( Lengow_Configuration::get( 'lengow_preprod_enabled' ) ) {
+		if ( Lengow_Configuration::debug_mode_is_active() ) {
 			return false;
 		}
 		Lengow_Main::log(

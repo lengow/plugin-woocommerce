@@ -47,9 +47,9 @@ class Lengow_Import_Order {
 	const RESULT_ERROR = 'error';
 
 	/**
-	 * @var boolean use preprod mode.
+	 * @var boolean use debug mode.
 	 */
-	private $_preprod_mode = false;
+	private $_debug_mode = false;
 
 	/**
 	 * @var boolean display log messages.
@@ -90,6 +90,11 @@ class Lengow_Import_Order {
 	 * @var boolean if order is first package.
 	 */
 	private $_first_package;
+
+	/**
+	 * @var boolean import one order var from lengow import.
+	 */
+	private $_import_one_order;
 
 	/**
 	 * @var boolean re-import order.
@@ -165,7 +170,7 @@ class Lengow_Import_Order {
 	 * Construct the import manager.
 	 *
 	 * @param $params array Optional options
-	 * boolean preprod_mode        preprod mode
+	 * boolean debug_mode          debug mode
 	 * boolean log_output          display log messages
 	 * string  marketplace_sku     order marketplace sku
 	 * integer delivery_address_id order delivery address id
@@ -174,15 +179,17 @@ class Lengow_Import_Order {
 	 * boolean first_package       it is the first package
 	 *
 	 * @throws Lengow_Exception
+	 *
 	 */
 	public function __construct( $params = array() ) {
-		$this->_preprod_mode        = $params['preprod_mode'];
+		$this->_debug_mode          = $params['debug_mode'];
 		$this->_log_output          = $params['log_output'];
 		$this->_marketplace_sku     = $params['marketplace_sku'];
 		$this->_delivery_address_id = $params['delivery_address_id'];
 		$this->_order_data          = $params['order_data'];
 		$this->_package_data        = $params['package_data'];
 		$this->_first_package       = $params['first_package'];
+		$this->_import_one_order    = $params['import_one_order'];
 		// get marketplace and Lengow order state.
 		$this->_marketplace             = Lengow_Main::get_marketplace_singleton(
 			(string) $this->_order_data->marketplace
@@ -195,6 +202,8 @@ class Lengow_Import_Order {
 	 * Create or update order.
 	 *
 	 * @return array|false
+	 * @throws Exception
+	 *
 	 */
 	public function import_order() {
 		// if order error exists and not finished.
@@ -210,7 +219,7 @@ class Lengow_Import_Order {
 					'log.import.error_already_created',
 					array(
 						'decoded_message' => $decoded_message,
-						'date_message'    => $order_error->created_at,
+						'date_message'    => get_date_from_gmt( $order_error->created_at ),
 					)
 				),
 				$this->_log_output,
@@ -238,7 +247,7 @@ class Lengow_Import_Order {
 		}
 		// checks if an external id already exists.
 		$order_id_woocommerce = $this->_check_external_ids( $this->_order_data->merchant_order_id );
-		if ( $order_id_woocommerce && ! $this->_preprod_mode && ! $this->_is_reimported ) {
+		if ( $order_id_woocommerce && ! $this->_debug_mode && ! $this->_is_reimported ) {
 			Lengow_Main::log(
 				Lengow_Log::CODE_IMPORT,
 				Lengow_Main::set_log_message(
@@ -254,8 +263,39 @@ class Lengow_Import_Order {
 		// get a record in the lengow order table.
 		$this->_order_lengow_id = Lengow_Order::get_id_from_lengow_orders(
 			$this->_marketplace_sku,
+			$this->_marketplace->name,
 			$this->_delivery_address_id
 		);
+
+		if ( ! $this->_import_one_order ) {
+			// skip import if the order is anonymized.
+			if ( $this->_order_data->anonymized ) {
+				Lengow_Main::log(
+					Lengow_Log::CODE_IMPORT,
+					Lengow_Main::set_log_message( 'log.import.anonymized_order' ),
+					$this->_log_output,
+					$this->_marketplace_sku
+				);
+
+				return false;
+			}
+
+			// skip import if the order is older than 3 months.
+			$date_time_order = new DateTime( $this->_order_data->marketplace_order_date );
+			$interval        = $date_time_order->diff( new DateTime() );
+			$months_interval = $interval->m + ( $interval->y * 12 );
+			if ( $months_interval >= Lengow_Import::MONTH_INTERVAL_TIME ) {
+				Lengow_Main::log(
+					Lengow_Log::CODE_IMPORT,
+					Lengow_Main::set_log_message( 'log.import.old_order' ),
+					$this->_log_output,
+					$this->_marketplace_sku
+				);
+
+				return false;
+			}
+		}
+
 		// if order is cancelled or new -> skip.
 		if ( ! Lengow_Import::check_state( $this->_order_state_marketplace, $this->_marketplace ) ) {
 			$order_process_state = Lengow_Order::get_order_process_state( $this->_order_state_lengow );
@@ -565,6 +605,7 @@ class Lengow_Import_Order {
 		if ( $result ) {
 			$this->_order_lengow_id = Lengow_Order::get_id_from_lengow_orders(
 				$this->_marketplace_sku,
+				$this->_marketplace->name,
 				$this->_delivery_address_id
 			);
 
@@ -753,7 +794,7 @@ class Lengow_Import_Order {
 	 * Get products from the API and check that they exist in WooCommerce database.
 	 *
 	 * @return array
-	 * @throws Lengow_Exception If product is not found
+	 * @throws Lengow_Exception
 	 *
 	 */
 	private function _get_products() {
@@ -848,7 +889,7 @@ class Lengow_Import_Order {
 	 * @param Lengow_Address $shipping_address Lengow shipping address
 	 *
 	 * @return WP_User|false
-	 * @throws Lengow_Exception Woocommerce customer not saved
+	 * @throws Lengow_Exception
 	 *
 	 */
 	private function _create_user( $user_email, $billing_address, $shipping_address ) {

@@ -59,7 +59,9 @@ if ( ! defined( 'ABSPATH' ) ) {
         <hr>
         <li>
             <span class="lgw-order-title"><?php echo $locale->t( 'meta_box.order_info.imported_date' ); ?></span>
-            <span class="lgw-order-label"><?php echo get_date_from_gmt( $order_lengow->created_at ); ?></span>
+            <span class="lgw-order-label">
+                <?php echo Lengow_Main::get_date_in_correct_format( strtotime( $order_lengow->created_at ) ); ?>
+            </span>
         </li>
     </ul>
     <ul>
@@ -104,7 +106,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 </div>
 
 <!-- ACTION BUTTONS -->
-<?php if ( ! $preprod ) : ?>
+<?php if ( ! $debug_mode ) : ?>
     <div id="lgw-box-order-buttons">
 		<?php if ( $can_send_action ) : ?>
             <button id="lgw-order-resend"

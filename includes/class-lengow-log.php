@@ -62,6 +62,11 @@ class Lengow_Log {
 	const CODE_ACTION = 'Action';
 
 	/**
+	 * @var string mail report .
+	 */
+	const CODE_MAIL_REPORT = 'Mail Report';
+
+	/**
 	 * @var string name of logs folder.
 	 */
 	public static $lengow_log_folder = 'logs';

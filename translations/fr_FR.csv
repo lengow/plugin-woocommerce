@@ -3,7 +3,7 @@ module.plugin_name|Lengow pour WooCommerce
 module.plugin_uri|https://www.lengow.com/fr/integrations/woocommerce/
 module.author_uri|http://www.lengow.com/fr
 module.description|Avec votre module Lengow pour WooCommerce vendez rapidement vos produits sur Amazon, Ebay, Facebook, Google Shopping, Criteo, Bing et d’autres et touchez facilement de nouveaux clients partout dans le monde. Plus de 1 800 canaux marketing vous attendent sur la plateforme Lengow !
-module.version|2.2.1
+module.version|2.3.0
 module.author|Lengow
 module.state_technical_error|Erreur technique - Lengow
 module.lengow_payment_title|Paiement Lengow
@@ -12,13 +12,15 @@ module.processing_fee|Frais de traitement
 menu.product|Produits
 menu.order|Commandes
 menu.jump_to_lengow|Accéder à Lengow
-menu.preprod_active|Mode préproduction
+menu.debug_active|Debug Mode
 menu.counter|Période d'essai : %{counter} jours restants
 menu.upgrade_account|Souscrire
 menu.order_overview|Vue d'ensemble
 menu.order_parameter|Paramètres des commandes
 menu.help|Aide
 menu.global_parameter|Paramètres principaux
+menu.new_version_available|La nouvelle version %{version} est disponible !
+menu.download_plugin|Télécharger
 footer.legals|Mentions légales
 footer.plugin_lengow|Lengow WooCommerce Plugin
 dashboard.screen.welcome_back|Bonjour ! Bienvenue parmi nous !
@@ -29,10 +31,6 @@ dashboard.screen.orders_title|Commandes
 dashboard.screen.orders_text|Gérer vos commandes directement sur votre tableau de bord WooCommerce
 dashboard.screen.settings_title|Paramètrage
 dashboard.screen.settings_text|Configurer les principaux paramètres de votre plugin WooCommerce
-dashboard.screen.partner_business|Lengow, partenaire de votre activité e-commerce
-dashboard.screen.stat_turnover|Chiffre d'affaires
-dashboard.screen.stat_nb_orders|Commandes
-dashboard.screen.stat_more_stats|Plus de statistiques ?
 dashboard.screen.some_help_title|Besoin d'aide ?
 dashboard.screen.get_in_touch|Prenez contact avec les équipes Lengow.
 dashboard.screen.visit_help_center|Visitez notre Help Center
@@ -42,12 +40,6 @@ status.screen.subtitle_end_free_trial|Vous avez atteint la fin de votre période
 status.screen.first_description_end_free_trial|Vos 15 jours d'essai gratuit sur la plateforme Lengow sont maintenant terminés. Nous espérons qu'ils ont été bénéfiques à votre activité e-commerce.
 status.screen.second_description_end_free_trial|Votre compte va être désactivé jusqu'à ce que vous souscriviez à un abonnement sur la plateforme Lengow. Toutes les diffusions en cours ainsi que les importations vont être momentanément stoppées.
 status.screen.third_description_end_free_trial|Votre compte d'essai sera supprimé 30 jours après expiration. Pour conserver l'intégralité des paramètres que vous avez défini, pensez à souscrire dès maintenant !
-status.screen.subtitle_bad_payer|Votre compte est temporairement fermé.
-status.screen.first_description_bad_payer|Nous sommes désolé mais nous devons temporairement limiter l'accès à votre compte car le paiement automatique de votre abonnement n'a pu se faire.
-status.screen.second_description_bad_payer|La publication de vos catalogues est aussi suspendue. Nous vous recommandons de prendre contact avec nous rapidement par mail
-status.screen.phone_bad_payer|ou par téléphone au +33 (0)2 85 52 64 15.
-status.screen.third_description_bad_payer|Nous espérons vous revoir très rapidement parmi nous
-status.screen.facturation_button|Voir mes informations de facturation
 status.screen.upgrade_account_button|Je suis prêt à souscrire !
 status.screen.refresh_action|Actualiser mon compte
 product.screen.nb_exported|produits exportés 
@@ -94,7 +86,7 @@ order.screen.order_to_be_sent|Vous avez %{nb_order} commande(s) en attente d'exp
 order.screen.last_order_importation|Dernière synchronisation
 order.screen.no_order_importation|Aucune synchronisation pour le moment
 order.screen.button_update_orders|Synchroniser les commandes
-order.screen.preprod_warning_message|Vous êtes en mode préproduction. Vous pouvez importer vos commandes mais les interactions avec Lengow ne sont pas possibles. <a href=%{url}>Retourner en mode production ?</a>
+order.screen.debug_warning_message|Vous êtes en Debug Mode. Vous pouvez importer vos commandes mais les interactions avec Lengow ne sont pas possibles. <a href=%{url}>Désactiver le Debug Mode ?</a>
 order.screen.status_not_synchronized|Non synchronisé
 order.screen.status_accepted|Accepté
 order.screen.status_waiting_shipment|En attente d'expédition
@@ -145,8 +137,8 @@ global_setting.screen.notification_alert_title|Notifications & alertes
 global_setting.screen.security_title|Sécurité
 global_setting.screen.tracker_title|Tracker Lengow
 global_setting.screen.tracker_description|Ce tracker vous permet de récupérer les statistiques de commandes de votre site directement sur la plateforme Lengow.
-global_setting.screen.preprod_mode_title|Mode préproduction
-global_setting.screen.preprod_mode_description|Utilisez la pré-production pour tester et simuler des commandes fictives. Pour rappel, vous devez activer ces paramètres UNIQUEMENT sur votre serveur de préproduction.
+global_setting.screen.debug_mode_title|Debug Mode
+global_setting.screen.debug_mode_description|Utilisez le Debug Mode pour tester et simuler des commandes fictives. Pour rappel, vous devez activer ce paramètre UNIQUEMENT sur votre serveur de préproduction
 global_setting.screen.log_file_title|Fichiers de Log
 global_setting.screen.log_file_description|Retrouvez ci-dessous tout l'historique des logs (commandes importées, messages d'erreurs...). Ils seront sauvegardés ici pendant 20 jours.
 global_setting.screen.button_download_file|Télécharger
@@ -209,7 +201,7 @@ lengow_settings.lengow_import_days_legend|Importez vos commandes depuis ... jour
 lengow_settings.lengow_import_ship_mp_enabled_title|Import des commandes expédiées par les places de marché
 lengow_settings.lengow_import_stock_ship_mp_title|Je veux diminuer mon stock
 lengow_settings.lengow_import_stock_ship_mp_legend|Activez cette option pour prendre en compte les commandes des places de marché sur les stocks de votre backoffice WooCommerce
-lengow_settings.lengow_preprod_enabled_title|Activer le mode préproduction
+lengow_settings.lengow_debug_enabled_title|Activer le Debug Mode
 lengow_settings.lengow_import_in_progress_title|Import en cours
 lengow_settings.lengow_last_import_manual_title|Dernier import manuel
 lengow_settings.lengow_last_import_cron_title|Dernier import CRON

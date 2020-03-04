@@ -4,7 +4,7 @@ Tags: woocommerce, ecommerce, feed, orders, marketplace, amazon, google shopping
 Requires at least: 3.5
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -45,7 +45,17 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 
 == Changelog ==
 
-= 2.2.1 - 2019-12-12 =
+= 2.3.0 - 2020-03-04 =
+* Feature: Refactoring and optimization of the connector class
+* Feature: [import] Protection of the import of anonymized orders
+* Feature: [import] Protection of the import of orders older than 3 months
+* Feature: Optimization of API calls for synchronisation of orders and actions
+* Feature: Display of an alert when the plugin is no longer up to date
+* Feature: Renaming from Preprod Mode to Debug Mode
+* Bugfix: Refactoring and optimization of dates with the correct locale
+* Bugfix: [import] Enhanced security for orders that change their marketplace name
+
+= 2.2.1 - 2020-01-06 =
 * Feature: Adding compatibility with php 7.3
 * Feature: Update of the GNU General Public License in version 3
 * Feature: Add readme.txt file for WordPress validation
