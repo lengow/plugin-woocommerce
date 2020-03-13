@@ -45,7 +45,7 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 
 == Changelog ==
 
-= 2.3.1 - xxxx-xx-xx =
+= 2.3.1 - 2020-03-13 =
 * Bugfix: Addition of the http 201 code in the success codes
 
 = 2.3.0 - 2020-03-04 =
