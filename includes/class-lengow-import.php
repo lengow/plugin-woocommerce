@@ -32,22 +32,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Import {
 
 	/**
-	 * @var integer max interval time for order synchronisation old versions (1 day)
+	 * @var integer max interval time for order synchronisation old versions (1 day).
 	 */
 	const MIN_INTERVAL_TIME = 86400;
 
 	/**
-	 * @var integer max import days for old versions (10 days)
+	 * @var integer max import days for old versions (10 days).
 	 */
 	const MAX_INTERVAL_TIME = 864000;
 
 	/**
-	 * @var integer security interval time for cron synchronisation (2 hours)
+	 * @var integer security interval time for cron synchronisation (2 hours).
 	 */
 	const SECURITY_INTERVAL_TIME = 7200;
 
 	/**
-	 * @var integer interval of months for cron synchronisation
+	 * @var integer interval of months for cron synchronisation.
 	 */
 	const MONTH_INTERVAL_TIME = 3;
 

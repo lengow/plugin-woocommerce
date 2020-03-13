@@ -4,7 +4,7 @@ Tags: woocommerce, ecommerce, feed, orders, marketplace, amazon, google shopping
 Requires at least: 3.5
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 2.2.2
+Stable tag: 2.3.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -44,6 +44,9 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 4. Log in with your Lengow credentials and configure the plugin
 
 == Changelog ==
+
+= 2.3.1 - 2020-03-13 =
+* Bugfix: Addition of the http 201 code in the success codes
 
 = 2.3.0 - 2020-03-04 =
 * Feature: Refactoring and optimization of the connector class
