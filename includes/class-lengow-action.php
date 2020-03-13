@@ -335,7 +335,7 @@ class Lengow_Action {
 					)
 				);
 			} else {
-				if ( null !== $result ) {
+				if ( $result && null !== $result ) {
 					$message = Lengow_Main::set_log_message(
 						'lengow_log.exception.action_not_created',
 						array( 'error_message' => json_encode( $result ) )
