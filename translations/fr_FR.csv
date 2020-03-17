@@ -3,7 +3,7 @@ module.plugin_name|Lengow pour WooCommerce
 module.plugin_uri|https://www.lengow.com/fr/integrations/woocommerce/
 module.author_uri|http://www.lengow.com/fr
 module.description|Avec votre module Lengow pour WooCommerce vendez rapidement vos produits sur Amazon, Ebay, Facebook, Google Shopping, Criteo, Bing et d’autres et touchez facilement de nouveaux clients partout dans le monde. Plus de 1 800 canaux marketing vous attendent sur la plateforme Lengow !
-module.version|2.3.1
+module.version|2.3.2
 module.author|Lengow
 module.state_technical_error|Erreur technique - Lengow
 module.lengow_payment_title|Paiement Lengow

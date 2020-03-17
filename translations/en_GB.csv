@@ -3,7 +3,7 @@ module.plugin_name|Lengow for WooCommerce
 module.plugin_uri|https://www.lengow.com/integrations/woocommerce/
 module.author_uri|http://www.lengow.com
 module.description|Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
-module.version|2.3.1
+module.version|2.3.2
 module.author|Lengow
 module.state_technical_error|Technical error - Lengow
 module.lengow_payment_title|Lengow payment
