@@ -859,14 +859,14 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		$price            = Lengow_Main::compare_version( '2.1.0', '<' )
 			? $order_lengow->total_paid . get_woocommerce_currency_symbol( $order_lengow->currency )
 			: wc_price( $order_lengow->total_paid, array( 'currency' => $order_lengow->currency ) );
-		$nbProductTooltip = Lengow_Main::decode_log_message(
+		$nb_product_tooltip = Lengow_Main::decode_log_message(
 			'order.screen.nb_product',
 			null,
 			array( 'nb' => $order_lengow->order_item )
 		);
 
 		return '
-			<span class="lengow_link_tooltip" data-original-title="' . $nbProductTooltip . '"/>'
+			<span class="lengow_link_tooltip" data-original-title="' . $nb_product_tooltip . '"/>'
 		        . $price .
 		    '</span>
 		';
