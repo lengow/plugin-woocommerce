@@ -252,11 +252,12 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		$lengow_admin_orders->locale    = new Lengow_Translation();
 		$lengow_admin_orders->countries = $countries_instance->countries;
 		$lengow_admin_orders->prepare_items();
-		$lengow_admin_orders->search(
-			$lengow_admin_orders->locale->t( 'order.table.button_search' ),
-			'search_id'
-		);
+		echo '<form id="post-filter" method="post">';
+		// the hidden element is needed to load the right page.
+		echo '<input type="hidden" name="page" value="lengow_list" />';
+		$lengow_admin_orders->search_box( $lengow_admin_orders->locale->t( 'order.table.button_search' ), 'search_id' );
 		$lengow_admin_orders->display();
+		echo '</form>';
 
 	}
 
@@ -288,6 +289,96 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	}
 
 	/**
+	 * Add extra markup in the toolbars before or after the list.
+	 *
+	 * @param string $which , helps you decide if you add the markup after (bottom) or before (top) the list
+	 */
+	public function extra_tablenav( $which ) {
+		if ( 'top' === $which ) {
+			$content = '<div id="lgw-order-filter">';
+			$filters = array(
+				array(
+					'name'        => 'order_action',
+					'placeholder' => $this->locale->t( 'order.screen.placeholder_action' ),
+					'options'     => array(
+						'success' => $this->locale->t( 'order.screen.action_success' ),
+						'error'   => $this->locale->t( 'order.screen.action_error' ),
+					),
+				),
+				array(
+					'name'        => 'order_status',
+					'placeholder' => $this->locale->t( 'order.screen.placeholder_order_status' ),
+					'options'     => array(
+						Lengow_Order::STATE_ACCEPTED         => $this->locale->t( 'order.screen.status_accepted' ),
+						Lengow_Order::STATE_WAITING_SHIPMENT => $this->locale->t(
+							'order.screen.status_waiting_shipment'
+						),
+						Lengow_Order::STATE_SHIPPED          => $this->locale->t( 'order.screen.status_shipped' ),
+						Lengow_Order::STATE_REFUNDED         => $this->locale->t( 'order.screen.status_refunded' ),
+						Lengow_Order::STATE_CLOSED           => $this->locale->t( 'order.screen.status_closed' ),
+						Lengow_Order::STATE_CANCELED         => $this->locale->t( 'order.screen.status_canceled' ),
+					),
+				),
+				array(
+					'name'        => 'order_type',
+					'placeholder' => $this->locale->t( 'order.screen.placeholder_order_types' ),
+					'options'     => array(
+						Lengow_Order::TYPE_EXPRESS                  => $this->locale->t( 'order.screen.type_express' ),
+						Lengow_Order::TYPE_DELIVERED_BY_MARKETPLACE => $this->locale->t(
+							'order.screen.type_delivered_by_marketplace'
+						),
+						Lengow_Order::TYPE_BUSINESS                 => $this->locale->t( 'order.screen.type_business' ),
+					),
+				),
+				array(
+					'name'        => 'order_marketplace',
+					'placeholder' => $this->locale->t( 'order.screen.placeholder_marketplace' ),
+					'options'     => Lengow_Order::get_marketplace_list(),
+				),
+			);
+			foreach ( $filters as $filter ) {
+				$option_selected = ( isset( $_REQUEST[ $filter['name'] ] ) && ! empty( $_REQUEST[ $filter['name'] ] ) )
+					? $_REQUEST[ $filter['name'] ]
+					: '';
+				$content         .= '<select name="' . $filter['name'] . '">';
+				$content         .= '<option value="" >' . $filter['placeholder'] . '</option>';
+				foreach ( $filter['options'] as $option_id => $option_label ) {
+					$selected = $option_selected === $option_id ? 'selected' : '';
+					$content  .= '<option value="' . $option_id . '" ' . $selected . ' >' . $option_label . '</option>';
+				}
+				$content .= '</select>';
+			}
+			$order_from = ( isset( $_REQUEST['order_from'] ) && ! empty( $_REQUEST['order_from'] ) )
+				? $_REQUEST['order_from']
+				: '';
+			$order_to   = ( isset( $_REQUEST['order_to'] ) && ! empty( $_REQUEST['order_to'] ) )
+				? $_REQUEST['order_to']
+				: '';
+			$content    .= '
+				<div class="lengow_datepicker_box">
+					<input type="search"
+						   name="order_from"
+						   placeholder="' . $this->locale->t( 'order.screen.placeholder_from' ) . '"
+						   value="' . $order_from . '"
+						   class="lengow_datepicker" />
+					<input type="search"
+						   name="order_to"
+						   placeholder="' . $this->locale->t( 'order.screen.placeholder_to' ) . '"
+						   value="' . $order_to . '"
+						   class="lengow_datepicker" />
+				</div>';
+			$content    .= '
+				<input type="submit" 
+					   name="filter_action" 
+					   id="post-query-submit" 
+					   class="button" 
+					   value="' . $this->locale->t( 'order.screen.filter_action' ) . '" />';
+			$content    .= '</div>';
+			echo $content;
+		}
+	}
+
+	/**
 	 * Get all columns.
 	 *
 	 * @return array
@@ -295,17 +386,17 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	public function get_columns() {
 		// columns label on the top and bottom of the table.
 		$columns = array(
-			'cb'          => '<input type="checkbox" />',
-			'action'      => $this->locale->t( 'order.table.action' ),
-			'status'      => $this->locale->t( 'order.table.lengow_status' ),
-			'marketplace' => $this->locale->t( 'order.table.marketplace' ),
-			'order_id'    => $this->locale->t( 'order.table.order_id' ),
-			'customer'    => $this->locale->t( 'order.table.customer' ),
-			'reference'   => $this->locale->t( 'order.table.reference' ),
-			'date'        => $this->locale->t( 'order.table.date' ),
-			'country'     => $this->locale->t( 'order.table.country' ),
-			'quantity'    => $this->locale->t( 'order.table.quantity' ),
-			'total'       => $this->locale->t( 'order.table.total' ),
+			'cb'              => '<input type="checkbox" />',
+			'action'          => $this->locale->t( 'order.table.action' ),
+			'status'          => $this->locale->t( 'order.table.lengow_status' ),
+			'order_types'     => $this->locale->t( 'order.table.order_types' ),
+			'marketplace_sku' => $this->locale->t( 'order.table.marketplace_sku' ),
+			'marketplace'     => $this->locale->t( 'order.table.marketplace' ),
+			'reference'       => $this->locale->t( 'order.table.reference' ),
+			'customer'        => $this->locale->t( 'order.table.customer' ),
+			'date'            => $this->locale->t( 'order.table.date' ),
+			'country'         => $this->locale->t( 'order.table.country' ),
+			'total'           => $this->locale->t( 'order.table.total' ),
 		);
 
 		return $columns;
@@ -314,7 +405,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	/**
 	 * Define all columns for specific method.
 	 *
-	 * @param array $item order datas
+	 * @param array $item order data
 	 * @param string $column_name column name
 	 *
 	 * @return array
@@ -325,13 +416,13 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		switch ( $column_name ) {
 			case 'action':
 			case 'status':
+			case 'order_types':
+			case 'marketplace_sku':
 			case 'marketplace':
-			case 'order_id':
-			case 'customer':
 			case 'reference':
+			case 'customer':
 			case 'date':
 			case 'country':
-			case 'quantity':
 			case 'total':
 				return $item[ $column_name ];
 				break;
@@ -350,16 +441,16 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			// the second parameter in the value array takes care of a possible pre-ordered column.
 			// if the value is true the column is assumed to be ordered ascending.
 			// if the value is false the column is assumed descending or unordered.
-			'action'      => array( 'action', false ),
-			'status'      => array( 'status', false ),
-			'marketplace' => array( 'marketplace', false ),
-			'order_id'    => array( 'order_id', false ),
-			'customer'    => array( 'customer', false ),
-			'reference'   => array( 'reference', false ),
-			'date'        => array( 'date', true ),
-			'country'     => array( 'country', false ),
-			'quantity'    => array( 'quantity', false ),
-			'total'       => array( 'total', false ),
+			'action'          => array( 'action', false ),
+			'status'          => array( 'status', false ),
+			'order_types'     => array( 'order_types', false ),
+			'marketplace_sku' => array( 'marketplace_sku', false ),
+			'marketplace'     => array( 'marketplace', false ),
+			'reference'       => array( 'reference', false ),
+			'customer'        => array( 'customer', false ),
+			'date'            => array( 'date', true ),
+			'country'         => array( 'country', false ),
+			'total'           => array( 'total', false ),
 		);
 
 		return $sortable_columns;
@@ -383,20 +474,6 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	}
 
 	/**
-	 * Search box.
-	 *
-	 * @param string $text text for search
-	 * @param string $input_id id for search
-	 */
-	public function search( $text, $input_id ) {
-		echo '<form id="post-filter" method="post">';
-		// the hidden element is needed to load the right page.
-		echo '<input type="hidden" name="page" value="lengow_list" />';
-		echo $this->search_box( $text, $input_id );
-		echo '</form>';
-	}
-
-	/**
 	 * Get all orders meta.
 	 *
 	 * @return array
@@ -407,21 +484,16 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			'id',
 			'action',
 			'status',
+			'order_types',
+			'marketplace_sku',
 			'marketplace',
-			'order_id',
-			'customer',
 			'reference',
+			'customer',
 			'date',
 			'country',
-			'quantity',
 			'total',
 		);
-		// filter by search box.
-		if ( isset( $_POST['s'] ) ) {
-			$orders = $this->_request_get_orders( $_POST['s'] );
-		} else {
-			$orders = $this->_request_get_orders();
-		}
+		$orders  = $this->_request_get_orders( $_REQUEST );
 		// get order data.
 		foreach ( $keys as $key ) {
 			foreach ( $orders as $order ) {
@@ -435,26 +507,26 @@ class Lengow_Admin_Orders extends WP_List_Table {
 					case 'status' :
 						$orders_data = $this->_display_status( $order );
 						break;
+					case 'order_types' :
+						$orders_data = $this->_display_order_types( $order );
+						break;
+					case 'marketplace_sku' :
+						$orders_data = $order->marketplace_sku;
+						break;
 					case 'marketplace' :
 						$orders_data = $order->marketplace_label;
 						break;
-					case 'order_id' :
-						$orders_data = $order->marketplace_sku;
+					case 'reference' :
+						$orders_data = $this->_display_reference( $order );
 						break;
 					case 'customer' :
 						$orders_data = $order->customer_name;
-						break;
-					case 'reference' :
-						$orders_data = $this->_display_reference( $order );
 						break;
 					case 'date' :
 						$orders_data = get_date_from_gmt( $order->order_date );
 						break;
 					case 'country' :
 						$orders_data = $this->_display_country( $order );
-						break;
-					case 'quantity' :
-						$orders_data = $order->order_item;
 						break;
 					case 'total' :
 						$orders_data = $this->_display_total( $order );
@@ -473,16 +545,16 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	/**
 	 * Sort orders (default by desc status).
 	 *
-	 * @param array $a order datas
-	 * @param array $b order datas
+	 * @param array $a order data
+	 * @param array $b order data
 	 *
 	 * @return string
 	 */
 	private function _usort_reorder( $a, $b ) {
 		// if no sort, default to status.
-		$order_by = ! empty( $_GET['orderby'] ) ? $_GET['orderby'] : 'date';
+		$order_by = ! empty( $_REQUEST['orderby'] ) ? $_REQUEST['orderby'] : 'date';
 		// if no order, default to asc.
-		$order = ! empty( $_GET['order'] ) ? $_GET['order'] : 'asc';
+		$order = ! empty( $_REQUEST['order'] ) ? $_REQUEST['order'] : 'asc';
 		// determine sort order.
 		$result = strcmp( $a[ $order_by ], $b[ $order_by ] );
 
@@ -493,47 +565,114 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	/**
 	 * Construct request and return orders.
 	 *
-	 * @param string $search search
+	 * @param array $request search request
 	 *
 	 * @return array
 	 */
-	private function _request_get_orders( $search = null ) {
+	private function _request_get_orders( $request ) {
 		global $wpdb;
+		$conditions   = array();
 		$array_search = array();
 		$fields       = array(
-			'orders.id',
-			'orders.order_lengow_state',
-			'orders.marketplace_label',
-			'orders.marketplace_sku',
-			'orders.customer_name',
-			'orders.order_id',
-			'orders.order_date',
-			'orders.delivery_country_iso',
-			'orders.order_item',
-			'orders.total_paid',
-			'orders.currency',
-			'orders.is_in_error',
-			'orders.order_process_state',
-			'orders.sent_marketplace',
+			'lo.id',
+			'lo.order_lengow_state',
+			'lo.marketplace_name',
+			'lo.marketplace_label',
+			'lo.marketplace_sku',
+			'lo.customer_name',
+			'lo.order_id',
+			'lo.order_date',
+			'lo.order_types',
+			'lo.delivery_country_iso',
+			'lo.order_item',
+			'lo.total_paid',
+			'lo.currency',
+			'lo.is_in_error',
+			'lo.order_process_state',
+			'lo.sent_marketplace',
 		);
-		$query        = 'SELECT ' . join( ', ', $fields ) . ' FROM ' . $wpdb->prefix . 'lengow_orders AS orders';
-		if ( ! empty( $search ) ) {
+		$query        = 'SELECT ' . join( ', ', $fields ) . ' FROM ' . $wpdb->prefix . 'lengow_orders AS lo';
+		// search field.
+		if ( isset( $request['s'] ) && ! empty( $request['s'] ) ) {
 			// changes $search for LIKE %% use.
-			$search        = '%' . $search . '%';
-			$search_fields = [ 'marketplace_label', 'marketplace_sku', 'order_id', 'customer_name' ];
-			$conditions    = array();
+			$search              = '%' . $request['s'] . '%';
+			$search_query_fields = array();
+			$search_fields       = [ 'marketplace_sku', 'order_id', 'customer_name' ];
 			foreach ( $search_fields as $search_field ) {
-				$conditions[] = $search_field . ' LIKE ' . '%s';
+				$search_query_fields[] = 'lo.' . $search_field . ' LIKE ' . '%s';
 			}
-			$query .= ' WHERE ' . join( ' OR ', $conditions );
-			// Wordpress needs one parameter by placeholder.
+			$conditions[] = '(' . join( ' OR ', $search_query_fields ) . ')';
 			for ( $i = 0; $i < count( $search_fields ); $i ++ ) {
 				$array_search[] = $search;
 			}
 		}
-		$prepare_query = empty( $search ) ? $query : $wpdb->prepare( $query, $array_search );
-		$result        = $wpdb->get_results( $prepare_query );
-		$return        = $result ? $result : array();
+		// order filters.
+		if ( isset( $request['order_action'] ) && ! empty( $request['order_action'] ) ) {
+			if ( 'error' === $request['order_action'] ) {
+				$conditions[]   = '(lo.is_in_error = %d AND lo.order_process_state != %d)';
+				$array_search[] = 1;
+				$array_search[] = Lengow_Order::PROCESS_STATE_FINISH;
+			} else {
+				$conditions[]   = 'lo.is_in_error = %d';
+				$array_search[] = 0;
+			}
+		}
+		if ( isset( $request['order_status'] ) && ! empty( $request['order_status'] ) ) {
+			$conditions[]   = 'lo.order_lengow_state = %s';
+			$array_search[] = $request['order_status'];
+		}
+		if ( isset( $request['order_type'] ) && ! empty( $request['order_type'] ) ) {
+			$orderType = $request['order_type'];
+			if ( Lengow_Order::TYPE_EXPRESS === $orderType ) {
+				$conditions[]   = '(lo.order_types LIKE %s OR lo.order_types LIKE %s)';
+				$array_search[] = '%' . Lengow_Order::TYPE_EXPRESS . '%';
+				$array_search[] = '%' . Lengow_Order::TYPE_PRIME . '%';
+			} elseif ( Lengow_Order::TYPE_DELIVERED_BY_MARKETPLACE === $orderType ) {
+				$conditions[]   = '(lo.order_types LIKE %s OR lo.sent_marketplace = %d)';
+				$array_search[] = '%' . Lengow_Order::TYPE_DELIVERED_BY_MARKETPLACE . '%';
+				$array_search[] = 1;
+			} else {
+				$conditions[]   = 'lo.order_types LIKE %s';
+				$array_search[] = '%' . Lengow_Order::TYPE_BUSINESS . '%';
+			}
+		}
+		if ( isset( $request['order_marketplace'] ) && ! empty( $request['order_marketplace'] ) ) {
+			$conditions[]   = 'lo.marketplace_name = %s';
+			$array_search[] = $request['order_marketplace'];
+		}
+		$order_from = ( isset( $request['order_from'] ) && ! empty( $request['order_from'] ) )
+			? $request['order_from']
+			: false;
+		$order_to   = ( isset( $request['order_to'] ) && ! empty( $request['order_to'] ) )
+			? $request['order_to']
+			: false;
+		if ( $order_from || $order_to ) {
+			if ( preg_match( '/^\d{2}\/\d{2}\/\d{4}$/', $order_from )
+			     && preg_match( '/^\d{2}\/\d{2}\/\d{4}$/', $order_to )
+			) {
+				$from           = DateTime::createFromFormat( 'd/m/Y', $order_from );
+				$to             = DateTime::createFromFormat( 'd/m/Y', $order_to );
+				$conditions[]   = ' lo.order_date BETWEEN %s AND %s';
+				$array_search[] = $from->format( 'Y-m-d' ) . ' 00:00:00';
+				$array_search[] = $to->format( 'Y-m-d' ) . ' 23:59:59';
+			} elseif ( preg_match( '/^\d{2}\/\d{2}\/\d{4}$/', $order_from ) ) {
+				$from           = DateTime::createFromFormat( 'd/m/Y', $order_from );
+				$conditions[]   = ' lo.order_date >= %s';
+				$array_search[] = $from->format( 'Y-m-d' ) . ' 00:00:00';
+			} elseif ( preg_match( '/^\d{2}\/\d{2}\/\d{4}$/', $order_to ) ) {
+				$to             = DateTime::createFromFormat( 'd/m/Y', $order_to );
+				$conditions[]   = ' lo.order_date <= %s';
+				$array_search[] = $to->format( 'Y-m-d' ) . ' 23:59:59';
+			}
+		}
+		if ( ! empty( $conditions ) ) {
+			$query         .= ' WHERE ' . join( ' AND ', $conditions );
+			$prepare_query = $wpdb->prepare( $query, $array_search );
+		} else {
+			$prepare_query = $query;
+		}
+		$result = $wpdb->get_results( $prepare_query );
+		$return = $result ? $result : array();
 
 		return $return;
 	}
@@ -574,11 +713,11 @@ class Lengow_Admin_Orders extends WP_List_Table {
 							Lengow_Main::decode_log_message( $error->message )
 						);
 					} else {
-						$error_messages[] = Lengow_Main::decode_log_message( 'order.table.no_error_message' );
+						$error_messages[] = $locale->t( 'order.table.no_error_message' );
 					}
 				}
 				if ( Lengow_Order::PROCESS_STATE_NOT_IMPORTED === $order_process_state ) {
-					$message     = Lengow_Main::decode_log_message( 'order.table.order_not_imported' )
+					$message     = $locale->t( 'order.table.order_not_imported' )
 					               . '<br/>' . join( '<br/>', $error_messages );
 					$value       = '<a href="#"
 									class="lengow_action lengow_link_tooltip lgw-btn lgw-btn-white"
@@ -586,11 +725,11 @@ class Lengow_Admin_Orders extends WP_List_Table {
 				                    data-order="' . $order_lengow->id . '"
 				                    data-html="true"
 				                    data-original-title="' . $message . '">'
-					               . Lengow_Main::decode_log_message( 'order.table.not_imported' )
+					               . $locale->t( 'order.table.not_imported' )
 					               . ' <i class="fa fa-refresh"></i></a>';
 					$orders_data = $value;
 				} else {
-					$message     = Lengow_Main::decode_log_message( 'order.table.action_sent_not_work' )
+					$message     = $locale->t( 'order.table.action_sent_not_work' )
 					               . '<br/>' . join( '<br/>', $error_messages );
 					$value       = '<a href="#"
 									class="lengow_action lengow_link_tooltip lgw-btn lgw-btn-white"
@@ -598,7 +737,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 				                    data-order="' . $order_lengow->id . '"
 				                    data-html="true"
 				                    data-original-title="' . $message . '">'
-					               . Lengow_Main::decode_log_message( 'order.table.not_sent' )
+					               . $locale->t( 'order.table.not_sent' )
 					               . ' <i class="fa fa-refresh"></i></a>';
 					$orders_data = $value;
 				}
@@ -607,17 +746,15 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			if ( $order_lengow->order_id && Lengow_Order::PROCESS_STATE_IMPORT === $order_process_state ) {
 				$last_action = Lengow_Action::get_last_order_action_type( $order_lengow->order_id );
 				if ( $last_action ) {
-					$message     = $locale->t( 'order.table.action_sent', array( 'action_type' => $last_action ) );
 					$value       = '<a class="lengow_action lengow_link_tooltip lgw-btn lgw-btn-white lgw-link-disabled"
 				                    data-order="' . $order_lengow->id . '"
 				                    data-action="' . 'none' . '"
-				                    data-original-title="' . $message . '"
-				                    >
-					               Action sent</a>';
+				                    data-original-title="' . $locale->t( 'order.table.action_waiting_return' ) . '">'
+				                    . $locale->t( 'order.table.action_sent', array( 'action_type' => $last_action ) )
+				                    . '</a>';
 					$orders_data = $value;
 				}
 			}
-
 		}
 
 		return $orders_data;
@@ -631,9 +768,44 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 * @return string
 	 */
 	private function _display_status( $order_lengow ) {
-		return '<span class="lgw-label lgw-label-' . $order_lengow->order_lengow_state . '">'
+		return '<span class="lgw-label lgw-order-status lgw-label-' . $order_lengow->order_lengow_state . '">'
 		       . Lengow_Main::decode_log_message( 'order.screen.status_' . $order_lengow->order_lengow_state )
 		       . '</span>';
+	}
+
+	/**
+	 * Generate order types.
+	 *
+	 * @param Object $order_lengow Lengow order row
+	 *
+	 * @return string
+	 */
+	private function _display_order_types( $order_lengow ) {
+		$return      = '<div>';
+		$order_types = null !== $order_lengow->order_types ? json_decode( $order_lengow->order_types, true ) : array();
+		if ( array_key_exists( Lengow_Order::TYPE_EXPRESS, $order_types )
+		     || array_key_exists( Lengow_Order::TYPE_PRIME, $order_types )
+		) {
+			$icon_label = isset( $order_types[ Lengow_Order::TYPE_PRIME ] )
+				? $order_types[ Lengow_Order::TYPE_PRIME ]
+				: $order_types[ Lengow_Order::TYPE_EXPRESS ];
+			$return     .= $this->_generate_order_type_icon( $icon_label, 'orange-light', 'mod-chrono' );
+		}
+		if ( array_key_exists( Lengow_Order::TYPE_DELIVERED_BY_MARKETPLACE, $order_types )
+		     || $order_lengow->sent_marketplace
+		) {
+			$icon_label = isset( $order_types[ Lengow_Order::TYPE_DELIVERED_BY_MARKETPLACE ] )
+				? $order_types[ Lengow_Order::TYPE_DELIVERED_BY_MARKETPLACE ]
+				: Lengow_Order::LABEL_FULFILLMENT;
+			$return     .= self::_generate_order_type_icon( $icon_label, 'green-light', 'mod-delivery' );
+		}
+		if ( array_key_exists( Lengow_Order::TYPE_BUSINESS, $order_types ) ) {
+			$icon_label = $order_types[ Lengow_Order::TYPE_BUSINESS ];
+			$return     .= self::_generate_order_type_icon( $icon_label, 'blue-light', 'mod-pro' );
+		}
+		$return .= '</div>';
+
+		return $return;
 	}
 
 	/**
@@ -648,13 +820,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			$return = '<a href="' . admin_url() . 'post.php?post=' . $order_lengow->order_id
 			          . '&action=edit" target="_blank">' . $order_lengow->order_id . '</a>';
 		} else {
-			if ( (bool) $order_lengow->sent_marketplace ) {
-				$return = '<span class="lgw-label">'
-				          . Lengow_Main::decode_log_message( 'order.screen.status_shipped_by_mkp' )
-				          . '</span>';
-			} else {
-				$return = '';
-			}
+			$return = '';
 		}
 
 		return $return;
@@ -690,8 +856,37 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 * @return string
 	 */
 	private function _display_total( $order_lengow ) {
-		return Lengow_Main::compare_version( '2.1.0', '<' )
+		$price            = Lengow_Main::compare_version( '2.1.0', '<' )
 			? $order_lengow->total_paid . get_woocommerce_currency_symbol( $order_lengow->currency )
-			: wc_price( $order_lengow->total_paid, array( 'currency' => $order_lengow->currency ) );;
+			: wc_price( $order_lengow->total_paid, array( 'currency' => $order_lengow->currency ) );
+		$nbProductTooltip = Lengow_Main::decode_log_message(
+			'order.screen.nb_product',
+			null,
+			array( 'nb' => $order_lengow->order_item )
+		);
+
+		return '
+			<span class="lengow_link_tooltip" data-original-title="' . $nbProductTooltip . '"/>'
+		        . $price .
+		    '</span>
+		';
+	}
+
+	/**
+	 * Generate order type icon.
+	 *
+	 * @param string $icon_label icon label for tooltip
+	 * @param string $icon_color icon background color
+	 * @param string $icon_mod icon mod for image
+	 *
+	 * @return string
+	 */
+	private function _generate_order_type_icon( $icon_label, $icon_color, $icon_mod ) {
+		return '
+            <div class="lgw-label ' . $icon_color . ' icon-solo lengow_link_tooltip" 
+                 data-original-title="' . $icon_label . '">
+                <span class="lgw-icon ' . $icon_mod . '">
+            </div>
+        ';
 	}
 }

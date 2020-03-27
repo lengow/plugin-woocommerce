@@ -64,7 +64,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <div class="js-lengow_feed_block_footer_content"
                          style="<?php if ( ! $shop['option_selected'] ): ?>display:none;<?php endif; ?>">
                         <div class="lengow_table_top">
-                            <div class="js-lengow_toolbar" style="display:none;">
+                            <div id="lgw-product-toolbar" class="js-lengow_toolbar" style="display:none;">
                                 <a href="#"
                                    data-export-action="remove_to_export"
                                    data-action="export_mass_action"

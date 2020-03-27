@@ -137,6 +137,11 @@ class Lengow_Import_Order {
 	private $_order_item;
 
 	/**
+	 * @var array order types (is_express, is_prime...).
+	 */
+	private $_order_types;
+
+	/**
 	 * @var string|null carrier.
 	 */
 	private $_carrier = null;
@@ -266,7 +271,6 @@ class Lengow_Import_Order {
 			$this->_marketplace->name,
 			$this->_delivery_address_id
 		);
-
 		if ( ! $this->_import_one_order ) {
 			// skip import if the order is anonymized.
 			if ( $this->_order_data->anonymized ) {
@@ -279,7 +283,6 @@ class Lengow_Import_Order {
 
 				return false;
 			}
-
 			// skip import if the order is older than 3 months.
 			$date_time_order = new DateTime( $this->_order_data->marketplace_order_date );
 			$interval        = $date_time_order->diff( new DateTime() );
@@ -295,7 +298,6 @@ class Lengow_Import_Order {
 				return false;
 			}
 		}
-
 		// if order is cancelled or new -> skip.
 		if ( ! Lengow_Import::check_state( $this->_order_state_marketplace, $this->_marketplace ) ) {
 			$order_process_state = Lengow_Order::get_order_process_state( $this->_order_state_lengow );
@@ -327,6 +329,8 @@ class Lengow_Import_Order {
 		}
 		// load order date.
 		$this->_load_order_date();
+		// load order types data.
+		$this->_load_order_types_data();
 		// create a new record in lengow order table if not exist.
 		if ( ! $this->_order_lengow_id ) {
 			// created a record in the lengow order table.
@@ -587,6 +591,22 @@ class Lengow_Import_Order {
 	}
 
 	/**
+	 * Get order types data and update Lengow order record.
+	 */
+	private function _load_order_types_data() {
+		$order_types = array();
+		if ( null !== $this->_order_data->order_types && ! empty( $this->_order_data->order_types ) ) {
+			foreach ( $this->_order_data->order_types as $order_type ) {
+				$order_types[ $order_type->type ] = $order_type->label;
+				if ( Lengow_Order::TYPE_DELIVERED_BY_MARKETPLACE === $order_type->type ) {
+					$this->_sent_marketplace = true;
+				}
+			}
+		}
+		$this->_order_types = $order_types;
+	}
+
+	/**
 	 * Create a order in lengow orders table.
 	 *
 	 * @return boolean
@@ -598,6 +618,7 @@ class Lengow_Import_Order {
 			'marketplace_label'   => $this->_marketplace->label_name,
 			'delivery_address_id' => $this->_delivery_address_id,
 			'order_date'          => $this->_order_date,
+			'order_types'         => json_encode( $this->_order_types ),
 			'order_lengow_state'  => $this->_order_state_lengow,
 			'extra'               => json_encode( $this->_order_data ),
 		);
@@ -743,16 +764,13 @@ class Lengow_Import_Order {
 	 * Load tracking data for order creation.
 	 */
 	private function _load_tracking_data() {
-		$trackings = $this->_package_data->delivery->trackings;
-		if ( ! empty( $trackings ) ) {
-			$tracking                = $trackings[0];
+		$tracks = $this->_package_data->delivery->trackings;
+		if ( ! empty( $tracks ) ) {
+			$tracking                = $tracks[0];
 			$this->_carrier          = null !== $tracking->carrier ? (string) $tracking->carrier : null;
 			$this->_carrier_method   = null !== $tracking->method ? (string) $tracking->method : null;
 			$this->_carrier_tracking = null !== $tracking->number ? (string) $tracking->number : null;
 			$this->_carrier_id_relay = null !== $tracking->relay->id ? (string) $tracking->relay->id : null;
-			if ( null !== $tracking->is_delivered_by_marketplace && $tracking->is_delivered_by_marketplace ) {
-				$this->_sent_marketplace = true;
-			}
 		}
 	}
 

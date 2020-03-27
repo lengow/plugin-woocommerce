@@ -92,6 +92,7 @@ class Lengow_Crud {
 			'order_process_state'  => array( 'required' => false, 'updated' => true, 'format' => '%d' ),
 			'order_date'           => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
 			'order_item'           => array( 'required' => false, 'updated' => true, 'format' => '%d' ),
+			'order_types'          => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
 			'currency'             => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
 			'total_paid'           => array( 'required' => false, 'updated' => true, 'format' => '%f' ),
 			'commission'           => array( 'required' => false, 'updated' => true, 'format' => '%f' ),
