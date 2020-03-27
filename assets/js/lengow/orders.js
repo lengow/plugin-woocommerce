@@ -198,13 +198,27 @@
                 order_from = $('#lgw-order-filter input[name="order_from"]').val(),
                 order_to = $('#lgw-order-filter input[name="order_to"]').val(),
                 request_params = '';
-            request_params += search !== '' ? '&s=' + search : '';
-            request_params += order_action !== '' ? '&order_action=' + order_action : '';
-            request_params += order_status !== '' ? '&order_status=' + order_status : '';
-            request_params += order_type !== '' ? '&order_type=' + order_type : '';
-            request_params += order_marketplace !== '' ? '&order_marketplace=' + order_marketplace : '';
-            request_params += order_from !== '' ? '&order_from=' + order_from : '';
-            request_params += order_to !== '' ? '&order_to=' + order_to : '';
+            request_params += (typeof(search) != "undefined" && search !== '')
+                ? '&s=' + search
+                : '';
+            request_params += (typeof(order_action) != "undefined" && order_action !== '')
+                ? '&order_action=' + order_action
+                : '';
+            request_params += (typeof(order_status) != "undefined" && order_status !== '')
+                ? '&order_status=' + order_status
+                : '';
+            request_params += (typeof(order_type) != "undefined" && order_type !== '')
+                ? '&order_type=' + order_type
+                : '';
+            request_params += (typeof(order_marketplace) != "undefined" && order_marketplace !== '')
+                ? '&order_marketplace=' + order_marketplace
+                : '';
+            request_params += (typeof(order_from) != "undefined" && order_from !== '')
+                ? '&order_from=' + order_from
+                : '';
+            request_params += (typeof(order_to) != "undefined" && order_to !== '')
+                ? '&order_to=' + order_to
+                : '';
             return request_params;
         }
 
