@@ -87,6 +87,8 @@ order.screen.last_order_importation|Last synchronization
 order.screen.no_order_importation|No synchronisation for now
 order.screen.button_update_orders|Synchronize Orders
 order.screen.debug_warning_message|You are in Debug Mode. You can import orders, but no interaction with Lengow is possible. <a href=%{url}>Change this</a>
+order.screen.action_success|Success
+order.screen.action_error|Error
 order.screen.status_not_synchronized|Not synchronized
 order.screen.status_accepted|Accepted
 order.screen.status_waiting_shipment|Waiting for shipment
@@ -94,7 +96,17 @@ order.screen.status_shipped|Shipped
 order.screen.status_closed|Closed
 order.screen.status_refunded|Refunded
 order.screen.status_canceled|Canceled
-order.screen.status_shipped_by_mkp|Shipped by Marketplace
+order.screen.type_express|Express delivery
+order.screen.type_delivered_by_marketplace|Shipped by Marketplace
+order.screen.type_business|Business
+order.screen.placeholder_action|Filter by state...
+order.screen.placeholder_order_status|Filter by status
+order.screen.placeholder_order_types|Filter by type
+order.screen.placeholder_marketplace|Filter by marketplace
+order.screen.placeholder_from|From
+order.screen.placeholder_to|To
+order.screen.filter_action|Filter
+order.screen.nb_product|%{nb} product(s)
 order.screen.no_order_title|The best is yet to come!
 order.screen.no_order_description|Your products have great visibility and your sales are about to prosper!
 order.screen.cancel_and_reimport|Re-import order
@@ -111,21 +123,22 @@ order.screen.check_resend_action|Do you really want to %{action} the order?
 order.table.button_search|Search
 order.table.id|ID
 order.table.action|Action
-order.table.lengow_status|Lengow status
+order.table.lengow_status|Status
+order.table.order_types|Types
 order.table.marketplace|Marketplace
-order.table.order_id|Order ID
-order.table.customer|Customer
+order.table.marketplace_sku|Order ID
+order.table.customer|Customer Name
 order.table.reference|Reference
 order.table.date|Date
 order.table.country|Country
-order.table.quantity|Quantity
-order.table.total|Total
+order.table.total|Amount
 order.table.order_not_imported|Order has not been imported into WooCommerce
 order.table.action_sent_not_work|Action sent to the marketplace didn't work
 order.table.no_error_message|Unidentified error, please contact Lengow's support team for more information
 order.table.not_imported|not imported
 order.table.not_sent|not sent
 order.table.action_sent|action %{action_type} sent
+order.table.action_waiting_return|Action sent, waiting for response
 order_setting.screen.default_shipping_method_title|Manage shipping methods
 order_setting.screen.default_shipping_method_description|Select the default shipping method that you would like to apply to your orders
 order_setting.screen.order_status_title|Order Status
@@ -249,7 +262,9 @@ meta_box.order_info.customer_name|Customer name
 meta_box.order_info.customer_email|Customer email
 meta_box.order_info.message|Message
 meta_box.order_info.imported_date|Imported at
-meta_box.order_info.shipped_by_marketplace|Shipped by marketplace
+meta_box.order_info.is_express|Express delivery
+meta_box.order_info.is_delivered_by_marketplace|Shipped by Marketplace
+meta_box.order_info.is_business|Business
 meta_box.order_info.relay_id|ID relay
 meta_box.order_info.carrier|Carrier from marketplace
 meta_box.order_info.carrier_method|Shipping method from marketplace

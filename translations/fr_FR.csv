@@ -87,6 +87,8 @@ order.screen.last_order_importation|Dernière synchronisation
 order.screen.no_order_importation|Aucune synchronisation pour le moment
 order.screen.button_update_orders|Synchroniser les commandes
 order.screen.debug_warning_message|Vous êtes en Debug Mode. Vous pouvez importer vos commandes mais les interactions avec Lengow ne sont pas possibles. <a href=%{url}>Désactiver le Debug Mode ?</a>
+order.screen.action_success|Succès
+order.screen.action_error|Erreur
 order.screen.status_not_synchronized|Non synchronisé
 order.screen.status_accepted|Accepté
 order.screen.status_waiting_shipment|En attente d'expédition
@@ -94,7 +96,17 @@ order.screen.status_shipped|Expédié
 order.screen.status_closed|Fermé
 order.screen.status_refunded|Remboursé
 order.screen.status_canceled|Annulé
-order.screen.status_shipped_by_mkp|Expédié par la place de marché
+order.screen.type_express|Livraison Express
+order.screen.type_delivered_by_marketplace|Expédié par la marketplace
+order.screen.type_business|Business
+order.screen.placeholder_action|Filtrer par état
+order.screen.placeholder_order_status|Filtrer par statut
+order.screen.placeholder_order_types|Filtrer par type
+order.screen.placeholder_marketplace|Filtrer par marketplace
+order.screen.placeholder_from|Du
+order.screen.placeholder_to|Au
+order.screen.filter_action|Filtrer
+order.screen.nb_product|%{nb} produit(s)
 order.screen.no_order_title|Le meilleur est encore à venir !
 order.screen.no_order_description|Vos produits sont bien visibles, vos ventes sont sur le point de décoller
 order.screen.cancel_and_reimport|Ré-importer la commande
@@ -111,27 +123,28 @@ order.screen.check_resend_action|Voulez vous vraiment envoyer une action %{actio
 order.table.button_search|Rechercher
 order.table.id|ID
 order.table.action|Action
-order.table.lengow_status|Statut Lengow
+order.table.lengow_status|Statut
+order.table.order_types|Types
 order.table.marketplace|Marketplace
-order.table.order_id|Commande ID
-order.table.customer|Client
+order.table.marketplace_sku|N° de commande
+order.table.customer|Nom du client
 order.table.reference|Référence
 order.table.date|Date
 order.table.country|Pays
-order.table.quantity|Quantité
-order.table.total|Total
+order.table.total|Montant
 order.table.order_not_imported|Votre commande n'a pas été importée dans WooCommerce
-order.table.action_sent_not_work|L'action envoyée à la place de marché ne fonctionne pas
+order.table.action_sent_not_work|L'action envoyée à la marketplace ne fonctionne pas
 order.table.no_error_message|Erreur non identifiée, merci de contacter le support Lengow pour plus d'informations
 order.table.not_imported|pas importée
 order.table.not_sent|pas envoyée
 order.table.action_sent|action %{action_type} envoyée
+order.table.action_waiting_return|Action envoyée, en attente d'une réponse
 order_setting.screen.default_shipping_method_title|Gérez les méthodes de livraison
 order_setting.screen.default_shipping_method_description|Sélectionnez la méthode de livraison par défaut à appliquer à vos commandes
 order_setting.screen.order_status_title|Statut des commandes
 order_setting.screen.order_status_description|Attribuez des statuts Lengow à vos commandes pour les retrouver facilement parmi l'ensemble de vos commandes
 order_setting.screen.import_setting_title|Import des commandes
-order_setting.screen.import_setting_description|Gérez ici vos paramètres d'import pour les commandes provenant des places de marché
+order_setting.screen.import_setting_description|Gérez ici vos paramètres d'import pour les commandes provenant des marketplaces
 order_setting.screen.nb_days|jours
 global_setting.screen.notification_alert_title|Notifications & alertes
 global_setting.screen.security_title|Sécurité
@@ -195,12 +208,12 @@ lengow_settings.lengow_import_default_shipping_method_title|Méthode de livraiso
 lengow_settings.lengow_id_waiting_shipment_title|Commandes en préparation
 lengow_settings.lengow_id_shipped_title|Commandes expédiées
 lengow_settings.lengow_id_cancel_title|Commandes annulées
-lengow_settings.lengow_id_shipped_by_mp_title|Commandes expédiées par les places de marché
+lengow_settings.lengow_id_shipped_by_mp_title|Commandes expédiées par les marketplaces
 lengow_settings.lengow_import_days_title|Synchroniser toutes les commandes mises à jour depuis
 lengow_settings.lengow_import_days_legend|Importez vos commandes depuis ... jours et diminuez votre stock
-lengow_settings.lengow_import_ship_mp_enabled_title|Import des commandes expédiées par les places de marché
+lengow_settings.lengow_import_ship_mp_enabled_title|Import des commandes expédiées par les marketplaces
 lengow_settings.lengow_import_stock_ship_mp_title|Je veux diminuer mon stock
-lengow_settings.lengow_import_stock_ship_mp_legend|Activez cette option pour prendre en compte les commandes des places de marché sur les stocks de votre backoffice WooCommerce
+lengow_settings.lengow_import_stock_ship_mp_legend|Activez cette option pour prendre en compte les commandes des marketplaces sur les stocks de votre backoffice WooCommerce
 lengow_settings.lengow_debug_enabled_title|Activer le Debug Mode
 lengow_settings.lengow_import_in_progress_title|Import en cours
 lengow_settings.lengow_last_import_manual_title|Dernier import manuel
@@ -221,12 +234,12 @@ lengow_log.error.no_currency|Erreur Lengow : pas de devise dans cette commande
 lengow_log.exception.no_connection_webservice|la connexion ne se fait pas avec Lengow
 lengow_log.exception.error_lengow_webservice|L'API Lengow : %{error_code} - %{error_message}
 lengow_log.exception.order_not_found|Erreur Lengow : la commande n'a pas été trouvée dans le flux Lengow
-lengow_log.exception.marketplace_not_present|Erreur Lengow : la place de marché %{marketplace_name} n’apparaît pas dans la liste des places de marché
+lengow_log.exception.marketplace_not_present|Erreur Lengow : la marketplace %{marketplace_name} n’apparaît pas dans la liste des marketplaces
 lengow_log.exception.order_line_required|numéro de la ligne de commande requis, non trouvé dans la commande
 lengow_log.exception.action_not_valid|l'action %{action} n'est pas valide
-lengow_log.exception.marketplace_action_not_present|l'action %{action} n'est pas présente pour cette place de marché
+lengow_log.exception.marketplace_action_not_present|l'action %{action} n'est pas présente pour cette marketplace
 lengow_log.exception.marketplace_sku_require|la référence commande marketplace est requise
-lengow_log.exception.marketplace_name_require|le nom de la place de marché est requis
+lengow_log.exception.marketplace_name_require|le nom de la marketplace est requis
 lengow_log.exception.arg_is_required|envoi d'action impossible : %{arg_name} est requis
 lengow_log.exception.action_not_created|création d'action impossible : %{error_message}
 lengow_log.exception.action_not_created_api|création d'action impossible car l'API Lengow n'est pas disponible. Réessayez de nouveau
@@ -239,7 +252,7 @@ lengow_log.exception.woocommerce_order_not_saved|ATTENTION ! La commande n'a pas
 lengow_log.mail_report.subject_report_mail|Erreur de l'import Lengow
 lengow_log.mail_report.order|Commande %{marketplace_sku}
 lengow_log.mail_report.no_error_in_report_mail|Pas de message d'erreur, contacter le support via https://supportlengow.zendesk.com/agent/
-meta_box.order_info.marketplace_sku|Marketplace SKU
+meta_box.order_info.marketplace_sku|N° de commande Lengow
 meta_box.order_info.marketplace|Marketplace
 meta_box.order_info.currency|Devise
 meta_box.order_info.total|Total
@@ -249,10 +262,12 @@ meta_box.order_info.customer_name|Nom du client
 meta_box.order_info.customer_email|Email client
 meta_box.order_info.message|Message
 meta_box.order_info.imported_date|Importée le
-meta_box.order_info.shipped_by_marketplace|Expédiée par la place de marché
+meta_box.order_info.is_express|Livraison Express
+meta_box.order_info.is_delivered_by_marketplace|Expédié par la marketplace
+meta_box.order_info.is_business|Business
 meta_box.order_info.relay_id|ID du point relais
-meta_box.order_info.carrier|Transporteur des places de marché
-meta_box.order_info.carrier_method|Mode d'expédition des places de marché
+meta_box.order_info.carrier|Transporteur de la marketplace
+meta_box.order_info.carrier_method|Mode d'expédition de la marketplace
 meta_box.order_info.tracking_number|Numéro de tracking
 meta_box.order_info.json_format|Format JSON
 meta_box.order_info.box_title|Informations Lengow

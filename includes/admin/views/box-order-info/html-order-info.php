@@ -53,14 +53,40 @@ if ( ! defined( 'ABSPATH' ) ) {
         </li>
         <hr>
         <li>
-            <span class="lgw-order-title"><?php echo $locale->t( 'meta_box.order_info.message' ); ?></span>
-            <span class="lgw-order-label"><?php echo $order_lengow->message; ?></span>
+            <span class="lgw-order-title"><?php echo $locale->t( 'meta_box.order_info.is_express' ); ?></span>
+            <span class="lgw-order-label"><?php
+				if ( $order_lengow->is_express() ) {
+					echo $locale->t( 'meta_box.order_info.boolean_yes' );
+				} else {
+					echo $locale->t( 'meta_box.order_info.boolean_no' );
+				}
+				?>
+            </span>
         </li>
         <hr>
         <li>
-            <span class="lgw-order-title"><?php echo $locale->t( 'meta_box.order_info.imported_date' ); ?></span>
-            <span class="lgw-order-label">
-                <?php echo Lengow_Main::get_date_in_correct_format( strtotime( $order_lengow->created_at ) ); ?>
+            <span class="lgw-order-title">
+                <?php echo $locale->t( 'meta_box.order_info.is_delivered_by_marketplace' ); ?>
+            </span>
+            <span class="lgw-order-label"><?php
+				if ( $order_lengow->is_delivered_by_marketplace() ) {
+					echo $locale->t( 'meta_box.order_info.boolean_yes' );
+				} else {
+					echo $locale->t( 'meta_box.order_info.boolean_no' );
+				}
+				?>
+            </span>
+        </li>
+        <hr>
+        <li>
+            <span class="lgw-order-title"><?php echo $locale->t( 'meta_box.order_info.is_business' ); ?></span>
+            <span class="lgw-order-label"><?php
+				if ( $order_lengow->is_business() ) {
+					echo $locale->t( 'meta_box.order_info.boolean_yes' );
+				} else {
+					echo $locale->t( 'meta_box.order_info.boolean_no' );
+				}
+				?>
             </span>
         </li>
     </ul>
@@ -86,14 +112,14 @@ if ( ! defined( 'ABSPATH' ) ) {
         </li>
         <hr>
         <li>
-            <span class="lgw-order-title"><?php echo $locale->t( 'meta_box.order_info.shipped_by_marketplace' ); ?></span>
-            <span class="lgw-order-label"><?php
-				if ( $order_lengow->sent_marketplace ) {
-					echo $locale->t( 'meta_box.order_info.boolean_yes' );
-				} else {
-					echo $locale->t( 'meta_box.order_info.boolean_no' );
-				}
-				?>
+            <span class="lgw-order-title"><?php echo $locale->t( 'meta_box.order_info.message' ); ?></span>
+            <span class="lgw-order-label"><?php echo $order_lengow->message; ?></span>
+        </li>
+        <hr>
+        <li>
+            <span class="lgw-order-title"><?php echo $locale->t( 'meta_box.order_info.imported_date' ); ?></span>
+            <span class="lgw-order-label">
+                <?php echo Lengow_Main::get_date_in_correct_format( strtotime( $order_lengow->created_at ) ); ?>
             </span>
         </li>
         <hr>

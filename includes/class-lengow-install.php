@@ -188,6 +188,7 @@ class Lengow_Install {
                 `order_process_state` INTEGER(11) UNSIGNED NOT NULL DEFAULT 0,
 				`order_date` DATETIME NOT NULL,
 				`order_item` INTEGER(11) UNSIGNED NULL,
+				`order_types` TEXT NULL DEFAULT NULL,
                 `currency` VARCHAR(3) NULL DEFAULT NULL,
                 `total_paid` DECIMAL(17,2) UNSIGNED NULL,
 				`commission` DECIMAL(17,2) UNSIGNED NULL,

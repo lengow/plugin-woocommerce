@@ -131,8 +131,15 @@ body.lgw-home-iframe .lgw-content-section p {
   width: auto;
 }
 
-#lengow_feed_table .js-lengow_toolbar {
+#lgw-product-toolbar {
   position: absolute;
+  font-size: 13px;
+  top: 40px;
+}
+
+#lgw-product-toolbar a {
+  margin: 0px;
+  padding: 5px 10px;
 }
 
 #lengow_feed_table .js-lengow_select_all {
@@ -201,7 +208,7 @@ body.lgw-home-iframe .lgw-content-section p {
   text-align: center;
 }
 
-#lengow_order_grid .lgw-label {
+#lengow_order_grid .lgw-label.lgw-order-status {
   padding: 0 7px;
   white-space: normal;
   height: auto;
@@ -221,6 +228,39 @@ body.lgw-home-iframe .lgw-content-section p {
   height: 60px;
 }
 
-#lengow_order_wrapper .js-lengow_toolbar {
+#lengow_order_grid .tablenav .actions {
+  padding: 0;
+}
+
+#lgw-order-toolbar {
   position: absolute;
+}
+
+#lgw-order-toolbar a {
+  margin: 0px;
+  padding: 5px 10px;
+  font-size: 13px;
+}
+
+#lgw-order-filter {
+  display: inline-block;
+}
+
+#lgw-order-filter select {
+  margin-right: 5px;
+}
+
+.lengow_datepicker_box {
+  min-width: 180px;
+  display: inline-block;
+}
+
+#lgw-order-filter input.lengow_datepicker {
+  width: 100px;
+  padding: 0 7px;
+  font-size: 13px;
+}
+
+#lgw-order-filter input.lengow_datepicker:first-child {
+  margin-right: 3px;
 }
