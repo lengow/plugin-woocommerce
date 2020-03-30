@@ -227,14 +227,19 @@
          */
         function generate_url(href, request_params) {
             href = href.replace('#', '');
-            var url = new URL(href);
-            url.searchParams.delete('s');
-            url.searchParams.delete('order_action');
-            url.searchParams.delete('order_status');
-            url.searchParams.delete('order_type');
-            url.searchParams.delete('order_marketplace');
-            url.searchParams.delete('order_from');
-            url.searchParams.delete('order_to');
+            var url = new URL(href),
+                params = [
+                    's',
+                    'order_action',
+                    'order_status',
+                    'order_type',
+                    'order_marketplace',
+                    'order_from',
+                    'order_to'
+                ];
+            params.forEach(function (e) {
+                url.searchParams.delete(e);
+            }, url);
             return url.href + request_params;
         }
 
