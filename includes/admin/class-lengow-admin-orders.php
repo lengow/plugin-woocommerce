@@ -750,8 +750,8 @@ class Lengow_Admin_Orders extends WP_List_Table {
 				                    data-order="' . $order_lengow->id . '"
 				                    data-action="' . 'none' . '"
 				                    data-original-title="' . $locale->t( 'order.table.action_waiting_return' ) . '">'
-				                    . $locale->t( 'order.table.action_sent', array( 'action_type' => $last_action ) )
-				                    . '</a>';
+					               . $locale->t( 'order.table.action_sent', array( 'action_type' => $last_action ) )
+					               . '</a>';
 					$orders_data = $value;
 				}
 			}
@@ -783,23 +783,21 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	private function _display_order_types( $order_lengow ) {
 		$return      = '<div>';
 		$order_types = null !== $order_lengow->order_types ? json_decode( $order_lengow->order_types, true ) : array();
-		if ( array_key_exists( Lengow_Order::TYPE_EXPRESS, $order_types )
-		     || array_key_exists( Lengow_Order::TYPE_PRIME, $order_types )
+		if ( isset( $order_types[ Lengow_Order::TYPE_EXPRESS ] )
+		     || isset( $order_types[ Lengow_Order::TYPE_PRIME ] )
 		) {
 			$icon_label = isset( $order_types[ Lengow_Order::TYPE_PRIME ] )
 				? $order_types[ Lengow_Order::TYPE_PRIME ]
 				: $order_types[ Lengow_Order::TYPE_EXPRESS ];
 			$return     .= $this->_generate_order_type_icon( $icon_label, 'orange-light', 'mod-chrono' );
 		}
-		if ( array_key_exists( Lengow_Order::TYPE_DELIVERED_BY_MARKETPLACE, $order_types )
-		     || $order_lengow->sent_marketplace
-		) {
+		if ( isset( $order_types[ Lengow_Order::TYPE_DELIVERED_BY_MARKETPLACE ] ) || $order_lengow->sent_marketplace ) {
 			$icon_label = isset( $order_types[ Lengow_Order::TYPE_DELIVERED_BY_MARKETPLACE ] )
 				? $order_types[ Lengow_Order::TYPE_DELIVERED_BY_MARKETPLACE ]
 				: Lengow_Order::LABEL_FULFILLMENT;
 			$return     .= self::_generate_order_type_icon( $icon_label, 'green-light', 'mod-delivery' );
 		}
-		if ( array_key_exists( Lengow_Order::TYPE_BUSINESS, $order_types ) ) {
+		if ( isset( $order_types[ Lengow_Order::TYPE_BUSINESS ] ) ) {
 			$icon_label = $order_types[ Lengow_Order::TYPE_BUSINESS ];
 			$return     .= self::_generate_order_type_icon( $icon_label, 'blue-light', 'mod-pro' );
 		}
@@ -856,7 +854,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 * @return string
 	 */
 	private function _display_total( $order_lengow ) {
-		$price            = Lengow_Main::compare_version( '2.1.0', '<' )
+		$price              = Lengow_Main::compare_version( '2.1.0', '<' )
 			? $order_lengow->total_paid . get_woocommerce_currency_symbol( $order_lengow->currency )
 			: wc_price( $order_lengow->total_paid, array( 'currency' => $order_lengow->currency ) );
 		$nb_product_tooltip = Lengow_Main::decode_log_message(
@@ -867,8 +865,8 @@ class Lengow_Admin_Orders extends WP_List_Table {
 
 		return '
 			<span class="lengow_link_tooltip" data-original-title="' . $nb_product_tooltip . '"/>'
-		        . $price .
-		    '</span>
+		       . $price .
+		       '</span>
 		';
 	}
 
@@ -885,7 +883,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		return '
             <div class="lgw-label ' . $icon_color . ' icon-solo lengow_link_tooltip" 
                  data-original-title="' . $icon_label . '">
-                <span class="lgw-icon ' . $icon_mod . '">
+                <span class="lgw-icon ' . $icon_mod . '"></span>
             </div>
         ';
 	}

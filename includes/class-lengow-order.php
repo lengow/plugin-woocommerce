@@ -971,9 +971,7 @@ class Lengow_Order {
 	 * @return boolean
 	 */
 	public function is_express() {
-		if ( array_key_exists( self::TYPE_EXPRESS, $this->order_types )
-		     || array_key_exists( self::TYPE_PRIME, $this->order_types )
-		) {
+		if ( isset( $this->order_types[ self::TYPE_EXPRESS ] ) || isset( $this->order_types[ self::TYPE_PRIME ] ) ) {
 			return true;
 		}
 
@@ -986,7 +984,7 @@ class Lengow_Order {
 	 * @return boolean
 	 */
 	public function is_business() {
-		if ( array_key_exists( self::TYPE_BUSINESS, $this->order_types ) ) {
+		if ( isset( $this->order_types[ self::TYPE_BUSINESS ] ) ) {
 			return true;
 		}
 
@@ -999,9 +997,7 @@ class Lengow_Order {
 	 * @return boolean
 	 */
 	public function is_delivered_by_marketplace() {
-		if ( array_key_exists( self::TYPE_DELIVERED_BY_MARKETPLACE, $this->order_types )
-		     || $this->sent_marketplace
-		) {
+		if ( isset( $this->order_types[ self::TYPE_DELIVERED_BY_MARKETPLACE ] ) || $this->sent_marketplace ) {
 			return true;
 		}
 

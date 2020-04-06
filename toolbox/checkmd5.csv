@@ -310,7 +310,7 @@
 /includes/admin/class-lengow-admin-main-settings.php|118e1a692e2ac0df4088994fffa439a2
 /includes/admin/class-lengow-box-order-info.php|6b7b8eb5f47966e38398ed896378bb80
 /includes/admin/class-lengow-admin-dashboard.php|d55f1f788b437501dddcb79d1fba0cd8
-/includes/admin/class-lengow-admin-orders.php|16961fe2aa376ec3776c1b4d6e6d68cf
+/includes/admin/class-lengow-admin-orders.php|dd7946de41aead939d6255dfce264804
 /includes/admin/views/order-settings/html-admin-order-settings.php|e8cbffd2e06d81f0a5b96fc533a54540
 /includes/admin/views/box-order-shipping/html-order-shipping.php|980a9bca192b7190b0f2eaa51b51714e
 /includes/admin/views/products/html-admin-products.php|57eb8ad29d356f8d41590b18ab5756e6
@@ -335,7 +335,7 @@
 /includes/class-lengow-install.php|f201b85c6df0e4c137c6ebbb3fdb3abd
 /includes/class-lengow-import-order.php|9da36f90d44ca2c99f8358c28f32779d
 /includes/class-lengow-sync.php|395f0fe92909e1253990af9450ab3038
-/includes/class-lengow-order.php|0456d9515cc69a6712b76167e7948cfa
+/includes/class-lengow-order.php|f775ede243844f66a28cef4db0a276c5
 /includes/class-lengow-crud.php|6b1fe933cb1bd2d78df7a40d8a072be4
 /includes/class-lengow-payment.php|57a687bc8554dac8b5d3df9f7b63aeb2
 /includes/class-lengow-order-error.php|f1536bd20476d1c96851099412efe644
