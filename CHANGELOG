@@ -3,6 +3,7 @@ Version 2.3.2
 ========================================================
 
     - Feature: [import] Addition of order types in the order management screen
+    - Feature: [import] Addition on the currency conversion in imported order
 
 ========================================================
 Version 2.3.1

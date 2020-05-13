@@ -146,6 +146,9 @@ order_setting.screen.order_status_description|Match your Lengow order status to 
 order_setting.screen.import_setting_title|Order import
 order_setting.screen.import_setting_description|Manage your import settings for marketplace orders here
 order_setting.screen.nb_days|days
+order_setting.screen.currency_conversion_title|Convert the currency of your order
+order_setting.screen.currency_conversion_description|All orders imported into WooCommerce will be automatically converted into the currency you've selected in Lengow
+order_setting.screen.currency_conversion_label|Activate conversion
 global_setting.screen.notification_alert_title|Notifications & alerts
 global_setting.screen.security_title|Security
 global_setting.screen.tracker_title|Lengow tracker
@@ -263,7 +266,7 @@ meta_box.order_info.customer_email|Customer email
 meta_box.order_info.message|Message
 meta_box.order_info.imported_date|Imported at
 meta_box.order_info.is_express|Express delivery
-meta_box.order_info.is_delivered_by_marketplace|Shipped by Marketplace
+meta_box.order_info.is_delivered_by_marketplace|Shipped by marketplace
 meta_box.order_info.is_business|Business
 meta_box.order_info.relay_id|ID relay
 meta_box.order_info.carrier|Carrier from marketplace

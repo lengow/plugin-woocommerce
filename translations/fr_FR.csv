@@ -146,6 +146,9 @@ order_setting.screen.order_status_description|Attribuez des statuts Lengow à vo
 order_setting.screen.import_setting_title|Import des commandes
 order_setting.screen.import_setting_description|Gérez ici vos paramètres d'import pour les commandes provenant des marketplaces
 order_setting.screen.nb_days|jours
+order_setting.screen.currency_conversion_title|Convertir la devise de vos commandes
+order_setting.screen.currency_conversion_description|Toutes les commandes importées dans WooCommerce seront automatiquement convertis dans la devise choisie dans Lengow
+order_setting.screen.currency_conversion_label|Activez la conversion de devises
 global_setting.screen.notification_alert_title|Notifications & alertes
 global_setting.screen.security_title|Sécurité
 global_setting.screen.tracker_title|Tracker Lengow
