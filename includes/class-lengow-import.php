@@ -484,7 +484,7 @@ class Lengow_Import {
 		}
 		do {
 			try {
-				$currency_conversion = ! (bool) Lengow_Configuration::currency_conversion_is_active();
+				$currency_conversion = ! (bool) Lengow_Configuration::get( 'lengow_currency_conversion' );
 				if ( $this->_import_one_order ) {
 					$results = $this->_connector->get(
 						Lengow_Connector::API_ORDER,

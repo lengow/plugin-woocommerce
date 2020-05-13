@@ -406,15 +406,6 @@ class Lengow_Configuration {
 	}
 
 	/**
-	 * Recovers if currency conversion is active
-	 *
-	 * @return boolean
-	 */
-	public static function currency_conversion_is_active() {
-		return (bool) self::get( 'lengow_currency_conversion' );
-	}
-
-	/**
 	 * Get Report Email Address for error report.
 	 *
 	 * @return array

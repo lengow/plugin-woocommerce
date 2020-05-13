@@ -112,7 +112,7 @@ en:
       type_express: "Express delivery"
       type_delivered_by_marketplace: "Shipped by Marketplace"
       type_business: "Business"
-      placeholder_action: "Filter by state"
+      placeholder_action: "Filter by state..."
       placeholder_order_status: "Filter by status"
       placeholder_order_types: "Filter by type"
       placeholder_marketplace: "Filter by marketplace"
@@ -163,7 +163,7 @@ en:
       import_setting_description: "Manage your import settings for marketplace orders here"
       nb_days: "days"
       currency_conversion_title: "Convert the currency of your order"
-      currency_conversion_description: "All orders imported into woo-commerce will be automatically converted into the currency you've selected in Lengow"
+      currency_conversion_description: "All orders imported into WooCommerce will be automatically converted into the currency you've selected in Lengow"
       currency_conversion_label: "Activate conversion"
   global_setting:
     screen:

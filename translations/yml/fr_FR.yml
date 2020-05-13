@@ -163,7 +163,7 @@ fr:
       import_setting_description: "Gérez ici vos paramètres d'import pour les commandes provenant des marketplaces"
       nb_days: "jours"
       currency_conversion_title: "Convertir la devise de vos commandes"
-      currency_conversion_description: "Toutes les commandes importées dans Woo-commerce seront automatiquement convertis dans la devise choisie dans Lengow"
+      currency_conversion_description: "Toutes les commandes importées dans WooCommerce seront automatiquement convertis dans la devise choisie dans Lengow"
       currency_conversion_label: "Activez la conversion de devises"
   global_setting:
     screen:

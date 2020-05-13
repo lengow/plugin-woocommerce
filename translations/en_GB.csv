@@ -99,7 +99,7 @@ order.screen.status_canceled|Canceled
 order.screen.type_express|Express delivery
 order.screen.type_delivered_by_marketplace|Shipped by Marketplace
 order.screen.type_business|Business
-order.screen.placeholder_action|Filter by state
+order.screen.placeholder_action|Filter by state...
 order.screen.placeholder_order_status|Filter by status
 order.screen.placeholder_order_types|Filter by type
 order.screen.placeholder_marketplace|Filter by marketplace
@@ -147,7 +147,7 @@ order_setting.screen.import_setting_title|Order import
 order_setting.screen.import_setting_description|Manage your import settings for marketplace orders here
 order_setting.screen.nb_days|days
 order_setting.screen.currency_conversion_title|Convert the currency of your order
-order_setting.screen.currency_conversion_description|All orders imported into woo-commerce will be automatically converted into the currency you've selected in Lengow
+order_setting.screen.currency_conversion_description|All orders imported into WooCommerce will be automatically converted into the currency you've selected in Lengow
 order_setting.screen.currency_conversion_label|Activate conversion
 global_setting.screen.notification_alert_title|Notifications & alerts
 global_setting.screen.security_title|Security
