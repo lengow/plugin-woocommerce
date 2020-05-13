@@ -484,6 +484,7 @@ class Lengow_Import {
 		}
 		do {
 			try {
+			    $currency_conversion = !(bool)Lengow_Configuration::currency_conversion_is_active();
 				if ( $this->_import_one_order ) {
 					$results = $this->_connector->get(
 						Lengow_Connector::API_ORDER,
@@ -492,6 +493,7 @@ class Lengow_Import {
 							'marketplace'          => $this->_marketplace_name,
 							'account_id'           => $this->_account_id,
 							'page'                 => $page,
+                            'no_currency_conversion' => $currency_conversion,
 						),
 						Lengow_Connector::FORMAT_STREAM,
 						'',
@@ -523,6 +525,7 @@ class Lengow_Import {
 								'catalog_ids' => implode( ',', $this->_shop_catalog_ids ),
 								'account_id'  => $this->_account_id,
 								'page'        => $page,
+                                'no_currency_conversion' => $currency_conversion,
 							)
 						),
 						Lengow_Connector::FORMAT_STREAM,

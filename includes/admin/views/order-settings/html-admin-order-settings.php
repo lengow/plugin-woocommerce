@@ -130,6 +130,25 @@ $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
                           style="display:block;"><?php echo $keys['lengow_import_stock_ship_mp']['legend']; ?></span>
                 </div>
             </div>
+            <div class="lgw-box">
+                <h2><?php echo $locale->t( 'order_setting.screen.currency_conversion_title' ); ?></h2>
+                <p><?php echo $locale->t( 'order_setting.screen.currency_conversion_description' ); ?></p>
+                <br/>
+                <div class="form-group lengow_currency_conversion" >
+                    <div class="lgw-switch <?php echo (bool) $values['lengow_currency_conversion'] ? 'checked' : ''; ?>">
+                        <label>
+                            <div>
+                                <span></span>
+                                <input type="hidden" name="lengow_currency_conversion" value="0">
+                                <input name="lengow_currency_conversion"
+                                       type="checkbox"
+                                    <?php echo (bool) $values['lengow_currency_conversion'] ? 'checked' : ''; ?>/>
+                            </div>
+                            <?php echo $keys['lengow_currency_conversion']['label']; ?>
+                        </label>
+                    </div>
+                </div>
+            </div>
             <div class="form-group container">
                 <div class="lengow_main_setting_block_content">
                     <div class="pull-left">

@@ -197,6 +197,11 @@ class Lengow_Configuration {
 					'default_value' => 3,
 					'update'        => true,
 				),
+                'lengow_currency_conversion'              => array(
+                    'global'        => true,
+                    'label'         => $locale->t( 'order_setting.screen.currency_conversion_label' ),
+                    'default_value' => true,
+                ),
 				'lengow_import_ship_mp_enabled'          => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_import_ship_mp_enabled_title' ),
@@ -399,6 +404,15 @@ class Lengow_Configuration {
 	public static function debug_mode_is_active() {
 		return (bool) self::get( 'lengow_debug_enabled' );
 	}
+
+    /**
+     * Recovers if currency conversion is active
+     *
+     * @return boolean
+     */
+	public static function currency_conversion_is_active() {
+	    return (bool) self::get('lengow_currency_conversion');
+    }
 
 	/**
 	 * Get Report Email Address for error report.
