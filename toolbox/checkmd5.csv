@@ -294,7 +294,7 @@
 /assets/css/toolbox.css|b7add16818aad28d25a35fd7961ae017
 /includes/class-lengow-order-error.php|f1536bd20476d1c96851099412efe644
 /includes/class-lengow-order.php|f775ede243844f66a28cef4db0a276c5
-/includes/class-lengow-import.php|f521b1c18ae9415608226fd215fbb79a
+/includes/class-lengow-import.php|cbee27975c3fb606b6fe686b5b18f6d7
 /includes/class-lengow-action.php|74acf83b4e3252f627a76044d45750fd
 /includes/class-lengow-connector.php|0e6c2358874db3a2a8320a4ecb181ef6
 /includes/class-lengow-order-line.php|2bcd48a77557cac556ef115c6d9443a7
@@ -331,7 +331,7 @@
 /includes/frontend/class-lengow-tracker.php|c2206bc8203b64f772da0f962bca2a5f
 /includes/class-lengow-file.php|4769716bda8e17fdab0198aeb12186e5
 /includes/class-lengow-exception.php|1db651b67392bc2c74b0b9fabf9886b4
-/includes/class-lengow-configuration.php|b579dfbb76d3b9284accff9ba922a209
+/includes/class-lengow-configuration.php|de401f2ba8012b37c6e8c3e0a0dae778
 /includes/class-lengow-payment.php|57a687bc8554dac8b5d3df9f7b63aeb2
 /includes/class-lengow-hook.php|5d0b154473c172726ffd99049e7f70d9
 /includes/class-lengow-import-order.php|9da36f90d44ca2c99f8358c28f32779d
