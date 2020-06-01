@@ -32,6 +32,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Address {
 
 	/**
+	 * @var string code ISO A2 for Spain.
+	 */
+	const ISO_A2_ES = 'ES';
+
+	/**
+	 * @var string code ISO A2 for Italy.
+	 */
+	const ISO_A2_IT = 'IT';
+
+	/**
 	 * @var string address type billing.
 	 */
 	const TYPE_BILLING = 'billing_';
@@ -101,6 +111,244 @@ class Lengow_Address {
 		'miss',
 		'Ms',
 		'ms',
+	);
+
+	/**
+	 * @var array All region codes for correspondence.
+	 */
+	private $_region_codes = array(
+		self::ISO_A2_ES => array(
+			'01' => 'VI',
+			'02' => 'AB',
+			'03' => 'A',
+			'04' => 'AL',
+			'05' => 'AV',
+			'06' => 'BA',
+			'07' => 'PM',
+			'08' => 'B',
+			'09' => 'BU',
+			'10' => 'CC',
+			'11' => 'CA',
+			'12' => 'CS',
+			'13' => 'CR',
+			'14' => 'CO',
+			'15' => 'C',
+			'16' => 'CU',
+			'17' => 'GI',
+			'18' => 'GR',
+			'19' => 'GU',
+			'20' => 'SS',
+			'21' => 'H',
+			'22' => 'HU',
+			'23' => 'J',
+			'24' => 'LE',
+			'25' => 'L',
+			'26' => 'LO',
+			'27' => 'LU',
+			'28' => 'M',
+			'29' => 'MA',
+			'30' => 'MU',
+			'31' => 'NA',
+			'32' => 'OR',
+			'33' => 'O',
+			'34' => 'P',
+			'35' => 'CG',
+			'36' => 'PO',
+			'37' => 'SA',
+			'38' => 'TF',
+			'39' => 'S',
+			'40' => 'SG',
+			'41' => 'SE',
+			'42' => 'SO',
+			'43' => 'T',
+			'44' => 'TE',
+			'45' => 'TO',
+			'46' => 'V',
+			'47' => 'VA',
+			'48' => 'BI',
+			'49' => 'ZA',
+			'50' => 'Z',
+			'51' => 'CE',
+			'52' => 'ML',
+		),
+		self::ISO_A2_IT => array(
+			'00' => 'RM',
+			'01' => 'VT',
+			'02' => 'RI',
+			'03' => 'FR',
+			'04' => 'LT',
+			'05' => 'TR',
+			'06' => 'PG',
+			'07' => array(
+				'07000-07019' => 'SS',
+				'07020-07029' => 'OT',
+				'07030-07049' => 'SS',
+				'07050-07999' => 'SS',
+			),
+			'08' => array(
+				'08000-08010' => 'OR',
+				'08011-08012' => 'NU',
+				'08013-08013' => 'OR',
+				'08014-08018' => 'NU',
+				'08019-08019' => 'OR',
+				'08020-08020' => 'OT',
+				'08021-08029' => 'NU',
+				'08030-08030' => 'OR',
+				'08031-08032' => 'NU',
+				'08033-08033' => 'CA',
+				'08034-08034' => 'OR',
+				'08035-08035' => 'CA',
+				'08036-08039' => 'NU',
+				'08040-08042' => 'OG',
+				'08043-08043' => 'CA',
+				'08044-08049' => 'OG',
+				'08050-08999' => 'NU',
+			),
+			'09' => array(
+				'09000-09009' => 'CA',
+				'09010-09017' => 'CI',
+				'09018-09019' => 'CA',
+				'09020-09041' => 'VS',
+				'09042-09069' => 'CA',
+				'09070-09099' => 'OR',
+				'09100-09169' => 'CA',
+				'09170-09170' => 'OR',
+				'09171-09999' => 'CA',
+			),
+			'10' => 'TO',
+			'11' => 'AO',
+			'12' => array(
+				'12000-12070' => 'CN',
+				'12071-12071' => 'SV',
+				'12072-12999' => 'CN',
+			),
+			'13' => array(
+				'13000-13799' => 'VC',
+				'13800-13999' => 'BI',
+			),
+			'14' => 'AT',
+			'15' => 'AL',
+			'16' => 'GE',
+			'17' => 'SV',
+			'18' => array(
+				'18000-18024' => 'IM',
+				'18025-18025' => 'CN',
+				'18026-18999' => 'IM',
+			),
+			'19' => 'SP',
+			'20' => array(
+				'20000-20799' => 'MI',
+				'20800-20999' => 'MB',
+			),
+			'21' => 'VA',
+			'22' => 'CO',
+			'23' => array(
+				'23000-23799' => 'SO',
+				'23800-23999' => 'LC',
+			),
+			'24' => 'BG',
+			'25' => 'BS',
+			'26' => array(
+				'26000-26799' => 'CR',
+				'26800-26999' => 'LO',
+			),
+			'27' => 'PV',
+			'28' => array(
+				'28000-28799' => 'NO',
+				'28800-28999' => 'VB',
+			),
+			'29' => 'PC',
+			'30' => 'VE',
+			'31' => 'TV',
+			'32' => 'BL',
+			'33' => array(
+				'33000-33069' => 'UD',
+				'33070-33099' => 'PN',
+				'33100-33169' => 'UD',
+				'33170-33999' => 'PN',
+			),
+			'34' => array(
+				'34000-34069' => 'TS',
+				'34070-34099' => 'GO',
+				'34100-34169' => 'TS',
+				'34170-34999' => 'GO',
+			),
+			'35' => 'PD',
+			'36' => 'VI',
+			'37' => 'VR',
+			'38' => 'TN',
+			'39' => 'BZ',
+			'40' => 'BO',
+			'41' => 'MO',
+			'42' => 'RE',
+			'43' => 'PR',
+			'44' => 'FE',
+			'45' => 'RO',
+			'46' => 'MN',
+			'47' => array(
+				'47000-47799' => 'FC',
+				'47800-47999' => 'RN',
+			),
+			'48' => 'RA',
+			'50' => 'FI',
+			'51' => 'PT',
+			'52' => 'AR',
+			'53' => 'SI',
+			'54' => 'MS',
+			'55' => 'LU',
+			'56' => 'PI',
+			'57' => 'LI',
+			'58' => 'GR',
+			'59' => 'PO',
+			'60' => 'AN',
+			'61' => 'PU',
+			'62' => 'MC',
+			'63' => array(
+				'63000-63799' => 'AP',
+				'63800-63999' => 'FM',
+			),
+			'64' => 'TE',
+			'65' => 'PE',
+			'66' => 'CH',
+			'67' => 'AQ',
+			'70' => 'BA',
+			'71' => 'FG',
+			'72' => 'BR',
+			'73' => 'LE',
+			'74' => 'TA',
+			'75' => 'MT',
+			'76' => 'BT',
+			'80' => 'NA',
+			'81' => 'CE',
+			'82' => 'BN',
+			'83' => 'AV',
+			'84' => 'SA',
+			'85' => 'PZ',
+			'86' => array(
+				'86000-86069' => 'CB',
+				'86070-86099' => 'IS',
+				'86100-86169' => 'CB',
+				'86170-86999' => 'IS',
+			),
+			'87' => 'CS',
+			'88' => array(
+				'88000-88799' => 'CZ',
+				'88800-88999' => 'KR',
+			),
+			'89' => array(
+				'89000-89799' => 'RC',
+				'89800-89999' => 'VV',
+			),
+			'90' => 'PA',
+			'91' => 'TP',
+			'92' => 'AG',
+			'93' => 'CL',
+			'94' => 'EN',
+			'95' => 'CT',
+			'96' => 'SR',
+			'97' => 'RG',
+			'98' => 'ME',
+		),
 	);
 
 	/**
@@ -375,19 +623,95 @@ class Lengow_Address {
 	}
 
 	/**
-	 * Get state name.
+	 * Get country state if exist.
 	 *
 	 * @param array $address_data API address data
 	 *
+	 * @return string|false
+	 */
+	private function _get_state( $address_data ) {
+		$state          = false;
+		$country_iso_a2 = $address_data['common_country_iso_a2'];
+		if ( in_array( $country_iso_a2, array( self::ISO_A2_ES, self::ISO_A2_IT ) ) ) {
+			$state = $this->_search_state_by_postcode( $country_iso_a2, $address_data['zipcode'] );
+		} elseif ( ! empty( $address_data['state_region'] ) ) {
+			$state = $this->_search_state_by_state_region( $country_iso_a2, $address_data['state_region'] );
+		}
+
+		return $state;
+	}
+
+	/**
+	 * Search state by postcode for specific countries.
+	 *
+	 * @param string $country_iso_a2 country iso a2 code
+	 * @param string $postcode address postcode
+	 *
+	 * @return string|false
+	 */
+	private function _search_state_by_postcode( $country_iso_a2, $postcode ) {
+		$postcode_substr = substr( str_pad( $postcode, 5, '0', STR_PAD_LEFT ), 0, 2 );
+		switch ( $country_iso_a2 ) {
+			case self::ISO_A2_ES:
+				$state = isset( $this->_region_codes[ $country_iso_a2 ][ $postcode_substr ] )
+					? $this->_region_codes[ $country_iso_a2 ][ $postcode_substr ]
+					: false;
+				break;
+			case self::ISO_A2_IT:
+				$state = isset( $this->_region_codes[ $country_iso_a2 ][ $postcode_substr ] )
+					? $this->_region_codes[ $country_iso_a2 ][ $postcode_substr ]
+					: false;
+				if ( $state && is_array( $state ) && ! empty( $state ) ) {
+					$state = $this->_get_state_from_interval_postcodes( (int) $postcode, $state );
+				}
+				break;
+			default:
+				$state = false;
+				break;
+		}
+
+		return $state;
+	}
+
+	/**
+	 * Get short code from interval postcodes.
+	 *
+	 * @param integer $postcode address postcode
+	 * @param array $interval_postcodes postcode intervals
+	 *
+	 * @return string|false
+	 */
+	private function _get_state_from_interval_postcodes( $postcode, $interval_postcodes ) {
+		foreach ( $interval_postcodes as $interval_postcode => $state ) {
+			$interval_postcodes = explode( '-', $interval_postcode );
+			if ( ! empty( $interval_postcodes ) && count( $interval_postcodes ) === 2 ) {
+				$min_postcode = is_numeric( $interval_postcodes[0] ) ? (int) $interval_postcodes[0] : false;
+				$max_postcode = is_numeric( $interval_postcodes[1] ) ? (int) $interval_postcodes[1] : false;
+				if ( ( $min_postcode && $max_postcode )
+				     && ( $postcode >= $min_postcode && $postcode <= $max_postcode )
+				) {
+					return $state;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Search state by state region return by api.
+	 *
+	 * @param string $country_iso_a2 country iso a2 code
+	 * @param string $state_region address state region
+	 *
 	 * @return string
 	 */
-	private function _get_state( $address_data = array() ) {
+	private function _search_state_by_state_region( $country_iso_a2, $state_region ) {
 		$state                = '';
 		$wc_countries         = new WC_Countries();
-		$country_iso_a2       = $address_data['common_country_iso_a2'];
 		$states               = $wc_countries->get_states( $country_iso_a2 );
-		$state_region         = strtoupper( trim( $address_data['state_region'] ) );
-		$state_region_cleaned = $this->_clean_string( $address_data['state_region'] );
+		$state_region         = strtoupper( trim( $state_region ) );
+		$state_region_cleaned = $this->_clean_string( $state_region );
 		if ( ! empty( $states ) && ! empty( $state_region ) ) {
 			if ( array_key_exists( $state_region, $states ) ) {
 				$state = $state_region;
