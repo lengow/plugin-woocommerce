@@ -124,7 +124,7 @@ class Lengow_Connector {
 	const CODE_201 = 201;
 
 	/**
-	 * @var string unauthorized access code
+	 * @var string unauthorized access code.
 	 */
 	const CODE_401 = 401;
 
@@ -152,9 +152,9 @@ class Lengow_Connector {
 	);
 
 	/**
-	 * @var array authorization HTTP codes for request
+	 * @var array authorization HTTP codes for request.
 	 */
-	protected $_authorizationCodes = array(
+	protected $_authorization_codes = array(
 		self::CODE_401,
 		self::CODE_403,
 	);
@@ -408,7 +408,7 @@ class Lengow_Connector {
 			$this->connect( false, $log_output );
 			$data = $this->_call_action( $api, $args, $type, $format, $body, $log_output );
 		} catch ( Lengow_Exception $e ) {
-			if ( in_array( $e->getCode(), $this->_authorizationCodes ) ) {
+			if ( in_array( $e->getCode(), $this->_authorization_codes ) ) {
 				Lengow_Main::log(
 					Lengow_Log::CODE_CONNECTOR,
 					Lengow_Main::set_log_message( 'log.connector.retry_get_token' ),
