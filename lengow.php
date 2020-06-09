@@ -26,7 +26,7 @@
  * Plugin Name: Lengow for WooCommerce
  * Plugin URI: https://www.lengow.com/integrations/woocommerce/
  * Description: Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
- * Version: 2.3.1
+ * Version: 2.3.2
  * Author: Lengow
  * Author URI: https://www.lengow.com
  * Requires at least: 3.5
@@ -59,7 +59,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		/**
 		 * @var string current version of plugin.
 		 */
-		public $version = '2.3.1';
+		public $version = '2.3.2';
 
 		/**
 		 * @var string plugin name.
@@ -263,6 +263,10 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		public function add_scripts() {
 			wp_register_style( 'lengow_font_awesome', plugins_url( '/assets/css/font-awesome.css', __FILE__ ) );
 			wp_register_style( 'lengow_select2_css', plugins_url( '/assets/css/select2.css', __FILE__ ) );
+			wp_register_style(
+				'lengow_bootstrap_datepicker_css',
+				plugins_url( '/assets/css/bootstrap-datepicker.css', __FILE__ )
+			);
 			wp_register_style( 'lengow_layout_css', plugins_url( '/assets/css/lengow-layout.css', __FILE__ ) );
 			wp_register_style( 'lengow_components_css', plugins_url( '/assets/css/lengow-components.css', __FILE__ ) );
 			wp_register_style(
@@ -271,6 +275,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				array(
 					'lengow_font_awesome',
 					'lengow_select2_css',
+					'lengow_bootstrap_datepicker_css',
 					'lengow_layout_css',
 					'lengow_components_css',
 				)
@@ -288,6 +293,10 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				plugins_url( '/assets/js/lengow/order_setting.js', __FILE__ )
 			);
 			wp_register_script( 'lengow_select2', plugins_url( '/assets/js/select2.js', __FILE__ ) );
+			wp_register_script(
+				'lengow_bootstrap_datepicker',
+				plugins_url( '/assets/js/bootstrap-datepicker.js', __FILE__ )
+			);
 			wp_register_script( 'lengow_products', plugins_url( '/assets/js/lengow/products.js', __FILE__ ) );
 			wp_register_script( 'lengow_home', plugins_url( '/assets/js/lengow/home.js', __FILE__ ) );
 			wp_register_script( 'lengow_orders', plugins_url( '/assets/js/lengow/orders.js', __FILE__ ) );
@@ -299,6 +308,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					'lengow_boostrap_js',
 					'lengow_products',
 					'lengow_select2',
+					'lengow_bootstrap_datepicker',
 					'lengow_home',
 					'lengow_orders',
 					'lengow_main_settings',

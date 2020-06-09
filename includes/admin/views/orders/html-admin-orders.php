@@ -47,7 +47,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php if ( 'none' !== $order_collection['last_import_type'] ) : ?>
 							<?php echo $locale->t( 'order.screen.last_order_importation' ); ?>
                             :
-                            <b><span id="lengow_last_import_date"><?php echo $order_collection['last_import_date']; ?></span></b>
+                            <b>
+                                <span id="lengow_last_import_date">
+                                    <?php echo $order_collection['last_import_date']; ?>
+                                </span>
+                            </b>
 						<?php else: ?>
 							<?php echo $locale->t( 'order.screen.no_order_importation' ); ?>
 						<?php endif; ?>
@@ -72,7 +76,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         </div>
         <!-- /UPDATE ORDERS -->
         <div id="lengow_wrapper_messages" class="blue-frame" style="display:none;"></div>
-        <div class="js-lengow_toolbar" style="display: none;">
+        <div id="lgw-order-toolbar" class="js-lengow_toolbar" style="display: none;">
             <a href="#"
                data-action="reimport_mass_action"
                class="lgw-btn js-lengow_reimport_mass_action">

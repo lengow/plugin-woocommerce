@@ -82,6 +82,31 @@ class Lengow_Order {
 	const STATE_REFUNDED = 'refunded';
 
 	/**
+	 * @var string order type prime.
+	 */
+	const TYPE_PRIME = 'is_prime';
+
+	/**
+	 * @var string order type express.
+	 */
+	const TYPE_EXPRESS = 'is_express';
+
+	/**
+	 * @var string order type business.
+	 */
+	const TYPE_BUSINESS = 'is_business';
+
+	/**
+	 * @var string order type delivered by marketplace.
+	 */
+	const TYPE_DELIVERED_BY_MARKETPLACE = 'is_delivered_by_marketplace';
+
+	/**
+	 * @var string label fulfillment for old orders without order type.
+	 */
+	const LABEL_FULFILLMENT = 'Fulfillment';
+
+	/**
 	 * @var integer Lengow order record id.
 	 */
 	public $id;
@@ -140,6 +165,11 @@ class Lengow_Order {
 	 * @var integer number of items.
 	 */
 	public $order_item;
+
+	/**
+	 * @var array order types (is_express, is_prime...).
+	 */
+	public $order_types;
 
 	/**
 	 * @var string order currency.
@@ -241,6 +271,7 @@ class Lengow_Order {
 			$this->order_process_state  = (int) $row->order_process_state;
 			$this->order_date           = $row->order_date;
 			$this->order_item           = (int) $row->order_item;
+			$this->order_types          = null !== $row->order_types ? json_decode( $row->order_types, true ) : array();
 			$this->currency             = $row->currency;
 			$this->total_paid           = null !== $row->total_paid ? (float) $row->total_paid : null;
 			$this->commission           = null !== $row->commission ? (float) $row->commission : null;
@@ -595,6 +626,28 @@ class Lengow_Order {
 	}
 
 	/**
+	 * Get marketplace list for order grid.
+	 *
+	 * @return array
+	 */
+	public static function get_marketplace_list() {
+		global $wpdb;
+
+		$marketplaces = array();
+		$query        = '
+			SELECT DISTINCT(marketplace_name) as marketplace_name,
+            IFNULL(marketplace_label, marketplace_name) as marketplace_label
+            FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER;
+		$results      = $wpdb->get_results( $query );
+		$results      = $results ? $results : array();
+		foreach ( $results as $result ) {
+			$marketplaces[ $result->marketplace_name ] = $result->marketplace_label;
+		}
+
+		return $marketplaces;
+	}
+
+	/**
 	 * Get total orders in error.
 	 **
 	 * @return integer
@@ -910,6 +963,45 @@ class Lengow_Order {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Check if order is express.
+	 *
+	 * @return boolean
+	 */
+	public function is_express() {
+		if ( isset( $this->order_types[ self::TYPE_EXPRESS ] ) || isset( $this->order_types[ self::TYPE_PRIME ] ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check if order is B2B.
+	 *
+	 * @return boolean
+	 */
+	public function is_business() {
+		if ( isset( $this->order_types[ self::TYPE_BUSINESS ] ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check if order is delivered by marketplace.
+	 *
+	 * @return boolean
+	 */
+	public function is_delivered_by_marketplace() {
+		if ( isset( $this->order_types[ self::TYPE_DELIVERED_BY_MARKETPLACE ] ) || $this->sent_marketplace ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

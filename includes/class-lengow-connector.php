@@ -35,17 +35,13 @@ class Lengow_Connector {
 	 * @var string url of Lengow solution.
 	 */
 	// const LENGOW_URL = 'lengow.io';
-	// const LENGOW_URL = 'lengow.net';
-	const LENGOW_URL = 'rec.lengow.hom';
-	// const LENGOW_URL = 'dev.lengow.hom';
+	const LENGOW_URL = 'lengow.net';
 
 	/**
 	 * @var string url of the Lengow API.
 	 */
 	// const LENGOW_API_URL = 'https://api.lengow.io';
-	// const LENGOW_API_URL = 'https://api.lengow.net';
-	const LENGOW_API_URL = 'http://api.lengow.rec';
-	// const LENGOW_API_URL = 'http://10.100.1.82:8081';
+	const LENGOW_API_URL = 'https://api.lengow.net';
 
 	/**
 	 * @var string url of access token API.
@@ -128,6 +124,11 @@ class Lengow_Connector {
 	const CODE_201 = 201;
 
 	/**
+	 * @var string unauthorized access code.
+	 */
+	const CODE_401 = 401;
+
+	/**
 	 * @var string forbidden access code.
 	 */
 	const CODE_403 = 403;
@@ -148,6 +149,14 @@ class Lengow_Connector {
 	private $_success_codes = array(
 		self::CODE_200,
 		self::CODE_201,
+	);
+
+	/**
+	 * @var array authorization HTTP codes for request.
+	 */
+	protected $_authorization_codes = array(
+		self::CODE_401,
+		self::CODE_403,
 	);
 
 	/**
@@ -399,7 +408,7 @@ class Lengow_Connector {
 			$this->connect( false, $log_output );
 			$data = $this->_call_action( $api, $args, $type, $format, $body, $log_output );
 		} catch ( Lengow_Exception $e ) {
-			if ( self::CODE_403 === $e->getCode() ) {
+			if ( in_array( $e->getCode(), $this->_authorization_codes ) ) {
 				Lengow_Main::log(
 					Lengow_Log::CODE_CONNECTOR,
 					Lengow_Main::set_log_message( 'log.connector.retry_get_token' ),
@@ -444,7 +453,9 @@ class Lengow_Connector {
 	 * @throws Lengow_Exception
 	 */
 	private function _get_authorization_token( $log_output ) {
-		$data = $this->_call_action(
+		// reset temporary token for the new authorization
+		$this->_token = null;
+		$data         = $this->_call_action(
 			self::API_ACCESS_TOKEN,
 			array(
 				'access_token' => $this->_access_token,

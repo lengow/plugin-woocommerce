@@ -197,6 +197,11 @@ class Lengow_Configuration {
 					'default_value' => 3,
 					'update'        => true,
 				),
+				'lengow_currency_conversion'             => array(
+					'global'        => true,
+					'label'         => $locale->t( 'order_setting.screen.currency_conversion_label' ),
+					'default_value' => true,
+				),
 				'lengow_import_ship_mp_enabled'          => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_import_ship_mp_enabled_title' ),

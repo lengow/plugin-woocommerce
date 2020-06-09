@@ -1,4 +1,13 @@
 ========================================================
+Version 2.3.2
+========================================================
+
+    - Feature: [import] Addition of order types in the order management screen
+    - Feature: [import] Addition on the currency conversion in imported order
+    - Feature: [import] Integration of the region code in the delivery and billing addresses
+    - Bugfix: Update of the access token when recovering an http 401 code
+
+========================================================
 Version 2.3.1
 ========================================================
 
@@ -118,7 +127,7 @@ Version 1.0.5
     - Bugfix: Fix bug with Lengow simple tracker and tag capsule
     - Bugfix: Fix bug for product category in export
     - Bugfix: Fix bug for product sku in export
-    
+
 ========================================================
 Version 1.0.4
 ========================================================
