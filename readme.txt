@@ -45,8 +45,11 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 
 == Changelog ==
 
-= 2.3.2 - xxxx-xx-xx =
+= 2.3.2 - 2020-06-09 =
 * Feature: [import] Addition of order types in the order management screen
+* Feature: [import] Addition on the currency conversion in imported order
+* Feature: [import] Integration of the region code in the delivery and billing addresses
+* Bugfix: Update of the access token when recovering an http 401 code
 
 = 2.3.1 - 2020-03-13 =
 * Bugfix: Addition of the http 201 code in the success codes
