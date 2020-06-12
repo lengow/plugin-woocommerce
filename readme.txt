@@ -45,6 +45,9 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 
 == Changelog ==
 
+= 2.3.3 - xxxx-xx-xx =
+
+
 = 2.3.2 - 2020-06-09 =
 * Feature: [import] Addition of order types in the order management screen
 * Feature: [import] Addition on the currency conversion in imported order

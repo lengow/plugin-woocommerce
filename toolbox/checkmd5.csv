@@ -1,4 +1,4 @@
-/lengow.php|74bd09a6511ac5e96483a044542d5371
+/lengow.php|7748edf26c33d9c2c7da43018aecff37
 /config/index.php|d41d8cd98f00b204e9800998ecf8427e
 /assets/css/bootstrap-3.3.6.css|2f624089c65f12185e79925bc5a7fc42
 /assets/css/toolbox.css|b7add16818aad28d25a35fd7961ae017
@@ -342,7 +342,7 @@
 /includes/class-lengow-marketplace.php|81a59a90f3319dda1ba4b10fdbc3bc8e
 /includes/class-lengow-order-line.php|2bcd48a77557cac556ef115c6d9443a7
 /includes/class-lengow-address.php|d02cfb120a2f57e76ee9e3ac3fb89aa5
-/languages/lengow-fr_FR.po|7cae6dd953935ef2715b3eb2e9fb8a27
+/languages/lengow-fr_FR.po|65bea889ebe832ff345a0df03e1aa4bb
 /languages/lengow-fr_FR.mo|c159535a9cf5b734a8bdb2d450e0971b
 /toolbox/index.php|484352f4f3e606c12a91087742af1d19
 /toolbox/log.php|f3b211a881364b9ff65052f9f1473e06
