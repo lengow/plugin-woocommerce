@@ -46,7 +46,7 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 == Changelog ==
 
 = 2.3.3 - xxxx-xx-xx =
-
+* Feature: Adding new links to the Lengow Help Center and Support
 
 = 2.3.2 - 2020-06-09 =
 * Feature: [import] Addition of order types in the order management screen
