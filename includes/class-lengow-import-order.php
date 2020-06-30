@@ -453,13 +453,13 @@ class Lengow_Import_Order {
                 // add hook on tax calculation for b2b order
                 add_filter(
                     'woocommerce_product_get_tax_class',
-                    array('Lengow_Hook', 'switch_product_tax_class_for_b2b'),
+                    array( 'Lengow_Hook', 'switch_product_tax_class_for_b2b' ),
                     100,
                     2
                 );
                 add_filter(
                     'woocommerce_product_variation_get_tax_class',
-                    array('Lengow_Hook', 'switch_product_tax_class_for_b2b'),
+                    array( 'Lengow_Hook', 'switch_product_tax_class_for_b2b' ),
                     100,
                     2
                 );
