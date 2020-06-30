@@ -89,6 +89,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 				?>
             </span>
         </li>
+        <hr>
+        <li>
+            <span class="lgw-order-title"><?php echo $locale->t( 'meta_box.order_info.vat_number' ); ?></span>
+            <span class="lgw-order-label"><?php
+                if ( $order_lengow->customer_vat_number ) {
+                    echo $order_lengow->customer_vat_number;
+                } else {
+                    echo $locale->t( 'meta_box.order_info.no_vat_number' );
+                }
+                ?>
+            </span>
+        </li>
     </ul>
     <ul>
         <li>

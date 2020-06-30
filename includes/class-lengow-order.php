@@ -176,6 +176,11 @@ class Lengow_Order {
 	 */
 	public $currency;
 
+    /**
+     * @var string customer vat number
+     */
+    public $customer_vat_number;
+
 	/**
 	 * @var float total paid on marketplace.
 	 */
@@ -273,6 +278,7 @@ class Lengow_Order {
 			$this->order_item           = (int) $row->order_item;
 			$this->order_types          = null !== $row->order_types ? json_decode( $row->order_types, true ) : array();
 			$this->currency             = $row->currency;
+			$this->customer_vat_number  = null !== $row->customer_vat_number ? $row->customer_vat_number : '';
 			$this->total_paid           = null !== $row->total_paid ? (float) $row->total_paid : null;
 			$this->commission           = null !== $row->commission ? (float) $row->commission : null;
 			$this->customer_name        = $row->customer_name;

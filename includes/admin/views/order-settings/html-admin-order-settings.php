@@ -149,6 +149,25 @@ $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
                     </div>
                 </div>
             </div>
+            <div class="lgw-box">
+                <h2><?php echo $locale->t( 'order_setting.screen.import_b2b_without_tax_title' ); ?></h2>
+                <p><?php echo $locale->t( 'order_setting.screen.import_b2b_without_tax_description' ); ?></p>
+                <br/>
+                <div class="form-group lengow_import_b2b_without_tax">
+                    <div class="lgw-switch <?php echo (bool) $values['lengow_import_b2b_without_tax'] ? 'checked' : ''; ?>">
+                        <label>
+                            <div>
+                                <span></span>
+                                <input type="hidden" name="lengow_import_b2b_without_tax" value="0">
+                                <input name="lengow_import_b2b_without_tax"
+                                       type="checkbox"
+                                    <?php echo (bool) $values['lengow_import_b2b_without_tax'] ? 'checked' : ''; ?>/>
+                            </div>
+                            <?php echo $keys['lengow_import_b2b_without_tax']['label']; ?>
+                        </label>
+                    </div>
+                </div>
+            </div>
             <div class="form-group container">
                 <div class="lengow_main_setting_block_content">
                     <div class="pull-left">
