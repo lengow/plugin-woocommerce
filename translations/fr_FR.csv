@@ -132,6 +132,7 @@ order.table.reference|Référence
 order.table.date|Date
 order.table.country|Pays
 order.table.total|Montant
+order.table.vat_number|Numéro de TVA
 order.table.order_not_imported|Votre commande n'a pas été importée dans WooCommerce
 order.table.action_sent_not_work|L'action envoyée à la marketplace ne fonctionne pas
 order.table.no_error_message|Erreur non identifiée, merci de contacter le support Lengow pour plus d'informations
@@ -149,6 +150,9 @@ order_setting.screen.nb_days|jours
 order_setting.screen.currency_conversion_title|Convertir la devise de vos commandes
 order_setting.screen.currency_conversion_description|Toutes les commandes importées dans WooCommerce seront automatiquement convertis dans la devise choisie dans Lengow
 order_setting.screen.currency_conversion_label|Activez la conversion de devises
+order_setting.screen.import_b2b_without_tax_title|Commandes B2B
+order_setting.screen.import_b2b_without_tax_label|Activer l'import des commandes B2B sans taxes
+order_setting.screen.import_b2b_without_tax_description|Activer cette option pour importer les commandes B2B sans taxes
 global_setting.screen.notification_alert_title|Notifications & alertes
 global_setting.screen.security_title|Sécurité
 global_setting.screen.tracker_title|Tracker Lengow
@@ -265,6 +269,8 @@ meta_box.order_info.customer_name|Nom du client
 meta_box.order_info.customer_email|Email client
 meta_box.order_info.message|Message
 meta_box.order_info.imported_date|Importée le
+meta_box.order_info.vat_number|Numéro de TVA
+meta_box.order_info.no_vat_number|Pas de numéro de TVA
 meta_box.order_info.is_express|Livraison Express
 meta_box.order_info.is_delivered_by_marketplace|Expédié par la marketplace
 meta_box.order_info.is_business|Business

@@ -213,6 +213,11 @@ class Lengow_Configuration {
 					'legend'        => $locale->t( 'lengow_settings.lengow_import_stock_ship_mp_legend' ),
 					'default_value' => 0,
 				),
+				'lengow_import_b2b_without_tax'          => array(
+					'global'        => true,
+					'label'         => $locale->t( 'order_setting.screen.import_b2b_without_tax_label' ),
+					'default_value' => false,
+				),
 				'lengow_debug_enabled'                   => array(
 					'global'        => true,
 					'label'         => $locale->t( 'lengow_settings.lengow_debug_enabled_title' ),
