@@ -169,15 +169,15 @@ class Lengow_Hook {
 		}
 	}
 
-    /**
-     * Switch woocommerce tax class for Lengow b2b orders
-     *
-     * @param $tax_class
-     * @param $product
-     *
-     * @return string
-     */
+	/**
+	 * Switch woocommerce tax class for Lengow b2b orders
+	 *
+	 * @param $tax_class
+	 * @param $product
+	 *
+	 * @return string
+	 */
 	public static function switch_product_tax_class_for_b2b( $tax_class, $product ) {
-	    return 'Zero Rate';
-    }
+		return 'Zero Rate';
+	}
 }

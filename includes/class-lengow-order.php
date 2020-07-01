@@ -176,10 +176,10 @@ class Lengow_Order {
 	 */
 	public $currency;
 
-    /**
-     * @var string customer vat number
-     */
-    public $customer_vat_number;
+	/**
+	 * @var string customer vat number
+	 */
+	public $customer_vat_number;
 
 	/**
 	 * @var float total paid on marketplace.
@@ -1200,7 +1200,7 @@ class Lengow_Order {
 				'order_lengow_id'     => $this->id,
 				'marketplace_sku'     => $this->marketplace_sku,
 				'marketplace_name'    => $this->marketplace_name,
-				'delivery_address_id' => $this->delivery_address_id
+				'delivery_address_id' => $this->delivery_address_id,
 			)
 		);
 		$result = $import->exec();

@@ -22,15 +22,15 @@
  */
 
 if ( ! defined( 'ABSPATH' ) || ! Lengow_Install::is_installation_in_progress() ) {
-    exit;
+	exit;
 }
 
 $table = Lengow_Crud::LENGOW_ORDER;
 if ( Lengow_Install::check_table_exists( $table ) ) {
-    $table_name = $wpdb->prefix . $table;
-    if ( ! Lengow_Install::check_field_exists( $table, 'customer_vat_number' ) ) {
-        $wpdb->query(
-            'ALTER TABLE ' . $table_name . ' ADD `customer_vat_number` VARCHAR(100) COLLATE utf8_unicode_ci NULL DEFAULT NULL'
-        );
-    }
+	$table_name = $wpdb->prefix . $table;
+	if ( ! Lengow_Install::check_field_exists( $table, 'customer_vat_number' ) ) {
+		$wpdb->query(
+			'ALTER TABLE ' . $table_name . ' ADD `customer_vat_number` VARCHAR(100) COLLATE utf8_unicode_ci NULL DEFAULT NULL'
+		);
+	}
 }
