@@ -449,7 +449,8 @@ class Lengow_Import_Order {
 			}
 			// If the order is B2B, activate switch_product_tax_class_for_b2b hook
 			if ( (bool) Lengow_Configuration::get( 'lengow_import_b2b_without_tax' )
-			     && isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] ) ) {
+			     && isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
+			) {
 				// add hook on tax calculation for b2b order
 				add_filter(
 					'woocommerce_product_get_tax_class',
@@ -468,7 +469,8 @@ class Lengow_Import_Order {
 			$order = $this->_create_order( $user, $products, $billing_address, $shipping_address );
 			// remove hook after creating the order to avoid any change to other order
 			if ( (bool) Lengow_Configuration::get( 'lengow_import_b2b_without_tax' )
-			     && isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] ) ) {
+			     && isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
+			) {
 				remove_filter(
 					'woocommerce_product_get_tax_class',
 					array( 'Lengow_Hook', 'switch_product_tax_class_for_b2b' ),

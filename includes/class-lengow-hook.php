@@ -39,6 +39,9 @@ include_once( 'class-lengow-order.php' );
  */
 class Lengow_Hook {
 
+	// tax rate to apply to b2b orders
+	const B2B_RATES = 'Zero Rate';
+
 	/**
 	 * Add meta box for orders created by Lengow.
 	 *
@@ -172,12 +175,12 @@ class Lengow_Hook {
 	/**
 	 * Switch woocommerce tax class for Lengow b2b orders
 	 *
-	 * @param $tax_class
-	 * @param $product
+	 * @param $tax_class string Magento tax class
+	 * @param $product WC_Product Magento product
 	 *
 	 * @return string
 	 */
 	public static function switch_product_tax_class_for_b2b( $tax_class, $product ) {
-		return 'Zero Rate';
+		return self::B2B_RATES;
 	}
 }
