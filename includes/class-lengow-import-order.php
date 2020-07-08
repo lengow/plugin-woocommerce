@@ -1076,10 +1076,11 @@ class Lengow_Import_Order {
 		     && isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
 		) {
 			// If order is B2B, add shipping cost without tax
-			$shipping_cost = $this->_add_shipping_cost( $order_id, $customer, $products, true );
+			$no_tax = true;
 		} else {
-			$shipping_cost = $this->_add_shipping_cost( $order_id, $customer, $products );
+			$no_tax = false;
 		}
+		$shipping_cost = $this->_add_shipping_cost( $order_id, $customer, $products, $no_tax );
 		$this->_add_tax( $order_id, $customer, $tax_amount, $shipping_cost['tax_amount'] );
 		if ( $this->_processing_fee > 0 ) {
 			$this->_add_processing_fee( $order_id );
@@ -1226,8 +1227,8 @@ class Lengow_Import_Order {
 			: $wc_tax->get_shipping_tax_rates();
 		$taxes      = $wc_tax->calc_tax( $shipping, $tax_rates, true, false );
 		$tax_id     = ! empty( $taxes ) ? (int) key( $taxes ) : false;
-		if ( ! $no_tax ) {
-			$tax_amount = $tax_id ? $taxes[ $tax_id ] : 0;
+		if ( ! $no_tax && $tax_id ) {
+			$tax_amount = $taxes[ $tax_id ];
 		} else {
 			$tax_amount = 0;
 		}
