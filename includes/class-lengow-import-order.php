@@ -1072,15 +1072,7 @@ class Lengow_Import_Order {
 		foreach ( $products as $product_data ) {
 			$tax_amount += $this->_add_product( $order_id, $customer, $product_data );
 		}
-		if ( (bool) Lengow_Configuration::get( 'lengow_import_b2b_without_tax' )
-		     && isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
-		) {
-			// If order is B2B, add shipping cost without tax
-			$no_tax = true;
-		} else {
-			$no_tax = false;
-		}
-		$shipping_cost = $this->_add_shipping_cost( $order_id, $customer, $products, $no_tax );
+		$shipping_cost = $this->_add_shipping_cost( $order_id, $customer, $products );
 		$this->_add_tax( $order_id, $customer, $tax_amount, $shipping_cost['tax_amount'] );
 		if ( $this->_processing_fee > 0 ) {
 			$this->_add_processing_fee( $order_id );
@@ -1214,12 +1206,18 @@ class Lengow_Import_Order {
 	 * @param integer $order_id WooCommerce order id
 	 * @param WC_Customer $customer WooCommerce customer instance
 	 * @param array $products products list
-	 * @param bool $no_tax Should apply shipping tax
 	 *
 	 * @return array
 	 */
-	private function _add_shipping_cost( $order_id, $customer, $products, $no_tax = false ) {
+	private function _add_shipping_cost( $order_id, $customer, $products ) {
 		$wc_tax = new WC_Tax();
+        $no_tax = false;
+        if ( (bool) Lengow_Configuration::get( 'lengow_import_b2b_without_tax' )
+             && isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
+        ) {
+            // If order is B2B, add shipping cost without tax
+            $no_tax = true;
+        }
 		// set shipping cost tax.
 		$shipping   = $this->_shipping_cost;
 		$tax_rates  = Lengow_Main::compare_version( '3.2' )
