@@ -1227,11 +1227,7 @@ class Lengow_Import_Order {
 			: $wc_tax->get_shipping_tax_rates();
 		$taxes      = $wc_tax->calc_tax( $shipping, $tax_rates, true, false );
 		$tax_id     = ! empty( $taxes ) ? (int) key( $taxes ) : false;
-		if ( ! $no_tax && $tax_id ) {
-			$tax_amount = $taxes[ $tax_id ];
-		} else {
-			$tax_amount = 0;
-		}
+		$tax_amount = ( ! $no_tax && $tax_id ) ? $taxes[ $tax_id ] : 0;
 		$amount     = $shipping - $tax_amount;
 		// get default shipping method.
 		$wc_shipping             = new WC_Shipping();
