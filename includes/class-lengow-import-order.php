@@ -1213,7 +1213,7 @@ class Lengow_Import_Order {
 	 * @param integer $order_id WooCommerce order id
 	 * @param WC_Customer $customer WooCommerce customer instance
 	 * @param array $products products list
-     * @param bool $no_tax Should apply shipping tax
+	 * @param bool $no_tax Should apply shipping tax
 	 *
 	 * @return array
 	 */
