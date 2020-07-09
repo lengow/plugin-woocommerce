@@ -1211,6 +1211,13 @@ class Lengow_Import_Order {
 	 */
 	private function _add_shipping_cost( $order_id, $customer, $products ) {
 		$wc_tax = new WC_Tax();
+		$no_tax = false;
+		if ( (bool) Lengow_Configuration::get( 'lengow_import_b2b_without_tax' )
+		     && isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
+		) {
+			// If order is B2B, add shipping cost without tax
+			$no_tax = true;
+		}
 		// set shipping cost tax.
 		$shipping   = $this->_shipping_cost;
 		$tax_rates  = Lengow_Main::compare_version( '3.2' )
@@ -1218,7 +1225,7 @@ class Lengow_Import_Order {
 			: $wc_tax->get_shipping_tax_rates();
 		$taxes      = $wc_tax->calc_tax( $shipping, $tax_rates, true, false );
 		$tax_id     = ! empty( $taxes ) ? (int) key( $taxes ) : false;
-		$tax_amount = $tax_id ? $taxes[ $tax_id ] : 0;
+		$tax_amount = ( ! $no_tax && $tax_id ) ? $taxes[ $tax_id ] : 0;
 		$amount     = $shipping - $tax_amount;
 		// get default shipping method.
 		$wc_shipping             = new WC_Shipping();
