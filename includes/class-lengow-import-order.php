@@ -1211,13 +1211,13 @@ class Lengow_Import_Order {
 	 */
 	private function _add_shipping_cost( $order_id, $customer, $products ) {
 		$wc_tax = new WC_Tax();
-        $no_tax = false;
-        if ( (bool) Lengow_Configuration::get( 'lengow_import_b2b_without_tax' )
-             && isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
-        ) {
-            // If order is B2B, add shipping cost without tax
-            $no_tax = true;
-        }
+		$no_tax = false;
+		if ( (bool) Lengow_Configuration::get( 'lengow_import_b2b_without_tax' )
+		     && isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
+		) {
+			// If order is B2B, add shipping cost without tax
+			$no_tax = true;
+		}
 		// set shipping cost tax.
 		$shipping   = $this->_shipping_cost;
 		$tax_rates  = Lengow_Main::compare_version( '3.2' )
