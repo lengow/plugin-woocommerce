@@ -48,7 +48,7 @@ class Lengow_Hook {
 	 * @param WP_Post $post Wordpress Post instance
 	 */
 	public static function adding_shop_order_meta_boxes( $post ) {
-		if ( Lengow_Order::get_id_from_order_id( (int) $post->ID ) ) {
+		if ( $post && Lengow_Order::get_id_from_order_id( (int) $post->ID ) ) {
 			$locale = new Lengow_Translation();
 			add_meta_box(
 				'lengow-order-infos',
@@ -76,7 +76,7 @@ class Lengow_Hook {
 	public static function unhook_woocommerce_mail( $email_class ) {
 		global $post;
 
-		if ( Lengow_Order::get_id_from_order_id( $post->ID ) ) {
+		if ( $post && Lengow_Order::get_id_from_order_id( $post->ID ) ) {
 			remove_action(
 				'woocommerce_order_status_pending_to_processing_notification',
 				array( &$email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' )
