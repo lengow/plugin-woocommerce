@@ -35,8 +35,8 @@
                     }
                 });
             };
-            syncIframe.src = syncLink ? '//cms.'+lengowUrl+'/sync/' : '//cms.'+lengowUrl+'/';
-            syncIframe.src = syncIframe.src + '?lang=' + isoCode + '&clientType=woocommerce';
+            syncIframe.src = (syncLink ? 'https://cms.' + lengowUrl + '/sync/' : 'https://cms.' + lengowUrl + '/')
+                + '?lang=' + isoCode + '&clientType=woocommerce';
             $('#frame_loader').hide();
             $('#lengow_iframe').show();
         }
