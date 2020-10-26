@@ -45,6 +45,9 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 
 == Changelog ==
 
+= 2.3.4 - xxxx-xx-xx =
+
+
 = 2.3.3 - 2020-10-26 =
 * Feature: Adding new links to the Lengow Help Center and Support
 * Feature: B2B orders can now be imported without taxes (optional)
