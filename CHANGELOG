@@ -3,7 +3,7 @@ Version 2.3.3
 ========================================================
 
     - Feature: Adding new links to the Lengow Help Center and Support
-    - Feature: B2B orders can now be imported without taxes (optionnal)
+    - Feature: B2B orders can now be imported without taxes (optional)
     - Bugfix: [import] Handling of b2b order shipping tax
     - Bugfix: New security for Wordpress version 5.5.x
     - Bugfix: [export] Checks if the child description is empty or null
