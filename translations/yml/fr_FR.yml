@@ -5,7 +5,7 @@ fr:
     plugin_uri: "https://www.lengow.com/fr/integrations/woocommerce/"
     author_uri: "http://www.lengow.com/fr"
     description: "Avec votre module Lengow pour WooCommerce vendez rapidement vos produits sur Amazon, Ebay, Facebook, Google Shopping, Criteo, Bing et d’autres et touchez facilement de nouveaux clients partout dans le monde. Plus de 1 800 canaux marketing vous attendent sur la plateforme Lengow !"
-    version: "2.3.2"
+    version: "2.3.3"
     author: "Lengow"
     state_technical_error: "Erreur technique - Lengow"
     lengow_payment_title: "Paiement Lengow"
@@ -146,6 +146,7 @@ fr:
       date: "Date"
       country: "Pays"
       total: "Montant"
+      vat_number: 'Numéro de TVA'
       order_not_imported: "Votre commande n'a pas été importée dans WooCommerce"
       action_sent_not_work: "L'action envoyée à la marketplace ne fonctionne pas"
       no_error_message: "Erreur non identifiée, merci de contacter le support Lengow pour plus d'informations"
@@ -165,6 +166,9 @@ fr:
       currency_conversion_title: "Convertir la devise de vos commandes"
       currency_conversion_description: "Toutes les commandes importées dans WooCommerce seront automatiquement convertis dans la devise choisie dans Lengow"
       currency_conversion_label: "Activez la conversion de devises"
+      import_b2b_without_tax_title: "Commandes B2B"
+      import_b2b_without_tax_label: "Activer l'import des commandes B2B sans taxes"
+      import_b2b_without_tax_description: "Activer cette option pour importer les commandes B2B sans taxes"
   global_setting:
     screen:
       notification_alert_title: "Notifications & alertes"
@@ -193,7 +197,7 @@ fr:
       contain_text_support_hour: "Nous ferons notre maximum pour revenir vers vous au plus vite (Notre équipe Support est disponible du lundi au vendredi, de 9h à 18h)."
       find_answer: "Vous pouvez aussi consulter"
       link_woocommerce_guide: "notre guide dédié à WooCommerce"
-      knowledge_link_url: "https://supportlengow.zendesk.com/hc/fr/articles/360011968912"
+      knowledge_link_url: "https://support.lengow.com/kb/guide/fr/rMVnXfZXmr"
   legals:
     screen:
       simplified_company: "Société par actions simplifiées"
@@ -294,6 +298,8 @@ fr:
       customer_email: "Email client"
       message: "Message"
       imported_date: "Importée le"
+      vat_number: "Numéro de TVA"
+      no_vat_number: "Pas de numéro de TVA"
       is_express: "Livraison Express"
       is_delivered_by_marketplace: "Expédié par la marketplace"
       is_business: "Business"

@@ -5,7 +5,7 @@ en:
     plugin_uri: "https://www.lengow.com/integrations/woocommerce/"
     author_uri: "http://www.lengow.com"
     description: "Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!"
-    version: "2.3.2"
+    version: "2.3.3"
     author: "Lengow"
     state_technical_error: "Technical error - Lengow"
     lengow_payment_title: "Lengow payment"
@@ -146,6 +146,7 @@ en:
       date: "Date"
       country: "Country"
       total: "Amount"
+      vat_number: 'Vat number'
       order_not_imported: "Order has not been imported into WooCommerce"
       action_sent_not_work: "Action sent to the marketplace didn't work"
       no_error_message: "Unidentified error, please contact Lengow's support team for more information"
@@ -165,6 +166,9 @@ en:
       currency_conversion_title: "Convert the currency of your order"
       currency_conversion_description: "All orders imported into WooCommerce will be automatically converted into the currency you've selected in Lengow"
       currency_conversion_label: "Activate conversion"
+      import_b2b_without_tax_title: "B2B orders"
+      import_b2b_without_tax_label: "Enable import of B2B orders without tax"
+      import_b2b_without_tax_description: "Activate this option to import B2B orders without tax"
   global_setting:
     screen:
       notification_alert_title: "Notifications & alerts"
@@ -188,12 +192,12 @@ en:
       title: "Get a little help from your support team!"
       contain_text_support: "Ask us anything about Lengow or share feedback with"
       title_lengow_support: "Lengow Support."
-      link_lengow_support: "https://supportlengow.zendesk.com/hc/en-us/requests/new"
+      link_lengow_support: "https://www.lengow.com/support/"
       need_some_help: "Need some help?"
       contain_text_support_hour: "We’ll do our best to get back to you during regular business hours (Monday to Friday – 9am to 6pm GMT+1)."
       find_answer: "You can also find answers in our "
       link_woocommerce_guide: "WooCommerce dedicated guide"
-      knowledge_link_url: "https://supportlengow.zendesk.com/hc/en-us/articles/360011968912"
+      knowledge_link_url: "https://support.lengow.com/kb/guide/en/rMVnXfZXmr"
   legals:
     screen:
       simplified_company: "Simplified limited liability company"
@@ -293,6 +297,8 @@ en:
       customer_name: "Customer name"
       customer_email: "Customer email"
       message: "Message"
+      vat_number: "VAT number"
+      no_vat_number: "No VAT number"
       imported_date: "Imported at"
       is_express: "Express delivery"
       is_delivered_by_marketplace: "Shipped by marketplace"

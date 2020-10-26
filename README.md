@@ -1,9 +1,9 @@
 # Lengow for WooCommerce
 
 - **Requires at least:** 3.5
-- **Tested up to:** 5.3
+- **Tested up to:** 5.5
 - **Requires PHP:** 5.6
-- **Stable tag:** 2.3.2
+- **Stable tag:** 2.3.3
 - **License:** GPLv3
 - **License URI:** https://www.gnu.org/licenses/gpl-3.0
 

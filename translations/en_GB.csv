@@ -3,7 +3,7 @@ module.plugin_name|Lengow for WooCommerce
 module.plugin_uri|https://www.lengow.com/integrations/woocommerce/
 module.author_uri|http://www.lengow.com
 module.description|Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
-module.version|2.3.2
+module.version|2.3.3
 module.author|Lengow
 module.state_technical_error|Technical error - Lengow
 module.lengow_payment_title|Lengow payment
@@ -132,6 +132,7 @@ order.table.reference|Reference
 order.table.date|Date
 order.table.country|Country
 order.table.total|Amount
+order.table.vat_number|Vat number
 order.table.order_not_imported|Order has not been imported into WooCommerce
 order.table.action_sent_not_work|Action sent to the marketplace didn't work
 order.table.no_error_message|Unidentified error, please contact Lengow's support team for more information
@@ -149,6 +150,9 @@ order_setting.screen.nb_days|days
 order_setting.screen.currency_conversion_title|Convert the currency of your order
 order_setting.screen.currency_conversion_description|All orders imported into WooCommerce will be automatically converted into the currency you've selected in Lengow
 order_setting.screen.currency_conversion_label|Activate conversion
+order_setting.screen.import_b2b_without_tax_title|B2B orders
+order_setting.screen.import_b2b_without_tax_label|Enable import of B2B orders without tax
+order_setting.screen.import_b2b_without_tax_description|Activate this option to import B2B orders without tax
 global_setting.screen.notification_alert_title|Notifications & alerts
 global_setting.screen.security_title|Security
 global_setting.screen.tracker_title|Lengow tracker
@@ -168,12 +172,12 @@ global_setting.screen.download_all_files|Download all files
 help.screen.title|Get a little help from your support team!
 help.screen.contain_text_support|Ask us anything about Lengow or share feedback with
 help.screen.title_lengow_support|Lengow Support.
-help.screen.link_lengow_support|https://supportlengow.zendesk.com/hc/en-us/requests/new
+help.screen.link_lengow_support|https://www.lengow.com/support/
 help.screen.need_some_help|Need some help?
 help.screen.contain_text_support_hour|We’ll do our best to get back to you during regular business hours (Monday to Friday – 9am to 6pm GMT+1).
 help.screen.find_answer|You can also find answers in our 
 help.screen.link_woocommerce_guide|WooCommerce dedicated guide
-help.screen.knowledge_link_url|https://supportlengow.zendesk.com/hc/en-us/articles/360011968912
+help.screen.knowledge_link_url|https://support.lengow.com/kb/guide/en/rMVnXfZXmr
 legals.screen.simplified_company|Simplified limited liability company
 legals.screen.social_capital|Social capital:
 legals.screen.cnil_declaration|CNIL declaration:
@@ -264,6 +268,8 @@ meta_box.order_info.address_id|Delivery Address ID
 meta_box.order_info.customer_name|Customer name
 meta_box.order_info.customer_email|Customer email
 meta_box.order_info.message|Message
+meta_box.order_info.vat_number|VAT number
+meta_box.order_info.no_vat_number|No VAT number
 meta_box.order_info.imported_date|Imported at
 meta_box.order_info.is_express|Express delivery
 meta_box.order_info.is_delivered_by_marketplace|Shipped by marketplace

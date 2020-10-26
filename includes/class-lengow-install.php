@@ -190,6 +190,7 @@ class Lengow_Install {
 				`order_item` INTEGER(11) UNSIGNED NULL,
 				`order_types` TEXT NULL DEFAULT NULL,
                 `currency` VARCHAR(3) NULL DEFAULT NULL,
+                `customer_vat_number` VARCHAR(100) NULL DEFAULT NULL,
                 `total_paid` DECIMAL(17,2) UNSIGNED NULL,
 				`commission` DECIMAL(17,2) UNSIGNED NULL,
 				`customer_name` VARCHAR(255) NULL DEFAULT NULL,

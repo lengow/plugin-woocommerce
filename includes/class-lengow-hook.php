@@ -39,13 +39,16 @@ include_once( 'class-lengow-order.php' );
  */
 class Lengow_Hook {
 
+	// tax rate to apply to b2b orders
+	const B2B_RATES = 'Zero Rate';
+
 	/**
 	 * Add meta box for orders created by Lengow.
 	 *
 	 * @param WP_Post $post Wordpress Post instance
 	 */
 	public static function adding_shop_order_meta_boxes( $post ) {
-		if ( Lengow_Order::get_id_from_order_id( (int) $post->ID ) ) {
+		if ( $post && Lengow_Order::get_id_from_order_id( (int) $post->ID ) ) {
 			$locale = new Lengow_Translation();
 			add_meta_box(
 				'lengow-order-infos',
@@ -73,7 +76,7 @@ class Lengow_Hook {
 	public static function unhook_woocommerce_mail( $email_class ) {
 		global $post;
 
-		if ( Lengow_Order::get_id_from_order_id( $post->ID ) ) {
+		if ( $post && Lengow_Order::get_id_from_order_id( $post->ID ) ) {
 			remove_action(
 				'woocommerce_order_status_pending_to_processing_notification',
 				array( &$email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger' )
@@ -167,5 +170,17 @@ class Lengow_Hook {
 				Lengow_Tracker::html_display( $order );
 			}
 		}
+	}
+
+	/**
+	 * Switch woocommerce tax class for Lengow b2b orders
+	 *
+	 * @param $tax_class string Magento tax class
+	 * @param $product WC_Product Magento product
+	 *
+	 * @return string
+	 */
+	public static function switch_product_tax_class_for_b2b( $tax_class, $product ) {
+		return self::B2B_RATES;
 	}
 }

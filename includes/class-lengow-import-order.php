@@ -447,8 +447,41 @@ class Lengow_Import_Order {
 			if ( ! $user ) {
 				$user = $this->_create_user( $user_email, $billing_address, $shipping_address );
 			}
+			// If the order is B2B, activate switch_product_tax_class_for_b2b hook
+			if ( (bool) Lengow_Configuration::get( 'lengow_import_b2b_without_tax' )
+			     && isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
+			) {
+				// add hook on tax calculation for b2b order
+				add_filter(
+					'woocommerce_product_get_tax_class',
+					array( 'Lengow_Hook', 'switch_product_tax_class_for_b2b' ),
+					100,
+					2
+				);
+				add_filter(
+					'woocommerce_product_variation_get_tax_class',
+					array( 'Lengow_Hook', 'switch_product_tax_class_for_b2b' ),
+					100,
+					2
+				);
+			}
 			// create a WooCommerce order.
 			$order = $this->_create_order( $user, $products, $billing_address, $shipping_address );
+			// remove hook after creating the order to avoid any change to other order
+			if ( (bool) Lengow_Configuration::get( 'lengow_import_b2b_without_tax' )
+			     && isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
+			) {
+				remove_filter(
+					'woocommerce_product_get_tax_class',
+					array( 'Lengow_Hook', 'switch_product_tax_class_for_b2b' ),
+					100
+				);
+				remove_filter(
+					'woocommerce_product_variation_get_tax_class',
+					array( 'Lengow_Hook', 'switch_product_tax_class_for_b2b' ),
+					100
+				);
+			}
 			// save order line id in lengow_order_line table.
 			$order_line_saved = $this->_save_lengow_order_lines( $order, $products );
 			Lengow_Main::log(
@@ -619,6 +652,7 @@ class Lengow_Import_Order {
 			'delivery_address_id' => $this->_delivery_address_id,
 			'order_date'          => $this->_order_date,
 			'order_types'         => json_encode( $this->_order_types ),
+			'customer_vat_number' => $this->getVatNumberFromOrderData(),
 			'order_lengow_state'  => $this->_order_state_lengow,
 			'extra'               => json_encode( $this->_order_data ),
 		);
@@ -634,6 +668,21 @@ class Lengow_Import_Order {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Get vat_number from lengow order data
+	 *
+	 * @return string|null
+	 */
+	protected function getVatNumberFromOrderData() {
+		if ( isset( $this->_order_data->billing_address->vat_number ) ) {
+			return $this->_order_data->billing_address->vat_number;
+		} elseif ( isset( $this->_package_data->delivery->vat_number ) ) {
+			return $this->_package_data->delivery->vat_number;
+		}
+
+		return null;
 	}
 
 	/**
@@ -1162,6 +1211,13 @@ class Lengow_Import_Order {
 	 */
 	private function _add_shipping_cost( $order_id, $customer, $products ) {
 		$wc_tax = new WC_Tax();
+		$no_tax = false;
+		if ( (bool) Lengow_Configuration::get( 'lengow_import_b2b_without_tax' )
+		     && isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
+		) {
+			// If order is B2B, add shipping cost without tax
+			$no_tax = true;
+		}
 		// set shipping cost tax.
 		$shipping   = $this->_shipping_cost;
 		$tax_rates  = Lengow_Main::compare_version( '3.2' )
@@ -1169,7 +1225,7 @@ class Lengow_Import_Order {
 			: $wc_tax->get_shipping_tax_rates();
 		$taxes      = $wc_tax->calc_tax( $shipping, $tax_rates, true, false );
 		$tax_id     = ! empty( $taxes ) ? (int) key( $taxes ) : false;
-		$tax_amount = $tax_id ? $taxes[ $tax_id ] : 0;
+		$tax_amount = ( ! $no_tax && $tax_id ) ? $taxes[ $tax_id ] : 0;
 		$amount     = $shipping - $tax_amount;
 		// get default shipping method.
 		$wc_shipping             = new WC_Shipping();
