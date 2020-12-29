@@ -98,6 +98,7 @@ class Lengow_Crud {
 			'commission'           => array( 'required' => false, 'updated' => true, 'format' => '%f' ),
 			'customer_name'        => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
 			'customer_email'       => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
+            'customer_vat_number'  => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
 			'carrier'              => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
 			'carrier_method'       => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
 			'carrier_tracking'     => array( 'required' => false, 'updated' => true, 'format' => '%s' ),

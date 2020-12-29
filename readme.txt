@@ -46,7 +46,7 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 == Changelog ==
 
 = 2.3.4 - xxxx-xx-xx =
-
+* Bugfix: Save customer_vat_number value in lengow order table
 
 = 2.3.3 - 2020-10-26 =
 * Feature: Adding new links to the Lengow Help Center and Support

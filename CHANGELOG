@@ -2,7 +2,7 @@
 Version 2.3.4
 ========================================================
 
-
+    - Bugfix: Save customer_vat_number value in lengow order table
 
 ========================================================
 Version 2.3.3
