@@ -3,6 +3,7 @@ Version 2.3.4
 ========================================================
 
     - Bugfix: Save customer_vat_number value in lengow order table
+    - Bugfix: remove NULL value from export images array
 
 ========================================================
 Version 2.3.3

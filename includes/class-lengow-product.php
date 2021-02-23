@@ -893,6 +893,8 @@ class Lengow_Product {
 		for ( $i = 1; $i < 11; $i ++ ) {
 			$imageUrls[ 'image_url_' . $i ] = '';
 		}
+		// clean $urls array to remove NULL entry
+		$urls = array_values( array_filter( $urls ) );
 		// Retrieves up to 10 images per product.
 		$counter = 1;
 		foreach ( $urls as $url ) {
