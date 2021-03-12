@@ -453,10 +453,9 @@ class Lengow_Product {
 				$description = $product->post->post_content;
 			}
 		} else {
-			if ( 'variation' === $product_type && $product_parent && empty( $product->get_description() ) ) {
+            $description = $product->get_description();
+			if ( 'variation' === $product_type && $product_parent && empty( $description ) ) {
 				$description = $product_parent->get_description();
-			} else {
-				$description = $product->get_description();
 			}
 		}
 
@@ -474,10 +473,9 @@ class Lengow_Product {
 	 */
 	public static function get_short_description( $product, $product_parent, $product_type ) {
 		if ( Lengow_Main::compare_version( '3.0' ) ) {
-			if ( 'variation' === $product_type && $product_parent && empty( $product->get_short_description() ) ) {
+            $short_description = $product->get_short_description();
+			if ( 'variation' === $product_type && $product_parent && empty( $short_description ) ) {
 				$short_description = $product_parent->get_short_description();
-			} else {
-				$short_description = $product->get_short_description();
 			}
 		} else {
 			$short_description = $product->post->post_excerpt;

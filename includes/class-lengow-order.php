@@ -873,17 +873,18 @@ class Lengow_Order {
 			if ( ! Lengow_Marketplace::marketplace_exist( $this->marketplace_name ) && null !== $this->feed_id ) {
 				$this->check_and_change_marketplace_name( $connector, $log_output );
 			}
+			$body = array(
+				'account_id'           => $account_id,
+				'marketplace_order_id' => $this->marketplace_sku,
+				'marketplace'          => $this->marketplace_name,
+				'merchant_order_id'    => $woocommerce_order_ids,
+			);
 			try {
 				$return = $connector->patch(
 					Lengow_Connector::API_ORDER_MOI,
-					array(
-						'account_id'           => $account_id,
-						'marketplace_order_id' => $this->marketplace_sku,
-						'marketplace'          => $this->marketplace_name,
-						'merchant_order_id'    => $woocommerce_order_ids,
-					),
+					array(),
 					Lengow_Connector::FORMAT_JSON,
-					'',
+					json_encode( $body ),
 					$log_output
 				);
 			} catch ( Exception $e ) {
@@ -1081,7 +1082,7 @@ class Lengow_Order {
 		Lengow_Order_Error::finish_order_errors( $this->id, Lengow_Order_Error::ERROR_TYPE_SEND );
 		try {
 			// compatibility v2.
-			if ( ! Lengow_Marketplace::marketplace_exist( $this->marketplace_name ) && null !== $this->feed_id ) {
+			if ( null !== $this->feed_id && ! Lengow_Marketplace::marketplace_exist( $this->marketplace_name ) ) {
 				$this->check_and_change_marketplace_name();
 			}
 			$marketplace = Lengow_Main::get_marketplace_singleton( $this->marketplace_name );

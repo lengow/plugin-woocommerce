@@ -36,41 +36,13 @@ class Lengow_Admin_Dashboard {
 	public static function display() {
 		$locale          = new Lengow_Translation();
 		$merchant_status = Lengow_Sync::get_status_account();
-		$is_new_merchant = Lengow_Configuration::is_new_merchant();
-		$is_sync         = isset( $_GET['isSync'] ) ? $_GET['isSync'] : false;
-		if ( $is_new_merchant || $is_sync ) {
-			$locale_iso_code = strtolower( substr( get_locale(), 0, 2 ) );
-			include_once 'views/dashboard/html-admin-new.php';
-		} elseif ( 'free_trial' === $merchant_status['type'] && $merchant_status['expired'] ) {
+		if ( 'free_trial' === $merchant_status['type'] && $merchant_status['expired'] ) {
 			$refresh_status = admin_url( 'admin.php?action=dashboard_get_process&do_action=refresh_status' );
 			include_once 'views/dashboard/html-admin-status.php';
 		} else {
 			$plugin_data         = Lengow_Sync::get_plugin_data();
 			$total_pending_order = Lengow_Order::get_total_order_by_status( 'waiting_shipment' );
 			include_once 'views/dashboard/html-admin-dashboard.php';
-		}
-	}
-
-	/**
-	 * Process Post Parameters.
-	 */
-	public static function post_process() {
-		$action = isset( $_POST['do_action'] ) ? $_POST['do_action'] : false;
-		if ( $action ) {
-			switch ( $action ) {
-				case 'get_sync_data':
-					$data               = array();
-					$data['function']   = 'sync';
-					$data['parameters'] = Lengow_Sync::get_sync_data();
-					echo json_encode( $data );
-					break;
-				case 'sync':
-					$data = isset( $_POST['data'] ) ? $_POST['data'] : false;
-					Lengow_Sync::sync( $data );
-					Lengow_Sync::get_status_account( true );
-					break;
-			}
-			exit();
 		}
 	}
 

@@ -2,8 +2,8 @@
 
 ## Liste des critères  ##
 	
-* Recetter sa feature sur les versions 2.0 et 3.6 de WooCommerce :
-* Recetter sa feature sur les versions 3.5 et 5.2 de WordPress :
+* Recetter sa feature sur les versions 2.x et 5.x de WooCommerce :
+* Recetter sa feature sur les versions 3.5.x et 5.6.x de WordPress :
 * Pas de modification de comportement de fonction :
 * Principe SOLID (au moins le S) :
 * Coding Style (Wordpress) :
@@ -18,10 +18,10 @@
  	
 ## Explication des critères ##
 
-### Recetter sa feature sur les versions 2.0 et 3.6 de WooCommerce ###
+### Recetter sa feature sur les versions 2.x et 5.x de WooCommerce ###
 Tester son développement sur toutes les versions WooCommerce compatibles avec le module
 
-### Recetter sa feature sur les versions 3.5 et 5.2 de WordPress ###
+### Recetter sa feature sur les versions 3.5.x et 5.6.x de WordPress ###
 Tester son développement sur toutes les versions WordPress compatibles avec le module
 
 ### Pas de modification de comportement de fonction ###

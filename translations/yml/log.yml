@@ -8,6 +8,13 @@ en:
       update_start: "## start updating for version %{old_version} to %{new_version} ##"
       update_end: "## end updating for version %{old_version} to %{new_version} ##"
       add_upgrade_version: "adding SQL patch required for the plugin version %{version}"
+    connection:
+      cms_creation_success: "CMS successfully created with Lengow webservice (CMS token %{cms_token})"
+      cms_creation_failed: "WARNING! CMS could NOT be created with Lengow webservice (CMS token %{cms_token})"
+      cms_already_exist: "CMS already created in Lengow (CMS token %{cms_token})"
+      try_link_catalog: "try to associate catalogue IDs %{catalog_ids} to the shop (SHOP token %{shop_token})"
+      link_catalog_success: "catalogues successfully linked with Lengow webservice"
+      link_catalog_failed: "WARNING! catalogues could NOT be linked with Lengow webservice"
     setting:
       setting_reset: "all Lengow settings were reset"
       setting_updated: "all Lengow settings were updated"

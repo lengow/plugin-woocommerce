@@ -29,7 +29,7 @@ $list_file = $logs ? array_reverse( $logs ) : array();
                             <input type="hidden" name="lengow_report_mail_enabled" value="0">
                             <input name="lengow_report_mail_enabled"
                                    type="checkbox"
-								<?php echo (bool) $values['lengow_report_mail_enabled'] ? 'checked' : ''; ?> />
+								<?php echo (bool) $values['lengow_report_mail_enabled'] ? 'checked' : ''; ?> >
                         </div>
 						<?php echo $keys['lengow_report_mail_enabled']['label']; ?>
                     </label>
@@ -40,7 +40,7 @@ $list_file = $logs ? array_reverse( $logs ) : array();
                 <div class="form-group">
                     <input type="text" name="lengow_report_mail_address" class="form-control"
                            placeholder="<?php echo $keys['lengow_report_mail_address']['placeholder']; ?>"
-                           value="<?php echo $values['lengow_report_mail_address']; ?>"/>
+                           value="<?php echo $values['lengow_report_mail_address']; ?>">
                     <span class="legend blue-frame"
                           style="display:block;"><?php echo $keys['lengow_report_mail_address']['legend']; ?></span>
                 </div>
@@ -77,7 +77,7 @@ $list_file = $logs ? array_reverse( $logs ) : array();
                             <input type="hidden" name="lengow_ip_enabled" value="0">
                             <input name="lengow_ip_enabled"
                                    type="checkbox"
-								<?php echo (bool) $values['lengow_ip_enabled'] ? 'checked' : ''; ?> />
+								<?php echo (bool) $values['lengow_ip_enabled'] ? 'checked' : ''; ?>>
                         </div>
 						<?php echo $keys['lengow_ip_enabled']['label']; ?>
                     </label>
@@ -91,7 +91,7 @@ $list_file = $logs ? array_reverse( $logs ) : array();
                     <div class="form-group">
                         <label class="control-label"><?php echo $keys['lengow_authorized_ip']['label']; ?></label>
                         <input type="text" name="lengow_authorized_ip" class="form-control"
-                               value="<?php echo $values['lengow_authorized_ip']; ?>"/>
+                               value="<?php echo $values['lengow_authorized_ip']; ?>">
                         <span class="legend blue-frame"
                               style="display:block;"><?php echo $keys['lengow_authorized_ip']['legend']; ?></span>
                     </div>
@@ -109,7 +109,7 @@ $list_file = $logs ? array_reverse( $logs ) : array();
                             <input type="hidden" name="lengow_tracking_enabled" value="0">
                             <input name="lengow_tracking_enabled"
                                    type="checkbox"
-								<?php echo (bool) $values['lengow_tracking_enabled'] ? 'checked' : ''; ?> />
+								<?php echo (bool) $values['lengow_tracking_enabled'] ? 'checked' : ''; ?>>
                         </div>
 						<?php echo $keys['lengow_tracking_enabled']['label']; ?>
                     </label>
@@ -127,7 +127,6 @@ $list_file = $logs ? array_reverse( $logs ) : array();
                                 </option>
 							<?php endforeach; ?>
                         </select>
-
                         <span class="legend blue-frame"
                               style="display:block;"><?php echo $keys['lengow_tracking_id']['legend']; ?></span>
                     </div>
@@ -135,19 +134,54 @@ $list_file = $logs ? array_reverse( $logs ) : array();
             </div>
         </div>
         <div class="lgw-box">
+            <h2><?php echo $locale->t( 'global_setting.screen.shop_title' ); ?></h2>
+            <p><?php echo $locale->t( 'global_setting.screen.shop_description' ); ?></p>
+            <div class="form-group">
+                <div class="lgw-switch <?php echo (bool) $values['lengow_store_enabled'] ? 'checked' : ''; ?>">
+                    <label>
+                        <div>
+                            <span></span>
+                            <input type="hidden" name="lengow_store_enabled" value="0">
+                            <input name="lengow_store_enabled"
+                                   type="checkbox"
+						        <?php echo (bool) $values['lengow_store_enabled'] ? 'checked' : ''; ?>>
+                        </div>
+				        <?php echo $keys['lengow_store_enabled']['label']; ?>
+                    </label>
+                </div>
+            </div>
+            <div id="lengow_wrapper_catalog_id"
+		        <?php echo (bool) $values['lengow_store_enabled'] ? '' : 'style="display:none;"'; ?>>
+                <div class="grey-frame">
+                    <div class="form-group">
+                        <label class="control-label"><?php echo $keys['lengow_catalog_id']['label']; ?></label>
+                        <input type="text"
+                               name="lengow_catalog_id"
+                               class="form-control"
+                               value="<?php echo $values['lengow_catalog_id']; ?>"/>
+                        <span class="legend blue-frame" style="display:block;">
+                            <?php echo $keys['lengow_catalog_id']['legend']; ?>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="lgw-box">
             <h2 class="margin-s"><?php echo $locale->t( 'global_setting.screen.debug_mode_title' ); ?></h2>
             <p><?php echo $locale->t( 'global_setting.screen.debug_mode_description' ); ?></p>
-            <div class="lgw-switch <?php echo (bool) $values['lengow_debug_enabled'] ? 'checked' : ''; ?>">
-                <label>
-                    <div>
-                        <span></span>
-                        <input type="hidden" name="lengow_debug_enabled" value="0">
-                        <input name="lengow_debug_enabled"
-                               type="checkbox"
-							<?php echo (bool) $values['lengow_debug_enabled'] ? 'checked' : ''; ?> />
-                    </div>
-					<?php echo $keys['lengow_debug_enabled']['label']; ?>
-                </label>
+            <div class="form-group">
+                <div class="lgw-switch <?php echo (bool) $values['lengow_debug_enabled'] ? 'checked' : ''; ?>">
+                    <label>
+                        <div>
+                            <span></span>
+                            <input type="hidden" name="lengow_debug_enabled" value="0">
+                            <input name="lengow_debug_enabled"
+                                   type="checkbox"
+                                <?php echo (bool) $values['lengow_debug_enabled'] ? 'checked' : ''; ?> />
+                        </div>
+                        <?php echo $keys['lengow_debug_enabled']['label']; ?>
+                    </label>
+                </div>
             </div>
             <div id="lengow_wrapper_debug"
 				<?php echo (bool) $values['lengow_debug_enabled'] ? '' : 'style="display:none;"'; ?>>
@@ -160,35 +194,12 @@ $list_file = $logs ? array_reverse( $logs ) : array();
                     <div class="form-group">
                         <label class="control-label"><?php echo $keys['lengow_access_token']['label']; ?></label>
                         <input type="text" name="lengow_access_token" class="form-control"
-                               value="<?php echo $values['lengow_access_token']; ?>"/>
+                               value="<?php echo $values['lengow_access_token']; ?>">
                     </div>
                     <div class="form-group">
                         <label class="control-label"><?php echo $keys['lengow_secret_token']['label']; ?></label>
                         <input type="text" name="lengow_secret_token" class="form-control"
-                               value="<?php echo $values['lengow_secret_token']; ?>"/>
-                    </div>
-                </div>
-                <div class="grey-frame">
-                    <div class="form-group">
-                        <div class="lgw-switch <?php echo (bool) $values['lengow_store_enabled'] ? 'checked' : ''; ?>">
-                            <label>
-                                <div>
-                                    <span></span>
-                                    <input type="hidden" name="lengow_store_enabled" value="0">
-                                    <input name="lengow_store_enabled"
-                                           type="checkbox"
-										<?php echo (bool) $values['lengow_store_enabled'] ? 'checked' : ''; ?>/>
-                                </div>
-								<?php echo $keys['lengow_store_enabled']['label']; ?>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label"><?php echo $keys['lengow_catalog_id']['label']; ?></label>
-                        <input type="text" name="lengow_catalog_id" class="form-control"
-                               value="<?php echo $values['lengow_catalog_id']; ?>"/>
-                        <span class="legend blue-frame"
-                              style="display:block;"><?php echo $keys['lengow_catalog_id']['legend']; ?></span>
+                               value="<?php echo $values['lengow_secret_token']; ?>">
                     </div>
                 </div>
             </div>

@@ -126,6 +126,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			if ( is_admin() ) {
 				include_once( 'includes/class-lengow-action.php' );
 				include_once( 'includes/class-lengow-address.php' );
+				include_once( 'includes/class-lengow-catalog.php' );
 				include_once( 'includes/class-lengow-check.php' );
 				include_once( 'includes/class-lengow-configuration.php' );
 				include_once( 'includes/class-lengow-connector.php' );
@@ -147,6 +148,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/class-lengow-sync.php' );
 				include_once( 'includes/class-lengow-translation.php' );
 				include_once( 'includes/admin/class-lengow-admin.php' );
+				include_once( 'includes/admin/class-lengow-admin-connection.php' );
 				include_once( 'includes/admin/class-lengow-admin-dashboard.php' );
 				include_once( 'includes/admin/class-lengow-admin-help.php' );
 				include_once( 'includes/admin/class-lengow-admin-legals.php' );
@@ -167,9 +169,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		public function init() {
 			if ( is_admin() ) {
 				// init ajax actions.
-				add_action( 'wp_ajax_post_process', array( 'Lengow_Admin_Products', 'post_process' ) );
+				add_action( 'wp_ajax_post_process_connection', array( 'Lengow_Admin_Connection', 'post_process' ) );
 				add_action( 'admin_action_dashboard_get_process', array( 'Lengow_Admin_Dashboard', 'get_process' ) );
-				add_action( 'wp_ajax_post_process_dashboard', array( 'Lengow_Admin_Dashboard', 'post_process' ) );
+				add_action( 'wp_ajax_post_process', array( 'Lengow_Admin_Products', 'post_process' ) );
 				add_action( 'wp_ajax_post_process_orders', array( 'Lengow_Admin_Orders', 'post_process' ) );
 				add_action( 'wp_ajax_post_process_order_box', array( 'Lengow_Box_Order_Info', 'post_process' ) );
 				// order actions.
@@ -298,7 +300,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				plugins_url( '/assets/js/bootstrap-datepicker.js', __FILE__ )
 			);
 			wp_register_script( 'lengow_products', plugins_url( '/assets/js/lengow/products.js', __FILE__ ) );
-			wp_register_script( 'lengow_home', plugins_url( '/assets/js/lengow/home.js', __FILE__ ) );
+			wp_register_script( 'lengow_connection', plugins_url( '/assets/js/lengow/connection.js', __FILE__ ) );
 			wp_register_script( 'lengow_orders', plugins_url( '/assets/js/lengow/orders.js', __FILE__ ) );
 			wp_register_script(
 				'lengow_admin_js',
@@ -309,7 +311,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					'lengow_products',
 					'lengow_select2',
 					'lengow_bootstrap_datepicker',
-					'lengow_home',
+					'lengow_connection',
 					'lengow_orders',
 					'lengow_main_settings',
 					'lengow_order_settings',

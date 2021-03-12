@@ -111,10 +111,9 @@ class Lengow_Sync {
 			'plugin_version' => LENGOW_VERSION,
 			'email'          => Lengow_Configuration::get( 'admin_email' ),
 			'cron_url'       => Lengow_Main::get_cron_url(),
-			'return_url'     => 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'],
 			'shops'          => array(),
 		);
-		$data['shops'][1] = array(
+		$data['shops'][] = array(
 			'token'                   => Lengow_Main::get_token(),
 			'shop_name'               => Lengow_Configuration::get( 'blogname' ),
 			'domain_url'              => $_SERVER['SERVER_NAME'],
@@ -128,32 +127,6 @@ class Lengow_Sync {
 	}
 
 	/**
-	 * Set shop configuration key from Lengow.
-	 *
-	 * @param array $params Lengow API credentials
-	 */
-	public static function sync( $params ) {
-		Lengow_Configuration::set_access_ids(
-			array(
-				'lengow_account_id'   => $params['account_id'],
-				'lengow_access_token' => $params['access_token'],
-				'lengow_secret_token' => $params['secret_token'],
-			)
-		);
-		if ( isset( $params['shops'] ) ) {
-			foreach ( $params['shops'] as $shop_token => $shop_catalog_ids ) {
-				$shop = Lengow_Main::find_by_token( $shop_token );
-				if ( $shop ) {
-					Lengow_Configuration::set_catalog_ids( $shop_catalog_ids['catalog_ids'] );
-					Lengow_Configuration::set_active_shop();
-				}
-			}
-		}
-		// save last update date for a specific settings (change synchronisation interval time).
-		Lengow_Configuration::update_value( 'lengow_last_setting_update', time() );
-	}
-
-	/**
 	 * Sync Lengow catalogs for order synchronisation.
 	 *
 	 * @param boolean $force Force cache Update
@@ -162,16 +135,17 @@ class Lengow_Sync {
 	 * @return boolean
 	 */
 	public static function sync_catalog( $force = false, $log_output = false ) {
+		$success         = false;
 		$setting_updated = false;
 		if ( Lengow_Configuration::is_new_merchant() ) {
-			return false;
+			return $success;
 		}
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( 'lengow_catalog_update' );
 			if ( null !== $updated_at
 			     && ( time() - (int) $updated_at ) < self::$_cache_times[ self::SYNC_CATALOG ]
 			) {
-				return false;
+				return $success;
 			}
 		}
 		$result = Lengow_Connector::query_api(
@@ -195,6 +169,7 @@ class Lengow_Sync {
 							}
 						}
 					}
+					$success = true;
 					break;
 				}
 			}
@@ -205,7 +180,7 @@ class Lengow_Sync {
 		}
 		Lengow_Configuration::update_value( 'lengow_catalog_update', time() );
 
-		return true;
+		return $success;
 	}
 
 	/**

@@ -1,7 +1,7 @@
 # Lengow for WooCommerce
 
 - **Requires at least:** 3.5
-- **Tested up to:** 5.5
+- **Tested up to:** 5.6
 - **Requires PHP:** 5.6
 - **Stable tag:** 2.3.3
 - **License:** GPLv3

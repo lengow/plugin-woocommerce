@@ -23,6 +23,48 @@ menu.new_version_available|A new version %{version} is available!
 menu.download_plugin|Download
 footer.legals|Legal notices
 footer.plugin_lengow|Lengow WooCommerce Plugin
+connection.home.description_first|Lengow helps you optimize your business worldwide!
+connection.home.description_second|Through the platform, you can automatically publish your product catalogue on marketplaces, comparison websites, affiliate network, and retargeting campaigns.
+connection.home.description_third|Explore your opportunities for international growth with 1,600 sales channels in 42 different countries.
+connection.home.description_fourth|Just one more step to go to install your Lengow plugin for WooCommerce
+connection.home.button|Connect my WooCommerce with Lengow
+connection.home.no_account|You don't have a Lengow account?
+connection.home.no_account_sign_up|Sign up for free
+connection.cms.credentials_title|Please enter your API Lengow credentials
+connection.cms.credentials_description|Find these credentials in your account settings, section "A.P.I"
+connection.cms.credentials_help|Need help?
+connection.cms.credentials_help_center|Check out our Help Center
+connection.cms.credentials_help_center_url|https://support.lengow.com/kb/en
+connection.cms.credentials_button|Connect to Lengow
+connection.cms.credentials_button_loading|Connecting...
+connection.cms.credentials_placeholder_access_token|Enter your access token
+connection.cms.credentials_placeholder_secret|Enter your secret
+connection.cms.success_title|Well done! Lengow is now connected with your WooCommerce
+connection.cms.success_description_first|You can now use the plugin, configure your products and view your marketplace orders.
+connection.cms.success_description_second|To import your catalogue and configure your channels,
+connection.cms.success_description_second_go_to_lengow|go to Lengow.
+connection.cms.success_button|Go to dashboard
+connection.cms.success_description_first_catalog|One last step to complete the installation:
+connection.cms.success_description_second_catalog|Link your Lengow catalogs to your WooCommerce store.
+connection.cms.success_button_catalog|Link catalogues
+connection.cms.failed_title|Ooops! Unable to connect Lengow to your WooCommerce
+connection.cms.failed_description|We were unable to make the connection between your WooCommerce and Lengow.
+connection.cms.failed_description_first_credentials|Unable to connect with credentials provided.
+connection.cms.failed_description_second_credentials_prod|Please verify that these credentials match Lengow's production environment.
+connection.cms.failed_description_second_credentials_preprod|Please verify that these credentials match Lengow's pre-production environment.
+connection.cms.failed_help|If the problem persists, you can take a look at
+connection.cms.failed_help_center|"WooCommerce guide"
+connection.cms.failed_help_or|or contact our
+connection.cms.failed_help_customer_success_team|"Customer Success Team"
+connection.cms.failed_button|Retry
+connection.catalog.link_title|Link your store with Lengow
+connection.catalog.link_description|To retrieve all your existing configuration (orders, products...) directly link the following WooCommerce store with your Lengow catalogue(s).
+connection.catalog.link_catalog_avalaible|catalogues are available and not linked to a cms in Lengow.
+connection.catalog.link_button|Save and go to the dashboard
+connection.catalog.link_placeholder_catalog|Select a catalogue
+connection.catalog.failed_title|Ooops! Unable to link your catalogues in Lengow
+connection.catalog.failed_description_first|We were unable to link your catalogues to Lengow.
+connection.catalog.failed_description_second|You can try again or fill in the catalogues IDs directly in the plugin settings.
 dashboard.screen.welcome_back|Hi! Welcome back!
 dashboard.screen.go_to_lengow|Go to Lengow
 dashboard.screen.products_title|Products
@@ -157,6 +199,8 @@ global_setting.screen.notification_alert_title|Notifications & alerts
 global_setting.screen.security_title|Security
 global_setting.screen.tracker_title|Lengow tracker
 global_setting.screen.tracker_description|This tracker allows you to retrieve order statistics generated on your site directly in Lengow.
+global_setting.screen.shop_title|Store management
+global_setting.screen.shop_description|Link your WooCommerce store to Lengow in order to import your orders. This part is automatically completed and activated when connecting with Lengow. However you can add catalog ids in the corresponding fields
 global_setting.screen.debug_mode_title|Debug Mode
 global_setting.screen.debug_mode_description|Use Debug Mode for testing and to simulate fictitious orders. Please note that you have to activate this setting on your pre-production server ONLY
 global_setting.screen.log_file_title|Log Files
@@ -172,12 +216,12 @@ global_setting.screen.download_all_files|Download all files
 help.screen.title|Get a little help from your support team!
 help.screen.contain_text_support|Ask us anything about Lengow or share feedback with
 help.screen.title_lengow_support|Lengow Support.
-help.screen.link_lengow_support|https://www.lengow.com/support/
+help.screen.link_lengow_support|https://help-support.lengow.com/hc/en-us/requests/new
 help.screen.need_some_help|Need some help?
 help.screen.contain_text_support_hour|We’ll do our best to get back to you during regular business hours (Monday to Friday – 9am to 6pm GMT+1).
 help.screen.find_answer|You can also find answers in our 
 help.screen.link_woocommerce_guide|WooCommerce dedicated guide
-help.screen.knowledge_link_url|https://support.lengow.com/kb/guide/en/rMVnXfZXmr
+help.screen.knowledge_link_url|https://support.lengow.com/kb/guide/en/woocommerce-rMVnXfZXmr/Steps/25873
 legals.screen.simplified_company|Simplified limited liability company
 legals.screen.social_capital|Social capital:
 legals.screen.cnil_declaration|CNIL declaration:
@@ -192,11 +236,11 @@ lengow_settings.lengow_account_id_title|Account ID
 lengow_settings.lengow_access_token_title|Access Token
 lengow_settings.lengow_secret_token_title|Secret Token
 lengow_settings.lengow_catalog_id_title|Catalogues ID
-lengow_settings.lengow_catalog_id_legend|Your catalogues ID to import orders. Separate them by ' ; '
+lengow_settings.lengow_catalog_id_legend|To add multiple catalog ids, use ";" to separate them
 lengow_settings.lengow_ip_enable_title|Enable authorisation by IP
 lengow_settings.lengow_ip_enable_legend|Enable this option if you want your export to be secured by IP. By default, your export is secured by a unique key.
 lengow_settings.lengow_authorized_ip_title|Authorised IPs
-lengow_settings.lengow_authorized_ip_legend|Authorise IP to get access to your export feed.<br />Separate them ' ; '
+lengow_settings.lengow_authorized_ip_legend|Authorise IP to get access to your export feed.<br />Separate them ";"
 lengow_settings.lengow_tracking_enabled_title|Activate Lengow tracking
 lengow_settings.lengow_tracking_id_title|Lengow Tracking ID
 lengow_settings.lengow_tracking_id_legend|The name of the unique identifier entered in the Lengow
@@ -210,7 +254,7 @@ lengow_settings.lengow_export_file_enabled_legend|You should use this option if 
 lengow_settings.lengow_last_export_title|Last export
 lengow_settings.lengow_report_mail_enabled_title|I would like to be notified when there are issues regarding order and action synchronisation
 lengow_settings.lengow_report_mail_address_title|Mail for the report email
-lengow_settings.lengow_report_mail_address_legend|To add several emails, use " ; " to separate them
+lengow_settings.lengow_report_mail_address_legend|To add several emails, use ";" to separate them
 lengow_settings.lengow_import_default_shipping_method_title|Default import shipping method
 lengow_settings.lengow_id_waiting_shipment_title|Orders in preparation
 lengow_settings.lengow_id_shipped_title|Shipped orders
@@ -258,7 +302,11 @@ lengow_log.exception.woocommerce_customer_not_saved|WARNING! Customer could NOT 
 lengow_log.exception.woocommerce_order_not_saved|WARNING! Order could NOT be saved in WordPress post table
 lengow_log.mail_report.subject_report_mail|Lengow imports errors
 lengow_log.mail_report.order|Order %{marketplace_sku}
-lengow_log.mail_report.no_error_in_report_mail|no error message, contact support via https://supportlengow.zendesk.com/agent/
+lengow_log.mail_report.no_error_in_report_mail|no error message, contact support via https://help-support.lengow.com/hc/en-us/requests/new
+lengow_log.connection.status_draft|Draft
+lengow_log.connection.status_active|Active
+lengow_log.connection.catalog|Catalogue %{catalog_id}
+lengow_log.connection.catalog_label|%{catalog_id} - %{catalog_name} - %{nb_products} products - %{catalog_status}
 meta_box.order_info.marketplace_sku|Marketplace SKU
 meta_box.order_info.marketplace|Marketplace
 meta_box.order_info.currency|Currency
@@ -297,6 +345,12 @@ log.install.table_already_created|skipping table %{name} : already existing in d
 log.install.update_start|## start updating for version %{old_version} to %{new_version} ##
 log.install.update_end|## end updating for version %{old_version} to %{new_version} ##
 log.install.add_upgrade_version|adding SQL patch required for the plugin version %{version}
+log.connection.cms_creation_success|CMS successfully created with Lengow webservice (CMS token %{cms_token})
+log.connection.cms_creation_failed|WARNING! CMS could NOT be created with Lengow webservice (CMS token %{cms_token})
+log.connection.cms_already_exist|CMS already created in Lengow (CMS token %{cms_token})
+log.connection.try_link_catalog|try to associate catalogue IDs %{catalog_ids} to the shop (SHOP token %{shop_token})
+log.connection.link_catalog_success|catalogues successfully linked with Lengow webservice
+log.connection.link_catalog_failed|WARNING! catalogues could NOT be linked with Lengow webservice
 log.setting.setting_reset|all Lengow settings were reset
 log.setting.setting_updated|all Lengow settings were updated
 log.setting.setting_change|%{key} - old value %{old_value} replaced with %{value}

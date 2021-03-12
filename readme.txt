@@ -46,6 +46,7 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 == Changelog ==
 
 = 2.3.4 - xxxx-xx-xx =
+* Feature: Integration of the new connection process
 * Bugfix: Save customer_vat_number value in lengow order table
 * Bugfix: remove NULL value from export images array
 

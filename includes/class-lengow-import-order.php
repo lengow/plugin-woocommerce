@@ -678,7 +678,8 @@ class Lengow_Import_Order {
 	protected function getVatNumberFromOrderData() {
 		if ( isset( $this->_order_data->billing_address->vat_number ) ) {
 			return $this->_order_data->billing_address->vat_number;
-		} elseif ( isset( $this->_package_data->delivery->vat_number ) ) {
+		}
+		if ( isset( $this->_package_data->delivery->vat_number ) ) {
 			return $this->_package_data->delivery->vat_number;
 		}
 
