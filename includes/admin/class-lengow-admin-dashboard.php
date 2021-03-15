@@ -55,7 +55,7 @@ class Lengow_Admin_Dashboard {
 			switch ( $action ) {
 				case 'refresh_status':
 					Lengow_Sync::get_status_account( true );
-					wp_redirect( admin_url( 'admin.php?page=lengow' ) );
+					wp_redirect( admin_url( 'admin.php?page=lengow&tab=lengow_admin_dashboard' ) );
 					break;
 			}
 			exit();

@@ -76,37 +76,38 @@ class Lengow_Admin {
 	public function lengow_display() {
 		$locale          = new Lengow_Translation();
 		$is_new_merchant = Lengow_Configuration::is_new_merchant();
-		if ( $this->current_tab !== $this->_default_tab && ! $is_new_merchant ) {
+		if ( ! $is_new_merchant
+		     && ! in_array( $this->current_tab, array( $this->_default_tab, 'lengow_admin_dashboard' ), true )
+		) {
 			$merchant_status     = Lengow_Sync::get_status_account();
 			$total_pending_order = Lengow_Order::get_total_order_by_status( Lengow_Order::STATE_WAITING_SHIPMENT );
 			$plugin_data         = Lengow_Sync::get_plugin_data();
 			include_once 'views/html-admin-header.php';
 		}
-		if ( $is_new_merchant ) {
-			Lengow_Admin_Connection::display();
-		} else {
-			switch ( $this->current_tab ) {
-				case 'lengow_admin_products':
-					Lengow_Admin_Products::html_display();
-					break;
-				case 'lengow_admin_orders':
-					Lengow_Admin_Orders::html_display();
-					break;
-				case 'lengow_admin_order_settings':
-					Lengow_Admin_Order_Settings::display();
-					break;
-				case 'lengow_admin_help':
-					Lengow_Admin_Help::display();
-					break;
-				case 'lengow_admin_settings':
-					Lengow_Admin_Main_Settings::display();
-					break;
-				case 'lengow_admin_legals':
-					Lengow_Admin_Legals::display();
-					break;
-				default:
-					Lengow_Admin_Dashboard::display();
-			}
+		switch ( $this->current_tab ) {
+			case 'lengow_admin_dashboard':
+				Lengow_Admin_Dashboard::display();
+				break;
+			case 'lengow_admin_products':
+				Lengow_Admin_Products::html_display();
+				break;
+			case 'lengow_admin_orders':
+				Lengow_Admin_Orders::html_display();
+				break;
+			case 'lengow_admin_order_settings':
+				Lengow_Admin_Order_Settings::display();
+				break;
+			case 'lengow_admin_help':
+				Lengow_Admin_Help::display();
+				break;
+			case 'lengow_admin_settings':
+				Lengow_Admin_Main_Settings::display();
+				break;
+			case 'lengow_admin_legals':
+				Lengow_Admin_Legals::display();
+				break;
+			default:
+				Lengow_Admin_Connection::display();
 		}
 		include_once 'views/html-admin-footer.php';
 	}

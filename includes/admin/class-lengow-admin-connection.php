@@ -34,8 +34,13 @@ class Lengow_Admin_Connection {
 	 * Display dashboard page.
 	 */
 	public static function display() {
-		$locale = new Lengow_Translation();
-		include_once 'views/connection/html-admin-connection.php';
+		$is_new_merchant = Lengow_Configuration::is_new_merchant();
+		if ( $is_new_merchant ) {
+			$locale = new Lengow_Translation();
+			include_once 'views/connection/html-admin-connection.php';
+		} else {
+			wp_redirect( admin_url( 'admin.php?page=lengow&tab=lengow_admin_dashboard' ) );
+		}
 	}
 
 	/**

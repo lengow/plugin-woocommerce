@@ -44,7 +44,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</p>
 			</div>
 			<div>
-				<a href="<?php echo admin_url( 'admin.php?page=lengow' ); ?>" class="lgw-btn lgw-btn-green">
+				<a href="<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_admin_dashboard' ); ?>"
+                   class="lgw-btn lgw-btn-green">
 					<?php echo $locale->t( 'connection.cms.success_button' ); ?>
 				</a>
 			</div>

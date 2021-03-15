@@ -10,7 +10,7 @@ if ( isset( $_GET['tab'] ) ) {
 } ?>
 <ul class="nav nav-pills lengow-nav lengow-nav-top">
     <li role="presentation" id="lengow_logo">
-        <a href="<?php echo admin_url( 'admin.php?page=lengow' ); ?>">
+        <a href="<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_admin_dashboard' ); ?>">
             <img src="/wp-content/plugins/lengow-woocommerce/assets/images/lengow-white.png" alt="lengow">
         </a>
     </li>

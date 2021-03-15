@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<button class="lgw-btn lgw-btn-green js-go-to-catalog" data-retry="true">
 		<?php echo $locale->t( 'connection.cms.failed_button' ); ?>
 	</button>
-	<a href="<?php echo admin_url( 'admin.php?page=lengow' ); ?>"
+	<a href="<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_admin_dashboard' ); ?>"
 	   class="lgw-btn lgw-btn-green">
 		<?php echo $locale->t( 'connection.cms.success_button' ); ?>
 	</a>
