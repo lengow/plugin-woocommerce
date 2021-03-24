@@ -30,7 +30,7 @@
  * Author: Lengow
  * Author URI: https://www.lengow.com
  * Requires at least: 3.5
- * Tested up to: 5.3
+ * Tested up to: 5.6
  *
  * Text Domain: lengow
  * Domain Path: /languages

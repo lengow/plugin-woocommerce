@@ -4,7 +4,7 @@ Tags: woocommerce, ecommerce, feed, orders, marketplace, amazon, google shopping
 Requires at least: 3.5
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 2.3.3
+Stable tag: 2.4.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -45,7 +45,7 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 
 == Changelog ==
 
-= 2.3.4 - xxxx-xx-xx =
+= 2.4.0 - 2021-03-24 =
 * Feature: Integration of the new connection process
 * Bugfix: Save customer_vat_number value in lengow order table
 * Bugfix: remove NULL value from export images array
