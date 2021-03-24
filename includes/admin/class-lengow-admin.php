@@ -75,18 +75,19 @@ class Lengow_Admin {
 	 */
 	public function lengow_display() {
 		$locale          = new Lengow_Translation();
-		$merchant_status = Lengow_Sync::get_status_account();
 		$is_new_merchant = Lengow_Configuration::is_new_merchant();
-		if ( $this->current_tab != $this->_default_tab
-		     && ! ( 'free_trial' === $merchant_status['type'] && $merchant_status['expired'] )
-		     && 'bad_payer' !== $merchant_status['type']
-		     && ! $is_new_merchant
+		if ( ! $is_new_merchant
+		     && ! in_array( $this->current_tab, array( $this->_default_tab, 'lengow_admin_dashboard' ), true )
 		) {
+			$merchant_status     = Lengow_Sync::get_status_account();
 			$total_pending_order = Lengow_Order::get_total_order_by_status( Lengow_Order::STATE_WAITING_SHIPMENT );
 			$plugin_data         = Lengow_Sync::get_plugin_data();
 			include_once 'views/html-admin-header.php';
 		}
 		switch ( $this->current_tab ) {
+			case 'lengow_admin_dashboard':
+				Lengow_Admin_Dashboard::display();
+				break;
 			case 'lengow_admin_products':
 				Lengow_Admin_Products::html_display();
 				break;
@@ -106,8 +107,7 @@ class Lengow_Admin {
 				Lengow_Admin_Legals::display();
 				break;
 			default:
-				Lengow_Admin_Dashboard::display();
-				break;
+				Lengow_Admin_Connection::display();
 		}
 		include_once 'views/html-admin-footer.php';
 	}

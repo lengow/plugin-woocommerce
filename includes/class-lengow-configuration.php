@@ -291,33 +291,52 @@ class Lengow_Configuration {
 	 * @return array
 	 */
 	public static function get_access_id() {
-		if ( strlen( self::get( 'lengow_account_id' ) ) > 0
-		     && strlen( self::get( 'lengow_access_token' ) ) > 0
-		     && strlen( self::get( 'lengow_secret_token' ) ) > 0
+		if ( '' !== self::get( 'lengow_account_id' )
+		     && '' !== self::get( 'lengow_access_token' )
+		     && '' !== self::get( 'lengow_secret_token' )
 		) {
 			return array(
 				(int) self::get( 'lengow_account_id' ),
 				self::get( 'lengow_access_token' ),
 				self::get( 'lengow_secret_token' ),
 			);
-		} else {
-			return array( null, null, null );
 		}
+
+		return array( null, null, null );
 	}
 
 	/**
 	 * Set Valid Account id / Access token / Secret token.
 	 *
 	 * @param array $access_ids Account id / Access token / Secret token
+	 *
+	 * @return boolean
 	 */
 	public static function set_access_ids( $access_ids ) {
+		$count    = 0;
 		$list_key = array( 'lengow_account_id', 'lengow_access_token', 'lengow_secret_token' );
 		foreach ( $access_ids as $key => $value ) {
-			if ( ! in_array( $key, array_keys( $list_key ) ) ) {
+			if ( ! in_array( $key, $list_key, true ) ) {
 				continue;
 			}
-			if ( strlen( $value ) > 0 ) {
+			if ( '' !== $value ) {
+				$count ++;
 				self::update_value( $key, $value );
+			}
+		}
+
+		return $count === count( $list_key );
+	}
+
+	/**
+	 * Reset access ids for old customer.
+	 */
+	public static function reset_access_ids() {
+		$access_ids = array( 'lengow_account_id', 'lengow_access_token', 'lengow_secret_token' );
+		foreach ( $access_ids as $access_id ) {
+			$value = self::get( $access_id );
+			if ( '' !== $value ) {
+				self::update_value( $access_id, '' );
 			}
 		}
 	}
@@ -368,7 +387,7 @@ class Lengow_Configuration {
 		$value_change     = false;
 		$shop_catalog_ids = self::get_catalog_ids();
 		foreach ( $catalog_ids as $catalog_id ) {
-			if ( ! in_array( $catalog_id, $shop_catalog_ids ) && is_numeric( $catalog_id ) && $catalog_id > 0 ) {
+			if ( $catalog_id > 0 && is_numeric( $catalog_id ) && ! in_array( $catalog_id, $shop_catalog_ids, true ) ) {
 				$shop_catalog_ids[] = (int) $catalog_id;
 				$value_change       = true;
 			}
@@ -376,6 +395,16 @@ class Lengow_Configuration {
 		self::update_value( 'lengow_catalog_id', implode( ';', $shop_catalog_ids ) );
 
 		return $value_change;
+	}
+
+	/**
+	 * Reset all catalog ids.
+	 */
+	public static function reset_catalog_ids() {
+		if ( self::shop_is_active() ) {
+			self::update_value( 'lengow_catalog_id', '' );
+			self::update_value( 'lengow_store_enabled', false );
+		}
 	}
 
 	/**
@@ -398,7 +427,7 @@ class Lengow_Configuration {
 		$shop_has_catalog = ! empty( $catalog_ids );
 		self::update_value( 'lengow_store_enabled', $shop_has_catalog );
 
-		return $shop_is_active !== $shop_has_catalog ? true : false;
+		return $shop_is_active !== $shop_has_catalog;
 	}
 
 	/**

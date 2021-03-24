@@ -1,4 +1,12 @@
 ========================================================
+Version 2.4.0
+========================================================
+
+    - Feature: Integration of the new connection process
+    - Bugfix: Save customer_vat_number value in lengow order table
+    - Bugfix: remove NULL value from export images array
+
+========================================================
 Version 2.3.3
 ========================================================
 

@@ -2,9 +2,9 @@
 Contributors: lengowcompany
 Tags: woocommerce, ecommerce, feed, orders, marketplace, amazon, google shopping, facebook, product catalog, feed management, lengow
 Requires at least: 3.5
-Tested up to: 5.5
+Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 2.3.3
+Stable tag: 2.4.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -44,6 +44,11 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 4. Log in with your Lengow credentials and configure the plugin
 
 == Changelog ==
+
+= 2.4.0 - 2021-03-24 =
+* Feature: Integration of the new connection process
+* Bugfix: Save customer_vat_number value in lengow order table
+* Bugfix: remove NULL value from export images array
 
 = 2.3.3 - 2020-10-26 =
 * Feature: Adding new links to the Lengow Help Center and Support
