@@ -243,7 +243,7 @@ class Lengow_Action {
 				}
 			}
 
-			return $update_success === count( $active_action ) ? true : false;
+			return $update_success === count( $active_action );
 		}
 
 		return true;
@@ -367,10 +367,12 @@ class Lengow_Action {
 	 */
 	public static function get_interval_time() {
 		$interval_time               = self::MAX_INTERVAL_TIME;
-		$last_action_synchronisation = Lengow_Configuration::get( 'lengow_last_action_sync' );
+		$last_action_synchronisation = Lengow_Configuration::get(
+			Lengow_Configuration::LAST_UPDATE_ACTION_SYNCHRONIZATION
+		);
 		if ( $last_action_synchronisation ) {
 			$last_interval_time = time() - (int) $last_action_synchronisation;
-			$last_interval_time = $last_interval_time + self::SECURITY_INTERVAL_TIME;
+			$last_interval_time += self::SECURITY_INTERVAL_TIME;
 			$interval_time      = $last_interval_time > $interval_time ? $interval_time : $last_interval_time;
 		}
 
@@ -492,7 +494,7 @@ class Lengow_Action {
 				}
 			}
 		}
-		Lengow_Configuration::update_value( 'lengow_last_action_sync', time() );
+		Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_ACTION_SYNCHRONIZATION, time() );
 
 		return true;
 	}

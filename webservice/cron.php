@@ -46,7 +46,6 @@ require( dirname( dirname( dirname( dirname( dirname( $_SERVER['SCRIPT_FILENAME'
 // dependencies.
 require_once( '../includes/class-lengow-action.php' );
 require_once( '../includes/class-lengow-address.php' );
-require_once( '../includes/class-lengow-check.php' );
 require_once( '../includes/class-lengow-configuration.php' );
 require_once( '../includes/class-lengow-connector.php' );
 require_once( '../includes/class-lengow-crud.php' );
@@ -54,6 +53,7 @@ require_once( '../includes/class-lengow-exception.php' );
 require_once( '../includes/class-lengow-export.php' );
 require_once( '../includes/class-lengow-feed.php' );
 require_once( '../includes/class-lengow-file.php' );
+require_once( '../includes/class-lengow-hook.php' );
 require_once( '../includes/class-lengow-import.php' );
 require_once( '../includes/class-lengow-import-order.php' );
 require_once( '../includes/class-lengow-log.php' );
@@ -64,29 +64,28 @@ require_once( '../includes/class-lengow-order-error.php' );
 require_once( '../includes/class-lengow-order-line.php' );
 require_once( '../includes/class-lengow-product.php' );
 require_once( '../includes/class-lengow-sync.php' );
+require_once( '../includes/class-lengow-toolbox.php' );
 require_once( '../includes/class-lengow-translation.php' );
-require_once( '../includes/class-lengow-hook.php' );
+require_once( '../includes/class-lengow-toolbox-element.php' );
 
 // check if WooCommerce plugin is activated.
-if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+$woocommercePlugin = 'woocommerce/woocommerce.php';
+if ( ! in_array( $woocommercePlugin, apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
 	wp_die( 'WooCommerce plugin is not active', '', array( 'response' => 400 ) );
 }
 
 // check if Lengow plugin is activated.
-if ( ! in_array(
-	'lengow-woocommerce/lengow.php',
-	apply_filters( 'active_plugins', get_option( 'active_plugins' ) )
-)
-) {
+$lengowPlugin = 'lengow-woocommerce/lengow.php';
+if ( ! in_array( $lengowPlugin, apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
 	wp_die( 'Lengow plugin is not active', '', array( 'response' => 400 ) );
 }
 
 // get token for authorisation.
-$token = isset( $_GET['token'] ) ? $_GET['token'] : '';
+$token = isset( $_GET[ Lengow_Import::PARAM_TOKEN ] ) ? $_GET[ Lengow_Import::PARAM_TOKEN ] : '';
 
 // check webservices access.
 if ( ! Lengow_Main::check_webservice_access( $token ) ) {
-	if ( Lengow_Configuration::get( 'lengow_ip_enabled' ) ) {
+	if ( Lengow_Configuration::get( Lengow_Configuration::AUTHORIZED_IP_ENABLED ) ) {
 		$errorMessage = 'Unauthorized access for IP: ' . $_SERVER['REMOTE_ADDR'];
 	} else {
 		$errorMessage = strlen( $token ) > 0
@@ -96,13 +95,13 @@ if ( ! Lengow_Main::check_webservice_access( $token ) ) {
 	wp_die( $errorMessage, '', array( 'response' => 403 ) );
 }
 
-if ( isset( $_GET['get_sync'] ) && 1 == $_GET['get_sync'] ) {
+if ( isset( $_GET[ Lengow_Import::PARAM_GET_SYNC ] ) && 1 == $_GET[ Lengow_Import::PARAM_GET_SYNC ] ) {
 	echo json_encode( Lengow_Sync::get_sync_data() );
 } else {
-	$force      = isset( $_GET['force'] ) ? (bool) $_GET['force'] : false;
-	$log_output = isset( $_GET['log_output'] ) ? (bool) $_GET['log_output'] : false;
+	$force      = isset( $_GET[ Lengow_Import::PARAM_FORCE ] ) && $_GET[ Lengow_Import::PARAM_FORCE ];
+	$log_output = isset( $_GET[ Lengow_Import::PARAM_LOG_OUTPUT ] ) && $_GET[ Lengow_Import::PARAM_LOG_OUTPUT ];
 	// get sync action if exists.
-	$sync = isset( $_GET['sync'] ) ? $_GET['sync'] : false;
+	$sync = isset( $_GET[ Lengow_Import::PARAM_SYNC ] ) ? $_GET[ Lengow_Import::PARAM_SYNC ] : false;
 	// sync catalogs id between Lengow and WooCommerce.
 	if ( ! $sync || Lengow_Sync::SYNC_CATALOG === $sync ) {
 		Lengow_Sync::sync_catalog( $force, $log_output );
@@ -111,32 +110,32 @@ if ( isset( $_GET['get_sync'] ) && 1 == $_GET['get_sync'] ) {
 	if ( ! $sync || Lengow_Sync::SYNC_ORDER === $sync ) {
 		// array of params for import order.
 		$params = array(
-			'type'       => Lengow_Import::TYPE_CRON,
-			'log_output' => $log_output,
+			Lengow_Import::PARAM_TYPE       => Lengow_Import::TYPE_CRON,
+			Lengow_Import::PARAM_LOG_OUTPUT => $log_output,
 		);
-		if ( isset( $_GET['debug_mode'] ) ) {
-			$params['debug_mode'] = (bool) $_GET['debug_mode'];
+		if ( isset( $_GET[ Lengow_Import::PARAM_DEBUG_MODE ] ) ) {
+			$params[ Lengow_Import::PARAM_DEBUG_MODE ] = (bool) $_GET[ Lengow_Import::PARAM_DEBUG_MODE ];
 		}
-		if ( isset( $_GET['days'] ) ) {
-			$params['days'] = (int) $_GET['days'];
+		if ( isset( $_GET[ Lengow_Import::PARAM_DAYS ] ) ) {
+			$params[ Lengow_Import::PARAM_DAYS ] = (int) $_GET[ Lengow_Import::PARAM_DAYS ];
 		}
-		if ( isset( $_GET['created_from'] ) ) {
-			$params['created_from'] = (string) $_GET['created_from'];
+		if ( isset( $_GET[ Lengow_Import::PARAM_CREATED_FROM ] ) ) {
+			$params[ Lengow_Import::PARAM_CREATED_FROM ] = (string) $_GET[ Lengow_Import::PARAM_CREATED_FROM ];
 		}
-		if ( isset( $_GET['created_to'] ) ) {
-			$params['created_to'] = (string) $_GET['created_to'];
+		if ( isset( $_GET[ Lengow_Import::PARAM_CREATED_TO ] ) ) {
+			$params[ Lengow_Import::PARAM_CREATED_TO ] = (string) $_GET[ Lengow_Import::PARAM_CREATED_TO ];
 		}
-		if ( isset( $_GET['limit'] ) ) {
-			$params['limit'] = (int) $_GET['limit'];
+		if ( isset( $_GET[ Lengow_Import::PARAM_LIMIT ] ) ) {
+			$params[ Lengow_Import::PARAM_LIMIT ] = (int) $_GET[ Lengow_Import::PARAM_LIMIT ];
 		}
-		if ( isset( $_GET['marketplace_sku'] ) ) {
-			$params['marketplace_sku'] = (string) $_GET['marketplace_sku'];
+		if ( isset( $_GET[ Lengow_Import::PARAM_MARKETPLACE_SKU ] ) ) {
+			$params[ Lengow_Import::PARAM_MARKETPLACE_SKU ] = (string) $_GET[ Lengow_Import::PARAM_MARKETPLACE_SKU ];
 		}
-		if ( isset( $_GET['marketplace_name'] ) ) {
-			$params['marketplace_name'] = (string) $_GET['marketplace_name'];
+		if ( isset( $_GET[ Lengow_Import::PARAM_MARKETPLACE_NAME ] ) ) {
+			$params[ Lengow_Import::PARAM_MARKETPLACE_NAME ] = (string) $_GET[ Lengow_Import::PARAM_MARKETPLACE_NAME ];
 		}
-		if ( isset( $_GET['delivery_address_id'] ) ) {
-			$params['delivery_address_id'] = (int) $_GET['delivery_address_id'];
+		if ( isset( $_GET[ Lengow_Import::PARAM_DELIVERY_ADDRESS_ID ] ) ) {
+			$params[ Lengow_Import::PARAM_DELIVERY_ADDRESS_ID ] = (int) $_GET[ Lengow_Import::PARAM_DELIVERY_ADDRESS_ID ];
 		}
 		$import = new Lengow_Import( $params );
 		$import->exec();
@@ -164,7 +163,7 @@ if ( isset( $_GET['get_sync'] ) && 1 == $_GET['get_sync'] ) {
 		Lengow_Sync::get_plugin_data( $force, $log_output );
 	}
 	// sync option is not valid.
-	if ( $sync && ! in_array( $sync, Lengow_Sync::$sync_actions ) ) {
+	if ( $sync && ! in_array( $sync, Lengow_Sync::$sync_actions, true ) ) {
 		wp_die( 'Action: ' . $sync . ' is not a valid action', '', array( 'response' => 400 ) );
 	}
 }

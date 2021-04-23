@@ -37,7 +37,7 @@ class Lengow_Tracker {
 	 */
 	public static function html_display( $order ) {
 		try {
-			$account_id     = Lengow_Configuration::get( 'lengow_account_id' );
+			$account_id     = Lengow_Configuration::get( Lengow_Configuration::ACCOUNT_ID );
 			$order_ref      = Lengow_Order::get_order_id( $order );
 			$amount         = (float) $order->get_total();
 			$currency       = self::_get_currency( $order );
@@ -60,7 +60,7 @@ class Lengow_Tracker {
 	 * @return array
 	 */
 	private static function _get_product_cart( $items ) {
-		$tracking_id  = Lengow_Configuration::get( 'lengow_tracking_id' );
+		$tracking_id  = Lengow_Configuration::get( Lengow_Configuration::TRACKING_ID );
 		$product_cart = array();
 		foreach ( $items as $item ) {
 			if ( Lengow_Main::compare_version( '3.0' ) ) {

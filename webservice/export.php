@@ -59,25 +59,23 @@ require_once( '../includes/class-lengow-exception.php' );
 require_once( '../includes/class-lengow-sync.php' );
 
 // check if WooCommerce plugin is activated.
-if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+$woocommercePlugin = 'woocommerce/woocommerce.php';
+if ( ! in_array( $woocommercePlugin, apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
 	wp_die( 'WooCommerce plugin is not active', '', array( 'response' => 400 ) );
 }
 
 // check if Lengow plugin is activated.
-if ( ! in_array(
-	'lengow-woocommerce/lengow.php',
-	apply_filters( 'active_plugins', get_option( 'active_plugins' ) )
-)
-) {
+$lengowPlugin = 'lengow-woocommerce/lengow.php';
+if ( ! in_array( $lengowPlugin, apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
 	wp_die( 'Lengow plugin is not active', '', array( 'response' => 400 ) );
 }
 
 // get token for authorisation.
-$token = isset( $_GET['token'] ) ? $_GET['token'] : '';
+$token = isset( $_GET[ Lengow_Export::PARAM_TOKEN ] ) ? $_GET[ Lengow_Export::PARAM_TOKEN ] : '';
 
 // check webservices access.
 if ( ! Lengow_Main::check_webservice_access( $token ) ) {
-	if ( (bool) Lengow_Configuration::get( 'lengow_ip_enabled' ) ) {
+	if ( (bool) Lengow_Configuration::get( Lengow_Configuration::AUTHORIZED_IP_ENABLED ) ) {
 		$errorMessage = 'Unauthorized access for IP: ' . $_SERVER['REMOTE_ADDR'];
 	} else {
 		$errorMessage = strlen( $token ) > 0
@@ -88,44 +86,72 @@ if ( ! Lengow_Main::check_webservice_access( $token ) ) {
 }
 
 // get params data.
-$get_params         = isset( $_GET['get_params'] ) ? (bool) $_GET['get_params'] : false;
-$mode               = isset( $_GET['mode'] ) ? $_GET['mode'] : null;
-$format             = isset( $_GET['format'] ) ? $_GET['format'] : null;
-$stream             = isset( $_GET['stream'] ) ? (bool) $_GET['stream'] : null;
-$offset             = isset( $_GET['offset'] ) ? (int) $_GET['offset'] : null;
-$limit              = isset( $_GET['limit'] ) ? (int) $_GET['limit'] : null;
-$selection          = isset( $_GET['all_products'] ) ? ! (bool) $_GET['all_products'] : null;
-$selection          = is_null( $selection ) && isset( $_GET['selection'] ) ? (bool) $_GET['selection'] : $selection;
-$out_of_stock       = isset( $_GET['out_of_stock'] ) ? (bool) $_GET['out_of_stock'] : null;
-$product_ids        = isset( $_GET['product_ids'] ) ? $_GET['product_ids'] : null;
-$product_types      = isset( $_GET['product_type'] ) ? $_GET['product_type'] : null;
-$product_types      = is_null( $product_types ) && isset( $_GET['product_types'] )
-	? $_GET['product_types']
+$get_params         = isset( $_GET[ Lengow_Export::PARAM_GET_PARAMS ] ) && $_GET[ Lengow_Export::PARAM_GET_PARAMS ];
+$mode               = isset( $_GET[ Lengow_Export::PARAM_MODE ] )
+	? $_GET[ Lengow_Export::PARAM_MODE ]
+	: null;
+$format             = isset( $_GET[ Lengow_Export::PARAM_FORMAT ] )
+	? $_GET[ Lengow_Export::PARAM_FORMAT ]
+	: null;
+$stream             = isset( $_GET[ Lengow_Export::PARAM_STREAM ] )
+	? (bool) $_GET[ Lengow_Export::PARAM_STREAM ]
+	: null;
+$offset             = isset( $_GET[ Lengow_Export::PARAM_OFFSET ] )
+	? (int) $_GET[ Lengow_Export::PARAM_OFFSET ]
+	: null;
+$limit              = isset( $_GET[ Lengow_Export::PARAM_LIMIT ] )
+	? (int) $_GET[ Lengow_Export::PARAM_LIMIT ]
+	: null;
+$selection          = isset( $_GET[ Lengow_Export::PARAM_LEGACY_SELECTION ] )
+	? ! (bool) $_GET[ Lengow_Export::PARAM_LEGACY_SELECTION ]
+	: null;
+$selection          = ( is_null( $selection ) && isset( $_GET[ Lengow_Export::PARAM_SELECTION ] ) )
+	? (bool) $_GET[ Lengow_Export::PARAM_SELECTION ]
+	: $selection;
+$out_of_stock       = isset( $_GET[ Lengow_Export::PARAM_OUT_OF_STOCK ] )
+	? (bool) $_GET[ Lengow_Export::PARAM_OUT_OF_STOCK ]
+	: null;
+$product_ids        = isset( $_GET[ Lengow_Export::PARAM_PRODUCT_IDS ] )
+	? $_GET[ Lengow_Export::PARAM_PRODUCT_IDS ]
+	: null;
+$product_types      = isset( $_GET[ Lengow_Export::PARAM_LEGACY_PRODUCT_TYPES ] )
+	? $_GET[ Lengow_Export::PARAM_LEGACY_PRODUCT_TYPES ]
+	: null;
+$product_types      = is_null( $product_types ) && isset( $_GET[ Lengow_Export::PARAM_PRODUCT_TYPES ] )
+	? $_GET[ Lengow_Export::PARAM_PRODUCT_TYPES ]
 	: $product_types;
-$variation          = isset( $_GET['variation'] ) ? (bool) $_GET['variation'] : null;
-$legacy_fields      = isset( $_GET['legacy_fields'] ) ? (bool) $_GET['legacy_fields'] : null;
-$log_output         = isset( $_GET['log_output'] ) ? (bool) $_GET['log_output'] : null;
-$update_export_date = isset( $_GET['update_export_date'] ) ? (bool) $_GET['update_export_date'] : null;
+$variation          = isset( $_GET[ Lengow_Export::PARAM_VARIATION ] )
+	? (bool) $_GET[ Lengow_Export::PARAM_VARIATION ]
+	: null;
+$legacy_fields      = isset( $_GET[ Lengow_Export::PARAM_LEGACY_FIELDS ] )
+	? (bool) $_GET[ Lengow_Export::PARAM_LEGACY_FIELDS ]
+	: null;
+$log_output         = isset( $_GET[ Lengow_Export::PARAM_LOG_OUTPUT ] )
+	? (bool) $_GET[ Lengow_Export::PARAM_LOG_OUTPUT ]
+	: null;
+$update_export_date = isset( $_GET[ Lengow_Export::PARAM_UPDATE_EXPORT_DATE ] )
+	? (bool) $_GET[ Lengow_Export::PARAM_UPDATE_EXPORT_DATE ]
+	: null;
 
 $export = new Lengow_Export(
 	array(
-		'format'             => $format,
-		'stream'             => $stream,
-		'offset'             => $offset,
-		'limit'              => $limit,
-		'selection'          => $selection,
-		'out_of_stock'       => $out_of_stock,
-		'product_ids'        => $product_ids,
-		'product_types'      => $product_types,
-		'variation'          => $variation,
-		'legacy_fields'      => $legacy_fields,
-		'log_output'         => $log_output,
-		'update_export_date' => $update_export_date,
+		Lengow_Export::PARAM_FORMAT             => $format,
+		Lengow_Export::PARAM_STREAM             => $stream,
+		Lengow_Export::PARAM_OFFSET             => $offset,
+		Lengow_Export::PARAM_LIMIT              => $limit,
+		Lengow_Export::PARAM_SELECTION          => $selection,
+		Lengow_Export::PARAM_OUT_OF_STOCK       => $out_of_stock,
+		Lengow_Export::PARAM_PRODUCT_IDS        => $product_ids,
+		Lengow_Export::PARAM_PRODUCT_TYPES      => $product_types,
+		Lengow_Export::PARAM_VARIATION          => $variation,
+		Lengow_Export::PARAM_LEGACY_FIELDS      => $legacy_fields,
+		Lengow_Export::PARAM_LOG_OUTPUT         => $log_output,
+		Lengow_Export::PARAM_UPDATE_EXPORT_DATE => $update_export_date,
 	)
 );
 
 if ( $get_params ) {
-	echo $export->get_export_params();
+	echo Lengow_Export::get_export_params();
 } elseif ( 'size' === $mode ) {
 	echo $export->get_total_export_product();
 } elseif ( 'total' === $mode ) {

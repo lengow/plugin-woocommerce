@@ -242,7 +242,7 @@ class Lengow_Connector {
 	 * @return boolean
 	 */
 	public static function is_valid_auth( $log_output = false ) {
-		if ( ! Lengow_Check::is_curl_activated() ) {
+		if ( ! Lengow_Toolbox::is_curl_activated() ) {
 			return false;
 		}
 		list( $account_id, $access_token, $secret ) = Lengow_Configuration::get_access_id();
@@ -365,8 +365,8 @@ class Lengow_Connector {
 	 *
 	 */
 	public function connect( $force = false, $log_output = false ) {
-		$token      = Lengow_Configuration::get( 'lengow_authorization_token' );
-		$updated_at = Lengow_Configuration::get( 'lengow_last_authorization_token_update' );
+		$token      = Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN );
+		$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_AUTHORIZATION_TOKEN );
 		if ( ! $force
 		     && null !== $token
 		     && null !== $updated_at
@@ -376,8 +376,8 @@ class Lengow_Connector {
 			$authorization_token = $token;
 		} else {
 			$authorization_token = $this->_get_authorization_token( $log_output );
-			Lengow_Configuration::update_value( 'lengow_authorization_token', $authorization_token );
-			Lengow_Configuration::update_value( 'lengow_last_authorization_token_update', time() );
+			Lengow_Configuration::update_value( Lengow_Configuration::AUTHORIZATION_TOKEN, $authorization_token );
+			Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_AUTHORIZATION_TOKEN, time() );
 		}
 		$this->_token = $authorization_token;
 	}

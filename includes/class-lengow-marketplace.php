@@ -34,7 +34,7 @@ class Lengow_Marketplace {
 	/**
 	 * @var string marketplace file name.
 	 */
-	public static $marketplace_json = 'marketplaces.json';
+	const FILE_MARKETPLACE = 'marketplaces.json';
 
 	/**
 	 * @var mixed all marketplaces allowed for an account ID.
@@ -201,7 +201,7 @@ class Lengow_Marketplace {
 	public static function get_file_path() {
 		$sep = DIRECTORY_SEPARATOR;
 
-		return LENGOW_PLUGIN_PATH . $sep . Lengow_Main::$lengow_config_folder . $sep . self::$marketplace_json;
+		return LENGOW_PLUGIN_PATH . $sep . Lengow_Main::FOLDER_CONFIG . $sep . self::FILE_MARKETPLACE;
 	}
 
 	/**

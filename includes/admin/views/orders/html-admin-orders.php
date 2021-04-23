@@ -24,9 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <p>
 						<?php echo $locale->t(
 							'order.screen.order_with_error',
-							array(
-								'nb_order' => Lengow_Order::get_total_order_in_error()
-							)
+							array( 'nb_order' => Lengow_Order::count_order_with_error() )
 						) ?>
                     </p>
                 </div>
@@ -34,11 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <p>
 						<?php echo $locale->t(
 							'order.screen.order_to_be_sent',
-							array(
-								'nb_order' => Lengow_Order::get_total_order_by_status(
-									Lengow_Order::STATE_WAITING_SHIPMENT
-								)
-							)
+							array( 'nb_order' => Lengow_Order::count_order_to_be_sent() )
 						) ?>
                     </p>
                 </div>
@@ -58,7 +52,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     </p>
                 </div>
                 <p>
-					<?php if ( (bool) Lengow_Configuration::get( 'lengow_report_mail_enabled' ) ) {
+					<?php if ( Lengow_Configuration::get( Lengow_Configuration::REPORT_MAIL_ENABLED ) ) {
 						echo $locale->t( 'order.screen.all_order_will_be_sent_to' ) . ' ' . $report_emails;
 					} else {
 						echo $locale->t( 'order.screen.no_order_will_be_sent' ) .

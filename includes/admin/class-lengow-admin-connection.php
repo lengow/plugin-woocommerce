@@ -107,9 +107,9 @@ class Lengow_Admin_Connection {
 		if ( $account_id ) {
 			$access_ids_saved = Lengow_Configuration::set_access_ids(
 				array(
-					'lengow_account_id'   => $account_id,
-					'lengow_access_token' => $access_token,
-					'lengow_secret_token' => $secret,
+					Lengow_Configuration::ACCOUNT_ID   => $account_id,
+					Lengow_Configuration::ACCESS_TOKEN => $access_token,
+					Lengow_Configuration::SECRET       => $secret,
 				)
 			);
 		}
@@ -198,7 +198,7 @@ class Lengow_Admin_Connection {
 			Lengow_Configuration::set_catalog_ids( $catalog_selected );
 			Lengow_Configuration::set_active_shop();
 			// save last update date for a specific setting (change synchronisation interval time).
-			Lengow_Configuration::update_value( 'lengow_last_setting_update', time() );
+			Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_SETTING, time() );
 			// link all catalogs selected by API.
 			$catalogs_linked = Lengow_Catalog::link_catalogs( $catalog_selected );
 			$message_key     = $catalogs_linked

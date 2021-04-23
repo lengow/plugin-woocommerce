@@ -396,18 +396,18 @@ class Lengow_Order {
 			case self::STATE_ACCEPTED:
 			case self::STATE_WAITING_SHIPMENT:
 			default:
-				$order_state = Lengow_Configuration::get( 'lengow_id_waiting_shipment' );
+				$order_state = Lengow_Configuration::get( Lengow_Configuration::WAITING_SHIPMENT_ORDER_ID );
 				break;
 			case self::STATE_SHIPPED:
 			case self::STATE_CLOSED:
-				$order_state = Lengow_Configuration::get( 'lengow_id_shipped' );
+				$order_state = Lengow_Configuration::get( Lengow_Configuration::SHIPPED_ORDER_ID );
 				break;
 			case self::STATE_REFUSED:
 			case self::STATE_CANCELED:
-				$order_state = Lengow_Configuration::get( 'lengow_id_cancel' );
+				$order_state = Lengow_Configuration::get( Lengow_Configuration::CANCELED_ORDER_ID );
 				break;
 			case 'shipped_by_mp':
-				$order_state = Lengow_Configuration::get( 'lengow_id_shipped_by_mp' );
+				$order_state = Lengow_Configuration::get( Lengow_Configuration::SHIPPED_BY_MARKETPLACE_ORDER_ID );
 				break;
 		}
 
@@ -612,26 +612,6 @@ class Lengow_Order {
 	}
 
 	/**
-	 * Get total order by statuses.
-	 *
-	 * @param string $order_status Lengow order state
-	 *
-	 * @return integer
-	 */
-	public static function get_total_order_by_status( $order_status ) {
-		global $wpdb;
-		$query = '
-			SELECT COUNT(*) as total FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . '
-			WHERE order_lengow_state = %s
-		';
-		$total = $wpdb->get_var(
-			$wpdb->prepare( $query, array( $order_status ) )
-		);
-
-		return (int) $total;
-	}
-
-	/**
 	 * Get marketplace list for order grid.
 	 *
 	 * @return array
@@ -654,12 +634,38 @@ class Lengow_Order {
 	}
 
 	/**
-	 * Get total orders in error.
-	 **
+	 * Return the number of Lengow orders imported in WooCommerce.
+	 *
 	 * @return integer
 	 */
-	public static function get_total_order_in_error() {
+	public static function count_order_imported_by_lengow() {
+		global $wpdb;
+		$query = '
+			SELECT COUNT(*) as total FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . '
+			WHERE order_id IS NOT NULL
+		';
+
+		return (int) $wpdb->get_var( $query );
+	}
+
+	/**
+	 * Return the number of Lengow orders with error.
+	 *
+	 * @return integer
+	 */
+	public static function count_order_with_error() {
 		$result = self::get( array( 'is_in_error' => 1 ), false );
+
+		return count( $result );
+	}
+
+	/**
+	 * Return the number of Lengow orders to be sent.
+	 *
+	 * @return integer
+	 */
+	public static function count_order_to_be_sent() {
+		$result = self::get( array( 'order_process_state' => 1 ), false );
 
 		return count( $result );
 	}
@@ -787,11 +793,11 @@ class Lengow_Order {
 		if ( $order_lengow ) {
 			$import = new Lengow_Import(
 				array(
-					'order_lengow_id'     => $order_lengow->id,
-					'marketplace_sku'     => $order_lengow->marketplace_sku,
-					'marketplace_name'    => $order_lengow->marketplace_name,
-					'delivery_address_id' => $order_lengow->delivery_address_id,
-					'log_output'          => false,
+					Lengow_Import::PARAM_ORDER_LENGOW_ID     => $order_lengow->id,
+					Lengow_Import::PARAM_MARKETPLACE_SKU     => $order_lengow->marketplace_sku,
+					Lengow_Import::PARAM_MARKETPLACE_NAME    => $order_lengow->marketplace_name,
+					Lengow_Import::PARAM_DELIVERY_ADDRESS_ID => $order_lengow->delivery_address_id,
+					Lengow_Import::PARAM_LOG_OUTPUT          => false,
 				)
 			);
 
@@ -809,7 +815,7 @@ class Lengow_Order {
 	 * @return bool
 	 */
 	public static function re_send_order( $order_lengow_id ) {
-		$order_lengow = New Lengow_Order( $order_lengow_id );
+		$order_lengow = new Lengow_Order( $order_lengow_id );
 		if ( $order_lengow->order_id ) {
 			$order        = new WC_Order( $order_lengow->order_id );
 			$order_status = self::get_order_status( $order );
@@ -1198,15 +1204,16 @@ class Lengow_Order {
 
 		$import = new Lengow_Import(
 			array(
-				'order_lengow_id'     => $this->id,
-				'marketplace_sku'     => $this->marketplace_sku,
-				'marketplace_name'    => $this->marketplace_name,
-				'delivery_address_id' => $this->delivery_address_id,
+				Lengow_Import::PARAM_ORDER_LENGOW_ID     => $this->id,
+				Lengow_Import::PARAM_MARKETPLACE_SKU     => $this->marketplace_sku,
+				Lengow_Import::PARAM_MARKETPLACE_NAME    => $this->marketplace_name,
+				Lengow_Import::PARAM_DELIVERY_ADDRESS_ID => $this->delivery_address_id,
 			)
 		);
 		$result = $import->exec();
 		if ( ( isset( $result['order_id'] ) && $this->id !== $result['order_id'] )
-		     && ( isset( $result['order_new'] ) && $result['order_new'] ) ) {
+		     && ( isset( $result['order_new'] ) && $result['order_new'] )
+		) {
 			$this->set_state_to_error();
 
 			return (int) $result['order_id'];

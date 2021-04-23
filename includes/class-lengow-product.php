@@ -248,11 +248,11 @@ class Lengow_Product {
 			case 'type':
 				if ( 'variation' === $this->_product_type ) {
 					return 'child';
-				} elseif ( 'variable' === $this->_product_type ) {
-					return 'parent';
-				} else {
-					return $this->_product_type;
 				}
+				if ( 'variable' === $this->_product_type ) {
+					return 'parent';
+				}
+				return $this->_product_type;
 			case 'parent_id':
 				return 'variation' === $this->_product_type ? $this->_product_id : '';
 			case 'variation':
@@ -286,9 +286,10 @@ class Lengow_Product {
 			case 'dimensions':
 				return $this->product->has_dimensions() ? $this->product->get_dimensions() : '';
 			default:
-				if ( in_array( $name, Lengow_Export::$attributes ) ) {
+				if ( in_array( $name, Lengow_Export::$attributes, true ) ) {
 					return Lengow_Main::clean_data( $this->_get_attribute_data( $name ) );
-				} elseif ( in_array( $name, Lengow_Export::$post_metas ) ) {
+				}
+				if ( in_array( $name, Lengow_Export::$post_metas, true ) ) {
 					return Lengow_Main::clean_data( $this->_get_post_meta_data( $name ) );
 				}
 
@@ -409,9 +410,8 @@ class Lengow_Product {
 				? $product->get_gallery_image_ids()
 				: $product->product_image_gallery;
 		}
-		$gallery_image_ids = is_array( $gallery_image_ids ) ? $gallery_image_ids : explode( ',', $gallery_image_ids );
 
-		return $gallery_image_ids;
+		return is_array( $gallery_image_ids ) ? $gallery_image_ids : explode( ',', $gallery_image_ids );
 	}
 
 	/**
@@ -453,7 +453,7 @@ class Lengow_Product {
 				$description = $product->post->post_content;
 			}
 		} else {
-            $description = $product->get_description();
+			$description = $product->get_description();
 			if ( 'variation' === $product_type && $product_parent && empty( $description ) ) {
 				$description = $product_parent->get_description();
 			}
@@ -473,7 +473,7 @@ class Lengow_Product {
 	 */
 	public static function get_short_description( $product, $product_parent, $product_type ) {
 		if ( Lengow_Main::compare_version( '3.0' ) ) {
-            $short_description = $product->get_short_description();
+			$short_description = $product->get_short_description();
 			if ( 'variation' === $product_type && $product_parent && empty( $short_description ) ) {
 				$short_description = $product_parent->get_short_description();
 			}
@@ -497,7 +497,7 @@ class Lengow_Product {
 			$attributes = unserialize( $result->meta_value );
 			if ( ! empty( $attributes ) ) {
 				foreach ( $attributes as $key => $attr ) {
-					if ( ! in_array( $key, $return ) ) {
+					if ( ! in_array( $key, $return, true ) ) {
 						$return[] = $key;
 					}
 				}
@@ -522,8 +522,8 @@ class Lengow_Product {
 			AND p.post_type = \'product\'
 		';
 		foreach ( $wpdb->get_results( $sql ) as $result ) {
-			if ( ! in_array( $result->meta_key, self::$excludes ) ) {
-				if ( ! in_array( $result->meta_key, $return ) ) {
+			if ( ! in_array( $result->meta_key, self::$excludes, true ) ) {
+				if ( ! in_array( $result->meta_key, $return, true ) ) {
 					$return[] = $result->meta_key;
 				}
 			}
@@ -535,7 +535,7 @@ class Lengow_Product {
 	/**
 	 * Extract cart data from API.
 	 *
-	 * @param mixed $product API product datas
+	 * @param mixed $product API product data
 	 *
 	 * @return array
 	 */
@@ -552,7 +552,7 @@ class Lengow_Product {
 	/**
 	 * Match product with API datas.
 	 *
-	 * @param mixed $product_datas all product datas
+	 * @param mixed $product_data all product data
 	 * @param string $marketplace_sku Lengow id of current order
 	 * @param boolean $log_output see log or not
 	 *
@@ -560,14 +560,14 @@ class Lengow_Product {
 	 * @throws Lengow_Exception If product is a variable
 	 *
 	 */
-	public static function match_product( $product_datas, $marketplace_sku, $log_output ) {
+	public static function match_product( $product_data, $marketplace_sku, $log_output ) {
 		$product         = false;
 		$api_product_ids = array(
-			'merchant_product_id'    => $product_datas['merchant_product_id']->id,
-			'marketplace_product_id' => $product_datas['marketplace_product_id'],
+			'merchant_product_id'    => $product_data['merchant_product_id']->id,
+			'marketplace_product_id' => $product_data['marketplace_product_id'],
 		);
-		$product_field   = null !== $product_datas['merchant_product_id']->field
-			? strtolower( (string) $product_datas['merchant_product_id']->field )
+		$product_field   = null !== $product_data['merchant_product_id']->field
+			? strtolower( (string) $product_data['merchant_product_id']->field )
 			: false;
 		// search product foreach value.
 		foreach ( $api_product_ids as $attribute_name => $attribute_value ) {
@@ -661,9 +661,8 @@ class Lengow_Product {
 				if ( in_array( get_post_type( $product_id ), array( 'product', 'product_variation' ) ) ) {
 					if ( 'variation' === self::get_product_type( $product ) ) {
 						return self::get_variation_id( $product );
-					} else {
-						return self::get_product_id( $product );
 					}
+					return self::get_product_id( $product );
 				}
 			}
 		}
@@ -943,7 +942,7 @@ class Lengow_Product {
 				$term_childs = $terms[ $product_term_id ]['child'];
 				if ( ! empty( $term_childs ) ) {
 					foreach ( $term_childs as $term_child ) {
-						if ( ! in_array( $term_child, $product_term_ids ) ) {
+						if ( ! in_array( $term_child, $product_term_ids, true ) ) {
 							$last_id = $product_term_id;
 							break;
 						}
@@ -1023,9 +1022,9 @@ class Lengow_Product {
 		if ( null !== $name ) {
 			if ( 'variation' === $this->_product_type ) {
 				$name            = 'attribute_' . $name;
-				$variation_datas = $this->product->get_variation_attributes();
-				if ( array_key_exists( $name, $variation_datas ) ) {
-					return $variation_datas[ $name ];
+				$variation_data = $this->product->get_variation_attributes();
+				if ( array_key_exists( $name, $variation_data ) ) {
+					return $variation_data[ $name ];
 				}
 			} elseif ( 'variable' !== $this->_product_type ) {
 				return $this->product->get_attribute( $name );

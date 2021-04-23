@@ -80,7 +80,7 @@ class Lengow_Admin {
 		     && ! in_array( $this->current_tab, array( $this->_default_tab, 'lengow_admin_dashboard' ), true )
 		) {
 			$merchant_status     = Lengow_Sync::get_status_account();
-			$total_pending_order = Lengow_Order::get_total_order_by_status( Lengow_Order::STATE_WAITING_SHIPMENT );
+			$total_pending_order = Lengow_Order::count_order_to_be_sent();
 			$plugin_data         = Lengow_Sync::get_plugin_data();
 			include_once 'views/html-admin-header.php';
 		}

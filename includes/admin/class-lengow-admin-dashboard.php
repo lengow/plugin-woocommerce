@@ -41,7 +41,7 @@ class Lengow_Admin_Dashboard {
 			include_once 'views/dashboard/html-admin-status.php';
 		} else {
 			$plugin_data         = Lengow_Sync::get_plugin_data();
-			$total_pending_order = Lengow_Order::get_total_order_by_status( 'waiting_shipment' );
+			$total_pending_order = Lengow_Order::count_order_to_be_sent();
 			include_once 'views/dashboard/html-admin-dashboard.php';
 		}
 	}

@@ -127,7 +127,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/class-lengow-action.php' );
 				include_once( 'includes/class-lengow-address.php' );
 				include_once( 'includes/class-lengow-catalog.php' );
-				include_once( 'includes/class-lengow-check.php' );
 				include_once( 'includes/class-lengow-configuration.php' );
 				include_once( 'includes/class-lengow-connector.php' );
 				include_once( 'includes/class-lengow-crud.php' );
@@ -146,6 +145,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/class-lengow-order-line.php' );
 				include_once( 'includes/class-lengow-product.php' );
 				include_once( 'includes/class-lengow-sync.php' );
+				include_once( 'includes/class-lengow-toolbox.php' );
+				include_once( 'includes/class-lengow-toolbox-element.php' );
 				include_once( 'includes/class-lengow-translation.php' );
 				include_once( 'includes/admin/class-lengow-admin.php' );
 				include_once( 'includes/admin/class-lengow-admin-connection.php' );
@@ -189,8 +190,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				}
 				switch ( $download ) {
 					case 'download':
-						$file = isset( $_GET['file'] ) ? $_GET['file'] : null;
-						Lengow_Log::download( $file );
+						$date = isset( $_GET[ Lengow_Log::LOG_DATE ] ) ? $_GET[ Lengow_Log::LOG_DATE ] : null;
+						Lengow_Log::download( $date );
 						break;
 					case 'download_all':
 						Lengow_Log::download();

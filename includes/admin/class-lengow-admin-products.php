@@ -67,8 +67,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 			'link'                 => Lengow_Main::get_export_url(),
 			'total_product'        => $lengow_export->get_total_product(),
 			'total_export_product' => $lengow_export->get_total_export_product(),
-			'last_export'          => Lengow_Configuration::get( 'lengow_last_export' ),
-			'option_selected'      => (bool) Lengow_Configuration::get( 'lengow_selection_enabled' ),
+			'option_selected'      => (bool) Lengow_Configuration::get( Lengow_Configuration::SELECTION_ENABLED ),
 			'select_all'           => self::_count_products(),
 		);
 		include_once 'views/products/html-admin-products.php';
@@ -86,10 +85,10 @@ class Lengow_Admin_Products extends WP_List_Table {
 					$state = isset( $_POST['state'] ) ? $_POST['state'] : null;
 					if ( null !== $state ) {
 						Lengow_Configuration::update_value(
-							'lengow_selection_enabled',
+							Lengow_Configuration::SELECTION_ENABLED,
 							$state
 						);
-						$state = Lengow_Configuration::get( 'lengow_selection_enabled' );
+						$state = Lengow_Configuration::get( Lengow_Configuration::SELECTION_ENABLED );
 						$data  = array();
 						if ( $state ) {
 							$data['state'] = true;

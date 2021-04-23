@@ -123,7 +123,10 @@ if ( Lengow_Install::$old_version && Lengow_Install::$old_version < '2.0.0' ) {
 	Lengow_Configuration::migrate_product_types();
 	Lengow_Configuration::check_ip_authorization();
 	// rename old settings.
-	Lengow_Install::rename_configuration_key( 'lengow_export_file', 'lengow_export_file_enabled' );
-	Lengow_Install::rename_configuration_key( 'lengow_debug', 'lengow_debug_enabled' );
-	Lengow_Install::rename_configuration_key( 'is_import_processing', 'lengow_import_in_progress' );
+	Lengow_Install::rename_configuration_key( 'lengow_export_file', Lengow_Configuration::EXPORT_FILE_ENABLED );
+	Lengow_Install::rename_configuration_key( 'lengow_debug', Lengow_Configuration::DEBUG_MODE_ENABLED );
+	Lengow_Install::rename_configuration_key(
+		'is_import_processing',
+		Lengow_Configuration::SYNCHRONIZATION_IN_PROGRESS
+	);
 }

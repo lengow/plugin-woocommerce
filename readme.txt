@@ -46,7 +46,7 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 == Changelog ==
 
 = 2.4.1 - xxxx-xx-xx =
-
+* Feature: Outsourcing of the toolbox via webservice
 
 = 2.4.0 - 2021-03-24 =
 * Feature: Integration of the new connection process
