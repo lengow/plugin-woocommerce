@@ -307,7 +307,7 @@ class Lengow_Toolbox {
 				while ( ( $data = fgetcsv( $file, 1000, '|' ) ) !== false ) {
 					$file_counter ++;
 					$short_path = $data[0];
-					$file_path = LENGOW_PLUGIN_PATH . $short_path;
+					$file_path  = LENGOW_PLUGIN_PATH . $short_path;
 					if ( file_exists( $file_path ) ) {
 						$file_md = md5_file( $file_path );
 						if ( $file_md !== $data[1] ) {
@@ -324,8 +324,7 @@ class Lengow_Toolbox {
 		}
 		$file_modified_counter = count( $file_modified );
 		$file_deleted_counter  = count( $file_deleted );
-		$md5_success           = ! $md5_available
-		                         || ! ( $file_modified_counter > 0 ) || ! ( $file_deleted_counter > 0 );
+		$md5_success           = $md5_available && ! ( $file_modified_counter > 0 ) && ! ( $file_deleted_counter > 0 );
 
 		return array(
 			self::CHECKSUM_AVAILABLE             => $md5_available,
