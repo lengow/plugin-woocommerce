@@ -802,14 +802,12 @@ class Lengow_Configuration {
 		if ( isset( $key_params[ self::PARAM_RETURN ] ) ) {
 			switch ( $key_params[ self::PARAM_RETURN ] ) {
 				case self::RETURN_TYPE_BOOLEAN:
-					$value = (bool) $value;
-					break;
+					return (bool) $value;
 				case self::RETURN_TYPE_INTEGER:
-					$value = (int) $value;
-					break;
+					return (int) $value;
 				case self::RETURN_TYPE_ARRAY:
 					if ( ! is_array( $value ) ) {
-						$value = ! empty( $value )
+						return ! empty( $value )
 							? explode( ';', trim( str_replace( array( "\r\n", ',', ' ' ), ';', $value ), ';' ) )
 							: array();
 					}

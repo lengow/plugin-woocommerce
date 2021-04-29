@@ -126,9 +126,6 @@ class Lengow_Toolbox {
 				return self::get_checklist_data();
 			case self::DATA_TYPE_CHECKSUM:
 				return self::get_checksum_data();
-			default:
-			case self::DATA_TYPE_CMS:
-				return self::get_cms_data();
 			case self::DATA_TYPE_LOG:
 				return self::get_log_data();
 			case self::DATA_TYPE_OPTION:
@@ -139,6 +136,9 @@ class Lengow_Toolbox {
 				return self::get_shop_data();
 			case self::DATA_TYPE_SYNCHRONIZATION:
 				return self::get_synchronization_data();
+			default:
+			case self::DATA_TYPE_CMS:
+				return self::get_cms_data();
 		}
 	}
 

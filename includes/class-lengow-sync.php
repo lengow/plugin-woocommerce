@@ -85,6 +85,7 @@ class Lengow_Sync {
 			'plugin_version' => LENGOW_VERSION,
 			'email'          => Lengow_Configuration::get( 'admin_email' ),
 			'cron_url'       => Lengow_Main::get_cron_url(),
+			'toolbox_url'    => Lengow_Main::get_toolbox_url(),
 			'shops'          => array(),
 		);
 		$data['shops'][] = array(

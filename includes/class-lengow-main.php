@@ -186,8 +186,7 @@ class Lengow_Main {
 	 * @return boolean
 	 */
 	public static function check_ip() {
-		$authorized_ips = Lengow_Configuration::get_authorized_ips();
-		$authorized_ips = array_merge( $authorized_ips, self::$_ips_lengow );
+		$authorized_ips = array_merge( Lengow_Configuration::get_authorized_ips(), self::$_ips_lengow );
 		if ( isset( $_SERVER['SERVER_ADDR'] ) ) {
 			$authorized_ips[] = $_SERVER['SERVER_ADDR'];
 		}

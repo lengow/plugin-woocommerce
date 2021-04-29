@@ -130,7 +130,7 @@ en:
       ip_enabled: "Authorisation by IP enabled"
       ip_authorized: "IP authorised"
       debug_disabled: "Debug Mode disabled"
-      write_permission: "Read and write permission from media folder"
+      write_permission: "Read and write permission for media folder"
       toolbox_url: "Toolbox URL"
       import_information: "Import information (Global)"
       global_token: "Import token"
