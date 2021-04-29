@@ -76,6 +76,9 @@ class Lengow_Admin {
 	public function lengow_display() {
 		$locale          = new Lengow_Translation();
 		$is_new_merchant = Lengow_Configuration::is_new_merchant();
+		$this->current_tab = ( ! $is_new_merchant && $this->current_tab === $this->_default_tab )
+			? 'lengow_admin_dashboard'
+			: $this->current_tab;
 		if ( ! $is_new_merchant
 		     && ! in_array( $this->current_tab, array( $this->_default_tab, 'lengow_admin_dashboard' ), true )
 		) {
