@@ -252,6 +252,7 @@ class Lengow_Product {
 				if ( 'variable' === $this->_product_type ) {
 					return 'parent';
 				}
+
 				return $this->_product_type;
 			case 'parent_id':
 				return 'variation' === $this->_product_type ? $this->_product_id : '';
@@ -374,10 +375,12 @@ class Lengow_Product {
 	 *
 	 * @param WC_Product $product WooCommerce product instance
 	 *
-	 * @return string
+	 * @return float
 	 */
 	public static function get_regular_price( $product ) {
-		return Lengow_Main::compare_version( '3.0' ) ? $product->get_regular_price() : $product->regular_price;
+		return Lengow_Main::compare_version( '3.0' )
+			? (float) $product->get_regular_price()
+			: (float) $product->regular_price;
 	}
 
 	/**
@@ -662,6 +665,7 @@ class Lengow_Product {
 					if ( 'variation' === self::get_product_type( $product ) ) {
 						return self::get_variation_id( $product );
 					}
+
 					return self::get_product_id( $product );
 				}
 			}
@@ -732,7 +736,7 @@ class Lengow_Product {
 		$price_incl_tax = $this->_get_price( true );
 		$regular_price  = self::get_regular_price( $this->product );
 		if ( $regular_price ) {
-			$precision                      = get_option( 'woocommerce_price_num_decimals' );
+			$precision                      = (int) get_option( 'woocommerce_price_num_decimals' );
 			$price_before_discount_excl_tax = $this->_get_price( false, $regular_price );
 			$price_before_discount_incl_tax = $this->_get_price( true, $regular_price );
 			$amount_excl_tax                = $price_before_discount_excl_tax - $price_excl_tax;
@@ -777,25 +781,25 @@ class Lengow_Product {
 	 * Returns the price (excluding tax).
 	 *
 	 * @param boolean $including_tax price including tax or not
-	 * @param string|null $price to calculate, left blank to just use get_price()
+	 * @param float|null $price to calculate, left blank to just use get_price()
 	 *
-	 * @return string
+	 * @return float
 	 */
 	private function _get_price( $including_tax = false, $price = null ) {
 		if ( null === $price ) {
-			$price = $this->product->get_price();
+			$price = (float) $this->product->get_price();
 		}
 		if ( $this->product->is_taxable() ) {
 			$WC_tax    = new WC_Tax();
 			$tax_rates = $WC_tax->get_rates( $this->product->get_tax_class() );
 			if ( $including_tax && 'no' === get_option( 'woocommerce_prices_include_tax' ) ) {
 				$taxes      = $WC_tax->calc_tax( $price, $tax_rates, false );
-				$tax_amount = $WC_tax->get_tax_total( $taxes );
-				$price      = round( $price + $tax_amount, get_option( 'woocommerce_price_num_decimals' ) );
+				$tax_amount = (float) $WC_tax->get_tax_total( $taxes );
+				$price      = round( $price + $tax_amount, (int) get_option( 'woocommerce_price_num_decimals' ) );
 			} elseif ( ! $including_tax && 'yes' === get_option( 'woocommerce_prices_include_tax' ) ) {
 				$taxes      = $WC_tax->calc_tax( $price, $tax_rates, true );
-				$tax_amount = $WC_tax->get_tax_total( $taxes );
-				$price      = round( $price - $tax_amount, get_option( 'woocommerce_price_num_decimals' ) );
+				$tax_amount = (float) $WC_tax->get_tax_total( $taxes );
+				$price      = round( $price - $tax_amount, (int) get_option( 'woocommerce_price_num_decimals' ) );
 			}
 		}
 
@@ -1021,7 +1025,7 @@ class Lengow_Product {
 	private function _get_attribute_data( $name = null ) {
 		if ( null !== $name ) {
 			if ( 'variation' === $this->_product_type ) {
-				$name            = 'attribute_' . $name;
+				$name           = 'attribute_' . $name;
 				$variation_data = $this->product->get_variation_attributes();
 				if ( array_key_exists( $name, $variation_data ) ) {
 					return $variation_data[ $name ];

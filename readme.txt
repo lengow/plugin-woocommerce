@@ -47,6 +47,7 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 
 = 2.4.1 - xxxx-xx-xx =
 * Feature: Outsourcing of the toolbox via webservice
+* Bugfix: [export] Added security on product tax recovery
 
 = 2.4.0 - 2021-03-24 =
 * Feature: Integration of the new connection process

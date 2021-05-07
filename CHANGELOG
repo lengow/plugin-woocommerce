@@ -3,6 +3,7 @@ Version 2.4.1
 ========================================================
 
     - Feature: Outsourcing of the toolbox via webservice
+    - Bugfix: [export] Added security on product tax recovery
 
 ========================================================
 Version 2.4.0
