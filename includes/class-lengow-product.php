@@ -522,7 +522,7 @@ class Lengow_Product {
 			SELECT DISTINCT(meta_key)
 			FROM ' . $wpdb->postmeta . ' AS pm
 			INNER JOIN ' . $wpdb->posts . ' AS p ON p.id = pm.post_id
-			AND p.post_type = \'product\'
+			WHERE p.post_type = \'product\' OR p.post_type = \'product_variation\'
 		';
 		foreach ( $wpdb->get_results( $sql ) as $result ) {
 			if ( ! in_array( $result->meta_key, self::$excludes, true ) ) {
