@@ -75,6 +75,7 @@ class Lengow_Configuration {
 	const LAST_UPDATE_SETTING = 'lengow_last_setting_update';
 	const LAST_UPDATE_PLUGIN_DATA = 'lengow_plugin_data_update';
 	const LAST_UPDATE_AUTHORIZATION_TOKEN = 'lengow_last_authorization_token_update';
+	const LAST_UPDATE_PLUGIN_MODAL = 'lengow_last_plugin_modal';
 
 	/* Configuration parameters */
 	const PARAM_DEFAULT_VALUE = 'default_value';
@@ -141,6 +142,7 @@ class Lengow_Configuration {
 		self::LAST_UPDATE_SETTING                  => 'last_update_setting',
 		self::LAST_UPDATE_PLUGIN_DATA              => 'last_update_plugin_data',
 		self::LAST_UPDATE_AUTHORIZATION_TOKEN      => 'last_update_authorization_token',
+		self::LAST_UPDATE_PLUGIN_MODAL             => 'last_update_plugin_modal',
 	);
 
 	/**
@@ -393,6 +395,10 @@ class Lengow_Configuration {
 					self::PARAM_RETURN => self::RETURN_TYPE_INTEGER,
 				),
 				self::LAST_UPDATE_AUTHORIZATION_TOKEN      => array(
+					self::PARAM_GLOBAL => true,
+					self::PARAM_RETURN => self::RETURN_TYPE_INTEGER,
+				),
+				self::LAST_UPDATE_PLUGIN_MODAL             => array(
 					self::PARAM_GLOBAL => true,
 					self::PARAM_RETURN => self::RETURN_TYPE_INTEGER,
 				),

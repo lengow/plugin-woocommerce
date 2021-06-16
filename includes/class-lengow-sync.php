@@ -45,6 +45,22 @@ class Lengow_Sync {
 	const SYNC_ACTION = 'action';
 	const SYNC_PLUGIN_DATA = 'plugin';
 
+	/* Plugin link types */
+	const LINK_TYPE_HELP_CENTER = 'help_center';
+	const LINK_TYPE_CHANGELOG = 'changelog';
+	const LINK_TYPE_UPDATE_GUIDE = 'update_guide';
+	const LINK_TYPE_SUPPORT = 'support';
+
+	/* Default plugin links */
+	const LINK_HELP_CENTER = 'https://support.lengow.com/kb/guide/en/woocommerce-rMVnXfZXmr/Steps/25873';
+	const LINK_CHANGELOG = 'https://support.lengow.com/kb/guide/en/woocommerce-rMVnXfZXmr/Steps/25873,113494,257787';
+	const LINK_UPDATE_GUIDE = 'https://support.lengow.com/kb/guide/en/woocommerce-rMVnXfZXmr/Steps/25873,123328';
+	const LINK_SUPPORT = 'https://help-support.lengow.com/hc/en-us/requests/new';
+
+	/* Api iso codes */
+	const API_ISO_CODE_EN = 'en';
+	const API_ISO_CODE_FR = 'fr';
+
 	/**
 	 * @var array cache time for catalog, account status, cms options and marketplace synchronisation.
 	 */
@@ -67,6 +83,24 @@ class Lengow_Sync {
 		self::SYNC_ACTION,
 		self::SYNC_CATALOG,
 		self::SYNC_PLUGIN_DATA,
+	);
+
+	/**
+	 * @var array iso code correspondence for plugin links
+	 */
+	public static $generic_iso_codes = array(
+		self::API_ISO_CODE_EN => Lengow_Translation::ISO_CODE_EN,
+		self::API_ISO_CODE_FR => Lengow_Translation::ISO_CODE_FR,
+	);
+
+	/**
+	 * @var array default plugin links when the API is not available
+	 */
+	public static $default_plugin_links = array(
+		self::LINK_TYPE_HELP_CENTER  => self::LINK_HELP_CENTER,
+		self::LINK_TYPE_CHANGELOG    => self::LINK_CHANGELOG,
+		self::LINK_TYPE_UPDATE_GUIDE => self::LINK_UPDATE_GUIDE,
+		self::LINK_TYPE_SUPPORT      => self::LINK_SUPPORT,
 	);
 
 	/**
@@ -341,9 +375,6 @@ class Lengow_Sync {
 	 * @return array|false
 	 */
 	public static function get_plugin_data( $force = false, $log_output = false ) {
-		if ( Lengow_Configuration::is_new_merchant() ) {
-			return false;
-		}
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_PLUGIN_DATA );
 			if ( $updated_at !== null
@@ -363,9 +394,24 @@ class Lengow_Sync {
 			$plugin_data = false;
 			foreach ( $plugins as $plugin ) {
 				if ( $plugin->type === self::CMS_TYPE ) {
+					$plugin_links = array();
+					if ( ! empty( $plugin->links ) ) {
+						foreach ( $plugin->links as $link ) {
+							if ( array_key_exists( $link->language->iso_a2, self::$generic_iso_codes ) ) {
+								$generic_iso_code                                      = self::$generic_iso_codes[
+									$link->language->iso_a2
+								];
+								$plugin_links[ $generic_iso_code ][ $link->link_type ] = $link->link;
+							}
+						}
+					}
 					$plugin_data = array(
-						'version'       => $plugin->version,
-						'download_link' => $plugin->archive,
+						'version'         => $plugin->version,
+						'download_link'   => $plugin->archive,
+						'cms_min_version' => '3.5',
+						'cms_max_version' => '5.7',
+						'links'           => $plugin_links,
+						'extensions'      => $plugin->extensions,
 					);
 					break;
 				}
@@ -383,5 +429,40 @@ class Lengow_Sync {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Get an array of plugin links for a specific iso code
+	 *
+	 * @param string|null $iso_code locale iso code
+	 *
+	 * @return array
+	 */
+	public static function get_plugin_links( $iso_code = null ) {
+		$plugin_data = self::get_plugin_data();
+		if ( ! $plugin_data ) {
+			return self::$default_plugin_links;
+		}
+		// check if the links are available in the locale
+		$iso_code             = $iso_code ?: Lengow_Translation::DEFAULT_ISO_CODE;
+		$locale_links         = isset( $plugin_data['links'][ $iso_code ] )
+			? $plugin_data['links'][ $iso_code ]
+			: false;
+		$default_locale_links = isset( $plugin_data['links'][ Lengow_Translation::DEFAULT_ISO_CODE ] )
+			? $plugin_data['links'][ Lengow_Translation::DEFAULT_ISO_CODE ]
+			: false;
+		// for each type of link, we check if the link is translated
+		$plugin_links = array();
+		foreach ( self::$default_plugin_links as $link_type => $default_link ) {
+			if ( $locale_links && isset( $locale_links[ $link_type ] ) ) {
+				$plugin_links[ $link_type ] = $locale_links[ $link_type ];
+			} elseif ( $default_locale_links && isset( $default_locale_links[ $link_type ] ) ) {
+				$plugin_links[ $link_type ] = $default_locale_links[ $link_type ];
+			} else {
+				$plugin_links[ $link_type ] = $default_link;
+			}
+		}
+
+		return $plugin_links;
 	}
 }

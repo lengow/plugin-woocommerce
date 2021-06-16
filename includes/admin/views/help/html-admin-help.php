@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <h2><?php echo $locale->t( 'help.screen.title' ); ?></h2>
         <p>
 			<?php echo $locale->t( 'help.screen.contain_text_support' ); ?>
-            <a href="<?php echo $locale->t( 'help.screen.link_lengow_support' ) ?>"
+            <a href="<?php echo $plugin_links[ Lengow_Sync::LINK_TYPE_SUPPORT ]; ?>"
                target="_blank"
                title="Support Lengow">
 				<?php echo $locale->t( 'help.screen.title_lengow_support' ); ?>
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <p><?php echo $locale->t( 'help.screen.contain_text_support_hour' ); ?></p>
         <p>
 			<?php echo $locale->t( 'help.screen.find_answer' ); ?>
-            <a href="<?php echo $locale->t( 'help.screen.knowledge_link_url' ); ?>"
+            <a href="<?php echo $plugin_links[ Lengow_Sync::LINK_TYPE_HELP_CENTER ]; ?>"
                target="_blank"
                title="Help Center">
 				<?php echo $locale->t( 'help.screen.link_woocommerce_guide' ); ?>

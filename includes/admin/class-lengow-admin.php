@@ -74,17 +74,28 @@ class Lengow_Admin {
 	 * Routing.
 	 */
 	public function lengow_display() {
-		$locale          = new Lengow_Translation();
-		$is_new_merchant = Lengow_Configuration::is_new_merchant();
+		$locale            = new Lengow_Translation();
+		$is_new_merchant   = Lengow_Configuration::is_new_merchant();
 		$this->current_tab = ( ! $is_new_merchant && $this->current_tab === $this->_default_tab )
 			? 'lengow_admin_dashboard'
 			: $this->current_tab;
+		// recovery of all plugin data for plugin update
+		$plugin_is_up_to_date      = true;
+		$show_plugin_upgrade_modal = false;
+		$plugin_data               = Lengow_Sync::get_plugin_data();
+		if ( $plugin_data && version_compare( $plugin_data['version'], LENGOW_VERSION, '>' ) ) {
+			$plugin_is_up_to_date = false;
+			// show upgrade plugin modal or not
+			$show_plugin_upgrade_modal = $this->_show_plugin_upgrade_modal();
+		}
+		// get actual plugin urls in current language
+		$plugin_links = Lengow_Sync::get_plugin_links( get_locale() );
+		// display footer or not
 		if ( ! $is_new_merchant
 		     && ! in_array( $this->current_tab, array( $this->_default_tab, 'lengow_admin_dashboard' ), true )
 		) {
 			$merchant_status     = Lengow_Sync::get_status_account();
 			$total_pending_order = Lengow_Order::count_order_to_be_sent();
-			$plugin_data         = Lengow_Sync::get_plugin_data();
 			include_once 'views/html-admin-header.php';
 		}
 		switch ( $this->current_tab ) {
@@ -113,5 +124,21 @@ class Lengow_Admin {
 				Lengow_Admin_Connection::display();
 		}
 		include_once 'views/html-admin-footer.php';
+	}
+
+	/**
+	 * Checks if the plugin upgrade modal should be displayed or not
+	 *
+	 * @return boolean
+	 */
+	private function _show_plugin_upgrade_modal()
+	{
+		// never display the upgrade modal during the connection process
+		$updated_at = Lengow_Configuration::get(Lengow_Configuration::LAST_UPDATE_PLUGIN_MODAL);
+		if ($updated_at !== null && (time() - (int) $updated_at) < 86400) {
+			return false;
+		}
+		Lengow_Configuration::update_value(Lengow_Configuration::LAST_UPDATE_PLUGIN_MODAL, time());
+		return true;
 	}
 }

@@ -78,11 +78,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php endif; ?>
 			<p>
 				<?php echo $locale->t( 'connection.cms.failed_help' ); ?>
-				<a href="<?php echo $locale->t( 'help.screen.knowledge_link_url' ); ?>" target="_blank">
+				<a href="<?php echo $plugin_links[ Lengow_Sync::LINK_TYPE_HELP_CENTER ]; ?>" target="_blank">
 					<?php echo $locale->t( 'connection.cms.failed_help_center' ); ?>
 				</a>
 				<?php echo $locale->t( 'connection.cms.failed_help_or' ); ?>
-				<a href="<?php echo $locale->t( 'help.screen.link_lengow_support' ); ?>" target="_blank">
+				<a href="<?php echo $plugin_links[ Lengow_Sync::LINK_TYPE_SUPPORT ]; ?>" target="_blank">
 					<?php echo $locale->t( 'connection.cms.failed_help_customer_success_team' ); ?>
 				</a>
 			</p>

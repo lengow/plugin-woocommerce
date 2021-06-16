@@ -8,15 +8,18 @@
 }
 
 .lengow-nav #menucountertrial a,
-.lengow-nav #menupluginavailable a {
+.lengow-nav #menupluginavailable button {
+  background: none;
+  border: none;
   display: inline-block;
+  color: white;
   text-decoration: underline;
   padding: 0 0px;
   margin-left: 5px;
 }
 
 .lengow-nav #menucountertrial a:hover,
-.lengow-nav #menupluginavailable a:hover {
+.lengow-nav #menupluginavailable button:hover {
   background: none;
   color: #00aeef;
   text-decoration: underline;
@@ -232,6 +235,17 @@
 #lengow_home_wrapper #alert-counter-trial,
 #lengow_home_wrapper #alert-plugin-available {
   margin-bottom: 10px;
+}
+
+#lengow_home_wrapper #alert-plugin-available button {
+  text-decoration: none;
+  margin-left: 0;
+  color: #00aeef;
+}
+
+#lengow_home_wrapper #alert-plugin-available button:hover {
+  text-decoration: underline;
+  color: #00aeef;
 }
 
 /*************************************************/

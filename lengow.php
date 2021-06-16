@@ -169,10 +169,12 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 */
 		public function init() {
 			if ( is_admin() ) {
+				// init controller actions.
+				add_action( 'admin_action_dashboard_get_process', array( 'Lengow_Admin_Dashboard', 'get_process' ) );
 				// init ajax actions.
 				add_action( 'wp_ajax_post_process_connection', array( 'Lengow_Admin_Connection', 'post_process' ) );
-				add_action( 'admin_action_dashboard_get_process', array( 'Lengow_Admin_Dashboard', 'get_process' ) );
-				add_action( 'wp_ajax_post_process', array( 'Lengow_Admin_Products', 'post_process' ) );
+				add_action( 'wp_ajax_post_process_dashboard', array( 'Lengow_Admin_Dashboard', 'post_process' ) );
+				add_action( 'wp_ajax_post_process_products', array( 'Lengow_Admin_Products', 'post_process' ) );
 				add_action( 'wp_ajax_post_process_orders', array( 'Lengow_Admin_Orders', 'post_process' ) );
 				add_action( 'wp_ajax_post_process_order_box', array( 'Lengow_Box_Order_Info', 'post_process' ) );
 				// order actions.

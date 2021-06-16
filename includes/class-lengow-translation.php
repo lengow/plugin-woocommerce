@@ -31,25 +31,29 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Lengow_Translation {
 
+	/* Plugin translation iso codes */
+	const ISO_CODE_EN = 'en_GB';
+	const ISO_CODE_FR = 'fr_FR';
+
 	/**
 	 * @var string default iso code.
 	 */
-	const DEFAULT_ISO_CODE = 'en_GB';
+	const DEFAULT_ISO_CODE = self::ISO_CODE_EN;
 
 	/**
 	 * @var array|null all translations.
 	 */
-	protected static $translation = null;
+	protected static $translation;
 
 	/**
 	 * @var string|null iso code.
 	 */
-	protected $iso_code = null;
+	protected $iso_code;
 
 	/**
 	 * @var string|null force iso code for log and toolbox.
 	 */
-	public static $force_iso_code = null;
+	public static $force_iso_code;
 
 	/**
 	 * Construct a new Lengow translation.
@@ -63,7 +67,7 @@ class Lengow_Translation {
 	 *
 	 * @param string $message localization key
 	 * @param array $args replace word in string
-	 * @param array|null $iso_code iso code
+	 * @param string|null $iso_code iso code
 	 *
 	 * @return string
 	 */
@@ -79,15 +83,15 @@ class Lengow_Translation {
 		}
 		if ( isset( self::$translation[ $iso_code ][ $message ] ) ) {
 			return $this->translate_final( self::$translation[ $iso_code ][ $message ], $args );
-		} else {
-			if ( ! isset( self::$translation[ self::DEFAULT_ISO_CODE ] ) ) {
-				$this->load_file( self::DEFAULT_ISO_CODE );
-			}
-			if ( isset( self::$translation[ self::DEFAULT_ISO_CODE ][ $message ] ) ) {
-				return $this->translate_final( self::$translation[ self::DEFAULT_ISO_CODE ][ $message ], $args );
-			}
-			return 'Missing Translation [' . $message . ']';
 		}
+		if ( ! isset( self::$translation[ self::DEFAULT_ISO_CODE ] ) ) {
+			$this->load_file( self::DEFAULT_ISO_CODE );
+		}
+		if ( isset( self::$translation[ self::DEFAULT_ISO_CODE ][ $message ] ) ) {
+			return $this->translate_final( self::$translation[ self::DEFAULT_ISO_CODE ][ $message ], $args );
+		}
+
+		return 'Missing Translation [' . $message . ']';
 	}
 
 	/**
@@ -109,6 +113,7 @@ class Lengow_Translation {
 
 			return str_replace( $params, $values, $text );
 		}
+
 		return $text;
 	}
 
@@ -122,8 +127,8 @@ class Lengow_Translation {
 	 */
 	public function load_file( $iso_code, $filename = null ) {
 		if ( ! $filename ) {
-			$sep = DIRECTORY_SEPARATOR;
-			$filename = LENGOW_PLUGIN_PATH . $sep. Lengow_Main::FOLDER_TRANSLATION . $sep . $iso_code . '.csv';
+			$sep      = DIRECTORY_SEPARATOR;
+			$filename = LENGOW_PLUGIN_PATH . $sep . Lengow_Main::FOLDER_TRANSLATION . $sep . $iso_code . '.csv';
 		}
 		$translation = array();
 		if ( file_exists( $filename ) ) {

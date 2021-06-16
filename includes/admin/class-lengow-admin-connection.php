@@ -42,8 +42,9 @@ class Lengow_Admin_Connection {
 	 * Process Post Parameters.
 	 */
 	public static function post_process() {
-		$locale = new Lengow_Translation();
-		$action = isset( $_POST['do_action'] ) ? $_POST['do_action'] : false;
+		$locale       = new Lengow_Translation();
+		$plugin_links = Lengow_Sync::get_plugin_links( get_locale() );
+		$action       = isset( $_POST['do_action'] ) ? $_POST['do_action'] : false;
 		if ( $action ) {
 			switch ( $action ) {
 				case 'go_to_credentials':

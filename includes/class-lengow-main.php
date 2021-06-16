@@ -827,9 +827,14 @@ class Lengow_Main {
 		$order_errors = Lengow_Order_Error::get_all_order_error_not_sent();
 		if ( $order_errors ) {
 			// construction of the report e-mail.
-			$subject   = self::decode_log_message( 'lengow_log.mail_report.subject_report_mail' );
-			$support   = self::decode_log_message( 'lengow_log.mail_report.no_error_in_report_mail' );
-			$mail_body = '<h2>' . $subject . '</h2><p><ul>';
+			$subject      = self::decode_log_message( 'lengow_log.mail_report.subject_report_mail' );
+			$plugin_links = Lengow_Sync::get_plugin_links();
+			$support      = self::decode_log_message(
+				'lengow_log.mail_report.no_error_in_report_mail',
+				null,
+				array( 'support_link' => $plugin_links[ Lengow_Sync::LINK_TYPE_SUPPORT ] )
+			);
+			$mail_body    = '<h2>' . $subject . '</h2><p><ul>';
 			foreach ( $order_errors as $order_error ) {
 				$order     = self::decode_log_message(
 					'lengow_log.mail_report.order',
@@ -847,7 +852,7 @@ class Lengow_Main {
 			// send an email foreach email address.
 			$emails = Lengow_Configuration::get_report_email_address();
 			foreach ( $emails as $email ) {
-				if ( strlen( $email ) > 0 ) {
+				if ( '' !== $email ) {
 					$mail_sent = wp_mail( $email, $subject, $mail_body );
 					if ( ! $mail_sent ) {
 						self::log(
