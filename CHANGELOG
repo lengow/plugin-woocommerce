@@ -6,6 +6,7 @@ Version 2.4.1
     - Feature: Setting up a modal for the plugin update
     - Bugfix: [export] Added security on product tax recovery
     - Bugfix: [export] Fix fields and attribute retrieval for product variation
+    - Bugfix: [export] Prevent wrongly formatted post_meta from being exported
 
 ========================================================
 Version 2.4.0

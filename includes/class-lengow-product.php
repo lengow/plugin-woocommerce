@@ -1049,6 +1049,11 @@ class Lengow_Product {
 		if ( null !== $name ) {
 			$product_id = null !== $this->_variation_id ? $this->_variation_id : $this->_product_id;
 			$post_meta  = get_post_meta( $product_id, $name );
+			// if post_meta[0] is an object, it mean it surely came from another plugin and not woocommerce itself
+            // we cannot know what is in the object so we return empty string
+            if ( is_object( $post_meta[0] ) ) {
+                return '';
+            }
 			if ( isset( $post_meta[0] ) ) {
 				return is_array( $post_meta[0] ) ? json_encode( $post_meta[0] ) : $post_meta[0];
 			}
