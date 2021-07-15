@@ -394,7 +394,19 @@ class Lengow_Sync {
 			$plugin_data = false;
 			foreach ( $plugins as $plugin ) {
 				if ( $plugin->type === self::CMS_TYPE ) {
-					$plugin_links = array();
+					$cms_min_version = '';
+					$cms_max_version = '';
+					$plugin_links    = array();
+					$current_version = $plugin->version;
+					if ( ! empty( $plugin->versions ) ) {
+						foreach ( $plugin->versions as $version ) {
+							if ( $version->version === $current_version ) {
+								$cms_min_version = $version->cms_min_version;
+								$cms_max_version = $version->cms_max_version;
+								break;
+							}
+						}
+					}
 					if ( ! empty( $plugin->links ) ) {
 						foreach ( $plugin->links as $link ) {
 							if ( array_key_exists( $link->language->iso_a2, self::$generic_iso_codes ) ) {
@@ -406,10 +418,10 @@ class Lengow_Sync {
 						}
 					}
 					$plugin_data = array(
-						'version'         => $plugin->version,
+						'version'         => $current_version,
 						'download_link'   => $plugin->archive,
-						'cms_min_version' => '3.5',
-						'cms_max_version' => '5.7',
+						'cms_min_version' => $cms_min_version,
+						'cms_max_version' => $cms_max_version,
 						'links'           => $plugin_links,
 						'extensions'      => $plugin->extensions,
 					);
