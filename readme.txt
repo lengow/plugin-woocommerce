@@ -2,9 +2,9 @@
 Contributors: lengowcompany
 Tags: woocommerce, ecommerce, feed, orders, marketplace, amazon, google shopping, facebook, product catalog, feed management, lengow
 Requires at least: 3.5
-Tested up to: 5.6
+Tested up to: 5.7
 Requires PHP: 5.6
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -44,6 +44,13 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 4. Log in with your Lengow credentials and configure the plugin
 
 == Changelog ==
+
+= 2.4.1 - 2021-07-19 =
+* Feature: Outsourcing of the toolbox via webservice
+* Feature: Setting up a modal for the plugin update
+* Bugfix: [export] Added security on product tax recovery
+* Bugfix: [export] Fix fields and attribute retrieval for product variation
+* Bugfix: [export] Prevent wrongly formatted post_meta from being exported
 
 = 2.4.0 - 2021-03-24 =
 * Feature: Integration of the new connection process

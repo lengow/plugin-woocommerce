@@ -224,6 +224,13 @@ class Lengow_Connector {
 	);
 
 	/**
+	 * @var array API requiring no authorization for the call url
+	 */
+	protected static $api_without_authorizations = array(
+		self::API_PLUGIN,
+	);
+
+	/**
 	 * Make a new Lengow API Connector.
 	 *
 	 * @param string $access_token Your access token
@@ -242,7 +249,7 @@ class Lengow_Connector {
 	 * @return boolean
 	 */
 	public static function is_valid_auth( $log_output = false ) {
-		if ( ! Lengow_Check::is_curl_activated() ) {
+		if ( ! Lengow_Toolbox::is_curl_activated() ) {
 			return false;
 		}
 		list( $account_id, $access_token, $secret ) = Lengow_Configuration::get_access_id();
@@ -285,19 +292,15 @@ class Lengow_Connector {
 			return false;
 		}
 		try {
+			$authorization_required = ! in_array( $api, self::$api_without_authorizations, true );
 			list( $account_id, $access_token, $secret ) = Lengow_Configuration::get_access_id();
-			if ( null === $account_id ) {
+			if ( null === $account_id && $authorization_required ) {
 				return false;
 			}
 			$connector = new Lengow_Connector( $access_token, $secret );
 			$type      = strtolower( $type );
-			$results   = $connector->$type(
-				$api,
-				array_merge( array( 'account_id' => $account_id ), $args ),
-				self::FORMAT_STREAM,
-				$body,
-				$log_output
-			);
+			$args      = $authorization_required ? array_merge( array( 'account_id' => $account_id ), $args ) : $args;
+			$results   = $connector->$type( $api, $args, self::FORMAT_STREAM, $body, $log_output );
 		} catch ( Lengow_Exception $e ) {
 			$message = Lengow_Main::decode_log_message( $e->getMessage(), Lengow_Translation::DEFAULT_ISO_CODE );
 			$error   = Lengow_Main::set_log_message(
@@ -365,8 +368,8 @@ class Lengow_Connector {
 	 *
 	 */
 	public function connect( $force = false, $log_output = false ) {
-		$token      = Lengow_Configuration::get( 'lengow_authorization_token' );
-		$updated_at = Lengow_Configuration::get( 'lengow_last_authorization_token_update' );
+		$token      = Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN );
+		$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_AUTHORIZATION_TOKEN );
 		if ( ! $force
 		     && null !== $token
 		     && null !== $updated_at
@@ -376,8 +379,8 @@ class Lengow_Connector {
 			$authorization_token = $token;
 		} else {
 			$authorization_token = $this->_get_authorization_token( $log_output );
-			Lengow_Configuration::update_value( 'lengow_authorization_token', $authorization_token );
-			Lengow_Configuration::update_value( 'lengow_last_authorization_token_update', time() );
+			Lengow_Configuration::update_value( Lengow_Configuration::AUTHORIZATION_TOKEN, $authorization_token );
+			Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_AUTHORIZATION_TOKEN, time() );
 		}
 		$this->_token = $authorization_token;
 	}
@@ -466,7 +469,9 @@ class Lengow_Connector {
 	 */
 	private function _call( $api, $args, $type, $format, $body, $log_output ) {
 		try {
-			$this->connect( false, $log_output );
+			if ( ! in_array( $api, self::$api_without_authorizations, true ) ) {
+				$this->connect( false, $log_output );
+			}
 			$data = $this->_call_action( $api, $args, $type, $format, $body, $log_output );
 		} catch ( Lengow_Exception $e ) {
 			if ( in_array( $e->getCode(), $this->_authorization_codes, true ) ) {
@@ -475,7 +480,9 @@ class Lengow_Connector {
 					Lengow_Main::set_log_message( 'log.connector.retry_get_token' ),
 					$log_output
 				);
-				$this->connect( true, $log_output );
+				if ( ! in_array( $api, self::$api_without_authorizations, true ) ) {
+					$this->connect( true, $log_output );
+				}
 				$data = $this->_call_action( $api, $args, $type, $format, $body, $log_output );
 			} else {
 				throw new Lengow_Exception( $e->getMessage(), $e->getCode() );
@@ -534,7 +541,7 @@ class Lengow_Connector {
 				self::CODE_500
 			);
 		}
-		if ( 0 === strlen( $data['token'] ) ) {
+		if ( '' === $data['token'] ) {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message( 'log.connector.token_is_empty' ),
 				self::CODE_500
@@ -656,7 +663,7 @@ class Lengow_Connector {
 		if ( ! in_array( $http_code, $this->_success_codes, true ) ) {
 			$result = $this->_format( $result );
 			// recovery of Lengow Api errors.
-			if ( isset( $result['error'], $result['error']['message'] ) ) {
+			if ( isset( $result['error']['message'] ) ) {
 				throw new Lengow_Exception( $result['error']['message'], $http_code );
 			}
 			throw new Lengow_Exception( Lengow_Main::set_log_message( 'log.connector.api_not_available' ), $http_code );

@@ -117,11 +117,6 @@ class Lengow_Feed {
 	);
 
 	/**
-	 * @var string Lengow export folder.
-	 */
-	public static $lengow_export_folder = 'export';
-
-	/**
 	 * Construct a new Lengow feed.
 	 *
 	 * @param boolean $stream feed in file or not
@@ -146,7 +141,7 @@ class Lengow_Feed {
 	 */
 	private function _init_export_file() {
 		$sep                  = DIRECTORY_SEPARATOR;
-		$this->_export_folder = self::$lengow_export_folder;
+		$this->_export_folder = Lengow_Main::FOLDER_EXPORT;
 		$folder_path          = LENGOW_PLUGIN_PATH . $sep . $this->_export_folder;
 		if ( ! file_exists( $folder_path ) ) {
 			if ( ! mkdir( $folder_path ) ) {
@@ -374,31 +369,29 @@ class Lengow_Feed {
 		switch ( $format ) {
 			case self::FORMAT_CSV:
 				if ( $legacy ) {
-					return substr(
-						strtoupper(
+					return strtoupper(
+						substr(
 							preg_replace(
 								'/[^a-zA-Z0-9_]+/',
 								'',
 								str_replace( array( ' ', '\'' ), '_', Lengow_Main::replace_accented_chars( $str ) )
-							)
-						),
-						0,
-						58
-					);
-				} else {
-					return substr(
-						strtolower(
-							preg_replace(
-								'/[^a-zA-Z0-9_]+/',
-								'',
-								str_replace( array( ' ', '\'' ), '_', Lengow_Main::replace_accented_chars( $str ) )
-							)
-						),
-						0,
-						58
+							),
+							0,
+							58
+						)
 					);
 				}
-				break;
+				return strtolower(
+					substr(
+						preg_replace(
+							'/[^a-zA-Z0-9_]+/',
+							'',
+							str_replace( array( ' ', '\'' ), '_', Lengow_Main::replace_accented_chars( $str ) )
+						),
+						0,
+						58
+					)
+				);
 			default:
 				return strtolower(
 					preg_replace(

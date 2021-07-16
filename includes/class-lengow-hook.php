@@ -163,7 +163,7 @@ class Lengow_Hook {
 	public static function render_lengow_tracker() {
 		global $wp;
 
-		if ( is_checkout() && (bool) Lengow_Configuration::get( 'lengow_tracking_enabled' ) ) {
+		if ( is_checkout() && (bool) Lengow_Configuration::get( Lengow_Configuration::TRACKING_ENABLED ) ) {
 			if ( isset( $wp->query_vars['order-received'] ) ) {
 				$order_id = (int) $wp->query_vars['order-received'];
 				$order    = new WC_Order( $order_id );

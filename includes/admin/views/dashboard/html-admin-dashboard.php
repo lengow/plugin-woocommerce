@@ -16,10 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
         <div class="text-left lgw-col-6" id="alert-plugin-available">
 			<?php if ( $plugin_data && version_compare( LENGOW_VERSION, $plugin_data['version'], '<' ) ) : ?>
 				<?php echo $locale->t( 'menu.new_version_available', array( 'version' => $plugin_data['version'] ) ); ?>
-                <a href="//my.<?php echo Lengow_Connector::LENGOW_URL . $plugin_data['download_link']; ?>"
-                   target="_blank">
+                <button class="btn-link mod-inline js-upgrade-plugin-modal-open">
 					<?php echo $locale->t( 'menu.download_plugin' ); ?>
-                </a>
+                </button>
 			<?php endif; ?>
         </div>
         <div class="text-right lgw-col-6" id="alert-counter-trial">
@@ -86,7 +85,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             </a>
         </p>
         <p>
-            <a href="<?php echo $locale->t( 'help.screen.knowledge_link_url' ); ?>" target="_blank">
+            <a href="<?php echo $plugin_links[ Lengow_Sync::LINK_TYPE_HELP_CENTER ]; ?>" target="_blank">
 				<?php echo $locale->t( 'dashboard.screen.visit_help_center' ); ?></a>
 			<?php echo $locale->t( 'dashboard.screen.configure_plugin' ); ?>
         </p>

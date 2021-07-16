@@ -26,7 +26,7 @@ require 'views/header.php';
 ?>
 	<div class="container">
 		<h1><?php echo $locale->t( 'toolbox.checksum.checksum_integrity' ); ?></h1>
-		<?php echo $check->check_file_md5(); ?>
+		<?php echo $toolbox_element->check_file_md5(); ?>
 	</div>
 <?php
 require 'views/footer.php';

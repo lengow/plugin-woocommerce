@@ -34,21 +34,17 @@ class Lengow_Admin_Connection {
 	 * Display dashboard page.
 	 */
 	public static function display() {
-		$is_new_merchant = Lengow_Configuration::is_new_merchant();
-		if ( $is_new_merchant ) {
-			$locale = new Lengow_Translation();
-			include_once 'views/connection/html-admin-connection.php';
-		} else {
-			wp_redirect( admin_url( 'admin.php?page=lengow&tab=lengow_admin_dashboard' ) );
-		}
+		$locale = new Lengow_Translation();
+		include_once 'views/connection/html-admin-connection.php';
 	}
 
 	/**
 	 * Process Post Parameters.
 	 */
 	public static function post_process() {
-		$locale = new Lengow_Translation();
-		$action = isset( $_POST['do_action'] ) ? $_POST['do_action'] : false;
+		$locale       = new Lengow_Translation();
+		$plugin_links = Lengow_Sync::get_plugin_links( get_locale() );
+		$action       = isset( $_POST['do_action'] ) ? $_POST['do_action'] : false;
 		if ( $action ) {
 			switch ( $action ) {
 				case 'go_to_credentials':
@@ -107,9 +103,9 @@ class Lengow_Admin_Connection {
 		if ( $account_id ) {
 			$access_ids_saved = Lengow_Configuration::set_access_ids(
 				array(
-					'lengow_account_id'   => $account_id,
-					'lengow_access_token' => $access_token,
-					'lengow_secret_token' => $secret,
+					Lengow_Configuration::ACCOUNT_ID   => $account_id,
+					Lengow_Configuration::ACCESS_TOKEN => $access_token,
+					Lengow_Configuration::SECRET       => $secret,
 				)
 			);
 		}
@@ -198,7 +194,7 @@ class Lengow_Admin_Connection {
 			Lengow_Configuration::set_catalog_ids( $catalog_selected );
 			Lengow_Configuration::set_active_shop();
 			// save last update date for a specific setting (change synchronisation interval time).
-			Lengow_Configuration::update_value( 'lengow_last_setting_update', time() );
+			Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_SETTING, time() );
 			// link all catalogs selected by API.
 			$catalogs_linked = Lengow_Catalog::link_catalogs( $catalog_selected );
 			$message_key     = $catalogs_linked

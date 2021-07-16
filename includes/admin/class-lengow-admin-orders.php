@@ -40,7 +40,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	private $countries;
 
 	/**
-	 * @var array all order datas.
+	 * @var array all order data.
 	 */
 	private $data;
 
@@ -101,7 +101,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		$message             = array();
 		if ( 'import_all' === $action ) {
 			$import  = new Lengow_Import(
-				array( 'log_output' => false )
+				array( Lengow_Import::PARAM_LOG_OUTPUT => false )
 			);
 			$return  = $import->exec();
 			$message = $lengow_admin_orders->load_message( $return );
@@ -155,11 +155,11 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		$order_collection         = $lengow_admin_orders->assign_last_importation_infos();
 		$data['order_with_error'] = $locale->t(
 			'order.screen.order_with_error',
-			array( 'nb_order' => Lengow_Order::get_total_order_in_error() )
+			array( 'nb_order' => Lengow_Order::count_order_with_error() )
 		);
 		$data['order_to_be_sent'] = $locale->t(
 			'order.screen.order_to_be_sent',
-			array( 'nb_order' => Lengow_Order::get_total_order_by_status( Lengow_Order::STATE_WAITING_SHIPMENT ) )
+			array( 'nb_order' => Lengow_Order::count_order_to_be_sent() )
 		);
 		$data['message']          = join( '<br/>', $message );
 		$data['import_orders']    = $locale->t( 'order.screen.button_update_orders' );

@@ -8,11 +8,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 Lengow_Admin_Main_Settings::post_process();
 $keys      = Lengow_Configuration::get_keys();
 $values    = Lengow_Configuration::get_all_values();
-$logs      = Lengow_Log::get_paths();
-$list_file = $logs ? array_reverse( $logs ) : array();
+$list_file = Lengow_Log::get_paths();
 ?>
 <div class="lgw-container" id="lengow_mainsettings_wrapper" xmlns="http://www.w3.org/1999/html">
-	<?php if ( (bool) $values['lengow_debug_enabled'] ) : ?>
+	<?php if ( (bool) $values[ Lengow_Configuration::DEBUG_MODE_ENABLED ] ) : ?>
         <div id="lgw-debug" class="adminlengowmainsetting">
 			<?php echo $locale->t( 'menu.debug_active' ); ?>
         </div>
@@ -22,38 +21,41 @@ $list_file = $logs ? array_reverse( $logs ) : array();
         <div class="lgw-box">
             <h2><?php echo $locale->t( 'global_setting.screen.notification_alert_title' ); ?></h2>
             <div class="form-group">
-                <div class="lgw-switch <?php echo (bool) $values['lengow_report_mail_enabled'] ? 'checked' : ''; ?>">
+                <div class="lgw-switch <?php echo $values[ Lengow_Configuration::REPORT_MAIL_ENABLED ] ? 'checked' : ''; ?>">
                     <label>
                         <div>
                             <span></span>
                             <input type="hidden" name="lengow_report_mail_enabled" value="0">
                             <input name="lengow_report_mail_enabled"
                                    type="checkbox"
-								<?php echo (bool) $values['lengow_report_mail_enabled'] ? 'checked' : ''; ?> >
+								<?php echo $values[ Lengow_Configuration::REPORT_MAIL_ENABLED ] ? 'checked' : ''; ?> >
                         </div>
-						<?php echo $keys['lengow_report_mail_enabled']['label']; ?>
+						<?php echo $keys[ Lengow_Configuration::REPORT_MAIL_ENABLED ][ Lengow_Configuration::PARAM_LABEL ]; ?>
                     </label>
                 </div>
             </div>
             <div id="lengow_wrapper_report_mail_address"
-				<?php echo (bool) $values['lengow_report_mail_enabled'] ? '' : 'style="display:none;"'; ?>>
+				<?php echo $values['lengow_report_mail_enabled'] ? '' : 'hidden'; ?>>
                 <div class="form-group">
                     <input type="text" name="lengow_report_mail_address" class="form-control"
-                           placeholder="<?php echo $keys['lengow_report_mail_address']['placeholder']; ?>"
-                           value="<?php echo $values['lengow_report_mail_address']; ?>">
-                    <span class="legend blue-frame"
-                          style="display:block;"><?php echo $keys['lengow_report_mail_address']['legend']; ?></span>
+                           placeholder="<?php echo $keys[ Lengow_Configuration::REPORT_MAILS ][ Lengow_Configuration::PARAM_PLACEHOLDER ]; ?>"
+                           value="<?php echo $values[ Lengow_Configuration::REPORT_MAILS ]; ?>">
+                    <span class="legend blue-frame" style="display:block;">
+                        <?php echo $keys[ Lengow_Configuration::REPORT_MAILS ][ Lengow_Configuration::PARAM_LEGEND ]; ?>
+                    </span>
                 </div>
             </div>
         </div>
         <div class="lgw-box">
             <h2><?php echo $locale->t( 'global_setting.screen.export_title' ); ?></h2>
-            <label class="control-label"><?php echo $keys['lengow_product_types']['label']; ?></label>
+            <label class="control-label">
+				<?php echo $keys[ Lengow_Configuration::EXPORT_PRODUCT_TYPES ][ Lengow_Configuration::PARAM_LABEL ]; ?>
+            </label>
             <div class="form-group">
                 <select class="form-control js-multiple-select" name="lengow_product_types[]" multiple>
 					<?php foreach ( Lengow_Main::$product_types as $row => $value ) :
 						$selected = false;
-						foreach ( $values['lengow_product_types'] as $key => $type ) {
+						foreach ( $values[ Lengow_Configuration::EXPORT_PRODUCT_TYPES ] as $key => $type ) {
 							if ( $type === $row ) {
 								$selected = 'selected';
 								continue;
@@ -63,37 +65,42 @@ $list_file = $logs ? array_reverse( $logs ) : array();
                         <option value="<?php echo $row ?>" <?php echo $selected; ?>><?php echo $value; ?></option>
 					<?php endforeach; ?>
                 </select>
-                <span class="legend blue-frame"
-                      style="display:block;"><?php echo $keys['lengow_product_types']['legend']; ?></span>
+                <span class="legend blue-frame" style="display:block;">
+                    <?php echo $keys[ Lengow_Configuration::EXPORT_PRODUCT_TYPES ][ Lengow_Configuration::PARAM_LEGEND ]; ?>
+                </span>
             </div>
         </div>
         <div class="lgw-box">
             <h2><?php echo $locale->t( 'global_setting.screen.security_title' ); ?></h2>
             <div class="form-group">
-                <div class="lgw-switch <?php echo (bool) $values['lengow_ip_enabled'] ? 'checked' : ''; ?>">
+                <div class="lgw-switch <?php echo $values[ Lengow_Configuration::AUTHORIZED_IP_ENABLED ] ? 'checked' : ''; ?>">
                     <label>
                         <div>
                             <span></span>
                             <input type="hidden" name="lengow_ip_enabled" value="0">
                             <input name="lengow_ip_enabled"
                                    type="checkbox"
-								<?php echo (bool) $values['lengow_ip_enabled'] ? 'checked' : ''; ?>>
+								<?php echo $values[ Lengow_Configuration::AUTHORIZED_IP_ENABLED ] ? 'checked' : ''; ?>>
                         </div>
-						<?php echo $keys['lengow_ip_enabled']['label']; ?>
+						<?php echo $keys[ Lengow_Configuration::AUTHORIZED_IP_ENABLED ][ Lengow_Configuration::PARAM_LABEL ]; ?>
                     </label>
                 </div>
-                <span class="legend blue-frame"
-                      style="display:block;"><?php echo $keys['lengow_ip_enabled']['legend']; ?></span>
+                <span class="legend blue-frame" style="display:block;">
+                    <?php echo $keys[ Lengow_Configuration::AUTHORIZED_IP_ENABLED ][ Lengow_Configuration::PARAM_LEGEND ]; ?>
+                </span>
             </div>
             <div id="lengow_wrapper_authorized_ip"
-				<?php echo (bool) $values['lengow_ip_enabled'] ? '' : 'style="display:none;"'; ?>>
+				<?php echo $values[ Lengow_Configuration::AUTHORIZED_IP_ENABLED ] ? '' : 'hidden'; ?>>
                 <div class="grey-frame">
                     <div class="form-group">
-                        <label class="control-label"><?php echo $keys['lengow_authorized_ip']['label']; ?></label>
+                        <label class="control-label">
+							<?php echo $keys[ Lengow_Configuration::AUTHORIZED_IPS ][ Lengow_Configuration::PARAM_LABEL ]; ?>
+                        </label>
                         <input type="text" name="lengow_authorized_ip" class="form-control"
-                               value="<?php echo $values['lengow_authorized_ip']; ?>">
-                        <span class="legend blue-frame"
-                              style="display:block;"><?php echo $keys['lengow_authorized_ip']['legend']; ?></span>
+                               value="<?php echo $values[ Lengow_Configuration::AUTHORIZED_IPS ]; ?>">
+                        <span class="legend blue-frame" style="display:block;">
+                            <?php echo $keys[ Lengow_Configuration::AUTHORIZED_IPS ][ Lengow_Configuration::PARAM_LEGEND ]; ?>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -102,33 +109,37 @@ $list_file = $logs ? array_reverse( $logs ) : array();
             <h2><?php echo $locale->t( 'global_setting.screen.tracker_title' ); ?></h2>
             <p><?php echo $locale->t( 'global_setting.screen.tracker_description' ); ?></p>
             <div class="form-group">
-                <div class="lgw-switch <?php echo (bool) $values['lengow_tracking_enabled'] ? 'checked' : ''; ?>">
+                <div class="lgw-switch <?php echo $values[ Lengow_Configuration::TRACKING_ENABLED ] ? 'checked' : ''; ?>">
                     <label>
                         <div>
                             <span></span>
                             <input type="hidden" name="lengow_tracking_enabled" value="0">
                             <input name="lengow_tracking_enabled"
                                    type="checkbox"
-								<?php echo (bool) $values['lengow_tracking_enabled'] ? 'checked' : ''; ?>>
+								<?php echo $values[ Lengow_Configuration::TRACKING_ENABLED ] ? 'checked' : ''; ?>>
                         </div>
-						<?php echo $keys['lengow_tracking_enabled']['label']; ?>
+						<?php echo $keys[ Lengow_Configuration::TRACKING_ENABLED ][ Lengow_Configuration::PARAM_LABEL ]; ?>
                     </label>
                 </div>
             </div>
             <div id="lengow_wrapper_tracking_id"
-				<?php echo (bool) $values['lengow_tracking_enabled'] ? '' : 'style="display:none;"'; ?>>
+				<?php echo (bool) $values[ Lengow_Configuration::TRACKING_ENABLED ] ? '' : 'hidden'; ?>>
                 <div class="grey-frame">
                     <div class="form-group">
-                        <label class="control-label"><?php echo $keys['lengow_tracking_id']['label']; ?></label>
+                        <label class="control-label">
+							<?php echo $keys[ Lengow_Configuration::TRACKING_ID ][ Lengow_Configuration::PARAM_LABEL ]; ?>
+                        </label>
                         <select class="js-select lengow_select" name="lengow_tracking_id">
-		                    <?php foreach ( Lengow_Main::$tracker_choice_id as $id => $label ) : ?>
-                                <option value="<?php echo $id; ?>" <?php echo $values['lengow_tracking_id'] === $id ? 'selected' : ''; ?>>
+							<?php foreach ( Lengow_Main::$tracker_choice_id as $id => $label ) : ?>
+                                <option value="<?php echo $id; ?>"
+                                    <?php echo $values[ Lengow_Configuration::TRACKING_ID ] === $id ? 'selected' : ''; ?>>
 									<?php echo $label; ?>
                                 </option>
 							<?php endforeach; ?>
                         </select>
-                        <span class="legend blue-frame"
-                              style="display:block;"><?php echo $keys['lengow_tracking_id']['legend']; ?></span>
+                        <span class="legend blue-frame" style="display:block;">
+                            <?php echo $keys[ Lengow_Configuration::TRACKING_ID ][ Lengow_Configuration::PARAM_LEGEND ]; ?>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -137,30 +148,32 @@ $list_file = $logs ? array_reverse( $logs ) : array();
             <h2><?php echo $locale->t( 'global_setting.screen.shop_title' ); ?></h2>
             <p><?php echo $locale->t( 'global_setting.screen.shop_description' ); ?></p>
             <div class="form-group">
-                <div class="lgw-switch <?php echo (bool) $values['lengow_store_enabled'] ? 'checked' : ''; ?>">
+                <div class="lgw-switch <?php echo $values[ Lengow_Configuration::SHOP_ACTIVE ] ? 'checked' : ''; ?>">
                     <label>
                         <div>
                             <span></span>
                             <input type="hidden" name="lengow_store_enabled" value="0">
                             <input name="lengow_store_enabled"
                                    type="checkbox"
-						        <?php echo (bool) $values['lengow_store_enabled'] ? 'checked' : ''; ?>>
+								<?php echo $values[ Lengow_Configuration::SHOP_ACTIVE ] ? 'checked' : ''; ?>>
                         </div>
-				        <?php echo $keys['lengow_store_enabled']['label']; ?>
+						<?php echo $keys[ Lengow_Configuration::SHOP_ACTIVE ][ Lengow_Configuration::PARAM_LABEL ]; ?>
                     </label>
                 </div>
             </div>
             <div id="lengow_wrapper_catalog_id"
-		        <?php echo (bool) $values['lengow_store_enabled'] ? '' : 'style="display:none;"'; ?>>
+				<?php echo $values[ Lengow_Configuration::SHOP_ACTIVE ] ? '' : 'hidden'; ?>>
                 <div class="grey-frame">
                     <div class="form-group">
-                        <label class="control-label"><?php echo $keys['lengow_catalog_id']['label']; ?></label>
+                        <label class="control-label">
+                            <?php echo $keys[ Lengow_Configuration::CATALOG_IDS ][ Lengow_Configuration::PARAM_LABEL ]; ?>
+                        </label>
                         <input type="text"
                                name="lengow_catalog_id"
                                class="form-control"
-                               value="<?php echo $values['lengow_catalog_id']; ?>"/>
+                               value="<?php echo $values[ Lengow_Configuration::CATALOG_IDS ]; ?>"/>
                         <span class="legend blue-frame" style="display:block;">
-                            <?php echo $keys['lengow_catalog_id']['legend']; ?>
+                            <?php echo $keys[ Lengow_Configuration::CATALOG_IDS ][ Lengow_Configuration::PARAM_LEGEND ]; ?>
                         </span>
                     </div>
                 </div>
@@ -170,36 +183,42 @@ $list_file = $logs ? array_reverse( $logs ) : array();
             <h2 class="margin-s"><?php echo $locale->t( 'global_setting.screen.debug_mode_title' ); ?></h2>
             <p><?php echo $locale->t( 'global_setting.screen.debug_mode_description' ); ?></p>
             <div class="form-group">
-                <div class="lgw-switch <?php echo (bool) $values['lengow_debug_enabled'] ? 'checked' : ''; ?>">
+                <div class="lgw-switch <?php echo $values[ Lengow_Configuration::DEBUG_MODE_ENABLED ] ? 'checked' : ''; ?>">
                     <label>
                         <div>
                             <span></span>
                             <input type="hidden" name="lengow_debug_enabled" value="0">
                             <input name="lengow_debug_enabled"
                                    type="checkbox"
-                                <?php echo (bool) $values['lengow_debug_enabled'] ? 'checked' : ''; ?> />
+								<?php echo $values[ Lengow_Configuration::DEBUG_MODE_ENABLED ] ? 'checked' : ''; ?> />
                         </div>
-                        <?php echo $keys['lengow_debug_enabled']['label']; ?>
+						<?php echo $keys[ Lengow_Configuration::DEBUG_MODE_ENABLED ][ Lengow_Configuration::PARAM_LABEL ]; ?>
                     </label>
                 </div>
             </div>
             <div id="lengow_wrapper_debug"
-				<?php echo (bool) $values['lengow_debug_enabled'] ? '' : 'style="display:none;"'; ?>>
+				<?php echo (bool) $values[ Lengow_Configuration::DEBUG_MODE_ENABLED ] ? '' : 'hidden'; ?>>
                 <div class="grey-frame">
                     <div class="form-group">
-                        <label class="control-label"><?php echo $keys['lengow_account_id']['label']; ?></label>
+                        <label class="control-label">
+                            <?php echo $keys[ Lengow_Configuration::ACCOUNT_ID ][ Lengow_Configuration::PARAM_LABEL ]; ?>
+                        </label>
                         <input type="text" name="lengow_account_id" class="form-control"
-                               value="<?php echo $values['lengow_account_id']; ?>"/>
+                               value="<?php echo $values[ Lengow_Configuration::ACCOUNT_ID ]; ?>"/>
                     </div>
                     <div class="form-group">
-                        <label class="control-label"><?php echo $keys['lengow_access_token']['label']; ?></label>
+                        <label class="control-label">
+                            <?php echo $keys[ Lengow_Configuration::ACCESS_TOKEN ][ Lengow_Configuration::PARAM_LABEL ]; ?>
+                        </label>
                         <input type="text" name="lengow_access_token" class="form-control"
-                               value="<?php echo $values['lengow_access_token']; ?>">
+                               value="<?php echo $values[ Lengow_Configuration::ACCESS_TOKEN ]; ?>">
                     </div>
                     <div class="form-group">
-                        <label class="control-label"><?php echo $keys['lengow_secret_token']['label']; ?></label>
+                        <label class="control-label">
+                            <?php echo $keys[ Lengow_Configuration::SECRET ][ Lengow_Configuration::PARAM_LABEL ]; ?>
+                        </label>
                         <input type="text" name="lengow_secret_token" class="form-control"
-                               value="<?php echo $values['lengow_secret_token']; ?>">
+                               value="<?php echo $values[ Lengow_Configuration::SECRET ]; ?>">
                     </div>
                 </div>
             </div>
@@ -212,10 +231,8 @@ $list_file = $logs ? array_reverse( $logs ) : array();
 					<?php echo $locale->t( 'global_setting.screen.please_choose_log' ); ?>
                 </option>
 				<?php foreach ( $list_file as $file ) : ?>
-                    <option
-                            value="<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_settings' ); ?>&action=download&file=<?php echo $file['short_path']; ?>">
-						<?php $file_name = explode( '.', $file['name'] ); ?>
-						<?php echo date_format( date_create( $file_name[0] ), 'd F Y' ); ?></option>
+                    <option value="<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_settings' ); ?>&action=download&date=<?php echo $file[ Lengow_Log::LOG_DATE ]; ?>">
+						<?php echo date_format( date_create( $file[ Lengow_Log::LOG_DATE ] ), 'd F Y' ); ?></option>
 				<?php endforeach; ?>
 				<?php if ( ! empty( $list_file ) ) : ?>
                     <option

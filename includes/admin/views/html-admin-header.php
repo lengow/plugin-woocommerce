@@ -63,14 +63,13 @@ if ( isset( $_GET['tab'] ) ) {
             </div>
         </li>
 	<?php endif; ?>
-	<?php if ( $plugin_data && version_compare( LENGOW_VERSION, $plugin_data['version'], '<' ) ) : ?>
+	<?php if ( ! $plugin_is_up_to_date ) : ?>
         <li class="lengow_float_right" id="menupluginavailable">
             <div class="lgw-block">
 				<?php echo $locale->t( 'menu.new_version_available', array( 'version' => $plugin_data['version'] ) ); ?>
-                <a href="//my.<?php echo Lengow_Connector::LENGOW_URL . $plugin_data['download_link'] ?>"
-                   target="_blank">
+                <button class="btn-link mod-inline js-upgrade-plugin-modal-open">
 					<?php echo $locale->t( 'menu.download_plugin' ); ?>
-                </a>
+                </button>
             </div>
         </li>
 	<?php endif; ?>

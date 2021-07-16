@@ -400,7 +400,7 @@ class Lengow_Import_Order {
 					$this->_log_output,
 					$this->_marketplace_sku
 				);
-				if ( ! Lengow_Configuration::get( 'lengow_import_ship_mp_enabled' ) ) {
+				if ( ! Lengow_Configuration::get( Lengow_Configuration::SHIPPED_BY_MARKETPLACE_ENABLED ) ) {
 					Lengow_Order::update(
 						$this->_order_lengow_id,
 						array(
@@ -448,8 +448,8 @@ class Lengow_Import_Order {
 				$user = $this->_create_user( $user_email, $billing_address, $shipping_address );
 			}
 			// If the order is B2B, activate switch_product_tax_class_for_b2b hook
-			if ( (bool) Lengow_Configuration::get( 'lengow_import_b2b_without_tax' )
-			     && isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
+			if ( isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
+			     && (bool) Lengow_Configuration::get( Lengow_Configuration::B2B_WITHOUT_TAX_ENABLED )
 			) {
 				// add hook on tax calculation for b2b order
 				add_filter(
@@ -468,8 +468,8 @@ class Lengow_Import_Order {
 			// create a WooCommerce order.
 			$order = $this->_create_order( $user, $products, $billing_address, $shipping_address );
 			// remove hook after creating the order to avoid any change to other order
-			if ( (bool) Lengow_Configuration::get( 'lengow_import_b2b_without_tax' )
-			     && isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
+			if ( isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
+			     && (bool) Lengow_Configuration::get( Lengow_Configuration::B2B_WITHOUT_TAX_ENABLED )
 			) {
 				remove_filter(
 					'woocommerce_product_get_tax_class',
@@ -870,12 +870,12 @@ class Lengow_Import_Order {
 		foreach ( $this->_package_data->cart as $api_product ) {
 			$found          = false;
 			$order_line_id  = (string) $api_product->marketplace_order_line_id;
-			$product_datas  = Lengow_Product::extract_product_data_from_api( $api_product );
-			$api_product_id = null !== $product_datas['merchant_product_id']->id
-				? (string) $product_datas['merchant_product_id']->id
-				: (string) $product_datas['marketplace_product_id'];
-			if ( null !== $product_datas['marketplace_status'] ) {
-				$product_state = $this->_marketplace->get_state_lengow( (string) $product_datas['marketplace_status'] );
+			$product_data   = Lengow_Product::extract_product_data_from_api( $api_product );
+			$api_product_id = null !== $product_data['merchant_product_id']->id
+				? (string) $product_data['merchant_product_id']->id
+				: (string) $product_data['marketplace_product_id'];
+			if ( null !== $product_data['marketplace_status'] ) {
+				$product_state = $this->_marketplace->get_state_lengow( (string) $product_data['marketplace_status'] );
 				if ( in_array( $product_state, array( Lengow_Order::STATE_CANCELED, Lengow_Order::STATE_REFUSED ) ) ) {
 					Lengow_Main::log(
 						Lengow_Log::CODE_IMPORT,
@@ -892,7 +892,7 @@ class Lengow_Import_Order {
 					continue;
 				}
 			}
-			$product = Lengow_Product::match_product( $product_datas, $this->_marketplace_sku, $this->_log_output );
+			$product = Lengow_Product::match_product( $product_data, $this->_marketplace_sku, $this->_log_output );
 			if ( $product ) {
 				if ( Lengow_Main::compare_version( '3.0' ) ) {
 					$product_id   = $product->get_id();
@@ -902,16 +902,16 @@ class Lengow_Import_Order {
 					$product_name = $product->get_title();
 				}
 				if ( array_key_exists( $product_id, $products ) ) {
-					$products[ $product_id ]['quantity']         += (integer) $product_datas['quantity'];
-					$products[ $product_id ]['amount']           += (float) $product_datas['amount'];
+					$products[ $product_id ]['quantity']         += (integer) $product_data['quantity'];
+					$products[ $product_id ]['amount']           += (float) $product_data['amount'];
 					$products[ $product_id ]['order_line_ids'][] = $order_line_id;
 				} else {
 					$products[ $product_id ] = array(
 						'woocommerce_product' => $product,
 						'name'                => $product_name,
-						'amount'              => (float) $product_datas['amount'],
-						'price_unit'          => $product_datas['price_unit'],
-						'quantity'            => (int) $product_datas['quantity'],
+						'amount'              => (float) $product_data['amount'],
+						'price_unit'          => $product_data['price_unit'],
+						'quantity'            => (int) $product_data['quantity'],
 						'order_line_ids'      => array( $order_line_id ),
 					);
 				}
@@ -1118,7 +1118,9 @@ class Lengow_Import_Order {
 		$order->update_status( $order_state );
 		// don't reduce stock for re-import order and order shipped by marketplace.
 		if ( $this->_is_reimported
-		     || ( $this->_sent_marketplace && ! (bool) Lengow_Configuration::get( 'lengow_import_stock_ship_mp' ) )
+		     || ( $this->_sent_marketplace
+		          && ! (bool) Lengow_Configuration::get( Lengow_Configuration::SHIPPED_BY_MARKETPLACE_STOCK_ENABLED )
+		     )
 		) {
 			if ( $this->_is_reimported ) {
 				$logMessage = Lengow_Main::set_log_message( 'log.import.quantity_back_reimported_order' );
@@ -1213,8 +1215,8 @@ class Lengow_Import_Order {
 	private function _add_shipping_cost( $order_id, $customer, $products ) {
 		$wc_tax = new WC_Tax();
 		$no_tax = false;
-		if ( (bool) Lengow_Configuration::get( 'lengow_import_b2b_without_tax' )
-		     && isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
+		if ( isset( $this->_order_types[ Lengow_Order::TYPE_BUSINESS ] )
+		     && (bool) Lengow_Configuration::get( Lengow_Configuration::B2B_WITHOUT_TAX_ENABLED )
 		) {
 			// If order is B2B, add shipping cost without tax
 			$no_tax = true;
@@ -1231,7 +1233,7 @@ class Lengow_Import_Order {
 		// get default shipping method.
 		$wc_shipping             = new WC_Shipping();
 		$shipping_methods        = $wc_shipping->load_shipping_methods();
-		$default_shipping_method = Lengow_Configuration::get( 'lengow_import_default_shipping_method' );
+		$default_shipping_method = Lengow_Configuration::get( Lengow_Configuration::DEFAULT_IMPORT_CARRIER_ID );
 		$shipping_method         = array_key_exists( $default_shipping_method, $shipping_methods )
 			? $shipping_methods[ $default_shipping_method ]
 			: $shipping_method = current( $shipping_methods );
@@ -1384,9 +1386,9 @@ class Lengow_Import_Order {
 	private function _format_total( $number ) {
 		if ( Lengow_Main::compare_version( '2.1' ) ) {
 			return wc_format_decimal( $number );
-		} else {
-			return woocommerce_format_total( $number );
 		}
+
+		return woocommerce_format_total( $number );
 	}
 
 	/**
@@ -1400,9 +1402,9 @@ class Lengow_Import_Order {
 	private function _format_decimal( $number, $dp ) {
 		if ( Lengow_Main::compare_version( '2.1' ) ) {
 			return wc_format_decimal( $number, $dp );
-		} else {
-			return woocommerce_format_decimal( $number, $dp );
 		}
+
+		return woocommerce_format_decimal( $number, $dp );
 	}
 
 	/**
@@ -1418,9 +1420,9 @@ class Lengow_Import_Order {
 	private function _add_order_item( $order_id, $item ) {
 		if ( Lengow_Main::compare_version( '2.1' ) ) {
 			return wc_add_order_item( $order_id, $item );
-		} else {
-			return woocommerce_add_order_item( $order_id, $item );
 		}
+
+		return woocommerce_add_order_item( $order_id, $item );
 	}
 
 	/**
@@ -1437,8 +1439,8 @@ class Lengow_Import_Order {
 	private function _add_order_item_meta( $item_id, $meta_key, $meta_value ) {
 		if ( Lengow_Main::compare_version( '2.1' ) ) {
 			return wc_add_order_item_meta( $item_id, $meta_key, $meta_value );
-		} else {
-			return woocommerce_add_order_item_meta( $item_id, $meta_key, $meta_value );
 		}
+
+		return woocommerce_add_order_item_meta( $item_id, $meta_key, $meta_value );
 	}
 }

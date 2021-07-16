@@ -26,7 +26,7 @@
  * Plugin Name: Lengow for WooCommerce
  * Plugin URI: https://www.lengow.com/integrations/woocommerce/
  * Description: Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
- * Version: 2.4.0
+ * Version: 2.4.1
  * Author: Lengow
  * Author URI: https://www.lengow.com
  * Requires at least: 3.5
@@ -59,7 +59,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		/**
 		 * @var string current version of plugin.
 		 */
-		public $version = '2.4.0';
+		public $version = '2.4.1';
 
 		/**
 		 * @var string plugin name.
@@ -127,7 +127,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/class-lengow-action.php' );
 				include_once( 'includes/class-lengow-address.php' );
 				include_once( 'includes/class-lengow-catalog.php' );
-				include_once( 'includes/class-lengow-check.php' );
 				include_once( 'includes/class-lengow-configuration.php' );
 				include_once( 'includes/class-lengow-connector.php' );
 				include_once( 'includes/class-lengow-crud.php' );
@@ -146,6 +145,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/class-lengow-order-line.php' );
 				include_once( 'includes/class-lengow-product.php' );
 				include_once( 'includes/class-lengow-sync.php' );
+				include_once( 'includes/class-lengow-toolbox.php' );
+				include_once( 'includes/class-lengow-toolbox-element.php' );
 				include_once( 'includes/class-lengow-translation.php' );
 				include_once( 'includes/admin/class-lengow-admin.php' );
 				include_once( 'includes/admin/class-lengow-admin-connection.php' );
@@ -168,10 +169,12 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 */
 		public function init() {
 			if ( is_admin() ) {
+				// init controller actions.
+				add_action( 'admin_action_dashboard_get_process', array( 'Lengow_Admin_Dashboard', 'get_process' ) );
 				// init ajax actions.
 				add_action( 'wp_ajax_post_process_connection', array( 'Lengow_Admin_Connection', 'post_process' ) );
-				add_action( 'admin_action_dashboard_get_process', array( 'Lengow_Admin_Dashboard', 'get_process' ) );
-				add_action( 'wp_ajax_post_process', array( 'Lengow_Admin_Products', 'post_process' ) );
+				add_action( 'wp_ajax_post_process_dashboard', array( 'Lengow_Admin_Dashboard', 'post_process' ) );
+				add_action( 'wp_ajax_post_process_products', array( 'Lengow_Admin_Products', 'post_process' ) );
 				add_action( 'wp_ajax_post_process_orders', array( 'Lengow_Admin_Orders', 'post_process' ) );
 				add_action( 'wp_ajax_post_process_order_box', array( 'Lengow_Box_Order_Info', 'post_process' ) );
 				// order actions.
@@ -189,8 +192,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				}
 				switch ( $download ) {
 					case 'download':
-						$file = isset( $_GET['file'] ) ? $_GET['file'] : null;
-						Lengow_Log::download( $file );
+						$date = isset( $_GET[ Lengow_Log::LOG_DATE ] ) ? $_GET[ Lengow_Log::LOG_DATE ] : null;
+						Lengow_Log::download( $date );
 						break;
 					case 'download_all':
 						Lengow_Log::download();

@@ -24,9 +24,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="lgw-content-section">
         <p><?php echo $locale->t( 'connection.cms.credentials_description' ); ?></p>
         <p>
-	        <?php echo $locale->t( 'connection.cms.credentials_help' ); ?>
-            <a href="<?php echo $locale->t( 'connection.cms.credentials_help_center_url' ); ?>" target="_blank">
-	            <?php echo $locale->t( 'connection.cms.credentials_help_center' ); ?>
+			<?php echo $locale->t( 'connection.cms.credentials_help' ); ?>
+            <a href="<?php echo $plugin_links[ Lengow_Sync::LINK_TYPE_HELP_CENTER ]; ?>" target="_blank">
+				<?php echo $locale->t( 'connection.cms.credentials_help_center' ); ?>
             </a>
         </p>
     </div>
@@ -34,10 +34,10 @@ if ( ! defined( 'ABSPATH' ) ) {
         <button class="lgw-btn lgw-btn-progression lgw-btn-disabled js-connect-cms">
             <div class="btn-inner">
                 <div class="btn-step default">
-	                <?php echo $locale->t( 'connection.cms.credentials_button' ); ?>
+					<?php echo $locale->t( 'connection.cms.credentials_button' ); ?>
                 </div>
                 <div class="btn-step loading">
-	                <?php echo $locale->t( 'connection.cms.credentials_button_loading' ); ?>
+					<?php echo $locale->t( 'connection.cms.credentials_button_loading' ); ?>
                 </div>
             </div>
         </button>

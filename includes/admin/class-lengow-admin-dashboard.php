@@ -41,7 +41,8 @@ class Lengow_Admin_Dashboard {
 			include_once 'views/dashboard/html-admin-status.php';
 		} else {
 			$plugin_data         = Lengow_Sync::get_plugin_data();
-			$total_pending_order = Lengow_Order::get_total_order_by_status( 'waiting_shipment' );
+			$plugin_links        = Lengow_Sync::get_plugin_links( get_locale() );
+			$total_pending_order = Lengow_Order::count_order_to_be_sent();
 			include_once 'views/dashboard/html-admin-dashboard.php';
 		}
 	}
@@ -58,6 +59,28 @@ class Lengow_Admin_Dashboard {
 					wp_redirect( admin_url( 'admin.php?page=lengow&tab=lengow_admin_dashboard' ) );
 					break;
 			}
+			exit();
+		}
+	}
+
+	/**
+	 * Process Post Parameters.
+	 */
+	public static function post_process() {
+		$data   = array();
+		$action = isset( $_POST['do_action'] ) ? $_POST['do_action'] : false;
+		if ( $action ) {
+			switch ( $action ) {
+				case 'remind_me_later':
+					$timestamp = time() + ( 7 * 86400 );
+					Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_PLUGIN_MODAL, $timestamp );
+					$data['success'] = true;
+					break;
+				default:
+					$data['success'] = false;
+					break;
+			}
+			echo json_encode( $data );
 			exit();
 		}
 	}

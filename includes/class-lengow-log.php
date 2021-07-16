@@ -31,50 +31,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Lengow_Log {
 
-	/**
-	 * @var string install log code.
-	 */
+	/* Log category codes */
 	const CODE_INSTALL = 'Install';
-
-	/**
-	 * @var string connection log code
-	 */
 	const CODE_CONNECTION = 'Connection';
-
-	/**
-	 * @var string setting log code.
-	 */
 	const CODE_SETTING = 'Setting';
-
-	/**
-	 * @var string connector log code.
-	 */
 	const CODE_CONNECTOR = 'Connector';
-
-	/**
-	 * @var string export log code.
-	 */
 	const CODE_EXPORT = 'Export';
-
-	/**
-	 * @var string import log code.
-	 */
 	const CODE_IMPORT = 'Import';
-
-	/**
-	 * @var string action log code.
-	 */
 	const CODE_ACTION = 'Action';
-
-	/**
-	 * @var string mail report .
-	 */
 	const CODE_MAIL_REPORT = 'Mail Report';
 
-	/**
-	 * @var string name of logs folder.
-	 */
-	public static $lengow_log_folder = 'logs';
+	/* Log params for export */
+	const LOG_DATE = 'date';
+	const LOG_LINK = 'link';
 
 	/**
 	 * @var Lengow_File Lengow file instance.
@@ -92,7 +61,7 @@ class Lengow_Log {
 		if ( empty( $file_name ) ) {
 			$file_name = 'logs-' . date( 'Y-m-d' ) . '.txt';
 		}
-		$this->_file = new Lengow_File( self::$lengow_log_folder, $file_name );
+		$this->_file = new Lengow_File( Lengow_Main::FOLDER_LOG, $file_name );
 	}
 
 	/**
@@ -122,60 +91,72 @@ class Lengow_Log {
 	 * @return array
 	 */
 	public static function get_files() {
-		return Lengow_File::get_files_from_folder( self::$lengow_log_folder );
+		return Lengow_File::get_files_from_folder( Lengow_Main::FOLDER_LOG );
 	}
 
 	/**
 	 * Get log files path.
 	 *
-	 * @return array|false
+	 * @return array
 	 */
 	public static function get_paths() {
+		$logs  = array();
 		$files = self::get_files();
 		if ( empty( $files ) ) {
-			return false;
+			return $logs;
 		}
-		$logs = array();
 		foreach ( $files as $file ) {
-			preg_match(
-				'/\/lengow-woocommerce\/logs\/logs-([0-9]{4}-[0-9]{2}-[0-9]{2})\.txt/',
-				$file->get_path(),
-				$match
-			);
+			preg_match( '/^logs-([0-9]{4}-[0-9]{2}-[0-9]{2})\.txt$/', $file->file_name, $match );
+			$date   = $match[1];
 			$logs[] = array(
-				'full_path'  => $file->get_path(),
-				'short_path' => 'logs-' . $match[1] . '.txt',
-				'name'       => $match[1] . '.txt',
+				self::LOG_DATE => $date,
+				self::LOG_LINK => Lengow_Main::get_toolbox_url()
+				          . '&' . Lengow_Toolbox::PARAM_TOOLBOX_ACTION . '=' . Lengow_Toolbox::ACTION_LOG
+				          . '&' . Lengow_Toolbox::PARAM_DATE . '=' . urlencode( $date ),
 			);
 		}
 
-		return $logs;
+		return array_reverse( $logs );
 	}
 
 	/**
 	 * Download log file.
 	 *
-	 * @param string|null $file log file name
+	 * @param string|null $date date for a specific log file
 	 */
-	public static function download( $file = null ) {
-		if ( $file && preg_match( '/^logs-([0-9]{4}-[0-9]{2}-[0-9]{2})\.txt$/', $file, $match ) ) {
-			$filename = LENGOW_PLUGIN_PATH . '/' . self::$lengow_log_folder . '/' . $file;
-			$handle   = fopen( $filename, 'r' );
-			$contents = fread( $handle, filesize( $filename ) );
-			header( 'Content-type: text/plain' );
-			header( 'Content-Disposition: attachment; filename="' . $match[1] . '.txt"' );
-			echo $contents;
-			exit();
-		} else {
-			$files = self::get_paths();
-			header( 'Content-type: text/plain; charset=UTF-8' );
-			header( 'Content-Disposition: attachment; filename="logs.txt"' );
-			foreach ( $files as $file ) {
-				$handle   = fopen( $file['full_path'], 'r' );
-				$contents = fread( $handle, filesize( $file['full_path'] ) );
-				echo $contents;
+	public static function download( $date = null ) {
+		/** @var Lengow_File[] $log_files */
+		if ( $date && preg_match( '/^(\d{4}-\d{2}-\d{2})$/', $date, $match ) ) {
+			$log_files = false;
+			$file      = 'logs-' . $date . '.txt';
+			$file_name = $date . '.txt';
+			$sep       = DIRECTORY_SEPARATOR;
+			$file_path = LENGOW_PLUGIN_PATH . $sep . Lengow_Main::FOLDER_LOG . $sep . $file;
+			if ( file_exists( $file_path ) ) {
+				try {
+					$log_files = array( new Lengow_File( Lengow_Main::FOLDER_LOG, $file ) );
+				} catch ( Lengow_Exception $e ) {
+					$log_files = array();
+				}
 			}
-			exit();
+		} else {
+			$file_name = 'logs.txt';
+			$log_files = self::get_files();
 		}
+		$contents = '';
+		if ( $log_files ) {
+			foreach ( $log_files as $log_file ) {
+				$file_path = $log_file->get_path();
+				$handle    = fopen( $file_path, 'r' );
+				$file_size = filesize( $file_path );
+				if ( $file_size > 0 ) {
+					$contents .= fread( $handle, $file_size );
+				}
+			}
+		}
+		header( 'Content-type: text/plain' );
+		header( 'Content-Disposition: attachment; filename="' . $file_name . '"' );
+		echo $contents;
+		exit();
 	}
 }

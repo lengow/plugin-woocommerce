@@ -37,7 +37,7 @@
                 state = $(this).prop('checked'),
                 data = {
                     // action call php function
-                    action: 'post_process',
+                    action: 'post_process_products',
                     state: state ? 1 : 0,
                     do_action: action
                 };
@@ -72,7 +72,7 @@
                 state = $(this).prop('checked'),
                 id_product = $(this).attr('data-id_product'),
                 data = {
-                    action: 'post_process',
+                    action: 'post_process_products',
                     state: state ? 1 : 0,
                     do_action: action,
                     id_product: id_product
@@ -116,7 +116,7 @@
             });
 
             var data = {
-                action: 'post_process',
+                action: 'post_process_products',
                 do_action: do_action,
                 export_action: export_action,
                 select_all: check,
