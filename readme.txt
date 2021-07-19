@@ -45,6 +45,9 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 
 == Changelog ==
 
+= 2.4.2 - xxxx-xx-xx =
+
+
 = 2.4.1 - 2021-07-19 =
 * Feature: Outsourcing of the toolbox via webservice
 * Feature: Setting up a modal for the plugin update
