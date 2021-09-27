@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -34,7 +34,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 class Lengow_Admin_Products extends WP_List_Table {
 
 	/**
-	 * @var array all product datas.
+	 * @var array all product data.
 	 */
 	private $data;
 
@@ -205,7 +205,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 */
 	public function get_columns() {
 		// columns label on the top and bottom of the table.
-		$columns = array(
+		return array(
 			'cb'            => '<input type="checkbox" />',
 			'ID'            => $this->locale->t( 'product.table.id_product' ),
 			'image'         => $this->locale->t( 'product.table.image' ),
@@ -217,14 +217,12 @@ class Lengow_Admin_Products extends WP_List_Table {
 			'product_type'  => $this->locale->t( 'product.table.type' ),
 			'lengow'        => $this->locale->t( 'product.table.lengow_status' ),
 		);
-
-		return $columns;
 	}
 
 	/**
 	 * Define all columns for specific method.
 	 *
-	 * @param array $item product datas
+	 * @param array $item product data
 	 * @param string $column_name column name
 	 *
 	 * @return array
@@ -243,7 +241,6 @@ class Lengow_Admin_Products extends WP_List_Table {
 			case 'product_type':
 			case 'lengow':
 				return $item[ $column_name ];
-				break;
 			default:
 				break;
 		}
@@ -255,7 +252,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 * @return array
 	 */
 	public function get_sortable_columns() {
-		$sortable_columns = array(
+		return array(
 			// the second parameter in the value array takes care of a possible pre-ordered column.
 			// if the value is true the column is assumed to be ordered ascending.
 			// if the value is false the column is assumed descending or unordered.
@@ -269,14 +266,12 @@ class Lengow_Admin_Products extends WP_List_Table {
 			'product_type'  => array( 'product_type', false ),
 			'lengow'        => array( 'lengow', false ),
 		);
-
-		return $sortable_columns;
 	}
 
 	/**
 	 * Display checkbox.
 	 *
-	 * @param array $product product datas
+	 * @param array $product product data
 	 *
 	 * @return string
 	 */
@@ -291,7 +286,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	/**
 	 * Display product edit action.
 	 *
-	 * @param array $product product datas
+	 * @param array $product product data
 	 *
 	 * @return string
 	 */
@@ -310,7 +305,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	/**
 	 * Display lengow checkbox.
 	 *
-	 * @param array $product product datas
+	 * @param array $product product data
 	 *
 	 * @return string
 	 */
@@ -419,8 +414,8 @@ class Lengow_Admin_Products extends WP_List_Table {
 	/**
 	 * Sort products (default by asc ID).
 	 *
-	 * @param array $a product datas
-	 * @param array $b product datas
+	 * @param array $a product data
+	 * @param array $b product data
 	 *
 	 * @return string
 	 */
@@ -444,12 +439,11 @@ class Lengow_Admin_Products extends WP_List_Table {
 	private static function _count_products() {
 		global $wpdb;
 
-		$query  = 'SELECT count(ID) FROM ' . $wpdb->posts . ' WHERE post_type = %s';
-		$result = $wpdb->get_var(
+		$query = 'SELECT count(ID) FROM ' . $wpdb->posts . ' WHERE post_type = %s';
+
+		return $wpdb->get_var(
 			$wpdb->prepare( $query, array( 'product' ) )
 		);
-
-		return $result;
 	}
 
 	/**
@@ -459,12 +453,11 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 */
 	private static function _reload_total() {
 		$lengow_export = new Lengow_Export( null );
-		$result        = array(
+
+		return array(
 			'total_export_product' => $lengow_export->get_total_export_product(),
 			'total_product'        => $lengow_export->get_total_product(),
 		);
-
-		return $result;
 	}
 
 	/**
@@ -509,12 +502,11 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 * @return string
 	 */
 	private function _display_price( $post ) {
-		$price               = get_post_meta( $post->ID, '_price', true );
-		$price_with_currency = Lengow_Main::compare_version( '2.1.0', '<' )
+		$price = get_post_meta( $post->ID, '_price', true );
+
+		return Lengow_Main::compare_version( '2.1.0', '<' )
 			? $price . get_woocommerce_currency_symbol()
 			: wc_price( $price );
-
-		return $price_with_currency;
 	}
 
 	/**
@@ -544,8 +536,8 @@ class Lengow_Admin_Products extends WP_List_Table {
 
 		if ( $sub_product_type ) {
 			return ucfirst( $product_type ) . $sub_product_type;
-		} else {
-			return ucfirst( $product_type );
 		}
+
+		return ucfirst( $product_type );
 	}
 }

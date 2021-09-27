@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -31,24 +31,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Lengow_Address {
 
-	/**
-	 * @var string code ISO A2 for Spain.
-	 */
+	/* Country iso codes */
 	const ISO_A2_ES = 'ES';
-
-	/**
-	 * @var string code ISO A2 for Italy.
-	 */
 	const ISO_A2_IT = 'IT';
 
-	/**
-	 * @var string address type billing.
-	 */
+	/* Address types */
 	const TYPE_BILLING = 'billing_';
-
-	/**
-	 * @var string address type shipping.
-	 */
 	const TYPE_SHIPPING = 'shipping_';
 
 	/**
@@ -512,15 +500,11 @@ class Lengow_Address {
 			'lastname'  => trim( $address_data['last_name'] ),
 			'fullname'  => $this->_clean_full_name( $address_data['full_name'] ),
 		);
-		if ( empty( $names['firstname'] ) ) {
-			if ( ! empty( $names['lastname'] ) ) {
-				$names = $this->_split_names( $names['lastname'] );
-			}
+		if ( empty( $names['firstname'] ) && ! empty( $names['lastname'] ) ) {
+			$names = $this->_split_names( $names['lastname'] );
 		}
-		if ( empty( $names['lastname'] ) ) {
-			if ( ! empty( $names['firstname'] ) ) {
-				$names = $this->_split_names( $names['firstname'] );
-			}
+		if ( empty( $names['lastname'] ) && ! empty( $names['firstname'] ) ) {
+			$names = $this->_split_names( $names['firstname'] );
 		}
 		// check full name if last_name and first_name are empty.
 		if ( empty( $names['lastname'] ) && empty( $names['firstname'] ) ) {
@@ -546,10 +530,11 @@ class Lengow_Address {
 	private function _clean_full_name( $fullname ) {
 		$split = explode( ' ', $fullname );
 		if ( $split && ! empty( $split ) ) {
-			$fullname = ( in_array( $split[0], $this->_current_male ) || in_array( $split[0], $this->_current_female ) )
-				? ''
-				: $split[0];
-			for ( $i = 1; $i < count( $split ); $i ++ ) {
+			$fullname    = ( in_array( $split[0], $this->_current_male, true )
+			                 || in_array( $split[0], $this->_current_female, true )
+			) ? '' : $split[0];
+			$count_split = count( $split );
+			for ( $i = 1; $i < $count_split; $i ++ ) {
 				if ( ! empty( $fullname ) ) {
 					$fullname .= ' ';
 				}
@@ -572,7 +557,8 @@ class Lengow_Address {
 		if ( $split && ! empty( $split ) ) {
 			$names['firstname'] = $split[0];
 			$names['lastname']  = '';
-			for ( $i = 1; $i < count( $split ); $i ++ ) {
+			$count_split        = count( $split );
+			for ( $i = 1; $i < $count_split; $i ++ ) {
 				if ( ! empty( $names['lastname'] ) ) {
 					$names['lastname'] .= ' ';
 				}
@@ -632,7 +618,7 @@ class Lengow_Address {
 	private function _get_state( $address_data ) {
 		$state          = false;
 		$country_iso_a2 = $address_data['common_country_iso_a2'];
-		if ( in_array( $country_iso_a2, array( self::ISO_A2_ES, self::ISO_A2_IT ) ) ) {
+		if ( in_array( $country_iso_a2, array( self::ISO_A2_ES, self::ISO_A2_IT ), true ) ) {
 			$state = $this->_search_state_by_postcode( $country_iso_a2, $address_data['zipcode'] );
 		} elseif ( ! empty( $address_data['state_region'] ) ) {
 			$state = $this->_search_state_by_state_region( $country_iso_a2, $address_data['state_region'] );
@@ -744,9 +730,8 @@ class Lengow_Address {
 	private function _clean_string( $string ) {
 		$cleanFilters = array( ' ', '-', '_', '.' );
 		$string       = strtolower( str_replace( $cleanFilters, '', trim( $string ) ) );
-		$string       = Lengow_Main::replace_accented_chars( html_entity_decode( $string ) );
 
-		return $string;
+		return Lengow_Main::replace_accented_chars( html_entity_decode( $string ) );
 	}
 
 	/**

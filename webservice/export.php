@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -42,7 +42,7 @@
 @set_time_limit( 0 );
 @ini_set( 'memory_limit', '512M' );
 
-// init wordpress.
+// init WordPress.
 require( dirname( dirname( dirname( dirname( dirname( $_SERVER['SCRIPT_FILENAME'] ) ) ) ) ) . '/wp-load.php' );
 
 // dependencies.

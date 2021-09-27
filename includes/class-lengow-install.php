@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -81,9 +81,9 @@ class Lengow_Install {
 			Lengow_Main::set_log_message( 'log.install.install_start', array( 'version' => LENGOW_VERSION ) )
 		);
 		$old_version = Lengow_Configuration::get( 'lengow_version' );
-		$old_version = $old_version ? $old_version : false;
+		$old_version = $old_version ?: false;
 		$old_version = LENGOW_VERSION === $old_version ? false : $old_version;
-		Lengow_Install::update( $old_version );
+		self::update( $old_version );
 		Lengow_Main::log(
 			Lengow_Log::CODE_INSTALL,
 			Lengow_Main::set_log_message( 'log.install.install_end', array( 'version' => LENGOW_VERSION ) )
@@ -152,7 +152,7 @@ class Lengow_Install {
 	public static function create_lengow_tables() {
 		global $wpdb;
 		// create table lengow_product.
-		$name = Lengow_Crud::LENGOW_PRODUCT;
+		$name = Lengow_Product::TABLE_PRODUCT;
 		if ( ! self::check_table_exists( $name ) ) {
 			$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . $name . ' (
 				`id` INTEGER(11) NOT NULL AUTO_INCREMENT,
@@ -173,7 +173,7 @@ class Lengow_Install {
 		}
 
 		// create table lengow_orders.
-		$name = Lengow_Crud::LENGOW_ORDER;
+		$name = Lengow_Order::TABLE_ORDER;
 		if ( ! self::check_table_exists( $name ) ) {
 			$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . $name . ' (
 				`id` INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -225,7 +225,7 @@ class Lengow_Install {
 		}
 
 		// create table lengow_order_line.
-		$name = Lengow_Crud::LENGOW_ORDER_LINE;
+		$name = Lengow_Order_Line::TABLE_ORDER_LINE;
 		if ( ! self::check_table_exists( $name ) ) {
 			$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . $name . ' (
 				`id` INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -248,7 +248,7 @@ class Lengow_Install {
 		}
 
 		// create table lengow_order_error.
-		$name = Lengow_Crud::LENGOW_ORDER_ERROR;
+		$name = Lengow_Order_Error::TABLE_ORDER_ERROR;
 		if ( ! self::check_table_exists( $name ) ) {
 			$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . $name . ' (
 				`id` INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -275,7 +275,7 @@ class Lengow_Install {
 		}
 
 		// create table lengow_action.
-		$name = Lengow_Crud::LENGOW_ACTION;
+		$name = Lengow_Action::TABLE_ACTION;
 		if ( ! self::check_table_exists( $name ) ) {
 			$sql = 'CREATE TABLE IF NOT EXISTS ' . $wpdb->prefix . $name . ' (
 				`id` INTEGER(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -322,9 +322,8 @@ class Lengow_Install {
 	 */
 	public static function check_table_exists( $table ) {
 		global $wpdb;
-		$exist = (bool) $wpdb->get_var( 'SHOW TABLES LIKE \'' . $wpdb->prefix . $table . '\'' );
 
-		return $exist;
+		return (bool) $wpdb->get_var( 'SHOW TABLES LIKE \'' . $wpdb->prefix . $table . '\'' );
 	}
 
 	/**
@@ -339,7 +338,7 @@ class Lengow_Install {
 		global $wpdb;
 		$result = $wpdb->get_results( 'SHOW COLUMNS FROM ' . $wpdb->prefix . $table . ' LIKE \'' . $field . '\'' );
 
-		return ! empty( $result ) ? true : false;
+		return ! empty( $result );
 	}
 
 	/**
@@ -369,7 +368,7 @@ class Lengow_Install {
 			'SHOW INDEXES FROM ' . $wpdb->prefix . $table . ' WHERE `Key_name` = \'' . $index . '\''
 		);
 
-		return ! empty( $result ) ? true : false;
+		return ! empty( $result );
 	}
 
 	/**

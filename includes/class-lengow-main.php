@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -43,6 +43,11 @@ class Lengow_Main {
 	const WEBSERVICE_EXPORT = 'export.php';
 	const WEBSERVICE_CRON = 'cron.php';
 	const WEBSERVICE_TOOLBOX = 'toolbox.php';
+
+	/* Date formats */
+	const DATE_FULL = 'Y-m-d H:i:s';
+	const DATE_DAY = 'Y-m-d';
+	const DATE_ISO_8601 = 'c';
 
 	/**
 	 * @var integer life of log files in days.
@@ -300,9 +305,9 @@ class Lengow_Main {
 	 */
 	public static function clean_log() {
 		$days   = array();
-		$days[] = 'logs-' . date( 'Y-m-d' ) . '.txt';
+		$days[] = 'logs-' . date( self::DATE_DAY ) . '.txt';
 		for ( $i = 1; $i < self::LOG_LIFE; $i ++ ) {
-			$days[] = 'logs-' . date( 'Y-m-d', strtotime( '-' . $i . 'day' ) ) . '.txt';
+			$days[] = 'logs-' . date( self::DATE_DAY, strtotime( '-' . $i . 'day' ) ) . '.txt';
 		}
 		/** @var Lengow_File[] $log_files */
 		$log_files = Lengow_Log::get_files();
@@ -419,7 +424,7 @@ class Lengow_Main {
 			$format = 'l d F Y @ H:i';
 		}
 
-		return get_date_from_gmt( date( 'Y-m-d H:i:s', $timestamp ), $format );
+		return get_date_from_gmt( date( self::DATE_FULL, $timestamp ), $format );
 	}
 
 	/**
@@ -845,7 +850,7 @@ class Lengow_Main {
 					? self::decode_log_message( $order_error->message )
 					: $support;
 				$mail_body .= '<li>' . $order . ' - ' . $message . '</li>';
-				Lengow_Order_Error::update( (int) $order_error->id, array( 'mail' => 1 ) );
+				Lengow_Order_Error::update( (int) $order_error->id, array( Lengow_Order_Error::FIELD_MAIL => 1 ) );
 				unset( $order, $message );
 			}
 			$mail_body .= '</ul></p>';

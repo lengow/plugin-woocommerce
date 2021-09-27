@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -32,13 +32,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Order_Error {
 
 	/**
-	 * @var integer order error type import.
+	 * @var string Lengow order error table name
 	 */
-	const ERROR_TYPE_IMPORT = 1;
+	const TABLE_ORDER_ERROR = 'lengow_order_error';
 
-	/**
-	 * @var integer order error type send.
-	 */
+	/* Order error fields */
+	const FIELD_ID = 'id';
+	const FIELD_ORDER_LENGOW_ID = 'order_lengow_id';
+	const FIELD_TYPE = 'type';
+	const FIELD_MESSAGE = 'message';
+	const FIELD_IS_FINISHED = 'is_finished';
+	const FIELD_MAIL = 'mail';
+	const FIELD_CREATED_AT = 'created_at';
+	const FIELD_UPDATED_AT = 'updated_at';
+
+	/* Order error types */
+	const ERROR_TYPE_IMPORT = 1;
 	const ERROR_TYPE_SEND = 2;
 
 	/**
@@ -51,7 +60,7 @@ class Lengow_Order_Error {
 	 *
 	 */
 	public static function get( $where = array(), $single = true ) {
-		return Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER_ERROR, $where, $single );
+		return Lengow_Crud::read( self::TABLE_ORDER_ERROR, $where, $single );
 	}
 
 	/**
@@ -63,12 +72,12 @@ class Lengow_Order_Error {
 	 *
 	 */
 	public static function create( $data = array() ) {
-		$data['created_at'] = date( 'Y-m-d H:i:s' );
-		if ( ! isset( $data['type'] ) ) {
-			$data['type'] = self::ERROR_TYPE_IMPORT;
+		$data[ self::FIELD_CREATED_AT ] = date( Lengow_Main::DATE_FULL );
+		if ( ! isset( $data[ self::FIELD_TYPE ] ) ) {
+			$data[ self::FIELD_TYPE ] = self::ERROR_TYPE_IMPORT;
 		}
 
-		return Lengow_Crud::create( Lengow_Crud::LENGOW_ORDER_ERROR, $data );
+		return Lengow_Crud::create( self::TABLE_ORDER_ERROR, $data );
 	}
 
 	/**
@@ -81,9 +90,9 @@ class Lengow_Order_Error {
 	 *
 	 */
 	public static function update( $order_error_id, $data = array() ) {
-		$data['updated_at'] = date( 'Y-m-d H:i:s' );
+		$data[ self::FIELD_UPDATED_AT ] = date( Lengow_Main::DATE_FULL );
 
-		return Lengow_Crud::update( Lengow_Crud::LENGOW_ORDER_ERROR, $data, array( 'id' => $order_error_id ) );
+		return Lengow_Crud::update( self::TABLE_ORDER_ERROR, $data, array( self::FIELD_ID => $order_error_id ) );
 	}
 
 	/**
@@ -101,8 +110,8 @@ class Lengow_Order_Error {
 		$order_error_type = null === $type ? self::ERROR_TYPE_IMPORT : $type;
 		$query            = '
 			SELECT loe.message, loe.created_at
-			FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER_ERROR . ' loe
-            LEFT JOIN ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . ' lo ON loe.order_lengow_id = lo.id
+			FROM ' . $wpdb->prefix . self::TABLE_ORDER_ERROR . ' loe
+            LEFT JOIN ' . $wpdb->prefix . Lengow_Order::TABLE_ORDER . ' lo ON loe.order_lengow_id = lo.id
             WHERE lo.marketplace_sku = %s
             AND lo.delivery_address_id = %d
             AND lo.is_in_error = %d
@@ -128,8 +137,8 @@ class Lengow_Order_Error {
 		global $wpdb;
 		$query   = '
 			SELECT lo.marketplace_sku, loe.message, loe.id
-			FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER_ERROR . ' loe
-            LEFT JOIN ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . ' lo ON loe.order_lengow_id = lo.id
+			FROM ' . $wpdb->prefix . self::TABLE_ORDER_ERROR . ' loe
+            LEFT JOIN ' . $wpdb->prefix . Lengow_Order::TABLE_ORDER . ' lo ON loe.order_lengow_id = lo.id
             WHERE loe.is_finished = %d
             AND loe.mail = %d
         ';
@@ -137,7 +146,7 @@ class Lengow_Order_Error {
 			$wpdb->prepare( $query, array( 0, 0 ) )
 		);
 
-		return $results ? $results : false;
+		return $results ?: false;
 	}
 
 	/**
@@ -149,20 +158,20 @@ class Lengow_Order_Error {
 	 * @return boolean
 	 */
 	public static function finish_order_errors( $order_lengow_id, $type = null ) {
-		$where = array( 'order_lengow_id' => $order_lengow_id );
+		$where = array( self::FIELD_ORDER_LENGOW_ID => $order_lengow_id );
 		if ( null !== $type ) {
-			$where['type'] = $type;
+			$where[ self::FIELD_TYPE ] = $type;
 		}
 		$order_errors   = self::get( $where, false );
 		$update_success = 0;
 		foreach ( $order_errors as $order_error ) {
-			$result = self::update( $order_error->id, array( 'is_finished' => 1 ) );
+			$result = self::update( $order_error->id, array( self::FIELD_IS_FINISHED => 1 ) );
 			if ( $result ) {
 				$update_success ++;
 			}
 		}
 
-		return $update_success === count( $order_errors ) ? true : false;
+		return $update_success === count( $order_errors );
 	}
 
 	/**
@@ -175,15 +184,14 @@ class Lengow_Order_Error {
 	 * @return array|false
 	 */
 	public static function get_order_errors( $order_lengow_id, $type = null, $finished = null ) {
-		$where = array( 'order_lengow_id' => $order_lengow_id );
+		$where = array( self::FIELD_ORDER_LENGOW_ID => $order_lengow_id );
 		if ( null !== $type ) {
-			$where['type'] = $type;
+			$where[ self::FIELD_TYPE ] = $type;
 		}
 		if ( null !== $finished ) {
-			$where['is_finished'] = (int) $finished;
+			$where[ self::FIELD_IS_FINISHED ] = (int) $finished;
 		}
-		$results = self::get( $where, false );
 
-		return $results;
+		return self::get( $where, false );
 	}
 }

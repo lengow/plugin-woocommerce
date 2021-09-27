@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -31,30 +31,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Lengow_Crud {
 
-	/**
-	 * @var string Lengow action table name.
-	 */
-	const LENGOW_ACTION = 'lengow_action';
+	/* Field database actions */
+	const FIELD_REQUIRED = 'required';
+	const FIELD_CAN_BE_UPDATED = 'updated';
+	const FIELD_FORMAT = 'format';
 
-	/**
-	 * @var string Lengow product table name.
-	 */
-	const LENGOW_PRODUCT = 'lengow_product';
-
-	/**
-	 * @var string Lengow order table name.
-	 */
-	const LENGOW_ORDER = 'lengow_orders';
-
-	/**
-	 * @var string Lengow order line table name.
-	 */
-	const LENGOW_ORDER_LINE = 'lengow_order_line';
-
-	/**
-	 * @var string Lengow order error table name.
-	 */
-	const LENGOW_ORDER_ERROR = 'lengow_order_error';
+	/* Field format types */
+	const FORMAT_STRING = '%s';
+	const FORMAT_INTEGER = '%d';
+	const FORMAT_FLOAT = '%f';
 
 	/**
 	 * @var array $field_list field list.
@@ -63,69 +48,285 @@ class Lengow_Crud {
 	 * format   => Format required in database (%s => string, %d => integer or %f => float)
 	 */
 	public static $lengow_tables = array(
-		'lengow_action'      => array(
-			'id'             => array( 'required' => false, 'updated' => false, 'format' => '%d' ),
-			'order_id'       => array( 'required' => true, 'updated' => false, 'format' => '%d' ),
-			'action_id'      => array( 'required' => true, 'updated' => false, 'format' => '%d' ),
-			'order_line_sku' => array( 'required' => false, 'updated' => false, 'format' => '%s' ),
-			'action_type'    => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
-			'retry'          => array( 'required' => false, 'updated' => true, 'format' => '%d' ),
-			'parameters'     => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
-			'state'          => array( 'required' => false, 'updated' => true, 'format' => '%d' ),
-			'created_at'     => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
-			'updated_at'     => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
+		Lengow_Action::TABLE_ACTION           => array(
+			Lengow_Action::FIELD_ID             => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Action::FIELD_ORDER_ID       => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Action::FIELD_ACTION_ID      => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Action::FIELD_ORDER_LINE_SKU => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Action::FIELD_ACTION_TYPE    => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Action::FIELD_RETRY          => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Action::FIELD_PARAMETERS     => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Action::FIELD_STATE          => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Action::FIELD_CREATED_AT     => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Action::FIELD_UPDATED_AT     => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
 		),
-		'lengow_product'     => array(
-			'id'         => array( 'required' => false, 'updated' => false, 'format' => '%d' ),
-			'product_id' => array( 'required' => true, 'updated' => true, 'format' => '%d' ),
+		Lengow_Product::TABLE_PRODUCT         => array(
+			Lengow_Product::FIELD_ID         => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Product::FIELD_PRODUCT_ID => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
 		),
-		'lengow_orders'      => array(
-			'id'                   => array( 'required' => false, 'updated' => false, 'format' => '%d' ),
-			'order_id'             => array( 'required' => false, 'updated' => true, 'format' => '%d' ),
-			'feed_id'              => array( 'required' => false, 'updated' => true, 'format' => '%d' ),
-			'delivery_address_id'  => array( 'required' => true, 'updated' => false, 'format' => '%d' ),
-			'delivery_country_iso' => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
-			'marketplace_sku'      => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
-			'marketplace_name'     => array( 'required' => true, 'updated' => true, 'format' => '%s' ),
-			'marketplace_label'    => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
-			'order_lengow_state'   => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
-			'order_process_state'  => array( 'required' => false, 'updated' => true, 'format' => '%d' ),
-			'order_date'           => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
-			'order_item'           => array( 'required' => false, 'updated' => true, 'format' => '%d' ),
-			'order_types'          => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
-			'currency'             => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
-			'total_paid'           => array( 'required' => false, 'updated' => true, 'format' => '%f' ),
-			'commission'           => array( 'required' => false, 'updated' => true, 'format' => '%f' ),
-			'customer_name'        => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
-			'customer_email'       => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
-            'customer_vat_number'  => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
-			'carrier'              => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
-			'carrier_method'       => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
-			'carrier_tracking'     => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
-			'carrier_id_relay'     => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
-			'sent_marketplace'     => array( 'required' => false, 'updated' => true, 'format' => '%d' ),
-			'is_in_error'          => array( 'required' => false, 'updated' => true, 'format' => '%d' ),
-			'is_reimported'        => array( 'required' => false, 'updated' => true, 'format' => '%d' ),
-			'message'              => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
-			'created_at'           => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
-			'updated_at'           => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
-			'extra'                => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
+		Lengow_Order::TABLE_ORDER             => array(
+			Lengow_Order::FIELD_ID                   => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Order::FIELD_ORDER_ID             => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Order::FIELD_FEED_ID              => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Order::FIELD_DELIVERY_ADDRESS_ID  => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Order::FIELD_DELIVERY_COUNTRY_ISO => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_MARKETPLACE_SKU      => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_MARKETPLACE_NAME     => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_MARKETPLACE_LABEL    => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_ORDER_LENGOW_STATE   => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_ORDER_PROCESS_STATE  => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Order::FIELD_ORDER_DATE           => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_ORDER_ITEM           => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Order::FIELD_ORDER_TYPES          => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_CURRENCY             => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_TOTAL_PAID           => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_FLOAT,
+			),
+			Lengow_Order::FIELD_COMMISSION           => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_FLOAT,
+			),
+			Lengow_Order::FIELD_CUSTOMER_NAME        => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_CUSTOMER_EMAIL       => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_CUSTOMER_VAT_NUMBER  => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_CARRIER              => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_CARRIER_METHOD       => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_CARRIER_TRACKING     => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_CARRIER_RELAY_ID     => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_SENT_MARKETPLACE     => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Order::FIELD_IS_IN_ERROR          => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Order::FIELD_IS_REIMPORTED        => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Order::FIELD_MESSAGE              => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_CREATED_AT           => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_UPDATED_AT           => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order::FIELD_EXTRA                => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
 		),
-		'lengow_order_line'  => array(
-			'id'            => array( 'required' => false, 'updated' => false, 'format' => '%d' ),
-			'order_id'      => array( 'required' => true, 'updated' => false, 'format' => '%d' ),
-			'order_line_id' => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
-			'product_id'    => array( 'required' => true, 'updated' => false, 'format' => '%d' ),
+		Lengow_Order_Line::TABLE_ORDER_LINE   => array(
+			Lengow_Order_Line::FIELD_ID            => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Order_Line::FIELD_ORDER_ID      => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Order_Line::FIELD_ORDER_LINE_ID => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order_Line::FIELD_PRODUCT_ID    => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
 		),
-		'lengow_order_error' => array(
-			'id'              => array( 'required' => false, 'updated' => false, 'format' => '%d' ),
-			'order_lengow_id' => array( 'required' => true, 'updated' => false, 'format' => '%d' ),
-			'message'         => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
-			'type'            => array( 'required' => true, 'updated' => false, 'format' => '%d' ),
-			'is_finished'     => array( 'required' => false, 'updated' => true, 'format' => '%d' ),
-			'mail'            => array( 'required' => false, 'updated' => true, 'format' => '%d' ),
-			'created_at'      => array( 'required' => true, 'updated' => false, 'format' => '%s' ),
-			'updated_at'      => array( 'required' => false, 'updated' => true, 'format' => '%s' ),
+		Lengow_Order_Error::TABLE_ORDER_ERROR => array(
+			Lengow_Order_Error::FIELD_ID              => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Order_Error::FIELD_ORDER_LENGOW_ID => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Order_Error::FIELD_MESSAGE         => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order_Error::FIELD_TYPE            => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Order_Error::FIELD_IS_FINISHED     => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Order_Error::FIELD_MAIL            => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_INTEGER,
+			),
+			Lengow_Order_Error::FIELD_CREATED_AT      => array(
+				self::FIELD_REQUIRED       => true,
+				self::FIELD_CAN_BE_UPDATED => false,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
+			Lengow_Order_Error::FIELD_UPDATED_AT      => array(
+				self::FIELD_REQUIRED       => false,
+				self::FIELD_CAN_BE_UPDATED => true,
+				self::FIELD_FORMAT         => self::FORMAT_STRING,
+			),
 		),
 	);
 
@@ -145,17 +346,17 @@ class Lengow_Crud {
 		}
 		$field_list = self::$lengow_tables[ $table ];
 		foreach ( $field_list as $key => $value ) {
-			if ( ! array_key_exists( $key, $data ) && $value['required'] ) {
+			if ( ! array_key_exists( $key, $data ) && $value[ self::FIELD_REQUIRED ] ) {
 				return false;
 			}
 		}
 		$formats = array();
 		foreach ( $data as $key => $value ) {
-			$formats[] = $field_list[ $key ]['format'];
+			$formats[] = $field_list[ $key ][ self::FIELD_FORMAT ];
 		}
 		$result = $wpdb->insert( $wpdb->prefix . $table, $data, $formats );
 
-		return $result ? true : false;
+		return (bool) $result;
 	}
 
 	/**
@@ -180,7 +381,7 @@ class Lengow_Crud {
 			$field_list = self::$lengow_tables[ $table ];
 			foreach ( $where as $key => $value ) {
 				$args[]       = $value;
-				$conditions[] = $key . ' = ' . $field_list[ $key ]['format'];
+				$conditions[] = $key . ' = ' . $field_list[ $key ][ self::FIELD_FORMAT ];
 			}
 			if ( ! empty( $conditions ) ) {
 				$query .= ' WHERE ' . join( ' AND ', $conditions );
@@ -189,10 +390,10 @@ class Lengow_Crud {
 		$prepare_query = empty( $args ) ? $query : $wpdb->prepare( $query, $args );
 		if ( $single ) {
 			$result = $wpdb->get_row( $prepare_query );
-			$return = $result ? $result : false;
+			$return = $result ?: false;
 		} else {
 			$result = $wpdb->get_results( $prepare_query );
-			$return = $result ? $result : array();
+			$return = $result ?: array();
 		}
 
 		return $return;
@@ -218,17 +419,17 @@ class Lengow_Crud {
 		$updated_data  = array();
 		$field_list    = self::$lengow_tables[ $table ];
 		foreach ( $field_list as $key => $value ) {
-			if ( $value['updated'] && isset( $data[ $key ] ) ) {
+			if ( $value[ self::FIELD_CAN_BE_UPDATED ] && isset( $data[ $key ] ) ) {
 				$updated_data[ $key ] = $data[ $key ];
-				$formats[]            = $value['format'];
+				$formats[]            = $value[ self::FIELD_FORMAT ];
 			}
 		}
 		foreach ( $where as $key => $value ) {
-			$where_formats[] = $field_list[ $key ]['format'];
+			$where_formats[] = $field_list[ $key ][ self::FIELD_FORMAT ];
 		}
 		$result = $wpdb->update( $wpdb->prefix . $table, $updated_data, $where, $formats, $where_formats );
 
-		return $result ? true : false;
+		return (bool) $result;
 	}
 
 	/**
@@ -248,10 +449,10 @@ class Lengow_Crud {
 		$where_formats = array();
 		$field_list    = self::$lengow_tables[ $table ];
 		foreach ( $where as $key => $value ) {
-			$where_formats[] = $field_list[ $key ]['format'];
+			$where_formats[] = $field_list[ $key ][ self::FIELD_FORMAT ];
 		}
 		$result = $wpdb->delete( $wpdb->prefix . $table, $where, $where_formats );
 
-		return $result ? true : false;
+		return (bool) $result;
 	}
 }

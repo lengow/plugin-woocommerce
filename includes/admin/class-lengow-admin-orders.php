@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -121,7 +121,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			if ( $orders_lengow_ids ) {
 				foreach ( $orders_lengow_ids as $order_lengow_id ) {
 					$result = Lengow_Order::re_import_order( $order_lengow_id );
-					if ( $result && isset( $result['order_new'] ) && $result['order_new'] ) {
+					if ( $result && ! empty( $result[ Lengow_Import::ORDERS_CREATED ] ) ) {
 						$total_reimport ++;
 					}
 				}
@@ -170,34 +170,43 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	/**
 	 * Generate message array (new, update and errors).
 	 *
-	 * @param array $return import informations
+	 * @param array $return import data
 	 *
 	 * @return array
 	 */
 	public function load_message( $return ) {
 		$locale   = new Lengow_Translation();
 		$messages = array();
-		if ( isset( $return['error'] ) && $return['error'] != false ) {
-			$messages[] = Lengow_Main::decode_log_message( $return['error'] );
+		// if global error or shop error return this.
+		if ( isset( $return[ Lengow_Import::ERRORS ] ) && count($return[ Lengow_Import::ERRORS ]) > 0 ) {
+			foreach ($return[Lengow_Import::ERRORS] as $message) {
+				$messages[] = Lengow_Main::decode_log_message( $message );
+			}
 
 			return $messages;
 		}
-		if ( isset( $return['order_new'] ) && $return['order_new'] > 0 ) {
+		if ( isset( $return[ Lengow_Import::NUMBER_ORDERS_CREATED ] )
+		     && $return[ Lengow_Import::NUMBER_ORDERS_CREATED ] > 0
+		) {
 			$messages[] = $locale->t(
 				'lengow_log.error.nb_order_imported',
-				array( 'nb_order' => (int) $return['order_new'] )
+				array( 'nb_order' => (int) $return[ Lengow_Import::NUMBER_ORDERS_CREATED ] )
 			);
 		}
-		if ( isset( $return['order_update'] ) && $return['order_update'] > 0 ) {
+		if ( isset( $return[ Lengow_Import::NUMBER_ORDERS_UPDATED ] )
+		     && $return[ Lengow_Import::NUMBER_ORDERS_UPDATED ] > 0
+		) {
 			$messages[] = $locale->t(
 				'lengow_log.error.nb_order_updated',
-				array( 'nb_order' => (int) $return['order_update'] )
+				array( 'nb_order' => (int) $return[ Lengow_Import::NUMBER_ORDERS_UPDATED ] )
 			);
 		}
-		if ( isset( $return['order_error'] ) && $return['order_error'] > 0 ) {
+		if ( isset( $return[ Lengow_Import::NUMBER_ORDERS_FAILED ] )
+		     && $return[ Lengow_Import::NUMBER_ORDERS_FAILED ] > 0
+		) {
 			$messages[] = $locale->t(
 				'lengow_log.error.nb_order_with_error',
-				array( 'nb_order' => (int) $return['order_error'] )
+				array( 'nb_order' => (int) $return[ Lengow_Import::NUMBER_ORDERS_FAILED ] )
 			);
 		}
 		if ( empty( $messages ) ) {
@@ -385,7 +394,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 */
 	public function get_columns() {
 		// columns label on the top and bottom of the table.
-		$columns = array(
+		return array(
 			'cb'              => '<input type="checkbox" />',
 			'action'          => $this->locale->t( 'order.table.action' ),
 			'status'          => $this->locale->t( 'order.table.lengow_status' ),
@@ -398,8 +407,6 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			'country'         => $this->locale->t( 'order.table.country' ),
 			'total'           => $this->locale->t( 'order.table.total' ),
 		);
-
-		return $columns;
 	}
 
 	/**
@@ -425,7 +432,6 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			case 'country':
 			case 'total':
 				return $item[ $column_name ];
-				break;
 			default:
 				break;
 		}
@@ -437,7 +443,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 * @return array
 	 */
 	public function get_sortable_columns() {
-		$sortable_columns = array(
+		return array(
 			// the second parameter in the value array takes care of a possible pre-ordered column.
 			// if the value is true the column is assumed to be ordered ascending.
 			// if the value is false the column is assumed descending or unordered.
@@ -452,8 +458,6 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			'country'         => array( 'country', false ),
 			'total'           => array( 'total', false ),
 		);
-
-		return $sortable_columns;
 	}
 
 	/**
@@ -468,7 +472,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			return sprintf(
 				'<input type="checkbox" id="js-lengow_order_checkbox"
 				name="order[' . $order['id'] . ']" value="%s" class="js-lengow_selection_order"/>',
-				$order['id']
+				$order[ Lengow_Order::FIELD_ID ]
 			);
 		}
 	}
@@ -597,12 +601,17 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			// changes $search for LIKE %% use.
 			$search              = '%' . $request['s'] . '%';
 			$search_query_fields = array();
-			$search_fields       = [ 'marketplace_sku', 'order_id', 'customer_name' ];
+			$search_fields       = array(
+				Lengow_Order::FIELD_MARKETPLACE_SKU,
+				Lengow_Order::FIELD_ORDER_ID,
+				Lengow_Order::FIELD_CUSTOMER_NAME,
+			);
 			foreach ( $search_fields as $search_field ) {
 				$search_query_fields[] = 'lo.' . $search_field . ' LIKE ' . '%s';
 			}
-			$conditions[] = '(' . join( ' OR ', $search_query_fields ) . ')';
-			for ( $i = 0; $i < count( $search_fields ); $i ++ ) {
+			$conditions[]       = '(' . join( ' OR ', $search_query_fields ) . ')';
+			$search_field_count = count( $search_fields );
+			for ( $i = 0; $i < $search_field_count; $i ++ ) {
 				$array_search[] = $search;
 			}
 		}
@@ -653,16 +662,16 @@ class Lengow_Admin_Orders extends WP_List_Table {
 				$from           = DateTime::createFromFormat( 'd/m/Y', $order_from );
 				$to             = DateTime::createFromFormat( 'd/m/Y', $order_to );
 				$conditions[]   = ' lo.order_date BETWEEN %s AND %s';
-				$array_search[] = $from->format( 'Y-m-d' ) . ' 00:00:00';
-				$array_search[] = $to->format( 'Y-m-d' ) . ' 23:59:59';
+				$array_search[] = $from->format( Lengow_Main::DATE_DAY ) . ' 00:00:00';
+				$array_search[] = $to->format( Lengow_Main::DATE_DAY ) . ' 23:59:59';
 			} elseif ( preg_match( '/^\d{2}\/\d{2}\/\d{4}$/', $order_from ) ) {
 				$from           = DateTime::createFromFormat( 'd/m/Y', $order_from );
 				$conditions[]   = ' lo.order_date >= %s';
-				$array_search[] = $from->format( 'Y-m-d' ) . ' 00:00:00';
+				$array_search[] = $from->format( Lengow_Main::DATE_DAY ) . ' 00:00:00';
 			} elseif ( preg_match( '/^\d{2}\/\d{2}\/\d{4}$/', $order_to ) ) {
 				$to             = DateTime::createFromFormat( 'd/m/Y', $order_to );
 				$conditions[]   = ' lo.order_date <= %s';
-				$array_search[] = $to->format( 'Y-m-d' ) . ' 23:59:59';
+				$array_search[] = $to->format( Lengow_Main::DATE_DAY ) . ' 23:59:59';
 			}
 		}
 		if ( ! empty( $conditions ) ) {
@@ -672,9 +681,8 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			$prepare_query = $query;
 		}
 		$result = $wpdb->get_results( $prepare_query );
-		$return = $result ? $result : array();
 
-		return $return;
+		return $result ?: array();
 	}
 
 	/**
@@ -685,10 +693,9 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	public static function count_orders() {
 		global $wpdb;
 
-		$query  = 'SELECT count(*) FROM ' . $wpdb->prefix . 'lengow_orders';
-		$result = $wpdb->get_var( $query );
+		$query = 'SELECT count(*) FROM ' . $wpdb->prefix . Lengow_Order::TABLE_ORDER;
 
-		return $result;
+		return $wpdb->get_var( $query );
 	}
 
 	/**

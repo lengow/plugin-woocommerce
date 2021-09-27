@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -32,6 +32,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Order_Line {
 
 	/**
+	 * @var string Lengow order line table name
+	 */
+	const TABLE_ORDER_LINE = 'lengow_order_line';
+
+	/* Order line fields */
+	const FIELD_ID = 'id';
+	const FIELD_ORDER_ID = 'order_id';
+	const FIELD_ORDER_LINE_ID = 'order_line_id';
+	const FIELD_PRODUCT_ID = 'product_id';
+
+	/**
 	 * Get Lengow order line.
 	 *
 	 * @param array $where a named array of WHERE clauses
@@ -41,7 +52,7 @@ class Lengow_Order_Line {
 	 *
 	 */
 	public static function get( $where = array(), $single = true ) {
-		return Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER_LINE, $where, $single );
+		return Lengow_Crud::read( self::TABLE_ORDER_LINE, $where, $single );
 	}
 
 	/**
@@ -53,7 +64,7 @@ class Lengow_Order_Line {
 	 *
 	 */
 	public static function create( $data = array() ) {
-		return Lengow_Crud::create( Lengow_Crud::LENGOW_ORDER_LINE, $data );
+		return Lengow_Crud::create( self::TABLE_ORDER_LINE, $data );
 	}
 
 	/**
@@ -68,7 +79,7 @@ class Lengow_Order_Line {
 		global $wpdb;
 
 		$query   = '
-			SELECT order_line_id FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER_LINE . '
+			SELECT order_line_id FROM ' . $wpdb->prefix . self::TABLE_ORDER_LINE . '
 			WHERE order_id = %d
 		';
 		$results = $wpdb->get_results(
@@ -76,6 +87,6 @@ class Lengow_Order_Line {
 			$output
 		);
 
-		return $results ? $results : false;
+		return $results ?: false;
 	}
 }

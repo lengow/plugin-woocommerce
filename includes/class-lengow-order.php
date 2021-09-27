@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -32,73 +32,60 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Order {
 
 	/**
-	 * @var integer order process state for order not imported.
+	 * @var string Lengow order table name
 	 */
+	const TABLE_ORDER = 'lengow_orders';
+
+	/* Order fields */
+	const FIELD_ID = 'id';
+	const FIELD_ORDER_ID = 'order_id';
+	const FIELD_FEED_ID = 'feed_id';
+	const FIELD_DELIVERY_ADDRESS_ID = 'delivery_address_id';
+	const FIELD_DELIVERY_COUNTRY_ISO = 'delivery_country_iso';
+	const FIELD_MARKETPLACE_SKU = 'marketplace_sku';
+	const FIELD_MARKETPLACE_NAME = 'marketplace_name';
+	const FIELD_MARKETPLACE_LABEL = 'marketplace_label';
+	const FIELD_ORDER_LENGOW_STATE = 'order_lengow_state';
+	const FIELD_ORDER_PROCESS_STATE = 'order_process_state';
+	const FIELD_ORDER_DATE = 'order_date';
+	const FIELD_ORDER_ITEM = 'order_item';
+	const FIELD_ORDER_TYPES = 'order_types';
+	const FIELD_CURRENCY = 'currency';
+	const FIELD_TOTAL_PAID = 'total_paid';
+	const FIELD_COMMISSION = 'commission';
+	const FIELD_CUSTOMER_NAME = 'customer_name';
+	const FIELD_CUSTOMER_EMAIL = 'customer_email';
+	const FIELD_CUSTOMER_VAT_NUMBER = 'customer_vat_number';
+	const FIELD_CARRIER = 'carrier';
+	const FIELD_CARRIER_METHOD = 'carrier_method';
+	const FIELD_CARRIER_TRACKING = 'carrier_tracking';
+	const FIELD_CARRIER_RELAY_ID = 'carrier_id_relay';
+	const FIELD_SENT_MARKETPLACE = 'sent_marketplace';
+	const FIELD_IS_IN_ERROR = 'is_in_error';
+	const FIELD_IS_REIMPORTED = 'is_reimported';
+	const FIELD_MESSAGE = 'message';
+	const FIELD_CREATED_AT = 'created_at';
+	const FIELD_UPDATED_AT = 'updated_at';
+	const FIELD_EXTRA = 'extra';
+
+	/* Order process states */
 	const PROCESS_STATE_NOT_IMPORTED = 0;
-
-	/**
-	 * @var integer order process state for order imported.
-	 */
 	const PROCESS_STATE_IMPORT = 1;
-
-	/**
-	 * @var integer order process state for order finished.
-	 */
 	const PROCESS_STATE_FINISH = 2;
 
-	/**
-	 * @var string order state accepted.
-	 */
+	/* Order states */
 	const STATE_ACCEPTED = 'accepted';
-
-	/**
-	 * @var string order state waiting_shipment.
-	 */
 	const STATE_WAITING_SHIPMENT = 'waiting_shipment';
-
-	/**
-	 * @var string order state shipped.
-	 */
 	const STATE_SHIPPED = 'shipped';
-
-	/**
-	 * @var string order state closed.
-	 */
 	const STATE_CLOSED = 'closed';
-
-	/**
-	 * @var string order state refused.
-	 */
 	const STATE_REFUSED = 'refused';
-
-	/**
-	 * @var string order state canceled.
-	 */
 	const STATE_CANCELED = 'canceled';
-
-	/**
-	 * @var string order state refunded.
-	 */
 	const STATE_REFUNDED = 'refunded';
 
-	/**
-	 * @var string order type prime.
-	 */
+	/* Order types */
 	const TYPE_PRIME = 'is_prime';
-
-	/**
-	 * @var string order type express.
-	 */
 	const TYPE_EXPRESS = 'is_express';
-
-	/**
-	 * @var string order type business.
-	 */
 	const TYPE_BUSINESS = 'is_business';
-
-	/**
-	 * @var string order type delivered by marketplace.
-	 */
 	const TYPE_DELIVERED_BY_MARKETPLACE = 'is_delivered_by_marketplace';
 
 	/**
@@ -262,7 +249,7 @@ class Lengow_Order {
 	 * @param integer $id Lengow order id
 	 */
 	public function __construct( $id ) {
-		$row = self::get( array( 'id' => $id ) );
+		$row = self::get( array( self::FIELD_ID => $id ) );
 		if ( $row ) {
 			$this->id                   = (int) $row->id;
 			$this->order_id             = null !== $row->order_id ? (int) $row->order_id : null;
@@ -307,7 +294,7 @@ class Lengow_Order {
 	 *
 	 */
 	public static function get( $where = array(), $single = true ) {
-		return Lengow_Crud::read( Lengow_Crud::LENGOW_ORDER, $where, $single );
+		return Lengow_Crud::read( self::TABLE_ORDER, $where, $single );
 	}
 
 	/**
@@ -319,9 +306,9 @@ class Lengow_Order {
 	 *
 	 */
 	public static function create( $data = array() ) {
-		$data['created_at'] = date( 'Y-m-d H:i:s' );
+		$data[ self::FIELD_CREATED_AT ] = date( Lengow_Main::DATE_FULL );
 
-		return Lengow_Crud::create( Lengow_Crud::LENGOW_ORDER, $data );
+		return Lengow_Crud::create( self::TABLE_ORDER, $data );
 	}
 
 	/**
@@ -334,9 +321,9 @@ class Lengow_Order {
 	 *
 	 */
 	public static function update( $order_lengow_id, $data = array() ) {
-		$data['updated_at'] = date( 'Y-m-d H:i:s' );
+		$data[ self::FIELD_UPDATED_AT ] = date( Lengow_Main::DATE_FULL );
 
-		return Lengow_Crud::update( Lengow_Crud::LENGOW_ORDER, $data, array( 'id' => $order_lengow_id ) );
+		return Lengow_Crud::update( self::TABLE_ORDER, $data, array( self::FIELD_ID => $order_lengow_id ) );
 	}
 
 	/**
@@ -371,11 +358,10 @@ class Lengow_Order {
 	 * @return string
 	 */
 	public static function get_woocommerce_state( $order_state_marketplace, $marketplace, $shipped_by_mp ) {
+		$order_state_lengow = $marketplace->get_state_lengow( $order_state_marketplace );
 		if ( $shipped_by_mp ) {
 			$order_state = 'shipped_by_mp';
-		} elseif ( $marketplace->get_state_lengow( $order_state_marketplace ) === self::STATE_SHIPPED
-		           || $marketplace->get_state_lengow( $order_state_marketplace ) === self::STATE_CLOSED
-		) {
+		} elseif ( $order_state_lengow === self::STATE_SHIPPED || $order_state_lengow === self::STATE_CLOSED ) {
 			$order_state = self::STATE_SHIPPED;
 		} else {
 			$order_state = self::STATE_WAITING_SHIPMENT;
@@ -434,9 +420,8 @@ class Lengow_Order {
 	 */
 	public static function get_order_status( $order ) {
 		$status = Lengow_Main::compare_version( '3.0' ) ? $order->get_status() : $order->status;
-		$status = Lengow_Main::compare_version( '2.2' ) ? 'wc-' . $status : $status;
 
-		return $status;
+		return Lengow_Main::compare_version( '2.2' ) ? 'wc-' . $status : $status;
 	}
 
 	/**
@@ -464,7 +449,7 @@ class Lengow_Order {
 
 		$query = '
 			SELECT order_id, delivery_address_id, feed_id
-			FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . '
+			FROM ' . $wpdb->prefix . self::TABLE_ORDER . '
 			WHERE marketplace_sku = %s
 			AND marketplace_name IN (%s, %s)
 		';
@@ -479,7 +464,8 @@ class Lengow_Order {
 		foreach ( $results as $result ) {
 			if ( null === $result->delivery_address_id && null !== $result->feed_id ) {
 				return (int) $result->order_id;
-			} elseif ( (int) $result->delivery_address_id === $delivery_address_id ) {
+			}
+			if ( (int) $result->delivery_address_id === $delivery_address_id ) {
 				return (int) $result->order_id;
 			}
 		}
@@ -499,7 +485,7 @@ class Lengow_Order {
 		global $wpdb;
 
 		$query   = '
-			SELECT order_id FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . '
+			SELECT order_id FROM ' . $wpdb->prefix . self::TABLE_ORDER . '
 			WHERE marketplace_sku = %s
 			AND marketplace_name = %s
 		';
@@ -507,7 +493,7 @@ class Lengow_Order {
 			$wpdb->prepare( $query, array( $marketplace_sku, $marketplace_name ) )
 		);
 
-		return $results ? $results : array();
+		return $results ?: array();
 	}
 
 	/**
@@ -523,7 +509,7 @@ class Lengow_Order {
 		global $wpdb;
 
 		$query           = '
-			SELECT id FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . '
+			SELECT id FROM ' . $wpdb->prefix . self::TABLE_ORDER . '
 			WHERE marketplace_sku = %s
 			AND marketplace_name = %s
 			AND delivery_address_id = %d
@@ -549,7 +535,7 @@ class Lengow_Order {
 		global $wpdb;
 
 		$query           = '
-			SELECT id FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . '
+			SELECT id FROM ' . $wpdb->prefix . self::TABLE_ORDER . '
 			WHERE order_id = %d
 		';
 		$order_lengow_id = $wpdb->get_var(
@@ -574,7 +560,7 @@ class Lengow_Order {
 		global $wpdb;
 
 		$query           = '
-			SELECT id FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . '
+			SELECT id FROM ' . $wpdb->prefix . self::TABLE_ORDER . '
 			WHERE order_id = %d
 			AND delivery_address_id = %d
 		';
@@ -600,15 +586,14 @@ class Lengow_Order {
 		if ( null === $order_id ) {
 			return false;
 		}
-		$query            = '
-			SELECT marketplace_label FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . '
+		$query = '
+			SELECT marketplace_label FROM ' . $wpdb->prefix . self::TABLE_ORDER . '
 			WHERE order_id = %d
 		';
-		$marketplace_name = $wpdb->get_var(
+
+		return $wpdb->get_var(
 			$wpdb->prepare( $query, array( $order_id ) )
 		);
-
-		return $marketplace_name;
 	}
 
 	/**
@@ -623,9 +608,9 @@ class Lengow_Order {
 		$query        = '
 			SELECT DISTINCT(marketplace_name) as marketplace_name,
             IFNULL(marketplace_label, marketplace_name) as marketplace_label
-            FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER;
+            FROM ' . $wpdb->prefix . self::TABLE_ORDER;
 		$results      = $wpdb->get_results( $query );
-		$results      = $results ? $results : array();
+		$results      = $results ?: array();
 		foreach ( $results as $result ) {
 			$marketplaces[ $result->marketplace_name ] = $result->marketplace_label;
 		}
@@ -641,7 +626,7 @@ class Lengow_Order {
 	public static function count_order_imported_by_lengow() {
 		global $wpdb;
 		$query = '
-			SELECT COUNT(*) as total FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . '
+			SELECT COUNT(*) as total FROM ' . $wpdb->prefix . self::TABLE_ORDER . '
 			WHERE order_id IS NOT NULL
 		';
 
@@ -654,7 +639,7 @@ class Lengow_Order {
 	 * @return integer
 	 */
 	public static function count_order_with_error() {
-		$result = self::get( array( 'is_in_error' => 1 ), false );
+		$result = self::get( array( self::FIELD_IS_IN_ERROR => 1 ), false );
 
 		return count( $result );
 	}
@@ -665,7 +650,7 @@ class Lengow_Order {
 	 * @return integer
 	 */
 	public static function count_order_to_be_sent() {
-		$result = self::get( array( 'order_process_state' => 1 ), false );
+		$result = self::get( array( self::FIELD_ORDER_PROCESS_STATE => self::PROCESS_STATE_IMPORT ), false );
 
 		return count( $result );
 	}
@@ -681,7 +666,7 @@ class Lengow_Order {
 		if ( Lengow_Main::compare_version( '2.2' ) ) {
 			$query = '
 				SELECT lo.id as order_lengow_id, p.ID as order_id, p.post_status as order_status
-				FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . ' lo
+				FROM ' . $wpdb->prefix . self::TABLE_ORDER . ' lo
 				LEFT JOIN ' . $wpdb->posts . ' p ON p.ID = lo.order_id
 	            WHERE lo.order_process_state = %d
 	            AND lo.is_in_error = %d
@@ -691,7 +676,7 @@ class Lengow_Order {
 		} else {
 			$query = '
 				SELECT lo.id as order_lengow_id, p.ID as order_id, t.slug as order_status
-				FROM ' . $wpdb->prefix . Lengow_Crud::LENGOW_ORDER . ' lo
+				FROM ' . $wpdb->prefix . self::TABLE_ORDER . ' lo
 				LEFT JOIN ' . $wpdb->posts . ' p ON p.ID = lo.order_id
 				LEFT JOIN ' . $wpdb->term_relationships . ' tr ON tr.object_id = p.ID
 				LEFT JOIN ' . $wpdb->term_taxonomy . ' tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
@@ -710,12 +695,12 @@ class Lengow_Order {
 					0,
 					self::get_order_state( self::STATE_SHIPPED ),
 					self::get_order_state( self::STATE_CANCELED ),
-					date( 'Y-m-d H:i:s', strtotime( '-5 days', time() ) ),
+					date( Lengow_Main::DATE_FULL, strtotime( '-5 days', time() ) ),
 				)
 			)
 		);
 
-		return $results ? $results : false;
+		return $results ?: false;
 	}
 
 	/**
@@ -732,24 +717,24 @@ class Lengow_Order {
 		// finish actions if lengow order is shipped, closed, cancel or refunded.
 		$order_process_state = self::get_order_process_state( $order_lengow_state );
 		// update Lengow order if necessary.
-		$params = [];
+		$params = array();
 		if ( self::PROCESS_STATE_FINISH === $order_process_state ) {
-			Lengow_Action::finish_all_actions( Lengow_Order::get_order_id( $order ) );
+			Lengow_Action::finish_all_actions( self::get_order_id( $order ) );
 			Lengow_Order_Error::finish_order_errors( $order_lengow->id, Lengow_Order_Error::ERROR_TYPE_SEND );
 			if ( $order_process_state !== $order_lengow->order_process_state ) {
-				$params['order_process_state'] = $order_process_state;
+				$params[ self::FIELD_ORDER_PROCESS_STATE ] = $order_process_state;
 			}
 			if ( $order_lengow->is_in_error ) {
-				$params['is_in_error'] = 0;
+				$params[ self::FIELD_IS_IN_ERROR ] = 0;
 			}
 		}
 		if ( $order_lengow_state !== $order_lengow->order_lengow_state ) {
-			$params['order_lengow_state'] = $order_lengow_state;
+			$params[ self::FIELD_ORDER_LENGOW_STATE ] = $order_lengow_state;
 			if ( ! empty( $package_data->delivery->trackings ) ) {
-				$tracking                   = $package_data->delivery->trackings[0];
-				$params['carrier']          = null !== $tracking->carrier ? (string) $tracking->carrier : null;
-				$params['carrier_tracking'] = null !== $tracking->number ? (string) $tracking->number : null;
-				$params['carrier_id_relay'] = null !== $tracking->relay->id ? (string) $tracking->relay->id : null;
+				$tracking                               = $package_data->delivery->trackings[0];
+				$params[ self::FIELD_CARRIER ]          = $tracking->carrier;
+				$params[ self::FIELD_CARRIER_TRACKING ] = $tracking->number;
+				$params[ self::FIELD_CARRIER_RELAY_ID ] = $tracking->relay->id;
 			}
 		}
 		if ( ! empty( $params ) ) {
@@ -767,14 +752,13 @@ class Lengow_Order {
 				$order->update_status( $shipped_state );
 
 				return self::STATE_SHIPPED;
-			} else {
-				if ( ( $order_status === $waiting_shipment_state || $order_status === $shipped_state )
-				     && in_array( $order_lengow_state, array( self::STATE_CANCELED, self::STATE_REFUSED ) )
-				) {
-					$order->update_status( $canceled_state );
+			}
+			if ( ( $order_status === $waiting_shipment_state || $order_status === $shipped_state )
+			     && in_array( $order_lengow_state, array( self::STATE_CANCELED, self::STATE_REFUSED ) )
+			) {
+				$order->update_status( $canceled_state );
 
-					return self::STATE_CANCELED;
-				}
+				return self::STATE_CANCELED;
 			}
 		}
 
@@ -789,7 +773,7 @@ class Lengow_Order {
 	 * @return array|false
 	 */
 	public static function re_import_order( $order_lengow_id ) {
-		$order_lengow = self::get( array( 'id' => $order_lengow_id ) );
+		$order_lengow = self::get( array( self::FIELD_ID => $order_lengow_id ) );
 		if ( $order_lengow ) {
 			$import = new Lengow_Import(
 				array(
@@ -820,11 +804,11 @@ class Lengow_Order {
 			$order        = new WC_Order( $order_lengow->order_id );
 			$order_status = self::get_order_status( $order );
 			// sending an API call for sending or canceling an order.
-			if ( self::get_order_state( Lengow_Order::STATE_SHIPPED ) === $order_status ) {
+			if ( self::get_order_state( self::STATE_SHIPPED ) === $order_status ) {
 				return $order_lengow->call_action( Lengow_Action::TYPE_SHIP );
-			} else {
-				return $order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
 			}
+
+			return $order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
 		}
 
 		return false;
@@ -837,19 +821,21 @@ class Lengow_Order {
 	 * @param string $message error message
 	 * @param string $type order error type (import or send)
 	 *
-	 * @return array|false
+	 * @return boolean
 	 */
 	public static function add_order_error( $order_lengow_id, $message, $type = null ) {
 		$error_created = Lengow_Order_Error::create(
 			array(
-				'order_lengow_id' => $order_lengow_id,
-				'message'         => $message,
-				'type'            => null === $type ? Lengow_Order_Error::ERROR_TYPE_IMPORT : $type,
+				Lengow_Order_Error::FIELD_ORDER_LENGOW_ID => $order_lengow_id,
+				Lengow_Order_Error::FIELD_MESSAGE         => $message,
+				Lengow_Order_Error::FIELD_TYPE            => null === $type
+					? Lengow_Order_Error::ERROR_TYPE_IMPORT
+					: $type,
 			)
 		);
-		$order_updated = Lengow_Order::update( $order_lengow_id, array( 'is_in_error' => 1 ) );
+		$order_updated = self::update( $order_lengow_id, array( self::FIELD_IS_IN_ERROR => 1 ) );
 
-		return ( $error_created && $order_updated ) ? true : false;
+		return $error_created && $order_updated;
 	}
 
 	/**
@@ -876,14 +862,14 @@ class Lengow_Order {
 				$woocommerce_order_ids[] = $result->order_id;
 			}
 			// compatibility v2.
-			if ( ! Lengow_Marketplace::marketplace_exist( $this->marketplace_name ) && null !== $this->feed_id ) {
+			if ( null !== $this->feed_id && ! Lengow_Marketplace::marketplace_exist( $this->marketplace_name ) ) {
 				$this->check_and_change_marketplace_name( $connector, $log_output );
 			}
 			$body = array(
-				'account_id'           => $account_id,
-				'marketplace_order_id' => $this->marketplace_sku,
-				'marketplace'          => $this->marketplace_name,
-				'merchant_order_id'    => $woocommerce_order_ids,
+				Lengow_Import::ARG_ACCOUNT_ID           => $account_id,
+				Lengow_Import::ARG_MARKETPLACE_ORDER_ID => $this->marketplace_sku,
+				Lengow_Import::ARG_MARKETPLACE          => $this->marketplace_name,
+				Lengow_Import::ARG_MERCHANT_ORDER_ID    => $woocommerce_order_ids,
 			);
 			try {
 				$return = $connector->patch(
@@ -911,9 +897,9 @@ class Lengow_Order {
 			     || isset( $return['error'] )
 			) {
 				return false;
-			} else {
-				return true;
 			}
+
+			return true;
 		}
 
 		return false;
@@ -940,8 +926,8 @@ class Lengow_Order {
 			$return = $connector->get(
 				Lengow_Connector::API_ORDER,
 				array(
-					'marketplace_order_id' => $this->marketplace_sku,
-					'account_id'           => $account_id,
+					Lengow_Import::ARG_MARKETPLACE_ORDER_ID => $this->marketplace_sku,
+					Lengow_Import::ARG_ACCOUNT_ID           => $account_id,
 				),
 				Lengow_Connector::FORMAT_STREAM,
 				'',
@@ -970,7 +956,7 @@ class Lengow_Order {
 		foreach ( $results->results as $order ) {
 			$new_marketplace_name = (string) $order->marketplace;
 			if ( $new_marketplace_name !== $this->marketplace_name ) {
-				self::update( $this->id, array( 'marketplace_name' => $new_marketplace_name ) );
+				self::update( $this->id, array( self::FIELD_MARKETPLACE_NAME => $new_marketplace_name ) );
 				$this->marketplace_name = $new_marketplace_name;
 			}
 		}
@@ -984,11 +970,7 @@ class Lengow_Order {
 	 * @return boolean
 	 */
 	public function is_express() {
-		if ( isset( $this->order_types[ self::TYPE_EXPRESS ] ) || isset( $this->order_types[ self::TYPE_PRIME ] ) ) {
-			return true;
-		}
-
-		return false;
+		return isset( $this->order_types[ self::TYPE_EXPRESS ] ) || isset( $this->order_types[ self::TYPE_PRIME ] );
 	}
 
 	/**
@@ -997,11 +979,7 @@ class Lengow_Order {
 	 * @return boolean
 	 */
 	public function is_business() {
-		if ( isset( $this->order_types[ self::TYPE_BUSINESS ] ) ) {
-			return true;
-		}
-
-		return false;
+		return isset( $this->order_types[ self::TYPE_BUSINESS ] );
 	}
 
 	/**
@@ -1010,11 +988,7 @@ class Lengow_Order {
 	 * @return boolean
 	 */
 	public function is_delivered_by_marketplace() {
-		if ( isset( $this->order_types[ self::TYPE_DELIVERED_BY_MARKETPLACE ] ) || $this->sent_marketplace ) {
-			return true;
-		}
-
-		return false;
+		return isset( $this->order_types[ self::TYPE_DELIVERED_BY_MARKETPLACE ] ) || $this->sent_marketplace;
 	}
 
 	/**
@@ -1023,11 +997,7 @@ class Lengow_Order {
 	 * @return boolean
 	 */
 	public function is_closed() {
-		if ( self::PROCESS_STATE_FINISH === $this->order_process_state ) {
-			return true;
-		}
-
-		return false;
+		return self::PROCESS_STATE_FINISH === $this->order_process_state;
 	}
 
 	/**
@@ -1038,7 +1008,7 @@ class Lengow_Order {
 	public function has_an_action_in_progress() {
 		$actions = Lengow_Action::get_active_action_by_order_id( $this->order_id );
 
-		return ! $actions ? false : true;
+		return (bool) $actions;
 	}
 
 	/**
@@ -1050,8 +1020,8 @@ class Lengow_Order {
 		$order = new WC_Order( $this->order_id );
 		if ( ! $this->is_closed() && ! $this->has_an_action_in_progress() ) {
 			$status = self::get_order_status( $order );
-			if ( Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED ) === $status ||
-			     Lengow_Order::get_order_state( Lengow_Order::STATE_SHIPPED ) === $status ) {
+			if ( self::get_order_state( self::STATE_CANCELED ) === $status ||
+			     self::get_order_state( self::STATE_SHIPPED ) === $status ) {
 				return true;
 			}
 		}
@@ -1093,7 +1063,6 @@ class Lengow_Order {
 			}
 			$marketplace = Lengow_Main::get_marketplace_singleton( $this->marketplace_name );
 			if ( $marketplace->contain_order_line( $action ) ) {
-				$order_lines = false;
 				$order_lines = Lengow_Order_Line::get_all_order_line_id_by_order_id( $this->order_id, ARRAY_A );
 				// compatibility v2 and security.
 				if ( ! $order_lines ) {
@@ -1107,20 +1076,23 @@ class Lengow_Order {
 				$results = array();
 				foreach ( $order_lines as $order_line ) {
 					$results[] = true;
-					$results[] = $marketplace->call_action( $action, $this, $order_line['order_line_id'] );
+					$results[] = $marketplace->call_action(
+						$action,
+						$this,
+						$order_line[ Lengow_Order_Line::FIELD_ORDER_LINE_ID ]
+					);
 				}
-				$success = ! in_array( false, $results );
+				$success = ! in_array( false, $results, true );
 			} else {
-				$success = true;
 				$success = $marketplace->call_action( $action, $this );
 			}
 		} catch ( Lengow_Exception $e ) {
 			$error_message = $e->getMessage();
 		} catch ( Exception $e ) {
-			$error_message = '[WooCommerce error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
+			$error_message = '[WooCommerce error]: "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
 		}
 		if ( isset( $error_message ) ) {
-			Lengow_Order::add_order_error( $this->id, $error_message, Lengow_Order_Error::ERROR_TYPE_SEND );
+			self::add_order_error( $this->id, $error_message, Lengow_Order_Error::ERROR_TYPE_SEND );
 			$decoded_message = Lengow_Main::decode_log_message( $error_message, Lengow_Translation::DEFAULT_ISO_CODE );
 			Lengow_Main::log(
 				Lengow_Log::CODE_ACTION,
@@ -1167,8 +1139,8 @@ class Lengow_Order {
 			Lengow_Connector::GET,
 			Lengow_Connector::API_ORDER,
 			array(
-				'marketplace_order_id' => $this->marketplace_sku,
-				'marketplace'          => $this->marketplace_name,
+				Lengow_Import::ARG_MARKETPLACE_ORDER_ID => $this->marketplace_sku,
+				Lengow_Import::ARG_MARKETPLACE          => $this->marketplace_name,
 			)
 		);
 		if ( ! isset( $results->count ) || ( isset( $results->count ) && 0 === (int) $results->count ) ) {
@@ -1178,13 +1150,14 @@ class Lengow_Order {
 		foreach ( $order_data->packages as $package ) {
 			$product_lines = array();
 			foreach ( $package->cart as $product ) {
-				$product_lines[] = array( 'order_line_id' => (string) $product->marketplace_order_line_id );
+				$product_lines[] = array(
+					Lengow_Order_Line::FIELD_ORDER_LINE_ID => (string) $product->marketplace_order_line_id,
+				);
 			}
 			if ( 0 === $this->delivery_address_id ) {
 				return ! empty( $product_lines ) ? $product_lines : false;
-			} else {
-				$order_lines[ (int) $package->delivery->id ] = $product_lines;
 			}
+			$order_lines[ (int) $package->delivery->id ] = $product_lines;
 		}
 		$return = $order_lines[ $this->delivery_address_id ];
 
@@ -1194,10 +1167,10 @@ class Lengow_Order {
 	/**
 	 * Reimport order and pass current order in technical error.
 	 *
-	 * @return bool|int
+	 * @return integer|false
 	 */
 	public function cancel_and_reimport_order() {
-		$update = self::update( $this->id, array( 'is_reimported' => true ) );
+		$update = self::update( $this->id, array( self::FIELD_IS_REIMPORTED => true ) );
 		if ( ! $update ) {
 			return false;
 		}
@@ -1211,13 +1184,23 @@ class Lengow_Order {
 			)
 		);
 		$result = $import->exec();
-		if ( ( isset( $result['order_id'] ) && $this->id !== $result['order_id'] )
-		     && ( isset( $result['order_new'] ) && $result['order_new'] )
-		) {
-			$this->set_state_to_error();
+		if ( ! empty( $result[ Lengow_Import::ORDERS_CREATED ] ) ) {
+			$order_created = $result[ Lengow_Import::ORDERS_CREATED ][0];
+			if ( $order_created[ Lengow_Import_Order::LENGOW_ORDER_ID ] === $this->id ) {
+				$this->set_state_to_error();
 
-			return (int) $result['order_id'];
+				return (int) $order_created[ Lengow_Import_Order::MERCHANT_ORDER_ID ];
+			}
 		}
+		// in the event of an error, all new order errors are finished and the order is reset.
+		Lengow_Order_Error::finish_order_errors( $this->id );
+		self::update(
+			$this->id,
+			array(
+				self::FIELD_IS_REIMPORTED => false,
+				self::FIELD_IS_IN_ERROR   => false,
+			)
+		);
 
 		return false;
 	}

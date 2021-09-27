@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -185,7 +185,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				if ( Lengow_Main::compare_version( '2.2' ) ) {
 					$this->init_lengow_technical_error_status();
 				}
-				// check logs download to prevent the occurrence of the wordpress html header.
+				// check logs download to prevent the occurrence of the WordPress html header.
 				$download = null;
 				if ( isset( $_GET['action'] ) ) {
 					$download = $_GET['action'];
@@ -326,7 +326,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 
 		/**
-		 * Remove Wordpress's updates messages.
+		 * Remove WordPress's updates messages.
 		 *
 		 * @return object
 		 */

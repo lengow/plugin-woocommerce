@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -45,7 +45,7 @@ class Lengow_Hook {
 	/**
 	 * Add meta box for orders created by Lengow.
 	 *
-	 * @param WP_Post $post Wordpress Post instance
+	 * @param WP_Post $post WordPress Post instance
 	 */
 	public static function adding_shop_order_meta_boxes( $post ) {
 		if ( $post && Lengow_Order::get_id_from_order_id( (int) $post->ID ) ) {
@@ -95,7 +95,7 @@ class Lengow_Hook {
 	/**
 	 * Update status on Lengow.
 	 *
-	 * @param integer $post_id Wordpress current post id
+	 * @param integer $post_id WordPress current post id
 	 *
 	 * @return integer|false
 	 */

@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -85,6 +85,7 @@ class Lengow_Configuration {
 	const PARAM_LABEL = 'label';
 	const PARAM_LEGEND = 'legend';
 	const PARAM_PLACEHOLDER = 'placeholder';
+	const PARAM_RESET_TOKEN = 'reset_token';
 	const PARAM_RETURN = 'return';
 	const PARAM_SECRET = 'secret';
 	const PARAM_SHOP = 'shop';
@@ -163,16 +164,18 @@ class Lengow_Configuration {
 					self::PARAM_LABEL  => $locale->t( 'lengow_settings.lengow_account_id_title' ),
 				),
 				self::ACCESS_TOKEN                         => array(
-					self::PARAM_GLOBAL => true,
-					self::PARAM_EXPORT => false,
-					self::PARAM_LABEL  => $locale->t( 'lengow_settings.lengow_access_token_title' ),
-					self::PARAM_SECRET => true,
+					self::PARAM_GLOBAL      => true,
+					self::PARAM_EXPORT      => false,
+					self::PARAM_LABEL       => $locale->t( 'lengow_settings.lengow_access_token_title' ),
+					self::PARAM_SECRET      => true,
+					self::PARAM_RESET_TOKEN => true,
 				),
 				self::SECRET                               => array(
-					self::PARAM_GLOBAL => true,
-					self::PARAM_EXPORT => false,
-					self::PARAM_LABEL  => $locale->t( 'lengow_settings.lengow_secret_token_title' ),
-					self::PARAM_SECRET => true,
+					self::PARAM_GLOBAL      => true,
+					self::PARAM_EXPORT      => false,
+					self::PARAM_LABEL       => $locale->t( 'lengow_settings.lengow_secret_token_title' ),
+					self::PARAM_SECRET      => true,
+					self::PARAM_RESET_TOKEN => true,
 				),
 				self::CMS_TOKEN                            => array(
 					self::PARAM_GLOBAL         => true,
@@ -283,25 +286,21 @@ class Lengow_Configuration {
 					self::PARAM_GLOBAL        => true,
 					self::PARAM_LABEL         => $locale->t( 'lengow_settings.lengow_id_waiting_shipment_title' ),
 					self::PARAM_DEFAULT_VALUE => Lengow_Main::compare_version( '2.2' ) ? 'wc-on-hold' : 'on-hold',
-					self::PARAM_RETURN        => self::RETURN_TYPE_INTEGER,
 				),
 				self::SHIPPED_ORDER_ID                     => array(
 					self::PARAM_GLOBAL        => true,
 					self::PARAM_LABEL         => $locale->t( 'lengow_settings.lengow_id_shipped_title' ),
 					self::PARAM_DEFAULT_VALUE => Lengow_Main::compare_version( '2.2' ) ? 'wc-completed' : 'completed',
-					self::PARAM_RETURN        => self::RETURN_TYPE_INTEGER,
 				),
 				self::CANCELED_ORDER_ID                    => array(
 					self::PARAM_GLOBAL        => true,
 					self::PARAM_LABEL         => $locale->t( 'lengow_settings.lengow_id_cancel_title' ),
 					self::PARAM_DEFAULT_VALUE => Lengow_Main::compare_version( '2.2' ) ? 'wc-cancelled' : 'cancelled',
-					self::PARAM_RETURN        => self::RETURN_TYPE_INTEGER,
 				),
 				self::SHIPPED_BY_MARKETPLACE_ORDER_ID      => array(
 					self::PARAM_GLOBAL        => true,
 					self::PARAM_LABEL         => $locale->t( 'lengow_settings.lengow_id_shipped_by_mp_title' ),
 					self::PARAM_DEFAULT_VALUE => Lengow_Main::compare_version( '2.2' ) ? 'wc-completed' : 'completed',
-					self::PARAM_RETURN        => self::RETURN_TYPE_INTEGER,
 				),
 				self::SYNCHRONIZATION_DAY_INTERVAL         => array(
 					self::PARAM_GLOBAL        => true,
@@ -503,6 +502,14 @@ class Lengow_Configuration {
 				self::update_value( $access_id, '' );
 			}
 		}
+	}
+
+	/**
+	 * Reset authorization token.
+	 */
+	public static function reset_authorization_token() {
+		self::update_value( self::AUTHORIZATION_TOKEN, '' );
+		self::update_value( self::LAST_UPDATE_AUTHORIZATION_TOKEN, '' );
 	}
 
 	/**
@@ -790,6 +797,10 @@ class Lengow_Configuration {
 				// save last update date for a specific settings (change synchronisation interval time).
 				if ( isset( $setting[ self::PARAM_UPDATE ] ) && $setting[ self::PARAM_UPDATE ] ) {
 					self::update_value( self::LAST_UPDATE_SETTING, time() );
+				}
+				// reset the authorization token when a configuration parameter is changed.
+				if ( isset( $setting[ self::PARAM_RESET_TOKEN ] ) && $setting[ self::PARAM_RESET_TOKEN ] ) {
+					self::reset_authorization_token();
 				}
 			}
 		}

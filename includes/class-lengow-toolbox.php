@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -32,14 +32,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Toolbox {
 
 	/* Toolbox GET params */
+	const PARAM_CREATED_FROM = 'created_from';
+	const PARAM_CREATED_TO = 'created_to';
+	const PARAM_DATE = 'date';
+	const PARAM_DAYS = 'days';
+	const PARAM_FORCE = 'force';
+	const PARAM_MARKETPLACE_NAME = 'marketplace_name';
+	const PARAM_MARKETPLACE_SKU = 'marketplace_sku';
+	const PARAM_PROCESS = 'process';
 	const PARAM_TOKEN = 'token';
 	const PARAM_TOOLBOX_ACTION = 'toolbox_action';
-	const PARAM_DATE = 'date';
 	const PARAM_TYPE = 'type';
 
 	/* Toolbox Actions */
 	const ACTION_DATA = 'data';
 	const ACTION_LOG = 'log';
+	const ACTION_ORDER = 'order';
 
 	/* Data type */
 	const DATA_TYPE_ALL = 'all';
@@ -51,6 +59,9 @@ class Lengow_Toolbox {
 	const DATA_TYPE_OPTION = 'option';
 	const DATA_TYPE_SHOP = 'shop';
 	const DATA_TYPE_SYNCHRONIZATION = 'synchronization';
+
+	/* Toolbox process type */
+	const PROCESS_TYPE_SYNC = 'sync';
 
 	/* Toolbox Data  */
 	const CHECKLIST = 'checklist';
@@ -99,6 +110,16 @@ class Lengow_Toolbox {
 	const CHECKSUM_FILE_DELETED = 'file_deleted';
 	const LOGS = 'logs';
 
+	/* Toolbox order data  */
+	const ERRORS = 'errors';
+	const ERROR_MESSAGE = 'message';
+	const ERROR_CODE = 'code';
+
+	/* PHP extensions */
+	const PHP_EXTENSION_CURL = 'curl_version';
+	const PHP_EXTENSION_SIMPLEXML = 'simplexml_load_file';
+	const PHP_EXTENSION_JSON = 'json_decode';
+
 	/* Toolbox files */
 	const FILE_CHECKMD5 = 'checkmd5.csv';
 	const FILE_TEST = 'test.txt';
@@ -109,6 +130,7 @@ class Lengow_Toolbox {
 	public static $toolbox_actions = array(
 		self::ACTION_DATA,
 		self::ACTION_LOG,
+		self::ACTION_ORDER,
 	);
 
 	/**
@@ -152,12 +174,33 @@ class Lengow_Toolbox {
 	}
 
 	/**
+	 * Start order synchronization based on specific parameters
+	 *
+	 * @param array $params synchronization parameters
+	 *
+	 * @return array
+	 */
+	public static function sync_orders( $params = array() ) {
+		// get all params for order synchronization.
+		$params = self::filter_params_for_sync( $params );
+		$import = new Lengow_Import( $params );
+		$result = $import->exec();
+		// if global error return error message and request http code.
+		if ( isset( $result[ Lengow_Import::ERRORS ][0] ) ) {
+			return self::generate_error_return( Lengow_Connector::CODE_403, $result[ Lengow_Import::ERRORS ][0] );
+		}
+		unset( $result[ Lengow_Import::ERRORS ] );
+
+		return $result;
+	}
+
+	/**
 	 * Check if PHP Curl is activated.
 	 *
 	 * @return boolean
 	 */
 	public static function is_curl_activated() {
-		return function_exists( 'curl_version' );
+		return function_exists( self::PHP_EXTENSION_CURL );
 	}
 
 	/**
@@ -361,7 +404,7 @@ class Lengow_Toolbox {
 	 * @return boolean
 	 */
 	private static function is_simple_XML_activated() {
-		return function_exists( 'simplexml_load_file' );
+		return function_exists( self::PHP_EXTENSION_SIMPLEXML );
 	}
 
 	/**
@@ -370,7 +413,7 @@ class Lengow_Toolbox {
 	 * @return boolean
 	 */
 	private static function is_json_activated() {
-		return function_exists( 'json_decode' );
+		return function_exists( self::PHP_EXTENSION_JSON );
 	}
 
 	/**
@@ -392,5 +435,51 @@ class Lengow_Toolbox {
 		} catch ( \Exception $e ) {
 			return false;
 		}
+	}
+
+	/**
+	 * Filter parameters for order synchronization
+	 *
+	 * @param array $params synchronization params
+	 *
+	 * @return array
+	 */
+	private static function filter_params_for_sync( $params = array() ) {
+		$params_filtered = array( Lengow_Import::PARAM_TYPE => Lengow_Import::TYPE_TOOLBOX );
+		if ( isset( $params[ self::PARAM_MARKETPLACE_SKU ], $params[ self::PARAM_MARKETPLACE_NAME ] ) ) {
+			// get all parameters to synchronize a specific order.
+			$params_filtered[ Lengow_Import::PARAM_MARKETPLACE_SKU ]  = $params[ self::PARAM_MARKETPLACE_SKU ];
+			$params_filtered[ Lengow_Import::PARAM_MARKETPLACE_NAME ] = $params[ self::PARAM_MARKETPLACE_NAME ];
+		} elseif ( isset( $params[ self::PARAM_CREATED_FROM ], $params[ self::PARAM_CREATED_TO ] ) ) {
+			// get all parameters to synchronize over a fixed period.
+			$params_filtered[ Lengow_Import::PARAM_CREATED_FROM ] = $params[ self::PARAM_CREATED_FROM ];
+			$params_filtered[ Lengow_Import::PARAM_CREATED_TO ]   = $params[ self::PARAM_CREATED_TO ];
+		} elseif ( isset( $params[ self::PARAM_DAYS ] ) ) {
+			// get all parameters to synchronize over a time interval.
+			$params_filtered[ Lengow_Import::PARAM_DAYS ] = (int) $params[ self::PARAM_DAYS ];
+		}
+		// force order synchronization by removing pending errors.
+		if ( isset( $params[ self::PARAM_FORCE ] ) ) {
+			$params_filtered[ Lengow_Import::PARAM_FORCE_SYNC ] = (bool) $params[ self::PARAM_FORCE ];
+		}
+
+		return $params_filtered;
+	}
+
+	/**
+	 * Generates an error return for the Toolbox webservice
+	 *
+	 * @param integer $http_code request http code
+	 * @param string $error error message
+	 *
+	 * @return array
+	 */
+	private static function generate_error_return( $http_code, $error ) {
+		return array(
+			self::ERRORS => array(
+				self::ERROR_MESSAGE => Lengow_Main::decode_log_message( $error, Lengow_Translation::DEFAULT_ISO_CODE ),
+				self::ERROR_CODE    => $http_code,
+			),
+		);
 	}
 }
