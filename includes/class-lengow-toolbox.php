@@ -640,7 +640,7 @@ class Lengow_Toolbox {
 			self::ORDER_MERCHANT_ORDER_STATUS => $order ? Lengow_Order::get_order_status( $order ) : null,
 			self::ORDER_STATUSES              => $order ? self::get_order_statuses_data( $order ) : array(),
 			self::ORDER_TOTAL_PAID            => $lengow_order->total_paid,
-			self::ORDER_MERCHANT_TOTAL_PAID   => $order ? $order->get_total() : null,
+			self::ORDER_MERCHANT_TOTAL_PAID   => $order ? (float) $order->get_total() : null,
 			self::ORDER_COMMISSION            => $lengow_order->commission,
 			self::ORDER_CURRENCY              => $lengow_order->currency,
 			self::CUSTOMER                    => array(
