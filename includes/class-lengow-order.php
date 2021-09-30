@@ -69,7 +69,7 @@ class Lengow_Order {
 	const FIELD_EXTRA = 'extra';
 
 	/* Order process states */
-	const PROCESS_STATE_NOT_IMPORTED = 0;
+	const PROCESS_STATE_NEW = 0;
 	const PROCESS_STATE_IMPORT = 1;
 	const PROCESS_STATE_FINISH = 2;
 
@@ -251,36 +251,47 @@ class Lengow_Order {
 	public function __construct( $id ) {
 		$row = self::get( array( self::FIELD_ID => $id ) );
 		if ( $row ) {
-			$this->id                   = (int) $row->id;
-			$this->order_id             = null !== $row->order_id ? (int) $row->order_id : null;
-			$this->feed_id              = null !== $row->feed_id ? (int) $row->feed_id : null;
-			$this->delivery_address_id  = (int) $row->delivery_address_id;
-			$this->delivery_country_iso = $row->delivery_country_iso;
-			$this->marketplace_sku      = $row->marketplace_sku;
-			$this->marketplace_name     = $row->marketplace_name;
-			$this->marketplace_label    = $row->marketplace_label;
-			$this->order_lengow_state   = $row->order_lengow_state;
-			$this->order_process_state  = (int) $row->order_process_state;
-			$this->order_date           = $row->order_date;
-			$this->order_item           = (int) $row->order_item;
-			$this->order_types          = null !== $row->order_types ? json_decode( $row->order_types, true ) : array();
-			$this->currency             = $row->currency;
-			$this->customer_vat_number  = null !== $row->customer_vat_number ? $row->customer_vat_number : '';
-			$this->total_paid           = null !== $row->total_paid ? (float) $row->total_paid : null;
-			$this->commission           = null !== $row->commission ? (float) $row->commission : null;
-			$this->customer_name        = $row->customer_name;
-			$this->customer_email       = $row->customer_email;
-			$this->carrier              = $row->carrier;
-			$this->carrier_method       = $row->carrier_method;
-			$this->carrier_tracking     = $row->carrier_tracking;
-			$this->carrier_id_relay     = $row->carrier_id_relay;
-			$this->sent_marketplace     = (bool) $row->sent_marketplace;
-			$this->is_in_error          = (bool) $row->is_in_error;
-			$this->is_reimported        = (bool) $row->is_reimported;
-			$this->message              = $row->message;
-			$this->created_at           = $row->created_at;
-			$this->updated_at           = $row->updated_at;
-			$this->extra                = $row->extra;
+			$this->id                   = (int) $row->{self::FIELD_ID};
+			$this->order_id             = null !== $row->{self::FIELD_ORDER_ID}
+				? (int) $row->{self::FIELD_ORDER_ID}
+				: null;
+			$this->feed_id              = null !== $row->{self::FIELD_FEED_ID}
+				? (int) $row->{self::FIELD_FEED_ID}
+				: null;
+			$this->delivery_address_id  = (int) $row->{self::FIELD_DELIVERY_ADDRESS_ID};
+			$this->delivery_country_iso = $row->{self::FIELD_DELIVERY_COUNTRY_ISO};
+			$this->marketplace_sku      = $row->{self::FIELD_MARKETPLACE_SKU};
+			$this->marketplace_name     = $row->{self::FIELD_MARKETPLACE_NAME};
+			$this->marketplace_label    = $row->{self::FIELD_MARKETPLACE_LABEL};
+			$this->order_lengow_state   = $row->{self::FIELD_ORDER_LENGOW_STATE};
+			$this->order_process_state  = (int) $row->{self::FIELD_ORDER_PROCESS_STATE};
+			$this->order_date           = $row->{self::FIELD_ORDER_DATE};
+			$this->order_item           = (int) $row->{self::FIELD_ORDER_ITEM};
+			$this->order_types          = null !== $row->{self::FIELD_ORDER_TYPES}
+				? json_decode( $row->{self::FIELD_ORDER_TYPES}, true )
+				: array();
+			$this->currency             = $row->{self::FIELD_CURRENCY};
+			$this->customer_vat_number  = null !== $row->{self::FIELD_CUSTOMER_VAT_NUMBER}
+				? $row->{self::FIELD_CUSTOMER_VAT_NUMBER}
+				: '';
+			$this->total_paid           = null !== $row->{self::FIELD_TOTAL_PAID}
+				? (float) $row->{self::FIELD_TOTAL_PAID} : null;
+			$this->commission           = null !== $row->{self::FIELD_COMMISSION}
+				? (float) $row->{self::FIELD_COMMISSION}
+				: null;
+			$this->customer_name        = $row->{self::FIELD_CUSTOMER_NAME};
+			$this->customer_email       = $row->{self::FIELD_CUSTOMER_EMAIL};
+			$this->carrier              = $row->{self::FIELD_CARRIER};
+			$this->carrier_method       = $row->{self::FIELD_CARRIER_METHOD};
+			$this->carrier_tracking     = $row->{self::FIELD_CARRIER_TRACKING};
+			$this->carrier_id_relay     = $row->{self::FIELD_CARRIER_RELAY_ID};
+			$this->sent_marketplace     = (bool) $row->{self::FIELD_SENT_MARKETPLACE};
+			$this->is_in_error          = (bool) $row->{self::FIELD_IS_IN_ERROR};
+			$this->is_reimported        = (bool) $row->{self::FIELD_IS_REIMPORTED};
+			$this->message              = $row->{self::FIELD_MESSAGE};
+			$this->created_at           = $row->{self::FIELD_CREATED_AT};
+			$this->updated_at           = $row->{self::FIELD_UPDATED_AT};
+			$this->extra                = $row->{self::FIELD_EXTRA};
 		}
 	}
 
@@ -462,11 +473,11 @@ class Lengow_Order {
 			return false;
 		}
 		foreach ( $results as $result ) {
-			if ( null === $result->delivery_address_id && null !== $result->feed_id ) {
-				return (int) $result->order_id;
+			if ( null === $result->{self::FIELD_DELIVERY_ADDRESS_ID} && null !== $result->{self::FIELD_FEED_ID} ) {
+				return (int) $result->{self::FIELD_ORDER_ID};
 			}
-			if ( (int) $result->delivery_address_id === $delivery_address_id ) {
-				return (int) $result->order_id;
+			if ( (int) $result->{self::FIELD_DELIVERY_ADDRESS_ID} === $delivery_address_id ) {
+				return (int) $result->{self::FIELD_ORDER_ID};
 			}
 		}
 
@@ -612,7 +623,7 @@ class Lengow_Order {
 		$results      = $wpdb->get_results( $query );
 		$results      = $results ?: array();
 		foreach ( $results as $result ) {
-			$marketplaces[ $result->marketplace_name ] = $result->marketplace_label;
+			$marketplaces[ $result->{self::FIELD_MARKETPLACE_NAME} ] = $result->{self::FIELD_MARKETPLACE_LABEL};
 		}
 
 		return $marketplaces;
@@ -653,6 +664,30 @@ class Lengow_Order {
 		$result = self::get( array( self::FIELD_ORDER_PROCESS_STATE => self::PROCESS_STATE_IMPORT ), false );
 
 		return count( $result );
+	}
+
+	/**
+	 * Retrieves all the Lengow order ids from a marketplace reference.
+	 *
+	 * @param string|null $marketplace_sku marketplace order reference
+	 * @param string|null $marketplace_name marketplace code
+	 *
+	 * @return self[]
+	 */
+	public static function get_all_lengow_orders( $marketplace_sku, $marketplace_name ) {
+		$lengowOrders = array();
+		$results      = self::get(
+			array(
+				self::FIELD_MARKETPLACE_SKU  => $marketplace_sku,
+				self::FIELD_MARKETPLACE_NAME => $marketplace_name,
+			),
+			false
+		);
+		foreach ( $results as $result ) {
+			$lengowOrders[] = new self( $result->{self::FIELD_ID} );
+		}
+
+		return $lengowOrders;
 	}
 
 	/**
@@ -839,6 +874,25 @@ class Lengow_Order {
 	}
 
 	/**
+	 * Retrieves the real import date of the woocommerce order.
+	 *
+	 * @param integer $order_id WooCommerce order id
+	 *
+	 * @return string|null
+	 */
+	public static function get_date_imported( $order_id ) {
+		$order_notes = Lengow_Main::compare_version( '3.2' )
+			? wc_get_order_notes( array( 'order_id' => $order_id ) )
+			: array();
+		if ( empty( $order_notes ) ) {
+			return null;
+		}
+		$first_order_note_created = end( $order_notes );
+
+		return get_gmt_from_date( $first_order_note_created->date_created->date( Lengow_Main::DATE_FULL ) );
+	}
+
+	/**
 	 * Synchronize order with Lengow API.
 	 *
 	 * @param Lengow_Connector|null $connector Lengow connector instance
@@ -892,14 +946,10 @@ class Lengow_Order {
 
 				return false;
 			}
-			if ( null === $return
-			     || ( isset( $return['detail'] ) && 'Pas trouvé.' === $return['detail'] )
-			     || isset( $return['error'] )
-			) {
-				return false;
-			}
 
-			return true;
+			return ! ( null === $return
+			           || ( isset( $return['detail'] ) && 'Pas trouvé.' === $return['detail'] )
+			           || isset( $return['error'] ) );
 		}
 
 		return false;
@@ -1006,7 +1056,7 @@ class Lengow_Order {
 	 * @return boolean
 	 */
 	public function has_an_action_in_progress() {
-		$actions = Lengow_Action::get_active_action_by_order_id( $this->order_id );
+		$actions = Lengow_Action::get_action_by_order_id( $this->order_id, true );
 
 		return (bool) $actions;
 	}

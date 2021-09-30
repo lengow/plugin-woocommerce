@@ -47,6 +47,7 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 
 = 2.4.2 - xxxx-xx-xx =
 * Feature: Integration of order synchronization in the toolbox webservice
+* Feature: Retrieving the status of an order in the toolbox webservice
 
 = 2.4.1 - 2021-07-19 =
 * Feature: Outsourcing of the toolbox via webservice

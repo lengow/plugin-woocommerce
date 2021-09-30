@@ -108,28 +108,45 @@ switch ( $action ) {
 		Lengow_Toolbox::download_log( $date );
 		break;
 	case Lengow_Toolbox::ACTION_ORDER:
-		$result = Lengow_Toolbox::sync_orders(
-			array(
-				Lengow_Toolbox::PARAM_CREATED_TO       => isset( $_GET[ Lengow_Toolbox::PARAM_CREATED_TO ] )
-					? $_GET[ Lengow_Toolbox::PARAM_CREATED_TO ]
-					: null,
-				Lengow_Toolbox::PARAM_CREATED_FROM     => isset( $_GET[ Lengow_Toolbox::PARAM_CREATED_FROM ] )
-					? $_GET[ Lengow_Toolbox::PARAM_CREATED_FROM ]
-					: null,
-				Lengow_Toolbox::PARAM_DAYS             => isset( $_GET[ Lengow_Toolbox::PARAM_DAYS ] )
-					? $_GET[ Lengow_Toolbox::PARAM_DAYS ]
-					: null,
-				Lengow_Toolbox::PARAM_FORCE            => isset( $_GET[ Lengow_Toolbox::PARAM_FORCE ] )
-					? $_GET[ Lengow_Toolbox::PARAM_FORCE ]
-					: null,
-				Lengow_Toolbox::PARAM_MARKETPLACE_NAME => isset( $_GET[ Lengow_Toolbox::PARAM_MARKETPLACE_NAME ] )
-					? $_GET[ Lengow_Toolbox::PARAM_MARKETPLACE_NAME ]
-					: null,
-				Lengow_Toolbox::PARAM_MARKETPLACE_SKU  => isset( $_GET[ Lengow_Toolbox::PARAM_MARKETPLACE_SKU ] )
+		$process = isset( $_GET[ Lengow_Toolbox::PARAM_PROCESS ] )
+			? $_GET[ Lengow_Toolbox::PARAM_PROCESS ]
+			: Lengow_Toolbox::PROCESS_TYPE_SYNC;
+		if ( Lengow_Toolbox::PROCESS_TYPE_GET_DATA === $process ) {
+			$result = Lengow_Toolbox::get_order_data(
+				isset( $_GET[ Lengow_Toolbox::PARAM_MARKETPLACE_SKU ] )
 					? $_GET[ Lengow_Toolbox::PARAM_MARKETPLACE_SKU ]
 					: null,
-			)
-		);
+				isset( $_GET[ Lengow_Toolbox::PARAM_MARKETPLACE_NAME ] )
+					? $_GET[ Lengow_Toolbox::PARAM_MARKETPLACE_NAME ]
+					: null,
+				isset( $_GET[ Lengow_Toolbox::PARAM_TYPE ] )
+					? $_GET[ Lengow_Toolbox::PARAM_TYPE ]
+					: null
+			);
+		} else {
+			$result = Lengow_Toolbox::sync_orders(
+				array(
+					Lengow_Toolbox::PARAM_CREATED_TO       => isset( $_GET[ Lengow_Toolbox::PARAM_CREATED_TO ] )
+						? $_GET[ Lengow_Toolbox::PARAM_CREATED_TO ]
+						: null,
+					Lengow_Toolbox::PARAM_CREATED_FROM     => isset( $_GET[ Lengow_Toolbox::PARAM_CREATED_FROM ] )
+						? $_GET[ Lengow_Toolbox::PARAM_CREATED_FROM ]
+						: null,
+					Lengow_Toolbox::PARAM_DAYS             => isset( $_GET[ Lengow_Toolbox::PARAM_DAYS ] )
+						? $_GET[ Lengow_Toolbox::PARAM_DAYS ]
+						: null,
+					Lengow_Toolbox::PARAM_FORCE            => isset( $_GET[ Lengow_Toolbox::PARAM_FORCE ] )
+						? $_GET[ Lengow_Toolbox::PARAM_FORCE ]
+						: null,
+					Lengow_Toolbox::PARAM_MARKETPLACE_NAME => isset( $_GET[ Lengow_Toolbox::PARAM_MARKETPLACE_NAME ] )
+						? $_GET[ Lengow_Toolbox::PARAM_MARKETPLACE_NAME ]
+						: null,
+					Lengow_Toolbox::PARAM_MARKETPLACE_SKU  => isset( $_GET[ Lengow_Toolbox::PARAM_MARKETPLACE_SKU ] )
+						? $_GET[ Lengow_Toolbox::PARAM_MARKETPLACE_SKU ]
+						: null,
+				)
+			);
+		}
 		if ( isset( $result[ Lengow_Toolbox::ERRORS ][ Lengow_Toolbox::ERROR_CODE ] ) ) {
 			if ( $result[ Lengow_Toolbox::ERRORS ][ Lengow_Toolbox::ERROR_CODE ] === Lengow_Connector::CODE_404 ) {
 				header( 'HTTP/1.1 404 Not Found' );

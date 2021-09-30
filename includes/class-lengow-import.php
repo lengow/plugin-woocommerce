@@ -424,7 +424,6 @@ class Lengow_Import {
 		}
 		$this->updated_from = time() - $interval_time;
 		$this->updated_to   = time();
-
 	}
 
 	/**

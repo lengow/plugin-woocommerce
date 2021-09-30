@@ -409,6 +409,7 @@ log.import.lengow_order_not_saved|WARNING! Order could NOT be saved in Lengow or
 log.import.lengow_order_updated|order updated in Lengow orders table
 log.import.lengow_order_not_updated|WARNING! Order could NOT be updated in Lengow orders table
 log.import.lengow_order_line_saved|save order lines product: %{order_line_saved}
+log.import.lengow_order_line_not_saved|WARNING ! Order lines could NOT be saved in Lengow order lines table
 log.import.quantity_back_shipped_by_marketplace|adding quantity back to stock (order shipped by marketplace)
 log.import.quantity_back_reimported_order|adding quantity back to stock (order is re-imported)
 log.import.product_not_saved|WARNING! Product ID %{product_id} could not be added to the WooCommerce order - %{error_message}
@@ -421,6 +422,7 @@ log.import.anonymized_order|order is anonymized and has not been imported
 log.import.old_order|order is older than 3 months and has not been imported
 log.import.unable_verify_date|unable to check if the order is too old
 log.import.connector_get_all_action|get order actions between %{date_from} and %{date_to}
+log.import.unable_find_order|Unable to find the requested order
 log.order_action.check_completed_action|check completed actions
 log.order_action.check_old_action|check and finish old actions
 log.order_action.check_action_not_sent|check actions not sent

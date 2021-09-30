@@ -378,14 +378,14 @@ class Lengow_Import_Order {
 				return false;
 			}
 			$decoded_message = Lengow_Main::decode_log_message(
-				$order_error->message,
+				$order_error->{Lengow_Order_Error::FIELD_MESSAGE},
 				Lengow_Translation::DEFAULT_ISO_CODE
 			);
 			$message         = Lengow_Main::set_log_message(
 				'log.import.error_already_created',
 				array(
 					'decoded_message' => $decoded_message,
-					'date_message'    => get_date_from_gmt( $order_error->created_at ),
+					'date_message'    => get_date_from_gmt( $order_error->{Lengow_Order_Error::FIELD_CREATED_AT} ),
 				)
 			);
 			$this->errors[]  = Lengow_Main::decode_log_message( $message, Lengow_Translation::DEFAULT_ISO_CODE );

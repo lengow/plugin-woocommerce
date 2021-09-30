@@ -40,6 +40,8 @@ class Lengow_Box_Order_Info {
 			$order_lengow_id = Lengow_Order::get_id_from_order_id( $post->ID );
 			$order_lengow    = new Lengow_Order( $order_lengow_id );
 			$can_send_action = $order_lengow->can_resend_action();
+			$imported_at     = Lengow_Order::get_date_imported( $order_lengow->order_id );
+			$imported_date   = $imported_at ?: $order_lengow->created_at;
 			$action_type     = false;
 			if ( $can_send_action ) {
 				$order        = new WC_Order( $order_lengow->order_id );

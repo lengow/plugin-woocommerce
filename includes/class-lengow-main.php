@@ -562,17 +562,12 @@ class Lengow_Main {
 		$str     = preg_replace( $pattern, ' ', $str );
 		$str     = preg_replace( '/[\s]+/', ' ', $str );
 		$str     = trim( $str );
-		$str     = str_replace( '&nbsp;', ' ', $str );
-		$str     = str_replace( '|', ' ', $str );
-		$str     = str_replace( '"', '\'', $str );
-		$str     = str_replace( '’', '\'', $str );
-		$str     = str_replace( '&#39;', '\' ', $str );
-		$str     = str_replace( '&#150;', '-', $str );
-		$str     = str_replace( chr( 9 ), ' ', $str );
-		$str     = str_replace( chr( 10 ), ' ', $str );
-		$str     = str_replace( chr( 13 ), ' ', $str );
 
-		return $str;
+		return str_replace(
+			array( '&nbsp;', '|', '"', '’', '&#39;', '&#150;', chr( 9 ), chr( 10 ), chr( 13 ) ),
+			array( ' ', ' ', '\'', '\'', '\' ', '-', ' ', ' ', ' ' ),
+			$str
+		);
 	}
 
 	/**
@@ -844,13 +839,16 @@ class Lengow_Main {
 				$order     = self::decode_log_message(
 					'lengow_log.mail_report.order',
 					null,
-					array( 'marketplace_sku' => $order_error->marketplace_sku )
+					array( 'marketplace_sku' => $order_error->{Lengow_Order::FIELD_MARKETPLACE_SKU} )
 				);
-				$message   = '' !== $order_error->message
-					? self::decode_log_message( $order_error->message )
+				$message   = '' !== $order_error->{Lengow_Order_Error::FIELD_MESSAGE}
+					? self::decode_log_message( $order_error->{Lengow_Order_Error::FIELD_MESSAGE} )
 					: $support;
 				$mail_body .= '<li>' . $order . ' - ' . $message . '</li>';
-				Lengow_Order_Error::update( (int) $order_error->id, array( Lengow_Order_Error::FIELD_MAIL => 1 ) );
+				Lengow_Order_Error::update(
+					(int) $order_error->{Lengow_Order_Error::FIELD_ID},
+					array( Lengow_Order_Error::FIELD_MAIL => 1 )
+				);
 				unset( $order, $message );
 			}
 			$mail_body .= '</ul></p>';

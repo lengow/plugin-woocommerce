@@ -562,7 +562,7 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Match product with API datas.
+	 * Match product with API data.
 	 *
 	 * @param mixed $product_data all product data
 	 * @param string $marketplace_sku Lengow id of current order
@@ -713,7 +713,7 @@ class Lengow_Product {
 		$results  = self::get( array(), false );
 		$products = array();
 		foreach ( $results as $value ) {
-			$products[ $value->product_id ] = $value->product_id;
+			$products[ $value->{self::FIELD_PRODUCT_ID} ] = $value->{self::FIELD_PRODUCT_ID};
 		}
 
 		return $products;

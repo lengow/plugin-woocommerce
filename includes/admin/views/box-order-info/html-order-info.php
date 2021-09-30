@@ -131,7 +131,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <li>
             <span class="lgw-order-title"><?php echo $locale->t( 'meta_box.order_info.imported_date' ); ?></span>
             <span class="lgw-order-label">
-                <?php echo Lengow_Main::get_date_in_correct_format( strtotime( $order_lengow->created_at ) ); ?>
+                <?php echo Lengow_Main::get_date_in_correct_format( strtotime( $imported_date ) ); ?>
             </span>
         </li>
         <hr>

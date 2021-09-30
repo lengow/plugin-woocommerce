@@ -131,15 +131,19 @@ class Lengow_Action {
 	}
 
 	/**
-	 * Find active actions by order id.
+	 * Find actions by order id.
 	 *
 	 * @param integer $order_id WooCommerce order id
+	 * @param boolean $only_active get only active actions
 	 * @param string|null $action_type action type (ship or cancel)
 	 *
 	 * @return array|false
 	 */
-	public static function get_active_action_by_order_id( $order_id, $action_type = null ) {
-		$where = array( self::FIELD_ORDER_ID => $order_id, self::FIELD_STATE => self::STATE_NEW );
+	public static function get_action_by_order_id( $order_id, $only_active = false, $action_type = null ) {
+		$where = array( self::FIELD_ORDER_ID => $order_id );
+		if ( $only_active ) {
+			$where[ self::FIELD_STATE ] = self::STATE_NEW;
+		}
 		if ( null !== $action_type ) {
 			$where[ self::FIELD_ACTION_TYPE ] = $action_type;
 		}
@@ -167,7 +171,7 @@ class Lengow_Action {
 	 * @return bool|string
 	 */
 	public static function get_last_order_action_type( $order_id ) {
-		$actions = self::get_active_action_by_order_id( $order_id );
+		$actions = self::get_action_by_order_id( $order_id, true );
 		if ( ! $actions ) {
 			return false;
 		}
@@ -195,11 +199,11 @@ class Lengow_Action {
 	 * @return boolean
 	 */
 	public static function finish_all_actions( $order_id, $action_type = null ) {
-		$active_action = self::get_active_action_by_order_id( $order_id, $action_type );
+		$active_action = self::get_action_by_order_id( $order_id, $action_type, true );
 		if ( $active_action ) {
 			$update_success = 0;
 			foreach ( $active_action as $action ) {
-				$result = self::finish_action( $action->id );
+				$result = self::finish_action( $action->{self::FIELD_ID} );
 				if ( $result ) {
 					$update_success ++;
 				}
@@ -248,7 +252,10 @@ class Lengow_Action {
 				$action = self::get( array( self::FIELD_ACTION_ID => (int) $row->id ) );
 				if ( $action ) {
 					// if the action already exists, the number of retries is increased.
-					$update = self::update( $action->id, array( self::FIELD_RETRY => (int) $action->retry + 1 ) );
+					$update = self::update(
+						$action->{self::FIELD_ID},
+						array( self::FIELD_RETRY => (int) $action->{self::FIELD_RETRY} + 1 )
+					);
 					if ( $update ) {
 						$send_action = false;
 					}
@@ -416,7 +423,7 @@ class Lengow_Action {
 		}
 		// check foreach action if it's complete.
 		foreach ( $active_actions as $action ) {
-			$action_id = (int) $action->action_id;
+			$action_id = (int) $action->{self::FIELD_ACTION_ID};
 			if ( ! isset( $api_actions[ $action_id ] ) ) {
 				continue;
 			}
@@ -428,8 +435,8 @@ class Lengow_Action {
 						continue;
 					}
 					// finish action in lengow_action table.
-					self::finish_action( $action->id );
-					$order_lengow_id = Lengow_Order::get_id_from_order_id( $action->order_id );
+					self::finish_action( $action_id );
+					$order_lengow_id = Lengow_Order::get_id_from_order_id( $action->{self::FIELD_ORDER_ID} );
 					$order_lengow    = new Lengow_Order( $order_lengow_id );
 					// finish all order logs send.
 					Lengow_Order_Error::finish_order_errors( $order_lengow->id, Lengow_Order_Error::ERROR_TYPE_SEND );
@@ -492,8 +499,8 @@ class Lengow_Action {
 		if ( $actions ) {
 			foreach ( $actions as $action ) {
 				// finish action in lengow_action table.
-				self::finish_action( $action->id );
-				$order_lengow_id = Lengow_Order::get_id_from_order_id( $action->order_id );
+				self::finish_action( $action->{self::FIELD_ID} );
+				$order_lengow_id = Lengow_Order::get_id_from_order_id( $action->{self::FIELD_ORDER_ID} );
 				$order_lengow    = new Lengow_Order( $order_lengow_id );
 				// finish all order logs send.
 				Lengow_Order_Error::finish_order_errors( $order_lengow->id, Lengow_Order_Error::ERROR_TYPE_SEND );
@@ -570,7 +577,7 @@ class Lengow_Action {
 		$unsent_orders = Lengow_Order::get_unsent_orders();
 		if ( $unsent_orders ) {
 			foreach ( $unsent_orders as $unsent_order ) {
-				if ( ! self::get_active_action_by_order_id( $unsent_order->order_id ) ) {
+				if ( ! self::get_action_by_order_id( $unsent_order->order_id, true ) ) {
 					$canceled_state = Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED );
 					$action         = $canceled_state === $unsent_order->order_status
 						? self::TYPE_CANCEL
