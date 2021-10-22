@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -43,114 +43,35 @@ class Lengow_Connector {
 	// const LENGOW_API_URL = 'https://api.lengow.io';
 	const LENGOW_API_URL = 'https://api.lengow.net';
 
-	/**
-	 * @var string url of access token API.
-	 */
+	/* Lengow API routes */
 	const API_ACCESS_TOKEN = '/access/get_token';
-
-	/**
-	 * @var string url of order API.
-	 */
 	const API_ORDER = '/v3.0/orders';
-
-	/**
-	 * @var string url of order merchant order id API.
-	 */
 	const API_ORDER_MOI = '/v3.0/orders/moi/';
-
-	/**
-	 * @var string url of order action API.
-	 */
 	const API_ORDER_ACTION = '/v3.0/orders/actions/';
-
-	/**
-	 * @var string url of marketplace API.
-	 */
 	const API_MARKETPLACE = '/v3.0/marketplaces';
-
-	/**
-	 * @var string url of plan API.
-	 */
 	const API_PLAN = '/v3.0/plans';
-
-	/**
-	 * @var string url of cms API.
-	 */
 	const API_CMS = '/v3.1/cms';
-
-	/**
-	 * @var string url of cms catalog API.
-	 */
 	const API_CMS_CATALOG = '/v3.1/cms/catalogs/';
-
-	/**
-	 * @var string url of cms mapping API.
-	 */
 	const API_CMS_MAPPING = '/v3.1/cms/mapping/';
-
-	/**
-	 * @var string url of plugin API.
-	 */
 	const API_PLUGIN = '/v3.0/plugins';
 
-	/**
-	 * @var string request GET.
-	 */
+	/* Request actions */
 	const GET = 'GET';
-
-	/**
-	 * @var string request POST.
-	 */
 	const POST = 'POST';
-
-	/**
-	 * @var string request PUT.
-	 */
 	const PUT = 'PUT';
-
-	/**
-	 * @var string request PATCH.
-	 */
 	const PATCH = 'PATCH';
 
-	/**
-	 * @var string json format return.
-	 */
+	/* Return formats */
 	const FORMAT_JSON = 'json';
-
-	/**
-	 * @var string stream format return.
-	 */
 	const FORMAT_STREAM = 'stream';
 
-	/**
-	 * @var string success code.
-	 */
+	/* Http codes */
 	const CODE_200 = 200;
-
-	/**
-	 * @var string success create code.
-	 */
 	const CODE_201 = 201;
-
-	/**
-	 * @var string unauthorized access code.
-	 */
 	const CODE_401 = 401;
-
-	/**
-	 * @var string forbidden access code.
-	 */
 	const CODE_403 = 403;
-
-	/**
-	 * @var string error server code.
-	 */
+	const CODE_404 = 404;
 	const CODE_500 = 500;
-
-	/**
-	 * @var string timeout server code.
-	 */
 	const CODE_504 = 504;
 
 	/**
@@ -253,7 +174,7 @@ class Lengow_Connector {
 			return false;
 		}
 		list( $account_id, $access_token, $secret ) = Lengow_Configuration::get_access_id();
-		if ( null === $account_id || 0 === $account_id || ! is_numeric( $account_id ) ) {
+		if ( null === $account_id ) {
 			return false;
 		}
 		$connector = new Lengow_Connector( $access_token, $secret );
@@ -299,7 +220,9 @@ class Lengow_Connector {
 			}
 			$connector = new Lengow_Connector( $access_token, $secret );
 			$type      = strtolower( $type );
-			$args      = $authorization_required ? array_merge( array( 'account_id' => $account_id ), $args ) : $args;
+			$args      = $authorization_required
+				? array_merge( array( Lengow_Import::ARG_ACCOUNT_ID => $account_id ), $args )
+				: $args;
 			$results   = $connector->$type( $api, $args, self::FORMAT_STREAM, $body, $log_output );
 		} catch ( Lengow_Exception $e ) {
 			$message = Lengow_Main::decode_log_message( $e->getMessage(), Lengow_Translation::DEFAULT_ISO_CODE );

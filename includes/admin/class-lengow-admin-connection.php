@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -65,7 +65,7 @@ class Lengow_Admin_Connection {
 					include 'views/connection/html-admin-connection-cms-result.php';
 					break;
 				case 'go_to_catalog':
-					$retry = isset( $_POST['retry'] ) ? $_POST['retry'] !== 'false' : false;
+					$retry = isset( $_POST['retry'] ) && $_POST['retry'] !== 'false';
 					if ( $retry ) {
 						Lengow_Configuration::reset_catalog_ids();
 					}
@@ -148,6 +148,7 @@ class Lengow_Admin_Connection {
 		// reset access ids if cms creation failed
 		if ( ! $cms_connected ) {
 			Lengow_Configuration::reset_access_ids();
+			Lengow_Configuration::reset_authorization_token();
 		}
 
 		return $cms_connected;

@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -52,9 +52,9 @@ class Lengow_Sync {
 	const LINK_TYPE_SUPPORT = 'support';
 
 	/* Default plugin links */
-	const LINK_HELP_CENTER = 'https://support.lengow.com/kb/guide/en/woocommerce-rMVnXfZXmr/Steps/25873';
-	const LINK_CHANGELOG = 'https://support.lengow.com/kb/guide/en/woocommerce-rMVnXfZXmr/Steps/25873,113494,257787';
-	const LINK_UPDATE_GUIDE = 'https://support.lengow.com/kb/guide/en/woocommerce-rMVnXfZXmr/Steps/25873,123328';
+	const LINK_HELP_CENTER = 'https://support.lengow.com/kb/guide/en/rMVnXfZXmr';
+	const LINK_CHANGELOG = 'https://support.lengow.com/kb/guide/en/FERYtyLbe4';
+	const LINK_UPDATE_GUIDE = 'https://support.lengow.com/kb/guide/en/rMVnXfZXmr/Steps/25873,123328';
 	const LINK_SUPPORT = 'https://help-support.lengow.com/hc/en-us/requests/new';
 
 	/* Api iso codes */
@@ -410,9 +410,7 @@ class Lengow_Sync {
 					if ( ! empty( $plugin->links ) ) {
 						foreach ( $plugin->links as $link ) {
 							if ( array_key_exists( $link->language->iso_a2, self::$generic_iso_codes ) ) {
-								$generic_iso_code                                      = self::$generic_iso_codes[
-									$link->language->iso_a2
-								];
+								$generic_iso_code                                      = self::$generic_iso_codes[ $link->language->iso_a2 ];
 								$plugin_links[ $generic_iso_code ][ $link->link_type ] = $link->link;
 							}
 						}

@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -30,6 +30,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Lengow_Product Class.
  */
 class Lengow_Product {
+
+	/**
+	 * @var string Lengow product table name
+	 */
+	const TABLE_PRODUCT = 'lengow_product';
+
+	/* Product fields */
+	const FIELD_ID = 'id';
+	const FIELD_PRODUCT_ID = 'product_id';
 
 	/**
 	 * @var array default fields for export.
@@ -154,7 +163,7 @@ class Lengow_Product {
 	 *
 	 */
 	public static function get( $where = array(), $single = true ) {
-		return Lengow_Crud::read( Lengow_Crud::LENGOW_PRODUCT, $where, $single );
+		return Lengow_Crud::read( self::TABLE_PRODUCT, $where, $single );
 	}
 
 	/**
@@ -166,7 +175,7 @@ class Lengow_Product {
 	 *
 	 */
 	public static function create( $data = array() ) {
-		return Lengow_Crud::create( Lengow_Crud::LENGOW_PRODUCT, $data );
+		return Lengow_Crud::create( self::TABLE_PRODUCT, $data );
 	}
 
 	/**
@@ -178,7 +187,7 @@ class Lengow_Product {
 	 *
 	 */
 	public static function delete( $where = array() ) {
-		return Lengow_Crud::delete( Lengow_Crud::LENGOW_PRODUCT, $where );
+		return Lengow_Crud::delete( self::TABLE_PRODUCT, $where );
 	}
 
 	/**
@@ -421,7 +430,7 @@ class Lengow_Product {
 	 * Get thumbnail id.
 	 *
 	 * @param integer $product_id WooCommerce product id
-	 * @param integer|null $variation_id WooCommerce variation id
+	 * @param integer|null $variation_id WooCommerce's variation id
 	 * @param string $product_type WooCommerce product type
 	 *
 	 * @return integer
@@ -433,7 +442,7 @@ class Lengow_Product {
 			$variation_thumbnail_id = get_post_thumbnail_id( $variation_id );
 		}
 
-		return (int) ( $variation_thumbnail_id ? $variation_thumbnail_id : $thumbnail_id );
+		return (int) ( $variation_thumbnail_id ?: $thumbnail_id );
 
 	}
 
@@ -553,7 +562,7 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Match product with API datas.
+	 * Match product with API data.
 	 *
 	 * @param mixed $product_data all product data
 	 * @param string $marketplace_sku Lengow id of current order
@@ -684,11 +693,11 @@ class Lengow_Product {
 	 */
 	public static function publish( $product_id, $value ) {
 		if ( ! $value ) {
-			self::delete( array( 'product_id' => ( (int) $product_id ) ) );
+			self::delete( array( self::FIELD_PRODUCT_ID => ( (int) $product_id ) ) );
 		} else {
-			$result = self::get( array( 'product_id' => ( (int) $product_id ) ) );
+			$result = self::get( array( self::FIELD_PRODUCT_ID => ( (int) $product_id ) ) );
 			if ( ! $result ) {
-				self::create( array( 'product_id' => ( (int) $product_id ) ) );
+				self::create( array( self::FIELD_PRODUCT_ID => ( (int) $product_id ) ) );
 			}
 		}
 
@@ -704,7 +713,7 @@ class Lengow_Product {
 		$results  = self::get( array(), false );
 		$products = array();
 		foreach ( $results as $value ) {
-			$products[ $value->product_id ] = $value->product_id;
+			$products[ $value->{self::FIELD_PRODUCT_ID} ] = $value->{self::FIELD_PRODUCT_ID};
 		}
 
 		return $products;
@@ -718,7 +727,7 @@ class Lengow_Product {
 	 * @return boolean
 	 */
 	public static function is_lengow_product( $product_id ) {
-		$result = self::get( array( 'product_id' => ( (int) $product_id ) ) );
+		$result = self::get( array( self::FIELD_PRODUCT_ID => ( (int) $product_id ) ) );
 		if ( $result ) {
 			return true;
 		}
@@ -752,11 +761,11 @@ class Lengow_Product {
 			$product_id            = 'variation' === $this->_product_type ? $this->_variation_id : $this->_product_id;
 			$sale_price_dates_from = get_post_meta( $product_id, '_sale_price_dates_from', true );
 			$start_date            = '' !== $sale_price_dates_from
-				? get_date_from_gmt( date( 'Y-m-d H:i:s', $sale_price_dates_from ) )
+				? get_date_from_gmt( date( Lengow_Main::DATE_FULL, $sale_price_dates_from ) )
 				: '';
 			$sale_price_dates_to   = get_post_meta( $product_id, '_sale_price_dates_to', true );
 			$end_date              = '' !== $sale_price_dates_to
-				? get_date_from_gmt( date( 'Y-m-d H:i:s', $sale_price_dates_to ) )
+				? get_date_from_gmt( date( Lengow_Main::DATE_FULL, $sale_price_dates_to ) )
 				: '';
 		}
 
@@ -1049,12 +1058,13 @@ class Lengow_Product {
 		if ( null !== $name ) {
 			$product_id = null !== $this->_variation_id ? $this->_variation_id : $this->_product_id;
 			$post_meta  = get_post_meta( $product_id, $name );
-			// if post_meta[0] is an object, it mean it surely came from another plugin and not woocommerce itself
-            // we cannot know what is in the object so we return empty string
-            if ( is_object( $post_meta[0] ) ) {
-                return '';
-            }
 			if ( isset( $post_meta[0] ) ) {
+				// if post_meta[0] is an object, it mean it surely came from another plugin and not woocommerce itself
+				// we cannot know what is in the object so we return empty string
+				if ( is_object( $post_meta[0] ) ) {
+					return '';
+				}
+
 				return is_array( $post_meta[0] ) ? json_encode( $post_meta[0] ) : $post_meta[0];
 			}
 		}

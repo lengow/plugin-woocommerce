@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -59,7 +59,7 @@ class Lengow_Log {
 	 */
 	public function __construct( $file_name = null ) {
 		if ( empty( $file_name ) ) {
-			$file_name = 'logs-' . date( 'Y-m-d' ) . '.txt';
+			$file_name = 'logs-' . date( Lengow_Main::DATE_DAY ) . '.txt';
 		}
 		$this->_file = new Lengow_File( Lengow_Main::FOLDER_LOG, $file_name );
 	}
@@ -74,7 +74,7 @@ class Lengow_Log {
 	 */
 	public function write( $category, $message = '', $display = false, $marketplace_sku = null ) {
 		$decoded_message = Lengow_Main::decode_log_message( $message, Lengow_Translation::DEFAULT_ISO_CODE );
-		$log             = get_date_from_gmt( date( 'Y-m-d H:i:s' ) );
+		$log             = get_date_from_gmt( date( Lengow_Main::DATE_FULL ) );
 		$log             .= ' - ' . ( empty( $category ) ? '' : '[' . $category . '] ' );
 		$log             .= '' . ( empty( $marketplace_sku ) ? '' : 'order ' . $marketplace_sku . ' : ' );
 		$log             .= $decoded_message . "\r\n";
@@ -111,8 +111,8 @@ class Lengow_Log {
 			$logs[] = array(
 				self::LOG_DATE => $date,
 				self::LOG_LINK => Lengow_Main::get_toolbox_url()
-				          . '&' . Lengow_Toolbox::PARAM_TOOLBOX_ACTION . '=' . Lengow_Toolbox::ACTION_LOG
-				          . '&' . Lengow_Toolbox::PARAM_DATE . '=' . urlencode( $date ),
+				                  . '&' . Lengow_Toolbox::PARAM_TOOLBOX_ACTION . '=' . Lengow_Toolbox::ACTION_LOG
+				                  . '&' . Lengow_Toolbox::PARAM_DATE . '=' . urlencode( $date ),
 			);
 		}
 

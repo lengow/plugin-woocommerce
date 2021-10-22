@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -33,13 +33,15 @@ class Lengow_Box_Order_Info {
 	/**
 	 * Display Lengow Box Order infos.
 	 *
-	 * @param WP_Post $post Wordpress Post instance
+	 * @param WP_Post $post WordPress Post instance
 	 */
 	public static function html_display( $post ) {
 		try {
 			$order_lengow_id = Lengow_Order::get_id_from_order_id( $post->ID );
-			$order_lengow    = New Lengow_Order( $order_lengow_id );
+			$order_lengow    = new Lengow_Order( $order_lengow_id );
 			$can_send_action = $order_lengow->can_resend_action();
+			$imported_at     = Lengow_Order::get_date_imported( $order_lengow->order_id );
+			$imported_date   = $imported_at ?: $order_lengow->created_at;
 			$action_type     = false;
 			if ( $can_send_action ) {
 				$order        = new WC_Order( $order_lengow->order_id );
@@ -62,7 +64,7 @@ class Lengow_Box_Order_Info {
 	public function post_process() {
 		$data         = array();
 		$action       = $_POST['do_action'];
-		$order_lengow = New Lengow_Order( (int) $_POST['order_lengow_id'] );
+		$order_lengow = new Lengow_Order( (int) $_POST['order_lengow_id'] );
 		switch ( $action ) {
 			case 'resend_ship':
 				$data['success'] = $order_lengow->call_action( Lengow_Action::TYPE_SHIP );

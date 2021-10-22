@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -31,6 +31,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Lengow_Feed {
 
+	/* Feed formats */
+	const FORMAT_CSV = 'csv';
+	const FORMAT_YAML = 'yaml';
+	const FORMAT_XML = 'xml';
+	const FORMAT_JSON = 'json';
+
+	/* Content types */
+	const HEADER = 'header';
+	const BODY = 'body';
+	const FOOTER = 'footer';
+
 	/**
 	 * @var string  CSV protection.
 	 */
@@ -45,41 +56,6 @@ class Lengow_Feed {
 	 * @var string end of line.
 	 */
 	const EOL = "\r\n";
-
-	/**
-	 * @var string csv format.
-	 */
-	const FORMAT_CSV = 'csv';
-
-	/**
-	 * @var string yaml format.
-	 */
-	const FORMAT_YAML = 'yaml';
-
-	/**
-	 * @var string xml format.
-	 */
-	const FORMAT_XML = 'xml';
-
-	/**
-	 * @var string json format.
-	 */
-	const FORMAT_JSON = 'json';
-
-	/**
-	 * @var string header content.
-	 */
-	const HEADER = 'header';
-
-	/**
-	 * @var string body content.
-	 */
-	const BODY = 'body';
-
-	/**
-	 * @var string footer content.
-	 */
-	const FOOTER = 'footer';
 
 	/**
 	 * @var Lengow_File temporary export file.
@@ -275,9 +251,9 @@ class Lengow_Feed {
 				return $content;
 			case self::FORMAT_YAML:
 				if ( 1 === $max_character % 2 ) {
-					$max_character = $max_character + 1;
+					++ $max_character;
 				} else {
-					$max_character = $max_character + 2;
+					$max_character += 2;
 				}
 				$content = '  ' . self::PROTECTION . 'product' . self::PROTECTION . ':' . self::EOL;
 				foreach ( $data as $field => $value ) {
@@ -324,7 +300,7 @@ class Lengow_Feed {
 	/**
 	 * Finalize export generation.
 	 *
-	 * @return string|boolean
+	 * @return boolean
 	 *
 	 * @throws Lengow_Exception
 	 */
@@ -381,6 +357,7 @@ class Lengow_Feed {
 						)
 					);
 				}
+
 				return strtolower(
 					substr(
 						preg_replace(

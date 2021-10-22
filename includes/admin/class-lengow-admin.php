@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -131,14 +131,14 @@ class Lengow_Admin {
 	 *
 	 * @return boolean
 	 */
-	private function _show_plugin_upgrade_modal()
-	{
+	private function _show_plugin_upgrade_modal() {
 		// never display the upgrade modal during the connection process
-		$updated_at = Lengow_Configuration::get(Lengow_Configuration::LAST_UPDATE_PLUGIN_MODAL);
-		if ($updated_at !== null && (time() - (int) $updated_at) < 86400) {
+		$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_PLUGIN_MODAL );
+		if ( $updated_at !== null && ( time() - (int) $updated_at ) < 86400 ) {
 			return false;
 		}
-		Lengow_Configuration::update_value(Lengow_Configuration::LAST_UPDATE_PLUGIN_MODAL, time());
+		Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_PLUGIN_MODAL, time() );
+
 		return true;
 	}
 }

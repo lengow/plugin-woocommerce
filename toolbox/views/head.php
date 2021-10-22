@@ -2,6 +2,7 @@
 define( 'WP_USE_THEMES', false );
 require( dirname( dirname( dirname( dirname( dirname( $_SERVER["SCRIPT_FILENAME"] ) ) ) ) ) . '/wp-load.php' );
 require_once( '../lengow.php' );
+require_once( '../includes/class-lengow-action.php' );
 require_once( '../includes/class-lengow-configuration.php' );
 require_once( '../includes/class-lengow-crud.php' );
 require_once( '../includes/class-lengow-export.php' );
@@ -10,6 +11,8 @@ require_once( '../includes/class-lengow-file.php' );
 require_once( '../includes/class-lengow-import.php' );
 require_once( '../includes/class-lengow-log.php' );
 require_once( '../includes/class-lengow-main.php' );
+require_once( '../includes/class-lengow-order-error.php' );
+require_once( '../includes/class-lengow-order-line.php' );
 require_once( '../includes/class-lengow-toolbox.php' );
 require_once( '../includes/class-lengow-toolbox-element.php' );
 require_once( '../includes/class-lengow-translation.php' );

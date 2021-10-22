@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -157,7 +157,9 @@ class Lengow_Toolbox_Element {
 			$last_import_type = $this->_locale->t( 'toolbox.index.last_import_none' );
 		} else {
 			$last_import_date          = Lengow_Main::get_date_in_correct_format( $last_synchronization, true );
-			$last_synchronization_type = $synchronization_data[ Lengow_Toolbox::SYNCHRONIZATION_LAST_SYNCHRONIZATION_TYPE ];
+			$last_synchronization_type = $synchronization_data[
+				Lengow_Toolbox::SYNCHRONIZATION_LAST_SYNCHRONIZATION_TYPE
+			];
 			if ( Lengow_Import::TYPE_CRON === $last_synchronization_type ) {
 				$last_import_type = $this->_locale->t( 'toolbox.index.last_import_cron' );
 			} else {
@@ -214,7 +216,7 @@ class Lengow_Toolbox_Element {
 	}
 
 	/**
-	 * Get array of requirements and their status, no multi-store on wordpress.
+	 * Get array of requirements and their status, no multi-store on WordPress.
 	 *
 	 * @return string
 	 */

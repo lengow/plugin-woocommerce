@@ -2,9 +2,9 @@
 Contributors: lengowcompany
 Tags: woocommerce, ecommerce, feed, orders, marketplace, amazon, google shopping, facebook, product catalog, feed management, lengow
 Requires at least: 3.5
-Tested up to: 5.7
+Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 2.4.1
+Stable tag: 2.5.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -45,6 +45,10 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 
 == Changelog ==
 
+= 2.5.0 - 2021-10-26 =
+* Feature: Integration of order synchronization in the toolbox webservice
+* Feature: Retrieving the status of an order in the toolbox webservice
+
 = 2.4.1 - 2021-07-19 =
 * Feature: Outsourcing of the toolbox via webservice
 * Feature: Setting up a modal for the plugin update
@@ -61,7 +65,7 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 * Feature: Adding new links to the Lengow Help Center and Support
 * Feature: B2B orders can now be imported without taxes (optional)
 * Bugfix: [import] Handling of b2b order shipping tax
-* Bugfix: New security for Wordpress version 5.5.x
+* Bugfix: New security for WordPress version 5.5.x
 * Bugfix: [export] Checks if the child description is empty or null
 * Bugfix: Always load iframe over https
 

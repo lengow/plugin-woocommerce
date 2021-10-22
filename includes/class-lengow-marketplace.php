@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -186,11 +186,8 @@ class Lengow_Marketplace {
 	 */
 	public static function marketplace_exist( $name ) {
 		self::load_api_marketplace();
-		if ( self::$marketplaces && isset( self::$marketplaces->{$name} ) ) {
-			return true;
-		}
 
-		return false;
+		return self::$marketplaces && isset( self::$marketplaces->{$name} );
 	}
 
 	/**
@@ -244,11 +241,8 @@ class Lengow_Marketplace {
 	 */
 	public function argument_is_required( $argument, $action = Lengow_Action::TYPE_SHIP ) {
 		$actions = $this->get_action( $action );
-		if ( isset( $actions['args'] ) && in_array( $argument, $actions['args'] ) ) {
-			return true;
-		}
 
-		return false;
+		return isset( $actions['args'] ) && in_array( $argument, $actions['args'], true );
 	}
 
 	/**
@@ -262,8 +256,9 @@ class Lengow_Marketplace {
 		     || array_key_exists( Lengow_Action::ARG_CUSTOM_CARRIER, $marketplace_arguments )
 		) {
 			return true;
-		} elseif ( array_key_exists( Lengow_Action::ARG_CARRIER, $this->arg_values )
-		           && $this->arg_values[ Lengow_Action::ARG_CARRIER ]['accept_free_values']
+		}
+		if ( array_key_exists( Lengow_Action::ARG_CARRIER, $this->arg_values )
+		     && $this->arg_values[ Lengow_Action::ARG_CARRIER ]['accept_free_values']
 		) {
 			return true;
 		}
@@ -279,14 +274,15 @@ class Lengow_Marketplace {
 	public function custom_carrier_is_required() {
 		$actions = $this->get_action( Lengow_Action::TYPE_SHIP );
 		if ( isset( $actions['args'] ) &&
-		     ( in_array( Lengow_Action::ARG_CARRIER_NAME, $actions['args'] )
-		       || in_array( Lengow_Action::ARG_CUSTOM_CARRIER, $actions['args'] )
+		     ( in_array( Lengow_Action::ARG_CARRIER_NAME, $actions['args'], true )
+		       || in_array( Lengow_Action::ARG_CUSTOM_CARRIER, $actions['args'], true )
 		     )
 		) {
 			return true;
-		} elseif ( isset( $actions['args'] )
-		           && in_array( Lengow_Action::ARG_CARRIER, $actions['args'] )
-		           && $this->arg_values[ Lengow_Action::ARG_CARRIER ]['accept_free_values']
+		}
+		if ( isset( $actions['args'] )
+		     && $this->arg_values[ Lengow_Action::ARG_CARRIER ]['accept_free_values']
+		     && in_array( Lengow_Action::ARG_CARRIER, $actions['args'], true )
 		) {
 			return true;
 		}
@@ -323,12 +319,12 @@ class Lengow_Marketplace {
 		if ( isset( $this->actions[ $action ] ) ) {
 			$actions = $this->actions[ $action ];
 			if ( isset( $actions['args'] ) && is_array( $actions['args'] ) ) {
-				if ( in_array( Lengow_Action::ARG_LINE, $actions['args'] ) ) {
+				if ( in_array( Lengow_Action::ARG_LINE, $actions['args'], true ) ) {
 					return true;
 				}
 			}
 			if ( isset( $actions['optional_args'] ) && is_array( $actions['optional_args'] ) ) {
-				if ( in_array( Lengow_Action::ARG_LINE, $actions['optional_args'] ) ) {
+				if ( in_array( Lengow_Action::ARG_LINE, $actions['optional_args'], true ) ) {
 					return true;
 				}
 			}
@@ -346,7 +342,7 @@ class Lengow_Marketplace {
 	 */
 	public function get_marketplace_arguments( $action ) {
 		$actions = $this->get_action( $action );
-		if ( isset( $actions['args'] ) && isset( $actions['optional_args'] ) ) {
+		if ( isset( $actions['args'], $actions['optional_args'] ) ) {
 			$marketplace_arguments = array_merge( $actions['args'], $actions['optional_args'] );
 		} elseif ( ! isset( $actions['args'] ) && isset( $actions['optional_args'] ) ) {
 			$marketplace_arguments = $actions['optional_args'];
@@ -387,9 +383,9 @@ class Lengow_Marketplace {
 			if ( ! is_null( $order_line_id ) ) {
 				$params[ Lengow_Action::ARG_LINE ] = $order_line_id;
 			}
-			$params['marketplace_order_id']           = $order_lengow->marketplace_sku;
-			$params['marketplace']                    = $order_lengow->marketplace_name;
-			$params[ Lengow_Action::ARG_ACTION_TYPE ] = $action;
+			$params[ Lengow_Import::ARG_MARKETPLACE_ORDER_ID ] = $order_lengow->marketplace_sku;
+			$params[ Lengow_Import::ARG_MARKETPLACE ]          = $order_lengow->marketplace_name;
+			$params[ Lengow_Action::ARG_ACTION_TYPE ]          = $action;
 			// checks whether the action is already created to not return an action.
 			$can_send_action = Lengow_Action::can_send_action( $params, $order_lengow );
 			if ( $can_send_action ) {
@@ -399,7 +395,7 @@ class Lengow_Marketplace {
 		} catch ( Lengow_Exception $e ) {
 			$error_message = $e->getMessage();
 		} catch ( Exception $e ) {
-			$error_message = '[WooCommerce Error] "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
+			$error_message = '[WooCommerce Error]: "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
 		}
 		if ( isset( $error_message ) ) {
 			Lengow_Order::add_order_error( $order_lengow->id, $error_message, Lengow_Order_Error::ERROR_TYPE_SEND );
@@ -428,7 +424,7 @@ class Lengow_Marketplace {
 	 * @throws Lengow_Exception action not valid / marketplace action not present
 	 */
 	private function _check_action( $action ) {
-		if ( ! in_array( $action, self::$valid_actions ) ) {
+		if ( ! in_array( $action, self::$valid_actions, true ) ) {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message( 'lengow_log.exception.action_not_valid', array( 'action' => $action ) )
 			);
@@ -451,12 +447,12 @@ class Lengow_Marketplace {
 	 * @throws Lengow_Exception marketplace sku is required / marketplace name is required
 	 */
 	private function _check_order_data( $order_lengow ) {
-		if ( 0 === strlen( $order_lengow->marketplace_sku ) ) {
+		if ( '' === $order_lengow->marketplace_sku ) {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message( 'lengow_log.exception.marketplace_sku_require' )
 			);
 		}
-		if ( 0 === strlen( $order_lengow->marketplace_name ) ) {
+		if ( '' === $order_lengow->marketplace_name ) {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message( 'lengow_log.exception.marketplace_name_require' )
 			);
@@ -473,17 +469,17 @@ class Lengow_Marketplace {
 	 * @return array
 	 */
 	private function _get_all_params( $action, $order_lengow, $marketplace_arguments ) {
-		$params         = [];
+		$params         = array();
 		$actions        = $this->get_action( $action );
 		$order_id       = $order_lengow->order_id;
 		$carrier        = (string) get_post_meta( $order_id, '_lengow_carrier', true );
 		$custom_carrier = (string) get_post_meta( $order_id, '_lengow_custom_carrier', true );
-		if ( null !== $order_lengow->carrier && strlen( $order_lengow->carrier ) > 0 ) {
+		if ( null !== $order_lengow->carrier && '' !== $order_lengow->carrier ) {
 			$carrier_code = $order_lengow->carrier;
 		} else {
-			$carrier_code = strlen( $carrier ) > 0 ? $carrier : $custom_carrier;
+			$carrier_code = '' !== $carrier ? $carrier : $custom_carrier;
 		}
-		// get all order informations.
+		// get all order data.
 		foreach ( $marketplace_arguments as $arg ) {
 			switch ( $arg ) {
 				case Lengow_Action::ARG_TRACKING_NUMBER:
@@ -505,14 +501,14 @@ class Lengow_Marketplace {
 					break;
 				case Lengow_Action::ARG_SHIPPING_DATE:
 				case Lengow_Action::ARG_DELIVERY_DATE:
-					$params[ $arg ] = get_date_from_gmt( date( 'Y-m-d H:i:s' ), 'c' );
+					$params[ $arg ] = get_date_from_gmt( date( Lengow_Main::DATE_FULL ), Lengow_Main::DATE_ISO_8601 );
 					break;
 				default:
-					if ( isset( $actions['optional_args'] ) && in_array( $arg, $actions['optional_args'] ) ) {
+					if ( isset( $actions['optional_args'] ) && in_array( $arg, $actions['optional_args'], true ) ) {
 						break;
 					}
 					$default_value  = $this->get_default_value( $arg );
-					$param_value    = $default_value ? $default_value : $arg . ' not available';
+					$param_value    = $default_value ?: $arg . ' not available';
 					$params[ $arg ] = $param_value;
 					break;
 			}
@@ -535,7 +531,7 @@ class Lengow_Marketplace {
 		$actions = $this->get_action( $action );
 		if ( isset( $actions['args'] ) ) {
 			foreach ( $actions['args'] as $arg ) {
-				if ( ! isset( $params[ $arg ] ) || 0 === strlen( $params[ $arg ] ) ) {
+				if ( ! isset( $params[ $arg ] ) || '' === $params[ $arg ] ) {
 					throw new Lengow_Exception(
 						Lengow_Main::set_log_message(
 							'lengow_log.exception.arg_is_required',
@@ -547,7 +543,7 @@ class Lengow_Marketplace {
 		}
 		if ( isset( $actions['optional_args'] ) ) {
 			foreach ( $actions['optional_args'] as $arg ) {
-				if ( isset( $params[ $arg ] ) && 0 === strlen( $params[ $arg ] ) ) {
+				if ( isset( $params[ $arg ] ) && '' === $params[ $arg ] ) {
 					unset( $params[ $arg ] );
 				}
 			}

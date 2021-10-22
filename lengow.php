@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -26,7 +26,7 @@
  * Plugin Name: Lengow for WooCommerce
  * Plugin URI: https://www.lengow.com/integrations/woocommerce/
  * Description: Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
- * Version: 2.4.1
+ * Version: 2.5.0
  * Author: Lengow
  * Author URI: https://www.lengow.com
  * Requires at least: 3.5
@@ -59,7 +59,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		/**
 		 * @var string current version of plugin.
 		 */
-		public $version = '2.4.1';
+		public $version = '2.5.0';
 
 		/**
 		 * @var string plugin name.
@@ -185,7 +185,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				if ( Lengow_Main::compare_version( '2.2' ) ) {
 					$this->init_lengow_technical_error_status();
 				}
-				// check logs download to prevent the occurrence of the wordpress html header.
+				// check logs download to prevent the occurrence of the WordPress html header.
 				$download = null;
 				if ( isset( $_GET['action'] ) ) {
 					$download = $_GET['action'];
@@ -326,7 +326,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 
 		/**
-		 * Remove Wordpress's updates messages.
+		 * Remove WordPress's updates messages.
 		 *
 		 * @return object
 		 */

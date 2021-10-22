@@ -6,7 +6,7 @@
 * Recetter sa feature sur les versions 3.5.x et 5.6.x de WordPress :
 * Pas de modification de comportement de fonction :
 * Principe SOLID (au moins le S) :
-* Coding Style (Wordpress) :
+* Coding Style (WordPress) :
 * Documentation Phpdoc au niveau du code :
 * Mise en place de log :
 * Mise en place de traductions :
@@ -31,7 +31,7 @@ Attention à ne pas modifier le comportement des fonctions déjà présentes
 * http://afsy.fr/avent/2013/02-principes-stupid-solid-poo
 * https://fr.wikipedia.org/wiki/SOLID_(informatique)
 
-### Coding Style (Wordpress) ###
+### Coding Style (WordPress) ###
 * https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/
 
 ### Documentation Phpdoc au niveau du code ###

@@ -47,7 +47,7 @@ $tracking_url    = get_post_meta( $post->ID, '_lengow_tracking_url', true );
             <li>
                 <label for="lengow_carrier">
 					<?php echo $locale->t( 'meta_box.order_shipping.carrier' ); ?>
-					<?php if ( $marketplace->argument_is_required( 'carrier' ) ) : ?>
+					<?php if ( $marketplace->argument_is_required( Lengow_Action::ARG_CARRIER ) ) : ?>
                         <span class="required">(<?php echo $locale->t( 'meta_box.order_shipping.required' ); ?>)</span>
 					<?php endif; ?>
                     :

@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * at your option) any later version.
+ * (at your option) any later version.
  *
  * It is available through the world-wide-web at this URL:
  * https://www.gnu.org/licenses/gpl-3.0
@@ -23,24 +23,25 @@
 
 /**
  * List params
- * string  sync                Number of products exported
- * integer days                Import period
- * integer limit               Number of orders to import
- * string  marketplace_sku     Lengow marketplace order id to import
- * string  marketplace_name    Lengow marketplace name to import
- * string  created_from        import of orders since
- * string  created_to          import of orders until
- * integer delivery_address_id Lengow delivery address id to import
- * boolean force               Force synchronisation for a specific process
- * boolean debug_mode          Activate debug mode
- * boolean log_output          See logs (1) or not (0)
- * boolean get_sync            See synchronisation parameters in json format (1) or not (0)
+ * string  sync                Data type to synchronize
+ * integer days                Synchronization interval time
+ * integer limit               Maximum number of new orders created
+ * string  marketplace_sku     Lengow marketplace order id to synchronize
+ * string  marketplace_name    Lengow marketplace name to synchronize
+ * string  created_from        Synchronization of orders since
+ * string  created_to          Synchronization of orders until
+ * integer delivery_address_id Lengow delivery address id to synchronize
+ * boolean force_sync          Force synchronization order even if there are errors (1) or not (0)
+ * boolean force               Force synchronization for a specific process
+ * boolean debug_mode          Activate debug mode (1) or not (0)
+ * boolean log_output          Display log messages (1) or not (0)
+ * boolean get_sync            See synchronization parameters in json format (1) or not (0)
  */
 
 @set_time_limit( 0 );
 @ini_set( 'memory_limit', '512M' );
 
-// init wordpress.
+// init WordPress.
 require( dirname( dirname( dirname( dirname( dirname( $_SERVER['SCRIPT_FILENAME'] ) ) ) ) ) . '/wp-load.php' );
 
 // dependencies.
@@ -102,7 +103,7 @@ if ( isset( $_GET[ Lengow_Import::PARAM_GET_SYNC ] ) && 1 == $_GET[ Lengow_Impor
 	$log_output = isset( $_GET[ Lengow_Import::PARAM_LOG_OUTPUT ] ) && $_GET[ Lengow_Import::PARAM_LOG_OUTPUT ];
 	// get sync action if exists.
 	$sync = isset( $_GET[ Lengow_Import::PARAM_SYNC ] ) ? $_GET[ Lengow_Import::PARAM_SYNC ] : false;
-	// sync catalogs id between Lengow and WooCommerce.
+	// sync catalogs between Lengow and WooCommerce.
 	if ( ! $sync || Lengow_Sync::SYNC_CATALOG === $sync ) {
 		Lengow_Sync::sync_catalog( $force, $log_output );
 	}
@@ -113,6 +114,9 @@ if ( isset( $_GET[ Lengow_Import::PARAM_GET_SYNC ] ) && 1 == $_GET[ Lengow_Impor
 			Lengow_Import::PARAM_TYPE       => Lengow_Import::TYPE_CRON,
 			Lengow_Import::PARAM_LOG_OUTPUT => $log_output,
 		);
+		if ( isset( $_GET[ Lengow_Import::PARAM_FORCE_SYNC ] ) ) {
+			$params[ Lengow_Import::PARAM_FORCE_SYNC ] = (bool) $_GET[ Lengow_Import::PARAM_FORCE_SYNC ];
+		}
 		if ( isset( $_GET[ Lengow_Import::PARAM_DEBUG_MODE ] ) ) {
 			$params[ Lengow_Import::PARAM_DEBUG_MODE ] = (bool) $_GET[ Lengow_Import::PARAM_DEBUG_MODE ];
 		}
