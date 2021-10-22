@@ -4,7 +4,7 @@ Tags: woocommerce, ecommerce, feed, orders, marketplace, amazon, google shopping
 Requires at least: 3.5
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 2.4.1
+Stable tag: 2.5.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -45,7 +45,7 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 
 == Changelog ==
 
-= 2.5.0 - xxxx-xx-xx =
+= 2.5.0 - 2021-10-26 =
 * Feature: Integration of order synchronization in the toolbox webservice
 * Feature: Retrieving the status of an order in the toolbox webservice
 
