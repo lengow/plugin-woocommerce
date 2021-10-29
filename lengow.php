@@ -322,7 +322,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			);
 			wp_enqueue_script( 'lengow_admin_js' );
 			// must be added to instantiate admin-ajax.php.
-			wp_localize_script( 'lengow_admin_js', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+			wp_add_inline_script( 'lengow_admin_js', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
 		}
 
 		/**
