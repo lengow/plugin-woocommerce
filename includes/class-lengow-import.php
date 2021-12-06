@@ -585,7 +585,8 @@ class Lengow_Import {
 		} catch ( Lengow_Exception $e ) {
 			$error_message = $e->getMessage();
 		} catch ( Exception $e ) {
-			$error_message = '[WooCommerce error]: "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
+			$error_message = '[WooCommerce error]: "' . $e->getMessage()
+			                 . '" in ' . $e->getFile() . ' on line ' . $e->getLine();
 		}
 		if ( isset( $error_message ) ) {
 			if ( isset( $this->order_lengow_id ) && $this->order_lengow_id ) {
@@ -836,7 +837,7 @@ class Lengow_Import {
 					unset( $import_order, $result );
 				} catch ( Exception $e ) {
 					$error_message = '[WooCommerce error]: "' . $e->getMessage()
-					                 . '" ' . $e->getFile() . ' | ' . $e->getLine();
+					                 . '" in ' . $e->getFile() . ' on line ' . $e->getLine();
 					Lengow_Main::log(
 						Lengow_Log::CODE_IMPORT,
 						Lengow_Main::set_log_message(
