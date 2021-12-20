@@ -370,31 +370,30 @@ class Lengow_Import_Order {
 	private function order_error_already_exist() {
 		// if order error exists and not finished.
 		$order_error = Lengow_Order_Error::order_is_in_error( $this->marketplace_sku, $this->delivery_address_id );
-		if ( $order_error ) {
-			// force order synchronization by removing pending errors.
-			if ( $this->force_sync ) {
-				Lengow_Order_Error::finish_order_errors( $this->order_lengow_id );
-
-				return false;
-			}
-			$decoded_message = Lengow_Main::decode_log_message(
-				$order_error->{Lengow_Order_Error::FIELD_MESSAGE},
-				Lengow_Translation::DEFAULT_ISO_CODE
-			);
-			$message         = Lengow_Main::set_log_message(
-				'log.import.error_already_created',
-				array(
-					'decoded_message' => $decoded_message,
-					'date_message'    => get_date_from_gmt( $order_error->{Lengow_Order_Error::FIELD_CREATED_AT} ),
-				)
-			);
-			$this->errors[]  = Lengow_Main::decode_log_message( $message, Lengow_Translation::DEFAULT_ISO_CODE );
-			Lengow_Main::log( Lengow_Log::CODE_IMPORT, $message, $this->log_output, $this->marketplace_sku );
-
-			return true;
+		if ( ! $order_error ) {
+			return false;
 		}
+		// force order synchronization by removing pending errors.
+		if ( $this->force_sync ) {
+			Lengow_Order_Error::finish_order_errors( $this->order_lengow_id );
 
-		return false;
+			return false;
+		}
+		$decoded_message = Lengow_Main::decode_log_message(
+			$order_error->{Lengow_Order_Error::FIELD_MESSAGE},
+			Lengow_Translation::DEFAULT_ISO_CODE
+		);
+		$message         = Lengow_Main::set_log_message(
+			'log.import.error_already_created',
+			array(
+				'decoded_message' => $decoded_message,
+				'date_message'    => get_date_from_gmt( $order_error->{Lengow_Order_Error::FIELD_CREATED_AT} ),
+			)
+		);
+		$this->errors[]  = Lengow_Main::decode_log_message( $message, Lengow_Translation::DEFAULT_ISO_CODE );
+		Lengow_Main::log( Lengow_Log::CODE_IMPORT, $message, $this->log_output, $this->marketplace_sku );
+
+		return true;
 	}
 
 	/**
@@ -446,6 +445,7 @@ class Lengow_Import_Order {
 				$this->log_output,
 				$this->marketplace_sku
 			);
+			$order_updated = true;
 		}
 		unset( $order, $order_lengow );
 
@@ -932,7 +932,8 @@ class Lengow_Import_Order {
 		} catch ( Lengow_Exception $e ) {
 			$error_message = $e->getMessage();
 		} catch ( Exception $e ) {
-			$error_message = '[WooCommerce error]: "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
+			$error_message = '[WooCommerce error]: "' . $e->getMessage()
+			                 . '" in ' . $e->getFile() . ' on line ' . $e->getLine();
 		}
 		if ( ! isset( $error_message ) ) {
 			return true;

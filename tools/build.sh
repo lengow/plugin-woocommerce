@@ -96,6 +96,8 @@ remove_files $FOLDER_TMP ".git"
 remove_files $FOLDER_TMP ".DS_Store"
 # Remove .idea
 remove_files $FOLDER_TMP ".idea"
+# Remove Jenkinsfile
+remove_files $FOLDER_TMP "Jenkinsfile"
 # Clean Config Folder
 remove_files $FOLDER_CONFIG "marketplaces.json"
 # Clean Log Folder

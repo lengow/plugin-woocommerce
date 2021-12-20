@@ -1139,7 +1139,8 @@ class Lengow_Order {
 		} catch ( Lengow_Exception $e ) {
 			$error_message = $e->getMessage();
 		} catch ( Exception $e ) {
-			$error_message = '[WooCommerce error]: "' . $e->getMessage() . '" ' . $e->getFile() . ' | ' . $e->getLine();
+			$error_message = '[WooCommerce error]: "' . $e->getMessage()
+			                 . '" in ' . $e->getFile() . ' on line ' . $e->getLine();
 		}
 		if ( isset( $error_message ) ) {
 			self::add_order_error( $this->id, $error_message, Lengow_Order_Error::ERROR_TYPE_SEND );
