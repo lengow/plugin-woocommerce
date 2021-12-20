@@ -1,4 +1,4 @@
-/lengow.php|6365fba11d5e6a36ba47b6f6399162f4
+/lengow.php|96d170c2db9f67fe5db3e04e4b3a5492
 /config/index.php|d41d8cd98f00b204e9800998ecf8427e
 /assets/js/bootstrap_v3.min.js|5869c96cc8f19086aee625d670d741f9
 /assets/js/bootstrap-datepicker.js|a6999445e0d313c57e829feca6277155
@@ -357,7 +357,7 @@
 /includes/class-lengow-import.php|b4a6db290eb4580aff972e26b641441a
 /includes/class-lengow-order-error.php|a546976194bf50569b2cd52d1d95d327
 /includes/class-lengow-translation.php|130619e9fa70bd98fd293dcdb88b6bc9
-/languages/lengow-fr_FR.po|e31e8cff44a036855a2948b2a63ee7d4
+/languages/lengow-fr_FR.po|cd5e13c02fdc68a568a4a85b4760f3b7
 /languages/lengow-fr_FR.mo|c159535a9cf5b734a8bdb2d450e0971b
 /toolbox/index.php|9367514081f63f8c6dc7e2fc806e0cdd
 /toolbox/checksum.php|a7818b95f3c7cd1cfbe0f15e1560eb00

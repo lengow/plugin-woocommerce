@@ -45,6 +45,8 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 
 == Changelog ==
 
+= 2.5.2 - xxxx-xx-xx =
+
 = 2.5.1 - 2021-12-20 =
 * Bugfix: Loading of all dependencies in the webservices
 
