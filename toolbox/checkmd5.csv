@@ -370,6 +370,6 @@
 /upgrade/update_2.2.0.php|fc6a28f59d5b8330588ff2648dd24fcb
 /upgrade/update_2.0.1.php|efb9f329f1b6cd22b5e8173db0f2be4d
 /upgrade/update_2.3.3.php|44d0124a73a729474b8cc359238f5e16
-/webservice/toolbox.php|57bd1a016ca15682754414d7d3051901
-/webservice/cron.php|04fce640992a7565f0223ec877939421
-/webservice/export.php|ea2ebc9f0c77462eacf805365b58561c
+/webservice/toolbox.php|9229c54f38f456f1eb5dc27048180e86
+/webservice/cron.php|92618507b1ca1d45075cfd55dd22ba42
+/webservice/export.php|06566bfe20121d5bc03cad3709b76c12

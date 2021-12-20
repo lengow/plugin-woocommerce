@@ -2,7 +2,7 @@
 Version 2.5.1
 ========================================================
 
-
+    - Bugfix: Loading of all dependencies in the webservices
 
 ========================================================
 Version 2.5.0
