@@ -285,22 +285,22 @@ class Lengow_Configuration {
 				self::WAITING_SHIPMENT_ORDER_ID            => array(
 					self::PARAM_GLOBAL        => true,
 					self::PARAM_LABEL         => $locale->t( 'lengow_settings.lengow_id_waiting_shipment_title' ),
-					self::PARAM_DEFAULT_VALUE => Lengow_Main::compare_version( '2.2' ) ? 'wc-on-hold' : 'on-hold',
+					self::PARAM_DEFAULT_VALUE => 'wc-on-hold',
 				),
 				self::SHIPPED_ORDER_ID                     => array(
 					self::PARAM_GLOBAL        => true,
 					self::PARAM_LABEL         => $locale->t( 'lengow_settings.lengow_id_shipped_title' ),
-					self::PARAM_DEFAULT_VALUE => Lengow_Main::compare_version( '2.2' ) ? 'wc-completed' : 'completed',
+					self::PARAM_DEFAULT_VALUE => 'wc-completed',
 				),
 				self::CANCELED_ORDER_ID                    => array(
 					self::PARAM_GLOBAL        => true,
 					self::PARAM_LABEL         => $locale->t( 'lengow_settings.lengow_id_cancel_title' ),
-					self::PARAM_DEFAULT_VALUE => Lengow_Main::compare_version( '2.2' ) ? 'wc-cancelled' : 'cancelled',
+					self::PARAM_DEFAULT_VALUE => 'wc-cancelled',
 				),
 				self::SHIPPED_BY_MARKETPLACE_ORDER_ID      => array(
 					self::PARAM_GLOBAL        => true,
 					self::PARAM_LABEL         => $locale->t( 'lengow_settings.lengow_id_shipped_by_mp_title' ),
-					self::PARAM_DEFAULT_VALUE => Lengow_Main::compare_version( '2.2' ) ? 'wc-completed' : 'completed',
+					self::PARAM_DEFAULT_VALUE => 'wc-completed',
 				),
 				self::SYNCHRONIZATION_DAY_INTERVAL         => array(
 					self::PARAM_GLOBAL        => true,
@@ -531,7 +531,7 @@ class Lengow_Configuration {
 	public static function get_catalog_ids() {
 		$catalog_ids      = array();
 		$shop_catalog_ids = self::get( self::CATALOG_IDS );
-		if ( strlen( $shop_catalog_ids ) > 0 && $shop_catalog_ids != 0 ) {
+		if ( ! empty( $shop_catalog_ids ) ) {
 			$ids = trim( str_replace( array( "\r\n", ',', '-', '|', ' ', '/' ), ';', $shop_catalog_ids ), ';' );
 			$ids = array_filter( explode( ';', $ids ) );
 			foreach ( $ids as $id ) {

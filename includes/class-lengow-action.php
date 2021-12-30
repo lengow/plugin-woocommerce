@@ -428,49 +428,49 @@ class Lengow_Action {
 				continue;
 			}
 			$api_action = $api_actions[ $action_id ];
-			if ( isset( $api_action->queued, $api_action->processed, $api_action->errors ) ) {
-				if ( false == $api_action->queued ) {
-					// order action is waiting to return from the marketplace.
-					if ( false == $api_action->processed && empty( $api_action->errors ) ) {
-						continue;
-					}
-					// finish action in lengow_action table.
-					self::finish_action( $action_id );
-					$order_lengow_id = Lengow_Order::get_id_from_order_id( $action->{self::FIELD_ORDER_ID} );
-					$order_lengow    = new Lengow_Order( $order_lengow_id );
-					// finish all order logs send.
-					Lengow_Order_Error::finish_order_errors( $order_lengow->id, Lengow_Order_Error::ERROR_TYPE_SEND );
-					if ( $order_lengow->is_in_error ) {
-						Lengow_Order::update( $order_lengow->id, array( Lengow_Order::FIELD_IS_IN_ERROR => 0 ) );
-					}
-					if ( ! $order_lengow->is_closed() ) {
-						// if action is accepted -> close order and finish all order actions.
-						if ( true == $api_action->processed && empty( $api_action->errors ) ) {
-							Lengow_Order::update(
-								$order_lengow->id,
-								array( Lengow_Order::FIELD_ORDER_PROCESS_STATE => Lengow_Order::PROCESS_STATE_FINISH )
-							);
-							self::finish_all_actions( $order_lengow->order_id );
-						} else {
-							// if action is denied -> create order logs and finish all order actions.
-							Lengow_Order::add_order_error(
-								$order_lengow->id,
-								$api_action->errors,
-								Lengow_Order_Error::ERROR_TYPE_SEND
-							);
-							Lengow_Main::log(
-								Lengow_Log::CODE_ACTION,
-								Lengow_Main::set_log_message(
-									'log.order_action.call_action_failed',
-									array( 'decoded_message' => $api_action->errors )
-								),
-								$log_output,
-								$order_lengow->marketplace_sku
-							);
-						}
-					}
-					unset( $order_lengow );
+			if ( isset( $api_action->queued, $api_action->processed, $api_action->errors )
+			     && false == $api_action->queued
+			) {
+				// order action is waiting to return from the marketplace.
+				if ( false == $api_action->processed && empty( $api_action->errors ) ) {
+					continue;
 				}
+				// finish action in lengow_action table.
+				self::finish_action( $action_id );
+				$order_lengow_id = Lengow_Order::get_id_from_order_id( $action->{self::FIELD_ORDER_ID} );
+				$order_lengow    = new Lengow_Order( $order_lengow_id );
+				// finish all order logs send.
+				Lengow_Order_Error::finish_order_errors( $order_lengow->id, Lengow_Order_Error::ERROR_TYPE_SEND );
+				if ( $order_lengow->is_in_error ) {
+					Lengow_Order::update( $order_lengow->id, array( Lengow_Order::FIELD_IS_IN_ERROR => 0 ) );
+				}
+				if ( ! $order_lengow->is_closed() ) {
+					// if action is accepted -> close order and finish all order actions.
+					if ( true == $api_action->processed && empty( $api_action->errors ) ) {
+						Lengow_Order::update(
+							$order_lengow->id,
+							array( Lengow_Order::FIELD_ORDER_PROCESS_STATE => Lengow_Order::PROCESS_STATE_FINISH )
+						);
+						self::finish_all_actions( $order_lengow->order_id );
+					} else {
+						// if action is denied -> create order logs and finish all order actions.
+						Lengow_Order::add_order_error(
+							$order_lengow->id,
+							$api_action->errors,
+							Lengow_Order_Error::ERROR_TYPE_SEND
+						);
+						Lengow_Main::log(
+							Lengow_Log::CODE_ACTION,
+							Lengow_Main::set_log_message(
+								'log.order_action.call_action_failed',
+								array( 'decoded_message' => $api_action->errors )
+							),
+							$log_output,
+							$order_lengow->marketplace_sku
+						);
+					}
+				}
+				unset( $order_lengow );
 			}
 		}
 		Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_ACTION_SYNCHRONIZATION, time() );

@@ -915,7 +915,7 @@ class Lengow_Import_Order {
 			// remove hook after creating the order to avoid any change to other order.
 			$this->disable_b2b_hook();
 			// load order data for return
-			$order_id              = Lengow_Order::get_order_id( $order );
+			$order_id              = $order->get_id();
 			$this->order_id        = $order_id;
 			$this->order_reference = (string) $order_id;
 			// save order line id in lengow_order_line table.
@@ -1001,13 +1001,7 @@ class Lengow_Import_Order {
 			}
 			$product = Lengow_Product::match_product( $product_data, $this->marketplace_sku, $this->log_output );
 			if ( $product ) {
-				if ( Lengow_Main::compare_version( '3.0' ) ) {
-					$product_id   = $product->get_id();
-					$product_name = $product->get_name();
-				} else {
-					$product_id   = $product->id;
-					$product_name = $product->get_title();
-				}
+				$product_id = $product->get_id();
 				if ( array_key_exists( $product_id, $products ) ) {
 					$products[ $product_id ]['quantity']         += (integer) $product_data['quantity'];
 					$products[ $product_id ]['amount']           += (float) $product_data['amount'];
@@ -1015,7 +1009,7 @@ class Lengow_Import_Order {
 				} else {
 					$products[ $product_id ] = array(
 						'woocommerce_product' => $product,
-						'name'                => $product_name,
+						'name'                => $product->get_name(),
 						'amount'              => (float) $product_data['amount'],
 						'price_unit'          => $product_data['price_unit'],
 						'quantity'            => (int) $product_data['quantity'],
@@ -1111,7 +1105,7 @@ class Lengow_Import_Order {
 	private function enable_b2b_hook() {
 		// if the order is B2B, activate switch_product_tax_class_for_b2b hook
 		if ( isset( $this->order_types[ Lengow_Order::TYPE_BUSINESS ] )
-		     && (bool) Lengow_Configuration::get( Lengow_Configuration::B2B_WITHOUT_TAX_ENABLED )
+		     && Lengow_Configuration::get( Lengow_Configuration::B2B_WITHOUT_TAX_ENABLED )
 		) {
 			// add hook on tax calculation for b2b order
 			add_filter(
@@ -1135,7 +1129,7 @@ class Lengow_Import_Order {
 	private function disable_b2b_hook() {
 		// remove hook after creating the order to avoid any change to other order
 		if ( isset( $this->order_types[ Lengow_Order::TYPE_BUSINESS ] )
-		     && (bool) Lengow_Configuration::get( Lengow_Configuration::B2B_WITHOUT_TAX_ENABLED )
+		     && Lengow_Configuration::get( Lengow_Configuration::B2B_WITHOUT_TAX_ENABLED )
 		) {
 			remove_filter(
 				'woocommerce_product_get_tax_class',
@@ -1222,9 +1216,9 @@ class Lengow_Import_Order {
 			),
 			'post_status'   => 'publish',
 			'ping_status'   => 'closed',
-			'post_excerpt'  => (string) $this->message,
+			'post_excerpt'  => $this->message,
 			'post_author'   => 1,
-			'post_password' => uniqid( 'wc_order_' ),
+			'post_password' => uniqid( 'wc_order_', true ),
 			'post_date'     => get_date_from_gmt( $this->order_date ),
 			'post_date_gmt' => $this->order_date,
 		);
@@ -1279,7 +1273,6 @@ class Lengow_Import_Order {
 	 */
 	private function add_product( $order_id, $customer, $product_data ) {
 		$line_tax = 0;
-		$wc_tax   = new WC_Tax();
 		// get product and product data.
 		$product    = $product_data['woocommerce_product'];
 		$price_unit = $product_data['price_unit'];
@@ -1287,39 +1280,36 @@ class Lengow_Import_Order {
 		try {
 			// add line item.
 			$new_product_data = array( 'order_item_name' => $product_data['name'], 'order_item_type' => 'line_item' );
-			$item_id          = $this->add_order_item( $order_id, $new_product_data );
+			$item_id          = wc_add_order_item( $order_id, $new_product_data );
 			// calculated tax per line.
-			$tax_rates         = Lengow_Main::compare_version( '3.2' )
-				? $wc_tax->get_rates( $product->get_tax_class(), $customer )
-				: $wc_tax->get_rates( $product->get_tax_class() );
-			$taxes             = $wc_tax->calc_tax( $price_unit, $tax_rates, true );
+			$tax_rates         = WC_Tax::get_rates( $product->get_tax_class(), $customer );
+			$taxes             = WC_Tax::calc_tax( $price_unit, $tax_rates, true );
 			$tax_id            = ! empty( $taxes ) ? (int) key( $taxes ) : false;
 			$product_tax       = $tax_id ? $taxes[ $tax_id ] : 0;
-			$line_subtotal     = $this->format_decimal( $price_unit - $product_tax, 8 );
-			$line_total        = $this->format_decimal( ( $price_unit - $product_tax ) * $quantity, 8 );
-			$line_subtotal_tax = $this->format_decimal( $product_tax, 8 );
-			$line_tax          = $this->format_decimal( $product_tax * $quantity, 8 );
+			$line_subtotal     = wc_format_decimal( $price_unit - $product_tax, 8 );
+			$line_total        = wc_format_decimal( ( $price_unit - $product_tax ) * $quantity, 8 );
+			$line_subtotal_tax = wc_format_decimal( $product_tax, 8 );
+			$line_tax          = wc_format_decimal( $product_tax * $quantity, 8 );
 			$line_tax_data     = array(
 				'total'    => array( $tax_id => $line_tax ),
 				'subtotal' => array( $tax_id => $line_subtotal_tax ),
 			);
 			// add line item meta.
-			$this->add_order_item_meta( $item_id, '_product_id', Lengow_Product::get_product_id( $product ) );
-			$this->add_order_item_meta( $item_id, '_variation_id', Lengow_Product::get_variation_id( $product ) );
-			$this->add_order_item_meta( $item_id, '_qty', apply_filters( 'woocommerce_stock_amount', $quantity ) );
-			$this->add_order_item_meta( $item_id, '_tax_class', $product->get_tax_class() );
-			$this->add_order_item_meta( $item_id, '_line_subtotal', $line_subtotal );
-			$this->add_order_item_meta( $item_id, '_line_subtotal_tax', $line_subtotal_tax );
-			$this->add_order_item_meta( $item_id, '_line_total', $line_total );
-			$this->add_order_item_meta( $item_id, '_line_tax', $line_tax );
-			$this->add_order_item_meta( $item_id, '_line_tax_data', $line_tax_data );
+			wc_add_order_item_meta( $item_id, '_product_id', Lengow_Product::get_product_id( $product ) );
+			wc_add_order_item_meta( $item_id, '_variation_id', Lengow_Product::get_variation_id( $product ) );
+			wc_add_order_item_meta( $item_id, '_qty', apply_filters( 'woocommerce_stock_amount', $quantity ) );
+			wc_add_order_item_meta( $item_id, '_tax_class', $product->get_tax_class() );
+			wc_add_order_item_meta( $item_id, '_line_subtotal', $line_subtotal );
+			wc_add_order_item_meta( $item_id, '_line_subtotal_tax', $line_subtotal_tax );
+			wc_add_order_item_meta( $item_id, '_line_total', $line_total );
+			wc_add_order_item_meta( $item_id, '_line_tax', $line_tax );
+			wc_add_order_item_meta( $item_id, '_line_tax_data', $line_tax_data );
 		} catch ( Exception $e ) {
-			$product_id = Lengow_Main::compare_version( '3.0' ) ? $product->get_id() : $product->id;
 			Lengow_Main::log(
 				Lengow_Log::CODE_IMPORT,
 				Lengow_Main::set_log_message(
 					'log.import.product_not_saved',
-					array( 'product_id' => $product_id, 'error_message' => $e->getMessage() )
+					array( 'product_id' => $product->get_id(), 'error_message' => $e->getMessage() )
 				),
 				$this->log_output,
 				$this->marketplace_sku
@@ -1340,7 +1330,6 @@ class Lengow_Import_Order {
 	 * @return array
 	 */
 	private function add_shipping_cost( $order_id, $customer, $products ) {
-		$wc_tax = new WC_Tax();
 		$no_tax = false;
 		if ( isset( $this->order_types[ Lengow_Order::TYPE_BUSINESS ] )
 		     && Lengow_Configuration::get( Lengow_Configuration::B2B_WITHOUT_TAX_ENABLED )
@@ -1350,10 +1339,8 @@ class Lengow_Import_Order {
 		}
 		// set shipping cost tax.
 		$shipping   = $this->shipping_cost;
-		$tax_rates  = Lengow_Main::compare_version( '3.2' )
-			? $wc_tax->get_shipping_tax_rates( '', $customer )
-			: $wc_tax->get_shipping_tax_rates();
-		$taxes      = $wc_tax->calc_tax( $shipping, $tax_rates, true, false );
+		$tax_rates  = WC_Tax::get_shipping_tax_rates( '', $customer );
+		$taxes      = WC_Tax::calc_tax( $shipping, $tax_rates, true );
 		$tax_id     = ! empty( $taxes ) ? (int) key( $taxes ) : false;
 		$tax_amount = ( ! $no_tax && $tax_id ) ? $taxes[ $tax_id ] : 0;
 		$amount     = $shipping - $tax_amount;
@@ -1364,24 +1351,21 @@ class Lengow_Import_Order {
 		$shipping_method         = array_key_exists( $default_shipping_method, $shipping_methods )
 			? $shipping_methods[ $default_shipping_method ]
 			: current( $shipping_methods );
-		$shipping_method_title   = Lengow_Main::compare_version( '3.0' )
-			? $shipping_method->get_method_title()
-			: $shipping_method->method_title;
+		$shipping_method_title   = $shipping_method->get_method_title();
 		try {
 			$new_shipping_data = array( 'order_item_name' => $shipping_method_title, 'order_item_type' => 'shipping' );
-			$item_id           = $this->add_order_item( $order_id, $new_shipping_data );
+			$item_id           = wc_add_order_item( $order_id, $new_shipping_data );
 			// add line item meta for shipping.
 			$articles = array();
 			foreach ( $products as $product ) {
 				$articles[] = $product['name'] . ' &times; ' . $product['quantity'];
 			}
-			$instance_id = Lengow_Main::compare_version( '3.0' ) ? $shipping_method->instance_id : 0;
-			$this->add_order_item_meta( $item_id, 'method_id', $shipping_method->id );
-			$this->add_order_item_meta( $item_id, 'instance_id', $instance_id );
-			$this->add_order_item_meta( $item_id, 'cost', $amount );
-			$this->add_order_item_meta( $item_id, 'total_tax', $tax_amount );
-			$this->add_order_item_meta( $item_id, 'taxes', array( 'total' => array( $tax_id => $tax_amount ) ) );
-			$this->add_order_item_meta( $item_id, 'Articles', implode( ', ', $articles ) );
+			wc_add_order_item_meta( $item_id, 'method_id', $shipping_method->id );
+			wc_add_order_item_meta( $item_id, 'instance_id', $shipping_method->instance_id );
+			wc_add_order_item_meta( $item_id, 'cost', $amount );
+			wc_add_order_item_meta( $item_id, 'total_tax', $tax_amount );
+			wc_add_order_item_meta( $item_id, 'taxes', array( 'total' => array( $tax_id => $tax_amount ) ) );
+			wc_add_order_item_meta( $item_id, 'Articles', implode( ', ', $articles ) );
 		} catch ( Exception $e ) {
 			Lengow_Main::log(
 				Lengow_Log::CODE_IMPORT,
@@ -1411,26 +1395,23 @@ class Lengow_Import_Order {
 	 * @param float $shipping_tax_amount shipping tax amount
 	 */
 	private function add_tax( $order_id, $customer, $tax_amount, $shipping_tax_amount ) {
-		$wc_tax    = new WC_Tax();
-		$tax_rates = Lengow_Main::compare_version( '3.2' )
-			? $wc_tax->get_rates( '', $customer )
-			: $wc_tax->get_rates();
+		$tax_rates = WC_Tax::get_rates( '', $customer );
 		if ( ! empty( $tax_rates ) ) {
 			$tax_id = key( $tax_rates );
 			$tax    = $tax_rates[ $tax_id ];
 			try {
 				$new_tax_data = array(
-					'order_item_name' => $wc_tax->get_rate_code( $tax_id ),
+					'order_item_name' => WC_Tax::get_rate_code( $tax_id ),
 					'order_item_type' => 'tax',
 				);
-				$item_id      = $this->add_order_item( $order_id, $new_tax_data );
+				$item_id      = wc_add_order_item( $order_id, $new_tax_data );
 				// add line item meta for tax.
-				$this->add_order_item_meta( $item_id, 'rate_id', $tax_id );
-				$this->add_order_item_meta( $item_id, 'label', $tax['label'] );
-				$this->add_order_item_meta( $item_id, 'compound', $tax['compound'] === 'yes' ? 1 : 0 );
-				$this->add_order_item_meta( $item_id, 'tax_amount', $tax_amount );
-				$this->add_order_item_meta( $item_id, 'shipping_tax_amount', $shipping_tax_amount );
-				$this->add_order_item_meta( $item_id, 'rate_percent', $tax['rate'] );
+				wc_add_order_item_meta( $item_id, 'rate_id', $tax_id );
+				wc_add_order_item_meta( $item_id, 'label', $tax['label'] );
+				wc_add_order_item_meta( $item_id, 'compound', $tax['compound'] === 'yes' ? 1 : 0 );
+				wc_add_order_item_meta( $item_id, 'tax_amount', $tax_amount );
+				wc_add_order_item_meta( $item_id, 'shipping_tax_amount', $shipping_tax_amount );
+				wc_add_order_item_meta( $item_id, 'rate_percent', $tax['rate'] );
 			} catch ( Exception $e ) {
 				Lengow_Main::log(
 					'Import',
@@ -1458,11 +1439,11 @@ class Lengow_Import_Order {
 					'order_item_name' => $locale->t( 'module.processing_fee' ),
 					'order_item_type' => 'fee',
 				);
-				$item_id                 = $this->add_order_item( $order_id, $new_processing_fee_data );
+				$item_id                 = wc_add_order_item( $order_id, $new_processing_fee_data );
 				// add line item meta for processing fee.
-				$this->add_order_item_meta( $item_id, '_tax_class', '0' );
-				$this->add_order_item_meta( $item_id, '_line_total', $this->format_total( $this->processing_fee ) );
-				$this->add_order_item_meta( $item_id, '_line_tax', '0' );
+				wc_add_order_item_meta( $item_id, '_tax_class', '0' );
+				wc_add_order_item_meta( $item_id, '_line_total', wc_format_decimal( $this->processing_fee ) );
+				wc_add_order_item_meta( $item_id, '_line_tax', '0' );
 			} catch ( Exception $e ) {
 				Lengow_Main::log(
 					Lengow_Log::CODE_IMPORT,
@@ -1486,11 +1467,11 @@ class Lengow_Import_Order {
 	 */
 	private function add_post_meta( $order_id, $tax_amount, $shipping_cost ) {
 		// add post meta.
-		$order_shipping      = $this->format_total( $shipping_cost['amount'] );
-		$order_tax           = $this->format_total( $tax_amount );
-		$order_shipping_tax  = $this->format_total( $shipping_cost['tax_amount'] );
-		$order_total         = $this->format_total( $this->total_paid );
-		$order_key           = apply_filters( 'woocommerce_generate_order_key', uniqid( 'wc_order_' ) );
+		$order_shipping      = wc_format_decimal( $shipping_cost['amount'] );
+		$order_tax           = wc_format_decimal( $tax_amount );
+		$order_shipping_tax  = wc_format_decimal( $shipping_cost['tax_amount'] );
+		$order_total         = wc_format_decimal( $this->total_paid );
+		$order_key           = apply_filters( 'woocommerce_generate_order_key', uniqid( 'wc_order_', true ) );
 		$order_currency      = (string) $this->order_data->currency->iso_a3;
 		$customer_ip_address = isset( $_SERVER['HTTP_X_FORWARDED_FOR'] )
 			? $_SERVER['HTTP_X_FORWARDED_FOR']
@@ -1532,11 +1513,7 @@ class Lengow_Import_Order {
 				? Lengow_Main::set_log_message( 'log.import.quantity_back_reimported_order' )
 				: Lengow_Main::set_log_message( 'log.import.quantity_back_shipped_by_marketplace' );
 			Lengow_Main::log( Lengow_Log::CODE_IMPORT, $log_message, $this->log_output, $this->marketplace_sku );
-			if ( Lengow_Main::compare_version( '3.0' ) ) {
-				wc_increase_stock_levels( Lengow_Order::get_order_id( $order ) );
-			}
-		} elseif ( ! Lengow_Main::compare_version( '3.0' ) ) {
-			$order->reduce_order_stock();
+			wc_increase_stock_levels( $order->get_id() );
 		}
 	}
 
@@ -1552,7 +1529,7 @@ class Lengow_Import_Order {
 			foreach ( $product_data['order_line_ids'] as $order_line_id ) {
 				$result = Lengow_Order_Line::create(
 					array(
-						Lengow_Order_Line::FIELD_ORDER_ID      => Lengow_Order::get_order_id( $order ),
+						Lengow_Order_Line::FIELD_ORDER_ID      => $order->get_id(),
 						Lengow_Order_Line::FIELD_ORDER_LINE_ID => $order_line_id,
 						Lengow_Order_Line::FIELD_PRODUCT_ID    => $product_id,
 					)
@@ -1580,73 +1557,5 @@ class Lengow_Import_Order {
 				$this->marketplace_sku
 			);
 		}
-	}
-
-	/**
-	 * Get compatibility for woocommerce_format_total function.
-	 *
-	 * @param mixed $number number
-	 *
-	 * @return string
-	 */
-	private function format_total( $number ) {
-		if ( Lengow_Main::compare_version( '2.1' ) ) {
-			return wc_format_decimal( $number );
-		}
-
-		return woocommerce_format_total( $number );
-	}
-
-	/**
-	 * Get compatibility for woocommerce_format_decimal function.
-	 *
-	 * @param mixed $number number
-	 * @param mixed $dp number of decimal points to use
-	 *
-	 * @return string
-	 */
-	private function format_decimal( $number, $dp ) {
-		if ( Lengow_Main::compare_version( '2.1' ) ) {
-			return wc_format_decimal( $number, $dp );
-		}
-
-		return woocommerce_format_decimal( $number, $dp );
-	}
-
-	/**
-	 * Get compatibility for woocommerce_add_order_item function.
-	 *
-	 * @param integer $order_id item id
-	 * @param mixed $item meta key
-	 *
-	 * @return mixed
-	 * @throws Exception
-	 *
-	 */
-	private function add_order_item( $order_id, $item ) {
-		if ( Lengow_Main::compare_version( '2.1' ) ) {
-			return wc_add_order_item( $order_id, $item );
-		}
-
-		return woocommerce_add_order_item( $order_id, $item );
-	}
-
-	/**
-	 * Get compatibility for woocommerce_add_order_item_meta function.
-	 *
-	 * @param mixed $item_id item id
-	 * @param mixed $meta_key meta key
-	 * @param mixed $meta_value meta value
-	 *
-	 * @return integer
-	 * @throws Exception
-	 *
-	 */
-	private function add_order_item_meta( $item_id, $meta_key, $meta_value ) {
-		if ( Lengow_Main::compare_version( '2.1' ) ) {
-			return wc_add_order_item_meta( $item_id, $meta_key, $meta_value );
-		}
-
-		return woocommerce_add_order_item_meta( $item_id, $meta_key, $meta_value );
 	}
 }

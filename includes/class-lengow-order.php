@@ -412,17 +412,6 @@ class Lengow_Order {
 	}
 
 	/**
-	 * Get compatibility for WooCommerce order id.
-	 *
-	 * @param WC_Order $order WooCommerce order instance
-	 *
-	 * @return integer
-	 */
-	public static function get_order_id( $order ) {
-		return Lengow_Main::compare_version( '3.0' ) ? $order->get_id() : (int) $order->id;
-	}
-
-	/**
 	 * Get compatibility for WooCommerce order status.
 	 *
 	 * @param WC_Order $order WooCommerce order instance
@@ -430,9 +419,7 @@ class Lengow_Order {
 	 * @return string
 	 */
 	public static function get_order_status( $order ) {
-		$status = Lengow_Main::compare_version( '3.0' ) ? $order->get_status() : $order->status;
-
-		return Lengow_Main::compare_version( '2.2' ) ? 'wc-' . $status : $status;
+		return 'wc-' . $order->get_status();
 	}
 
 	/**
@@ -698,30 +685,15 @@ class Lengow_Order {
 	public static function get_unsent_orders() {
 		global $wpdb;
 
-		if ( Lengow_Main::compare_version( '2.2' ) ) {
-			$query = '
-				SELECT lo.id as order_lengow_id, p.ID as order_id, p.post_status as order_status
-				FROM ' . $wpdb->prefix . self::TABLE_ORDER . ' lo
-				LEFT JOIN ' . $wpdb->posts . ' p ON p.ID = lo.order_id
-	            WHERE lo.order_process_state = %d
-	            AND lo.is_in_error = %d
-	            AND p.post_status IN (%s,%s)
-	            AND p.post_modified >= %s
-	        ';
-		} else {
-			$query = '
-				SELECT lo.id as order_lengow_id, p.ID as order_id, t.slug as order_status
-				FROM ' . $wpdb->prefix . self::TABLE_ORDER . ' lo
-				LEFT JOIN ' . $wpdb->posts . ' p ON p.ID = lo.order_id
-				LEFT JOIN ' . $wpdb->term_relationships . ' tr ON tr.object_id = p.ID
-				LEFT JOIN ' . $wpdb->term_taxonomy . ' tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
-				LEFT JOIN ' . $wpdb->terms . ' t ON t.term_id = tt.term_id
-	            WHERE lo.order_process_state = %d
-	            AND lo.is_in_error = %d
-	            AND t.slug IN (%s,%s)
-	            AND p.post_modified >= %s
-	        ';
-		}
+		$query = '
+			SELECT lo.id as order_lengow_id, p.ID as order_id, p.post_status as order_status
+			FROM ' . $wpdb->prefix . self::TABLE_ORDER . ' lo
+			LEFT JOIN ' . $wpdb->posts . ' p ON p.ID = lo.order_id
+            WHERE lo.order_process_state = %d
+            AND lo.is_in_error = %d
+            AND p.post_status IN (%s,%s)
+            AND p.post_modified >= %s
+        ';
 		$results = $wpdb->get_results(
 			$wpdb->prepare(
 				$query,
@@ -730,7 +702,7 @@ class Lengow_Order {
 					0,
 					self::get_order_state( self::STATE_SHIPPED ),
 					self::get_order_state( self::STATE_CANCELED ),
-					date( Lengow_Main::DATE_FULL, strtotime( '-5 days', time() ) ),
+					date( Lengow_Main::DATE_FULL, strtotime( '-5 days' ) ),
 				)
 			)
 		);
@@ -754,7 +726,7 @@ class Lengow_Order {
 		// update Lengow order if necessary.
 		$params = array();
 		if ( self::PROCESS_STATE_FINISH === $order_process_state ) {
-			Lengow_Action::finish_all_actions( self::get_order_id( $order ) );
+			Lengow_Action::finish_all_actions( $order->get_id() );
 			Lengow_Order_Error::finish_order_errors( $order_lengow->id, Lengow_Order_Error::ERROR_TYPE_SEND );
 			if ( $order_process_state !== $order_lengow->order_process_state ) {
 				$params[ self::FIELD_ORDER_PROCESS_STATE ] = $order_process_state;
@@ -881,9 +853,7 @@ class Lengow_Order {
 	 * @return string|null
 	 */
 	public static function get_date_imported( $order_id ) {
-		$order_notes = Lengow_Main::compare_version( '3.2' )
-			? wc_get_order_notes( array( 'order_id' => $order_id ) )
-			: array();
+		$order_notes = wc_get_order_notes( array( 'order_id' => $order_id ) );
 		if ( empty( $order_notes ) ) {
 			return null;
 		}
@@ -999,6 +969,7 @@ class Lengow_Order {
 		if ( null === $return ) {
 			return false;
 		}
+		// don't decode into array as we use the result as an object.
 		$results = json_decode( $return );
 		if ( isset( $results->error ) ) {
 			return false;
@@ -1194,7 +1165,7 @@ class Lengow_Order {
 				Lengow_Import::ARG_MARKETPLACE          => $this->marketplace_name,
 			)
 		);
-		if ( ! isset( $results->count ) || ( isset( $results->count ) && 0 === (int) $results->count ) ) {
+		if ( ! isset( $results->count ) || 0 === (int) $results->count ) {
 			return false;
 		}
 		$order_data = $results->results[0];
@@ -1260,9 +1231,7 @@ class Lengow_Order {
 	 * Pass order in technical error.
 	 */
 	public function set_state_to_error() {
-		if ( Lengow_Main::compare_version( '2.2' ) ) {
-			$order = new WC_Order( $this->order_id );
-			$order->update_status( Lengow::STATE_LENGOW_TECHNICAL_ERROR );
-		}
+		$order = new WC_Order( $this->order_id );
+		$order->update_status( Lengow::STATE_LENGOW_TECHNICAL_ERROR );
 	}
 }

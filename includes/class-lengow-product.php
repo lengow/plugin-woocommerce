@@ -99,32 +99,32 @@ class Lengow_Product {
 	/**
 	 * @var WC_Product WooCommerce product parent instance for variation.
 	 */
-	private $_product_parent;
+	private $product_parent;
 
 	/**
 	 * @var integer product id.
 	 */
-	private $_product_id;
+	private $product_id;
 
 	/**
 	 * @var integer variation id.
 	 */
-	private $_variation_id;
+	private $variation_id;
 
 	/**
 	 * @var string product type.
 	 */
-	private $_product_type;
+	private $product_type;
 
 	/**
 	 * @var array all product prices.
 	 */
-	private $_prices;
+	private $prices;
 
 	/**
 	 * @var array all product images.
 	 */
-	private $_images;
+	private $images;
 
 	/**
 	 * Construct a new Lengow product.
@@ -134,7 +134,7 @@ class Lengow_Product {
 	 * @throws Lengow_Exception Unable to find product
 	 */
 	public function __construct( $product_id ) {
-		$this->product = self::get_product( $product_id );
+		$this->product = wc_get_product( $product_id );
 		if ( '' === $this->product
 		     || ! in_array( get_post_type( $product_id ), array( 'product', 'product_variation' ) )
 		) {
@@ -145,12 +145,12 @@ class Lengow_Product {
 				)
 			);
 		}
-		$this->_product_type   = self::get_product_type( $this->product );
-		$this->_product_id     = self::get_product_id( $this->product );
-		$this->_variation_id   = self::get_variation_id( $this->product );
-		$this->_product_parent = self::get_product_parent( $this->product, $this->_product_type );
-		$this->_prices         = $this->_get_prices();
-		$this->_images         = $this->_get_images();
+		$this->product_type   = $this->product->get_type();
+		$this->product_id     = self::get_product_id( $this->product );
+		$this->variation_id   = self::get_variation_id( $this->product );
+		$this->product_parent = self::get_product_parent( $this->product, $this->product_type );
+		$this->prices         = $this->get_prices();
+		$this->images         = $this->get_images();
 	}
 
 	/**
@@ -200,9 +200,9 @@ class Lengow_Product {
 	public function get_data( $name ) {
 		switch ( $name ) {
 			case 'id':
-				return 'variation' === $this->_product_type
-					? $this->_product_id . '_' . $this->_variation_id
-					: $this->_product_id;
+				return 'variation' === $this->product_type
+					? $this->product_id . '_' . $this->variation_id
+					: $this->product_id;
 			case 'sku':
 				return $this->product->get_sku();
 			case 'name':
@@ -210,7 +210,7 @@ class Lengow_Product {
 			case 'quantity':
 				return (int) $this->product->get_stock_quantity();
 			case 'availability':
-				return self::get_stock_status( $this->product );
+				return $this->product->get_stock_status();
 			case 'available_product':
 				$availability = $this->product->get_availability();
 
@@ -230,11 +230,11 @@ class Lengow_Product {
 			case 'rating_count':
 				return $this->product->get_rating_count();
 			case 'category':
-				return $this->_get_categories();
+				return $this->get_categories();
 			case 'status':
 				return $this->product->is_purchasable() ? 'Enabled' : 'Disabled';
 			case 'url':
-				return get_permalink( $this->_product_id );
+				return get_permalink( $this->product_id );
 			case 'price_excl_tax':
 			case 'price_incl_tax':
 			case 'price_before_discount_excl_tax':
@@ -244,89 +244,67 @@ class Lengow_Product {
 			case 'discount_percent':
 			case 'discount_start_date':
 			case 'discount_end_date':
-				return $this->_prices[ $name ];
+				return $this->prices[ $name ];
 			case 'shipping_class':
-				return $this->_get_shipping_class();
+				return $this->get_shipping_class();
 			case 'price_shipping':
-				return $this->_get_price_shipping();
+				return $this->get_price_shipping();
 			case 'currency':
 				return get_woocommerce_currency();
 			case 'image_product':
-			case ( preg_match( '`image_url_([0-9]+)`', $name ) ? true : false ):
-				return $this->_images[ $name ];
+			case (bool) preg_match( '`image_url_([0-9]+)`', $name ):
+				return $this->images[ $name ];
 			case 'type':
-				if ( 'variation' === $this->_product_type ) {
+				if ( 'variation' === $this->product_type ) {
 					return 'child';
 				}
-				if ( 'variable' === $this->_product_type ) {
+				if ( 'variable' === $this->product_type ) {
 					return 'parent';
 				}
 
-				return $this->_product_type;
+				return $this->product_type;
 			case 'parent_id':
-				return 'variation' === $this->_product_type ? $this->_product_id : '';
+				return 'variation' === $this->product_type ? $this->product_id : '';
 			case 'variation':
-				return $this->_get_variation_list();
+				return $this->get_variation_list();
 			case 'language':
 				return get_locale();
 			case 'description':
 				return Lengow_Main::clean_html(
 					Lengow_Main::clean_data(
-						self::get_description( $this->product, $this->_product_parent, $this->_product_type )
+						self::get_description( $this->product, $this->product_parent, $this->product_type )
 					)
 				);
 			case 'description_html':
 				return Lengow_Main::clean_data(
-					self::get_description( $this->product, $this->_product_parent, $this->_product_type )
+					self::get_description( $this->product, $this->product_parent, $this->product_type )
 				);
 			case 'description_short':
 				return Lengow_Main::clean_html(
 					Lengow_Main::clean_data(
-						self::get_short_description( $this->product, $this->_product_parent, $this->_product_type )
+						self::get_short_description( $this->product, $this->product_parent, $this->product_type )
 					)
 				);
 			case 'description_short_html':
 				return Lengow_Main::clean_data(
-					self::get_short_description( $this->product, $this->_product_parent, $this->_product_type )
+					self::get_short_description( $this->product, $this->product_parent, $this->product_type )
 				);
 			case 'tags':
-				return $this->_get_tag_list();
+				return $this->get_tag_list();
 			case 'weight':
 				return $this->product->has_weight() ? $this->product->get_weight() : '';
 			case 'dimensions':
 				return $this->product->has_dimensions() ? $this->product->get_dimensions() : '';
 			default:
 				if ( in_array( $name, Lengow_Export::$attributes, true ) ) {
-					return Lengow_Main::clean_data( $this->_get_attribute_data( $name ) );
+					return Lengow_Main::clean_data( $this->get_attribute_data( $name ) );
 				}
 				if ( in_array( $name, Lengow_Export::$post_metas, true ) ) {
-					return Lengow_Main::clean_data( $this->_get_post_meta_data( $name ) );
+					return Lengow_Main::clean_data( $this->get_post_meta_data( $name ) );
 				}
 
 				return '';
 		}
-	}
-
-	/**
-	 * Get product.
-	 *
-	 * @param integer $product_id WooCommerce product id
-	 *
-	 * @return WC_Product
-	 */
-	public static function get_product( $product_id ) {
-		return Lengow_Main::compare_version( '3.0' ) ? wc_get_product( $product_id ) : get_product( $product_id );
-	}
-
-	/**
-	 * Get product type.
-	 *
-	 * @param WC_Product $product WooCommerce product instance
-	 *
-	 * @return string
-	 */
-	public static function get_product_type( $product ) {
-		return Lengow_Main::compare_version( '3.0' ) ? $product->get_type() : $product->product_type;
 	}
 
 	/**
@@ -337,13 +315,7 @@ class Lengow_Product {
 	 * @return integer
 	 */
 	public static function get_product_id( $product ) {
-		if ( Lengow_Main::compare_version( '3.0' ) ) {
-			$product_id = 'variation' === $product->get_type() ? $product->get_parent_id() : $product->get_id();
-		} else {
-			$product_id = $product->id;
-		}
-
-		return (int) $product_id;
+		return (int) ( 'variation' === $product->get_type() ? $product->get_parent_id() : $product->get_id() );
 	}
 
 	/**
@@ -354,11 +326,7 @@ class Lengow_Product {
 	 * @return integer|null
 	 */
 	public static function get_variation_id( $product ) {
-		if ( Lengow_Main::compare_version( '3.0' ) ) {
-			$variation_id = 'variation' === $product->get_type() ? $product->get_id() : null;
-		} else {
-			$variation_id = 'variation' === $product->product_type ? $product->variation_id : null;
-		}
+		$variation_id = 'variation' === $product->get_type() ? $product->get_id() : null;
 
 		return null !== $variation_id ? (int) $variation_id : null;
 	}
@@ -373,34 +341,7 @@ class Lengow_Product {
 	 * @return WC_Product|null
 	 */
 	public static function get_product_parent( $product, $product_type ) {
-		return Lengow_Main::compare_version( '3.0' ) && 'variation' === $product_type
-			? wc_get_product( $product->get_parent_id() )
-			: null;
-	}
-
-
-	/**
-	 * Get regular price.
-	 *
-	 * @param WC_Product $product WooCommerce product instance
-	 *
-	 * @return float
-	 */
-	public static function get_regular_price( $product ) {
-		return Lengow_Main::compare_version( '3.0' )
-			? (float) $product->get_regular_price()
-			: (float) $product->regular_price;
-	}
-
-	/**
-	 * Get stock status.
-	 *
-	 * @param WC_Product $product WooCommerce product instance
-	 *
-	 * @return string
-	 */
-	public static function get_stock_status( $product ) {
-		return Lengow_Main::compare_version( '3.0' ) ? $product->get_stock_status() : $product->stock_status;
+		return 'variation' === $product_type ? wc_get_product( $product->get_parent_id() ) : null;
 	}
 
 	/**
@@ -414,13 +355,9 @@ class Lengow_Product {
 	 */
 	public static function get_gallery_image_ids( $product, $product_parent, $product_type ) {
 		if ( 'variation' === $product_type && $product_parent ) {
-			$gallery_image_ids = Lengow_Main::compare_version( '3.0' )
-				? $product_parent->get_gallery_image_ids()
-				: $product_parent->product_image_gallery;
+			$gallery_image_ids = $product_parent->get_gallery_image_ids();
 		} else {
-			$gallery_image_ids = Lengow_Main::compare_version( '3.0' )
-				? $product->get_gallery_image_ids()
-				: $product->product_image_gallery;
+			$gallery_image_ids = $product->get_gallery_image_ids();
 		}
 
 		return is_array( $gallery_image_ids ) ? $gallery_image_ids : explode( ',', $gallery_image_ids );
@@ -456,19 +393,9 @@ class Lengow_Product {
 	 * @return string
 	 */
 	public static function get_description( $product, $product_parent, $product_type ) {
-		if ( Lengow_Main::compare_version( '2.5', '<' ) ) {
-			$description = $product->post->post_content;
-		} else if ( Lengow_Main::compare_version( '3.0', '<' ) ) {
-			if ( 'variation' === $product_type && null !== $product->get_variation_description() ) {
-				$description = $product->get_variation_description();
-			} else {
-				$description = $product->post->post_content;
-			}
-		} else {
-			$description = $product->get_description();
-			if ( 'variation' === $product_type && $product_parent && empty( $description ) ) {
-				$description = $product_parent->get_description();
-			}
+		$description = $product->get_description();
+		if ( 'variation' === $product_type && $product_parent && empty( $description ) ) {
+			$description = $product_parent->get_description();
 		}
 
 		return $description;
@@ -484,13 +411,9 @@ class Lengow_Product {
 	 * @return string
 	 */
 	public static function get_short_description( $product, $product_parent, $product_type ) {
-		if ( Lengow_Main::compare_version( '3.0' ) ) {
-			$short_description = $product->get_short_description();
-			if ( 'variation' === $product_type && $product_parent && empty( $short_description ) ) {
-				$short_description = $product_parent->get_short_description();
-			}
-		} else {
-			$short_description = $product->post->post_excerpt;
+		$short_description = $product->get_short_description();
+		if ( 'variation' === $product_type && $product_parent && empty( $short_description ) ) {
+			$short_description = $product_parent->get_short_description();
 		}
 
 		return $short_description;
@@ -534,10 +457,10 @@ class Lengow_Product {
 			WHERE p.post_type = \'product\' OR p.post_type = \'product_variation\'
 		';
 		foreach ( $wpdb->get_results( $sql ) as $result ) {
-			if ( ! in_array( $result->meta_key, self::$excludes, true ) ) {
-				if ( ! in_array( $result->meta_key, $return, true ) ) {
-					$return[] = $result->meta_key;
-				}
+			if ( ! in_array( $result->meta_key, self::$excludes, true )
+			     && ! in_array( $result->meta_key, $return, true )
+			) {
+				$return[] = $result->meta_key;
 			}
 		}
 
@@ -601,8 +524,8 @@ class Lengow_Product {
 				}
 			}
 			if ( $product_id ) {
-				$product = self::get_product( $product_id );
-				if ( 'variable' === self::get_product_type( $product ) ) {
+				$product = wc_get_product( $product_id );
+				if ( 'variable' === $product->get_type() ) {
 					throw new Lengow_Exception(
 						Lengow_Main::set_log_message(
 							'lengow_log.exception.product_is_a_parent',
@@ -643,8 +566,7 @@ class Lengow_Product {
 		$product_id = false;
 		switch ( $type ) {
 			case 'id':
-				$attribute_value = str_replace( '\_', '_', $attribute_value );
-				$attribute_value = str_replace( 'X', '_', $attribute_value );
+				$attribute_value = str_replace( array( '\_', 'X' ), '_', $attribute_value );
 				$ids             = explode( '_', $attribute_value );
 				// if a product variation -> search with product variation id.
 				$id = isset( $ids[1] ) ? $ids[1] : $ids[0];
@@ -668,15 +590,13 @@ class Lengow_Product {
 				break;
 		}
 		if ( $product_id ) {
-			$product = self::get_product( $product_id );
-			if ( $product ) {
-				if ( in_array( get_post_type( $product_id ), array( 'product', 'product_variation' ) ) ) {
-					if ( 'variation' === self::get_product_type( $product ) ) {
-						return self::get_variation_id( $product );
-					}
-
-					return self::get_product_id( $product );
+			$product = wc_get_product( $product_id );
+			if ( $product && in_array( get_post_type( $product_id ), array( 'product', 'product_variation' ) ) ) {
+				if ( 'variation' === $product->get_type() ) {
+					return self::get_variation_id( $product );
 				}
+
+				return self::get_product_id( $product );
 			}
 		}
 
@@ -687,7 +607,7 @@ class Lengow_Product {
 	 * Publish or Un-publish to Lengow.
 	 *
 	 * @param integer $product_id the id product
-	 * @param integer $value 1 : publish, 0 : unpublish
+	 * @param integer $value 1 : publish, 0 : unpublished
 	 *
 	 * @return boolean
 	 */
@@ -720,34 +640,18 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Is Lengow product.
-	 *
-	 * @param integer $product_id the id product
-	 *
-	 * @return boolean
-	 */
-	public static function is_lengow_product( $product_id ) {
-		$result = self::get( array( self::FIELD_PRODUCT_ID => ( (int) $product_id ) ) );
-		if ( $result ) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * Get prices for a product.
 	 *
 	 * @return array
 	 */
-	private function _get_prices() {
-		$price_excl_tax = $this->_get_price();
-		$price_incl_tax = $this->_get_price( true );
-		$regular_price  = self::get_regular_price( $this->product );
+	private function get_prices() {
+		$price_excl_tax = $this->get_price();
+		$price_incl_tax = $this->get_price( true );
+		$regular_price  = (float) $this->product->get_regular_price();
 		if ( $regular_price ) {
 			$precision                      = (int) get_option( 'woocommerce_price_num_decimals' );
-			$price_before_discount_excl_tax = $this->_get_price( false, $regular_price );
-			$price_before_discount_incl_tax = $this->_get_price( true, $regular_price );
+			$price_before_discount_excl_tax = $this->get_price( false, $regular_price );
+			$price_before_discount_incl_tax = $this->get_price( true, $regular_price );
 			$amount_excl_tax                = $price_before_discount_excl_tax - $price_excl_tax;
 			$amount_incl_tax                = $price_before_discount_incl_tax - $price_incl_tax;
 			$discount_amount_excl_tax       = round( $amount_excl_tax, $precision );
@@ -758,7 +662,7 @@ class Lengow_Product {
 			);
 		}
 		if ( $this->product->is_on_sale() ) {
-			$product_id            = 'variation' === $this->_product_type ? $this->_variation_id : $this->_product_id;
+			$product_id            = 'variation' === $this->product_type ? $this->variation_id : $this->product_id;
 			$sale_price_dates_from = get_post_meta( $product_id, '_sale_price_dates_from', true );
 			$start_date            = '' !== $sale_price_dates_from
 				? get_date_from_gmt( date( Lengow_Main::DATE_FULL, $sale_price_dates_from ) )
@@ -794,20 +698,19 @@ class Lengow_Product {
 	 *
 	 * @return float
 	 */
-	private function _get_price( $including_tax = false, $price = null ) {
+	private function get_price( $including_tax = false, $price = null ) {
 		if ( null === $price ) {
 			$price = (float) $this->product->get_price();
 		}
 		if ( $this->product->is_taxable() ) {
-			$WC_tax    = new WC_Tax();
-			$tax_rates = $WC_tax->get_rates( $this->product->get_tax_class() );
+			$tax_rates = WC_Tax::get_rates( $this->product->get_tax_class() );
 			if ( $including_tax && 'no' === get_option( 'woocommerce_prices_include_tax' ) ) {
-				$taxes      = $WC_tax->calc_tax( $price, $tax_rates, false );
-				$tax_amount = (float) $WC_tax->get_tax_total( $taxes );
+				$taxes      = WC_Tax::calc_tax( $price, $tax_rates );
+				$tax_amount = (float) WC_Tax::get_tax_total( $taxes );
 				$price      = round( $price + $tax_amount, (int) get_option( 'woocommerce_price_num_decimals' ) );
 			} elseif ( ! $including_tax && 'yes' === get_option( 'woocommerce_prices_include_tax' ) ) {
-				$taxes      = $WC_tax->calc_tax( $price, $tax_rates, true );
-				$tax_amount = (float) $WC_tax->get_tax_total( $taxes );
+				$taxes      = WC_Tax::calc_tax( $price, $tax_rates, true );
+				$tax_amount = (float) WC_Tax::get_tax_total( $taxes );
 				$price      = round( $price - $tax_amount, (int) get_option( 'woocommerce_price_num_decimals' ) );
 			}
 		}
@@ -820,15 +723,15 @@ class Lengow_Product {
 	 *
 	 * @return string
 	 */
-	private function _get_price_shipping() {
+	private function get_price_shipping() {
 		global $woocommerce;
 		$price_shipping = 0;
 		if ( $this->product->needs_shipping() ) {
 			$woocommerce->cart->empty_cart();
 			$packages                               = array();
 			$packages[0]['contents'][0]             = array(
-				'product_id'   => $this->_product_id,
-				'variation_id' => $this->_variation_id,
+				'product_id'   => $this->product_id,
+				'variation_id' => $this->variation_id,
 				'variation'    => null,
 				'quantity'     => 1,
 				'line_total'   => $this->product->get_price(),
@@ -856,11 +759,11 @@ class Lengow_Product {
 	 *
 	 * @return string
 	 */
-	private function _get_shipping_class() {
+	private function get_shipping_class() {
 		$shipping_class_name = '';
 		$taxonomy            = 'product_shipping_class';
 		// get product terms.
-		$product_terms = get_the_terms( $this->_product_id, $taxonomy );
+		$product_terms = get_the_terms( $this->product_id, $taxonomy );
 		if ( $product_terms ) {
 			$shipping_class = $product_terms[0];
 			if ( isset( $shipping_class->name ) ) {
@@ -876,22 +779,22 @@ class Lengow_Product {
 	 *
 	 * @return array
 	 */
-	private function _get_images() {
+	private function get_images() {
 		$urls      = array();
 		$imageUrls = array();
 		// get thumbnail image for a product or a variation.
 		$thumbnail_id               = self::get_thumbnail_id(
-			$this->_product_id,
-			$this->_variation_id,
-			$this->_product_type
+			$this->product_id,
+			$this->variation_id,
+			$this->product_type
 		);
 		$thumbnail                  = wp_get_attachment_image_src( $thumbnail_id, 'shop_catalog_image_size' );
 		$imageUrls['image_product'] = $thumbnail ? $thumbnail[0] : '';
 		// get all product images for parent and variation.
 		$gallery_image_ids = self::get_gallery_image_ids(
 			$this->product,
-			$this->_product_parent,
-			$this->_product_type
+			$this->product_parent,
+			$this->product_type
 		);
 		if ( ! empty( $gallery_image_ids ) ) {
 			foreach ( $gallery_image_ids as $image_id ) {
@@ -923,26 +826,26 @@ class Lengow_Product {
 	 *
 	 * @return string
 	 */
-	private function _get_categories() {
+	private function get_categories() {
 		$taxonomy = 'product_cat';
 		// get all terms with id and name.
 		$terms     = array();
 		$all_terms = get_terms( $taxonomy );
 		foreach ( $all_terms as $term ) {
-			$childs = array();
+			$children = array();
 			foreach ( $all_terms as $child ) {
-				if ( $term->term_id == $child->parent ) {
-					$childs[] = $child->term_id;
+				if ( $term->term_id === $child->parent ) {
+					$children[] = $child->term_id;
 				}
 			}
 			$terms[ $term->term_id ] = array(
 				'name'   => $term->name,
 				'parent' => $term->parent,
-				'child'  => $childs,
+				'child'  => $children,
 			);
 		}
 		// get product terms.
-		$product_terms = get_the_terms( $this->_product_id, $taxonomy );
+		$product_terms = get_the_terms( $this->product_id, $taxonomy );
 		if ( $product_terms && ! is_wp_error( $product_terms ) ) {
 			// get product terms with only term id.
 			$last_id          = false;
@@ -952,9 +855,9 @@ class Lengow_Product {
 			}
 			// get the id at the last term.
 			foreach ( $product_term_ids as $product_term_id ) {
-				$term_childs = $terms[ $product_term_id ]['child'];
-				if ( ! empty( $term_childs ) ) {
-					foreach ( $term_childs as $term_child ) {
+				$term_children = $terms[ $product_term_id ]['child'];
+				if ( ! empty( $term_children ) ) {
+					foreach ( $term_children as $term_child ) {
 						if ( ! in_array( $term_child, $product_term_ids, true ) ) {
 							$last_id = $product_term_id;
 							break;
@@ -969,15 +872,15 @@ class Lengow_Product {
 			if ( $last_id ) {
 				$term_ids   = array();
 				$term_ids[] = $terms[ $last_id ]['name'];
-				$parent_id  = $last_id;
+				$parent_id  = (int) $last_id;
 				do {
 					$parent_id = $terms[ $parent_id ]['parent'];
-					if ( $parent_id != 0 ) {
+					if ( $parent_id !== 0 ) {
 						$term_ids[] = $terms[ $parent_id ]['name'];
 					}
-				} while ( $parent_id != 0 );
+				} while ( $parent_id !== 0 );
 
-				return join( ' > ', array_reverse( $term_ids ) );
+				return implode( ' > ', array_reverse( $term_ids ) );
 			}
 		}
 
@@ -989,9 +892,9 @@ class Lengow_Product {
 	 *
 	 * @return string
 	 */
-	private function _get_variation_list() {
+	private function get_variation_list() {
 		$variationsToString = '';
-		if ( 'variable' === $this->_product_type ) {
+		if ( 'variable' === $this->product_type ) {
 			$variations = array();
 			$attributes = $this->product->get_attributes();
 			foreach ( $attributes as $attribute ) {
@@ -1010,10 +913,10 @@ class Lengow_Product {
 	 *
 	 * @return string
 	 */
-	private function _get_tag_list() {
+	private function get_tag_list() {
 		$tagsToString = '';
 		$return       = array();
-		$tags         = get_the_terms( $this->_product_id, 'product_tag' );
+		$tags         = get_the_terms( $this->product_id, 'product_tag' );
 		if ( ! empty( $tags ) ) {
 			foreach ( $tags as $tag ) {
 				$return[] = $tag->name;
@@ -1031,15 +934,15 @@ class Lengow_Product {
 	 *
 	 * @return string
 	 */
-	private function _get_attribute_data( $name = null ) {
+	private function get_attribute_data( $name = null ) {
 		if ( null !== $name ) {
-			if ( 'variation' === $this->_product_type ) {
+			if ( 'variation' === $this->product_type ) {
 				$name           = 'attribute_' . $name;
 				$variation_data = $this->product->get_variation_attributes();
 				if ( array_key_exists( $name, $variation_data ) ) {
 					return $variation_data[ $name ];
 				}
-			} elseif ( 'variable' !== $this->_product_type ) {
+			} elseif ( 'variable' !== $this->product_type ) {
 				return $this->product->get_attribute( $name );
 			}
 		}
@@ -1054,13 +957,13 @@ class Lengow_Product {
 	 *
 	 * @return string
 	 */
-	private function _get_post_meta_data( $name = null ) {
+	private function get_post_meta_data( $name = null ) {
 		if ( null !== $name ) {
-			$product_id = null !== $this->_variation_id ? $this->_variation_id : $this->_product_id;
+			$product_id = null !== $this->variation_id ? $this->variation_id : $this->product_id;
 			$post_meta  = get_post_meta( $product_id, $name );
 			if ( isset( $post_meta[0] ) ) {
 				// if post_meta[0] is an object, it mean it surely came from another plugin and not woocommerce itself
-				// we cannot know what is in the object so we return empty string
+				// we cannot know what is in the object, so we return empty string
 				if ( is_object( $post_meta[0] ) ) {
 					return '';
 				}

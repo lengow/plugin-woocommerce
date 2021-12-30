@@ -38,7 +38,7 @@ class Lengow_Admin {
 	/**
 	 * @var string default tab.
 	 */
-	private $_default_tab = 'lengow';
+	private $default_tab = 'lengow';
 
 	/**
 	 * Init Lengow for WooCommerce.
@@ -47,7 +47,7 @@ class Lengow_Admin {
 	public function __construct() {
 		global $lengow, $woocommerce;
 		$this->current_tab = empty( $_GET['tab'] )
-			? $this->_default_tab
+			? $this->default_tab
 			: sanitize_text_field( urldecode( $_GET['tab'] ) );
 		add_action( 'admin_menu', array( $this, 'lengow_admin_menu' ) );
 	}
@@ -76,7 +76,7 @@ class Lengow_Admin {
 	public function lengow_display() {
 		$locale            = new Lengow_Translation();
 		$is_new_merchant   = Lengow_Configuration::is_new_merchant();
-		$this->current_tab = ( ! $is_new_merchant && $this->current_tab === $this->_default_tab )
+		$this->current_tab = ( ! $is_new_merchant && $this->current_tab === $this->default_tab )
 			? 'lengow_admin_dashboard'
 			: $this->current_tab;
 		// recovery of all plugin data for plugin update
@@ -92,7 +92,7 @@ class Lengow_Admin {
 		$plugin_links = Lengow_Sync::get_plugin_links( get_locale() );
 		// display footer or not
 		if ( ! $is_new_merchant
-		     && ! in_array( $this->current_tab, array( $this->_default_tab, 'lengow_admin_dashboard' ), true )
+		     && ! in_array( $this->current_tab, array( $this->default_tab, 'lengow_admin_dashboard' ), true )
 		) {
 			$merchant_status     = Lengow_Sync::get_status_account();
 			$total_pending_order = Lengow_Order::count_order_to_be_sent();

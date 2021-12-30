@@ -64,7 +64,7 @@ class Lengow_Sync {
 	/**
 	 * @var array cache time for catalog, account status, cms options and marketplace synchronisation.
 	 */
-	protected static $_cache_times = array(
+	private static $cache_times = array(
 		self::SYNC_CATALOG        => 21600,
 		self::SYNC_CMS_OPTION     => 86400,
 		self::SYNC_STATUS_ACCOUNT => 86400,
@@ -152,7 +152,7 @@ class Lengow_Sync {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_CATALOG );
 			if ( null !== $updated_at
-			     && ( time() - (int) $updated_at ) < self::$_cache_times[ self::SYNC_CATALOG ]
+			     && ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_CATALOG ]
 			) {
 				return $success;
 			}
@@ -233,7 +233,7 @@ class Lengow_Sync {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_OPTION_CMS );
 			if ( null !== $updated_at
-			     && ( time() - (int) $updated_at ) < self::$_cache_times[ self::SYNC_CMS_OPTION ]
+			     && ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_CMS_OPTION ]
 			) {
 				return false;
 			}
@@ -263,7 +263,7 @@ class Lengow_Sync {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_ACCOUNT_STATUS_DATA );
 			if ( null !== $updated_at
-			     && ( time() - (int) $updated_at ) < self::$_cache_times[ self::SYNC_STATUS_ACCOUNT ]
+			     && ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_STATUS_ACCOUNT ]
 			) {
 				return json_decode( Lengow_Configuration::get( Lengow_Configuration::ACCOUNT_STATUS_DATA ), true );
 			}
@@ -307,12 +307,13 @@ class Lengow_Sync {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_MARKETPLACE );
 			if ( null !== $updated_at
-			     && ( time() - (int) $updated_at ) < self::$_cache_times[ self::SYNC_MARKETPLACE ]
+			     && ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_MARKETPLACE ]
 			     && file_exists( $file_path )
 			) {
 				// recovering data with the marketplaces.json file.
 				$marketplaces_data = file_get_contents( $file_path );
 				if ( $marketplaces_data ) {
+					// don't decode into array as we use the result as an object.
 					return json_decode( $marketplaces_data );
 				}
 			}
@@ -353,13 +354,13 @@ class Lengow_Sync {
 			}
 
 			return $result;
-		} else {
-			// if the API does not respond, use marketplaces.json if it exists.
-			if ( file_exists( $file_path ) ) {
-				$marketplaces_data = file_get_contents( $file_path );
-				if ( $marketplaces_data ) {
-					return json_decode( $marketplaces_data );
-				}
+		}
+		// if the API does not respond, use marketplaces.json if it exists.
+		if ( file_exists( $file_path ) ) {
+			$marketplaces_data = file_get_contents( $file_path );
+			if ( $marketplaces_data ) {
+				// don't decode into array as we use the result as an object.
+				return json_decode( $marketplaces_data );
 			}
 		}
 
@@ -378,7 +379,7 @@ class Lengow_Sync {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_PLUGIN_DATA );
 			if ( $updated_at !== null
-			     && ( time() - (int) $updated_at ) < self::$_cache_times[ self::SYNC_PLUGIN_DATA ]
+			     && ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_PLUGIN_DATA ]
 			) {
 				return json_decode( Lengow_Configuration::get( Lengow_Configuration::PLUGIN_DATA ), true );
 			}
@@ -410,7 +411,9 @@ class Lengow_Sync {
 					if ( ! empty( $plugin->links ) ) {
 						foreach ( $plugin->links as $link ) {
 							if ( array_key_exists( $link->language->iso_a2, self::$generic_iso_codes ) ) {
-								$generic_iso_code                                      = self::$generic_iso_codes[ $link->language->iso_a2 ];
+								$generic_iso_code                                      = self::$generic_iso_codes[
+									$link->language->iso_a2
+								];
 								$plugin_links[ $generic_iso_code ][ $link->link_type ] = $link->link;
 							}
 						}
@@ -432,10 +435,8 @@ class Lengow_Sync {
 
 				return $plugin_data;
 			}
-		} else {
-			if ( Lengow_Configuration::get( Lengow_Configuration::PLUGIN_DATA ) ) {
-				return json_decode( Lengow_Configuration::get( Lengow_Configuration::PLUGIN_DATA ), true );
-			}
+		} else if ( Lengow_Configuration::get( Lengow_Configuration::PLUGIN_DATA ) ) {
+			return json_decode( Lengow_Configuration::get( Lengow_Configuration::PLUGIN_DATA ), true );
 		}
 
 		return false;

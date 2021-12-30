@@ -58,31 +58,6 @@ class Lengow_Feed {
 	const EOL = "\r\n";
 
 	/**
-	 * @var Lengow_File temporary export file.
-	 */
-	private $_file;
-
-	/**
-	 * @var string feed format.
-	 */
-	private $_format;
-
-	/**
-	 * @var boolean generate file or not.
-	 */
-	private $_stream;
-
-	/**
-	 * @var boolean use legacy fields.
-	 */
-	private $_legacy;
-
-	/**
-	 * @var string full export folder.
-	 */
-	private $_export_folder;
-
-	/**
 	 * @var array formats available for export.
 	 */
 	public static $available_formats = array(
@@ -91,6 +66,31 @@ class Lengow_Feed {
 		self::FORMAT_XML,
 		self::FORMAT_JSON,
 	);
+
+	/**
+	 * @var Lengow_File temporary export file.
+	 */
+	private $file;
+
+	/**
+	 * @var string feed format.
+	 */
+	private $format;
+
+	/**
+	 * @var boolean generate file or not.
+	 */
+	private $stream;
+
+	/**
+	 * @var boolean use legacy fields.
+	 */
+	private $legacy;
+
+	/**
+	 * @var string full export folder.
+	 */
+	private $export_folder;
 
 	/**
 	 * Construct a new Lengow feed.
@@ -102,10 +102,10 @@ class Lengow_Feed {
 	 * @throws Lengow_Exception Unable to create folder
 	 */
 	public function __construct( $stream, $format, $legacy ) {
-		$this->_stream = $stream;
-		$this->_format = $format;
-		$this->_legacy = $legacy;
-		if ( ! $this->_stream ) {
+		$this->stream = $stream;
+		$this->format = $format;
+		$this->legacy = $legacy;
+		if ( ! $this->stream ) {
 			$this->_init_export_file();
 		}
 	}
@@ -116,21 +116,19 @@ class Lengow_Feed {
 	 * @throws Lengow_Exception Unable to create folder
 	 */
 	private function _init_export_file() {
-		$sep                  = DIRECTORY_SEPARATOR;
-		$this->_export_folder = Lengow_Main::FOLDER_EXPORT;
-		$folder_path          = LENGOW_PLUGIN_PATH . $sep . $this->_export_folder;
-		if ( ! file_exists( $folder_path ) ) {
-			if ( ! mkdir( $folder_path ) ) {
-				throw new Lengow_Exception(
-					Lengow_Main::set_log_message(
-						'log.export.error_unable_to_create_folder',
-						array( 'folder_path' => $folder_path )
-					)
-				);
-			}
+		$sep                 = DIRECTORY_SEPARATOR;
+		$this->export_folder = Lengow_Main::FOLDER_EXPORT;
+		$folder_path         = LENGOW_PLUGIN_PATH . $sep . $this->export_folder;
+		if ( ! file_exists( $folder_path ) && ! mkdir( $folder_path ) && ! is_dir( $folder_path ) ) {
+			throw new Lengow_Exception(
+				Lengow_Main::set_log_message(
+					'log.export.error_unable_to_create_folder',
+					array( 'folder_path' => $folder_path )
+				)
+			);
 		}
-		$file_name   = 'flux-' . time() . '.' . $this->_format;
-		$this->_file = new Lengow_File( $this->_export_folder, $file_name );
+		$file_name  = 'flux-' . time() . '.' . $this->format;
+		$this->file = new Lengow_File( $this->export_folder, $file_name );
 	}
 
 	/**
@@ -144,22 +142,22 @@ class Lengow_Feed {
 	public function write( $type, $data = array(), $is_first = null, $max_character = null ) {
 		switch ( $type ) {
 			case self::HEADER:
-				if ( $this->_stream ) {
-					header( $this->_get_html_header() );
-					if ( self::FORMAT_CSV === $this->_format ) {
+				if ( $this->stream ) {
+					header( $this->get_html_header() );
+					if ( self::FORMAT_CSV === $this->format ) {
 						header( 'Content-Disposition: attachment; filename=feed.csv' );
 					}
 				}
-				$header = $this->_get_header( $data );
-				$this->_flush( $header );
+				$header = $this->get_header( $data );
+				$this->flush( $header );
 				break;
 			case self::BODY:
-				$body = $this->_get_body( $data, $is_first, $max_character );
-				$this->_flush( $body );
+				$body = $this->get_body( $data, $is_first, $max_character );
+				$this->flush( $body );
 				break;
 			case self::FOOTER:
-				$footer = $this->_get_footer();
-				$this->_flush( $footer );
+				$footer = $this->get_footer();
+				$this->flush( $footer );
 				break;
 		}
 	}
@@ -169,8 +167,8 @@ class Lengow_Feed {
 	 *
 	 * @return string
 	 */
-	private function _get_html_header() {
-		switch ( $this->_format ) {
+	private function get_html_header() {
+		switch ( $this->format ) {
 			case self::FORMAT_CSV:
 			default:
 				return 'Content-Type: text/csv; charset=UTF-8';
@@ -190,13 +188,13 @@ class Lengow_Feed {
 	 *
 	 * @return string
 	 */
-	private function _get_header( $data ) {
-		switch ( $this->_format ) {
+	private function get_header( $data ) {
+		switch ( $this->format ) {
 			case self::FORMAT_CSV:
 			default:
 				$header = '';
 				foreach ( $data as $field ) {
-					$header .= self::PROTECTION . self::format_fields( $field, self::FORMAT_CSV, $this->_legacy )
+					$header .= self::PROTECTION . self::format_fields( $field, self::FORMAT_CSV, $this->legacy )
 					           . self::PROTECTION . self::CSV_SEPARATOR;
 				}
 
@@ -220,8 +218,8 @@ class Lengow_Feed {
 	 *
 	 * @return string
 	 */
-	private function _get_body( $data, $is_first, $max_character ) {
-		switch ( $this->_format ) {
+	private function get_body( $data, $is_first, $max_character ) {
+		switch ( $this->format ) {
 			case self::FORMAT_CSV:
 			default:
 				$content = '';
@@ -233,7 +231,7 @@ class Lengow_Feed {
 			case self::FORMAT_XML:
 				$content = '<product>';
 				foreach ( $data as $field => $value ) {
-					$field   = self::format_fields( $field, self::FORMAT_XML, $this->_legacy );
+					$field   = self::format_fields( $field, self::FORMAT_XML, $this->legacy );
 					$content .= '<' . $field . '><![CDATA[' . $value . ']]></' . $field . '>' . self::EOL;
 				}
 				$content .= '</product>' . self::EOL;
@@ -243,7 +241,7 @@ class Lengow_Feed {
 				$content    = $is_first ? '' : ',';
 				$json_array = array();
 				foreach ( $data as $field => $value ) {
-					$field                = self::format_fields( $field, self::FORMAT_JSON, $this->_legacy );
+					$field                = self::format_fields( $field, self::FORMAT_JSON, $this->legacy );
 					$json_array[ $field ] = $value;
 				}
 				$content .= json_encode( $json_array );
@@ -257,9 +255,9 @@ class Lengow_Feed {
 				}
 				$content = '  ' . self::PROTECTION . 'product' . self::PROTECTION . ':' . self::EOL;
 				foreach ( $data as $field => $value ) {
-					$field   = self::format_fields( $field, self::FORMAT_YAML, $this->_legacy );
+					$field   = self::format_fields( $field, self::FORMAT_YAML, $this->legacy );
 					$content .= '    ' . self::PROTECTION . $field . self::PROTECTION . ':';
-					$content .= $this->_indent_yaml( $field, $max_character ) . (string) $value . self::EOL;
+					$content .= $this->indent_yaml( $field, $max_character ) . $value . self::EOL;
 				}
 
 				return $content;
@@ -271,8 +269,8 @@ class Lengow_Feed {
 	 *
 	 * @return string
 	 */
-	private function _get_footer() {
-		switch ( $this->_format ) {
+	private function get_footer() {
+		switch ( $this->format ) {
 			case self::FORMAT_XML:
 				return '</catalog>';
 			case self::FORMAT_JSON:
@@ -288,12 +286,12 @@ class Lengow_Feed {
 	 * @param string $content feed content to be flushed
 	 *
 	 */
-	private function _flush( $content ) {
-		if ( $this->_stream ) {
+	private function flush( $content ) {
+		if ( $this->stream ) {
 			echo $content;
 			flush();
 		} else {
-			$this->_file->write( $content );
+			$this->file->write( $content );
 		}
 	}
 
@@ -306,25 +304,19 @@ class Lengow_Feed {
 	 */
 	public function end() {
 		$this->write( self::FOOTER );
-		if ( ! $this->_stream ) {
-			$old_file_name = 'flux.' . $this->_format;
-			$old_file      = new Lengow_File( $this->_export_folder, $old_file_name );
-
+		if ( ! $this->stream ) {
+			$old_file_name = 'flux.' . $this->format;
+			$old_file      = new Lengow_File( $this->export_folder, $old_file_name );
 			if ( $old_file->exists() ) {
 				$old_file_path = $old_file->get_path();
 				$old_file->delete();
 			}
-
 			if ( isset( $old_file_path ) ) {
-				$rename                 = $this->_file->rename( $old_file_path );
-				$this->_file->file_name = $old_file_name;
+				$rename = $this->file->rename( $old_file_path );
 			} else {
-				$sep                    = DIRECTORY_SEPARATOR;
-				$rename                 = $this->_file->rename(
-					$this->_file->get_folder_path() . $sep . $old_file_name
-				);
-				$this->_file->file_name = $old_file_name;
+				$rename = $this->file->rename( $this->file->get_folder_path() . DIRECTORY_SEPARATOR . $old_file_name );
 			}
+			$this->file->file_name = $old_file_name;
 
 			return $rename;
 		}
@@ -388,7 +380,7 @@ class Lengow_Feed {
 	 *
 	 * @return string
 	 */
-	private function _indent_yaml( $name, $max_size ) {
+	private function indent_yaml( $name, $max_size ) {
 		$strlen = strlen( $name );
 		$spaces = '';
 		for ( $i = $strlen; $i < $max_size; $i ++ ) {
@@ -404,6 +396,6 @@ class Lengow_Feed {
 	 * @return string
 	 */
 	public function get_url() {
-		return $this->_file->get_link();
+		return $this->file->get_link();
 	}
 }

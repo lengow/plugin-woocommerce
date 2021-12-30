@@ -148,22 +148,22 @@ class Lengow_Import {
 	/**
 	 * @var integer|false imports orders updated since (timestamp).
 	 */
-	protected $updated_from = false;
+	private $updated_from = false;
 
 	/**
 	 * @var integer|false imports orders updated until (timestamp).
 	 */
-	protected $updated_to = false;
+	private $updated_to = false;
 
 	/**
 	 * @var integer|false imports orders created since (timestamp).
 	 */
-	protected $created_from = false;
+	private $created_from = false;
 
 	/**
 	 * @var integer|false imports orders created until (timestamp).
 	 */
-	protected $created_to = false;
+	private $created_to = false;
 
 	/**
 	 * @var boolean import one order.
@@ -750,6 +750,7 @@ class Lengow_Import {
 					Lengow_Main::set_log_message( 'lengow_log.exception.no_connection_webservice' )
 				);
 			}
+			// don't decode into array as we use the result as an object.
 			$results = json_decode( $results );
 			if ( ! is_object( $results ) ) {
 				throw new Lengow_Exception(
@@ -803,15 +804,14 @@ class Lengow_Import {
 				$package_delivery_address_id = (int) $package_data->delivery->id;
 				$first_package               = ! ( $nb_package > 1 );
 				// check the package for re-import order.
-				if ( $this->import_one_order ) {
-					if ( null !== $this->delivery_address_id
-					     && $this->delivery_address_id !== $package_delivery_address_id
-					) {
-						$message = Lengow_Main::set_log_message( 'log.import.error_wrong_package_number' );
-						Lengow_Main::log( Lengow_Log::CODE_IMPORT, $message, $this->log_output, $marketplace_sku );
-						$this->add_order_not_formatted( $marketplace_sku, $message, $order_data );
-						continue;
-					}
+				if ( $this->import_one_order
+				     && null !== $this->delivery_address_id
+				     && $this->delivery_address_id !== $package_delivery_address_id
+				) {
+				     $message = Lengow_Main::set_log_message( 'log.import.error_wrong_package_number' );
+				     Lengow_Main::log( Lengow_Log::CODE_IMPORT, $message, $this->log_output, $marketplace_sku );
+				     $this->add_order_not_formatted( $marketplace_sku, $message, $order_data );
+				     continue;
 				}
 				try {
 					// try to import or update order.

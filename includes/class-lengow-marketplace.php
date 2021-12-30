@@ -149,9 +149,8 @@ class Lengow_Marketplace {
 					$default_value                         = isset( $arg_description->default_value )
 						? (string) $arg_description->default_value
 						: '';
-					$accept_free_value                     = isset( $arg_description->accept_free_values )
-						? (bool) $arg_description->accept_free_values
-						: true;
+					$accept_free_value                     = ! isset( $arg_description->accept_free_values )
+					                                         || $arg_description->accept_free_values;
 					$this->arg_values[ (string) $arg_key ] = array(
 						'default_value'      => $default_value,
 						'accept_free_values' => $accept_free_value,
@@ -318,15 +317,17 @@ class Lengow_Marketplace {
 	public function contain_order_line( $action ) {
 		if ( isset( $this->actions[ $action ] ) ) {
 			$actions = $this->actions[ $action ];
-			if ( isset( $actions['args'] ) && is_array( $actions['args'] ) ) {
-				if ( in_array( Lengow_Action::ARG_LINE, $actions['args'], true ) ) {
-					return true;
-				}
+			if ( isset( $actions['args'] )
+			     && is_array( $actions['args'] )
+			     && in_array( Lengow_Action::ARG_LINE, $actions['args'], true )
+			) {
+				return true;
 			}
-			if ( isset( $actions['optional_args'] ) && is_array( $actions['optional_args'] ) ) {
-				if ( in_array( Lengow_Action::ARG_LINE, $actions['optional_args'], true ) ) {
-					return true;
-				}
+			if ( isset( $actions['optional_args'] )
+			     && is_array( $actions['optional_args'] )
+			     && in_array( Lengow_Action::ARG_LINE, $actions['optional_args'], true )
+			) {
+				return true;
 			}
 		}
 
@@ -371,14 +372,14 @@ class Lengow_Marketplace {
 		}
 		try {
 			// check the action and order data.
-			$this->_check_action( $action );
-			$this->_check_order_data( $order_lengow );
+			$this->check_action( $action );
+			$this->check_order_data( $order_lengow );
 			// get all required and optional arguments for a specific marketplace.
 			$marketplace_arguments = $this->get_marketplace_arguments( $action );
 			// get all available values from an order.
-			$params = $this->_get_all_params( $action, $order_lengow, $marketplace_arguments );
+			$params = $this->get_all_params( $action, $order_lengow, $marketplace_arguments );
 			// check required arguments and clean value for empty optionals arguments.
-			$params = $this->_check_and_clean_params( $action, $params );
+			$params = $this->check_and_clean_params( $action, $params );
 			// complete the values with the specific values of the account.
 			if ( ! is_null( $order_line_id ) ) {
 				$params[ Lengow_Action::ARG_LINE ] = $order_line_id;
@@ -424,7 +425,7 @@ class Lengow_Marketplace {
 	 *
 	 * @throws Lengow_Exception action not valid / marketplace action not present
 	 */
-	private function _check_action( $action ) {
+	private function check_action( $action ) {
 		if ( ! in_array( $action, self::$valid_actions, true ) ) {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message( 'lengow_log.exception.action_not_valid', array( 'action' => $action ) )
@@ -447,7 +448,7 @@ class Lengow_Marketplace {
 	 *
 	 * @throws Lengow_Exception marketplace sku is required / marketplace name is required
 	 */
-	private function _check_order_data( $order_lengow ) {
+	private function check_order_data( $order_lengow ) {
 		if ( '' === $order_lengow->marketplace_sku ) {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message( 'lengow_log.exception.marketplace_sku_require' )
@@ -469,7 +470,7 @@ class Lengow_Marketplace {
 	 *
 	 * @return array
 	 */
-	private function _get_all_params( $action, $order_lengow, $marketplace_arguments ) {
+	private function get_all_params( $action, $order_lengow, $marketplace_arguments ) {
 		$params         = array();
 		$actions        = $this->get_action( $action );
 		$order_id       = $order_lengow->order_id;
@@ -528,7 +529,7 @@ class Lengow_Marketplace {
 	 * @throws Exception argument is required
 	 *
 	 */
-	private function _check_and_clean_params( $action, $params ) {
+	private function check_and_clean_params( $action, $params ) {
 		$actions = $this->get_action( $action );
 		if ( isset( $actions['args'] ) ) {
 			foreach ( $actions['args'] as $arg ) {

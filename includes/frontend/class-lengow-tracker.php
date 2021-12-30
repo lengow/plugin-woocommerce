@@ -38,11 +38,11 @@ class Lengow_Tracker {
 	public static function html_display( $order ) {
 		try {
 			$account_id     = Lengow_Configuration::get( Lengow_Configuration::ACCOUNT_ID );
-			$order_ref      = Lengow_Order::get_order_id( $order );
+			$order_ref      = $order->get_id();
 			$amount         = (float) $order->get_total();
-			$currency       = self::_get_currency( $order );
-			$payment_method = self::_get_payment_method( $order );
-			$cart           = htmlspecialchars( json_encode( self::_get_product_cart( $order->get_items() ) ) );
+			$currency       = self::get_currency( $order );
+			$payment_method = self::get_payment_method( $order );
+			$cart           = htmlspecialchars( json_encode( self::get_product_cart( $order->get_items() ) ) );
 			$cart_number    = 0;
 			$newbiz         = 1;
 			$valid          = 1;
@@ -59,23 +59,17 @@ class Lengow_Tracker {
 	 *
 	 * @return array
 	 */
-	private static function _get_product_cart( $items ) {
+	private static function get_product_cart( $items ) {
 		$tracking_id  = Lengow_Configuration::get( Lengow_Configuration::TRACKING_ID );
 		$product_cart = array();
 		foreach ( $items as $item ) {
-			if ( Lengow_Main::compare_version( '3.0' ) ) {
-				$product  = Lengow_Product::get_product( $item->get_product_id() );
-				$price    = wc_get_price_including_tax( $product );
-				$quantity = (int) $item->get_quantity();
-			} else {
-				$product  = Lengow_Product::get_product( $item['product_id'] );
-				$price    = (float) $product->get_price_including_tax();
-				$quantity = (int) $item['qty'];
-			}
+			$product  = wc_get_product( $item->get_product_id() );
+			$price    = wc_get_price_including_tax( $product );
+			$quantity = (int) $item->get_quantity();
 			if ( 'sku' === $tracking_id ) {
 				$product_id = $product->get_sku();
 			} else {
-				$product_id = 'variation' === Lengow_Product::get_product_type( $product )
+				$product_id = 'variation' === $product->get_type()
 					? Lengow_Product::get_product_id( $product ) . '_' . Lengow_Product::get_variation_id( $product )
 					: Lengow_Product::get_product_id( $product );
 			}
@@ -96,14 +90,8 @@ class Lengow_Tracker {
 	 *
 	 * @return string
 	 */
-	private static function _get_currency( $order ) {
-		if ( Lengow_Main::compare_version( '3.0' ) ) {
-			$currency = $order->get_currency();
-		} else {
-			$currency = get_post_meta( Lengow_Order::get_order_id( $order ), '_order_currency', true );
-		}
-
-		return $currency;
+	private static function get_currency( $order ) {
+		return $order->get_currency();
 	}
 
 	/**
@@ -113,13 +101,7 @@ class Lengow_Tracker {
 	 *
 	 * @return string
 	 */
-	private static function _get_payment_method( $order ) {
-		if ( Lengow_Main::compare_version( '3.0' ) ) {
-			$payment_method = $order->get_payment_method();
-		} else {
-			$payment_method = get_post_meta( Lengow_Order::get_order_id( $order ), '_payment_method', true );
-		}
-
-		return $payment_method;
+	private static function get_payment_method( $order ) {
+		return $order->get_payment_method();
 	}
 }

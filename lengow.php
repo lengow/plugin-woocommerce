@@ -182,9 +182,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				add_action( 'woocommerce_email', array( 'Lengow_Hook', 'unhook_woocommerce_mail' ) );
 				add_action( 'add_meta_boxes_shop_order', array( 'Lengow_Hook', 'adding_shop_order_meta_boxes' ) );
 				// init lengow technical error status.
-				if ( Lengow_Main::compare_version( '2.2' ) ) {
-					$this->init_lengow_technical_error_status();
-				}
+				$this->init_lengow_technical_error_status();
 				// check logs download to prevent the occurrence of the WordPress html header.
 				$download = null;
 				if ( isset( $_GET['action'] ) ) {
@@ -322,7 +320,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			);
 			wp_enqueue_script( 'lengow_admin_js' );
 			// must be added to instantiate admin-ajax.php.
-			wp_localize_script( 'lengow_admin_js', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+			wp_add_inline_script( 'lengow_admin_js', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
 		}
 
 		/**

@@ -77,7 +77,7 @@ class Lengow_Connector {
 	/**
 	 * @var array success HTTP codes for request.
 	 */
-	private $_success_codes = array(
+	private $success_codes = array(
 		self::CODE_200,
 		self::CODE_201,
 	);
@@ -85,7 +85,7 @@ class Lengow_Connector {
 	/**
 	 * @var array authorization HTTP codes for request.
 	 */
-	protected $_authorization_codes = array(
+	private $authorization_codes = array(
 		self::CODE_401,
 		self::CODE_403,
 	);
@@ -93,12 +93,12 @@ class Lengow_Connector {
 	/**
 	 * @var integer Authorization token lifetime.
 	 */
-	private $_token_lifetime = 3000;
+	private $token_lifetime = 3000;
 
 	/**
 	 * @var array default options for curl.
 	 */
-	private $_curl_opts = array(
+	private $curl_opts = array(
 		CURLOPT_CONNECTTIMEOUT => 10,
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_TIMEOUT        => 10,
@@ -108,22 +108,22 @@ class Lengow_Connector {
 	/**
 	 * @var string the access token to connect.
 	 */
-	private $_access_token;
+	private $access_token;
 
 	/**
 	 * @var string the secret to connect.
 	 */
-	private $_secret;
+	private $secret;
 
 	/**
 	 * @var string temporary token for the authorization.
 	 */
-	private $_token;
+	private $token;
 
 	/**
 	 * @var array lengow url for curl timeout.
 	 */
-	private $_lengow_urls = array(
+	private $lengow_urls = array(
 		self::API_ORDER        => 20,
 		self::API_ORDER_MOI    => 10,
 		self::API_ORDER_ACTION => 15,
@@ -138,7 +138,7 @@ class Lengow_Connector {
 	/**
 	 * @var array API requiring no arguments in the call url.
 	 */
-	protected $api_without_url_args = array(
+	private $api_without_url_args = array(
 		self::API_ACCESS_TOKEN,
 		self::API_ORDER_ACTION,
 		self::API_ORDER_MOI,
@@ -147,7 +147,7 @@ class Lengow_Connector {
 	/**
 	 * @var array API requiring no authorization for the call url
 	 */
-	protected static $api_without_authorizations = array(
+	private static $api_without_authorizations = array(
 		self::API_PLUGIN,
 	);
 
@@ -158,8 +158,8 @@ class Lengow_Connector {
 	 * @param string $secret Your secret
 	 */
 	public function __construct( $access_token, $secret ) {
-		$this->_access_token = $access_token;
-		$this->_secret       = $secret;
+		$this->access_token = $access_token;
+		$this->secret       = $secret;
 	}
 
 	/**
@@ -238,6 +238,7 @@ class Lengow_Connector {
 			return false;
 		}
 
+		// don't decode into array as we use the result as an object.
 		return json_decode( $results );
 	}
 
@@ -253,7 +254,7 @@ class Lengow_Connector {
 	public static function get_account_id_by_credentials( $access_token, $secret, $log_output = false ) {
 		$connector = new Lengow_Connector( $access_token, $secret );
 		try {
-			$data = $connector->_call_action(
+			$data = $connector->call_action(
 				self::API_ACCESS_TOKEN,
 				array(
 					'access_token' => $access_token,
@@ -297,15 +298,15 @@ class Lengow_Connector {
 		     && null !== $token
 		     && null !== $updated_at
 		     && '' !== $token
-		     && ( time() - $updated_at ) < $this->_token_lifetime
+		     && ( time() - $updated_at ) < $this->token_lifetime
 		) {
 			$authorization_token = $token;
 		} else {
-			$authorization_token = $this->_get_authorization_token( $log_output );
+			$authorization_token = $this->get_authorization_token( $log_output );
 			Lengow_Configuration::update_value( Lengow_Configuration::AUTHORIZATION_TOKEN, $authorization_token );
 			Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_AUTHORIZATION_TOKEN, time() );
 		}
-		$this->_token = $authorization_token;
+		$this->token = $authorization_token;
 	}
 
 	/**
@@ -322,7 +323,7 @@ class Lengow_Connector {
 	 *
 	 */
 	public function get( $api, $args = array(), $format = self::FORMAT_JSON, $body = '', $log_output = false ) {
-		return $this->_call( $api, $args, self::GET, $format, $body, $log_output );
+		return $this->call( $api, $args, self::GET, $format, $body, $log_output );
 	}
 
 	/**
@@ -339,7 +340,7 @@ class Lengow_Connector {
 	 *
 	 */
 	public function post( $api, $args = array(), $format = self::FORMAT_JSON, $body = '', $log_output = false ) {
-		return $this->_call( $api, $args, self::POST, $format, $body, $log_output );
+		return $this->call( $api, $args, self::POST, $format, $body, $log_output );
 	}
 
 	/**
@@ -356,7 +357,7 @@ class Lengow_Connector {
 	 *
 	 */
 	public function put( $api, $args = array(), $format = self::FORMAT_JSON, $body = '', $log_output = false ) {
-		return $this->_call( $api, $args, self::PUT, $format, $body, $log_output );
+		return $this->call( $api, $args, self::PUT, $format, $body, $log_output );
 	}
 
 	/**
@@ -373,7 +374,7 @@ class Lengow_Connector {
 	 *
 	 */
 	public function patch( $api, $args = array(), $format = self::FORMAT_JSON, $body = '', $log_output = false ) {
-		return $this->_call( $api, $args, self::PATCH, $format, $body, $log_output );
+		return $this->call( $api, $args, self::PATCH, $format, $body, $log_output );
 	}
 
 	/**
@@ -390,14 +391,14 @@ class Lengow_Connector {
 	 * @throws Lengow_Exception
 	 *
 	 */
-	private function _call( $api, $args, $type, $format, $body, $log_output ) {
+	private function call( $api, $args, $type, $format, $body, $log_output ) {
 		try {
 			if ( ! in_array( $api, self::$api_without_authorizations, true ) ) {
 				$this->connect( false, $log_output );
 			}
-			$data = $this->_call_action( $api, $args, $type, $format, $body, $log_output );
+			$data = $this->call_action( $api, $args, $type, $format, $body, $log_output );
 		} catch ( Lengow_Exception $e ) {
-			if ( in_array( $e->getCode(), $this->_authorization_codes, true ) ) {
+			if ( in_array( $e->getCode(), $this->authorization_codes, true ) ) {
 				Lengow_Main::log(
 					Lengow_Log::CODE_CONNECTOR,
 					Lengow_Main::set_log_message( 'log.connector.retry_get_token' ),
@@ -406,7 +407,7 @@ class Lengow_Connector {
 				if ( ! in_array( $api, self::$api_without_authorizations, true ) ) {
 					$this->connect( true, $log_output );
 				}
-				$data = $this->_call_action( $api, $args, $type, $format, $body, $log_output );
+				$data = $this->call_action( $api, $args, $type, $format, $body, $log_output );
 			} else {
 				throw new Lengow_Exception( $e->getMessage(), $e->getCode() );
 			}
@@ -429,10 +430,10 @@ class Lengow_Connector {
 	 * @throws Lengow_Exception
 	 *
 	 */
-	private function _call_action( $api, $args, $type, $format, $body, $log_output ) {
-		$result = $this->_make_request( $type, $api, $args, $this->_token, $body, $log_output );
+	private function call_action( $api, $args, $type, $format, $body, $log_output ) {
+		$result = $this->make_request( $type, $api, $args, $this->token, $body, $log_output );
 
-		return $this->_format( $result, $format );
+		return $this->format( $result, $format );
 	}
 
 	/**
@@ -443,14 +444,14 @@ class Lengow_Connector {
 	 * @return string
 	 * @throws Lengow_Exception
 	 */
-	private function _get_authorization_token( $log_output ) {
+	private function get_authorization_token( $log_output ) {
 		// reset temporary token for the new authorization
-		$this->_token = null;
-		$data         = $this->_call_action(
+		$this->token = null;
+		$data        = $this->call_action(
 			self::API_ACCESS_TOKEN,
 			array(
-				'access_token' => $this->_access_token,
-				'secret'       => $this->_secret,
+				'access_token' => $this->access_token,
+				'secret'       => $this->secret,
 			),
 			self::POST,
 			self::FORMAT_JSON,
@@ -484,19 +485,19 @@ class Lengow_Connector {
 	 * @param string $body body data for request
 	 * @param boolean $log_output see log or not
 	 *
-	 * @return mixed
+	 * @return bool|string
 	 * @throws Lengow_Exception
 	 *
 	 */
-	private function _make_request( $type, $api, $args, $token, $body, $log_output ) {
+	private function make_request( $type, $api, $args, $token, $body, $log_output ) {
 		// define CURLE_OPERATION_TIMEDOUT for old php versions.
 		defined( 'CURLE_OPERATION_TIMEDOUT' ) || define( 'CURLE_OPERATION_TIMEDOUT', CURLE_OPERATION_TIMEOUTED );
 		$ch = curl_init();
 		// get default curl options.
-		$opts = $this->_curl_opts;
+		$opts = $this->curl_opts;
 		// get special timeout for specific Lengow API.
-		if ( array_key_exists( $api, $this->_lengow_urls ) ) {
-			$opts[ CURLOPT_TIMEOUT ] = $this->_lengow_urls[ $api ];
+		if ( array_key_exists( $api, $this->lengow_urls ) ) {
+			$opts[ CURLOPT_TIMEOUT ] = $this->lengow_urls[ $api ];
 		}
 		// get base url for a specific environment.
 		$url                           = self::LENGOW_API_URL . $api;
@@ -549,7 +550,7 @@ class Lengow_Connector {
 		$curl_error        = curl_error( $ch );
 		$curl_error_number = curl_errno( $ch );
 		curl_close( $ch );
-		$this->_check_return_request( $result, $http_code, $curl_error, $curl_error_number );
+		$this->check_return_request( $result, $http_code, $curl_error, $curl_error_number );
 
 		return $result;
 	}
@@ -565,7 +566,7 @@ class Lengow_Connector {
 	 * @throws Lengow_Exception
 	 *
 	 */
-	private function _check_return_request( $result, $http_code, $curl_error, $curl_error_number ) {
+	private function check_return_request( $result, $http_code, $curl_error, $curl_error_number ) {
 		if ( false === $result ) {
 			// recovery of Curl errors.
 			if ( in_array( $curl_error_number, array( CURLE_OPERATION_TIMEDOUT, CURLE_OPERATION_TIMEOUTED ), true ) ) {
@@ -583,8 +584,8 @@ class Lengow_Connector {
 			);
 			throw new Lengow_Exception( $error, self::CODE_500 );
 		}
-		if ( ! in_array( $http_code, $this->_success_codes, true ) ) {
-			$result = $this->_format( $result );
+		if ( ! in_array( $http_code, $this->success_codes, true ) ) {
+			$result = $this->format( $result );
 			// recovery of Lengow Api errors.
 			if ( isset( $result['error']['message'] ) ) {
 				throw new Lengow_Exception( $result['error']['message'], $http_code );
@@ -601,7 +602,7 @@ class Lengow_Connector {
 	 *
 	 * @return mixed
 	 */
-	private function _format( $data, $format = self::FORMAT_JSON ) {
+	private function format( $data, $format = self::FORMAT_JSON ) {
 		switch ( $format ) {
 			case self::FORMAT_STREAM:
 				return $data;

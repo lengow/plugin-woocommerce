@@ -181,7 +181,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 		// $sortable defines if the table can be sorted by this column.
 		$sortable              = $this->get_sortable_columns();
 		$this->_column_headers = array( $columns, $hidden, $sortable );
-		$this->data            = $this->_get_products();
+		$this->data            = $this->get_products();
 		usort( $this->data, array( &$this, '_usort_reorder' ) );
 		// pagination.
 		$per_page     = 20;
@@ -271,15 +271,15 @@ class Lengow_Admin_Products extends WP_List_Table {
 	/**
 	 * Display checkbox.
 	 *
-	 * @param array $product product data
+	 * @param array $item product data
 	 *
 	 * @return string
 	 */
-	public function column_cb( $product ) {
+	public function column_cb( $item ) {
 		return sprintf(
 			'<input type="checkbox" id="js-lengow_product_checkbox"
-				name="product[]" value="%s"class="js-lengow_selection"/>',
-			$product['ID']
+				name="product[]" value="%s" class="js-lengow_selection"/>',
+			$item['ID']
 		);
 	}
 
@@ -353,7 +353,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	private function _get_products() {
+	private function get_products() {
 		$results = array();
 		$keys    = array(
 			'ID',
@@ -386,16 +386,16 @@ class Lengow_Admin_Products extends WP_List_Table {
 						$products_data = $post->post_title;
 						break;
 					case 'categories':
-						$products_data = $this->_display_categories( $post );
+						$products_data = $this->display_categories( $post );
 						break;
 					case '_stock_status':
-						$products_data = $this->_display_stock_status( $post );
+						$products_data = $this->display_stock_status( $post );
 						break;
 					case '_price':
-						$products_data = $this->_display_price( $post );
+						$products_data = $this->display_price( $post );
 						break;
 					case 'product_type':
-						$products_data = $this->_display_product_type( $post );
+						$products_data = $this->display_product_type( $post );
 						break;
 					case 'lengow':
 						$products_data = isset( $this->lengow_product_ids[ $post->ID ] ) ? 1 : 0;
@@ -467,7 +467,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 *
 	 * @return string
 	 */
-	private function _display_categories( $post ) {
+	private function display_categories( $post ) {
 		$categories          = wp_get_post_terms(
 			$post->ID,
 			'product_cat',
@@ -475,7 +475,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 		);
 		$products_categories = array();
 		foreach ( $categories as $value ) {
-			array_push( $products_categories, $value );
+			$products_categories[] = $value;
 		}
 
 		return implode( ',', $products_categories );
@@ -488,10 +488,10 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 *
 	 * @return string
 	 */
-	private function _display_stock_status( $post ) {
+	private function display_stock_status( $post ) {
 		return 'instock' === get_post_meta( $post->ID, '_stock_status', true )
 			? $this->locale->t( 'product.table.in_stock' )
-			: $this->locale->t( 'product.table.out_of_stock' );;
+			: $this->locale->t( 'product.table.out_of_stock' );
 	}
 
 	/**
@@ -501,12 +501,10 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 *
 	 * @return string
 	 */
-	private function _display_price( $post ) {
+	private function display_price( $post ) {
 		$price = get_post_meta( $post->ID, '_price', true );
 
-		return Lengow_Main::compare_version( '2.1.0', '<' )
-			? $price . get_woocommerce_currency_symbol()
-			: wc_price( $price );
+		return wc_price( $price );
 	}
 
 	/**
@@ -516,9 +514,9 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 *
 	 * @return string
 	 */
-	private function _display_product_type( $post ) {
-		$product          = Lengow_Product::get_product( $post->ID );
-		$product_type     = Lengow_Product::get_product_type( $product );
+	private function display_product_type( $post ) {
+		$product          = wc_get_product( $post->ID );
+		$product_type     = $product->get_type();
 		$downloadable     = 'yes' === get_post_meta( $post->ID, '_downloadable', true )
 			? $this->locale->t( 'product.table.type_downloadable' )
 			: false;

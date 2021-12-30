@@ -26,12 +26,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Lengow_Admin_Settings Class.
+ * Lengow_Admin_Main_Settings Class.
  */
 class Lengow_Admin_Main_Settings {
 
 	/**
-	 * Display settings page.
+	 * Display admin main settings page.
 	 */
 	public static function display() {
 		$locale = new Lengow_Translation();

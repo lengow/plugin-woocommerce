@@ -55,9 +55,37 @@ class Lengow_Main {
 	const LOG_LIFE = 20;
 
 	/**
+	 * @var array Marketplaces collection.
+	 */
+	public static $registers = array();
+
+	/**
+	 * @var Lengow_Log Lengow log file instance.
+	 */
+	public static $log;
+
+	/**
+	 * @var array WooCommerce product types.
+	 */
+	public static $product_types = array(
+		'simple'   => 'Simple Product',
+		'variable' => 'Variable Product',
+		'external' => 'External Product',
+		'grouped'  => 'Grouped Product',
+	);
+
+	/**
+	 * @var array product ids available to track products.
+	 */
+	public static $tracker_choice_id = array(
+		'id'  => 'Product ID',
+		'sku' => 'Product SKU',
+	);
+
+	/**
 	 * @var array Lengow Authorized IPs.
 	 */
-	private static $_ips_lengow = array(
+	private static $ips_lengow = array(
 		'127.0.0.1',
 		'10.0.4.150',
 		'46.19.183.204',
@@ -86,34 +114,6 @@ class Lengow_Main {
 		'185.61.176.140',
 		'185.61.176.141',
 		'185.61.176.142',
-	);
-
-	/**
-	 * @var array Marketplaces collection.
-	 */
-	public static $registers = array();
-
-	/**
-	 * @var Lengow_Log Lengow log file instance.
-	 */
-	public static $log;
-
-	/**
-	 * @var array WooCommerce product types.
-	 */
-	public static $product_types = array(
-		'simple'   => 'Simple Product',
-		'variable' => 'Variable Product',
-		'external' => 'External Product',
-		'grouped'  => 'Grouped Product',
-	);
-
-	/**
-	 * @var array product ids available to track products.
-	 */
-	public static $tracker_choice_id = array(
-		'id'  => 'Product ID',
-		'sku' => 'Product SKU',
 	);
 
 	/**
@@ -191,7 +191,7 @@ class Lengow_Main {
 	 * @return boolean
 	 */
 	public static function check_ip() {
-		$authorized_ips = array_merge( Lengow_Configuration::get_authorized_ips(), self::$_ips_lengow );
+		$authorized_ips = array_merge( Lengow_Configuration::get_authorized_ips(), self::$ips_lengow );
 		if ( isset( $_SERVER['SERVER_ADDR'] ) ) {
 			$authorized_ips[] = $_SERVER['SERVER_ADDR'];
 		}
@@ -339,7 +339,7 @@ class Lengow_Main {
 			$all_params[] = $param . '==' . $value;
 		}
 
-		return $key . '[' . join( '|', $all_params ) . ']';
+		return $key . '[' . implode( '|', $all_params ) . ']';
 	}
 
 	/**
@@ -352,20 +352,18 @@ class Lengow_Main {
 	 * @return string
 	 */
 	public static function decode_log_message( $message, $iso_code = null, $params = null ) {
-		if ( preg_match( '/^(([a-z\_]*\.){1,3}[a-z\_]*)(\[(.*)\]|)$/', $message, $result ) ) {
-			if ( isset( $result[1] ) ) {
-				$key = $result[1];
-				if ( isset( $result[4] ) && null === $params ) {
-					$str_param  = $result[4];
-					$all_params = explode( '|', $str_param );
-					foreach ( $all_params as $param ) {
-						$result               = explode( '==', $param );
-						$params[ $result[0] ] = $result[1];
-					}
+		if ( preg_match( '/^(([a-z\_]*\.){1,3}[a-z\_]*)(\[(.*)\]|)$/', $message, $result ) && isset( $result[1] ) ) {
+			$key = $result[1];
+			if ( isset( $result[4] ) && null === $params ) {
+				$str_param  = $result[4];
+				$all_params = explode( '|', $str_param );
+				foreach ( $all_params as $param ) {
+					$result               = explode( '==', $param );
+					$params[ $result[0] ] = $result[1];
 				}
-				$locale  = new Lengow_Translation();
-				$message = $locale->t( $key, $params, $iso_code );
 			}
+			$locale  = new Lengow_Translation();
+			$message = $locale->t( $key, $params, $iso_code );
 		}
 
 		return $message;
@@ -434,16 +432,9 @@ class Lengow_Main {
 	 */
 	public static function get_order_statuses() {
 		$order_statuses = array();
-		if ( self::compare_version( '2.2' ) ) {
-			$statuses = wc_get_order_statuses();
-			foreach ( $statuses as $status => $label ) {
-				$order_statuses[ $status ] = __( $label, 'woocommerce' );
-			}
-		} else {
-			$statuses = get_terms( 'shop_order_status', array( 'hide_empty' => 0, 'orderby' => 'id,' ) );
-			foreach ( $statuses as $status ) {
-				$order_statuses[ $status->slug ] = __( $status->name, 'woocommerce' );
-			}
+		$statuses = wc_get_order_statuses();
+		foreach ( $statuses as $status => $label ) {
+			$order_statuses[ $status ] = __( $label, 'woocommerce' );
 		}
 
 		return $order_statuses;
@@ -504,7 +495,8 @@ class Lengow_Main {
 		);
 		$str = preg_replace( '/[\s]+/', ' ', $str );
 		$str = trim( $str );
-		$str = str_replace(
+
+		return str_replace(
 			array(
 				'&nbsp;',
 				'|',
@@ -541,8 +533,6 @@ class Lengow_Main {
 			),
 			$str
 		);
-
-		return $str;
 	}
 
 	/**
@@ -571,7 +561,7 @@ class Lengow_Main {
 	}
 
 	/**
-	 * Replace all accented chars by their equivalent non accented chars.
+	 * Replace all accented chars by their equivalent non-accented chars.
 	 *
 	 * @param string $str the content
 	 *
