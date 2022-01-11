@@ -27,6 +27,11 @@
               box-shadow 100ms ease;
 }
 
+.lgw-box-content {
+  width: 96%;
+  padding: 2%;
+}
+
 .lgw-container a.lgw-box-link:hover {
   text-decoration: none;
 }

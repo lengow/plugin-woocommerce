@@ -46,6 +46,8 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 == Changelog ==
 
 = 2.5.2 - xxxx-xx-xx =
+* Feature: Removal of compatibility with WooCommerce versions lower than 4.0
+* Feature: Integration of an internal toolbox with all Lengow information for support
 
 = 2.5.1 - 2021-12-20 =
 * Bugfix: Loading of all dependencies in the webservices

@@ -450,7 +450,7 @@ class Lengow_Toolbox {
 		$file_modified = array();
 		$file_deleted  = array();
 		$sep           = DIRECTORY_SEPARATOR;
-		$file_name     = LENGOW_PLUGIN_PATH . $sep . Lengow_Main::FOLDER_TOOLBOX . $sep . self::FILE_CHECKMD5;
+		$file_name     = LENGOW_PLUGIN_PATH . $sep . Lengow_Main::FOLDER_CONFIG . $sep . self::FILE_CHECKMD5;
 		if ( file_exists( $file_name ) ) {
 			$md5_available = true;
 			if ( ( $file = fopen( $file_name, 'rb' ) ) !== false ) {

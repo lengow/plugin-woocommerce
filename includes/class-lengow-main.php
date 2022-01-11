@@ -36,7 +36,6 @@ class Lengow_Main {
 	const FOLDER_EXPORT = 'export';
 	const FOLDER_LOG = 'logs';
 	const FOLDER_TRANSLATION = 'translations';
-	const FOLDER_TOOLBOX = 'toolbox';
 	const FOLDER_WEBSERVICE = 'webservice';
 
 	/* Lengow webservices */

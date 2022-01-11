@@ -120,6 +120,9 @@ class Lengow_Admin {
 			case 'lengow_admin_legals':
 				Lengow_Admin_Legals::display();
 				break;
+			case 'lengow_admin_toolbox':
+				Lengow_Admin_Toolbox::display();
+				break;
 			default:
 				Lengow_Admin_Connection::display();
 		}

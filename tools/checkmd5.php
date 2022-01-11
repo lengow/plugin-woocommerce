@@ -7,13 +7,12 @@ error_reporting( E_ALL );
 ini_set( 'display_errors', 1 );
 
 $base = dirname( dirname( __FILE__ ) );
-$fp   = fopen( dirname( dirname( __FILE__ ) ) . '/toolbox/checkmd5.csv', 'w+' );
+$fp   = fopen( dirname( dirname( __FILE__ ) ) . '/config/checkmd5.csv', 'wb+' );
 
 $list_folders = array(
 	'/assets',
 	'/includes',
 	'/languages',
-	'/toolbox',
 	'/upgrade',
 	'/webservice',
 );
@@ -21,6 +20,8 @@ $list_folders = array(
 $file_paths = array(
 	$base . '/lengow.php',
 	$base . '/config/index.php',
+	$base . '/translations/en_GB.csv',
+	$base . '/translations/fr_FR.csv',
 );
 
 foreach ( $list_folders as $folder ) {
@@ -76,7 +77,7 @@ function write_csv( $fp, $text, &$front_key = array() ) {
 			array_pop( $front_key );
 		}
 	} else {
-		$line = join( '.', $front_key ) . '|' . str_replace( "\n", '<br />', $text ) . PHP_EOL;
+		$line = implode( '.', $front_key ) . '|' . str_replace( "\n", '<br />', $text ) . PHP_EOL;
 		fwrite( $fp, $line );
 	}
 }

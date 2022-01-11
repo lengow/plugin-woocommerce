@@ -156,6 +156,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/admin/class-lengow-admin-order-settings.php' );
 				include_once( 'includes/admin/class-lengow-admin-orders.php' );
 				include_once( 'includes/admin/class-lengow-admin-products.php' );
+				include_once( 'includes/admin/class-lengow-admin-toolbox.php' );
 				include_once( 'includes/admin/class-lengow-admin-main-settings.php' );
 				include_once( 'includes/admin/class-lengow-box-order-info.php' );
 				include_once( 'includes/admin/class-lengow-box-order-shipping.php' );
@@ -284,12 +285,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				)
 			);
 			wp_enqueue_style( 'lengow_admin_css' );
-
-			if ( intval( get_bloginfo( 'version' ) ) >= 4 ) {
-				wp_register_script( 'lengow_boostrap_js', plugins_url( '/assets/js/bootstrap_v3.min.js', __FILE__ ) );
-			} else {
-				wp_register_script( 'lengow_boostrap_js', plugins_url( '/assets/js/bootstrap.min.js', __FILE__ ) );
-			}
+			wp_register_script( 'lengow_boostrap_js', plugins_url( '/assets/js/bootstrap.min.js', __FILE__ ) );
 			wp_register_script( 'lengow_main_settings', plugins_url( '/assets/js/lengow/main_setting.js', __FILE__ ) );
 			wp_register_script(
 				'lengow_order_settings',
@@ -303,6 +299,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			wp_register_script( 'lengow_products', plugins_url( '/assets/js/lengow/products.js', __FILE__ ) );
 			wp_register_script( 'lengow_connection', plugins_url( '/assets/js/lengow/connection.js', __FILE__ ) );
 			wp_register_script( 'lengow_orders', plugins_url( '/assets/js/lengow/orders.js', __FILE__ ) );
+			wp_register_script( 'lengow_toolbox', plugins_url( '/assets/js/lengow/toolbox.js', __FILE__ ) );
 			wp_register_script(
 				'lengow_admin_js',
 				plugins_url( '/assets/js/lengow/admin.js', __FILE__ ),
@@ -316,6 +313,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					'lengow_orders',
 					'lengow_main_settings',
 					'lengow_order_settings',
+					'lengow_toolbox',
 				)
 			);
 			wp_enqueue_script( 'lengow_admin_js' );
