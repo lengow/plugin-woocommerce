@@ -292,6 +292,7 @@ en:
       wordpress_version: "WordPress version"
       woocommerce_version: "WooCommerce version"
       plugin_version: "Plugin version"
+      php_version: "PHP version"
       ip_server: "Server IP"
       ip_enabled: "Authorisation by IP enabled"
       ip_authorized: "IP authorised"

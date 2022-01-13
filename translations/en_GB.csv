@@ -263,6 +263,7 @@ toolbox.screen.plugin_information|Plugin information
 toolbox.screen.wordpress_version|WordPress version
 toolbox.screen.woocommerce_version|WooCommerce version
 toolbox.screen.plugin_version|Plugin version
+toolbox.screen.php_version|PHP version
 toolbox.screen.ip_server|Server IP
 toolbox.screen.ip_enabled|Authorisation by IP enabled
 toolbox.screen.ip_authorized|IP authorised

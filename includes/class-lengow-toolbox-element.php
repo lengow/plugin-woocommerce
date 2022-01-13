@@ -114,6 +114,10 @@ class Lengow_Toolbox_Element {
 				self::DATA_MESSAGE => $plugin_data[ Lengow_Toolbox::PLUGIN_VERSION ],
 			),
 			array(
+				self::DATA_TITLE   => $this->locale->t( 'toolbox.screen.php_version' ),
+				self::DATA_MESSAGE => $plugin_data[ Lengow_Toolbox::PLUGIN_PHP_VERSION ],
+			),
+			array(
 				self::DATA_TITLE   => $this->locale->t( 'toolbox.screen.ip_server' ),
 				self::DATA_MESSAGE => $plugin_data[ Lengow_Toolbox::PLUGIN_SERVER_IP ],
 			),

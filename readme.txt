@@ -3,7 +3,7 @@ Contributors: lengowcompany
 Tags: woocommerce, ecommerce, feed, orders, marketplace, amazon, google shopping, facebook, product catalog, feed management, lengow
 Requires at least: 5.3
 Tested up to: 5.8
-Requires PHP: 5.6
+Requires PHP: 5.5
 Stable tag: 2.5.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html

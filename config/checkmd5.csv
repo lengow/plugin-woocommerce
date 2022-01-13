@@ -1,7 +1,7 @@
 /lengow.php|6e842b99bf16784469c62300caadb3ca
 /config/index.php|d41d8cd98f00b204e9800998ecf8427e
-/translations/en_GB.csv|f83ab7685244b844c8f9f998bb65242e
-/translations/fr_FR.csv|c0d18c713736d12fa1bdd9d1f8bf00c6
+/translations/en_GB.csv|a01202bb3537b79d4e6087b14ad98667
+/translations/fr_FR.csv|0fc85a527f15236f7006003fed688dd6
 /assets/js/bootstrap-datepicker.js|a6999445e0d313c57e829feca6277155
 /assets/js/lengow/main_setting.js|eed3d95e851120cffc22183a8d6c217a
 /assets/js/lengow/toolbox.js|a8484f2acb07c0bddf661e8b0f0a0b01
@@ -333,7 +333,7 @@
 /includes/class-lengow-exception.php|6625be649f271218c55d1a67c84dfebb
 /includes/class-lengow-import-order.php|86495802f0eaa6410552872dc26d2d7c
 /includes/class-lengow-order-line.php|da9907b79052af8c1b7c1c327b3e2359
-/includes/class-lengow-toolbox-element.php|81c7fbf9acb69f9f5200619a9c9bd521
+/includes/class-lengow-toolbox-element.php|2fe1e4f4b6b9ac00baa51875e85e305e
 /includes/class-lengow-marketplace.php|b4fdfd9588a6fd4c5503439dabc089c9
 /includes/class-lengow-log.php|7b9d91f744c4f01ec8c25903023605c3
 /includes/class-lengow-install.php|9cd7faa792f30f9c38dcf5007c2125b9
@@ -348,7 +348,7 @@
 /includes/class-lengow-configuration.php|c3dd66ec0e9e9a78117480cd67bb9384
 /includes/class-lengow-address.php|0c9247dc1fe75ececa85ef04ec4132a1
 /includes/class-lengow-order.php|9d56eb210367f6c609774dad93f15306
-/includes/class-lengow-toolbox.php|ecd56a09b5a64328d281bef3c791e303
+/includes/class-lengow-toolbox.php|cc6e232ae703edf93dcbf677c11b7048
 /includes/class-lengow-catalog.php|48e9efefe08125e8a8bec7152eb93f3c
 /includes/class-lengow-connector.php|4524e492c9defa89da70545d633bc4da
 /includes/class-lengow-file.php|19f5c28b4aeafc7130cf6d284ab03f6f
