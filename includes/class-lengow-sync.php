@@ -55,7 +55,7 @@ class Lengow_Sync {
 	const LINK_HELP_CENTER = 'https://help.lengow.com/hc/en-us/articles/360011968912';
 	const LINK_CHANGELOG = 'https://help.lengow.com/hc/en-us/articles/360011089440';
 	const LINK_UPDATE_GUIDE = 'https://help.lengow.com/hc/en-us/articles/360011968912#2-updating-your-plugin-version';
-	const LINK_SUPPORT = 'https://help-support.lengow.com/hc/en-us/requests/new';
+	const LINK_SUPPORT = 'https://help.lengow.com/hc/en-us/requests/new';
 
 	/* Api iso codes */
 	const API_ISO_CODE_EN = 'en';
