@@ -30,11 +30,11 @@ A Lengow account is created during the extension installation and you will have 
 
 = Where can I find Lengow documentation and user guides? =
 
-For help setting up and configuring Lengow plugin please refer to our [user guide](https://support.lengow.com/hc/en-us/articles/360011968912-WooCommerce-For-new-Lengow-platform-users)
+For help setting up and configuring Lengow plugin please refer to our [user guide](https://help.lengow.com/hc/en-us/articles/360011968912)
 
 = Where can I get support? =
 
-To make a support request to Lengow, use [our helpdesk](https://support.lengow.com/hc/en-us/requests/new).
+To make a support request to Lengow, use [our helpdesk](https://help.lengow.com/hc/en-us/requests/new).
 
 == Installation ==
 

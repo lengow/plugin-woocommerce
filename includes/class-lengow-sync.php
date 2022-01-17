@@ -52,10 +52,10 @@ class Lengow_Sync {
 	const LINK_TYPE_SUPPORT = 'support';
 
 	/* Default plugin links */
-	const LINK_HELP_CENTER = 'https://support.lengow.com/kb/guide/en/rMVnXfZXmr';
-	const LINK_CHANGELOG = 'https://support.lengow.com/kb/guide/en/FERYtyLbe4';
-	const LINK_UPDATE_GUIDE = 'https://support.lengow.com/kb/guide/en/rMVnXfZXmr/Steps/25873,123328';
-	const LINK_SUPPORT = 'https://help-support.lengow.com/hc/en-us/requests/new';
+	const LINK_HELP_CENTER = 'https://help.lengow.com/hc/en-us/articles/360011968912';
+	const LINK_CHANGELOG = 'https://help.lengow.com/hc/en-us/articles/360011089440';
+	const LINK_UPDATE_GUIDE = 'https://help.lengow.com/hc/en-us/articles/360011968912#2-updating-your-plugin-version';
+	const LINK_SUPPORT = 'https://help.lengow.com/hc/en-us/requests/new';
 
 	/* Api iso codes */
 	const API_ISO_CODE_EN = 'en';
