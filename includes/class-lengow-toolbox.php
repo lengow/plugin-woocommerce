@@ -172,6 +172,7 @@ class Lengow_Toolbox {
 	const ACTION_PARAMETERS = 'parameters';
 	const ACTION_RETRY = 'retry';
 	const ACTION_FINISH = 'is_finished';
+	const EXTRA_UPDATED_AT = 'extra_updated_at';
 
 	/* Process state labels */
 	const PROCESS_STATE_NEW = 'new';
@@ -287,11 +288,13 @@ class Lengow_Toolbox {
 		}
 		$orders = array();
 		foreach ( $lengow_orders as $lengow_order ) {
+			$order = $lengow_order->order_id ? new WC_Order( $lengow_order->order_id ) : null;
 			if ( $type === self::DATA_TYPE_EXTRA ) {
-				return self::get_order_extra_data( $lengow_order );
+				return self::get_order_extra_data( $lengow_order, $order );
 			}
 			$marketplace_label = $lengow_order->marketplace_label;
-			$orders[]          = self::get_order_data_by_type( $lengow_order, $type );
+			$orders[]          = self::get_order_data_by_type( $type, $lengow_order, $order );
+			unset( $order );
 		}
 
 		return array(
@@ -578,13 +581,13 @@ class Lengow_Toolbox {
 	/**
 	 * Get array of all the data of the order.
 	 *
-	 * @param Lengow_Order $lengow_order Lengow order instance
 	 * @param string $type Toolbox order data type
+	 * @param Lengow_Order $lengow_order Lengow order instance
+	 * @param WC_Order|null $order WooCommerce order instance
 	 *
 	 * @return array
 	 */
-	private static function get_order_data_by_type( $lengow_order, $type ) {
-		$order            = $lengow_order->order_id ? new WC_Order( $lengow_order->order_id ) : null;
+	private static function get_order_data_by_type( $type, $lengow_order, $order = null ) {
 		$order_references = array(
 			self::ID                             => $lengow_order->id,
 			self::ORDER_MERCHANT_ORDER_ID        => $order ? $order->get_id() : null,
@@ -824,11 +827,17 @@ class Lengow_Toolbox {
 	 * Get all the data of the order at the time of import.
 	 *
 	 * @param Lengow_Order $lengow_order Lengow order instance
+	 * @param WC_Order|null $order WooCommerce order instance
 	 *
 	 * @return array
 	 */
-	private static function get_order_extra_data( $lengow_order ) {
-		return json_decode( $lengow_order->extra, true );
+	private static function get_order_extra_data( $lengow_order, $order = null ) {
+		$orderData                           = json_decode( $lengow_order->extra, true );
+		$orderData[ self::EXTRA_UPDATED_AT ] = $order
+			? strtotime( Lengow_Order::get_date_imported( $order->get_id() ) )
+			: strtotime( $lengow_order->updated_at );
+
+		return $orderData;
 	}
 
 	/**
