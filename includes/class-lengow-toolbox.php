@@ -78,6 +78,7 @@ class Lengow_Toolbox {
 	const PLUGIN = 'plugin';
 	const PLUGIN_CMS_VERSION = 'cms_version';
 	const PLUGIN_VERSION = 'plugin_version';
+	const PLUGIN_PHP_VERSION = 'php_version';
 	const PLUGIN_DEBUG_MODE_DISABLE = 'debug_mode_disable';
 	const PLUGIN_WRITE_PERMISSION = 'write_permission';
 	const PLUGIN_SERVER_IP = 'server_ip';
@@ -171,6 +172,7 @@ class Lengow_Toolbox {
 	const ACTION_PARAMETERS = 'parameters';
 	const ACTION_RETRY = 'retry';
 	const ACTION_FINISH = 'is_finished';
+	const EXTRA_UPDATED_AT = 'extra_updated_at';
 
 	/* Process state labels */
 	const PROCESS_STATE_NEW = 'new';
@@ -286,11 +288,13 @@ class Lengow_Toolbox {
 		}
 		$orders = array();
 		foreach ( $lengow_orders as $lengow_order ) {
+			$order = $lengow_order->order_id ? new WC_Order( $lengow_order->order_id ) : null;
 			if ( $type === self::DATA_TYPE_EXTRA ) {
-				return self::get_order_extra_data( $lengow_order );
+				return self::get_order_extra_data( $lengow_order, $order );
 			}
 			$marketplace_label = $lengow_order->marketplace_label;
-			$orders[]          = self::get_order_data_by_type( $lengow_order, $type );
+			$orders[]          = self::get_order_data_by_type( $type, $lengow_order, $order );
+			unset( $order );
 		}
 
 		return array(
@@ -368,6 +372,7 @@ class Lengow_Toolbox {
 		return array(
 			self::PLUGIN_CMS_VERSION          => $wp_version,
 			self::PLUGIN_VERSION              => LENGOW_VERSION,
+			self::PLUGIN_PHP_VERSION          => PHP_VERSION,
 			self::PLUGIN_DEBUG_MODE_DISABLE   => ! Lengow_Configuration::debug_mode_is_active(),
 			self::PLUGIN_WRITE_PERMISSION     => self::test_write_permission(),
 			self::PLUGIN_SERVER_IP            => $_SERVER['SERVER_ADDR'],
@@ -450,10 +455,10 @@ class Lengow_Toolbox {
 		$file_modified = array();
 		$file_deleted  = array();
 		$sep           = DIRECTORY_SEPARATOR;
-		$file_name     = LENGOW_PLUGIN_PATH . $sep . Lengow_Main::FOLDER_TOOLBOX . $sep . self::FILE_CHECKMD5;
+		$file_name     = LENGOW_PLUGIN_PATH . $sep . Lengow_Main::FOLDER_CONFIG . $sep . self::FILE_CHECKMD5;
 		if ( file_exists( $file_name ) ) {
 			$md5_available = true;
-			if ( ( $file = fopen( $file_name, 'r' ) ) !== false ) {
+			if ( ( $file = fopen( $file_name, 'rb' ) ) !== false ) {
 				while ( ( $data = fgetcsv( $file, 1000, '|' ) ) !== false ) {
 					$file_counter ++;
 					$short_path = $data[0];
@@ -532,14 +537,14 @@ class Lengow_Toolbox {
 		$sep       = DIRECTORY_SEPARATOR;
 		$file_path = LENGOW_PLUGIN_PATH . $sep . Lengow_Main::FOLDER_CONFIG . $sep . self::FILE_TEST;
 		try {
-			$file = fopen( $file_path, 'w+' );
+			$file = fopen( $file_path, 'wb+' );
 			if ( ! $file ) {
 				return false;
 			}
 			unlink( $file_path );
 
 			return true;
-		} catch ( \Exception $e ) {
+		} catch ( Exception $e ) {
 			return false;
 		}
 	}
@@ -576,24 +581,24 @@ class Lengow_Toolbox {
 	/**
 	 * Get array of all the data of the order.
 	 *
-	 * @param Lengow_Order $lengow_order Lengow order instance
 	 * @param string $type Toolbox order data type
+	 * @param Lengow_Order $lengow_order Lengow order instance
+	 * @param WC_Order|null $order WooCommerce order instance
 	 *
 	 * @return array
 	 */
-	private static function get_order_data_by_type( $lengow_order, $type ) {
-		$order            = $lengow_order->order_id ? new WC_Order( $lengow_order->order_id ) : null;
+	private static function get_order_data_by_type( $type, $lengow_order, $order = null ) {
 		$order_references = array(
 			self::ID                             => $lengow_order->id,
-			self::ORDER_MERCHANT_ORDER_ID        => $order ? Lengow_Order::get_order_id( $order ) : null,
-			self::ORDER_MERCHANT_ORDER_REFERENCE => $order ? (string) Lengow_Order::get_order_id( $order ) : null,
+			self::ORDER_MERCHANT_ORDER_ID        => $order ? $order->get_id() : null,
+			self::ORDER_MERCHANT_ORDER_REFERENCE => $order ? (string) $order->get_id() : null,
 			self::ORDER_DELIVERY_ADDRESS_ID      => $lengow_order->delivery_address_id,
 		);
 		switch ( $type ) {
 			case self::DATA_TYPE_ACTION:
 				$order_data = array(
 					self::ACTIONS => $order
-						? self::get_order_action_data( Lengow_Order::get_order_id( $order ) )
+						? self::get_order_action_data( $order->get_id() )
 						: array(),
 				);
 				break;
@@ -625,7 +630,7 @@ class Lengow_Toolbox {
 	 */
 	private static function get_all_order_data( $lengow_order, $order = null ) {
 		if ( $order ) {
-			$order_id                 = Lengow_Order::get_order_id( $order );
+			$order_id                 = $order->get_id();
 			$carrier                  = get_post_meta( $order_id, '_lengow_carrier', true );
 			$custom_carrier           = get_post_meta( $order_id, '_lengow_custom_carrier', true );
 			$merchant_carrier         = $carrier ?: $custom_carrier;
@@ -697,13 +702,11 @@ class Lengow_Toolbox {
 			self::ORDER_IS_IN_ERROR           => $lengow_order->is_in_error,
 			self::ERRORS                      => self::get_order_errors_data( $lengow_order->id ),
 			self::ORDER_ACTION_IN_PROGRESS    => $order && $lengow_order->has_an_action_in_progress(),
-			self::ACTIONS                     => $order
-				? self::get_order_action_data( Lengow_Order::get_order_id( $order ) )
-				: array(),
+			self::ACTIONS                     => $order ? self::get_order_action_data( $order->get_id() ) : array(),
 			self::CREATED_AT                  => strtotime( $lengow_order->created_at ),
 			self::UPDATED_AT                  => strtotime( $lengow_order->updated_at ),
 			self::IMPORTED_AT                 => $order
-				? strtotime( Lengow_Order::get_date_imported( Lengow_Order::get_order_id( $order ) ) )
+				? strtotime( Lengow_Order::get_date_imported( $order->get_id() ) )
 				: 0,
 		);
 	}
@@ -779,7 +782,7 @@ class Lengow_Toolbox {
 	 */
 	private static function get_order_statuses_data( $order ) {
 		$order_statuses        = array();
-		$imported_date         = Lengow_Order::get_date_imported( Lengow_Order::get_order_id( $order ) );
+		$imported_date         = Lengow_Order::get_date_imported( $order->get_id() );
 		$created_date          = $order->get_date_created()
 			? get_gmt_from_date( $order->get_date_created()->date( Lengow_Main::DATE_FULL ) )
 			: null;
@@ -824,11 +827,17 @@ class Lengow_Toolbox {
 	 * Get all the data of the order at the time of import.
 	 *
 	 * @param Lengow_Order $lengow_order Lengow order instance
+	 * @param WC_Order|null $order WooCommerce order instance
 	 *
 	 * @return array
 	 */
-	private static function get_order_extra_data( $lengow_order ) {
-		return json_decode( $lengow_order->extra, true );
+	private static function get_order_extra_data( $lengow_order, $order = null ) {
+		$orderData                           = json_decode( $lengow_order->extra, true );
+		$orderData[ self::EXTRA_UPDATED_AT ] = $order
+			? strtotime( Lengow_Order::get_date_imported( $order->get_id() ) )
+			: strtotime( $lengow_order->updated_at );
+
+		return $orderData;
 	}
 
 	/**

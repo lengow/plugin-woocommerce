@@ -11,8 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="lgw-content-section text-center">
         <div id="lgw-footer">
             <p>
-                <a href="<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_admin_legals' ); ?>"
-                   class="sub-link" title="Legal"><?php echo $locale->t( 'footer.legals' ); ?></a>
+                <a href="<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_admin_toolbox' ); ?>"
+                   class="sub-link"
+                   title="<?php echo $locale->t( 'footer.toolbox' ); ?>">
+                    <?php echo $locale->t( 'footer.toolbox' ); ?>
+                </a>
+                | <a href="<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_admin_legals' ); ?>"
+                     class="sub-link"
+                     title="<?php echo $locale->t( 'footer.legals' ); ?>">
+                    <?php echo $locale->t( 'footer.legals' ); ?>
+                </a>
                 | <?php echo $locale->t( 'footer.plugin_lengow' ) ?> - v.<?php echo LENGOW_VERSION; ?>
 				<?php if ( 'lengow.net' === Lengow_Connector::LENGOW_URL ): ?>
                     <span class="lgw-label-preprod">preprod</span>

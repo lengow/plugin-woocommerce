@@ -55,11 +55,11 @@ class Lengow_Admin_Connection {
 					$has_catalog_to_link = false;
 					$access_token        = isset( $_POST['access_token'] ) ? $_POST['access_token'] : '';
 					$secret              = isset( $_POST['secret'] ) ? $_POST['secret'] : '';
-					$credentials_valid   = self::_check_api_credentials( $access_token, $secret );
+					$credentials_valid   = self::check_api_credentials( $access_token, $secret );
 					if ( $credentials_valid ) {
-						$cms_connected = self::_connect_cms();
+						$cms_connected = self::connect_cms();
 						if ( $cms_connected ) {
-							$has_catalog_to_link = self::_has_catalog_to_link();
+							$has_catalog_to_link = self::has_catalog_to_link();
 						}
 					}
 					include 'views/connection/html-admin-connection-cms-result.php';
@@ -69,14 +69,14 @@ class Lengow_Admin_Connection {
 					if ( $retry ) {
 						Lengow_Configuration::reset_catalog_ids();
 					}
-					$catalog_list = self::_get_catalog_list();
+					$catalog_list = self::get_catalog_list();
 					include 'views/connection/html-admin-connection-catalog.php';
 					break;
 				case 'link_catalogs':
 					$catalogs_linked  = true;
 					$catalog_selected = isset( $_POST['catalog_selected'] ) ? $_POST['catalog_selected'] : array();
 					if ( ! empty( $catalog_selected ) ) {
-						$catalogs_linked = self::_save_catalogs_linked( $catalog_selected );
+						$catalogs_linked = self::save_catalogs_linked( $catalog_selected );
 					}
 					if ( $catalogs_linked ) {
 						echo json_encode( array( 'success' => true ) );
@@ -97,7 +97,7 @@ class Lengow_Admin_Connection {
 	 *
 	 * @return boolean
 	 */
-	private static function _check_api_credentials( $access_token, $secret ) {
+	private static function check_api_credentials( $access_token, $secret ) {
 		$access_ids_saved = false;
 		$account_id       = Lengow_Connector::get_account_id_by_credentials( $access_token, $secret );
 		if ( $account_id ) {
@@ -118,7 +118,7 @@ class Lengow_Admin_Connection {
 	 *
 	 * @return boolean
 	 */
-	private static function _connect_cms() {
+	private static function connect_cms() {
 		$cms_token     = Lengow_Main::get_token();
 		$cms_connected = Lengow_Sync::sync_catalog( true );
 		if ( ! $cms_connected ) {
@@ -159,7 +159,7 @@ class Lengow_Admin_Connection {
 	 *
 	 * @return boolean
 	 */
-	private static function _has_catalog_to_link() {
+	private static function has_catalog_to_link() {
 		if ( ! Lengow_Configuration::shop_is_active() ) {
 			return Lengow_Catalog::has_catalog_not_linked();
 		}
@@ -172,7 +172,7 @@ class Lengow_Admin_Connection {
 	 *
 	 * @return array
 	 */
-	private static function _get_catalog_list() {
+	private static function get_catalog_list() {
 		if ( ! Lengow_Configuration::shop_is_active() ) {
 			return Lengow_Catalog::get_catalog_list();
 		}
@@ -188,7 +188,7 @@ class Lengow_Admin_Connection {
 	 *
 	 * @return boolean
 	 */
-	private static function _save_catalogs_linked( $catalog_selected ) {
+	private static function save_catalogs_linked( $catalog_selected ) {
 		$catalogs_linked = true;
 		if ( ! empty( $catalog_selected ) ) {
 			// save catalogs ids and active shop in lengow configuration.

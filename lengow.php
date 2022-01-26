@@ -26,7 +26,7 @@
  * Plugin Name: Lengow for WooCommerce
  * Plugin URI: https://www.lengow.com/integrations/woocommerce/
  * Description: Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
- * Version: 2.5.1
+ * Version: 2.5.2
  * Author: Lengow
  * Author URI: https://www.lengow.com
  * Requires at least: 3.5
@@ -59,7 +59,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		/**
 		 * @var string current version of plugin.
 		 */
-		public $version = '2.5.1';
+		public $version = '2.5.2';
 
 		/**
 		 * @var string plugin name.
@@ -156,6 +156,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/admin/class-lengow-admin-order-settings.php' );
 				include_once( 'includes/admin/class-lengow-admin-orders.php' );
 				include_once( 'includes/admin/class-lengow-admin-products.php' );
+				include_once( 'includes/admin/class-lengow-admin-toolbox.php' );
 				include_once( 'includes/admin/class-lengow-admin-main-settings.php' );
 				include_once( 'includes/admin/class-lengow-box-order-info.php' );
 				include_once( 'includes/admin/class-lengow-box-order-shipping.php' );
@@ -182,9 +183,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				add_action( 'woocommerce_email', array( 'Lengow_Hook', 'unhook_woocommerce_mail' ) );
 				add_action( 'add_meta_boxes_shop_order', array( 'Lengow_Hook', 'adding_shop_order_meta_boxes' ) );
 				// init lengow technical error status.
-				if ( Lengow_Main::compare_version( '2.2' ) ) {
-					$this->init_lengow_technical_error_status();
-				}
+				$this->init_lengow_technical_error_status();
 				// check logs download to prevent the occurrence of the WordPress html header.
 				$download = null;
 				if ( isset( $_GET['action'] ) ) {
@@ -286,12 +285,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				)
 			);
 			wp_enqueue_style( 'lengow_admin_css' );
-
-			if ( intval( get_bloginfo( 'version' ) ) >= 4 ) {
-				wp_register_script( 'lengow_boostrap_js', plugins_url( '/assets/js/bootstrap_v3.min.js', __FILE__ ) );
-			} else {
-				wp_register_script( 'lengow_boostrap_js', plugins_url( '/assets/js/bootstrap.min.js', __FILE__ ) );
-			}
+			wp_register_script( 'lengow_boostrap_js', plugins_url( '/assets/js/bootstrap.min.js', __FILE__ ) );
 			wp_register_script( 'lengow_main_settings', plugins_url( '/assets/js/lengow/main_setting.js', __FILE__ ) );
 			wp_register_script(
 				'lengow_order_settings',
@@ -305,6 +299,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			wp_register_script( 'lengow_products', plugins_url( '/assets/js/lengow/products.js', __FILE__ ) );
 			wp_register_script( 'lengow_connection', plugins_url( '/assets/js/lengow/connection.js', __FILE__ ) );
 			wp_register_script( 'lengow_orders', plugins_url( '/assets/js/lengow/orders.js', __FILE__ ) );
+			wp_register_script( 'lengow_toolbox', plugins_url( '/assets/js/lengow/toolbox.js', __FILE__ ) );
 			wp_register_script(
 				'lengow_admin_js',
 				plugins_url( '/assets/js/lengow/admin.js', __FILE__ ),
@@ -318,11 +313,12 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					'lengow_orders',
 					'lengow_main_settings',
 					'lengow_order_settings',
+					'lengow_toolbox',
 				)
 			);
 			wp_enqueue_script( 'lengow_admin_js' );
 			// must be added to instantiate admin-ajax.php.
-			wp_localize_script( 'lengow_admin_js', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+			wp_add_inline_script( 'lengow_admin_js', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
 		}
 
 		/**

@@ -48,7 +48,7 @@ class Lengow_Log {
 	/**
 	 * @var Lengow_File Lengow file instance.
 	 */
-	private $_file;
+	private $file;
 
 	/**
 	 * Construct a new Lengow log.
@@ -61,7 +61,7 @@ class Lengow_Log {
 		if ( empty( $file_name ) ) {
 			$file_name = 'logs-' . date( Lengow_Main::DATE_DAY ) . '.txt';
 		}
-		$this->_file = new Lengow_File( Lengow_Main::FOLDER_LOG, $file_name );
+		$this->file = new Lengow_File( Lengow_Main::FOLDER_LOG, $file_name );
 	}
 
 	/**
@@ -76,13 +76,13 @@ class Lengow_Log {
 		$decoded_message = Lengow_Main::decode_log_message( $message, Lengow_Translation::DEFAULT_ISO_CODE );
 		$log             = get_date_from_gmt( date( Lengow_Main::DATE_FULL ) );
 		$log             .= ' - ' . ( empty( $category ) ? '' : '[' . $category . '] ' );
-		$log             .= '' . ( empty( $marketplace_sku ) ? '' : 'order ' . $marketplace_sku . ' : ' );
+		$log             .= empty( $marketplace_sku ) ? '' : 'order ' . $marketplace_sku . ' : ';
 		$log             .= $decoded_message . "\r\n";
 		if ( $display ) {
 			echo $log . '<br />';
 			flush();
 		}
-		$this->_file->write( $log );
+		$this->file->write( $log );
 	}
 
 	/**
@@ -126,7 +126,7 @@ class Lengow_Log {
 	 */
 	public static function download( $date = null ) {
 		/** @var Lengow_File[] $log_files */
-		if ( $date && preg_match( '/^(\d{4}-\d{2}-\d{2})$/', $date, $match ) ) {
+		if ( $date && preg_match( '/^(\d{4}-\d{2}-\d{2})$/', $date ) ) {
 			$log_files = false;
 			$file      = 'logs-' . $date . '.txt';
 			$file_name = $date . '.txt';
@@ -147,7 +147,7 @@ class Lengow_Log {
 		if ( $log_files ) {
 			foreach ( $log_files as $log_file ) {
 				$file_path = $log_file->get_path();
-				$handle    = fopen( $file_path, 'r' );
+				$handle    = fopen( $file_path, 'rb' );
 				$file_size = filesize( $file_path );
 				if ( $file_size > 0 ) {
 					$contents .= fread( $handle, $file_size );

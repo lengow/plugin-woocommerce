@@ -1,10 +1,10 @@
 === Lengow for WooCommerce ===
 Contributors: lengowcompany
 Tags: woocommerce, ecommerce, feed, orders, marketplace, amazon, google shopping, facebook, product catalog, feed management, lengow
-Requires at least: 3.5
+Requires at least: 5.3
 Tested up to: 5.8
-Requires PHP: 5.6
-Stable tag: 2.5.1
+Requires PHP: 5.5
+Stable tag: 2.5.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -30,11 +30,11 @@ A Lengow account is created during the extension installation and you will have 
 
 = Where can I find Lengow documentation and user guides? =
 
-For help setting up and configuring Lengow plugin please refer to our [user guide](https://support.lengow.com/hc/en-us/articles/360011968912-WooCommerce-For-new-Lengow-platform-users)
+For help setting up and configuring Lengow plugin please refer to our [user guide](https://help.lengow.com/hc/en-us/articles/360011968912)
 
 = Where can I get support? =
 
-To make a support request to Lengow, use [our helpdesk](https://support.lengow.com/hc/en-us/requests/new).
+To make a support request to Lengow, use [our helpdesk](https://help.lengow.com/hc/en-us/requests/new).
 
 == Installation ==
 
@@ -44,6 +44,13 @@ To make a support request to Lengow, use [our helpdesk](https://support.lengow.c
 4. Log in with your Lengow credentials and configure the plugin
 
 == Changelog ==
+
+= 2.5.2 - 2022-01-27 =
+* Feature: Removal of compatibility with WooCommerce versions lower than 4.0
+* Feature: Integration of an internal toolbox with all Lengow information for support
+* Feature: Adding the PHP version in the toolbox
+* Feature: Modification of the fallback urls of the Lengow Help Center
+* Feature: Adding extra field update date in external toolbox
 
 = 2.5.1 - 2021-12-20 =
 * Bugfix: Loading of all dependencies in the webservices

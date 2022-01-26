@@ -384,7 +384,7 @@ class Lengow_Crud {
 				$conditions[] = $key . ' = ' . $field_list[ $key ][ self::FIELD_FORMAT ];
 			}
 			if ( ! empty( $conditions ) ) {
-				$query .= ' WHERE ' . join( ' AND ', $conditions );
+				$query .= ' WHERE ' . implode( ' AND ', $conditions );
 			}
 		}
 		$prepare_query = empty( $args ) ? $query : $wpdb->prepare( $query, $args );

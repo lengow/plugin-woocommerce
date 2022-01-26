@@ -91,7 +91,7 @@ class Lengow_File {
 	 */
 	public function write( $txt ) {
 		if ( ! $this->instance ) {
-			$this->instance = fopen( $this->get_path(), 'a+' );
+			$this->instance = fopen( $this->get_path(), 'ab+' );
 		}
 		fwrite( $this->instance, $txt );
 	}
@@ -136,7 +136,7 @@ class Lengow_File {
 	 *
 	 * @return resource
 	 */
-	public static function get_resource( $path, $mode = 'a+' ) {
+	public static function get_resource( $path, $mode = 'ab+' ) {
 		return fopen( $path, $mode );
 	}
 
@@ -147,9 +147,6 @@ class Lengow_File {
 	 */
 	public function get_link() {
 		if ( empty( $this->link ) ) {
-			if ( ! $this->exists() ) {
-				$this->link = null;
-			}
 			$sep        = DIRECTORY_SEPARATOR;
 			$this->link = LENGOW_PLUGIN_URL . $sep . $this->folder_name . $sep . $this->file_name;
 		}

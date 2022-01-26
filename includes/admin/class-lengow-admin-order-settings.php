@@ -31,11 +31,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Admin_Order_Settings {
 
 	/**
-	 * Display admin orders page.
+	 * Display admin order setting page.
 	 */
 	public static function display() {
-		$lengow_admin_orders = new Lengow_Admin_Order_Settings();
-		$locale              = new Lengow_Translation();
+		$locale = new Lengow_Translation();
 		include_once 'views/html-admin-header-order.php';
 		include_once 'views/order-settings/html-admin-order-settings.php';
 	}

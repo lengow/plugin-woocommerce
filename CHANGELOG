@@ -1,4 +1,14 @@
 ========================================================
+Version 2.5.2
+========================================================
+
+    - Feature: Removal of compatibility with WooCommerce versions lower than 4.0
+    - Feature: Integration of an internal toolbox with all Lengow information for support
+    - Feature: Adding the PHP version in the toolbox
+    - Feature: Modification of the fallback urls of the Lengow Help Center
+    - Feature: Adding extra field update date in external toolbox
+
+========================================================
 Version 2.5.1
 ========================================================
 

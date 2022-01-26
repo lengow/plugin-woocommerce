@@ -42,7 +42,7 @@ class Lengow_Address {
 	/**
 	 * @var array API fields for an address.
 	 */
-	private $_address_api_nodes = array(
+	private $address_api_nodes = array(
 		'company',
 		'civility',
 		'email',
@@ -64,7 +64,7 @@ class Lengow_Address {
 	/**
 	 * @var array current alias of mister.
 	 */
-	private $_current_male = array(
+	private $current_male = array(
 		'M',
 		'M.',
 		'Mr',
@@ -80,7 +80,7 @@ class Lengow_Address {
 	/**
 	 * @var array current alias of miss.
 	 */
-	private $_current_female = array(
+	private $current_female = array(
 		'Mme',
 		'mme',
 		'Mm',
@@ -104,7 +104,7 @@ class Lengow_Address {
 	/**
 	 * @var array All region codes for correspondence.
 	 */
-	private $_region_codes = array(
+	private $region_codes = array(
 		self::ISO_A2_ES => array(
 			'01' => 'VI',
 			'02' => 'AB',
@@ -342,62 +342,62 @@ class Lengow_Address {
 	/**
 	 * @var string address type (billing or shipping).
 	 */
-	private $_type;
+	private $type;
 
 	/**
 	 * @var string first name.
 	 */
-	private $_first_name;
+	private $first_name;
 
 	/**
 	 * @var string last name.
 	 */
-	private $_last_name;
+	private $last_name;
 
 	/**
 	 * @var string company.
 	 */
-	private $_company;
+	private $company;
 
 	/**
 	 * @var string first line.
 	 */
-	private $_address_1;
+	private $address_1;
 
 	/**
 	 * @var string second line.
 	 */
-	private $_address_2;
+	private $address_2;
 
 	/**
 	 * @var string postcode.
 	 */
-	private $_postcode;
+	private $postcode;
 
 	/**
 	 * @var string city.
 	 */
-	private $_city;
+	private $city;
 
 	/**
 	 * @var string state name.
 	 */
-	private $_state;
+	private $state;
 
 	/**
 	 * @var string country code iso a2.
 	 */
-	private $_country;
+	private $country;
 
 	/**
 	 * @var string contact email.
 	 */
-	private $_email;
+	private $email;
 
 	/**
 	 * @var string contact phone.
 	 */
-	private $_phone;
+	private $phone;
 
 	/**
 	 * Construct.
@@ -408,23 +408,23 @@ class Lengow_Address {
 	 */
 	public function __construct( $data, $type, $relay_id = null ) {
 		// set all generic fields for WooCommerce Address.
-		$address_data      = $this->_extract_address_data_from_api( $data );
-		$names             = $this->_get_names( $address_data );
-		$address_fields    = $this->_get_address_fields( $address_data, $relay_id );
-		$state             = $this->_get_state( $address_data );
-		$phone_number      = $this->_get_phone_number( $address_data );
-		$this->_type       = $type;
-		$this->_first_name = ucfirst( strtolower( $names['firstname'] ) );
-		$this->_last_name  = ucfirst( strtolower( $names['lastname'] ) );
-		$this->_company    = $address_data['company'];
-		$this->_address_1  = strtolower( $address_fields['address_1'] );
-		$this->_address_2  = strtolower( $address_fields['address_2'] );
-		$this->_postcode   = $address_data['zipcode'];
-		$this->_city       = ucfirst( strtolower( preg_replace( '/[!<>?=+@{}_$%]/sim', '', $address_data['city'] ) ) );
-		$this->_state      = $state;
-		$this->_country    = $address_data['common_country_iso_a2'];
-		$this->_email      = $address_data['email'];
-		$this->_phone      = $phone_number;
+		$address_data     = $this->extract_address_data_from_api( $data );
+		$names            = $this->get_names( $address_data );
+		$address_fields   = $this->get_address_fields( $address_data, $relay_id );
+		$state            = $this->get_state( $address_data );
+		$phone_number     = $this->get_phone_number( $address_data );
+		$this->type       = $type;
+		$this->first_name = ucfirst( strtolower( $names['firstname'] ) );
+		$this->last_name  = ucfirst( strtolower( $names['lastname'] ) );
+		$this->company    = $address_data['company'];
+		$this->address_1  = strtolower( $address_fields['address_1'] );
+		$this->address_2  = strtolower( $address_fields['address_2'] );
+		$this->postcode   = $address_data['zipcode'];
+		$this->city       = ucfirst( strtolower( preg_replace( '/[!<>?=+@{}_$%]/sim', '', $address_data['city'] ) ) );
+		$this->state      = $state;
+		$this->country    = $address_data['common_country_iso_a2'];
+		$this->email      = $address_data['email'];
+		$this->phone      = $phone_number;
 	}
 
 	/**
@@ -462,9 +462,9 @@ class Lengow_Address {
 		global $woocommerce;
 
 		$address = array();
-		$fields  = $woocommerce->countries->get_address_fields( $this->_country, $this->_type );
+		$fields  = $woocommerce->countries->get_address_fields( $this->country, $this->type );
 		foreach ( $fields as $key => $field ) {
-			$attribute       = '_' . str_replace( $this->_type, '', $key );
+			$attribute       = str_replace( $this->type, '', $key );
 			$address[ $key ] = isset( $this->{$attribute} ) ? $this->{$attribute} : '';
 		}
 
@@ -478,9 +478,9 @@ class Lengow_Address {
 	 *
 	 * @return array
 	 */
-	private function _extract_address_data_from_api( $api ) {
+	private function extract_address_data_from_api( $api ) {
 		$address_data = array();
-		foreach ( $this->_address_api_nodes as $node ) {
+		foreach ( $this->address_api_nodes as $node ) {
 			$address_data[ $node ] = (string) $api->{$node};
 		}
 
@@ -494,21 +494,21 @@ class Lengow_Address {
 	 *
 	 * @return array
 	 */
-	private function _get_names( $address_data ) {
+	private function get_names( $address_data ) {
 		$names = array(
 			'firstname' => trim( $address_data['first_name'] ),
 			'lastname'  => trim( $address_data['last_name'] ),
-			'fullname'  => $this->_clean_full_name( $address_data['full_name'] ),
+			'fullname'  => $this->clean_full_name( $address_data['full_name'] ),
 		);
 		if ( empty( $names['firstname'] ) && ! empty( $names['lastname'] ) ) {
-			$names = $this->_split_names( $names['lastname'] );
+			$names = $this->split_names( $names['lastname'] );
 		}
 		if ( empty( $names['lastname'] ) && ! empty( $names['firstname'] ) ) {
-			$names = $this->_split_names( $names['firstname'] );
+			$names = $this->split_names( $names['firstname'] );
 		}
 		// check full name if last_name and first_name are empty.
 		if ( empty( $names['lastname'] ) && empty( $names['firstname'] ) ) {
-			$names = $this->_split_names( $names['fullname'] );
+			$names = $this->split_names( $names['fullname'] );
 		}
 		if ( empty( $names['lastname'] ) ) {
 			$names['lastname'] = '__';
@@ -527,11 +527,11 @@ class Lengow_Address {
 	 *
 	 * @return string
 	 */
-	private function _clean_full_name( $fullname ) {
+	private function clean_full_name( $fullname ) {
 		$split = explode( ' ', $fullname );
-		if ( $split && ! empty( $split ) ) {
-			$fullname    = ( in_array( $split[0], $this->_current_male, true )
-			                 || in_array( $split[0], $this->_current_female, true )
+		if ( ! empty( $split ) ) {
+			$fullname    = ( in_array( $split[0], $this->current_male, true )
+			                 || in_array( $split[0], $this->current_female, true )
 			) ? '' : $split[0];
 			$count_split = count( $split );
 			for ( $i = 1; $i < $count_split; $i ++ ) {
@@ -552,9 +552,9 @@ class Lengow_Address {
 	 *
 	 * @return array
 	 */
-	private function _split_names( $fullname ) {
+	private function split_names( $fullname ) {
 		$split = explode( ' ', $fullname );
-		if ( $split && ! empty( $split ) ) {
+		if ( ! empty( $split ) ) {
 			$names['firstname'] = $split[0];
 			$names['lastname']  = '';
 			$count_split        = count( $split );
@@ -580,7 +580,7 @@ class Lengow_Address {
 	 *
 	 * @return array
 	 */
-	private function _get_address_fields( $address_data, $relay_id = null ) {
+	private function get_address_fields( $address_data, $relay_id = null ) {
 		$address_1  = trim( $address_data['first_line'] );
 		$address_2  = trim( $address_data['second_line'] );
 		$complement = trim( $address_data['complement'] );
@@ -597,7 +597,7 @@ class Lengow_Address {
 			$address_2 = $complement;
 		}
 		// get relay id for shipping address.
-		if ( null !== $relay_id && self::TYPE_SHIPPING === $this->_type ) {
+		if ( null !== $relay_id && self::TYPE_SHIPPING === $this->type ) {
 			$relay_id  = 'Relay id: ' . $relay_id;
 			$address_2 .= ! empty( $address_2 ) ? ' - ' . $relay_id : $relay_id;
 		}
@@ -609,19 +609,19 @@ class Lengow_Address {
 	}
 
 	/**
-	 * Get country state if exist.
+	 * Get country state if existed.
 	 *
 	 * @param array $address_data API address data
 	 *
 	 * @return string|false
 	 */
-	private function _get_state( $address_data ) {
+	private function get_state( $address_data ) {
 		$state          = false;
 		$country_iso_a2 = $address_data['common_country_iso_a2'];
 		if ( in_array( $country_iso_a2, array( self::ISO_A2_ES, self::ISO_A2_IT ), true ) ) {
-			$state = $this->_search_state_by_postcode( $country_iso_a2, $address_data['zipcode'] );
+			$state = $this->search_state_by_postcode( $country_iso_a2, $address_data['zipcode'] );
 		} elseif ( ! empty( $address_data['state_region'] ) ) {
-			$state = $this->_search_state_by_state_region( $country_iso_a2, $address_data['state_region'] );
+			$state = $this->search_state_by_state_region( $country_iso_a2, $address_data['state_region'] );
 		}
 
 		return $state;
@@ -635,20 +635,20 @@ class Lengow_Address {
 	 *
 	 * @return string|false
 	 */
-	private function _search_state_by_postcode( $country_iso_a2, $postcode ) {
+	private function search_state_by_postcode( $country_iso_a2, $postcode ) {
 		$postcode_substr = substr( str_pad( $postcode, 5, '0', STR_PAD_LEFT ), 0, 2 );
 		switch ( $country_iso_a2 ) {
 			case self::ISO_A2_ES:
-				$state = isset( $this->_region_codes[ $country_iso_a2 ][ $postcode_substr ] )
-					? $this->_region_codes[ $country_iso_a2 ][ $postcode_substr ]
+				$state = isset( $this->region_codes[ $country_iso_a2 ][ $postcode_substr ] )
+					? $this->region_codes[ $country_iso_a2 ][ $postcode_substr ]
 					: false;
 				break;
 			case self::ISO_A2_IT:
-				$state = isset( $this->_region_codes[ $country_iso_a2 ][ $postcode_substr ] )
-					? $this->_region_codes[ $country_iso_a2 ][ $postcode_substr ]
+				$state = isset( $this->region_codes[ $country_iso_a2 ][ $postcode_substr ] )
+					? $this->region_codes[ $country_iso_a2 ][ $postcode_substr ]
 					: false;
-				if ( $state && is_array( $state ) && ! empty( $state ) ) {
-					$state = $this->_get_state_from_interval_postcodes( (int) $postcode, $state );
+				if ( is_array( $state ) && ! empty( $state ) ) {
+					$state = $this->get_state_from_interval_postcodes( (int) $postcode, $state );
 				}
 				break;
 			default:
@@ -667,7 +667,7 @@ class Lengow_Address {
 	 *
 	 * @return string|false
 	 */
-	private function _get_state_from_interval_postcodes( $postcode, $interval_postcodes ) {
+	private function get_state_from_interval_postcodes( $postcode, $interval_postcodes ) {
 		foreach ( $interval_postcodes as $interval_postcode => $state ) {
 			$interval_postcodes = explode( '-', $interval_postcode );
 			if ( ! empty( $interval_postcodes ) && count( $interval_postcodes ) === 2 ) {
@@ -692,19 +692,19 @@ class Lengow_Address {
 	 *
 	 * @return string
 	 */
-	private function _search_state_by_state_region( $country_iso_a2, $state_region ) {
+	private function search_state_by_state_region( $country_iso_a2, $state_region ) {
 		$state                = '';
 		$wc_countries         = new WC_Countries();
 		$states               = $wc_countries->get_states( $country_iso_a2 );
 		$state_region         = strtoupper( trim( $state_region ) );
-		$state_region_cleaned = $this->_clean_string( $state_region );
+		$state_region_cleaned = $this->clean_string( $state_region );
 		if ( ! empty( $states ) && ! empty( $state_region ) ) {
 			if ( array_key_exists( $state_region, $states ) ) {
 				$state = $state_region;
 			} else {
 				$results = array();
 				foreach ( $states as $code => $name ) {
-					$name_cleaned = $this->_clean_string( $name );
+					$name_cleaned = $this->clean_string( $name );
 					similar_text( $state_region_cleaned, $name_cleaned, $percent );
 					if ( $percent > 70 ) {
 						$results[ (int) $percent ] = $code;
@@ -727,7 +727,7 @@ class Lengow_Address {
 	 *
 	 * @return string
 	 */
-	private function _clean_string( $string ) {
+	private function clean_string( $string ) {
 		$cleanFilters = array( ' ', '-', '_', '.' );
 		$string       = strtolower( str_replace( $cleanFilters, '', trim( $string ) ) );
 
@@ -741,7 +741,7 @@ class Lengow_Address {
 	 *
 	 * @return string
 	 */
-	private function _get_phone_number( $address_data = array() ) {
+	private function get_phone_number( $address_data = array() ) {
 		$phone_number = '';
 		if ( ! empty( $address_data['phone_home'] ) ) {
 			$phone_number = $address_data['phone_home'];

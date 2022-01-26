@@ -394,3 +394,25 @@
 #lgw-order-filter input.lengow_datepicker:first-child {
   margin-right: 3px;
 }
+
+/*************************************************/
+/*                    TOOLBOX                    */
+/*************************************************/
+
+.lgw-container.lgw-toolbox-wrapper {
+  min-width: 1100px;
+  max-width: 1400px;
+  width: auto;
+}
+
+.lgw-toolbox-wrapper .lgw-check-green {
+  color: green;
+}
+
+.lgw-toolbox-wrapper .lgw-check-red {
+  color: red;
+}
+
+.lgw-container.lgw-toolbox-wrapper .table tr td {
+  max-width: none;
+}

@@ -98,7 +98,7 @@ if ( ! Lengow_Main::check_webservice_access( $token ) ) {
 	wp_die( $errorMessage, '', array( 'response' => 403 ) );
 }
 
-if ( isset( $_GET[ Lengow_Import::PARAM_GET_SYNC ] ) && 1 == $_GET[ Lengow_Import::PARAM_GET_SYNC ] ) {
+if ( isset( $_GET[ Lengow_Import::PARAM_GET_SYNC ] ) && '1' === $_GET[ Lengow_Import::PARAM_GET_SYNC ] ) {
 	echo json_encode( Lengow_Sync::get_sync_data() );
 } else {
 	$force      = isset( $_GET[ Lengow_Import::PARAM_FORCE ] ) && $_GET[ Lengow_Import::PARAM_FORCE ];
@@ -141,7 +141,8 @@ if ( isset( $_GET[ Lengow_Import::PARAM_GET_SYNC ] ) && 1 == $_GET[ Lengow_Impor
 			$params[ Lengow_Import::PARAM_MARKETPLACE_NAME ] = (string) $_GET[ Lengow_Import::PARAM_MARKETPLACE_NAME ];
 		}
 		if ( isset( $_GET[ Lengow_Import::PARAM_DELIVERY_ADDRESS_ID ] ) ) {
-			$params[ Lengow_Import::PARAM_DELIVERY_ADDRESS_ID ] = (int) $_GET[ Lengow_Import::PARAM_DELIVERY_ADDRESS_ID ];
+			$params[ Lengow_Import::PARAM_DELIVERY_ADDRESS_ID ] =
+				(int) $_GET[ Lengow_Import::PARAM_DELIVERY_ADDRESS_ID ];
 		}
 		$import = new Lengow_Import( $params );
 		$import->exec();

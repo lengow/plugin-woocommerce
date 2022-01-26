@@ -41,19 +41,19 @@ class Lengow_Translation {
 	const DEFAULT_ISO_CODE = self::ISO_CODE_EN;
 
 	/**
+	 * @var string|null force iso code for log and toolbox.
+	 */
+	public static $force_iso_code;
+
+	/**
 	 * @var array|null all translations.
 	 */
-	protected static $translation;
+	private static $translation;
 
 	/**
 	 * @var string|null iso code.
 	 */
-	protected $iso_code;
-
-	/**
-	 * @var string|null force iso code for log and toolbox.
-	 */
-	public static $force_iso_code;
+	private $iso_code;
 
 	/**
 	 * Construct a new Lengow translation.
@@ -102,7 +102,7 @@ class Lengow_Translation {
 	 *
 	 * @return string
 	 */
-	protected function translate_final( $text, $args ) {
+	private function translate_final( $text, $args ) {
 		if ( $args ) {
 			$params = array();
 			$values = array();
@@ -121,26 +121,17 @@ class Lengow_Translation {
 	 * Load csv file.
 	 *
 	 * @param string $iso_code translation iso code
-	 * @param string|null $filename file location
-	 *
-	 * @return boolean
 	 */
-	public function load_file( $iso_code, $filename = null ) {
-		if ( ! $filename ) {
-			$sep      = DIRECTORY_SEPARATOR;
-			$filename = LENGOW_PLUGIN_PATH . $sep . Lengow_Main::FOLDER_TRANSLATION . $sep . $iso_code . '.csv';
-		}
+	private function load_file( $iso_code ) {
+		$sep         = DIRECTORY_SEPARATOR;
+		$filename    = LENGOW_PLUGIN_PATH . $sep . Lengow_Main::FOLDER_TRANSLATION . $sep . $iso_code . '.csv';
 		$translation = array();
-		if ( file_exists( $filename ) ) {
-			if ( false !== ( $handle = fopen( $filename, 'r' ) ) ) {
-				while ( false !== ( $data = fgetcsv( $handle, 1000, '|' ) ) ) {
-					$translation[ $data[0] ] = $data[1];
-				}
-				fclose( $handle );
+		if ( file_exists( $filename ) && false !== ( $handle = fopen( $filename, 'rb' ) ) ) {
+			while ( false !== ( $data = fgetcsv( $handle, 1000, '|' ) ) ) {
+				$translation[ $data[0] ] = $data[1];
 			}
+			fclose( $handle );
 		}
 		self::$translation[ $iso_code ] = $translation;
-
-		return ! empty( $translation );
 	}
 }

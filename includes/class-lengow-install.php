@@ -372,7 +372,7 @@ class Lengow_Install {
 	}
 
 	/**
-	 * Checks if a index exists in BDD and dropped it.
+	 * Checks if an index exists in BDD and dropped it.
 	 *
 	 * @param string $table Lengow table
 	 * @param string $index Lengow index

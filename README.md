@@ -1,9 +1,9 @@
 # Lengow for WooCommerce
 
-- **Requires at least:** 3.5
+- **Requires at least:** 5.3
 - **Tested up to:** 5.8
-- **Requires PHP:** 5.6
-- **Stable tag:** 2.5.1
+- **Requires PHP:** 5.5
+- **Stable tag:** 2.5.2
 - **License:** GPLv3
 - **License URI:** https://www.gnu.org/licenses/gpl-3.0
 
@@ -54,11 +54,11 @@ You can also start testing with lower permissions due to security reasons (644 f
 
 ### Where can I find Lengow documentation and user guides?
 
-For help setting up and configuring Lengow plugin please refer to our [user guide](https://support.lengow.com/hc/en-us/articles/360011968912-WooCommerce-For-new-Lengow-platform-users)
+For help setting up and configuring Lengow plugin please refer to our [user guide](https://help.lengow.com/hc/en-us/articles/360011968912)
 
 ### Where can I get support?
 
-To make a support request to Lengow, use [our helpdesk](https://support.lengow.com/hc/en-us/requests/new).
+To make a support request to Lengow, use [our helpdesk](https://help.lengow.com/hc/en-us/requests/new).
 
 
 ## Become a contributor

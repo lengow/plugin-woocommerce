@@ -61,7 +61,7 @@ class Lengow_Box_Order_Info {
 	/**
 	 * Process for ajax actions.
 	 */
-	public function post_process() {
+	public static function post_process() {
 		$data         = array();
 		$action       = $_POST['do_action'];
 		$order_lengow = new Lengow_Order( (int) $_POST['order_lengow_id'] );

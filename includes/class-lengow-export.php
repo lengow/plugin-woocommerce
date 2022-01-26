@@ -90,7 +90,7 @@ class Lengow_Export {
 	/**
 	 * @var array new fields for v3.
 	 */
-	private $_new_fields = array(
+	private $new_fields = array(
 		'id'                             => 'id',
 		'sku'                            => 'sku',
 		'name'                           => 'name',
@@ -144,7 +144,7 @@ class Lengow_Export {
 	/**
 	 * @var array legacy fields for export.
 	 */
-	private $_legacy_fields = array(
+	private $legacy_fields = array(
 		'id_product'            => 'id',
 		'name_product'          => 'name',
 		'sku_product'           => 'sku',
@@ -189,62 +189,62 @@ class Lengow_Export {
 	/**
 	 * @var string format of exported files.
 	 */
-	private $_format;
+	private $format;
 
 	/**
 	 * @var boolean stream file or generate a file.
 	 */
-	private $_stream;
+	private $stream;
 
 	/**
 	 * @var integer offset of total product.
 	 */
-	private $_offset;
+	private $offset;
 
 	/**
 	 * @var integer limit number of exported product.
 	 */
-	private $_limit;
+	private $limit;
 
 	/**
 	 * @var boolean export product selection.
 	 */
-	private $_selection;
+	private $selection;
 
 	/**
 	 * @var boolean export out of stock product.
 	 */
-	private $_out_of_stock;
+	private $out_of_stock;
 
 	/**
 	 * @var boolean use legacy fields.
 	 */
-	private $_legacy;
+	private $legacy;
 
 	/**
 	 * @var array list of product id separate with comma.
 	 */
-	private $_product_ids = array();
+	private $product_ids = array();
 
 	/**
 	 * @var array product types separate with comma.
 	 */
-	private $_product_types = array();
+	private $product_types = array();
 
 	/**
 	 * @var boolean export product variation.
 	 */
-	private $_variation;
+	private $variation;
 
 	/**
 	 * @var boolean See logs or not.
 	 */
-	private $_log_output;
+	private $log_output;
 
 	/**
-	 * @var boolean change last export date in data base.
+	 * @var boolean change last export date in database.
 	 */
-	private $_update_export_date;
+	private $update_export_date;
 
 	/**
 	 * Construct new Lengow export.
@@ -261,42 +261,42 @@ class Lengow_Export {
 	 * boolean variation          Export product Variation (1) Export parent product only (0)
 	 * boolean legacy_fields      Export feed with v2 fields (1) or v3 fields (0)
 	 * boolean log_output         See logs (1) or not (0)
-	 * boolean update_export_date Change last export date in data base (1) or not (0)
+	 * boolean update_export_date Change last export date in database (1) or not (0)
 	 */
 	public function __construct( $params = array() ) {
-		$this->_stream             = isset( $params[ self::PARAM_STREAM ] )
+		$this->stream             = isset( $params[ self::PARAM_STREAM ] )
 			? $params[ self::PARAM_STREAM ]
 			: ! (bool) Lengow_Configuration::get( Lengow_Configuration::EXPORT_FILE_ENABLED );
-		$this->_offset             = isset( $params[ self::PARAM_OFFSET ] )
+		$this->offset             = isset( $params[ self::PARAM_OFFSET ] )
 			? $params[ self::PARAM_OFFSET ]
 			: 0;
-		$this->_limit              = isset( $params[ self::PARAM_LIMIT ] )
+		$this->limit              = isset( $params[ self::PARAM_LIMIT ] )
 			? $params[ self::PARAM_LIMIT ]
 			: 0;
-		$this->_selection          = isset( $params[ self::PARAM_SELECTION ] )
+		$this->selection          = isset( $params[ self::PARAM_SELECTION ] )
 			? $params[ self::PARAM_SELECTION ]
 			: (bool) Lengow_Configuration::get( Lengow_Configuration::SELECTION_ENABLED );
-		$this->_out_of_stock       = isset( $params[ self::PARAM_OUT_OF_STOCK ] )
+		$this->out_of_stock       = isset( $params[ self::PARAM_OUT_OF_STOCK ] )
 			? $params[ self::PARAM_OUT_OF_STOCK ]
 			: true;
-		$this->_variation          = isset( $params[ self::PARAM_VARIATION ] )
+		$this->variation          = isset( $params[ self::PARAM_VARIATION ] )
 			? $params[ self::PARAM_VARIATION ]
 			: true;
-		$this->_update_export_date = ! isset( $params[ self::PARAM_UPDATE_EXPORT_DATE ] )
-		                             || $params[ self::PARAM_UPDATE_EXPORT_DATE ];
-		$this->_legacy             = isset( $params[ self::PARAM_LEGACY_FIELDS ] )
+		$this->update_export_date = ! isset( $params[ self::PARAM_UPDATE_EXPORT_DATE ] )
+		                            || $params[ self::PARAM_UPDATE_EXPORT_DATE ];
+		$this->legacy             = isset( $params[ self::PARAM_LEGACY_FIELDS ] )
 			? $params[ self::PARAM_LEGACY_FIELDS ]
 			: null;
-		$this->_set_format(
+		$this->set_format(
 			isset( $params[ self::PARAM_FORMAT ] ) ? $params[ self::PARAM_FORMAT ] : false
 		);
-		$this->_set_product_ids(
+		$this->set_product_ids(
 			isset( $params[ self::PARAM_PRODUCT_IDS ] ) ? $params[ self::PARAM_PRODUCT_IDS ] : false
 		);
-		$this->_set_product_types(
+		$this->set_product_types(
 			isset( $params[ self::PARAM_PRODUCT_TYPES ] ) ? $params[ self::PARAM_PRODUCT_TYPES ] : false
 		);
-		$this->_set_log_output(
+		$this->set_log_output(
 			isset( $params[ self::PARAM_LOG_OUTPUT ] ) ? $params[ self::PARAM_LOG_OUTPUT ] : true
 		);
 	}
@@ -311,30 +311,30 @@ class Lengow_Export {
 			Lengow_Main::log(
 				Lengow_Log::CODE_EXPORT,
 				Lengow_Main::set_log_message( 'log.export.start' ),
-				$this->_log_output
+				$this->log_output
 			);
 			// set legacy fields option.
-			$this->_set_legacy_fields();
+			$this->set_legacy_fields();
 			// get fields to export.
-			$fields = $this->_get_fields();
+			$fields = $this->get_fields();
 			// get products to be exported.
-			$products = $this->_get_export_ids();
+			$products = $this->get_export_ids();
 			Lengow_Main::log(
 				Lengow_Log::CODE_EXPORT,
 				Lengow_Main::set_log_message(
 					'log.export.nb_product_found',
 					array( 'nb_product' => count( $products ) )
 				),
-				$this->_log_output
+				$this->log_output
 			);
-			$this->_export( $products, $fields );
-			if ( $this->_update_export_date ) {
+			$this->export( $products, $fields );
+			if ( $this->update_export_date ) {
 				Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_EXPORT, time() );
 			}
 			Lengow_Main::log(
 				Lengow_Log::CODE_EXPORT,
 				Lengow_Main::set_log_message( 'log.export.end' ),
-				$this->_log_output
+				$this->log_output
 			);
 		} catch ( Lengow_Exception $e ) {
 			$error_message = $e->getMessage();
@@ -350,7 +350,7 @@ class Lengow_Export {
 					'log.export.export_failed',
 					array( 'decoded_message' => $decoded_message )
 				),
-				$this->_log_output
+				$this->log_output
 			);
 		}
 	}
@@ -384,14 +384,14 @@ class Lengow_Export {
 	 */
 	public function get_total_export_product() {
 		global $wpdb;
-		if ( $this->_variation && in_array( 'variable', $this->_product_types, true ) ) {
+		if ( $this->variation && in_array( 'variable', $this->product_types, true ) ) {
 			$query = ' SELECT COUNT(*) AS total FROM ( ( ';
-			$query .= $this->_build_total_query();
+			$query .= $this->build_total_query();
 			$query .= ' ) UNION ALL ( ';
-			$query .= $this->_build_total_query( true );
+			$query .= $this->build_total_query( true );
 			$query .= ' ) ) AS tmp';
 		} else {
-			$query = ' SELECT COUNT(*) AS total FROM ( ' . $this->_build_total_query() . ' ) AS tmp';
+			$query = ' SELECT COUNT(*) AS total FROM ( ' . $this->build_total_query() . ' ) AS tmp';
 		}
 
 		return (int) $wpdb->get_var( $query );
@@ -455,16 +455,16 @@ class Lengow_Export {
 	/**
 	 * Set legacy fields or not.
 	 */
-	private function _set_legacy_fields() {
-		if ( null === $this->_legacy ) {
+	private function set_legacy_fields() {
+		if ( null === $this->legacy ) {
 			$merchant_status = Lengow_Sync::get_status_account();
 			if ( $merchant_status && isset( $merchant_status['legacy'] ) ) {
-				$this->_legacy = $merchant_status['legacy'];
+				$this->legacy = $merchant_status['legacy'];
 			} else {
-				$this->_legacy = false;
+				$this->legacy = false;
 			}
 		}
-		self::$default_field = $this->_legacy ? $this->_legacy_fields : $this->_new_fields;
+		self::$default_field = $this->legacy ? $this->legacy_fields : $this->new_fields;
 	}
 
 	/**
@@ -472,12 +472,12 @@ class Lengow_Export {
 	 *
 	 * @param string|false $format export format
 	 */
-	private function _set_format( $format ) {
+	private function set_format( $format ) {
 		if ( $format ) {
-			$this->_format = ! in_array( $format, Lengow_Feed::$available_formats, true ) ? null : $format;
+			$this->format = ! in_array( $format, Lengow_Feed::$available_formats, true ) ? null : $format;
 		}
-		if ( null === $this->_format ) {
-			$this->_format = Lengow_Configuration::get( Lengow_Configuration::EXPORT_FORMAT );
+		if ( null === $this->format ) {
+			$this->format = Lengow_Configuration::get( Lengow_Configuration::EXPORT_FORMAT );
 		}
 	}
 
@@ -486,12 +486,12 @@ class Lengow_Export {
 	 *
 	 * @param string|false $product_ids product ids to export
 	 */
-	private function _set_product_ids( $product_ids ) {
+	private function set_product_ids( $product_ids ) {
 		if ( $product_ids ) {
 			$exported_ids = explode( ',', $product_ids );
 			foreach ( $exported_ids as $id ) {
 				if ( is_numeric( $id ) && $id > 0 ) {
-					$this->_product_ids[] = (int) $id;
+					$this->product_ids[] = (int) $id;
 				}
 			}
 		}
@@ -502,17 +502,17 @@ class Lengow_Export {
 	 *
 	 * @param string|false $product_types product types to export
 	 */
-	private function _set_product_types( $product_types ) {
+	private function set_product_types( $product_types ) {
 		if ( $product_types ) {
 			$exported_types = explode( ',', $product_types );
 			foreach ( $exported_types as $type ) {
 				if ( array_key_exists( $type, Lengow_Main::$product_types ) ) {
-					$this->_product_types[] = $type;
+					$this->product_types[] = $type;
 				}
 			}
 		}
-		if ( empty( $this->_product_types ) ) {
-			$this->_product_types = Lengow_Configuration::get_product_types();
+		if ( empty( $this->product_types ) ) {
+			$this->product_types = Lengow_Configuration::get_product_types();
 		}
 	}
 
@@ -521,10 +521,9 @@ class Lengow_Export {
 	 *
 	 * @param boolean $log_output see logs or not
 	 */
-	private function _set_log_output( $log_output ) {
-		$this->_log_output = $this->_stream ? false : $log_output;
+	private function set_log_output( $log_output ) {
+		$this->log_output = $this->stream ? false : $log_output;
 	}
-
 
 	/**
 	 * Export products.
@@ -534,9 +533,9 @@ class Lengow_Export {
 	 *
 	 * @throws Lengow_Exception Export folder not writable
 	 */
-	private function _export( $products, $fields ) {
+	private function export( $products, $fields ) {
 		$product_count = 0;
-		$feed          = new Lengow_Feed( $this->_stream, $this->_format, $this->_legacy );
+		$feed          = new Lengow_Feed( $this->stream, $this->format, $this->legacy );
 		$feed->write( Lengow_Feed::HEADER, $fields );
 		$is_first = true;
 		// get the maximum of character for yaml format.
@@ -573,7 +572,7 @@ class Lengow_Export {
 						'log.export.count_product',
 						array( 'product_count' => $product_count )
 					),
-					$this->_log_output
+					$this->log_output
 				);
 			}
 			// clean data for next product.
@@ -589,7 +588,7 @@ class Lengow_Export {
 				Lengow_Main::set_log_message( 'log.export.error_folder_not_writable' )
 			);
 		}
-		if ( ! $this->_stream ) {
+		if ( ! $this->stream ) {
 			$feed_url = $feed->get_url();
 			if ( $feed_url && 'cli' !== php_sapi_name() ) {
 				Lengow_Main::log(
@@ -598,7 +597,7 @@ class Lengow_Export {
 						'log.export.your_feed_available_here',
 						array( 'feed_url' => $feed_url )
 					),
-					$this->_log_output
+					$this->log_output
 				);
 			}
 		}
@@ -609,17 +608,17 @@ class Lengow_Export {
 	 *
 	 * @return array
 	 */
-	private function _get_fields() {
+	private function get_fields() {
 		$fields = array();
 		// check field name to lower to avoid duplicates
 		$formatted_fields = array();
 		foreach ( self::$default_field as $key => $value ) {
 			$fields[]           = $key;
-			$formatted_fields[] = Lengow_Feed::format_fields( $key, $this->_format, $this->_legacy );
+			$formatted_fields[] = Lengow_Feed::format_fields( $key, $this->format, $this->legacy );
 		}
 		self::$attributes = Lengow_Product::get_attributes();
 		foreach ( self::$attributes as $attribute ) {
-			$formatted_attribute = Lengow_Feed::format_fields( $attribute, $this->_format, $this->_legacy );
+			$formatted_attribute = Lengow_Feed::format_fields( $attribute, $this->format, $this->legacy );
 			if ( ! in_array( $formatted_attribute, $formatted_fields, true ) ) {
 				$fields[]           = $attribute;
 				$formatted_fields[] = $formatted_attribute;
@@ -627,7 +626,7 @@ class Lengow_Export {
 		}
 		self::$post_metas = Lengow_Product::get_post_metas();
 		foreach ( self::$post_metas as $post_meta ) {
-			$formatted_post_meta = Lengow_Feed::format_fields( $post_meta, $this->_format, $this->_legacy );
+			$formatted_post_meta = Lengow_Feed::format_fields( $post_meta, $this->format, $this->legacy );
 			if ( ! in_array( $formatted_post_meta, $formatted_fields, true ) ) {
 				$fields[]           = $post_meta;
 				$formatted_fields[] = $formatted_post_meta;
@@ -642,22 +641,22 @@ class Lengow_Export {
 	 *
 	 * @return array
 	 */
-	private function _get_export_ids() {
+	private function get_export_ids() {
 		global $wpdb;
-		if ( $this->_variation && in_array( 'variable', $this->_product_types, true ) ) {
+		if ( $this->variation && in_array( 'variable', $this->product_types, true ) ) {
 			$query = ' SELECT * FROM ( ( ';
-			$query .= $this->_build_total_query();
+			$query .= $this->build_total_query();
 			$query .= ' ) UNION ALL ( ';
-			$query .= $this->_build_total_query( true );
+			$query .= $this->build_total_query( true );
 			$query .= ' ) ) AS tmp ORDER BY id_product, id_product_attribute';
 		} else {
-			$query = $this->_build_total_query();
+			$query = $this->build_total_query();
 		}
-		if ( $this->_limit > 0 ) {
-			if ( $this->_offset > 0 ) {
-				$query .= ' LIMIT ' . $this->_offset . ', ' . $this->_limit;
+		if ( $this->limit > 0 ) {
+			if ( $this->offset > 0 ) {
+				$query .= ' LIMIT ' . $this->offset . ', ' . $this->limit;
 			} else {
-				$query .= ' LIMIT 0, ' . $this->_limit;
+				$query .= ' LIMIT 0, ' . $this->limit;
 			}
 		}
 
@@ -671,7 +670,7 @@ class Lengow_Export {
 	 *
 	 * @return string
 	 */
-	private function _build_total_query( $variation = false ) {
+	private function build_total_query( $variation = false ) {
 		global $wpdb;
 		if ( $variation ) {
 			$query = 'SELECT DISTINCT(p.post_parent) AS id_product, p.id AS id_product_attribute ';
@@ -688,7 +687,7 @@ class Lengow_Export {
 				INNER JOIN ' . $wpdb->terms . ' AS t ON t.term_id = tr.term_taxonomy_id
 			';
 		}
-		if ( $this->_selection ) {
+		if ( $this->selection ) {
 			if ( $variation ) {
 				$query .= ' INNER JOIN ' . $wpdb->prefix . 'lengow_product lp ON lp.product_id = p.post_parent ';
 			} else {
@@ -704,7 +703,7 @@ class Lengow_Export {
 		} else {
 			$where[] = "p.post_type = 'product'";
 		}
-		if ( ! $this->_out_of_stock ) {
+		if ( ! $this->out_of_stock ) {
 			$where[] = '((
 				meta_key = \'_stock_status\' AND meta_value = \'instock\'
 				) OR ( meta_key = \'_manage_stock\' AND meta_value = \'yes\' AND p.id IN
@@ -728,18 +727,18 @@ class Lengow_Export {
 						WHERE meta_key = \'_manage_stock\' AND meta_value = \'no\')  
 			))';
 		}
-		if ( ! empty( $this->_product_types ) && ! $variation ) {
-			$where[] = 't.name IN (\'' . join( "','", $this->_product_types ) . '\')';
+		if ( ! empty( $this->product_types ) && ! $variation ) {
+			$where[] = 't.name IN (\'' . implode( "','", $this->product_types ) . '\')';
 		}
-		if ( ! empty( $this->_product_ids ) ) {
+		if ( ! empty( $this->product_ids ) ) {
 			if ( $variation ) {
-				$where[] = 'p.post_parent IN (' . join( ',', $this->_product_ids ) . ')';
+				$where[] = 'p.post_parent IN (' . implode( ',', $this->product_ids ) . ')';
 			} else {
-				$where[] = 'p.id IN (' . join( ',', $this->_product_ids ) . ')';
+				$where[] = 'p.id IN (' . implode( ',', $this->product_ids ) . ')';
 			}
 		}
 		if ( ! empty( $where ) ) {
-			$query .= ' WHERE ' . join( ' AND ', $where );
+			$query .= ' WHERE ' . implode( ' AND ', $where );
 		}
 		$query .= ' ORDER BY id_product ASC';
 
