@@ -45,7 +45,7 @@ To make a support request to Lengow, use [our helpdesk](https://help.lengow.com/
 
 == Changelog ==
 
-= 2.5.2 - xxxx-xx-xx =
+= 2.5.3 - xxxx-xx-xx =
 
 
 = 2.5.2 - 2022-01-27 =
