@@ -1,7 +1,7 @@
-/lengow.php|6e842b99bf16784469c62300caadb3ca
+/lengow.php|9acf46b4e4f97d9491c2895a33fe4cc9
 /config/index.php|d41d8cd98f00b204e9800998ecf8427e
-/translations/en_GB.csv|a01202bb3537b79d4e6087b14ad98667
-/translations/fr_FR.csv|0fc85a527f15236f7006003fed688dd6
+/translations/en_GB.csv|c986d77818eeea3a1362ea45250d9dba
+/translations/fr_FR.csv|762daa71e7d30983ab8391dcd14cbb8d
 /assets/js/bootstrap-datepicker.js|a6999445e0d313c57e829feca6277155
 /assets/js/lengow/main_setting.js|eed3d95e851120cffc22183a8d6c217a
 /assets/js/lengow/toolbox.js|a8484f2acb07c0bddf661e8b0f0a0b01
@@ -358,7 +358,7 @@
 /includes/class-lengow-import.php|63d6b4c71f25eb08324ac3bc498cfc26
 /includes/class-lengow-order-error.php|a546976194bf50569b2cd52d1d95d327
 /includes/class-lengow-translation.php|6edca64ec59300d6e9f451621517374f
-/languages/lengow-fr_FR.po|cd5e13c02fdc68a568a4a85b4760f3b7
+/languages/lengow-fr_FR.po|13425fbae772302a0ff936850bfa658e
 /languages/lengow-fr_FR.mo|c159535a9cf5b734a8bdb2d450e0971b
 /upgrade/update_2.0.0.php|ba0c85bb492127a9ed25eed79001168d
 /upgrade/update_2.3.2.php|1bc70e9b3661efd1e0349b449d0484be

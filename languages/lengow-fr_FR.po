@@ -40,8 +40,8 @@ msgstr ""
 # @ lengow
 #. translators: plugin header field 'Version'
 #: lengow.php:0
-msgid "2.5.2"
-msgstr "2.5.2"
+msgid "2.5.3"
+msgstr "2.5.3"
 
 # @ lengow
 #. translators: plugin header field 'Author'
