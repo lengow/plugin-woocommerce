@@ -220,7 +220,7 @@ class Lengow_Toolbox {
 			case self::DATA_TYPE_CHECKSUM:
 				return self::get_checksum_data();
                          case self::DATA_TYPE_MODIFIED_FILES:
-                            $short_path_param = (string) isset($_GET[self::PARAM_SHORT_PATH]) ? $_GET[self::PARAM_SHORT_PATH] : '' ;                          
+                            $short_path_param = (string) isset($_GET[self::PARAM_SHORT_PATH]) ? sanitize_text_field($_GET[self::PARAM_SHORT_PATH]) : '' ;                          
                             return self::get_modified_files_data(base64_decode($short_path_param));    
 			case self::DATA_TYPE_LOG:
 				return self::get_log_data();
