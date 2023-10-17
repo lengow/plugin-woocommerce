@@ -435,6 +435,7 @@ class Lengow_Import_Order {
 			$this->order_state_lengow,
 			$this->package_data
 		);
+                
 		if ( $order_updated ) {
 			Lengow_Main::log(
 				Lengow_Log::CODE_IMPORT,
@@ -447,6 +448,17 @@ class Lengow_Import_Order {
 			);
 			$order_updated = true;
 		}
+                $vatNumber = $this->get_vat_number_from_order_data();
+                if ($order_lengow->customer_vat_number !== $vatNumber) {
+                    $this->check_and_update_lengow_order_data();
+                    $order_updated = true;
+                    Lengow_Main::log(
+			Lengow_Log::CODE_IMPORT,
+			Lengow_Main::set_log_message( 'log.import.lengow_order_updated' ),
+			$this->log_output,
+			$this->marketplace_sku
+                    );                    
+                }
 		unset( $order, $order_lengow );
 
 		return $order_updated;
@@ -680,6 +692,7 @@ class Lengow_Import_Order {
 				Lengow_Order::FIELD_ORDER_ITEM           => $this->order_item,
 				Lengow_Order::FIELD_CUSTOMER_NAME        => $this->get_customer_name(),
 				Lengow_Order::FIELD_CUSTOMER_EMAIL       => $this->get_customer_email(),
+                                Lengow_Order::FIELD_CUSTOMER_VAT_NUMBER  => $this->get_vat_number_from_order_data(),
 				Lengow_Order::FIELD_CARRIER              => $this->carrier,
 				Lengow_Order::FIELD_CARRIER_METHOD       => $this->carrier_method,
 				Lengow_Order::FIELD_CARRIER_TRACKING     => $this->carrier_tracking,
@@ -1229,7 +1242,7 @@ class Lengow_Import_Order {
 				Lengow_Main::set_log_message( 'lengow_log.exception.woocommerce_order_not_saved' )
 			);
 		}
-		do_action( 'woocommerce_new_order', $order_id );
+		do_action( 'woocommerce_new_order', $order_id, new WC_Order($order_id));
 		// update lengow_orders table directly after creating the WooCommerce order.
 		$success = Lengow_Order::update(
 			$this->order_lengow_id,
