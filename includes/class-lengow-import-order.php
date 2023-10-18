@@ -447,7 +447,18 @@ class Lengow_Import_Order {
 				$this->marketplace_sku
 			);
 			$order_updated = true;
-		}                
+		}
+                $vat_number_data = $this->get_vat_number_from_order_data();
+                if ($order_lengow->customer_vat_number !== $vat_number_data) {
+                    $this->check_and_update_lengow_order_data();
+                    $order_updated = true;
+                    Lengow_Main::log(
+			Lengow_Log::CODE_IMPORT,
+			Lengow_Main::set_log_message( 'log.import.lengow_order_updated' ),
+			$this->log_output,
+			$this->marketplace_sku
+                    );                    
+                }
 		unset( $order, $order_lengow );
 		return $order_updated;
 	}
@@ -679,7 +690,8 @@ class Lengow_Import_Order {
 				Lengow_Order::FIELD_TOTAL_PAID           => $this->total_paid,
 				Lengow_Order::FIELD_ORDER_ITEM           => $this->order_item,
 				Lengow_Order::FIELD_CUSTOMER_NAME        => $this->get_customer_name(),
-				Lengow_Order::FIELD_CUSTOMER_EMAIL       => $this->get_customer_email(),                               
+				Lengow_Order::FIELD_CUSTOMER_EMAIL       => $this->get_customer_email(),
+                                Lengow_Order::FIELD_CUSTOMER_VAT_NUMBER  => $this->get_vat_number_from_order_data(),
 				Lengow_Order::FIELD_CARRIER              => $this->carrier,
 				Lengow_Order::FIELD_CARRIER_METHOD       => $this->carrier_method,
 				Lengow_Order::FIELD_CARRIER_TRACKING     => $this->carrier_tracking,
