@@ -975,9 +975,7 @@ class Lengow_Import_Order {
 		foreach ( $this->package_data->cart as $api_product ) {
 			$found          = false;
 			$order_line_id  = (string) $api_product->marketplace_order_line_id;
-			$product_data   = Lengow_Product::extract_product_data_from_api( $api_product );
-                        $product_data['merchant_product_id']->id = 116;
-                        //$product_data['marketplace_product_id'] = 220;
+			$product_data   = Lengow_Product::extract_product_data_from_api( $api_product );                       
                         
 			$api_product_id = null !== $product_data['merchant_product_id']->id
 				? (string) $product_data['merchant_product_id']->id
