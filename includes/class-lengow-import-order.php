@@ -447,20 +447,8 @@ class Lengow_Import_Order {
 				$this->marketplace_sku
 			);
 			$order_updated = true;
-		}
-                $vatNumber = $this->get_vat_number_from_order_data();
-                if ($order_lengow->customer_vat_number !== $vatNumber) {
-                    $this->check_and_update_lengow_order_data();
-                    $order_updated = true;
-                    Lengow_Main::log(
-			Lengow_Log::CODE_IMPORT,
-			Lengow_Main::set_log_message( 'log.import.lengow_order_updated' ),
-			$this->log_output,
-			$this->marketplace_sku
-                    );                    
-                }
+		}                
 		unset( $order, $order_lengow );
-
 		return $order_updated;
 	}
 
