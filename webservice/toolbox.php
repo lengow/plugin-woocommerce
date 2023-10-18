@@ -69,6 +69,7 @@ require_once( '../includes/class-lengow-toolbox.php' );
 require_once( '../includes/class-lengow-toolbox-element.php' );
 require_once( '../includes/class-lengow-translation.php' );
 
+
 // check if WooCommerce plugin is activated.
 $woocommercePlugin = 'woocommerce/woocommerce.php';
 if ( ! in_array( $woocommercePlugin, apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
@@ -110,6 +111,7 @@ switch ( $action ) {
 		Lengow_Toolbox::download_log( $date );
 		break;
 	case Lengow_Toolbox::ACTION_ORDER:
+                $error = false;
 		$process = isset( $_GET[ Lengow_Toolbox::PARAM_PROCESS ] )
 			? $_GET[ Lengow_Toolbox::PARAM_PROCESS ]
 			: Lengow_Toolbox::PROCESS_TYPE_SYNC;
@@ -150,16 +152,21 @@ switch ( $action ) {
 			);
 		}
 		if ( isset( $result[ Lengow_Toolbox::ERRORS ][ Lengow_Toolbox::ERROR_CODE ] ) ) {
+                        $error = true;
 			if ( $result[ Lengow_Toolbox::ERRORS ][ Lengow_Toolbox::ERROR_CODE ] === Lengow_Connector::CODE_404 ) {
 				header( 'HTTP/1.1 404 Not Found' );
 			} else {
 				header( 'HTTP/1.1 403 Forbidden' );
 			}
 		}
+                if (!$error) {
+                    header('Content-Type: application/json');
+                }
 		echo json_encode( $result );
 		break;
 	default:
 		$type = isset( $_GET[ Lengow_Toolbox::PARAM_TYPE ] ) ? $_GET[ Lengow_Toolbox::PARAM_TYPE ] : null;
+                header('Content-Type: application/json');
 		echo json_encode( Lengow_Toolbox::get_data( $type ) );
 		break;
 }
