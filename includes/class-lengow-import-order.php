@@ -256,8 +256,8 @@ class Lengow_Import_Order {
 		// get a record in the lengow order table.
 		$this->order_lengow_id = Lengow_Order::get_id_from_lengow_orders(
 			$this->marketplace_sku,
-			$this->marketplace->name,
-			$this->delivery_address_id
+			$this->marketplace->name
+			
 		);
 		// checks if an order already has an error in progress.
 		if ( $this->order_lengow_id && $this->order_error_already_exist() ) {
@@ -266,8 +266,7 @@ class Lengow_Import_Order {
 		// recovery id if the command has already been imported.
 		$order_id = Lengow_Order::get_order_id_from_lengow_orders(
 			$this->marketplace_sku,
-			$this->marketplace->name,
-			$this->delivery_address_id,
+			$this->marketplace->name,			
 			$this->marketplace->legacy_code
 		);
 		// update order state if already imported.
@@ -369,7 +368,10 @@ class Lengow_Import_Order {
 	 */
 	private function order_error_already_exist() {
 		// if order error exists and not finished.
-		$order_error = Lengow_Order_Error::order_is_in_error( $this->marketplace_sku, $this->delivery_address_id );
+		$order_error = Lengow_Order_Error::order_is_in_error(
+                    $this->marketplace_sku, 
+                    $this->marketplace->name
+                );
 		if ( ! $order_error ) {
 			return false;
 		}
@@ -514,7 +516,7 @@ class Lengow_Import_Order {
 			return false;
 		}
 		foreach ( $this->order_data->merchant_order_id as $external_id ) {
-			if ( Lengow_Order::get_id_from_lengow_delivery_address( (int) $external_id, $this->delivery_address_id ) ) {
+			if ( Lengow_Order::get_id_from_lengow_marketplace_sku( (int) $external_id, $this->marketplace_sku, $this->marketplace->name) ) {
 				$message        = Lengow_Main::set_log_message(
 					'log.import.external_id_exist',
 					array( 'order_id' => $external_id )
@@ -985,10 +987,12 @@ class Lengow_Import_Order {
 		foreach ( $this->package_data->cart as $api_product ) {
 			$found          = false;
 			$order_line_id  = (string) $api_product->marketplace_order_line_id;
-			$product_data   = Lengow_Product::extract_product_data_from_api( $api_product );
+			$product_data   = Lengow_Product::extract_product_data_from_api( $api_product );                       
+                        
 			$api_product_id = null !== $product_data['merchant_product_id']->id
 				? (string) $product_data['merchant_product_id']->id
 				: (string) $product_data['marketplace_product_id'];
+                       
 			if ( null !== $product_data['marketplace_status'] ) {
 				$product_state = $this->marketplace->get_state_lengow( (string) $product_data['marketplace_status'] );
 				if ( in_array(
