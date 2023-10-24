@@ -412,7 +412,13 @@ class Lengow_Import_Order {
 			$this->log_output,
 			$this->marketplace_sku
 		);
-		$order           = new WC_Order( $order_id );
+                try {
+                    $order           = new WC_Order( $order_id );
+                    
+                } catch (\Exception $e) {
+                    return false;
+                }
+		
 		$order_lengow_id = Lengow_Order::get_id_from_order_id( $order_id );
 		$order_lengow    = new Lengow_Order( $order_lengow_id );
 		// Lengow -> cancel and reimport order.
@@ -1179,11 +1185,17 @@ class Lengow_Import_Order {
 		$billing_data  = $billing_address->get_formatted_data();
 		$shipping_data = $shipping_address->get_formatted_data();
 		// adds shipping and billing addresses to the order.
+                
+                $billing = [];
 		foreach ( $billing_data as $key => $field ) {
-			update_post_meta( $order_id, '_' . $key, $field );
+                    $billingKey = str_replace('billing_', '', $key);
+                    $billing[$billingKey] = $field;                        
 		}
+                
+                $shipping = [];
 		foreach ( $shipping_data as $key => $field ) {
-			update_post_meta( $order_id, '_' . $key, $field );
+                    $shippingKey = str_replace('shipping_', '', $key);
+                    $shipping[$shippingKey] = $field;
 		}
 		update_post_meta( $order_id, '_customer_user', absint( $user->ID ) );
 		// load WooCommerce customer.
@@ -1203,6 +1215,9 @@ class Lengow_Import_Order {
 		$this->add_post_meta( $order_id, $tax_amount, $shipping_cost );
 		// load WooCommerce order.
 		$order = new WC_Order( $order_id );
+                $order->set_address($billing, 'billing');
+                $order->set_address($shipping, 'shipping');
+                
 		// change order state.
 		$order_state = Lengow_Order::get_woocommerce_state(
 			$this->order_state_marketplace,
@@ -1212,6 +1227,8 @@ class Lengow_Import_Order {
 		$order->update_status( $order_state );
 		// add quantity back for re-import order and order shipped by marketplace.
 		$this->add_quantity_back( $order );
+                $order->calculate_totals();
+                $order->save();
 
 		return $order;
 	}
@@ -1223,34 +1240,21 @@ class Lengow_Import_Order {
 	 * @throws Exception|Lengow_Exception
 	 */
 	private function create_generic_woocommerce_order() {
-		// create a generic order.
-		$new_order_data = array(
-			'post_type'     => 'shop_order',
-			'post_title'    => sprintf(
-				__( 'Order &ndash; %s', 'woocommerce' ),
-				strftime( _x( '%b %d, %Y @ %I:%M %p', 'Order date parsed by strftime', 'woocommerce' ) )
-			),
-			'post_status'   => 'publish',
-			'ping_status'   => 'closed',
-			'post_excerpt'  => $this->message,
-			'post_author'   => 1,
-			'post_password' => uniqid( 'wc_order_', true ),
-			'post_date'     => get_date_from_gmt( $this->order_date ),
-			'post_date_gmt' => $this->order_date,
-		);
-		$order_data     = apply_filters( 'woocommerce_new_order_data', $new_order_data );
-		$order_id       = wp_insert_post( $order_data, true );
-		if ( is_wp_error( $order_id ) ) {
+            
+                $wc_order =  wc_create_order();                
+                if ( is_wp_error($wc_order->get_id()) ) {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message( 'lengow_log.exception.woocommerce_order_not_saved' )
 			);
 		}
-		do_action( 'woocommerce_new_order', $order_id, new WC_Order($order_id));
+                
+                
+		do_action( 'woocommerce_new_order', $wc_order->get_id(), $wc_order);
 		// update lengow_orders table directly after creating the WooCommerce order.
 		$success = Lengow_Order::update(
 			$this->order_lengow_id,
 			array(
-				Lengow_Order::FIELD_ORDER_ID            => $order_id,
+				Lengow_Order::FIELD_ORDER_ID            => $wc_order->get_id(),
 				Lengow_Order::FIELD_ORDER_PROCESS_STATE => Lengow_Order::get_order_process_state(
 					$this->order_state_lengow
 				),
@@ -1275,7 +1279,7 @@ class Lengow_Import_Order {
 			);
 		}
 
-		return $order_id;
+		return $wc_order->get_id();
 	}
 
 	/**

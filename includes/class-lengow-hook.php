@@ -45,23 +45,26 @@ class Lengow_Hook {
 	/**
 	 * Add meta box for orders created by Lengow.
 	 *
-	 * @param WP_Post $post WordPress Post instance
+	 * @param WC_Order $wc_order
 	 */
-	public static function adding_shop_order_meta_boxes( $post ) {
-		if ( $post && Lengow_Order::get_id_from_order_id( (int) $post->ID ) ) {
+	public static function adding_shop_order_meta_boxes( $wc_order ) {
+                
+		if ( $wc_order && Lengow_Order::get_id_from_order_id( (int) $wc_order->get_id() ) ) {
+                        
 			$locale = new Lengow_Translation();
+                        
 			add_meta_box(
 				'lengow-order-infos',
 				$locale->t( 'meta_box.order_info.box_title' ),
 				array( 'Lengow_Box_Order_Info', 'html_display' ),
-				'shop_order',
+				'woocommerce_page_wc-orders',
 				'normal'
 			);
 			add_meta_box(
 				'lengow-shipping-infos',
 				$locale->t( 'meta_box.order_shipping.box_title' ),
 				array( 'Lengow_Box_Order_Shipping', 'html_display' ),
-				'shop_order',
+				'woocommerce_page_wc-orders',
 				'side',
 				'high'
 			);
@@ -95,31 +98,31 @@ class Lengow_Hook {
 	/**
 	 * Update status on Lengow.
 	 *
-	 * @param integer $post_id WordPress current post id
+	 * @param integer $wc_order_id woocommerce order id
 	 *
 	 * @return integer|false
 	 */
-	public static function save_lengow_shipping( $post_id ) {
-		if ( 'shop_order' !== get_post_type( $post_id ) ) {
+	public static function save_lengow_shipping( $wc_order_id) {
+		if ( 'shop_order' !== get_post_type( $wc_order_id ) ) {
 			return false;
 		}
-		$order_lengow_id = Lengow_Order::get_id_from_order_id( $post_id );
+		$order_lengow_id = Lengow_Order::get_id_from_order_id( $wc_order_id );
 		if ( $order_lengow_id ) {
 			// check if our nonce is set.
 			if ( ! isset( $_POST['lengow_woocommerce_custom_box_nonce'] ) ) {
-				return $post_id;
+				return $wc_order_id;
 			}
 			$nonce = $_POST['lengow_woocommerce_custom_box_nonce'];
 			// verify that the nonce is valid.
 			if ( ! wp_verify_nonce( $nonce, 'lengow_woocommerce_custom_box' ) ) {
-				return $post_id;
+				return $wc_order_id;
 			}
 			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-				return $post_id;
+				return $wc_order_id;
 			}
 			// check the user's permissions.
-			if ( ! current_user_can( 'edit_post', $post_id ) ) {
-				return $post_id;
+			if ( ! current_user_can( 'edit_post', $wc_order_id) ) {
+				return $wc_order_id;
 			}
 			// get new WooCommerce order status.
 			$order_status = sanitize_text_field( $_POST['order_status'] );
@@ -137,10 +140,10 @@ class Lengow_Hook {
 				? sanitize_text_field( $_POST['lengow_tracking_url'] )
 				: '';
 			// save Lengow shipping data.
-			update_post_meta( $post_id, '_lengow_carrier', $carrier );
-			update_post_meta( $post_id, '_lengow_custom_carrier', $custom_carrier );
-			update_post_meta( $post_id, '_lengow_tracking_number', $tracking_number );
-			update_post_meta( $post_id, '_lengow_tracking_url', $tracking_url );
+			update_post_meta( $wc_order_id, '_lengow_carrier', $carrier );
+			update_post_meta( $wc_order_id, '_lengow_custom_carrier', $custom_carrier );
+			update_post_meta( $wc_order_id, '_lengow_tracking_number', $tracking_number );
+			update_post_meta( $wc_order_id, '_lengow_tracking_url', $tracking_url );
 			$order_lengow = new Lengow_Order( $order_lengow_id );
 			// do nothing if the order is closed or an action is being processed.
 			if ( ! $order_lengow->is_closed() && ! $order_lengow->has_an_action_in_progress() ) {
@@ -154,7 +157,7 @@ class Lengow_Hook {
 			unset( $order_lengow );
 		}
 
-		return $post_id;
+		return $wc_order_id;
 	}
 
 	/**

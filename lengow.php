@@ -181,7 +181,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				// order actions.
 				add_action( 'save_post', array( 'Lengow_Hook', 'save_lengow_shipping' ) );
 				add_action( 'woocommerce_email', array( 'Lengow_Hook', 'unhook_woocommerce_mail' ) );
-				add_action( 'add_meta_boxes_shop_order', array( 'Lengow_Hook', 'adding_shop_order_meta_boxes' ) );
+				add_action( 'add_meta_boxes_woocommerce_page_wc-orders', array( 'Lengow_Hook', 'adding_shop_order_meta_boxes' ) );
 				// init lengow technical error status.
 				$this->init_lengow_technical_error_status();
 				// check logs download to prevent the occurrence of the WordPress html header.
