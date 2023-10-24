@@ -1389,16 +1389,15 @@ class Lengow_Import_Order {
                         $wc_shipping_item->set_method_id($shipping_method->id);
                         $wc_shipping_item->set_method_title($shipping_method_title);
                         $wc_shipping_item->set_taxes(array('total' => array( $tax_id => $tax_amount ) ));
+                        $wc_shipping_item->set_instance_id($shipping_method->instance_id);
+                        $wc_shipping_item->add_meta_data('Articles', implode( ', ', $articles ));
+                        $wc_shipping_item->add_meta_data('cost', $amount);
+                        $wc_shipping_item->add_meta_data('total_tax', $tax_amount);
                         $wc_shipping_item->set_total($amount);
                         $wc_order->add_item($wc_shipping_item);
                         $wc_order->save();
                         
-//			wc_add_order_item_meta( $item_id, 'method_id', $shipping_method->id );
-//			wc_add_order_item_meta( $item_id, 'instance_id', $shipping_method->instance_id );
-//			wc_add_order_item_meta( $item_id, 'cost', $amount );
-//			wc_add_order_item_meta( $item_id, 'total_tax', $tax_amount );
-//			wc_add_order_item_meta( $item_id, 'taxes', array( 'total' => array( $tax_id => $tax_amount ) ) );
-//			wc_add_order_item_meta( $item_id, 'Articles', implode( ', ', $articles ) );
+
 		} catch ( Exception $e ) {
 			Lengow_Main::log(
 				Lengow_Log::CODE_IMPORT,
@@ -1527,34 +1526,16 @@ class Lengow_Import_Order {
                 $wc_order->set_shipping_total($shipping_cost['amount']);
                 $wc_order->set_shipping_tax($order_shipping_tax);
                 $wc_order->set_payment_method(
-                    WC_Lengow_Payment_Gateway::PAYMENT_LENGOW_ID.' - '.$this->marketplace->label_name
+                    WC_Lengow_Payment_Gateway::PAYMENT_LENGOW_ID
                 );
+                $wc_order->set_payment_method_title($this->marketplace->label_name);                
                 $wc_order->set_date_paid(strtotime( $this->order_date ));
                 $wc_order->set_prices_include_tax($prices_include_tax);
                 $wc_order->set_customer_ip_address($customer_ip_address);
                 $wc_order->set_customer_user_agent($customer_user_agent);                
                 $wc_order->save();
                 
-                
-                //$wc_order->set_shipping_m
-                
-//		update_post_meta( $order_id, '_cart_discount', 0 );
-//		update_post_meta( $order_id, '_order_discount', 0 );
-//		update_post_meta( $order_id, '_order_total', $order_total );
-//		update_post_meta( $order_id, '_order_tax', $order_tax );
-//		update_post_meta( $order_id, '_order_shipping', $order_shipping );
-//		update_post_meta( $order_id, '_order_shipping_tax', $order_shipping_tax );
-//		update_post_meta( $order_id, '_order_key', $order_key );
-//		update_post_meta( $order_id, '_order_currency', $order_currency );
-//		update_post_meta( $order_id, '_payment_method', WC_Lengow_Payment_Gateway::PAYMENT_LENGOW_ID );
-//		update_post_meta( $order_id, '_payment_method_title', $this->marketplace->label_name );
-//		update_post_meta( $order_id, '_date_paid', strtotime( $this->order_date ) );
-//		update_post_meta( $order_id, '_paid_date', $this->order_date );
-//		update_post_meta( $order_id, '_shipping_method', $shipping_cost['method'] );
-//		update_post_meta( $order_id, '_shipping_method_title', $shipping_cost['method_title'] );
-//		update_post_meta( $order_id, '_prices_include_tax', $prices_include_tax );
-//		update_post_meta( $order_id, '_customer_ip_address', $customer_ip_address );
-//		update_post_meta( $order_id, '_customer_user_agent', $customer_user_agent );
+            
 	}
 
 	/**
