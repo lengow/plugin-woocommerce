@@ -211,7 +211,7 @@ class Lengow_Toolbox {
 	 *
 	 * @return array
 	 */
-	public static function get_data( $type = self::DATA_TYPE_CMS ) {           
+	public static function get_data( $type = self::DATA_TYPE_CMS ) {
 		switch ( $type ) {
 			case self::DATA_TYPE_ALL:
 				return self::get_all_data();
@@ -220,8 +220,8 @@ class Lengow_Toolbox {
 			case self::DATA_TYPE_CHECKSUM:
 				return self::get_checksum_data();
                          case self::DATA_TYPE_MODIFIED_FILES:
-                            $short_path_param = (string) isset($_GET[self::PARAM_SHORT_PATH]) ? sanitize_text_field($_GET[self::PARAM_SHORT_PATH]) : '' ;                          
-                            return self::get_modified_files_data(base64_decode($short_path_param));    
+                            $short_path_param = (string) isset($_GET[self::PARAM_SHORT_PATH]) ? sanitize_text_field($_GET[self::PARAM_SHORT_PATH]) : '' ;
+                            return self::get_modified_files_data(base64_decode($short_path_param));
 			case self::DATA_TYPE_LOG:
 				return self::get_log_data();
 			case self::DATA_TYPE_OPTION:
@@ -498,7 +498,7 @@ class Lengow_Toolbox {
                         self::CHECKSUM_FILE_DETAILS          => 1
 		);
 	}
-        
+
     /**
      * Get files modified details
      *
@@ -527,7 +527,7 @@ class Lengow_Toolbox {
                                                         continue;
                                                     }
                                                     $file_modified[] = [
-                                                        'short_path' => $short_path, 
+                                                        'short_path' => $short_path,
                                                         'content_encoded' =>  base64_encode(file_get_contents($file_path)),
                                                         'checksum' => $file_md
                                                     ];
@@ -541,8 +541,8 @@ class Lengow_Toolbox {
 		} else {
 			$md5_available = false;
 		}
-		
-		return array(			
+
+		return array(
 			self::CHECKSUM_FILE_MODIFIED         => $file_modified,
 			self::CHECKSUM_FILE_DELETED          => $file_deleted,
 		);
@@ -687,11 +687,11 @@ class Lengow_Toolbox {
 	private static function get_all_order_data( $lengow_order, $order = null ) {
 		if ( $order ) {
 			$order_id                 = $order->get_id();
-			$carrier                  = get_post_meta( $order_id, '_lengow_carrier', true );
-			$custom_carrier           = get_post_meta( $order_id, '_lengow_custom_carrier', true );
+			$carrier                  = $order->get_meta('_lengow_carrier', true );
+			$custom_carrier           = $order->get_meta('_lengow_custom_carrier', true );
 			$merchant_carrier         = $carrier ?: $custom_carrier;
-			$merchant_tracking_number = get_post_meta( $order_id, '_lengow_tracking_number', true );
-			$merchant_tracking_url    = get_post_meta( $order_id, '_lengow_tracking_url', true );
+			$merchant_tracking_number = $order->get_meta('_lengow_tracking_number', true );
+			$merchant_tracking_url    = $order->get_meta('_lengow_tracking_url', true );
 		}
 
 		return array(

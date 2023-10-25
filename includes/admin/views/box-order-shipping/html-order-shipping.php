@@ -11,18 +11,19 @@ $carriers              = $marketplace->carriers;
 $marketplace_arguments = $marketplace->get_marketplace_arguments( Lengow_Action::TYPE_SHIP );
 $accept_custom_carrier = $marketplace->accept_custom_carrier();
 $order_lengow_carrier  = false;
+$wc_order              = new WC_Order($order_lengow->order_id);
 // recovery of the carrier code returned by the marketplace.
 // this argument has priority over all others.
 if ( null !== $order_lengow->carrier && strlen( $order_lengow->carrier ) > 0 ) {
 	$order_lengow_carrier = $order_lengow->carrier;
 }
-$carrier         = get_post_meta( $post->ID, '_lengow_carrier', true );
+$carrier         = $wc_order->get_meta('_lengow_carrier', true );
 $carrier         = $order_lengow_carrier ?: $carrier;
-$custom_carrier  = get_post_meta( $post->ID, '_lengow_custom_carrier', true );
+$custom_carrier  = $wc_order->get_meta('_lengow_custom_carrier', true );
 $custom_carrier  = $order_lengow_carrier ?: $custom_carrier;
-$tracking_number = get_post_meta( $post->ID, '_lengow_tracking_number', true );
+$tracking_number = $wc_order->get_meta('_lengow_tracking_number', true );
 $tracking_number = strlen( $tracking_number ) > 0 ? $tracking_number : $order_lengow->carrier_tracking;
-$tracking_url    = get_post_meta( $post->ID, '_lengow_tracking_url', true );
+$tracking_url    = $wc_order->get_meta('_lengow_tracking_url', true );
 ?>
 
 <style>
