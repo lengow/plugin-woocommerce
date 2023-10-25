@@ -6,6 +6,7 @@ Version 2.5.3
     - Bugfix:   Vat number sync update
     - Bugfix:   Order duplicate when delivery_address_id changes
     - Bugfix:   php8.1 address strings data not be null
+    - BugFix:   Order not post but WC_Order
 
 ========================================================
 Version 2.5.2
