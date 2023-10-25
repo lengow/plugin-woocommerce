@@ -81,6 +81,9 @@ class Lengow_Order {
 	const STATE_REFUSED = 'refused';
 	const STATE_CANCELED = 'canceled';
 	const STATE_REFUNDED = 'refunded';
+        const STATE_WC_COMPLETED = 'wc-completed';
+        const STATE_WC_PROCESSING = 'wc-processing';
+        const STATE_WC_CANCELED = 'wc-cancelled';
 
 	/* Order types */
 	const TYPE_PRIME = 'is_prime';
@@ -392,15 +395,18 @@ class Lengow_Order {
 		switch ( $state ) {
 			case self::STATE_ACCEPTED:
 			case self::STATE_WAITING_SHIPMENT:
+                        case self::STATE_WC_PROCESSING:
 			default:
 				$order_state = Lengow_Configuration::get( Lengow_Configuration::WAITING_SHIPMENT_ORDER_ID );
 				break;
 			case self::STATE_SHIPPED:
 			case self::STATE_CLOSED:
+                        case self::STATE_WC_COMPLETED:
 				$order_state = Lengow_Configuration::get( Lengow_Configuration::SHIPPED_ORDER_ID );
 				break;
 			case self::STATE_REFUSED:
 			case self::STATE_CANCELED:
+                        case self::STATE_WC_CANCELED:
 				$order_state = Lengow_Configuration::get( Lengow_Configuration::CANCELED_ORDER_ID );
 				break;
 			case 'shipped_by_mp':
@@ -434,7 +440,7 @@ class Lengow_Order {
 	 */
 	public static function get_order_id_from_lengow_orders(
 		$marketplace_sku,
-		$marketplace_name,		
+		$marketplace_name,
 		$marketplace_name_legacy
 	) {
 		global $wpdb;
@@ -458,10 +464,10 @@ class Lengow_Order {
 		if ( empty( $results ) ) {
 			return false;
 		}
-                
+
 		return (int) reset($results)->order_id;
 
-		
+
 	}
 
 	/**
@@ -492,7 +498,7 @@ class Lengow_Order {
 	 *
 	 * @param string $marketplace_sku Lengow id
 	 * @param string $marketplace_name marketplace name
-	 * 
+	 *
 	 *
 	 * @return integer|false
 	 */
@@ -502,7 +508,7 @@ class Lengow_Order {
 		$query           = '
 			SELECT id FROM ' . $wpdb->prefix . self::TABLE_ORDER . '
 			WHERE marketplace_sku = %s
-			AND marketplace_name = %s			
+			AND marketplace_name = %s
 		';
 		$order_lengow_id = $wpdb->get_var(
 			$wpdb->prepare( $query, array( $marketplace_sku, $marketplace_name) )
@@ -552,7 +558,7 @@ class Lengow_Order {
 
 		$query           = '
 			SELECT id FROM ' . $wpdb->prefix . self::TABLE_ORDER . '
-			WHERE order_id = %d			
+			WHERE order_id = %d
                         AND marketplace_sku =  %s
                         AND marketplace_name =  %s
 		';

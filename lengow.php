@@ -179,9 +179,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				add_action( 'wp_ajax_post_process_orders', array( 'Lengow_Admin_Orders', 'post_process' ) );
 				add_action( 'wp_ajax_post_process_order_box', array( 'Lengow_Box_Order_Info', 'post_process' ) );
 				// order actions.
-				add_action( 'save_post', array( 'Lengow_Hook', 'save_lengow_shipping' ) );
+				add_action( 'woocommerce_after_order_object_save', array( 'Lengow_Hook', 'save_lengow_shipping' ) );
 				add_action( 'woocommerce_email', array( 'Lengow_Hook', 'unhook_woocommerce_mail' ) );
-				add_action( 'add_meta_boxes_shop_order', array( 'Lengow_Hook', 'adding_shop_order_meta_boxes' ) );
+				add_action( 'add_meta_boxes_woocommerce_page_wc-orders', array( 'Lengow_Hook', 'adding_shop_order_meta_boxes' ) );
 				// init lengow technical error status.
 				$this->init_lengow_technical_error_status();
 				// check logs download to prevent the occurrence of the WordPress html header.
