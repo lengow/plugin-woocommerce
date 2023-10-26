@@ -165,6 +165,20 @@ $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
                         </label>
                     </div>
                 </div>
+                <div class="form-group lengow_anonymize_email">
+                    <div class="lgw-switch <?php echo $values[ Lengow_Configuration::ANONYMIZE_EMAIL ] ? 'checked' : ''; ?>">
+                        <label>
+                            <div>
+                                <span></span>
+                                <input type="hidden" name="lengow_anonymize_email" value="0">
+                                <input name="lengow_anonymize_email"
+                                       type="checkbox"
+									<?php echo $values[ Lengow_Configuration::ANONYMIZE_EMAIL ] ? 'checked' : ''; ?>/>
+                            </div>
+							<?php echo $keys[ Lengow_Configuration::ANONYMIZE_EMAIL ][ Lengow_Configuration::PARAM_LABEL ]; ?>
+                        </label>
+                    </div>
+                </div>
             </div>
             <div class="lgw-box">
                 <h2><?php echo $locale->t( 'order_setting.screen.import_b2b_without_tax_title' ); ?></h2>

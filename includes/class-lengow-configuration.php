@@ -60,6 +60,7 @@ class Lengow_Configuration {
 	const SYNCHRONIZATION_DAY_INTERVAL = 'lengow_import_days';
 	const DEFAULT_IMPORT_CARRIER_ID = 'lengow_import_default_shipping_method';
 	const CURRENCY_CONVERSION_ENABLED = 'lengow_currency_conversion';
+        const ANONYMIZE_EMAIL = 'LENGOW_ANONYMIZE_EMAIL';
 	const B2B_WITHOUT_TAX_ENABLED = 'lengow_import_b2b_without_tax';
 	const SHIPPED_BY_MARKETPLACE_ENABLED = 'lengow_import_ship_mp_enabled';
 	const SHIPPED_BY_MARKETPLACE_STOCK_ENABLED = 'lengow_import_stock_ship_mp';
@@ -128,6 +129,7 @@ class Lengow_Configuration {
 		self::SYNCHRONIZATION_DAY_INTERVAL         => 'synchronization_day_interval',
 		self::DEFAULT_IMPORT_CARRIER_ID            => 'default_import_carrier_id',
 		self::CURRENCY_CONVERSION_ENABLED          => 'currency_conversion_enabled',
+                self::ANONYMIZE_EMAIL                      => 'anonyze_customers_email',
 		self::B2B_WITHOUT_TAX_ENABLED              => 'b2b_without_tax_enabled',
 		self::SHIPPED_BY_MARKETPLACE_ENABLED       => 'shipped_by_marketplace_enabled',
 		self::SHIPPED_BY_MARKETPLACE_STOCK_ENABLED => 'shipped_by_marketplace_stock_enabled',
@@ -320,6 +322,12 @@ class Lengow_Configuration {
 				self::CURRENCY_CONVERSION_ENABLED          => array(
 					self::PARAM_GLOBAL        => true,
 					self::PARAM_LABEL         => $locale->t( 'order_setting.screen.currency_conversion_label' ),
+					self::PARAM_DEFAULT_VALUE => true,
+					self::PARAM_RETURN        => self::RETURN_TYPE_BOOLEAN,
+				),
+                                self::ANONYMIZE_EMAIL          => array(
+					self::PARAM_GLOBAL        => true,
+					self::PARAM_LABEL         => $locale->t( 'order_setting.screen.anonymize_email' ),
 					self::PARAM_DEFAULT_VALUE => true,
 					self::PARAM_RETURN        => self::RETURN_TYPE_BOOLEAN,
 				),

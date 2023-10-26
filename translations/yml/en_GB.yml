@@ -230,6 +230,7 @@ en:
       import_b2b_without_tax_title: "B2B orders"
       import_b2b_without_tax_label: "Enable import of B2B orders without tax"
       import_b2b_without_tax_description: "Activate this option to import B2B orders without tax"
+      anonymize_email: "Anonymize customer's emails addresses"
   global_setting:
     screen:
       notification_alert_title: "Notifications & alerts"
