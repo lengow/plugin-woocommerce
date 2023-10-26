@@ -49,6 +49,12 @@ else
 	VERSION="$1"
 	ARCHIVE_NAME='lengow.woocommerce.'$VERSION'.zip'
 fi
+# Check parameters
+if [ -z "$2" ]; then
+	echo 'Deploy environment is not set: preprod or prod'
+	echo
+	exit 0
+fi
 if [ ! -z "$2" ] && [ "$2" == "preprod" ]; then
         ARCHIVE_NAME="preprod__${ARCHIVE_NAME}"        
 fi
