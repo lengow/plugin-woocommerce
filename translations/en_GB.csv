@@ -209,6 +209,7 @@ order_setting.screen.currency_conversion_label|Activate conversion
 order_setting.screen.import_b2b_without_tax_title|B2B orders
 order_setting.screen.import_b2b_without_tax_label|Enable import of B2B orders without tax
 order_setting.screen.import_b2b_without_tax_description|Activate this option to import B2B orders without tax
+order_setting.screen.anonymize_email|Anonymize customer's emails addresses
 global_setting.screen.notification_alert_title|Notifications & alerts
 global_setting.screen.security_title|Security
 global_setting.screen.tracker_title|Lengow tracker

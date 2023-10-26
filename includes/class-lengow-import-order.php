@@ -912,17 +912,22 @@ class Lengow_Import_Order {
 				$this->carrier_id_relay
 			);
 			$billing_email    = $billing_address->get_data( 'email' );
+                        $user_email       = $billing_email;
 			if ( empty( $billing_email ) ) {
 				$shipping_email = $shipping_address->get_data( 'email' );
 				$billing_address->set_data( 'email', $shipping_email );
+                                $user_email     = $shipping_email;
 			}
 			$billing_phone = $billing_address->get_data( 'phone' );
 			if ( empty( $billing_phone ) ) {
 				$shipping_phone = $shipping_address->get_data( 'phone' );
 				$billing_address->set_data( 'phone', $shipping_phone );
 			}
-			// get fictitious email for user creation.
-			$user_email = $this->get_user_email();
+                        if (Lengow_Configuration::get(Lengow_Configuration::ANONYMIZE_EMAIL) || empty($user_email)) {
+                            // get fictitious email for user creation.
+                            $user_email = $this->get_user_email();
+                        }
+
 			// get or create a WordPress user.
 			$user = get_user_by( 'email', $user_email );
 			if ( ! $user ) {
@@ -1066,7 +1071,7 @@ class Lengow_Import_Order {
 	private function get_user_email() {
 		$domain = implode( '.', array_slice( explode( '.', parse_url( get_site_url(), PHP_URL_HOST ) ), - 2 ) );
 		$domain = preg_match( '`^([\w]+)\.([a-z]+)$`', $domain ) ? $domain : 'lengow.com';
-		$email  = md5($this->marketplace_sku . '-' . $this->marketplace->name). '@' . $domain;
+		$email  = md5($this->marketplace_sku . '-' . $this->marketplace->name) . '@' . $domain;
 		Lengow_Main::log(
 			Lengow_Log::CODE_IMPORT,
 			Lengow_Main::set_log_message( 'log.import.generate_unique_email', array( 'email' => $email ) ),
@@ -1535,9 +1540,28 @@ class Lengow_Import_Order {
                 $wc_order->set_customer_user_agent($customer_user_agent);
                 $wc_order->add_meta_data('_order_shipping', $order_shipping);
                 $wc_order->add_meta_data('_order_shipping_tax', $order_shipping_tax);
-                $wc_order->add_meta_data('_paid_date', $this->order_date);
                 $wc_order->save();
 
+
+                //$wc_order->set_shipping_m
+
+//		update_post_meta( $order_id, '_cart_discount', 0 );
+//		update_post_meta( $order_id, '_order_discount', 0 );
+//		update_post_meta( $order_id, '_order_total', $order_total );
+//		update_post_meta( $order_id, '_order_tax', $order_tax );
+//		update_post_meta( $order_id, '_order_shipping', $order_shipping );
+//		update_post_meta( $order_id, '_order_shipping_tax', $order_shipping_tax );
+//		update_post_meta( $order_id, '_order_key', $order_key );
+//		update_post_meta( $order_id, '_order_currency', $order_currency );
+//		update_post_meta( $order_id, '_payment_method', WC_Lengow_Payment_Gateway::PAYMENT_LENGOW_ID );
+//		update_post_meta( $order_id, '_payment_method_title', $this->marketplace->label_name );
+//		update_post_meta( $order_id, '_date_paid', strtotime( $this->order_date ) );
+//		update_post_meta( $order_id, '_paid_date', $this->order_date );
+//		update_post_meta( $order_id, '_shipping_method', $shipping_cost['method'] );
+//		update_post_meta( $order_id, '_shipping_method_title', $shipping_cost['method_title'] );
+//		update_post_meta( $order_id, '_prices_include_tax', $prices_include_tax );
+//		update_post_meta( $order_id, '_customer_ip_address', $customer_ip_address );
+//		update_post_meta( $order_id, '_customer_user_agent', $customer_user_agent );
 	}
 
 	/**

@@ -1,7 +1,7 @@
 /lengow.php|d0ce8fc49ba25e5ff9b48d525dff0152
 /config/index.php|d41d8cd98f00b204e9800998ecf8427e
-/translations/en_GB.csv|a7e4bdb33bcf194ff7e717f39970d438
-/translations/fr_FR.csv|762daa71e7d30983ab8391dcd14cbb8d
+/translations/en_GB.csv|bea8e56b6fa42edaf649c1999f860c06
+/translations/fr_FR.csv|ab22085efb737662f5d02f1ae0f74244
 /assets/js/select2.js|fc6ada6e297531c8e4e3e3f3edc79207
 /assets/js/bootstrap.min.js|5869c96cc8f19086aee625d670d741f9
 /assets/js/lengow/admin.js|9035e11aedf03c95bc85083a73ccad18
@@ -317,7 +317,7 @@
 /includes/class-lengow-translation.php|6edca64ec59300d6e9f451621517374f
 /includes/class-lengow-connector.php|4524e492c9defa89da70545d633bc4da
 /includes/class-lengow-marketplace.php|c9493ab89cbeb1eeaa8b4896c5fdd913
-/includes/class-lengow-configuration.php|c3dd66ec0e9e9a78117480cd67bb9384
+/includes/class-lengow-configuration.php|fd8e9de40d5a63e317ed66525f3ee31d
 /includes/admin/class-lengow-box-order-shipping.php|a4d58cdf04035da4fe66a452748b2296
 /includes/admin/class-lengow-admin-products.php|cfbe0305504e04bd136170d02c5741f4
 /includes/admin/class-lengow-admin-legals.php|9c0dc4982b44cb93f4c209fa96c93f19
@@ -331,7 +331,7 @@
 /includes/admin/views/box-order-info/html-order-info.php|e215ab0012083ea68a3051c7b7bb0c6e
 /includes/admin/views/html-admin-header-order.php|133e2638703d42ea8e01eee83b917780
 /includes/admin/views/products/html-admin-products.php|57eb8ad29d356f8d41590b18ab5756e6
-/includes/admin/views/order-settings/html-admin-order-settings.php|c10b477726b2ed308db75a6a17c3e841
+/includes/admin/views/order-settings/html-admin-order-settings.php|c040599c66484cffc546178c2009933d
 /includes/admin/views/help/html-admin-help.php|ef2554d0eceb891863fdb91aeea80f61
 /includes/admin/views/html-admin-footer.php|0d8ffaa00d83b1537f9061d0582202c7
 /includes/admin/views/legals/html-admin-legals.php|2707e90cd7f5bc3d06db51ec9ab21c0d
@@ -353,7 +353,7 @@
 /includes/class-lengow-file.php|19f5c28b4aeafc7130cf6d284ab03f6f
 /includes/class-lengow-toolbox.php|4ac92a11127de5cf41877d24b869fd36
 /includes/class-lengow-import.php|dbd8189ae56c69b5e21f2604ca4ff5fc
-/includes/class-lengow-import-order.php|16c4ea4a97932e5b56b2ef82e9c7a289
+/includes/class-lengow-import-order.php|816a3e43e23096ba2a69c931b7404f10
 /includes/class-lengow-export.php|c6c8fb9ee095b64fdcf9961a64b00154
 /includes/class-lengow-order.php|a5d99e6a907a5800ddab15815aa6d9a7
 /includes/class-lengow-toolbox-element.php|2fe1e4f4b6b9ac00baa51875e85e305e
