@@ -49,6 +49,9 @@ else
 	VERSION="$1"
 	ARCHIVE_NAME='lengow.woocommerce.'$VERSION'.zip'
 fi
+if [ ! -z "$2" ] && [ "$2" == "preprod" ]; then
+        ARCHIVE_NAME="preprod__${ARCHIVE_NAME}"        
+fi
 
 # Variables
 FOLDER_TMP="/tmp/lengow-woocommerce"
@@ -62,6 +65,7 @@ VERT="\e[32m"
 ROUGE="\e[31m"
 NORMAL="\e[39m"
 BLEU="\e[36m"
+DEPLOY_ENV=$2
 
 
 # Process
@@ -83,6 +87,15 @@ fi
 PHP=$(which php8.1)
 echo ${PHP}
 
+# Change config for preprod
+if [ ! -z "${DEPLOY_ENV}" ] && [ "${DEPLOY_ENV}" == "preprod" ]; then
+    sed -i 's/lengow.io/lengow.net/g' ${FOLDER}/includes/class-lengow-connector.php 
+fi
+if [ ! -z "${DEPLOY_ENV}" ] && [ "${DEPLOY_ENV}" == "prod" ]; then
+    sed -i 's/lengow.net/lengow.io/g' ${FOLDER}/includes/class-lengow-connector.php 
+fi
+
+
 # Generate translations
 ${PHP} translate.php
 echo -e "- Generate translations : ${VERT}DONE${NORMAL}"
@@ -93,6 +106,7 @@ echo -e "- Create files checksum : ${VERT}DONE${NORMAL}"
 remove_directory $FOLDER_TMP
 #copy files
 cp -rRp $FOLDER $FOLDER_TMP
+
 # Remove dod
 remove_files $FOLDER_TMP "dod.md"
 # Remove Readme
