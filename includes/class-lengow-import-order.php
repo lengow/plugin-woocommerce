@@ -923,7 +923,7 @@ class Lengow_Import_Order {
 				$shipping_phone = $shipping_address->get_data( 'phone' );
 				$billing_address->set_data( 'phone', $shipping_phone );
 			}
-                        if (Lengow_Configuration::get(Lengow_Configuration::ANONYMIZE_EMAIL)) {
+                        if (Lengow_Configuration::get(Lengow_Configuration::ANONYMIZE_EMAIL) || empty($user_email)) {
                             // get fictitious email for user creation.
                             $user_email = $this->get_user_email();
                         }
