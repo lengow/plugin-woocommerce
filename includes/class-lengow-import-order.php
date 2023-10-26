@@ -1542,26 +1542,6 @@ class Lengow_Import_Order {
                 $wc_order->add_meta_data('_order_shipping_tax', $order_shipping_tax);
                 $wc_order->save();
 
-
-                //$wc_order->set_shipping_m
-
-//		update_post_meta( $order_id, '_cart_discount', 0 );
-//		update_post_meta( $order_id, '_order_discount', 0 );
-//		update_post_meta( $order_id, '_order_total', $order_total );
-//		update_post_meta( $order_id, '_order_tax', $order_tax );
-//		update_post_meta( $order_id, '_order_shipping', $order_shipping );
-//		update_post_meta( $order_id, '_order_shipping_tax', $order_shipping_tax );
-//		update_post_meta( $order_id, '_order_key', $order_key );
-//		update_post_meta( $order_id, '_order_currency', $order_currency );
-//		update_post_meta( $order_id, '_payment_method', WC_Lengow_Payment_Gateway::PAYMENT_LENGOW_ID );
-//		update_post_meta( $order_id, '_payment_method_title', $this->marketplace->label_name );
-//		update_post_meta( $order_id, '_date_paid', strtotime( $this->order_date ) );
-//		update_post_meta( $order_id, '_paid_date', $this->order_date );
-//		update_post_meta( $order_id, '_shipping_method', $shipping_cost['method'] );
-//		update_post_meta( $order_id, '_shipping_method_title', $shipping_cost['method_title'] );
-//		update_post_meta( $order_id, '_prices_include_tax', $prices_include_tax );
-//		update_post_meta( $order_id, '_customer_ip_address', $customer_ip_address );
-//		update_post_meta( $order_id, '_customer_user_agent', $customer_user_agent );
 	}
 
 	/**
