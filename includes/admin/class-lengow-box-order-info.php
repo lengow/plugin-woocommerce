@@ -33,11 +33,11 @@ class Lengow_Box_Order_Info {
 	/**
 	 * Display Lengow Box Order infos.
 	 *
-	 * @param WP_Post $post WordPress Post instance
+	 * @param WC_Order $wc_order WC_Order instance from woocommerce
 	 */
-	public static function html_display( $post ) {
+	public static function html_display( $wc_order ) {
 		try {
-			$order_lengow_id = Lengow_Order::get_id_from_order_id( $post->ID );
+			$order_lengow_id = Lengow_Order::get_id_from_order_id( $wc_order->get_id() );
 			$order_lengow    = new Lengow_Order( $order_lengow_id );
 			$can_send_action = $order_lengow->can_resend_action();
 			$imported_at     = Lengow_Order::get_date_imported( $order_lengow->order_id );
