@@ -318,7 +318,7 @@
 /includes/class-lengow-connector.php|29d022b155ec3096c9c0c3fb1a255793
 /includes/class-lengow-marketplace.php|c9493ab89cbeb1eeaa8b4896c5fdd913
 /includes/class-lengow-configuration.php|fd8e9de40d5a63e317ed66525f3ee31d
-/includes/admin/class-lengow-box-order-shipping.php|a4d58cdf04035da4fe66a452748b2296
+/includes/admin/class-lengow-box-order-shipping.php|9e869d8d97d35cf677ae9787b3a3fb90
 /includes/admin/class-lengow-admin-products.php|cfbe0305504e04bd136170d02c5741f4
 /includes/admin/class-lengow-admin-legals.php|9c0dc4982b44cb93f4c209fa96c93f19
 /includes/admin/class-lengow-admin-help.php|c3eeede9ec341fa22695179bcb265073
@@ -345,7 +345,7 @@
 /includes/admin/class-lengow-admin-order-settings.php|ce9fcadcd7436cb633c6afebf49ed14a
 /includes/admin/class-lengow-admin-toolbox.php|f76cf77e0f3399df6c1d36b22567b37f
 /includes/admin/class-lengow-admin.php|f44fbbf174b1617c933370ba1ab4be35
-/includes/admin/class-lengow-box-order-info.php|90a5ae138d175fdbc0c8c974d6e39f8f
+/includes/admin/class-lengow-box-order-info.php|d8f8b5a04a0dfb1b198c4ca27d39f397
 /includes/admin/class-lengow-admin-orders.php|2cd2b79238789187cc3ec00d46c4959e
 /includes/admin/class-lengow-admin-dashboard.php|592fea310d8a0cc54f7a63e43a17e4ba
 /includes/admin/class-lengow-admin-main-settings.php|027e193b9bcbe176ed2479c5de14e6d7
