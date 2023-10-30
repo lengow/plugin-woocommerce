@@ -256,8 +256,8 @@ class Lengow_Import_Order {
 		// get a record in the lengow order table.
 		$this->order_lengow_id = Lengow_Order::get_id_from_lengow_orders(
 			$this->marketplace_sku,
-			$this->marketplace->name,
-			$this->delivery_address_id
+			$this->marketplace->name
+
 		);
 		// checks if an order already has an error in progress.
 		if ( $this->order_lengow_id && $this->order_error_already_exist() ) {
@@ -267,7 +267,6 @@ class Lengow_Import_Order {
 		$order_id = Lengow_Order::get_order_id_from_lengow_orders(
 			$this->marketplace_sku,
 			$this->marketplace->name,
-			$this->delivery_address_id,
 			$this->marketplace->legacy_code
 		);
 		// update order state if already imported.
@@ -369,7 +368,10 @@ class Lengow_Import_Order {
 	 */
 	private function order_error_already_exist() {
 		// if order error exists and not finished.
-		$order_error = Lengow_Order_Error::order_is_in_error( $this->marketplace_sku, $this->delivery_address_id );
+		$order_error = Lengow_Order_Error::order_is_in_error(
+                    $this->marketplace_sku,
+                    $this->marketplace->name
+                );
 		if ( ! $order_error ) {
 			return false;
 		}
@@ -410,7 +412,13 @@ class Lengow_Import_Order {
 			$this->log_output,
 			$this->marketplace_sku
 		);
-		$order           = new WC_Order( $order_id );
+                try {
+                    $order           = new WC_Order( $order_id );
+
+                } catch (\Exception $e) {
+                    return false;
+                }
+
 		$order_lengow_id = Lengow_Order::get_id_from_order_id( $order_id );
 		$order_lengow    = new Lengow_Order( $order_lengow_id );
 		// Lengow -> cancel and reimport order.
@@ -435,6 +443,7 @@ class Lengow_Import_Order {
 			$this->order_state_lengow,
 			$this->package_data
 		);
+
 		if ( $order_updated ) {
 			Lengow_Main::log(
 				Lengow_Log::CODE_IMPORT,
@@ -447,8 +456,18 @@ class Lengow_Import_Order {
 			);
 			$order_updated = true;
 		}
+                $vat_number_data = $this->get_vat_number_from_order_data();
+                if ($order_lengow->customer_vat_number !== $vat_number_data) {
+                    $this->check_and_update_lengow_order_data();
+                    $order_updated = true;
+                    Lengow_Main::log(
+			Lengow_Log::CODE_IMPORT,
+			Lengow_Main::set_log_message( 'log.import.lengow_order_updated' ),
+			$this->log_output,
+			$this->marketplace_sku
+                    );
+                }
 		unset( $order, $order_lengow );
-
 		return $order_updated;
 	}
 
@@ -503,7 +522,7 @@ class Lengow_Import_Order {
 			return false;
 		}
 		foreach ( $this->order_data->merchant_order_id as $external_id ) {
-			if ( Lengow_Order::get_id_from_lengow_delivery_address( (int) $external_id, $this->delivery_address_id ) ) {
+			if ( Lengow_Order::get_id_from_lengow_marketplace_sku( (int) $external_id, $this->marketplace_sku, $this->marketplace->name) ) {
 				$message        = Lengow_Main::set_log_message(
 					'log.import.external_id_exist',
 					array( 'order_id' => $external_id )
@@ -680,6 +699,7 @@ class Lengow_Import_Order {
 				Lengow_Order::FIELD_ORDER_ITEM           => $this->order_item,
 				Lengow_Order::FIELD_CUSTOMER_NAME        => $this->get_customer_name(),
 				Lengow_Order::FIELD_CUSTOMER_EMAIL       => $this->get_customer_email(),
+                                Lengow_Order::FIELD_CUSTOMER_VAT_NUMBER  => $this->get_vat_number_from_order_data(),
 				Lengow_Order::FIELD_CARRIER              => $this->carrier,
 				Lengow_Order::FIELD_CARRIER_METHOD       => $this->carrier_method,
 				Lengow_Order::FIELD_CARRIER_TRACKING     => $this->carrier_tracking,
@@ -892,17 +912,22 @@ class Lengow_Import_Order {
 				$this->carrier_id_relay
 			);
 			$billing_email    = $billing_address->get_data( 'email' );
+                        $user_email       = $billing_email;
 			if ( empty( $billing_email ) ) {
 				$shipping_email = $shipping_address->get_data( 'email' );
 				$billing_address->set_data( 'email', $shipping_email );
+                                $user_email     = $shipping_email;
 			}
 			$billing_phone = $billing_address->get_data( 'phone' );
 			if ( empty( $billing_phone ) ) {
 				$shipping_phone = $shipping_address->get_data( 'phone' );
 				$billing_address->set_data( 'phone', $shipping_phone );
 			}
-			// get fictitious email for user creation.
-			$user_email = $this->get_user_email();
+                        if (Lengow_Configuration::get(Lengow_Configuration::ANONYMIZE_EMAIL) || empty($user_email)) {
+                            // get fictitious email for user creation.
+                            $user_email = $this->get_user_email();
+                        }
+
 			// get or create a WordPress user.
 			$user = get_user_by( 'email', $user_email );
 			if ( ! $user ) {
@@ -974,9 +999,11 @@ class Lengow_Import_Order {
 			$found          = false;
 			$order_line_id  = (string) $api_product->marketplace_order_line_id;
 			$product_data   = Lengow_Product::extract_product_data_from_api( $api_product );
+
 			$api_product_id = null !== $product_data['merchant_product_id']->id
 				? (string) $product_data['merchant_product_id']->id
 				: (string) $product_data['marketplace_product_id'];
+
 			if ( null !== $product_data['marketplace_status'] ) {
 				$product_state = $this->marketplace->get_state_lengow( (string) $product_data['marketplace_status'] );
 				if ( in_array(
@@ -1044,7 +1071,7 @@ class Lengow_Import_Order {
 	private function get_user_email() {
 		$domain = implode( '.', array_slice( explode( '.', parse_url( get_site_url(), PHP_URL_HOST ) ), - 2 ) );
 		$domain = preg_match( '`^([\w]+)\.([a-z]+)$`', $domain ) ? $domain : 'lengow.com';
-		$email  = $this->marketplace_sku . '-' . $this->marketplace->name . '@' . $domain;
+		$email  = md5($this->marketplace_sku . '-' . $this->marketplace->name) . '@' . $domain;
 		Lengow_Main::log(
 			Lengow_Log::CODE_IMPORT,
 			Lengow_Main::set_log_message( 'log.import.generate_unique_email', array( 'email' => $email ) ),
@@ -1158,18 +1185,30 @@ class Lengow_Import_Order {
 	 */
 	private function create_woocommerce_order( $user, $products, $billing_address, $shipping_address ) {
 		// create a generic order.
-		$order_id = $this->create_generic_woocommerce_order();
+		$wc_order = $this->create_generic_woocommerce_order();
+                $order_id = $wc_order->get_id();
 		// get billing data formatted for WooCommerce address.
 		$billing_data  = $billing_address->get_formatted_data();
 		$shipping_data = $shipping_address->get_formatted_data();
 		// adds shipping and billing addresses to the order.
+
+                $billing = [];
 		foreach ( $billing_data as $key => $field ) {
-			update_post_meta( $order_id, '_' . $key, $field );
+                    $billingKey = str_replace('billing_', '', $key);
+                    $billing[$billingKey] = $field;
 		}
+
+                $shipping = [];
 		foreach ( $shipping_data as $key => $field ) {
-			update_post_meta( $order_id, '_' . $key, $field );
+                    $shippingKey = str_replace('shipping_', '', $key);
+                    $shipping[$shippingKey] = $field;
 		}
-		update_post_meta( $order_id, '_customer_user', absint( $user->ID ) );
+                $wc_order->set_address($billing, 'billing');
+                $wc_order->set_address($shipping, 'shipping');
+
+                $wc_order->set_customer_id(absint( $user->ID ));
+                $wc_order->save();
+
 		// load WooCommerce customer.
 		$customer = new WC_Customer( $user->ID );
 		// add products, shipping cost, tax and processing fees to the order.
@@ -1186,55 +1225,44 @@ class Lengow_Import_Order {
 		// add post meta to the WooCommerce order.
 		$this->add_post_meta( $order_id, $tax_amount, $shipping_cost );
 		// load WooCommerce order.
-		$order = new WC_Order( $order_id );
+
+
 		// change order state.
 		$order_state = Lengow_Order::get_woocommerce_state(
 			$this->order_state_marketplace,
 			$this->marketplace,
 			$this->sent_marketplace
 		);
-		$order->update_status( $order_state );
+		$wc_order->update_status( $order_state );
 		// add quantity back for re-import order and order shipped by marketplace.
 		$this->add_quantity_back( $order );
+                $wc_order->save();
 
-		return $order;
+		return $wc_order;
 	}
 
 	/**
 	 * Create a generic WooCommerce order.
 	 *
-	 * @return integer
+	 * @return WC_Order
 	 * @throws Exception|Lengow_Exception
 	 */
 	private function create_generic_woocommerce_order() {
-		// create a generic order.
-		$new_order_data = array(
-			'post_type'     => 'shop_order',
-			'post_title'    => sprintf(
-				__( 'Order &ndash; %s', 'woocommerce' ),
-				strftime( _x( '%b %d, %Y @ %I:%M %p', 'Order date parsed by strftime', 'woocommerce' ) )
-			),
-			'post_status'   => 'publish',
-			'ping_status'   => 'closed',
-			'post_excerpt'  => $this->message,
-			'post_author'   => 1,
-			'post_password' => uniqid( 'wc_order_', true ),
-			'post_date'     => get_date_from_gmt( $this->order_date ),
-			'post_date_gmt' => $this->order_date,
-		);
-		$order_data     = apply_filters( 'woocommerce_new_order_data', $new_order_data );
-		$order_id       = wp_insert_post( $order_data, true );
-		if ( is_wp_error( $order_id ) ) {
+
+                $wc_order =  wc_create_order();
+                if ( is_wp_error($wc_order->get_id()) ) {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message( 'lengow_log.exception.woocommerce_order_not_saved' )
 			);
 		}
-		do_action( 'woocommerce_new_order', $order_id );
+
+
+		do_action( 'woocommerce_new_order', $wc_order->get_id(), $wc_order);
 		// update lengow_orders table directly after creating the WooCommerce order.
 		$success = Lengow_Order::update(
 			$this->order_lengow_id,
 			array(
-				Lengow_Order::FIELD_ORDER_ID            => $order_id,
+				Lengow_Order::FIELD_ORDER_ID            => $wc_order->get_id(),
 				Lengow_Order::FIELD_ORDER_PROCESS_STATE => Lengow_Order::get_order_process_state(
 					$this->order_state_lengow
 				),
@@ -1259,7 +1287,7 @@ class Lengow_Import_Order {
 			);
 		}
 
-		return $order_id;
+		return $wc_order;
 	}
 
 	/**
@@ -1352,20 +1380,29 @@ class Lengow_Import_Order {
 			? $shipping_methods[ $default_shipping_method ]
 			: current( $shipping_methods );
 		$shipping_method_title   = $shipping_method->get_method_title();
+                $wc_order = new WC_Order($order_id);
 		try {
 			$new_shipping_data = array( 'order_item_name' => $shipping_method_title, 'order_item_type' => 'shipping' );
-			$item_id           = wc_add_order_item( $order_id, $new_shipping_data );
+			//$item_id           = wc_add_order_item( $order_id, $new_shipping_data );
 			// add line item meta for shipping.
 			$articles = array();
 			foreach ( $products as $product ) {
 				$articles[] = $product['name'] . ' &times; ' . $product['quantity'];
 			}
-			wc_add_order_item_meta( $item_id, 'method_id', $shipping_method->id );
-			wc_add_order_item_meta( $item_id, 'instance_id', $shipping_method->instance_id );
-			wc_add_order_item_meta( $item_id, 'cost', $amount );
-			wc_add_order_item_meta( $item_id, 'total_tax', $tax_amount );
-			wc_add_order_item_meta( $item_id, 'taxes', array( 'total' => array( $tax_id => $tax_amount ) ) );
-			wc_add_order_item_meta( $item_id, 'Articles', implode( ', ', $articles ) );
+
+                        $wc_shipping_item = new WC_Order_Item_Shipping();
+                        $wc_shipping_item->set_method_id($shipping_method->id);
+                        $wc_shipping_item->set_method_title($shipping_method_title);
+                        $wc_shipping_item->set_taxes(array('total' => array( $tax_id => $tax_amount ) ));
+                        $wc_shipping_item->set_total($amount);
+                        $wc_shipping_item->set_instance_id($shipping_method->instance_id);
+                        $wc_shipping_item->add_meta_data('Articles', implode( ', ', $articles ));
+                        $wc_shipping_item->add_meta_data('cost', $amount);
+                        $wc_shipping_item->add_meta_data('total_tax', $tax_amount);
+                        $wc_order->add_item($wc_shipping_item);
+                        $wc_order->save();
+
+
 		} catch ( Exception $e ) {
 			Lengow_Main::log(
 				Lengow_Log::CODE_IMPORT,
@@ -1396,6 +1433,7 @@ class Lengow_Import_Order {
 	 */
 	private function add_tax( $order_id, $customer, $tax_amount, $shipping_tax_amount ) {
 		$tax_rates = WC_Tax::get_rates( '', $customer );
+                $wc_order = new WC_Order($order_id);
 		if ( ! empty( $tax_rates ) ) {
 			$tax_id = key( $tax_rates );
 			$tax    = $tax_rates[ $tax_id ];
@@ -1405,6 +1443,9 @@ class Lengow_Import_Order {
 					'order_item_type' => 'tax',
 				);
 				$item_id      = wc_add_order_item( $order_id, $new_tax_data );
+
+                                $wc_order->add_tax($tax_id, $tax_amount);
+                                $wc_order->save();
 				// add line item meta for tax.
 				wc_add_order_item_meta( $item_id, 'rate_id', $tax_id );
 				wc_add_order_item_meta( $item_id, 'label', $tax['label'] );
@@ -1471,30 +1512,36 @@ class Lengow_Import_Order {
 		$order_tax           = wc_format_decimal( $tax_amount );
 		$order_shipping_tax  = wc_format_decimal( $shipping_cost['tax_amount'] );
 		$order_total         = wc_format_decimal( $this->total_paid );
-		$order_key           = apply_filters( 'woocommerce_generate_order_key', uniqid( 'wc_order_', true ) );
+
 		$order_currency      = (string) $this->order_data->currency->iso_a3;
 		$customer_ip_address = isset( $_SERVER['HTTP_X_FORWARDED_FOR'] )
 			? $_SERVER['HTTP_X_FORWARDED_FOR']
 			: $_SERVER['REMOTE_ADDR'];
 		$customer_user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
 		$prices_include_tax  = get_option( 'woocommerce_prices_include_tax' );
-		update_post_meta( $order_id, '_cart_discount', 0 );
-		update_post_meta( $order_id, '_order_discount', 0 );
-		update_post_meta( $order_id, '_order_total', $order_total );
-		update_post_meta( $order_id, '_order_tax', $order_tax );
-		update_post_meta( $order_id, '_order_shipping', $order_shipping );
-		update_post_meta( $order_id, '_order_shipping_tax', $order_shipping_tax );
-		update_post_meta( $order_id, '_order_key', $order_key );
-		update_post_meta( $order_id, '_order_currency', $order_currency );
-		update_post_meta( $order_id, '_payment_method', WC_Lengow_Payment_Gateway::PAYMENT_LENGOW_ID );
-		update_post_meta( $order_id, '_payment_method_title', $this->marketplace->label_name );
-		update_post_meta( $order_id, '_date_paid', strtotime( $this->order_date ) );
-		update_post_meta( $order_id, '_paid_date', $this->order_date );
-		update_post_meta( $order_id, '_shipping_method', $shipping_cost['method'] );
-		update_post_meta( $order_id, '_shipping_method_title', $shipping_cost['method_title'] );
-		update_post_meta( $order_id, '_prices_include_tax', $prices_include_tax );
-		update_post_meta( $order_id, '_customer_ip_address', $customer_ip_address );
-		update_post_meta( $order_id, '_customer_user_agent', $customer_user_agent );
+
+                $wc_order = new WC_Order($order_id);
+                $wc_order->set_currency($order_currency);
+                $wc_order->set_total($order_total);
+                $wc_order->set_cart_tax($order_tax);
+
+
+
+
+                $wc_order->set_shipping_total($shipping_cost['amount']);
+                $wc_order->set_shipping_tax($order_shipping_tax);
+                $wc_order->set_payment_method(
+                    WC_Lengow_Payment_Gateway::PAYMENT_LENGOW_ID
+                );
+                $wc_order->set_payment_method_title($this->marketplace->label_name);
+                $wc_order->set_date_paid(strtotime( $this->order_date ));
+                $wc_order->set_prices_include_tax($prices_include_tax);
+                $wc_order->set_customer_ip_address($customer_ip_address);
+                $wc_order->set_customer_user_agent($customer_user_agent);
+                $wc_order->add_meta_data('_order_shipping', $order_shipping);
+                $wc_order->add_meta_data('_order_shipping_tax', $order_shipping_tax);
+                $wc_order->save();
+
 	}
 
 	/**

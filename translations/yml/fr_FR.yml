@@ -5,7 +5,7 @@ fr:
     plugin_uri: "https://www.lengow.com/fr/integrations/woocommerce/"
     author_uri: "http://www.lengow.com/fr"
     description: "Avec votre module Lengow pour WooCommerce vendez rapidement vos produits sur Amazon, Ebay, Facebook, Google Shopping, Criteo, Bing et d’autres et touchez facilement de nouveaux clients partout dans le monde. Plus de 1 800 canaux marketing vous attendent sur la plateforme Lengow !"
-    version: "2.5.2"
+    version: "2.5.3"
     author: "Lengow"
     state_technical_error: "Erreur technique - Lengow"
     lengow_payment_title: "Paiement Lengow"
@@ -230,6 +230,7 @@ fr:
       import_b2b_without_tax_title: "Commandes B2B"
       import_b2b_without_tax_label: "Activer l'import des commandes B2B sans taxes"
       import_b2b_without_tax_description: "Activer cette option pour importer les commandes B2B sans taxes"
+      anonymize_email: "Anonymiser les adresses e-mails des clients"
   global_setting:
     screen:
       notification_alert_title: "Notifications & alertes"

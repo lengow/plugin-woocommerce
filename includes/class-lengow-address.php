@@ -496,19 +496,19 @@ class Lengow_Address {
 	 */
 	private function get_names( $address_data ) {
 		$names = array(
-			'firstname' => trim( $address_data['first_name'] ),
-			'lastname'  => trim( $address_data['last_name'] ),
-			'fullname'  => $this->clean_full_name( $address_data['full_name'] ),
+			'firstname' => trim((string) $address_data['first_name'] ),
+			'lastname'  => trim((string) $address_data['last_name'] ),
+			'fullname'  => $this->clean_full_name((string) $address_data['full_name'] ),
 		);
 		if ( empty( $names['firstname'] ) && ! empty( $names['lastname'] ) ) {
-			$names = $this->split_names( $names['lastname'] );
+			$names = $this->split_names((string) $names['lastname'] );
 		}
 		if ( empty( $names['lastname'] ) && ! empty( $names['firstname'] ) ) {
-			$names = $this->split_names( $names['firstname'] );
+			$names = $this->split_names((string) $names['firstname'] );
 		}
 		// check full name if last_name and first_name are empty.
 		if ( empty( $names['lastname'] ) && empty( $names['firstname'] ) ) {
-			$names = $this->split_names( $names['fullname'] );
+			$names = $this->split_names((string) $names['fullname'] );
 		}
 		if ( empty( $names['lastname'] ) ) {
 			$names['lastname'] = '__';
@@ -581,9 +581,9 @@ class Lengow_Address {
 	 * @return array
 	 */
 	private function get_address_fields( $address_data, $relay_id = null ) {
-		$address_1  = trim( $address_data['first_line'] );
-		$address_2  = trim( $address_data['second_line'] );
-		$complement = trim( $address_data['complement'] );
+		$address_1  = trim((string) $address_data['first_line'] );
+		$address_2  = trim((string) $address_data['second_line'] );
+		$complement = trim((string) $address_data['complement'] );
 		if ( empty( $address_1 ) ) {
 			if ( ! empty( $address_2 ) ) {
 				$address_1 = $address_2;
@@ -696,7 +696,7 @@ class Lengow_Address {
 		$state                = '';
 		$wc_countries         = new WC_Countries();
 		$states               = $wc_countries->get_states( $country_iso_a2 );
-		$state_region         = strtoupper( trim( $state_region ) );
+		$state_region         = strtoupper(trim((string) $state_region ) );
 		$state_region_cleaned = $this->clean_string( $state_region );
 		if ( ! empty( $states ) && ! empty( $state_region ) ) {
 			if ( array_key_exists( $state_region, $states ) ) {
@@ -729,7 +729,7 @@ class Lengow_Address {
 	 */
 	private function clean_string( $string ) {
 		$cleanFilters = array( ' ', '-', '_', '.' );
-		$string       = strtolower( str_replace( $cleanFilters, '', trim( $string ) ) );
+		$string       = strtolower( str_replace( $cleanFilters, '', trim((string) $string ) ) );
 
 		return Lengow_Main::replace_accented_chars( html_entity_decode( $string ) );
 	}
@@ -751,6 +751,6 @@ class Lengow_Address {
 			$phone_number = $address_data['phone_office'];
 		}
 
-		return Lengow_Main::clean_phone( $phone_number );
+		return Lengow_Main::clean_phone((string) $phone_number );
 	}
 }

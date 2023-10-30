@@ -3,7 +3,7 @@ module.plugin_name|Lengow for WooCommerce
 module.plugin_uri|https://www.lengow.com/integrations/woocommerce/
 module.author_uri|http://www.lengow.com
 module.description|Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
-module.version|2.5.2
+module.version|2.5.3
 module.author|Lengow
 module.state_technical_error|Technical error - Lengow
 module.lengow_payment_title|Lengow payment
@@ -209,6 +209,7 @@ order_setting.screen.currency_conversion_label|Activate conversion
 order_setting.screen.import_b2b_without_tax_title|B2B orders
 order_setting.screen.import_b2b_without_tax_label|Enable import of B2B orders without tax
 order_setting.screen.import_b2b_without_tax_description|Activate this option to import B2B orders without tax
+order_setting.screen.anonymize_email|Anonymize customer's emails addresses
 global_setting.screen.notification_alert_title|Notifications & alerts
 global_setting.screen.security_title|Security
 global_setting.screen.tracker_title|Lengow tracker
@@ -452,6 +453,7 @@ log.import.connector_get_order|get order with order ID: %{marketplace_sku} and m
 log.import.connector_get_all_order|get orders between %{date_from} and %{date_to} for catalogs ID: %{catalog_id}
 log.import.find_one_order|%{nb_order} order found for order ID: %{marketplace_sku} and marketplace: %{marketplace_name} with account ID: %{account_id}
 log.import.find_all_orders|%{nb_order} order(s) found with account ID: %{account_id}
+log.import.init_params|import initialized with params : %{init_params}
 log.import.sync_result|%{number_orders_processed} orders processed, %{number_orders_created} created, %{number_orders_updated} updated, %{number_orders_failed} failed, %{number_orders_ignored} ignored and %{number_orders_not_formatted} not formatted
 log.import.error_already_created|%{decoded_message} (created on the %{date_message})
 log.import.external_id_exist|already imported in a WooCommerce with the order ID %{order_id}

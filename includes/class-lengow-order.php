@@ -81,6 +81,9 @@ class Lengow_Order {
 	const STATE_REFUSED = 'refused';
 	const STATE_CANCELED = 'canceled';
 	const STATE_REFUNDED = 'refunded';
+        const STATE_WC_COMPLETED = 'wc-completed';
+        const STATE_WC_PROCESSING = 'wc-processing';
+        const STATE_WC_CANCELED = 'wc-cancelled';
 
 	/* Order types */
 	const TYPE_PRIME = 'is_prime';
@@ -392,15 +395,18 @@ class Lengow_Order {
 		switch ( $state ) {
 			case self::STATE_ACCEPTED:
 			case self::STATE_WAITING_SHIPMENT:
+                        case self::STATE_WC_PROCESSING:
 			default:
 				$order_state = Lengow_Configuration::get( Lengow_Configuration::WAITING_SHIPMENT_ORDER_ID );
 				break;
 			case self::STATE_SHIPPED:
 			case self::STATE_CLOSED:
+                        case self::STATE_WC_COMPLETED:
 				$order_state = Lengow_Configuration::get( Lengow_Configuration::SHIPPED_ORDER_ID );
 				break;
 			case self::STATE_REFUSED:
 			case self::STATE_CANCELED:
+                        case self::STATE_WC_CANCELED:
 				$order_state = Lengow_Configuration::get( Lengow_Configuration::CANCELED_ORDER_ID );
 				break;
 			case 'shipped_by_mp':
@@ -435,7 +441,6 @@ class Lengow_Order {
 	public static function get_order_id_from_lengow_orders(
 		$marketplace_sku,
 		$marketplace_name,
-		$delivery_address_id,
 		$marketplace_name_legacy
 	) {
 		global $wpdb;
@@ -459,16 +464,10 @@ class Lengow_Order {
 		if ( empty( $results ) ) {
 			return false;
 		}
-		foreach ( $results as $result ) {
-			if ( null === $result->{self::FIELD_DELIVERY_ADDRESS_ID} && null !== $result->{self::FIELD_FEED_ID} ) {
-				return (int) $result->{self::FIELD_ORDER_ID};
-			}
-			if ( (int) $result->{self::FIELD_DELIVERY_ADDRESS_ID} === $delivery_address_id ) {
-				return (int) $result->{self::FIELD_ORDER_ID};
-			}
-		}
 
-		return false;
+		return (int) reset($results)->order_id;
+
+
 	}
 
 	/**
@@ -499,21 +498,20 @@ class Lengow_Order {
 	 *
 	 * @param string $marketplace_sku Lengow id
 	 * @param string $marketplace_name marketplace name
-	 * @param integer $delivery_address_id delivery address id
+	 *
 	 *
 	 * @return integer|false
 	 */
-	public static function get_id_from_lengow_orders( $marketplace_sku, $marketplace_name, $delivery_address_id ) {
+	public static function get_id_from_lengow_orders( $marketplace_sku, $marketplace_name) {
 		global $wpdb;
 
 		$query           = '
 			SELECT id FROM ' . $wpdb->prefix . self::TABLE_ORDER . '
 			WHERE marketplace_sku = %s
 			AND marketplace_name = %s
-			AND delivery_address_id = %d
 		';
 		$order_lengow_id = $wpdb->get_var(
-			$wpdb->prepare( $query, array( $marketplace_sku, $marketplace_name, $delivery_address_id ) )
+			$wpdb->prepare( $query, array( $marketplace_sku, $marketplace_name) )
 		);
 		if ( $order_lengow_id ) {
 			return (int) $order_lengow_id;
@@ -549,21 +547,23 @@ class Lengow_Order {
 	/**
 	 * Get id from Lengow delivery address id.
 	 *
-	 * @param integer $order_id WooCommerce order id
-	 * @param integer $delivery_address_id Lengow delivery address id
+	 * @param integer   $order_id           WooCommerce order id
+	 * @param string    $marketplace_sku    Marketplace order reference
+         * @param string    $marketplace_name   The name of the marketplace
 	 *
 	 * @return integer|false
 	 */
-	public static function get_id_from_lengow_delivery_address( $order_id, $delivery_address_id ) {
+	public static function get_id_from_lengow_marketplace_sku( $order_id, $marketplace_sku, $marketplace_name ) {
 		global $wpdb;
 
 		$query           = '
 			SELECT id FROM ' . $wpdb->prefix . self::TABLE_ORDER . '
 			WHERE order_id = %d
-			AND delivery_address_id = %d
+                        AND marketplace_sku =  %s
+                        AND marketplace_name =  %s
 		';
 		$order_lengow_id = $wpdb->get_var(
-			$wpdb->prepare( $query, array( $order_id, $delivery_address_id ) )
+			$wpdb->prepare( $query, array( $order_id, $marketplace_sku, $marketplace_name ) )
 		);
 		if ( $order_lengow_id ) {
 			return (int) $order_lengow_id;

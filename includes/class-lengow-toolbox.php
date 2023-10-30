@@ -43,6 +43,7 @@ class Lengow_Toolbox {
 	const PARAM_TOKEN = 'token';
 	const PARAM_TOOLBOX_ACTION = 'toolbox_action';
 	const PARAM_TYPE = 'type';
+        const PARAM_SHORT_PATH = 'short_path';
 
 	/* Toolbox Actions */
 	const ACTION_DATA = 'data';
@@ -54,6 +55,7 @@ class Lengow_Toolbox {
 	const DATA_TYPE_ALL = 'all';
 	const DATA_TYPE_CHECKLIST = 'checklist';
 	const DATA_TYPE_CHECKSUM = 'checksum';
+        const DATA_TYPE_MODIFIED_FILES = 'modified_files';
 	const DATA_TYPE_CMS = 'cms';
 	const DATA_TYPE_ERROR = 'error';
 	const DATA_TYPE_EXTRA = 'extra';
@@ -115,6 +117,7 @@ class Lengow_Toolbox {
 	const CHECKSUM_NUMBER_FILES_DELETED = 'number_files_deleted';
 	const CHECKSUM_FILE_MODIFIED = 'file_modified';
 	const CHECKSUM_FILE_DELETED = 'file_deleted';
+        const CHECKSUM_FILE_DETAILS = 'file_details';
 	const LOGS = 'logs';
 
 	/* Toolbox order data  */
@@ -216,6 +219,9 @@ class Lengow_Toolbox {
 				return self::get_checklist_data();
 			case self::DATA_TYPE_CHECKSUM:
 				return self::get_checksum_data();
+                         case self::DATA_TYPE_MODIFIED_FILES:
+                            $short_path_param = (string) isset($_GET[self::PARAM_SHORT_PATH]) ? sanitize_text_field($_GET[self::PARAM_SHORT_PATH]) : '' ;
+                            return self::get_modified_files_data(base64_decode($short_path_param));
 			case self::DATA_TYPE_LOG:
 				return self::get_log_data();
 			case self::DATA_TYPE_OPTION:
@@ -489,8 +495,58 @@ class Lengow_Toolbox {
 			self::CHECKSUM_NUMBER_FILES_DELETED  => $file_deleted_counter,
 			self::CHECKSUM_FILE_MODIFIED         => $file_modified,
 			self::CHECKSUM_FILE_DELETED          => $file_deleted,
+                        self::CHECKSUM_FILE_DETAILS          => 1
 		);
 	}
+
+    /**
+     * Get files modified details
+     *
+     * @string $short_path_param the file short path
+     *
+     * @return array
+     */
+    private static function get_modified_files_data($short_path_param)
+    {
+        $file_counter  = 0;
+		$file_modified = array();
+		$file_deleted  = array();
+		$sep           = DIRECTORY_SEPARATOR;
+		$file_name     = LENGOW_PLUGIN_PATH . $sep . Lengow_Main::FOLDER_CONFIG . $sep . self::FILE_CHECKMD5;
+		if ( file_exists( $file_name ) ) {
+			$md5_available = true;
+			if ( ( $file = fopen( $file_name, 'rb' ) ) !== false ) {
+				while ( ( $data = fgetcsv( $file, 1000, '|' ) ) !== false ) {
+					$file_counter ++;
+					$short_path = $data[0];
+					$file_path  = LENGOW_PLUGIN_PATH . $short_path;
+					if ( file_exists( $file_path ) ) {
+						$file_md = md5_file( $file_path );
+						if ( $file_md !== $data[1] ) {
+                                                    if ($short_path_param && ($short_path_param !== $short_path)) {
+                                                        continue;
+                                                    }
+                                                    $file_modified[] = [
+                                                        'short_path' => $short_path,
+                                                        'content_encoded' =>  base64_encode(file_get_contents($file_path)),
+                                                        'checksum' => $file_md
+                                                    ];
+						}
+					} else {
+						$file_deleted[] = $short_path;
+					}
+				}
+				fclose( $file );
+			}
+		} else {
+			$md5_available = false;
+		}
+
+		return array(
+			self::CHECKSUM_FILE_MODIFIED         => $file_modified,
+			self::CHECKSUM_FILE_DELETED          => $file_deleted,
+		);
+    }
 
 	/**
 	 * Get all log files available.
@@ -631,11 +687,11 @@ class Lengow_Toolbox {
 	private static function get_all_order_data( $lengow_order, $order = null ) {
 		if ( $order ) {
 			$order_id                 = $order->get_id();
-			$carrier                  = get_post_meta( $order_id, '_lengow_carrier', true );
-			$custom_carrier           = get_post_meta( $order_id, '_lengow_custom_carrier', true );
+			$carrier                  = $order->get_meta('_lengow_carrier', true );
+			$custom_carrier           = $order->get_meta('_lengow_custom_carrier', true );
 			$merchant_carrier         = $carrier ?: $custom_carrier;
-			$merchant_tracking_number = get_post_meta( $order_id, '_lengow_tracking_number', true );
-			$merchant_tracking_url    = get_post_meta( $order_id, '_lengow_tracking_url', true );
+			$merchant_tracking_number = $order->get_meta('_lengow_tracking_number', true );
+			$merchant_tracking_url    = $order->get_meta('_lengow_tracking_url', true );
 		}
 
 		return array(

@@ -98,28 +98,28 @@ class Lengow_Order_Error {
 	/**
 	 * Check if an order has an error.
 	 *
-	 * @param string $marketplace_sku Lengow marketplace sku
-	 * @param integer $delivery_address_id Lengow delivery address id
-	 * @param integer|null $type order error type (import or send)
+	 * @param string        $marketplace_sku   Lengow marketplace sku
+	 * @param string        $marketplace_name  Lengow marketpalce name
+	 * @param integer|null  $type              Order error type (import or send)
 	 *
 	 * @return array|false
 	 */
-	public static function order_is_in_error( $marketplace_sku, $delivery_address_id, $type = null ) {
+	public static function order_is_in_error( $marketplace_sku, $marketplace_name, $type = null) {
 		global $wpdb;
 
 		$order_error_type = null === $type ? self::ERROR_TYPE_IMPORT : $type;
-		$query            = '
+		$query = '
 			SELECT loe.message, loe.created_at
 			FROM ' . $wpdb->prefix . self::TABLE_ORDER_ERROR . ' loe
-            LEFT JOIN ' . $wpdb->prefix . Lengow_Order::TABLE_ORDER . ' lo ON loe.order_lengow_id = lo.id
-            WHERE lo.marketplace_sku = %s
-            AND lo.delivery_address_id = %d
-            AND lo.is_in_error = %d
-            AND loe.type = %d
-            AND loe.is_finished = %d
-        ';
+                        LEFT JOIN ' . $wpdb->prefix . Lengow_Order::TABLE_ORDER . ' lo ON loe.order_lengow_id = lo.id
+                        WHERE lo.marketplace_sku = %s 
+                        AND lo.marketplace_name= %s          
+                        AND lo.is_in_error = %d
+                        AND loe.type = %d
+                        AND loe.is_finished = %d
+                    ';
 		$results          = $wpdb->get_results(
-			$wpdb->prepare( $query, array( $marketplace_sku, $delivery_address_id, 1, $order_error_type, 0 ) )
+			$wpdb->prepare( $query, array( $marketplace_sku, $marketplace_name, 1, $order_error_type, 0 ) )
 		);
 		if ( $results ) {
 			return $results[0];

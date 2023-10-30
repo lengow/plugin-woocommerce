@@ -391,8 +391,10 @@ class Lengow_Marketplace {
 			$can_send_action = Lengow_Action::can_send_action( $params, $order_lengow );
 			if ( $can_send_action ) {
 				// send a new action on the order via the Lengow API.
+
 				Lengow_Action::send_action( $params, $order_lengow );
 			}
+
 		} catch ( Lengow_Exception $e ) {
 			$error_message = $e->getMessage();
 		} catch ( Exception $e ) {
@@ -471,21 +473,28 @@ class Lengow_Marketplace {
 	 * @return array
 	 */
 	private function get_all_params( $action, $order_lengow, $marketplace_arguments ) {
+
 		$params         = array();
 		$actions        = $this->get_action( $action );
 		$order_id       = $order_lengow->order_id;
-		$carrier        = (string) get_post_meta( $order_id, '_lengow_carrier', true );
-		$custom_carrier = (string) get_post_meta( $order_id, '_lengow_custom_carrier', true );
+                $wc_order       = new WC_Order($order_id);
+                $carrier        = (string) $wc_order->get_meta('_lengow_carrier', true );
+		$custom_carrier = (string) $wc_order->get_meta('_lengow_custom_carrier', true );
+
 		if ( null !== $order_lengow->carrier && '' !== $order_lengow->carrier ) {
 			$carrier_code = $order_lengow->carrier;
 		} else {
 			$carrier_code = '' !== $carrier ? $carrier : $custom_carrier;
 		}
+
 		// get all order data.
 		foreach ( $marketplace_arguments as $arg ) {
 			switch ( $arg ) {
 				case Lengow_Action::ARG_TRACKING_NUMBER:
-					$params[ $arg ] = (string) get_post_meta( $order_id, '_lengow_tracking_number', true );
+					$params[ $arg ] = (string) $wc_order->get_meta(
+                                            '_lengow_tracking_number',
+                                            true
+                                        );
 					break;
 				case Lengow_Action::ARG_CARRIER:
 				case Lengow_Action::ARG_CARRIER_NAME:
@@ -494,11 +503,20 @@ class Lengow_Marketplace {
 					$params[ $arg ] = $carrier_code;
 					break;
 				case Lengow_Action::ARG_TRACKING_URL:
-					$params[ $arg ] = (string) get_post_meta( $order_id, '_lengow_tracking_url', true );
+					$params[ $arg ] = (string) $wc_order->get_meta(
+                                            '_lengow_tracking_url',
+                                            true
+                                        );
 					break;
 				case Lengow_Action::ARG_SHIPPING_PRICE:
-					$shipping       = (float) get_post_meta( $order_id, '_order_shipping', true );
-					$shipping_tax   = (float) get_post_meta( $order_id, '_order_shipping_tax', true );
+					$shipping       = (float) $wc_order->get_meta(
+                                            '_order_shipping',
+                                            true
+                                        );
+					$shipping_tax   = (float) $wc_order->get_meta(
+                                            '_order_shipping_tax',
+                                            true
+                                        );
 					$params[ $arg ] = $shipping + $shipping_tax;
 					break;
 				case Lengow_Action::ARG_SHIPPING_DATE:

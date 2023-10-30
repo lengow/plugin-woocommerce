@@ -3,7 +3,7 @@ module.plugin_name|Lengow pour WooCommerce
 module.plugin_uri|https://www.lengow.com/fr/integrations/woocommerce/
 module.author_uri|http://www.lengow.com/fr
 module.description|Avec votre module Lengow pour WooCommerce vendez rapidement vos produits sur Amazon, Ebay, Facebook, Google Shopping, Criteo, Bing et d’autres et touchez facilement de nouveaux clients partout dans le monde. Plus de 1 800 canaux marketing vous attendent sur la plateforme Lengow !
-module.version|2.5.2
+module.version|2.5.3
 module.author|Lengow
 module.state_technical_error|Erreur technique - Lengow
 module.lengow_payment_title|Paiement Lengow
@@ -209,6 +209,7 @@ order_setting.screen.currency_conversion_label|Activez la conversion de devises
 order_setting.screen.import_b2b_without_tax_title|Commandes B2B
 order_setting.screen.import_b2b_without_tax_label|Activer l'import des commandes B2B sans taxes
 order_setting.screen.import_b2b_without_tax_description|Activer cette option pour importer les commandes B2B sans taxes
+order_setting.screen.anonymize_email|Anonymiser les adresses e-mails des clients
 global_setting.screen.notification_alert_title|Notifications & alertes
 global_setting.screen.security_title|Sécurité
 global_setting.screen.tracker_title|Tracker Lengow
