@@ -191,7 +191,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				}
 				switch ( $download ) {
 					case 'download':
-						$date = isset( $_GET[ Lengow_Log::LOG_DATE ] ) ? $_GET[ Lengow_Log::LOG_DATE ] : null;
+						$date = isset( $_GET[ Lengow_Log::LOG_DATE ] ) ? sanitize_text_field($_GET[ Lengow_Log::LOG_DATE ]) : null;
 						Lengow_Log::download( $date );
 						break;
 					case 'download_all':

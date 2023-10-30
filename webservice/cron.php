@@ -84,7 +84,7 @@ if ( ! in_array( $lengowPlugin, apply_filters( 'active_plugins', get_option( 'ac
 }
 
 // get token for authorisation.
-$token = isset( $_GET[ Lengow_Import::PARAM_TOKEN ] ) ? $_GET[ Lengow_Import::PARAM_TOKEN ] : '';
+$token = isset( $_GET[ Lengow_Import::PARAM_TOKEN ] ) ? sanitize_text_field($_GET[ Lengow_Import::PARAM_TOKEN ]) : '';
 
 // check webservices access.
 if ( ! Lengow_Main::check_webservice_access( $token ) ) {
@@ -104,7 +104,7 @@ if ( isset( $_GET[ Lengow_Import::PARAM_GET_SYNC ] ) && '1' === $_GET[ Lengow_Im
 	$force      = isset( $_GET[ Lengow_Import::PARAM_FORCE ] ) && $_GET[ Lengow_Import::PARAM_FORCE ];
 	$log_output = isset( $_GET[ Lengow_Import::PARAM_LOG_OUTPUT ] ) && $_GET[ Lengow_Import::PARAM_LOG_OUTPUT ];
 	// get sync action if exists.
-	$sync = isset( $_GET[ Lengow_Import::PARAM_SYNC ] ) ? $_GET[ Lengow_Import::PARAM_SYNC ] : false;
+	$sync = isset( $_GET[ Lengow_Import::PARAM_SYNC ] ) ? sanitize_text_field($_GET[ Lengow_Import::PARAM_SYNC ]) : false;
 	// sync catalogs between Lengow and WooCommerce.
 	if ( ! $sync || Lengow_Sync::SYNC_CATALOG === $sync ) {
 		Lengow_Sync::sync_catalog( $force, $log_output );
@@ -117,32 +117,32 @@ if ( isset( $_GET[ Lengow_Import::PARAM_GET_SYNC ] ) && '1' === $_GET[ Lengow_Im
 			Lengow_Import::PARAM_LOG_OUTPUT => $log_output,
 		);
 		if ( isset( $_GET[ Lengow_Import::PARAM_FORCE_SYNC ] ) ) {
-			$params[ Lengow_Import::PARAM_FORCE_SYNC ] = (bool) $_GET[ Lengow_Import::PARAM_FORCE_SYNC ];
+			$params[ Lengow_Import::PARAM_FORCE_SYNC ] = (bool) sanitize_text_field($_GET[ Lengow_Import::PARAM_FORCE_SYNC ]);
 		}
 		if ( isset( $_GET[ Lengow_Import::PARAM_DEBUG_MODE ] ) ) {
-			$params[ Lengow_Import::PARAM_DEBUG_MODE ] = (bool) $_GET[ Lengow_Import::PARAM_DEBUG_MODE ];
+			$params[ Lengow_Import::PARAM_DEBUG_MODE ] = (bool) sanitize_text_field($_GET[ Lengow_Import::PARAM_DEBUG_MODE ]);
 		}
 		if ( isset( $_GET[ Lengow_Import::PARAM_DAYS ] ) ) {
-			$params[ Lengow_Import::PARAM_DAYS ] = (int) $_GET[ Lengow_Import::PARAM_DAYS ];
+			$params[ Lengow_Import::PARAM_DAYS ] = (int) sanitize_text_field($_GET[ Lengow_Import::PARAM_DAYS ]);
 		}
 		if ( isset( $_GET[ Lengow_Import::PARAM_CREATED_FROM ] ) ) {
-			$params[ Lengow_Import::PARAM_CREATED_FROM ] = (string) $_GET[ Lengow_Import::PARAM_CREATED_FROM ];
+			$params[ Lengow_Import::PARAM_CREATED_FROM ] = (string) sanitize_text_field($_GET[ Lengow_Import::PARAM_CREATED_FROM ]);
 		}
 		if ( isset( $_GET[ Lengow_Import::PARAM_CREATED_TO ] ) ) {
-			$params[ Lengow_Import::PARAM_CREATED_TO ] = (string) $_GET[ Lengow_Import::PARAM_CREATED_TO ];
+			$params[ Lengow_Import::PARAM_CREATED_TO ] = (string) sanitize_text_field($_GET[ Lengow_Import::PARAM_CREATED_TO ]);
 		}
 		if ( isset( $_GET[ Lengow_Import::PARAM_LIMIT ] ) ) {
-			$params[ Lengow_Import::PARAM_LIMIT ] = (int) $_GET[ Lengow_Import::PARAM_LIMIT ];
+			$params[ Lengow_Import::PARAM_LIMIT ] = (int) sanitize_text_field($_GET[ Lengow_Import::PARAM_LIMIT ]);
 		}
 		if ( isset( $_GET[ Lengow_Import::PARAM_MARKETPLACE_SKU ] ) ) {
-			$params[ Lengow_Import::PARAM_MARKETPLACE_SKU ] = (string) $_GET[ Lengow_Import::PARAM_MARKETPLACE_SKU ];
+			$params[ Lengow_Import::PARAM_MARKETPLACE_SKU ] = (string) sanitize_text_field($_GET[ Lengow_Import::PARAM_MARKETPLACE_SKU ]);
 		}
 		if ( isset( $_GET[ Lengow_Import::PARAM_MARKETPLACE_NAME ] ) ) {
-			$params[ Lengow_Import::PARAM_MARKETPLACE_NAME ] = (string) $_GET[ Lengow_Import::PARAM_MARKETPLACE_NAME ];
+			$params[ Lengow_Import::PARAM_MARKETPLACE_NAME ] = (string) sanitize_text_field($_GET[ Lengow_Import::PARAM_MARKETPLACE_NAME ]);
 		}
 		if ( isset( $_GET[ Lengow_Import::PARAM_DELIVERY_ADDRESS_ID ] ) ) {
 			$params[ Lengow_Import::PARAM_DELIVERY_ADDRESS_ID ] =
-				(int) $_GET[ Lengow_Import::PARAM_DELIVERY_ADDRESS_ID ];
+				(int) sanitize_text_field($_GET[ Lengow_Import::PARAM_DELIVERY_ADDRESS_ID ]);
 		}
 		$import = new Lengow_Import( $params );
 		$import->exec();

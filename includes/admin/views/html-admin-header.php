@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( isset( $_GET['tab'] ) ) {
-	$current_page = $_GET['tab'];
+	$current_page = sanitize_text_field($_GET['tab']);
 } ?>
 <ul class="nav nav-pills lengow-nav lengow-nav-top">
     <li role="presentation" id="lengow_logo">

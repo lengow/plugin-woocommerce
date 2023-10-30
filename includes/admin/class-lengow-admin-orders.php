@@ -66,7 +66,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 * Process Post Parameters.
 	 */
 	public static function post_process() {
-		$action = isset( $_POST['do_action'] ) ? $_POST['do_action'] : false;
+		$action = isset( $_POST['do_action'] ) ? sanitize_text_field($_POST['do_action']) : false;
 		if ( $action ) {
 			switch ( $action ) {
 				case 'import_all':
@@ -106,12 +106,12 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			$return  = $import->exec();
 			$message = $lengow_admin_orders->load_message( $return );
 		} elseif ( 're_import' === $action ) {
-			$order_lengow_id = isset( $_POST['order_id'] ) ? $_POST['order_id'] : null;
+			$order_lengow_id = isset( $_POST['order_id'] ) ? sanitize_text_field($_POST['order_id']) : null;
 			if ( null !== $order_lengow_id ) {
 				Lengow_Order::re_import_order( $order_lengow_id );
 			}
 		} elseif ( 're_send' === $action ) {
-			$order_lengow_id = isset( $_POST['order_id'] ) ? $_POST['order_id'] : null;
+			$order_lengow_id = isset( $_POST['order_id'] ) ? sanitize_text_field($_POST['order_id']) : null;
 			if ( null !== $order_lengow_id ) {
 				Lengow_Order::re_send_order( $order_lengow_id );
 			}
@@ -120,7 +120,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 			$total_reimport    = 0;
 			if ( $orders_lengow_ids ) {
 				foreach ( $orders_lengow_ids as $order_lengow_id ) {
-					$result = Lengow_Order::re_import_order( $order_lengow_id );
+					$result = Lengow_Order::re_import_order( sanitize_text_field($order_lengow_id ));
 					if ( $result && ! empty( $result[ Lengow_Import::ORDERS_CREATED ] ) ) {
 						$total_reimport ++;
 					}
@@ -377,10 +377,10 @@ class Lengow_Admin_Orders extends WP_List_Table {
 						   class="lengow_datepicker" />
 				</div>';
 			$content    .= '
-				<input type="submit" 
-					   name="filter_action" 
-					   id="post-query-submit" 
-					   class="button" 
+				<input type="submit"
+					   name="filter_action"
+					   id="post-query-submit"
+					   class="button"
 					   value="' . $this->locale->t( 'order.screen.filter_action' ) . '" />';
 			$content    .= '</div>';
 			echo $content;
@@ -905,7 +905,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
 	 */
 	private function generate_order_type_icon( $icon_label, $icon_color, $icon_mod ) {
 		return '
-            <div class="lgw-label ' . $icon_color . ' icon-solo lengow_link_tooltip" 
+            <div class="lgw-label ' . $icon_color . ' icon-solo lengow_link_tooltip"
                  data-original-title="' . $icon_label . '">
                 <span class="lgw-icon ' . $icon_mod . '"></span>
             </div>
