@@ -41,7 +41,7 @@ class Lengow_Connector {
 	 * @var string url of the Lengow API.
 	 */
 	const LENGOW_API_URL = 'https://api.lengow.net';
-	
+
 
 	/* Lengow API routes */
 	const API_ACCESS_TOKEN = '/access/get_token';

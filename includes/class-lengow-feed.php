@@ -288,7 +288,7 @@ class Lengow_Feed {
 	 */
 	private function flush( $content ) {
 		if ( $this->stream ) {
-			echo $content;
+			echo esc_html($content);
 			flush();
 		} else {
 			$this->file->write( $content );

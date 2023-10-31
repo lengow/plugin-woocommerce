@@ -160,9 +160,14 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/admin/class-lengow-admin-main-settings.php' );
 				include_once( 'includes/admin/class-lengow-box-order-info.php' );
 				include_once( 'includes/admin/class-lengow-box-order-shipping.php' );
+
 			}
+                        
 			include_once( 'includes/class-lengow-hook.php' );
 			include_once( 'includes/frontend/class-lengow-tracker.php' );
+                        include_once('includes/class-lengow-cron.php');
+                        include_once('includes/class-lengow-cron-toolbox.php');
+                        include_once('includes/class-lengow-cron-export.php');
 		}
 
 		/**
@@ -200,6 +205,24 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				}
 				$this->lengow_admin = new Lengow_Admin();
 			}
+                    add_action( 'rest_api_init', function () {
+                        register_rest_route( 'lengow-woocommerce/v2', '/cron', array(
+                          'methods' => 'GET',
+                          'callback' => [new LengowCron(), 'launch'],
+                        ) );
+                    } );
+                    add_action( 'rest_api_init', function () {
+                        register_rest_route( 'lengow-woocommerce/v2', '/cron/toolbox', array(
+                          'methods' => 'GET',
+                          'callback' => [new LengowCronToolbox(), 'launch'],
+                        ) );
+                    } );
+                    add_action( 'rest_api_init', function () {
+                        register_rest_route( 'lengow-woocommerce/v2', '/cron/export', array(
+                          'methods' => 'GET',
+                          'callback' => [new LengowCronExport(), 'launch'],
+                        ) );
+                    } );
 		}
 
 		/**
