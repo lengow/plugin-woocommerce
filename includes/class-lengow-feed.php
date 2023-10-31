@@ -163,6 +163,11 @@ class Lengow_Feed {
 				$footer = $this->get_footer();
 				break;
 		}
+                
+                if (!$this->stream) {
+                    $this->file->write($header.$body.$footer);
+                }
+
                 return $header.$body.$footer;
 	}
 
@@ -284,20 +289,7 @@ class Lengow_Feed {
 		}
 	}
 
-	/**
-	 * Flush feed content.
-	 *
-	 * @param string $content feed content to be flushed
-	 *
-	 */
-	private function flush( $content ) {
-		if ( $this->stream ) {
-			echo $content;
-			flush();
-		} else {
-			$this->file->write( $content );
-		}
-	}
+
 
 	/**
 	 * Finalize export generation.
@@ -403,4 +395,3 @@ class Lengow_Feed {
 		return $this->file->get_link();
 	}
 }
-
