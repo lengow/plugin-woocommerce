@@ -41,6 +41,7 @@
 @ini_set('memory_limit', '512M');
 
 
+require_once(dirname(__FILE__).'/../../woocommerce/woocommerce.php');
 
 // dependencies.
 require_once('class-lengow-action.php' );
@@ -147,7 +148,11 @@ class LengowCron
                 if (isset($_GET[Lengow_Import::PARAM_OUTPUT_FORMAT])) {
                     $params[Lengow_Import::PARAM_OUTPUT_FORMAT] = (string) sanitize_text_field($_GET[Lengow_Import::PARAM_OUTPUT_FORMAT]);
                 }
-
+                if (is_null(WC()->session)) {
+                    WC()->frontend_includes();
+                    WC()->init();
+                    WC()->initialize_session();
+                }
                 $import = new Lengow_Import($params);
                 $import->exec();
             }
@@ -178,7 +183,7 @@ class LengowCron
                 wp_die('Action: ' . $sync . ' is not a valid action', '', array('response' => 400));
             }
 
-            if (isset($params[Lengow_Import::PARAM_LOG_OUTPUT]) && (int) $params[Lengow_Import::PARAM_LOG_OUTPUT] > 0) {
+            if (isset($params[Lengow_Import::PARAM_LOG_OUTPUT])) {
                 echo(esc_html($import->getLogsDisplay()));
                 exit;
             }
@@ -186,3 +191,4 @@ class LengowCron
         }
     }
 }
+
