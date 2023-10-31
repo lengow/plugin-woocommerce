@@ -138,8 +138,14 @@ class Lengow_Feed {
 	 * @param array $data export data
 	 * @param boolean|null $is_first is first product to export
 	 * @param boolean|null $max_character Max characters for yaml format
+         *
+         * @return string
 	 */
 	public function write( $type, $data = array(), $is_first = null, $max_character = null ) {
+
+                $header = '';
+                $body   = '';
+                $footer = '';
 		switch ( $type ) {
 			case self::HEADER:
 				if ( $this->stream ) {
@@ -149,17 +155,15 @@ class Lengow_Feed {
 					}
 				}
 				$header = $this->get_header( $data );
-				$this->flush( $header );
 				break;
 			case self::BODY:
 				$body = $this->get_body( $data, $is_first, $max_character );
-				$this->flush( $body );
 				break;
 			case self::FOOTER:
 				$footer = $this->get_footer();
-				$this->flush( $footer );
 				break;
 		}
+                return $header.$body.$footer;
 	}
 
 	/**
@@ -288,7 +292,7 @@ class Lengow_Feed {
 	 */
 	private function flush( $content ) {
 		if ( $this->stream ) {
-			echo esc_html($content);
+			echo $content;
 			flush();
 		} else {
 			$this->file->write( $content );
@@ -303,7 +307,7 @@ class Lengow_Feed {
 	 * @throws Lengow_Exception
 	 */
 	public function end() {
-		$this->write( self::FOOTER );
+
 		if ( ! $this->stream ) {
 			$old_file_name = 'flux.' . $this->format;
 			$old_file      = new Lengow_File( $this->export_folder, $old_file_name );
@@ -399,3 +403,4 @@ class Lengow_Feed {
 		return $this->file->get_link();
 	}
 }
+

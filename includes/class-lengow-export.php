@@ -327,7 +327,7 @@ class Lengow_Export {
 				),
 				$this->log_output
 			);
-			$this->export( $products, $fields );
+			$exported = $this->export( $products, $fields );
 			if ( $this->update_export_date ) {
 				Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_EXPORT, time() );
 			}
@@ -353,6 +353,10 @@ class Lengow_Export {
 				$this->log_output
 			);
 		}
+                if ($this->stream) {
+                    echo $exported;
+                    exit();
+                }
 	}
 
 	/**
@@ -365,9 +369,9 @@ class Lengow_Export {
 		$query = '
 			SELECT COUNT(*) AS total FROM ( (
 				SELECT DISTINCT(id) AS id_product
-				FROM ' . $wpdb->posts . ' 
+				FROM ' . $wpdb->posts . '
     			WHERE post_status = \'publish\' AND post_type = \'product\'
-    		) UNION ALL ( 
+    		) UNION ALL (
    				SELECT DISTINCT(id) AS id_product
    				FROM ' . $wpdb->posts . '
    				WHERE post_status = \'publish\' AND post_type = \'product_variation\' AND post_parent > 0
@@ -530,13 +534,16 @@ class Lengow_Export {
 	 *
 	 * @param array $products list of products to be exported
 	 * @param array $fields list of fields
+         *
 	 *
 	 * @throws Lengow_Exception Export folder not writable
+         *
+         * @return string
 	 */
 	private function export( $products, $fields ) {
 		$product_count = 0;
 		$feed          = new Lengow_Feed( $this->stream, $this->format, $this->legacy );
-		$feed->write( Lengow_Feed::HEADER, $fields );
+		$writed = $feed->write( Lengow_Feed::HEADER, $fields );
 		$is_first = true;
 		// get the maximum of character for yaml format.
 		$max_character = 0;
@@ -563,7 +570,7 @@ class Lengow_Export {
 				}
 			}
 			// write parent product.
-			$feed->write( Lengow_Feed::BODY, $product_data, $is_first, $max_character );
+			$writed .= $feed->write( Lengow_Feed::BODY, $product_data, $is_first, $max_character );
 			$product_count ++;
 			if ( $product_count > 0 && 0 === $product_count % 50 ) {
 				Lengow_Main::log(
@@ -582,6 +589,7 @@ class Lengow_Export {
 			}
 			$is_first = false;
 		}
+                $writed .= $feed->write(Lengow_Feed::FOOTER );
 		$success = $feed->end();
 		if ( ! $success ) {
 			throw new Lengow_Exception(
@@ -601,6 +609,7 @@ class Lengow_Export {
 				);
 			}
 		}
+                return $writed;
 	}
 
 	/**
@@ -683,7 +692,7 @@ class Lengow_Export {
 		';
 		if ( ! $variation ) {
 			$query .= '
-				INNER JOIN ' . $wpdb->term_relationships . ' AS tr ON tr.object_id = p.id 
+				INNER JOIN ' . $wpdb->term_relationships . ' AS tr ON tr.object_id = p.id
 				INNER JOIN ' . $wpdb->terms . ' AS t ON t.term_id = tr.term_taxonomy_id
 			';
 		}
@@ -708,23 +717,23 @@ class Lengow_Export {
 				meta_key = \'_stock_status\' AND meta_value = \'instock\'
 				) OR ( meta_key = \'_manage_stock\' AND meta_value = \'yes\' AND p.id IN
 					(SELECT post_id FROM ' . $wpdb->postmeta . ' WHERE meta_key = \'_stock\' AND meta_value > 0)
-				) OR (   
-					p.id NOT IN 
+				) OR (
+					p.id NOT IN
 					(SELECT post_id FROM ' . $wpdb->postmeta . '
 						WHERE meta_key = \'_stock_status\' AND meta_value IN (\'instock\', \'outofstock\'))
 					AND p.post_parent IN
-						(SELECT post_id FROM ' . $wpdb->postmeta . ' 
+						(SELECT post_id FROM ' . $wpdb->postmeta . '
 							WHERE meta_key = \'_manage_stock\' AND meta_value = \'yes\')
 					AND p.post_parent IN
 						(SELECT post_id FROM ' . $wpdb->postmeta . '
 							WHERE meta_key = \'_stock\' AND meta_value > 0)
-				) OR (   
-					p.id NOT IN 
-					(SELECT post_id FROM ' . $wpdb->postmeta . ' 
+				) OR (
+					p.id NOT IN
+					(SELECT post_id FROM ' . $wpdb->postmeta . '
 						WHERE meta_key = \'_stock_status\' AND meta_value IN (\'instock\', \'outofstock\'))
 					AND p.post_parent IN
-					(SELECT post_id FROM ' . $wpdb->postmeta . ' 
-						WHERE meta_key = \'_manage_stock\' AND meta_value = \'no\')  
+					(SELECT post_id FROM ' . $wpdb->postmeta . '
+						WHERE meta_key = \'_manage_stock\' AND meta_value = \'no\')
 			))';
 		}
 		if ( ! empty( $this->product_types ) && ! $variation ) {

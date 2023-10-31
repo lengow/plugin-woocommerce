@@ -38,7 +38,7 @@
  * boolean get_sync            See synchronization parameters in json format (1) or not (0)
  */
 @set_time_limit(0);
-@ini_set('memory_limit', '512M');
+@ini_set('memory_limit', '1024M');
 
 
 require_once(dirname(__FILE__).'/../../woocommerce/woocommerce.php');
