@@ -368,6 +368,3 @@
 /upgrade/update_2.2.0.php|fc6a28f59d5b8330588ff2648dd24fcb
 /upgrade/update_2.3.3.php|44d0124a73a729474b8cc359238f5e16
 /upgrade/update_2.0.1.php|efb9f329f1b6cd22b5e8173db0f2be4d
-/webservice/export.php|06566bfe20121d5bc03cad3709b76c12
-/webservice/toolbox.php|df7bd494a7b28febe79634dc64809141
-/webservice/cron.php|a44776d1716d85976137c5c0b87e3b59
