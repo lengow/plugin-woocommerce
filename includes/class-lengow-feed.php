@@ -163,9 +163,10 @@ class Lengow_Feed {
 				$footer = $this->get_footer();
 				break;
 		}
-                
+
                 if (!$this->stream) {
                     $this->file->write($header.$body.$footer);
+                    return '';
                 }
 
                 return $header.$body.$footer;
