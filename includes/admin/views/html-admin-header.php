@@ -49,7 +49,7 @@ if ( isset( $_GET['tab'] ) ) {
         </a>
     </li>
     <li class="lengow_float_right" id="menugotosolution">
-        <a href="//my.<?php echo Lengow_Connector::LENGOW_URL; ?>" target="_blank">
+        <a href="//my.<?php echo Lengow_Configuration::get_lengow_url(); ?>" target="_blank">
 			<?php echo $locale->t( 'menu.jump_to_lengow' ); ?>
         </a>
     </li>
@@ -57,7 +57,7 @@ if ( isset( $_GET['tab'] ) ) {
         <li class="lengow_float_right" id="menucountertrial">
             <div class="lgw-block">
 				<?php echo $locale->t( 'menu.counter', array( 'counter' => $merchant_status['day'] ) ); ?>
-                <a href="//my.<?php echo Lengow_Connector::LENGOW_URL; ?>" target="_blank">
+                <a href="//my.<?php echo Lengow_Configuration::get_lengow_url(); ?>" target="_blank">
 					<?php echo $locale->t( 'menu.upgrade_account' ); ?>
                 </a>
             </div>

@@ -37,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<br/>
 			<p>
 				<?php echo $locale->t( 'connection.home.no_account' ); ?>
-				<a href="//my.<?php echo Lengow_Connector::LENGOW_URL; ?>" target="_blank">
+				<a href="//my.<?php echo Lengow_Connector::get_lengow_url(); ?>" target="_blank">
 					<?php echo $locale->t( 'connection.home.no_account_sign_up' ); ?>
 				</a>
 			</p>

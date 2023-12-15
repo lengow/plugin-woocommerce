@@ -34,13 +34,24 @@ class Lengow_Connector {
     /**
      * @var string url of Lengow solution.
      */
-    const LENGOW_URL = 'lengow.net';
+    const LENGOW_URL = 'lengow.io';
 
 
     /**
      * @var string url of the Lengow API.
      */
-    const LENGOW_API_URL = 'https://api.lengow.net';
+    const LENGOW_API_URL = 'https://api.lengow.io';
+
+    /**
+     * @var string suffix for prod
+     */
+    const LIVE_SUFFIX = '.io';
+
+    /**
+     * @var string suffix for pre-prod
+     */
+    const TEST_SUFFIX = '.net';
+
 
 
     /* Lengow API routes */
@@ -499,7 +510,9 @@ class Lengow_Connector {
                         $opts['timeout'] =  $this->lengow_urls[ $api ];
 		}
 		// get base url for a specific environment.
-		$url                           = self::LENGOW_API_URL . $api;
+		$url                           = Lengow_Configuration::get_lengow_api_url() . $api;
+               
+                //exit;
 		$opts['customrequest'] = strtoupper( $type );
 
 		$url                           = parse_url( $url );

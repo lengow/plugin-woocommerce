@@ -38,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<p><?php echo $locale->t( 'connection.cms.success_description_first' ); ?></p>
 				<p>
 					<?php echo $locale->t( 'connection.cms.success_description_second' ); ?>
-					<a href="https://my.<?php echo Lengow_Connector::LENGOW_URL; ?>" target="_blank">
+					<a href="https://my.<?php echo Lengow_Configuration::get_lengow_url(); ?>" target="_blank">
 						<?php echo $locale->t( 'connection.cms.success_description_second_go_to_lengow' ); ?>
 					</a>
 				</p>
@@ -70,7 +70,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<p><?php echo $locale->t( 'connection.cms.failed_description' ); ?></p>
 			<?php else: ?>
 				<p><?php echo $locale->t( 'connection.cms.failed_description_first_credentials' ); ?></p>
-				<?php if ( Lengow_Connector::LENGOW_URL === 'lengow.net' ) : ?>
+				<?php if ( Lengow_Configuration::get_lengow_url() === 'lengow.net' ) : ?>
 					<p><?php echo $locale->t( 'connection.cms.failed_description_second_credentials_preprod' ); ?></p>
 				<?php else: ?>
 					<p><?php echo $locale->t( 'connection.cms.failed_description_second_credentials_prod' ); ?></p>
