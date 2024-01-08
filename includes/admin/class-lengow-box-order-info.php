@@ -64,7 +64,7 @@ class Lengow_Box_Order_Info {
 	public static function post_process() {
 		$data         = array();
 		$action       = $_POST['do_action'];
-		$order_lengow = new Lengow_Order( (int) $_POST['order_lengow_id'] );
+		$order_lengow = new Lengow_Order( (int) sanitize_text_field($_POST['order_lengow_id']));
 		switch ( $action ) {
 			case 'resend_ship':
 				$data['success'] = $order_lengow->call_action( Lengow_Action::TYPE_SHIP );

@@ -66,6 +66,7 @@ FOLDER_CONFIG="/tmp/lengow-woocommerce/config"
 FOLDER_EXPORT="/tmp/lengow-woocommerce/export"
 FOLDER_TOOLS="/tmp/lengow-woocommerce/tools"
 FOLDER_TRANSLATION="/tmp/lengow-woocommerce/translations/yml"
+FOLDER_NBPROJECT="/tmp/lengow-woocommerce/nbproject"
 
 VERT="\e[32m"
 ROUGE="\e[31m"
@@ -146,6 +147,9 @@ echo -e "- Remove Tools folder : ${VERT}DONE${NORMAL}"
 #remove TMP FOLDER_TRANSLATION
 remove_directory $FOLDER_TRANSLATION
 echo -e "- Remove Translation yml folder : ${VERT}DONE${NORMAL}"
+#remove TMP FOLDER_NBPROJECT
+remove_directory $FOLDER_NBPROJECT
+echo -e "- Remove Translation nbproject folder : ${VERT}DONE${NORMAL}"
 
 # Make zip
 cd /tmp

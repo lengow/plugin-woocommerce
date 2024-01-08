@@ -50,7 +50,13 @@ class Lengow_Log {
 	 */
 	private $file;
 
-	/**
+        /**
+         *
+         * @var bool $display
+         */
+        private $display;
+
+        /**
 	 * Construct a new Lengow log.
 	 *
 	 * @param string $file_name log file name
@@ -79,8 +85,7 @@ class Lengow_Log {
 		$log             .= empty( $marketplace_sku ) ? '' : 'order ' . $marketplace_sku . ' : ';
 		$log             .= $decoded_message . "\r\n";
 		if ( $display ) {
-			echo $log . '<br />';
-			flush();
+                    $this->display = true;
 		}
 		$this->file->write( $log );
 	}
@@ -156,7 +161,34 @@ class Lengow_Log {
 		}
 		header( 'Content-type: text/plain' );
 		header( 'Content-Disposition: attachment; filename="' . $file_name . '"' );
-		echo $contents;
+		echo esc_html($contents);
 		exit();
 	}
+
+        /**
+         * Returns log content for display
+         *
+         * @return string
+         */
+        public function getFileLogContent($format = 'txt')
+        {
+            if (!$this->display) {
+                return '';
+            }
+            $contentLog = (string) file_get_contents($this->file->get_path());
+
+            if ($format === 'txt') {
+                return $contentLog;
+            }
+
+            $contentLines = [];
+            $explodeLines = explode("\r\n", $contentLog);
+            foreach ($explodeLines as $index => $logLine) {
+
+                $contentLines[] = $logLine;
+            }
+
+            return json_encode($contentLines);
+
+        }
 }

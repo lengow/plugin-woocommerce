@@ -26,6 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+
 /**
  * Lengow_Import_Order Class.
  */
@@ -1184,6 +1185,8 @@ class Lengow_Import_Order {
 	 *
 	 */
 	private function create_woocommerce_order( $user, $products, $billing_address, $shipping_address ) {
+
+
 		// create a generic order.
 		$wc_order = $this->create_generic_woocommerce_order();
                 $order_id = $wc_order->get_id();
@@ -1211,6 +1214,23 @@ class Lengow_Import_Order {
 
 		// load WooCommerce customer.
 		$customer = new WC_Customer( $user->ID );
+
+                if ($billing) {
+                    foreach ($billing as $key => $billingData) {
+                        $method = 'set_billing_'.$key;
+                        $customer->{$method}($billingData);
+                    }
+                    $customer->save();
+                }
+
+                if ($shipping) {
+                    foreach ($shipping as $key => $shippingData) {
+                        $method = 'set_shipping_'.$key;
+                        $customer->{$method}($shippingData);
+                    }
+                    $customer->save();
+                }
+                
 		// add products, shipping cost, tax and processing fees to the order.
 		$tax_amount = 0;
 		foreach ( $products as $product_data ) {
@@ -1300,12 +1320,14 @@ class Lengow_Import_Order {
 	 * @return float
 	 */
 	private function add_product( $order_id, $customer, $product_data ) {
+
 		$line_tax = 0;
 		// get product and product data.
 		$product    = $product_data['woocommerce_product'];
 		$price_unit = $product_data['price_unit'];
 		$quantity   = $product_data['quantity'];
 		try {
+
 			// add line item.
 			$new_product_data = array( 'order_item_name' => $product_data['name'], 'order_item_type' => 'line_item' );
 			$item_id          = wc_add_order_item( $order_id, $new_product_data );

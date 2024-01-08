@@ -81,6 +81,7 @@ class Lengow_Order {
 	const STATE_REFUSED = 'refused';
 	const STATE_CANCELED = 'canceled';
 	const STATE_REFUNDED = 'refunded';
+        const STATE_PARTIALLY_REFUNDED = 'partial_refunded';
         const STATE_WC_COMPLETED = 'wc-completed';
         const STATE_WC_PROCESSING = 'wc-processing';
         const STATE_WC_CANCELED = 'wc-cancelled';
@@ -351,6 +352,7 @@ class Lengow_Order {
 		switch ( $state ) {
 			case self::STATE_ACCEPTED:
 			case self::STATE_WAITING_SHIPMENT:
+                        case self::STATE_PARTIALLY_REFUNDED:
 			default:
 				return self::PROCESS_STATE_IMPORT;
 			case self::STATE_SHIPPED:

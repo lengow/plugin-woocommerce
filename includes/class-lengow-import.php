@@ -43,6 +43,7 @@ class Lengow_Import {
 	const PARAM_ORDER_LENGOW_ID = 'order_lengow_id';
 	const PARAM_LIMIT = 'limit';
 	const PARAM_LOG_OUTPUT = 'log_output';
+        const PARAM_OUTPUT_FORMAT = 'output_format';
 	const PARAM_DEBUG_MODE = 'debug_mode';
 	const PARAM_FORCE = 'force';
 	const PARAM_FORCE_SYNC = 'force_sync';
@@ -180,6 +181,12 @@ class Lengow_Import {
 	 */
 	private $log_output;
 
+        /**
+         *
+         * @var string output format
+         */
+        private $output_format;
+
 	/**
 	 * @var string type import (manual or cron).
 	 */
@@ -249,6 +256,7 @@ class Lengow_Import {
 	 * integer days                Synchronization interval time
 	 * integer limit               Maximum number of new orders created
 	 * boolean log_output          Display log messages
+         * string  output_format       Ouput format
 	 * boolean debug_mode          Debug mode
 	 * boolean force_sync          Force synchronization order even if there are errors
 	 */
@@ -260,6 +268,7 @@ class Lengow_Import {
 		$this->type_import = isset( $params[ self::PARAM_TYPE ] ) ? $params[ self::PARAM_TYPE ] : self::TYPE_MANUAL;
 		$this->force_sync  = isset( $params[ self::PARAM_FORCE_SYNC ] ) && $params[ self::PARAM_FORCE_SYNC ];
 		$this->log_output  = isset( $params[ self::PARAM_LOG_OUTPUT ] ) && $params[ self::PARAM_LOG_OUTPUT ];
+                $this->output_format = isset($params[self::PARAM_OUTPUT_FORMAT]) ? $params[self::PARAM_OUTPUT_FORMAT]: 'txt';
 		// params for re-import order.
 		if ( isset( $params[ self::PARAM_MARKETPLACE_SKU ], $params[ self::PARAM_MARKETPLACE_NAME ] ) ) {
 			$this->marketplace_sku  = $params[ self::PARAM_MARKETPLACE_SKU ];
@@ -335,10 +344,21 @@ class Lengow_Import {
 		// complete synchronization and start all necessary processes.
 		$this->finish_synchronization();
 
+
+
 		return $result;
 	}
 
-	/**
+        public function getLogsDisplay()
+        {
+            if ($this->log_output) {
+                return Lengow_Main::get_display_log($this->output_format);
+            } else {
+                return '';
+            }
+        }
+
+        /**
 	 * Check if order status is valid for import.
 	 *
 	 * @param string $order_state_marketplace order state

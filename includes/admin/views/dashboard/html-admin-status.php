@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <p class="text-center"><?php echo $locale->t( 'status.screen.second_description_end_free_trial' ); ?></p>
                 <p class="text-center"><?php echo $locale->t( 'status.screen.third_description_end_free_trial' ); ?></p>
                 <div class="text-center">
-                    <a href="//my.<?php echo Lengow_Connector::LENGOW_URL; ?>" class="lgw-btn" target="_blank">
+                    <a href="//my.<?php echo Lengow_Configuration::get_lengow_url(); ?>" class="lgw-btn" target="_blank">
 						<?php echo $locale->t( 'status.screen.upgrade_account_button' ); ?>
                     </a>
                 </div>

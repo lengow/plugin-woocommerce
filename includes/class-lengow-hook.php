@@ -115,7 +115,7 @@ class Lengow_Hook {
 			if ( ! isset( $_POST['lengow_woocommerce_custom_box_nonce'] ) ) {
 				return $wc_order_id;
 			}
-			$nonce = $_POST['lengow_woocommerce_custom_box_nonce'];
+			$nonce = sanitize_text_field($_POST['lengow_woocommerce_custom_box_nonce']);
 			// verify that the nonce is valid.
 			if ( ! wp_verify_nonce( $nonce, 'lengow_woocommerce_custom_box' ) ) {
 				return $wc_order_id;
@@ -153,7 +153,7 @@ class Lengow_Hook {
                             $wc_order->update_meta_data('_lengow_tracking_url', $tracking_url);
                             $wc_order->save();
                         }
-                        
+
                         if ($custom_carrier && ($wc_order_custom_carrier !== $custom_carrier)) {
                             $wc_order->update_meta_data('_lengow_custom_carrier', $custom_carrier);
                             $wc_order->update_meta_data('_lengow_tracking_number', $tracking_number);

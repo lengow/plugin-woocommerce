@@ -78,11 +78,11 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 */
 	public static function post_process() {
 		$locale = new Lengow_Translation();
-		$action = isset( $_POST['do_action'] ) ? $_POST['do_action'] : false;
+		$action = isset( $_POST['do_action'] ) ? sanitize_text_field($_POST['do_action']) : false;
 		if ( $action ) {
 			switch ( $action ) {
 				case 'change_option_selected':
-					$state = isset( $_POST['state'] ) ? $_POST['state'] : null;
+					$state = isset( $_POST['state'] ) ? sanitize_text_field($_POST['state']) : null;
 					if ( null !== $state ) {
 						Lengow_Configuration::update_value(
 							Lengow_Configuration::SELECTION_ENABLED,
@@ -100,17 +100,17 @@ class Lengow_Admin_Products extends WP_List_Table {
 					}
 					break;
 				case 'select_product':
-					$state     = isset( $_POST['state'] ) ? $_POST['state'] : null;
-					$productId = isset( $_POST['id_product'] ) ? $_POST['id_product'] : null;
+					$state     = isset( $_POST['state'] ) ? sanitize_text_field($_POST['state']) : null;
+					$productId = isset( $_POST['id_product'] ) ? (int) sanitize_text_field($_POST['id_product']) : null;
 					if ( null !== $state ) {
 						Lengow_Product::publish( $productId, $state );
 						echo json_encode( self::_reload_total() );
 					}
 					break;
 				case 'export_mass_action':
-					$selection     = isset( $_POST['product'] ) ? $_POST['product'] : false;
-					$select_all    = isset( $_POST['select_all'] ) ? $_POST['select_all'] : null;
-					$export_action = isset( $_POST['export_action'] ) ? $_POST['export_action'] : null;
+					$selection     = isset( $_POST['product'] ) ? sanitize_text_field($_POST['product']) : false;
+					$select_all    = isset( $_POST['select_all'] ) ? sanitize_text_field($_POST['select_all']) : null;
+					$export_action = isset( $_POST['export_action'] ) ? sanitize_text_field($_POST['export_action']) : null;
 					$data          = array();
 					if ( 'true' === $select_all ) {
 						$all_products = get_posts(
@@ -316,7 +316,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 		return sprintf(
 			'<div class="lgw-switch ' . $checked . '">
 				<label><div><span></span>
-				<input 
+				<input
 				type="checkbox"
 				data-size="mini"
 				class="js-lengow_switch_product"

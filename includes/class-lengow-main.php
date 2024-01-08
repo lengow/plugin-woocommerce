@@ -39,9 +39,9 @@ class Lengow_Main {
 	const FOLDER_WEBSERVICE = 'webservice';
 
 	/* Lengow webservices */
-	const WEBSERVICE_EXPORT = 'export.php';
-	const WEBSERVICE_CRON = 'cron.php';
-	const WEBSERVICE_TOOLBOX = 'toolbox.php';
+	const WEBSERVICE_EXPORT = 'lengow-woocommerce/v2/cron/export';
+	const WEBSERVICE_CRON = 'lengow-woocommerce/v2/cron';
+	const WEBSERVICE_TOOLBOX = 'lengow-woocommerce/v2/cron/toolbox';
 
 	/* Date formats */
 	const DATE_FULL = 'Y-m-d H:i:s';
@@ -123,7 +123,7 @@ class Lengow_Main {
 	public static function get_export_url() {
 		$sep = DIRECTORY_SEPARATOR;
 
-		return LENGOW_PLUGIN_URL . $sep . self::FOLDER_WEBSERVICE . $sep . self::WEBSERVICE_EXPORT . '?'
+		return get_site_url() . $sep .'wp-json'.$sep. self::WEBSERVICE_EXPORT . '?'
 		       . Lengow_Export::PARAM_TOKEN . '=' . self::get_token();
 	}
 
@@ -135,8 +135,9 @@ class Lengow_Main {
 	public static function get_cron_url() {
 		$sep = DIRECTORY_SEPARATOR;
 
-		return LENGOW_PLUGIN_URL . $sep . self::FOLDER_WEBSERVICE . $sep . self::WEBSERVICE_CRON . '?'
-		       . Lengow_Import::PARAM_TOKEN . '=' . self::get_token();
+		return get_site_url() .$sep.'wp-json'.$sep. self::WEBSERVICE_CRON . '?'
+		       . Lengow_Import::PARAM_TOKEN . '=' . self::get_token()
+                       .'&'.Lengow_Import::PARAM_OUTPUT_FORMAT.'=json';
 	}
 
 	/**
@@ -147,7 +148,7 @@ class Lengow_Main {
 	public static function get_toolbox_url() {
 		$sep = DIRECTORY_SEPARATOR;
 
-		return LENGOW_PLUGIN_URL . $sep . self::FOLDER_WEBSERVICE . $sep . self::WEBSERVICE_TOOLBOX . '?'
+		return get_site_url() . $sep.'wp-json'.$sep. self::WEBSERVICE_TOOLBOX . '?'
 		       . Lengow_Toolbox::PARAM_TOKEN . '=' . self::get_token();
 	}
 
@@ -180,6 +181,7 @@ class Lengow_Main {
 	 */
 	public static function check_token( $token ) {
 		$storeToken = self::get_token();
+
 
 		return $token === $storeToken;
 	}
@@ -280,6 +282,12 @@ class Lengow_Main {
 		if ( $log ) {
 			$log->write( $category, $txt, $force_output, $marketplace_sku );
 		}
+	}
+
+
+	public static function get_display_log($format = 'txt') {
+		$log = self::get_log_instance();
+                return $log->getFileLogContent($format);
 	}
 
 	/**
