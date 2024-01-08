@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <div class="text-right lgw-col-6" id="alert-counter-trial">
 			<?php if ( 'free_trial' === $merchant_status['type'] && ! $merchant_status['expired'] ) : ?>
 				<?php echo $locale->t( 'menu.counter', array( 'counter' => $merchant_status['day'] ) ); ?>
-                <a href="//my.<?php echo Lengow_Connector::LENGOW_URL; ?>" target="_blank">
+                <a href="//my.<?php echo Lengow_Configuration::get_lengow_url(); ?>" target="_blank">
 					<?php echo $locale->t( 'menu.upgrade_account' ); ?>
                 </a>
 			<?php endif; ?>
@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="lgw-box lgw-home-header text-center">
         <img src="/wp-content/plugins/lengow-woocommerce/assets/images/lengow-white-big.png" alt="lengow">
         <h1><?php echo $locale->t( 'dashboard.screen.welcome_back' ); ?></h1>
-        <a href="//my.<?php echo Lengow_Connector::LENGOW_URL; ?>" class="lgw-btn" target="_blank">
+        <a href="//my.<?php echo Lengow_Configuration::get_lengow_url(); ?>" class="lgw-btn" target="_blank">
 			<?php echo $locale->t( 'dashboard.screen.go_to_lengow' ); ?>
         </a>
     </div>

@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <?php echo $locale->t( 'footer.legals' ); ?>
                 </a>
                 | <?php echo $locale->t( 'footer.plugin_lengow' ) ?> - v.<?php echo LENGOW_VERSION; ?>
-				<?php if ( 'lengow.net' === Lengow_Connector::LENGOW_URL ): ?>
+				<?php if ( 'lengow.net' === Lengow_Configuration::get_lengow_url() ): ?>
                     <span class="lgw-label-preprod">preprod</span>
 				<?php endif; ?>
                 | copyright © <?php echo date( 'Y' ); ?> <a href="http://www.lengow.com" target="_blank"

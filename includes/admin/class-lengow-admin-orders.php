@@ -322,10 +322,11 @@ class Lengow_Admin_Orders extends WP_List_Table {
 						Lengow_Order::STATE_WAITING_SHIPMENT => $this->locale->t(
 							'order.screen.status_waiting_shipment'
 						),
-						Lengow_Order::STATE_SHIPPED          => $this->locale->t( 'order.screen.status_shipped' ),
-						Lengow_Order::STATE_REFUNDED         => $this->locale->t( 'order.screen.status_refunded' ),
-						Lengow_Order::STATE_CLOSED           => $this->locale->t( 'order.screen.status_closed' ),
-						Lengow_Order::STATE_CANCELED         => $this->locale->t( 'order.screen.status_canceled' ),
+						Lengow_Order::STATE_SHIPPED                     => $this->locale->t( 'order.screen.status_shipped' ),
+						Lengow_Order::STATE_REFUNDED                    => $this->locale->t( 'order.screen.status_refunded' ),
+                                                Lengow_Order::STATE_PARTIALLY_REFUNDED          => $this->locale->t( 'order.screen.status_partially_refunded' ),
+						Lengow_Order::STATE_CLOSED                      => $this->locale->t( 'order.screen.status_closed' ),
+						Lengow_Order::STATE_CANCELED                    => $this->locale->t( 'order.screen.status_canceled' ),
 					),
 				),
 				array(
