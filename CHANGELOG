@@ -1,9 +1,8 @@
 ========================================================
-Version 2.5.4
-========================================================
-========================================================
 Version 2.5.3
 ========================================================
+    - Feature:  Partially refunded status
+    - Feature:  Switch env preprod/prod from config
     - Feature:  Toolbox file details
     - Feature:  Log import params initialized
     - Feature:  Anonymize customers emails config
