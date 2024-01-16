@@ -37,8 +37,7 @@
  * boolean log_output          Display log messages (1) or not (0)
  * boolean get_sync            See synchronization parameters in json format (1) or not (0)
  */
-@set_time_limit(0);
-@ini_set('memory_limit', '1024M');
+
 
 
 require_once(dirname(__FILE__).'/../../woocommerce/woocommerce.php');
@@ -74,7 +73,8 @@ class LengowCron
 {
 
     public function launch() {
-
+        @set_time_limit(0);
+        @ini_set('memory_limit', '1024M');
         // check if WooCommerce plugin is activated.
         $woocommercePlugin = 'woocommerce/woocommerce.php';
         if (!in_array($woocommercePlugin, apply_filters('active_plugins', get_option('active_plugins')), true)) {
