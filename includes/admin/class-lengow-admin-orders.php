@@ -856,12 +856,12 @@ class Lengow_Admin_Orders extends WP_List_Table {
 		if ( $this->countries[ $order_lengow->{Lengow_Order::FIELD_DELIVERY_COUNTRY_ISO} ] ) {
 			$countryIsoCode = $order_lengow->{Lengow_Order::FIELD_DELIVERY_COUNTRY_ISO};
 			$countryName = $this->countries[ $order_lengow->{Lengow_Order::FIELD_DELIVERY_COUNTRY_ISO} ];
-			$return = '<img src="'.esc_attr('/wp-content/plugins/lengow-woocommerce/assets/images/flag/' . $countryIsoCode . '.png').'"
+			$return = '<img src="'.esc_attr('/wp-content/plugins/lengow/assets/images/flag/' . $countryIsoCode . '.png').'"
                       class="lengow_link_tooltip"
                       alt="' . esc_attr($countryName) . '"
                       data-original-title="' . esc_attr($countryName) . '"/>';
 		} else {
-			$return = '<img src="/wp-content/plugins/lengow-woocommerce/assets/images/flag/OTHERS.png"
+			$return = '<img src="/wp-content/plugins/lengow/assets/images/flag/OTHERS.png"
                             class="lengow_link_tooltip"
                             alt="OTHERS"
                             data-original-title="OTHERS"/>';
