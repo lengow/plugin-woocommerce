@@ -31,6 +31,12 @@ A Lengow account is created during the extension installation and you will have 
 This plugin uses the services of Lengow as a third party for certain functionalities. When using these features, data may be transmitted to Lengow. Please follow the link below to find out how your data is used.
 - [Lengow]: https://www.lengow.com/
 
+Lengow will use too different domains to interact with its solution and those of merchants:
+
+Lengow API: https://api.lengow.io
+Tracking Lengow: https://trk.lgw.io
+Solution documentation: https://help.lengow.com
+
 = Terms of use and privacy policy =
 
 Before using Lengow-related features, please carefully read Lengow's Terms of Use and Privacy Policy:
