@@ -496,8 +496,7 @@ class Lengow_Connector {
      */
     private function make_request( $type, $api, $args, $token, $body, $log_output ) {
 
-		// define CURLE_OPERATION_TIMEDOUT for old php versions.
-		defined( 'CURLE_OPERATION_TIMEDOUT' ) || define( 'CURLE_OPERATION_TIMEDOUT', CURLE_OPERATION_TIMEOUTED );
+
 
 		// get default curl options.
 		$opts = $this->curl_opts;
@@ -511,7 +510,7 @@ class Lengow_Connector {
 		}
 		// get base url for a specific environment.
 		$url                           = Lengow_Configuration::get_lengow_api_url() . $api;
-               
+
                 //exit;
 		$opts['customrequest'] = strtoupper( $type );
 
@@ -600,7 +599,7 @@ class Lengow_Connector {
     private function check_return_request($result, $http_code, $curl_error, $curl_error_number) {
         if (false === $result) {
             // recovery of Curl errors.
-            if (in_array($curl_error_number, array(CURLE_OPERATION_TIMEDOUT, CURLE_OPERATION_TIMEOUTED), true)) {
+            if (in_array($curl_error_number, array(CURLE_OPERATION_TIMEDOUT), true)) {
                 throw new Lengow_Exception(
                                 Lengow_Main::set_log_message('log.connector.timeout_api'),
                                 self::CODE_504

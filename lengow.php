@@ -30,7 +30,7 @@
  * Author: Lengow
  * Author URI: https://www.lengow.com
  * Requires at least: 5.3
- * Tested up to: 5.8
+ * Tested up to: 6.4
  *
  * Text Domain: lengow
  * Domain Path: /languages
@@ -162,7 +162,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once( 'includes/admin/class-lengow-box-order-shipping.php' );
 
 			}
-                        
+
 			include_once( 'includes/class-lengow-hook.php' );
 			include_once( 'includes/frontend/class-lengow-tracker.php' );
                         include_once('includes/class-lengow-cron.php');
@@ -242,7 +242,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 * @return array
 		 */
 		public function add_lengow_gateway_class( $methods ) {
-			$methods[] = 'WC_Lengow_Payment_Gateway';
+			$methods[] = 'Lengow_Payment_Gateway';
 
 			return $methods;
 		}

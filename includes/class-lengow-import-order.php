@@ -1230,7 +1230,7 @@ class Lengow_Import_Order {
                     }
                     $customer->save();
                 }
-                
+
 		// add products, shipping cost, tax and processing fees to the order.
 		$tax_amount = 0;
 		foreach ( $products as $product_data ) {
@@ -1553,7 +1553,7 @@ class Lengow_Import_Order {
                 $wc_order->set_shipping_total($shipping_cost['amount']);
                 $wc_order->set_shipping_tax($order_shipping_tax);
                 $wc_order->set_payment_method(
-                    WC_Lengow_Payment_Gateway::PAYMENT_LENGOW_ID
+                    Lengow_Payment_Gateway::PAYMENT_LENGOW_ID
                 );
                 $wc_order->set_payment_method_title($this->marketplace->label_name);
                 $wc_order->set_date_paid(strtotime( $this->order_date ));

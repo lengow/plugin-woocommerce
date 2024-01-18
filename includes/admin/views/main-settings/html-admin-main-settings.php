@@ -200,7 +200,10 @@ $list_file = Lengow_Log::get_paths();
 				<?php echo (bool) $values[ Lengow_Configuration::DEBUG_MODE_ENABLED ] ? '' : 'hidden'; ?>>
                 <div class="grey-frame">
                     <div class="form-group">
-                        <select class="form-control " name="lengow_plugin_env">
+                        <label class="control-label">
+                            <?php echo $keys[ Lengow_Configuration::PLUGIN_ENV ][ Lengow_Configuration::PARAM_LABEL ]; ?>
+                        </label>
+                        <select class="form-control " name="lengow_plugin_env" style="font-size: 13px; text-transform: uppercase;">
                             <?php foreach (Lengow_Configuration::ENVIRONMENTS as $env): ?>
                             <option value="<?php echo $env ?>"
                                 <?php if (isset($values[Lengow_Configuration::PLUGIN_ENV ]) && $env === $values[Lengow_Configuration::PLUGIN_ENV ]): ?> selected="selected"<?php endif ?>>

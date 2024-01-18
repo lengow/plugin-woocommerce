@@ -52,9 +52,9 @@ class Lengow_Sync {
 	const LINK_TYPE_SUPPORT = 'support';
 
 	/* Default plugin links */
-	const LINK_HELP_CENTER = 'https://help.lengow.com/hc/en-us/articles/360011968912';
-	const LINK_CHANGELOG = 'https://help.lengow.com/hc/en-us/articles/360011089440';
-	const LINK_UPDATE_GUIDE = 'https://help.lengow.com/hc/en-us/articles/360011968912#2-updating-your-plugin-version';
+	const LINK_HELP_CENTER = 'https://help.lengow.com/hc/fr/articles/10059898927388-WooCommerce-Configurez-le-plugin';
+	const LINK_CHANGELOG = 'https://help.lengow.com/hc/fr/articles/360011089440-WooCommerce-Plugin-Lengow-changelogs';
+	const LINK_UPDATE_GUIDE = 'https://help.lengow.com/hc/fr/articles/10058794907164-WooCommerce-Mise-%C3%A0-jour-du-plugin';
 	const LINK_SUPPORT = 'https://help.lengow.com/hc/en-us/requests/new';
 
 	/* Api iso codes */

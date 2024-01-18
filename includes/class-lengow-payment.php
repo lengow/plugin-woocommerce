@@ -34,7 +34,7 @@ include_once( 'class-lengow-translation.php' );
 /**
  * Lengow_Payment Class.
  */
-class WC_Lengow_Payment_Gateway extends WC_Payment_Gateway {
+class Lengow_Payment_Gateway extends WC_Payment_Gateway {
 
 	/**
 	 * @var string Lengow payment gateway id.
@@ -42,7 +42,7 @@ class WC_Lengow_Payment_Gateway extends WC_Payment_Gateway {
 	const PAYMENT_LENGOW_ID = 'lengow_payment_gateway';
 
 	/**
-	 * Construct WC_Lengow_Payment_Gateway.
+	 * Construct Lengow_Payment_Gateway.
 	 */
 	public function __construct() {
 		$locale                   = new Lengow_Translation();

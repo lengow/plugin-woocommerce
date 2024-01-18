@@ -3,7 +3,7 @@ MAGE=$1
 
 copy_directory(){
 	ORIGINAL_DIRECTORY="$(dirname "$(pwd)")"
-	DESTINATION_DIRECTORY="$MAGE$1/wp-content/plugins/lengow-woocommerce"
+	DESTINATION_DIRECTORY="$MAGE$1/wp-content/plugins/lengow"
 	if [ -d "$ORIGINAL_DIRECTORY" ]; then
 		if [ -e "$DESTINATION_DIRECTORY" ]; then
 			unlink $DESTINATION_DIRECTORY

@@ -68,11 +68,9 @@ Lengow for WooCommerce is available under license (GPLv3). If you want to contri
 The `master` branch contains the latest stable version of the plugin. The `dev` branch contains the version under development.
 All Pull requests must be made on the `dev` branch and must be validated by reviewers working at Lengow.
 
-By default the plugin is made to work on our pre-production environment (my.lengow.net).
-To change this environment, you must modify the two constants present in the file `lengow-woocommerce/includes/class-lengow-connector.php`
+By default, the plugin is made to work on our production environment (my.lengow.io).
+The environment can be changed to pre-production (my.lengow.net) in the settings of this module, after active debug mode option.
 
-    const LENGOW_URL = 'lengow.net';
-    const LENGOW_API_URL = 'https://api.lengow.net';
 
 ### Translation
 

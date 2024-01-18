@@ -40,6 +40,7 @@ fr:
     button_download_version: "Lengow WooCommerce %{version}"
     button_remind_me_later: "Pas maintenant, rappelez-moi plus tard"
   footer:
+    setting: "Settings":
     toolbox: "Toolbox"
     legals: "Mentions légales"
     plugin_lengow: "Lengow WooCommerce Plugin"
@@ -346,6 +347,8 @@ fr:
     lengow_account_id_title: "ID du compte"
     lengow_access_token_title: "Access Token"
     lengow_secret_token_title: "Secret Token"
+    lengow_plugin_env_legend: "Connecter vous à l'environnement de production ou pré-production"
+    lengow_plugin_env_title: "environnement"
     lengow_catalog_id_title: "ID Catalogues"
     lengow_catalog_id_legend: "Pour ajouter plusieurs ids catalogue, utilisez des \";\" pour les séparer"
     lengow_ip_enable_title: "Activer l'autorisation par IP"

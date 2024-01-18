@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         </div>
     </div>
     <div class="lgw-box lgw-home-header text-center">
-        <img src="/wp-content/plugins/lengow-woocommerce/assets/images/lengow-white-big.png" alt="lengow">
+        <img src="/wp-content/plugins/lengow/assets/images/lengow-white-big.png" alt="lengow">
         <h1><?php echo $locale->t( 'dashboard.screen.welcome_back' ); ?></h1>
         <a href="//my.<?php echo Lengow_Configuration::get_lengow_url(); ?>" class="lgw-btn" target="_blank">
 			<?php echo $locale->t( 'dashboard.screen.go_to_lengow' ); ?>
@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <a href="<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_admin_products' ); ?>"
                class="lgw-box-link">
                 <div class="lgw-box">
-                    <img src="/wp-content/plugins/lengow-woocommerce/assets/images/home-products.png"
+                    <img src="/wp-content/plugins/lengow/assets/images/home-products.png"
                          class="img-responsive">
                     <h2><?php echo $locale->t( 'dashboard.screen.products_title' ); ?></h2>
                     <p><?php echo $locale->t( 'dashboard.screen.products_text' ); ?></p>
@@ -53,7 +53,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <a href="<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_admin_orders' ); ?>"
                class="lgw-box-link">
                 <div class="lgw-box">
-                    <img src="/wp-content/plugins/lengow-woocommerce/assets/images/home-orders.png"
+                    <img src="/wp-content/plugins/lengow/assets/images/home-orders.png"
                          class="img-responsive">
                     <h2>
 						<?php echo $locale->t( 'dashboard.screen.orders_title' ); ?>
@@ -69,7 +69,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <a href="<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_admin_settings' ); ?>"
                class="lgw-box-link">
                 <div class="lgw-box">
-                    <img src="/wp-content/plugins/lengow-woocommerce/assets/images/home-settings.png"
+                    <img src="/wp-content/plugins/lengow/assets/images/home-settings.png"
                          class="img-responsive">
                     <h2><?php echo $locale->t( 'dashboard.screen.settings_title' ); ?></h2>
                     <p><?php echo $locale->t( 'dashboard.screen.settings_text' ); ?></p>

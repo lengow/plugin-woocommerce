@@ -721,12 +721,16 @@ class Lengow_Product {
 	/**
 	 * Returns the price shipping.
 	 *
-	 * @return string
+	 * @return float
 	 */
 	private function get_price_shipping() {
 		global $woocommerce;
 		$price_shipping = 0;
 		if ( $this->product->needs_shipping() ) {
+            if (is_null($woocommerce->cart)){
+                $woocommerce->initialize_session();
+                $woocommerce->initialize_cart();
+            }
 			$woocommerce->cart->empty_cart();
 			$packages                               = array();
 			$packages[0]['contents'][0]             = array(
@@ -751,7 +755,7 @@ class Lengow_Product {
 			$price_shipping = $woocommerce->shipping->shipping_total;
 		}
 
-		return $price_shipping;
+		return (float) $price_shipping;
 	}
 
 	/**

@@ -35,8 +35,7 @@
  * integer shop_id          Shop id to synchronize
  * integer days             Synchronization interval time
  */
-@set_time_limit(0);
-@ini_set('memory_limit', '1024M');
+
 
 
 // dependencies.
@@ -70,6 +69,8 @@ class LengowCronToolbox
 {
 
     public function launch() {
+        @set_time_limit(0);
+        @ini_set('memory_limit', '1024M');
         // check if WooCommerce plugin is activated.
         $woocommercePlugin = 'woocommerce/woocommerce.php';
         if (!in_array($woocommercePlugin, apply_filters('active_plugins', get_option('active_plugins')), true)) {
@@ -77,7 +78,7 @@ class LengowCronToolbox
         }
 
         // check if Lengow plugin is activated.
-        $lengowPlugin = 'lengow-woocommerce/lengow.php';
+        $lengowPlugin = 'lengow/lengow.php';
         if (!in_array($lengowPlugin, apply_filters('active_plugins', get_option('active_plugins')), true)) {
             wp_die('Lengow plugin is not active', '', array('response' => 400));
         }

@@ -168,9 +168,9 @@ class Lengow_Configuration {
                 self::PLUGIN_ENV => array(
                     self::PARAM_GLOBAL => true,
                     self::PARAM_EXPORT => false,
-                    self::PARAM_LABEL => $locale->t('lengow_setting.lengow_plugin_env_title'),
-                    self::PARAM_LEGEND => $locale->t('lengow_setting.lengow_plugin_env_legend'),
-                    self::PARAM_DEFAULT_VALUE => self::ENVIRONMENTS,
+                    self::PARAM_LABEL => $locale->t('lengow_settings.lengow_plugin_env_title'),
+                    self::PARAM_LEGEND => $locale->t('lengow_settings.lengow_plugin_env_legend'),
+                    self::PARAM_DEFAULT_VALUE => self::ENVIRONMENTS[0],
                     self::PARAM_RETURN => self::RETURN_TYPE_STRING
                 ),
                 self::ACCOUNT_ID => array(
