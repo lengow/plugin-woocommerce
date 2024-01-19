@@ -209,18 +209,21 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
                         register_rest_route( 'lengow-woocommerce/v2', '/cron', array(
                           'methods' => 'GET',
                           'callback' => [new LengowCron(), 'launch'],
+                          'permission_callback' => '__return_true',
                         ) );
                     } );
                     add_action( 'rest_api_init', function () {
                         register_rest_route( 'lengow-woocommerce/v2', '/cron/toolbox', array(
                           'methods' => 'GET',
                           'callback' => [new LengowCronToolbox(), 'launch'],
+                          'permission_callback' => '__return_true',
                         ) );
                     } );
                     add_action( 'rest_api_init', function () {
                         register_rest_route( 'lengow-woocommerce/v2', '/cron/export', array(
                           'methods' => 'GET',
                           'callback' => [new LengowCronExport(), 'launch'],
+                          'permission_callback' => '__return_true',
                         ) );
                     } );
 		}

@@ -47,7 +47,7 @@ Before using Lengow-related features, please carefully read Lengow's Terms of Us
 
 = Where can I find Lengow documentation and user guides? =
 
-For help setting up and configuring Lengow plugin please refer to our [user guide](https://help.lengow.com/hc/en-us/articles/360011968912)
+For help setting up and configuring Lengow plugin please refer to our [user guide](https://help.lengow.com/hc/en-us/articles/10059898927388-WooCommerce-Set-up-the-plugin)
 
 = Where can I get support? =
 
