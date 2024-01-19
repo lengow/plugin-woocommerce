@@ -137,11 +137,11 @@ class LengowCronExport
         );
 
         if ($get_params) {
-            echo Lengow_Export::get_export_params();
+            echo esc_html(Lengow_Export::get_export_params());
         } elseif ('size' === $mode) {
-            echo $export->get_total_export_product();
+            echo esc_html($export->get_total_export_product());
         } elseif ('total' === $mode) {
-            echo $export->get_total_product();
+            echo esc_html($export->get_total_product());
         } else {
             $export->exec();
         }

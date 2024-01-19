@@ -34,65 +34,63 @@ $tracking_url    = (string) $wc_order->get_meta('_lengow_tracking_url', true );
 		<?php if ( array_key_exists( Lengow_Action::ARG_TRACKING_NUMBER, $marketplace_arguments ) ) : ?>
             <li>
                 <label for="lengow_tracking_number">
-					<?php echo $locale->t( 'meta_box.order_shipping.tracking_number' ); ?>
-					<?php if ( $marketplace->argument_is_required( 'tracking_number' ) ) : ?>
-                        <span class="required">(<?php echo $locale->t( 'meta_box.order_shipping.required' ); ?>)</span>
-					<?php endif; ?>
+                    <?php echo esc_html( $locale->t( 'meta_box.order_shipping.tracking_number' ) ); ?>
+                    <?php if ( $marketplace->argument_is_required( 'tracking_number' ) ) : ?>
+                        <span class="required">(<?php echo esc_html( $locale->t( 'meta_box.order_shipping.required' ) ); ?>)</span>
+                    <?php endif; ?>
                     :
                 </label>
                 <input type="text" name="lengow_tracking_number" id="lengow_tracking_number"
-                       value="<?php echo $tracking_number; ?>"/>
+                       value="<?php echo esc_attr( $tracking_number ); ?>"/>
             </li>
 		<?php endif; ?>
 		<?php if ( ! empty( $carriers ) ) : ?>
             <li>
                 <label for="lengow_carrier">
-					<?php echo $locale->t( 'meta_box.order_shipping.carrier' ); ?>
+					<?php echo esc_html( $locale->t( 'meta_box.order_shipping.carrier' ) ); ?>
 					<?php if ( $marketplace->argument_is_required( Lengow_Action::ARG_CARRIER ) ) : ?>
-                        <span class="required">(<?php echo $locale->t( 'meta_box.order_shipping.required' ); ?>)</span>
+                        <span class="required">(<?php echo esc_html( $locale->t( 'meta_box.order_shipping.required' ) ); ?>)</span>
 					<?php endif; ?>
                     :
                 </label>
                 <select name="lengow_carrier">
                     <option value="">
-						<?php echo $locale->t( 'meta_box.order_shipping.choose_a_carrier' ); ?>
+                        <?php echo esc_html( $locale->t( 'meta_box.order_shipping.choose_a_carrier' ) ); ?>
                     </option>
-					<?php foreach ( $carriers as $code => $label ) : ?>
-                        <option value="<?php echo $code; ?>" <?php echo $carrier === $code ? 'selected' : ''; ?>>
-							<?php echo $label; ?>
+                    <?php foreach ( $carriers as $code => $label ) : ?>
+                        <option value="<?php echo esc_attr( $code ); ?>" <?php selected( $carrier, $code ); ?>>
+                            <?php echo esc_html( $label ); ?>
                         </option>
-					<?php endforeach; ?>
+                    <?php endforeach; ?>
                 </select>
             </li>
 		<?php endif; ?>
 		<?php if ( ! empty( $carriers ) && $accept_custom_carrier ) : ?>
-            <span class="or-use"><?php echo $locale->t( 'meta_box.order_shipping.or_use' ); ?></span>
+            <span class="or-use"><?php echo esc_html( $locale->t( 'meta_box.order_shipping.or_use' ) ); ?></span>
 		<?php endif; ?>
 		<?php if ( $accept_custom_carrier ) : ?>
             <li>
                 <label for="lengow_custom_carrier">
-					<?php echo $locale->t( 'meta_box.order_shipping.custom_carrier' ); ?>
-					<?php if ( $marketplace->custom_carrier_is_required() ) : ?>
-                        <span class="required">(<?php echo $locale->t( 'meta_box.order_shipping.required' ); ?>)</span>
-					<?php endif; ?>
-                    :
+                    <?php echo esc_html( $locale->t( 'meta_box.order_shipping.custom_carrier' ) ); ?>
+                    <?php if ( $marketplace->custom_carrier_is_required() ) : ?>
+                        <span class="required">(<?php echo esc_html( $locale->t( 'meta_box.order_shipping.required' ) ); ?>)</span>
+                    <?php endif; ?>:
                 </label>
                 <input type="text" name="lengow_custom_carrier" id="lengow_custom_carrier"
-                       value="<?php echo $custom_carrier; ?>"/>
+                       value="<?php echo esc_attr( $custom_carrier ); ?>"/>
             </li>
 		<?php endif; ?>
 		<?php if ( array_key_exists( Lengow_Action::ARG_TRACKING_URL, $marketplace_arguments ) ) : ?>
             <li>
                 <label for="lengow_tracking_url">
-					<?php echo $locale->t( 'meta_box.order_shipping.tracking_url' ); ?>
-					<?php if ( $marketplace->argument_is_required( 'tracking_url' ) ) : ?>
-                        <span class="required">(<?php echo $locale->t( 'meta_box.order_shipping.required' ); ?>)</span>
-					<?php endif; ?>
-                    :
+                    <?php echo esc_html( $locale->t( 'meta_box.order_shipping.tracking_url' ) ); ?>
+                    <?php if ( $marketplace->argument_is_required( 'tracking_url' ) ) : ?>
+                        <span class="required">(<?php echo esc_html( $locale->t( 'meta_box.order_shipping.required' ) ); ?>)</span>
+                    <?php endif; ?>:
                 </label>
                 <input type="text" name="lengow_tracking_url" id="lengow_tracking_url"
-                       value="<?php echo $tracking_url; ?>"/>
+                       value="<?php echo esc_attr( $tracking_url ); ?>"/>
             </li>
-		<?php endif; ?>
+        <?php endif; ?>
     </ul>
 </div>

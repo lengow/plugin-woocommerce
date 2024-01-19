@@ -383,7 +383,29 @@ class Lengow_Admin_Orders extends WP_List_Table {
 					   class="button" 
 					   value="' . $this->locale->t( 'order.screen.filter_action' ) . '" />';
             $content    .= '</div>';
-            echo $content;
+
+            $allowed_html = array(
+                'select' => array(
+                    'name' => true,
+                ),
+                'option' => array(
+                    'value' => true,
+                ),
+                'div' => array(
+                    'id' => true,
+                    'class' => true,
+                    'style' => true,
+                ),
+                'input' => array(
+                    'type' => true,
+                    'name' => true,
+                    'placeholder' => true,
+                    'value' => true,
+                    'class' => true,
+                ),
+            );
+
+            echo wp_kses( $content, $allowed_html );
         }
     }
 

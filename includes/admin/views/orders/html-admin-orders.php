@@ -9,62 +9,62 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div id="lengow_order_wrapper" class="lgw-container">
 	<?php if ( Lengow_Configuration::debug_mode_is_active() ) : ?>
         <div id="lgw-debug">
-			<?php echo $locale->t( 'menu.debug_active' ); ?>
+			<?php echo esc_html( $locale->t( 'menu.debug_active' ) ); ?>
         </div>
 	<?php endif; ?>
     <div class="lgw-box row">
 		<?php if ( $warning_message ) : ?>
             <p class="blue-frame" style="line-height: 20px;">
-				<?php echo $warning_message; ?>
+                <?php echo  wp_kses_post( $warning_message ); ?>
             </p>
 		<?php endif; ?>
         <div id="lengow_order_header">
             <div class="lgw-col-8" style="padding:0;">
                 <div id="lengow_order_with_error">
                     <p>
-						<?php echo $locale->t(
+						<?php echo esc_html( $locale->t(
 							'order.screen.order_with_error',
 							array( 'nb_order' => Lengow_Order::count_order_with_error() )
-						) ?>
+						) ) ?>
                     </p>
                 </div>
                 <div id="lengow_order_to_be_sent">
                     <p>
-						<?php echo $locale->t(
+						<?php echo esc_html( $locale->t(
 							'order.screen.order_to_be_sent',
 							array( 'nb_order' => Lengow_Order::count_order_to_be_sent() )
-						) ?>
+						) ) ?>
                     </p>
                 </div>
                 <div id="lengow_last_importation">
                     <p>
 						<?php if ( 'none' !== $order_collection['last_import_type'] ) : ?>
-							<?php echo $locale->t( 'order.screen.last_order_importation' ); ?>
+							<?php echo esc_html( $locale->t( 'order.screen.last_order_importation' ) ); ?>
                             :
                             <b>
                                 <span id="lengow_last_import_date">
-                                    <?php echo $order_collection['last_import_date']; ?>
+                                    <?php echo esc_html( $order_collection['last_import_date'] ); ?>
                                 </span>
                             </b>
 						<?php else: ?>
-							<?php echo $locale->t( 'order.screen.no_order_importation' ); ?>
+							<?php echo esc_html( $locale->t( 'order.screen.no_order_importation' ) ); ?>
 						<?php endif; ?>
                     </p>
                 </div>
                 <p>
 					<?php if ( Lengow_Configuration::get( Lengow_Configuration::REPORT_MAIL_ENABLED ) ) {
-						echo $locale->t( 'order.screen.all_order_will_be_sent_to' ) . ' ' . $report_emails;
+						echo esc_html( $locale->t( 'order.screen.all_order_will_be_sent_to' ) . ' ' . $report_emails );
 					} else {
-						echo $locale->t( 'order.screen.no_order_will_be_sent' ) .
+						echo wp_kses_post( $locale->t( 'order.screen.no_order_will_be_sent' ) .
 						     ' (<a href="' . admin_url( 'admin.php?page=lengow&tab=lengow_admin_settings' ) .
-						     '">' . $locale->t( 'order.screen.change_this' ) . '</a>)';
+						     '">' . $locale->t( 'order.screen.change_this' ) . '</a>)' );
 					}
 					?>
                 <p>
             </div>
             <div class="pull-right text-right lgw-col-3">
                 <a id="lengow_import_orders" class="lgw-btn btn no-margin-top">
-					<?php echo $locale->t( 'order.screen.button_update_orders' ); ?>
+					<?php echo esc_html( $locale->t( 'order.screen.button_update_orders' ) ); ?>
                 </a>
             </div>
         </div>
@@ -74,12 +74,12 @@ if ( ! defined( 'ABSPATH' ) ) {
             <a href="#"
                data-action="reimport_mass_action"
                class="lgw-btn js-lengow_reimport_mass_action">
-                <i class="fa fa-download"></i> <?php echo $locale->t( 'order.screen.button_reimport_order' ); ?>
+                <i class="fa fa-download"></i> <?php echo esc_html( $locale->t( 'order.screen.button_reimport_order' ) ); ?>
             </a>
             <a href="#"
                data-action="resend_mass_action"
                class="lgw-btn js-lengow_resend_mass_action">
-                <i class="fa fa-arrow-right"></i> <?php echo $locale->t( 'order.screen.button_resend_order' ); ?>
+                <i class="fa fa-arrow-right"></i> <?php echo esc_html( $locale->t( 'order.screen.button_resend_order' ) ); ?>
             </a>
         </div>
         <!-- ORDERS GRID -->
@@ -91,8 +91,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				} else { ?>
                     <div id="lengow_no_order_block">
                         <div id="lengow_no_order_message" class="text-center">
-                            <h2 class="no-margin"><?php echo $locale->t( 'order.screen.no_order_title' ); ?></h2>
-                            <p><?php echo $locale->t( 'order.screen.no_order_description' ); ?></p>
+                            <h2 class="no-margin"><?php echo esc_html( $locale->t( 'order.screen.no_order_title' ) ); ?></h2>
+                            <p><?php echo esc_html( $locale->t( 'order.screen.no_order_description' ) ); ?></p>
                         </div>
                     </div>
 				<?php }
@@ -106,8 +106,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <div class="lgw-ajax-loading-ball1"></div>
                 <div class="lgw-ajax-loading-ball2"></div>
             </div>
-            <p id="lengow_charge_lign1"><?php echo $locale->t( 'order.screen.import_charge_first' ); ?></p>
-            <p id="lengow_charge_lign2"><?php echo $locale->t( 'order.screen.import_charge_second' ); ?></p>
+            <p id="lengow_charge_lign1"><?php echo esc_html( $locale->t( 'order.screen.import_charge_first' ) ); ?></p>
+            <p id="lengow_charge_lign2"><?php echo esc_html( $locale->t( 'order.screen.import_charge_second' ) ); ?></p>
         </div>
         <!-- /UPDATE ORDERS -->
     </div>
