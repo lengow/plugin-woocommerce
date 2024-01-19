@@ -172,6 +172,7 @@ en:
       status_refunded: "Refunded"
       status_partialy_refunded: "Partially Refunded"
       status_canceled: "Canceled"
+      status_new: "New"
       type_express: "Express delivery"
       type_delivered_by_marketplace: "Shipped by Marketplace"
       type_business: "Business"
