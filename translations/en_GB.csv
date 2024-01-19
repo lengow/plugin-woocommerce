@@ -154,6 +154,7 @@ order.screen.status_closed|Closed
 order.screen.status_refunded|Refunded
 order.screen.status_partialy_refunded|Partially Refunded
 order.screen.status_canceled|Canceled
+order.screen.status_new|New
 order.screen.type_express|Express delivery
 order.screen.type_delivered_by_marketplace|Shipped by Marketplace
 order.screen.type_business|Business
@@ -422,94 +423,3 @@ meta_box.order_shipping.tracking_url|Tracking url
 meta_box.order_shipping.choose_a_carrier|Select a carrier code...
 meta_box.order_shipping.required|required
 meta_box.order_shipping.or_use|or use...
-log.install.install_start|## start install for version %{version} ##
-log.install.install_end|## end install for version %{version} ##
-log.install.table_created|adding table %{name} in database
-log.install.table_already_created|skipping table %{name} : already existing in database
-log.install.update_start|## start updating for version %{old_version} to %{new_version} ##
-log.install.update_end|## end updating for version %{old_version} to %{new_version} ##
-log.install.add_upgrade_version|adding SQL patch required for the plugin version %{version}
-log.connection.cms_creation_success|CMS successfully created with Lengow webservice (CMS token %{cms_token})
-log.connection.cms_creation_failed|WARNING! CMS could NOT be created with Lengow webservice (CMS token %{cms_token})
-log.connection.cms_already_exist|CMS already created in Lengow (CMS token %{cms_token})
-log.connection.try_link_catalog|try to associate catalogue IDs %{catalog_ids} to the shop (SHOP token %{shop_token})
-log.connection.link_catalog_success|catalogues successfully linked with Lengow webservice
-log.connection.link_catalog_failed|WARNING! catalogues could NOT be linked with Lengow webservice
-log.setting.setting_reset|all Lengow settings were reset
-log.setting.setting_updated|all Lengow settings were updated
-log.setting.setting_change|%{key} - old value %{old_value} replaced with %{value}
-log.mail_report.send_mail_to|report email sent to %{email}
-log.mail_report.unable_send_mail_to|unable to send report email to %{email}
-log.export.start|## start export ##
-log.export.end|## end export ##
-log.export.nb_product_found|%{nb_product} product(s) found
-log.export.count_product|%{product_count} product(s) exported
-log.export.export_failed|export failed - %{decoded_message}
-log.export.your_feed_available_here|your feed is available here: %{feed_url}
-log.export.error_unable_to_find_product|unable to find product (ID %{product_id})
-log.export.error_unable_to_create_folder|unable to create folder %{folder_path}. Make sure it is writable
-log.export.error_unable_to_create_file|unable to create file %{file_name} in %{folder_name}
-log.export.error_folder_not_writable|export file generation did not end properly. Please make sure the export folder is writable
-log.import.start|## start %{type} import ##
-log.import.end|## end %{type} import ##
-log.import.debug_mode_active|warning ! Debug Mode is activated
-log.import.connector_get_order|get order with order ID: %{marketplace_sku} and marketplace: %{marketplace_name}
-log.import.connector_get_all_order|get orders between %{date_from} and %{date_to} for catalogs ID: %{catalog_id}
-log.import.find_one_order|%{nb_order} order found for order ID: %{marketplace_sku} and marketplace: %{marketplace_name} with account ID: %{account_id}
-log.import.find_all_orders|%{nb_order} order(s) found with account ID: %{account_id}
-log.import.init_params|import initialized with params : %{init_params}
-log.import.sync_result|%{number_orders_processed} orders processed, %{number_orders_created} created, %{number_orders_updated} updated, %{number_orders_failed} failed, %{number_orders_ignored} ignored and %{number_orders_not_formatted} not formatted
-log.import.error_already_created|%{decoded_message} (created on the %{date_message})
-log.import.external_id_exist|already imported in a WooCommerce with the order ID %{order_id}
-log.import.order_already_imported|order already imported (ORDER ID %{order_id})
-log.import.order_ready_to_reimport|order ready to be re-imported (ORDER ID %{order_id})
-log.import.order_state_updated|order's status has been updated to %{state_name}
-log.import.rewrite_processing_fee|rewrite amount without processing fee
-log.import.rewrite_shipping_cost|rewrite amount without shipping cost
-log.import.generate_unique_email|generate a unique email %{email}
-log.import.order_shipped_by_marketplace|order shipped by %{marketplace_name}
-log.import.current_order_state_unavailable|current order's status [%{order_state_marketplace}] makes it unavailable to import for marketplace %{marketplace_name}
-log.import.order_successfully_imported|order successfully imported (ORDER ID %{order_id})
-log.import.import_failed|import failed - %{decoded_message}
-log.import.marketplace_update_failed|marketplace update failed - %{decoded_message}
-log.import.order_import_failed|import order failed - %{decoded_message}
-log.import.error_no_package|import order failed - Lengow error: no package in the order
-log.import.error_wrong_package_number|import order failed - wrong package number
-log.import.error_no_delivery_address|import order failed - Lengow error: no delivery address in the order
-log.import.product_be_found|product ID %{product_id} found with field %{attribute_name} (%{attribute_value})
-log.import.product_state_canceled|product ID %{product_id} could not be added to cart - status: %{product_state}
-log.import.lengow_order_saved|order saved in Lengow orders table
-log.import.lengow_order_not_saved|WARNING! Order could NOT be saved in Lengow orders table
-log.import.lengow_order_updated|order updated in Lengow orders table
-log.import.lengow_order_not_updated|WARNING! Order could NOT be updated in Lengow orders table
-log.import.lengow_order_line_saved|save order lines product: %{order_line_saved}
-log.import.lengow_order_line_not_saved|WARNING ! Order lines could NOT be saved in Lengow order lines table
-log.import.quantity_back_shipped_by_marketplace|adding quantity back to stock (order shipped by marketplace)
-log.import.quantity_back_reimported_order|adding quantity back to stock (order is re-imported)
-log.import.product_not_saved|WARNING! Product ID %{product_id} could not be added to the WooCommerce order - %{error_message}
-log.import.shipping_not_saved|WARNING! Shipping costs could not be added to the WooCommerce order - %{error_message}
-log.import.tax_not_saved|WARNING! Tax could not be added to the WooCommerce order - %{error_message}
-log.import.processing_fee_not_saved|WARNING! Processing fees could not be added to the WooCommerce order - %{error_message}
-log.import.order_synchronized_with_lengow|order successfully synchronised with Lengow webservice (ORDER ID %{order_id})
-log.import.order_not_synchronized_with_lengow|WARNING ! Order could NOT be synchronised with Lengow webservice (ORDER ID %{order_id})
-log.import.anonymized_order|order is anonymized and has not been imported
-log.import.old_order|order is older than 3 months and has not been imported
-log.import.unable_verify_date|unable to check if the order is too old
-log.import.connector_get_all_action|get order actions between %{date_from} and %{date_to}
-log.import.unable_find_order|Unable to find the requested order
-log.order_action.check_completed_action|check completed actions
-log.order_action.check_old_action|check and finish old actions
-log.order_action.check_action_not_sent|check actions not sent
-log.order_action.try_to_send_action|try to send %{action} action (ORDER ID %{order_id})
-log.order_action.action_send|action %{action} was successfully sent (ORDER ID %{order_id})
-log.order_action.action_not_send|WARNING ! action %{action} could not be sent (ORDER ID %{order_id})
-log.order_action.call_tracking|call tracking with parameters: %{parameters}
-log.order_action.call_action_failed|order action failed - %{decoded_message}
-log.connector.call_api|call %{call_type} %{curl_url}
-log.connector.error_api|API call failed - %{error_code} - %{error_message}
-log.connector.error_curl|Curl error %{error_code} - %{error_message}
-log.connector.token_not_return|no authorization token returned
-log.connector.token_is_empty|the returned authorization token is empty
-log.connector.timeout_api|API call has been blocked by a timeout
-log.connector.api_not_available|Lengow APIs are not available
-log.connector.retry_get_token|API call failed - authorization token expired - attempt to recover a new token

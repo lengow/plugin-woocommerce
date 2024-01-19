@@ -40,7 +40,7 @@ fr:
     button_download_version: "Lengow WooCommerce %{version}"
     button_remind_me_later: "Pas maintenant, rappelez-moi plus tard"
   footer:
-    setting: "Settings":
+    setting: "Paramètres"
     toolbox: "Toolbox"
     legals: "Mentions légales"
     plugin_lengow: "Lengow WooCommerce Plugin"
@@ -172,6 +172,7 @@ fr:
       status_refunded: "Remboursé"
       status_partialy_refunded: "Partially Refunded"
       status_canceled: "Annulé"
+      status_new: "Nouveau"
       type_express: "Livraison Express"
       type_delivered_by_marketplace: "Expédié par la marketplace"
       type_business: "Business"
