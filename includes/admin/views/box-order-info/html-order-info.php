@@ -182,4 +182,4 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
 <?php endif ?>
 
-<script><?php include WP_PLUGIN_DIR . '/lengow-woocommerce/assets/js/lengow-woocommerce/order_box.js' ?></script>
+<script><?php include WP_PLUGIN_DIR . '/lengow-woocommerce/assets/js/lengow/order_box.js' ?></script>
