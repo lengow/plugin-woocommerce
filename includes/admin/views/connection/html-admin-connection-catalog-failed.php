@@ -11,13 +11,13 @@ if ( ! defined( 'ABSPATH' ) ) {
     <h2><?php echo esc_html( $locale->t( 'connection.catalog.failed_title' ) ); ?></h2>
 </div>
 <div class="lgw-module-illu mod-disconnected">
-	<img src="/wp-content/plugins/lengow/assets/images/connected-woocommerce.png"
+	<img src="/wp-content/plugins/lengow-woocommerce/assets/images/connected-woocommerce.png"
 	     class="lgw-module-illu-module mod-disconnected"
 	     alt="woocommerce">
-	<img src="/wp-content/plugins/lengow/assets/images/connected-lengow.png"
+	<img src="/wp-content/plugins/lengow-woocommerce/assets/images/connected-lengow.png"
 	     class="lgw-module-illu-lengow mod-disconnected"
 	     alt="lengow">
-	<img src="/wp-content/plugins/lengow/assets/images/unplugged.png"
+	<img src="/wp-content/plugins/lengow-woocommerce/assets/images/unplugged.png"
 	     class="lgw-module-illu-plug mod-disconnected"
 	     alt="unplugged">
 </div>

@@ -27,7 +27,7 @@ $tracking_url    = (string) $wc_order->get_meta('_lengow_tracking_url', true );
 ?>
 
 <style>
-    <?php include WP_PLUGIN_DIR . '/lengow/assets/css/lengow-box-order.css'  ?>
+    <?php include WP_PLUGIN_DIR . '/lengow-woocommerce/assets/css/lengow-box-order.css'  ?>
 </style>
 <div id="lgw-box-order-shipping">
     <ul class="order_shipping submitbox">

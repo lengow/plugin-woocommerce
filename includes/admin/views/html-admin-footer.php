@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <div class="lgw-modalbox-body">
                     <div class="lgw-row flexbox-vertical-center">
                         <div class="lgw-col-5 text-center">
-                            <img src="/wp-content/plugins/lengow/assets/images/plugin-update.png" alt="">
+                            <img src="/wp-content/plugins/lengow-woocommerce/assets/images/plugin-update.png" alt="">
                         </div>
                         <div class="lgw-col-7">
                             <h1><?php echo esc_html( $locale->t( 'update.version_available' ) ); ?></h1>

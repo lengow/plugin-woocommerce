@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             </div>
             <div class="lgw-col-6">
                 <div class="vertical-center">
-                    <img src="/wp-content/plugins/lengow/assets/images/logo-blue.png"
+                    <img src="/wp-content/plugins/lengow-woocommerce/assets/images/logo-blue.png"
                          class="center-block" alt="lengow"/>
                 </div>
             </div>

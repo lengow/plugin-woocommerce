@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div id="lengow_connection_wrapper" class="lgw-container lgw-connection text-center">
 	<div class="lgw-content-section">
 		<div class="lgw-logo">
-			<img src="/wp-content/plugins/lengow/assets/images/lengow-blue.png" alt="lengow">
+			<img src="/wp-content/plugins/lengow-woocommerce/assets/images/lengow-blue.png" alt="lengow">
 		</div>
 	</div>
 	<div id="lgw-connection-content">
@@ -19,13 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<p><?php echo esc_html( $locale->t( 'connection.home.description_third' ) ); ?></p>
 		</div>
 		<div class="lgw-module-illu">
-			<img src="/wp-content/plugins/lengow/assets/images/connected-woocommerce.png"
+			<img src="/wp-content/plugins/lengow-woocommerce/assets/images/connected-woocommerce.png"
 			     class="lgw-module-illu-module"
 			     alt="woocommerce">
-			<img src="/wp-content/plugins/lengow/assets/images/connected-lengow.png"
+			<img src="/wp-content/plugins/lengow-woocommerce/assets/images/connected-lengow.png"
 			     class="lgw-module-illu-lengow"
 			     alt="lengow">
-			<img src="/wp-content/plugins/lengow/assets/images/plug-grey.png"
+			<img src="/wp-content/plugins/lengow-woocommerce/assets/images/plug-grey.png"
 			     class="lgw-module-illu-plug"
 			     alt="plug">
 		</div>

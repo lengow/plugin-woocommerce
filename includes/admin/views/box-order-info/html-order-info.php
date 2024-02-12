@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <style>
-    <?php include WP_PLUGIN_DIR . '/lengow/assets/css/lengow-box-order.css'  ?>
+    <?php include WP_PLUGIN_DIR . '/lengow-woocommerce/assets/css/lengow-box-order.css'  ?>
 </style>
 <div id="lgw-box-order-info">
     <ul>
@@ -182,4 +182,4 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
 <?php endif ?>
 
-<script><?php include WP_PLUGIN_DIR . '/lengow/assets/js/lengow/order_box.js' ?></script>
+<script><?php include WP_PLUGIN_DIR . '/lengow-woocommerce/assets/js/lengow-woocommerce/order_box.js' ?></script>
