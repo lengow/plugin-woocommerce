@@ -83,7 +83,7 @@ class LengowCronExport
         }
 
         // check if Lengow plugin is activated.
-        $lengowPlugin = 'lengow/lengow.php';
+        $lengowPlugin = 'lengow-woocommerce/lengow.php';
         if (!in_array($lengowPlugin, apply_filters('active_plugins', get_option('active_plugins')), true)) {
             wp_die('Lengow plugin is not active', '', array('response' => 400));
         }
@@ -137,11 +137,11 @@ class LengowCronExport
         );
 
         if ($get_params) {
-            echo Lengow_Export::get_export_params();
+            echo esc_html(Lengow_Export::get_export_params());
         } elseif ('size' === $mode) {
-            echo $export->get_total_export_product();
+            echo esc_html($export->get_total_export_product());
         } elseif ('total' === $mode) {
-            echo $export->get_total_product();
+            echo esc_html($export->get_total_product());
         } else {
             $export->exec();
         }

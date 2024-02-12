@@ -82,7 +82,7 @@ class LengowCron
         }
 
         // check if Lengow plugin is activated.
-        $lengowPlugin = 'lengow/lengow.php';
+        $lengowPlugin = 'lengow-woocommerce/lengow.php';
         if (!in_array($lengowPlugin, apply_filters('active_plugins', get_option('active_plugins')), true)) {
             wp_die('Lengow plugin is not active', '', array('response' => 400));
         }

@@ -334,19 +334,33 @@ class Lengow_Admin_Products extends WP_List_Table {
 		);
 	}
 
-	/**
-	 * Search box.
-	 *
-	 * @param string $text text for search
-	 * @param string $input_id id for search
-	 */
-	public function search( $text, $input_id ) {
-		echo '<form id="post-filter" method="post">';
-		// the hidden element is needed to load the right page.
-		echo '<input type="hidden" name="page" value="lengow_list" />';
-		echo $this->search_box( $text, $input_id );
-		echo '</form>';
-	}
+    /**
+     * Search box.
+     *
+     * @param string $text text for search
+     * @param string $input_id id for search
+     */
+    public function search( $text, $input_id ) {
+        $allowed_html = array(
+            'form' => array(
+                'id'    => true,
+                'method' => true,
+            ),
+            'input' => array(
+                'type'        => true,
+                'name'        => true,
+                'placeholder' => true,
+                'value'       => true,
+                'class'       => true,
+            ),
+        );
+
+        echo wp_kses( '<form id="post-filter" method="post">', $allowed_html  );
+        // the hidden element is needed to load the right page.
+        echo wp_kses( '<input type="hidden" name="page" value="lengow_list" />', $allowed_html );
+        echo wp_kses( $this->search_box( $text, $input_id ) , $allowed_html );
+        echo wp_kses( '</form>', $allowed_html  );
+    }
 
 	/**
 	 * Get all products meta.

@@ -23,17 +23,17 @@ $list_files = array_diff( $list_files, array( 'en_GB.yml' ) );
 array_unshift( $list_files, 'en_GB.yml' );
 
 foreach ( $list_files as $list ) {
-	$yml_file = yaml_parse_file( $directory . $list );
-	$locale   = basename( $directory . $list, '.yml' );
-	if ( $list === 'log.yml' ) {
-		$fp = fopen( dirname( dirname( __FILE__ ) ) . '/translations/en_GB.csv', 'a+' );
-	} else {
-		$fp = fopen( dirname( dirname( __FILE__ ) ) . '/translations/' . $locale . '.csv', 'w+' );
-	}
-	foreach ( $yml_file as $language => $categories ) {
-		write_csv( $fp, $categories );
-	}
-	fclose( $fp );
+    $yml_file = yaml_parse_file( $directory . $list );
+    $locale   = basename( $directory . $list, '.yml' );
+    if ( $list === 'log.yml' ) {
+        $fp = fopen( dirname( dirname( __FILE__ ) ) . '/translations/en_GB.csv', 'a+' );
+    } else {
+        $fp = fopen( dirname( dirname( __FILE__ ) ) . '/translations/' . $locale . '.csv', 'w+' );
+    }
+    foreach ( $yml_file as $language => $categories ) {
+        write_csv( $fp, $categories );
+    }
+    fclose( $fp );
 }
 
 /**
@@ -44,14 +44,14 @@ foreach ( $list_files as $list ) {
  * @param array $front_key
  */
 function write_csv( $fp, $text, &$front_key = array() ) {
-	if ( is_array( $text ) ) {
-		foreach ( $text as $k => $v ) {
-			$front_key[] = $k;
-			write_csv( $fp, $v, $front_key );
-			array_pop( $front_key );
-		}
-	} else {
-		$line = join( '.', $front_key ) . '|' . str_replace( "\n", '<br />', $text ) . PHP_EOL;
-		fwrite( $fp, $line );
-	}
+    if ( is_array( $text ) ) {
+        foreach ( $text as $k => $v ) {
+            $front_key[] = $k;
+            write_csv( $fp, $v, $front_key );
+            array_pop( $front_key );
+        }
+    } else {
+        $line = join( '.', $front_key ) . '|' . str_replace( "\n", '<br />', $text ) . PHP_EOL;
+        fwrite( $fp, $line );
+    }
 }

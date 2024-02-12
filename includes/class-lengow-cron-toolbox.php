@@ -78,7 +78,7 @@ class LengowCronToolbox
         }
 
         // check if Lengow plugin is activated.
-        $lengowPlugin = 'lengow/lengow.php';
+        $lengowPlugin = 'lengow-woocommerce/lengow.php';
         if (!in_array($lengowPlugin, apply_filters('active_plugins', get_option('active_plugins')), true)) {
             wp_die('Lengow plugin is not active', '', array('response' => 400));
         }
@@ -139,12 +139,12 @@ class LengowCronToolbox
                 if (!$error) {
                     header('Content-Type: application/json');
                 }
-                echo json_encode($result);
+                echo wp_json_encode($result);
                 break;
             default:
                 $type = isset($_GET[Lengow_Toolbox::PARAM_TYPE]) ? $_GET[Lengow_Toolbox::PARAM_TYPE] : null;
                 header('Content-Type: application/json');
-                echo json_encode(Lengow_Toolbox::get_data($type));
+                echo wp_json_encode( Lengow_Toolbox::get_data( $type ) );
                 break;
         }
     }

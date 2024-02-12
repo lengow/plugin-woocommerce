@@ -383,7 +383,29 @@ class Lengow_Admin_Orders extends WP_List_Table {
 					   class="button" 
 					   value="' . $this->locale->t( 'order.screen.filter_action' ) . '" />';
             $content    .= '</div>';
-            echo $content;
+
+            $allowed_html = array(
+                'select' => array(
+                    'name' => true,
+                ),
+                'option' => array(
+                    'value' => true,
+                ),
+                'div' => array(
+                    'id' => true,
+                    'class' => true,
+                    'style' => true,
+                ),
+                'input' => array(
+                    'type' => true,
+                    'name' => true,
+                    'placeholder' => true,
+                    'value' => true,
+                    'class' => true,
+                ),
+            );
+
+            echo wp_kses( $content, $allowed_html );
         }
     }
 
@@ -855,12 +877,12 @@ class Lengow_Admin_Orders extends WP_List_Table {
         if ( $this->countries[ $order_lengow->{Lengow_Order::FIELD_DELIVERY_COUNTRY_ISO} ] ) {
             $countryIsoCode = $order_lengow->{Lengow_Order::FIELD_DELIVERY_COUNTRY_ISO};
             $countryName = $this->countries[ $order_lengow->{Lengow_Order::FIELD_DELIVERY_COUNTRY_ISO} ];
-            $return = '<img src="/wp-content/plugins/lengow/assets/images/flag/' . $countryIsoCode . '.png"
+            $return = '<img src="/wp-content/plugins/lengow-woocommerce/assets/images/flag/' . $countryIsoCode . '.png"
                       class="lengow_link_tooltip"
                       alt="' . $countryName . '"
                       data-original-title="' . $countryName . '"/>';
         } else {
-            $return = '<img src="/wp-content/plugins/lengow/assets/images/flag/OTHERS.png"
+            $return = '<img src="/wp-content/plugins/lengow-woocommerce/assets/images/flag/OTHERS.png"
                             class="lengow_link_tooltip"
                             alt="OTHERS"
                             data-original-title="OTHERS"/>';

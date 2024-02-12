@@ -91,6 +91,7 @@ class Lengow_Order {
 	const TYPE_EXPRESS = 'is_express';
 	const TYPE_BUSINESS = 'is_business';
 	const TYPE_DELIVERED_BY_MARKETPLACE = 'is_delivered_by_marketplace';
+        const SYNCHRONIZE_TRIES = 5;
 
 	/**
 	 * @var string label fulfillment for old orders without order type.
@@ -897,7 +898,9 @@ class Lengow_Order {
 				Lengow_Import::ARG_MARKETPLACE          => $this->marketplace_name,
 				Lengow_Import::ARG_MERCHANT_ORDER_ID    => $woocommerce_order_ids,
 			);
-			try {
+                        $tries = self::SYNCHRONIZE_TRIES;
+                        do {
+                            try {
 				$return = $connector->patch(
 					Lengow_Connector::API_ORDER_MOI,
 					array(),
@@ -905,23 +908,26 @@ class Lengow_Order {
 					json_encode( $body ),
 					$log_output
 				);
-			} catch ( Exception $e ) {
-				$message = Lengow_Main::decode_log_message( $e->getMessage(), Lengow_Translation::DEFAULT_ISO_CODE );
-				$error   = Lengow_Main::set_log_message(
-					'log.connector.error_api',
-					array(
-						'error_code'    => $e->getCode(),
-						'error_message' => $message,
-					)
-				);
-				Lengow_Main::log( Lengow_Log::CODE_CONNECTOR, $error, $log_output );
+                                return ! ( null === $return
+                                       || ( isset( $return['detail'] ) && 'Pas trouvé.' === $return['detail'] )
+                                       || isset( $return['error'] ) );
+                            } catch ( Exception $e ) {
+                                $tries--;
+                                if ($tries === 0) {
+                                    $message = Lengow_Main::decode_log_message( $e->getMessage(), Lengow_Translation::DEFAULT_ISO_CODE );
+                                    $error   = Lengow_Main::set_log_message(
+                                            'log.connector.error_api',
+                                            array(
+                                                    'error_code'    => $e->getCode(),
+                                                    'error_message' => $message,
+                                            )
+                                    );
+                                    Lengow_Main::log( Lengow_Log::CODE_CONNECTOR, $error, $log_output );
+                                }
+                            }
 
-				return false;
-			}
+                        } while($tries > 0);
 
-			return ! ( null === $return
-			           || ( isset( $return['detail'] ) && 'Pas trouvé.' === $return['detail'] )
-			           || isset( $return['error'] ) );
 		}
 
 		return false;

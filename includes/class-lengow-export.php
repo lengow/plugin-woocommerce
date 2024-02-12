@@ -354,7 +354,7 @@ class Lengow_Export {
 			);
 		}
                 if ($this->stream) {
-                    echo $exported;
+                    echo wp_kses_post( $exported );
                     exit();
                 } else {
                     exit(json_encode([]));

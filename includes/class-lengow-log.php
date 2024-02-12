@@ -161,7 +161,7 @@ class Lengow_Log {
 		}
 		header( 'Content-type: text/plain' );
 		header( 'Content-Disposition: attachment; filename="' . $file_name . '"' );
-		echo esc_html($contents);
+		echo wp_kses_post($contents);
 		exit();
 	}
 
