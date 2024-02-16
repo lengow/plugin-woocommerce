@@ -92,6 +92,11 @@ class Lengow_Product {
 	);
 
 	/**
+	 * @var array non-persistent cache for categories
+	 */
+	private static $categories;
+
+	/**
 	 * @var WC_Product WooCommerce product instance.
 	 */
 	public $product;
@@ -826,15 +831,18 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Returns the category breadcrumb.
+	 * returns product_cat categories
 	 *
-	 * @return string
+	 * @return array
 	 */
-	private function get_categories() {
-		$taxonomy = 'product_cat';
-		// get all terms with id and name.
+	private function get_all_categories()
+	{
+		if ( isset( self::$categories ) ) {
+			return self::$categories;
+		}
+
 		$terms     = array();
-		$all_terms = get_terms( $taxonomy );
+		$all_terms = get_terms( 'product_cat' );
 		foreach ( $all_terms as $term ) {
 			$children = array();
 			foreach ( $all_terms as $child ) {
@@ -848,6 +856,20 @@ class Lengow_Product {
 				'child'  => $children,
 			);
 		}
+
+		self::$categories = $terms;
+		return self::$categories;
+	}
+
+	/**
+	 * Returns the category breadcrumb.
+	 *
+	 * @return string
+	 */
+	private function get_categories() {
+		$taxonomy = 'product_cat';
+		// get all terms with id and name.
+		$terms = $this->get_all_categories();
 		// get product terms.
 		$product_terms = get_the_terms( $this->product_id, $taxonomy );
 		if ( $product_terms && ! is_wp_error( $product_terms ) ) {
