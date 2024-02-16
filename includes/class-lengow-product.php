@@ -808,7 +808,9 @@ class Lengow_Product {
 		if ( ! empty( $gallery_image_ids ) ) {
 			foreach ( $gallery_image_ids as $image_id ) {
 				$image  = wp_get_attachment_image_src( $image_id, 'shop_catalog_image_size' );
-				$urls[] = $image[0];
+				if ( isset( $image[0] ) ) {
+					$urls[] = $image[0];
+				}
 			}
 		}
 		// create image urls array.
