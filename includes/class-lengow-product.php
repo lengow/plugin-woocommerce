@@ -40,6 +40,8 @@ class Lengow_Product {
 	const FIELD_ID = 'id';
 	const FIELD_PRODUCT_ID = 'product_id';
 
+	const TAX_CATEGORY = 'product_cat';
+
 	/**
 	 * @var array default fields for export.
 	 */
@@ -844,7 +846,7 @@ class Lengow_Product {
 		}
 
 		$terms     = array();
-		$all_terms = get_terms( 'product_cat' );
+		$all_terms = get_terms( self::TAX_CATEGORY );
 		foreach ( $all_terms as $term ) {
 			$children = array();
 			foreach ( $all_terms as $child ) {
@@ -869,11 +871,10 @@ class Lengow_Product {
 	 * @return string
 	 */
 	private function get_categories() {
-		$taxonomy = 'product_cat';
 		// get all terms with id and name.
 		$terms = $this->get_all_categories();
 		// get product terms.
-		$product_terms = get_the_terms( $this->product_id, $taxonomy );
+		$product_terms = get_the_terms( $this->product_id, self::TAX_CATEGORY );
 		if ( $product_terms && ! is_wp_error( $product_terms ) ) {
 			// get product terms with only term id.
 			$last_id          = false;
