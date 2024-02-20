@@ -455,7 +455,7 @@ class Lengow_Export {
 			);
 		}
 
-		return json_encode( $params );
+		return wp_json_encode( $params );
 	}
 
 	/**
