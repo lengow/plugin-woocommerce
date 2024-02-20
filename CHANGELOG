@@ -1,6 +1,13 @@
 ========================================================
+Version 2.5.4
+========================================================
+
+    - BugFix:  Optimise the catalog export time
+
+========================================================
 Version 2.5.3
 ========================================================
+
     - Feature:  Partially refunded status
     - Feature:  Switch env preprod/prod from config
     - Feature:  Toolbox file details
