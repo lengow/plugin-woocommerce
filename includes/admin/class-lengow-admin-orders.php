@@ -619,7 +619,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
         );
         $query        = 'SELECT ' . implode( ', ', $fields ) . ' FROM ' . $wpdb->prefix . 'lengow_orders AS lo';
         // search field.
-        if ( isset( $request['s'] ) && ! empty( $request['s'] ) ) {
+        if ( ! empty( $request['s'] ) ) {
             // changes $search for LIKE %% use.
             $search              = '%' . $request['s'] . '%';
             $search_query_fields = array();
@@ -638,7 +638,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
             }
         }
         // order filters.
-        if ( isset( $request['order_action'] ) && ! empty( $request['order_action'] ) ) {
+        if ( ! empty( $request['order_action'] ) ) {
             if ( 'error' === $request['order_action'] ) {
                 $conditions[]   = '(lo.is_in_error = %d AND lo.order_process_state != %d)';
                 $array_search[] = 1;
@@ -648,11 +648,11 @@ class Lengow_Admin_Orders extends WP_List_Table {
                 $array_search[] = 0;
             }
         }
-        if ( isset( $request['order_status'] ) && ! empty( $request['order_status'] ) ) {
+        if ( ! empty( $request['order_status'] ) ) {
             $conditions[]   = 'lo.order_lengow_state = %s';
             $array_search[] = $request['order_status'];
         }
-        if ( isset( $request['order_type'] ) && ! empty( $request['order_type'] ) ) {
+        if ( ! empty( $request['order_type'] ) ) {
             $orderType = $request['order_type'];
             if ( Lengow_Order::TYPE_EXPRESS === $orderType ) {
                 $conditions[]   = '(lo.order_types LIKE %s OR lo.order_types LIKE %s)';
@@ -667,14 +667,14 @@ class Lengow_Admin_Orders extends WP_List_Table {
                 $array_search[] = '%' . Lengow_Order::TYPE_BUSINESS . '%';
             }
         }
-        if ( isset( $request['order_marketplace'] ) && ! empty( $request['order_marketplace'] ) ) {
+        if ( ! empty( $request['order_marketplace'] ) ) {
             $conditions[]   = 'lo.marketplace_name = %s';
             $array_search[] = $request['order_marketplace'];
         }
-        $order_from = ( isset( $request['order_from'] ) && ! empty( $request['order_from'] ) )
+        $order_from = ( ! empty( $request['order_from'] ) )
             ? $request['order_from']
             : false;
-        $order_to   = ( isset( $request['order_to'] ) && ! empty( $request['order_to'] ) )
+        $order_to   = ( ! empty( $request['order_to'] ) )
             ? $request['order_to']
             : false;
         if ( $order_from || $order_to ) {
