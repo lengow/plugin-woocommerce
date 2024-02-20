@@ -63,7 +63,7 @@ class Lengow_Box_Order_Info {
 	 */
 	public static function post_process() {
 		$data         = array();
-		$action       = $_POST['do_action'];
+		$action       = sanitize_text_field( $_POST['do_action'] );
 		$order_lengow = new Lengow_Order( (int) sanitize_text_field($_POST['order_lengow_id']));
 		switch ( $action ) {
 			case 'resend_ship':

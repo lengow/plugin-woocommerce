@@ -383,7 +383,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 		// filter by search box.
 		$params = array( 'numberposts' => - 1, 'post_type' => 'product' );
 		if ( isset( $_POST['s'] ) ) {
-			$params['s'] = $_POST['s'];
+			$params['s'] = sanitize_text_field( $_POST['s'] );
 		}
 		$posts = get_posts( $params );
 		// get product data.
@@ -435,9 +435,9 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 */
 	private function _usort_reorder( $a, $b ) {
 		// if no sort, default to ID.
-		$order_by = ! empty( $_GET['orderby'] ) ? $_GET['orderby'] : 'ID';
+		$order_by = ! empty( $_GET['orderby'] ) ? sanitize_text_field( $_GET['orderby'] ) : 'ID';
 		// if no order, default to asc.
-		$order = ! empty( $_GET['order'] ) ? $_GET['order'] : 'asc';
+		$order = ! empty( $_GET['order'] ) ? sanitize_text_field( $_GET['order'] ) : 'asc';
 		// determine sort order.
 		$result = strcmp( $a[ $order_by ], $b[ $order_by ] );
 

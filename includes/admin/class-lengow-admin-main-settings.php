@@ -43,7 +43,7 @@ class Lengow_Admin_Main_Settings {
 	 */
 	public static function post_process() {
 		$action = null;
-		if ( $_POST ) {
+		if ( isset( $_POST['action'] ) ) {
 			$action = sanitize_text_field($_POST['action']);
 		} elseif ( isset( $_GET['action'] ) ) {
 			$action = sanitize_text_field($_GET['action']);

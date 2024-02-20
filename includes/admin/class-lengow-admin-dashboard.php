@@ -51,7 +51,7 @@ class Lengow_Admin_Dashboard {
 	 * Process Get Parameters.
 	 */
 	public static function get_process() {
-		$action = isset( $_GET['do_action'] ) ? $_GET['do_action'] : false;
+		$action = isset( $_GET['do_action'] ) ? sanitize_text_field( $_GET['do_action'] ) : false;
 		if ( $action ) {
 			switch ( $action ) {
 				case 'refresh_status':

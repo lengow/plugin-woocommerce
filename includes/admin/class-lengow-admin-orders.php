@@ -66,7 +66,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
      * Process Post Parameters.
      */
     public static function post_process() {
-        $action = isset( $_POST['do_action'] ) ? $_POST['do_action'] : false;
+        $action = isset( $_POST['do_action'] ) ? sanitize_text_field( $_POST['do_action'] ) : false;
         if ( $action ) {
             switch ( $action ) {
                 case 'import_all':
@@ -106,12 +106,12 @@ class Lengow_Admin_Orders extends WP_List_Table {
             $return  = $import->exec();
             $message = $lengow_admin_orders->load_message( $return );
         } elseif ( 're_import' === $action ) {
-            $order_lengow_id = isset( $_POST['order_id'] ) ? $_POST['order_id'] : null;
+            $order_lengow_id = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : null;
             if ( null !== $order_lengow_id ) {
                 Lengow_Order::re_import_order( $order_lengow_id );
             }
         } elseif ( 're_send' === $action ) {
-            $order_lengow_id = isset( $_POST['order_id'] ) ? $_POST['order_id'] : null;
+            $order_lengow_id = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : null;
             if ( null !== $order_lengow_id ) {
                 Lengow_Order::re_send_order( $order_lengow_id );
             }
@@ -120,7 +120,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
             $total_reimport    = 0;
             if ( $orders_lengow_ids ) {
                 foreach ( $orders_lengow_ids as $order_lengow_id ) {
-                    $result = Lengow_Order::re_import_order( $order_lengow_id );
+                    $result = Lengow_Order::re_import_order( sanitize_text_field( $order_lengow_id ) );
                     if ( $result && ! empty( $result[ Lengow_Import::ORDERS_CREATED ] ) ) {
                         $total_reimport ++;
                     }
@@ -138,7 +138,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
             $total_resend      = 0;
             if ( $orders_lengow_ids ) {
                 foreach ( $orders_lengow_ids as $order_lengow_id ) {
-                    $result = Lengow_Order::re_send_order( $order_lengow_id );
+                    $result = Lengow_Order::re_send_order( sanitize_text_field( $order_lengow_id ) );
                     if ( $result ) {
                         $total_resend ++;
                     }
@@ -519,7 +519,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
             'country',
             'total',
         );
-        $orders  = $this->request_get_orders( $_REQUEST );
+        $orders  = $this->request_get_orders( empty( $_POST ) ? $_GET : $_POST + $_GET );
         // get order data.
         foreach ( $keys as $key ) {
             foreach ( $orders as $order ) {
@@ -578,9 +578,9 @@ class Lengow_Admin_Orders extends WP_List_Table {
      */
     private function _usort_reorder( $a, $b ) {
         // if no sort, default to status.
-        $order_by = ! empty( $_REQUEST['orderby'] ) ? $_REQUEST['orderby'] : 'date';
+        $order_by = ! empty( $_GET['orderby'] ) ? $_GET['orderby'] : 'date';
         // if no order, default to asc.
-        $order = ! empty( $_REQUEST['order'] ) ? $_REQUEST['order'] : 'asc';
+        $order = ! empty( $_GET['order'] ) ? $_GET['order'] : 'asc';
         // determine sort order.
         $result = strcmp( $a[ $order_by ], $b[ $order_by ] );
 

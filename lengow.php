@@ -192,7 +192,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				// check logs download to prevent the occurrence of the WordPress html header.
 				$download = null;
 				if ( isset( $_GET['action'] ) ) {
-					$download = $_GET['action'];
+					$download = sanitize_text_field( $_GET['action'] );
 				}
 				switch ( $download ) {
 					case 'download':
