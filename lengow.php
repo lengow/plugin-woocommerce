@@ -264,10 +264,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					'exclude_from_search'       => false,
 					'show_in_admin_all_list'    => true,
 					'show_in_admin_status_list' => true,
-					'label_count'               => _n_noop(
-						$locale->t( 'module.state_technical_error' ) . ' <span class="count">(%s)</span>',
-						$locale->t( 'module.state_technical_error' ) . ' <span class="count">(%s)</span>'
-					),
+					'label_count'               => $locale->t( 'module.state_technical_error' ) . ' <span class="count">(%s)</span>',
 				)
 			);
 			add_filter( 'wc_order_statuses', array( $this, 'add_lengow_technical_error_status' ) );

@@ -438,13 +438,7 @@ class Lengow_Main {
 	 * @return array
 	 */
 	public static function get_order_statuses() {
-		$order_statuses = array();
-		$statuses = wc_get_order_statuses();
-		foreach ( $statuses as $status => $label ) {
-			$order_statuses[ $status ] = __( $label, 'woocommerce' );
-		}
-
-		return $order_statuses;
+		return wc_get_order_statuses();
 	}
 
 	/**
@@ -456,7 +450,7 @@ class Lengow_Main {
 		$wc_shipping = new WC_Shipping();
 		$return      = array();
 		foreach ( $wc_shipping->load_shipping_methods() as $key => $shipping ) {
-			$return[ $key ] = __( $shipping->method_title, 'woocommerce' );
+			$return[ $key ] = $shipping->method_title;
 		}
 
 		return $return;
