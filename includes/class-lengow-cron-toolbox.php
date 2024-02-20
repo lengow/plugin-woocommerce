@@ -97,34 +97,34 @@ class LengowCronToolbox
         }
 
         // check if toolbox action is valid.
-        $action = isset($_GET[Lengow_Toolbox::PARAM_TOOLBOX_ACTION]) ? $_GET[Lengow_Toolbox::PARAM_TOOLBOX_ACTION] : Lengow_Toolbox::ACTION_DATA;
+        $action = isset($_GET[Lengow_Toolbox::PARAM_TOOLBOX_ACTION]) ? sanitize_text_field($_GET[Lengow_Toolbox::PARAM_TOOLBOX_ACTION]) : Lengow_Toolbox::ACTION_DATA;
         if (!in_array($action, Lengow_Toolbox::$toolbox_actions, true)) {
             wp_die('Action: ' . $action . ' is not a valid action', '', array('response' => 400));
         }
 
         switch ($action) {
             case Lengow_Toolbox::ACTION_LOG:
-                $date = isset($_GET[Lengow_Toolbox::PARAM_DATE]) ? $_GET[Lengow_Toolbox::PARAM_DATE] : null;
+                $date = isset($_GET[Lengow_Toolbox::PARAM_DATE]) ? sanitize_text_field($_GET[Lengow_Toolbox::PARAM_DATE]) : null;
                 Lengow_Toolbox::download_log($date);
                 break;
             case Lengow_Toolbox::ACTION_ORDER:
                 $error = false;
-                $process = isset($_GET[Lengow_Toolbox::PARAM_PROCESS]) ? $_GET[Lengow_Toolbox::PARAM_PROCESS] : Lengow_Toolbox::PROCESS_TYPE_SYNC;
+                $process = isset($_GET[Lengow_Toolbox::PARAM_PROCESS]) ? sanitize_text_field($_GET[Lengow_Toolbox::PARAM_PROCESS]) : Lengow_Toolbox::PROCESS_TYPE_SYNC;
                 if (Lengow_Toolbox::PROCESS_TYPE_GET_DATA === $process) {
                     $result = Lengow_Toolbox::get_order_data(
-                                    isset($_GET[Lengow_Toolbox::PARAM_MARKETPLACE_SKU]) ? $_GET[Lengow_Toolbox::PARAM_MARKETPLACE_SKU] : null,
-                                    isset($_GET[Lengow_Toolbox::PARAM_MARKETPLACE_NAME]) ? $_GET[Lengow_Toolbox::PARAM_MARKETPLACE_NAME] : null,
-                                    isset($_GET[Lengow_Toolbox::PARAM_TYPE]) ? $_GET[Lengow_Toolbox::PARAM_TYPE] : null
+                                    isset($_GET[Lengow_Toolbox::PARAM_MARKETPLACE_SKU]) ? sanitize_text_field($_GET[Lengow_Toolbox::PARAM_MARKETPLACE_SKU]) : null,
+                                    isset($_GET[Lengow_Toolbox::PARAM_MARKETPLACE_NAME]) ? sanitize_text_field($_GET[Lengow_Toolbox::PARAM_MARKETPLACE_NAME]) : null,
+                                    isset($_GET[Lengow_Toolbox::PARAM_TYPE]) ? sanitize_text_field($_GET[Lengow_Toolbox::PARAM_TYPE]) : null
                     );
                 } else {
                     $result = Lengow_Toolbox::sync_orders(
                                     array(
-                                        Lengow_Toolbox::PARAM_CREATED_TO => isset($_GET[Lengow_Toolbox::PARAM_CREATED_TO]) ? $_GET[Lengow_Toolbox::PARAM_CREATED_TO] : null,
-                                        Lengow_Toolbox::PARAM_CREATED_FROM => isset($_GET[Lengow_Toolbox::PARAM_CREATED_FROM]) ? $_GET[Lengow_Toolbox::PARAM_CREATED_FROM] : null,
-                                        Lengow_Toolbox::PARAM_DAYS => isset($_GET[Lengow_Toolbox::PARAM_DAYS]) ? $_GET[Lengow_Toolbox::PARAM_DAYS] : null,
-                                        Lengow_Toolbox::PARAM_FORCE => isset($_GET[Lengow_Toolbox::PARAM_FORCE]) ? $_GET[Lengow_Toolbox::PARAM_FORCE] : null,
-                                        Lengow_Toolbox::PARAM_MARKETPLACE_NAME => isset($_GET[Lengow_Toolbox::PARAM_MARKETPLACE_NAME]) ? $_GET[Lengow_Toolbox::PARAM_MARKETPLACE_NAME] : null,
-                                        Lengow_Toolbox::PARAM_MARKETPLACE_SKU => isset($_GET[Lengow_Toolbox::PARAM_MARKETPLACE_SKU]) ? $_GET[Lengow_Toolbox::PARAM_MARKETPLACE_SKU] : null,
+                                        Lengow_Toolbox::PARAM_CREATED_TO => isset($_GET[Lengow_Toolbox::PARAM_CREATED_TO]) ? sanitize_text_field($_GET[Lengow_Toolbox::PARAM_CREATED_TO]) : null,
+                                        Lengow_Toolbox::PARAM_CREATED_FROM => isset($_GET[Lengow_Toolbox::PARAM_CREATED_FROM]) ? sanitize_text_field($_GET[Lengow_Toolbox::PARAM_CREATED_FROM]) : null,
+                                        Lengow_Toolbox::PARAM_DAYS => isset($_GET[Lengow_Toolbox::PARAM_DAYS]) ? sanitize_text_field($_GET[Lengow_Toolbox::PARAM_DAYS]) : null,
+                                        Lengow_Toolbox::PARAM_FORCE => isset($_GET[Lengow_Toolbox::PARAM_FORCE]) ? sanitize_text_field($_GET[Lengow_Toolbox::PARAM_FORCE]) : null,
+                                        Lengow_Toolbox::PARAM_MARKETPLACE_NAME => isset($_GET[Lengow_Toolbox::PARAM_MARKETPLACE_NAME]) ? sanitize_text_field($_GET[Lengow_Toolbox::PARAM_MARKETPLACE_NAME]) : null,
+                                        Lengow_Toolbox::PARAM_MARKETPLACE_SKU => isset($_GET[Lengow_Toolbox::PARAM_MARKETPLACE_SKU]) ? sanitize_text_field($_GET[Lengow_Toolbox::PARAM_MARKETPLACE_SKU]) : null,
                                     )
                     );
                 }
@@ -142,7 +142,7 @@ class LengowCronToolbox
                 echo wp_json_encode($result);
                 break;
             default:
-                $type = isset($_GET[Lengow_Toolbox::PARAM_TYPE]) ? $_GET[Lengow_Toolbox::PARAM_TYPE] : null;
+                $type = isset($_GET[Lengow_Toolbox::PARAM_TYPE]) ? sanitize_text_field($_GET[Lengow_Toolbox::PARAM_TYPE]) : null;
                 header('Content-Type: application/json');
                 echo wp_json_encode( Lengow_Toolbox::get_data( $type ) );
                 break;

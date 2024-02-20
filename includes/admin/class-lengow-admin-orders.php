@@ -346,8 +346,8 @@ class Lengow_Admin_Orders extends WP_List_Table {
                 ),
             );
             foreach ( $filters as $filter ) {
-                $option_selected = ( isset( $_REQUEST[ $filter['name'] ] ) && ! empty( $_REQUEST[ $filter['name'] ] ) )
-                    ? $_REQUEST[ $filter['name'] ]
+                $option_selected = ( ! empty( $_POST[ $filter['name'] ] ) )
+                    ? sanitize_text_field( $_POST[ $filter['name'] ] )
                     : '';
                 $content         .= '<select name="' . $filter['name'] . '">';
                 $content         .= '<option value="" >' . $filter['placeholder'] . '</option>';
@@ -357,11 +357,11 @@ class Lengow_Admin_Orders extends WP_List_Table {
                 }
                 $content .= '</select>';
             }
-            $order_from = ( isset( $_REQUEST['order_from'] ) && ! empty( $_REQUEST['order_from'] ) )
-                ? $_REQUEST['order_from']
+            $order_from = ( ! empty( $_POST['order_from'] ) )
+                ? sanitize_text_field( $_POST['order_from'] )
                 : '';
-            $order_to   = ( isset( $_REQUEST['order_to'] ) && ! empty( $_REQUEST['order_to'] ) )
-                ? $_REQUEST['order_to']
+            $order_to   = ( ! empty( $_POST['order_to'] ) )
+                ? sanitize_text_field( $_POST['order_to'] )
                 : '';
             $content    .= '
 				<div class="lengow_datepicker_box">
