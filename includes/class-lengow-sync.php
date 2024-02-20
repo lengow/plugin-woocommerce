@@ -52,9 +52,9 @@ class Lengow_Sync {
 	const LINK_TYPE_SUPPORT = 'support';
 
 	/* Default plugin links */
-	const LINK_HELP_CENTER = 'https://help.lengow.com/hc/fr/articles/10059898927388-WooCommerce-Configurez-le-plugin';
-	const LINK_CHANGELOG = 'https://help.lengow.com/hc/fr/articles/360011089440-WooCommerce-Plugin-Lengow-changelogs';
-	const LINK_UPDATE_GUIDE = 'https://help.lengow.com/hc/fr/articles/10058794907164-WooCommerce-Mise-%C3%A0-jour-du-plugin';
+	const LINK_HELP_CENTER = 'https://help.lengow.com/hc/en-us/articles/10059898927388-WooCommerce-Set-up-the-plugin';
+	const LINK_CHANGELOG = 'https://help.lengow.com/hc/en-us/articles/360011089440-Woocommerce-Lengow-plugin-changelogs';
+	const LINK_UPDATE_GUIDE = 'https://help.lengow.com/hc/en-us/articles/10058794907164-WooCommerce-Update-the-plugin-version';
 	const LINK_SUPPORT = 'https://help.lengow.com/hc/en-us/requests/new';
 
 	/* Api iso codes */
@@ -450,30 +450,6 @@ class Lengow_Sync {
 	 * @return array
 	 */
 	public static function get_plugin_links( $iso_code = null ) {
-		$plugin_data = self::get_plugin_data();
-		if ( ! $plugin_data ) {
-			return self::$default_plugin_links;
-		}
-		// check if the links are available in the locale
-		$iso_code             = $iso_code ?: Lengow_Translation::DEFAULT_ISO_CODE;
-		$locale_links         = isset( $plugin_data['links'][ $iso_code ] )
-			? $plugin_data['links'][ $iso_code ]
-			: false;
-		$default_locale_links = isset( $plugin_data['links'][ Lengow_Translation::DEFAULT_ISO_CODE ] )
-			? $plugin_data['links'][ Lengow_Translation::DEFAULT_ISO_CODE ]
-			: false;
-		// for each type of link, we check if the link is translated
-		$plugin_links = array();
-		foreach ( self::$default_plugin_links as $link_type => $default_link ) {
-			if ( $locale_links && isset( $locale_links[ $link_type ] ) ) {
-				$plugin_links[ $link_type ] = $locale_links[ $link_type ];
-			} elseif ( $default_locale_links && isset( $default_locale_links[ $link_type ] ) ) {
-				$plugin_links[ $link_type ] = $default_locale_links[ $link_type ];
-			} else {
-				$plugin_links[ $link_type ] = $default_link;
-			}
-		}
-
-		return $plugin_links;
+		return self::$default_plugin_links;
 	}
 }
