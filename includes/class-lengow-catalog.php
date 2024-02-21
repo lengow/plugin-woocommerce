@@ -119,7 +119,7 @@ class Lengow_Catalog {
 				array(
 					'shop_token'  => $token,
 					'catalogs_id' => $catalog_ids,
-				)
+				),
 			),
 		);
 		Lengow_Main::log(

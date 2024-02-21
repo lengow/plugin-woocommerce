@@ -46,7 +46,7 @@ class Lengow_Tracker {
 			$cart_number    = 0;
 			$newbiz         = 1;
 			$valid          = 1;
-			include_once( 'views/tracker/html-tracker.php' );
+			include_once 'views/tracker/html-tracker.php';
 		} catch ( Exception $e ) {
 			echo '';
 		}

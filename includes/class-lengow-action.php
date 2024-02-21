@@ -37,37 +37,37 @@ class Lengow_Action {
 	const TABLE_ACTION = 'lengow_action';
 
 	/* Action fields */
-	const FIELD_ID = 'id';
-	const FIELD_ORDER_ID = 'order_id';
+	const FIELD_ID             = 'id';
+	const FIELD_ORDER_ID       = 'order_id';
 	const FIELD_ORDER_LINE_SKU = 'order_line_sku';
-	const FIELD_ACTION_ID = 'action_id';
-	const FIELD_ACTION_TYPE = 'action_type';
-	const FIELD_RETRY = 'retry';
-	const FIELD_PARAMETERS = 'parameters';
-	const FIELD_STATE = 'state';
-	const FIELD_CREATED_AT = 'created_at';
-	const FIELD_UPDATED_AT = 'updated_at';
+	const FIELD_ACTION_ID      = 'action_id';
+	const FIELD_ACTION_TYPE    = 'action_type';
+	const FIELD_RETRY          = 'retry';
+	const FIELD_PARAMETERS     = 'parameters';
+	const FIELD_STATE          = 'state';
+	const FIELD_CREATED_AT     = 'created_at';
+	const FIELD_UPDATED_AT     = 'updated_at';
 
 	/* Action states */
-	const STATE_NEW = 0;
+	const STATE_NEW    = 0;
 	const STATE_FINISH = 1;
 
 	/* Action types */
-	const TYPE_SHIP = 'ship';
+	const TYPE_SHIP   = 'ship';
 	const TYPE_CANCEL = 'cancel';
 
 	/* Action API arguments */
-	const ARG_ACTION_TYPE = 'action_type';
-	const ARG_LINE = 'line';
-	const ARG_CARRIER = 'carrier';
-	const ARG_CARRIER_NAME = 'carrier_name';
-	const ARG_CUSTOM_CARRIER = 'custom_carrier';
+	const ARG_ACTION_TYPE     = 'action_type';
+	const ARG_LINE            = 'line';
+	const ARG_CARRIER         = 'carrier';
+	const ARG_CARRIER_NAME    = 'carrier_name';
+	const ARG_CUSTOM_CARRIER  = 'custom_carrier';
 	const ARG_SHIPPING_METHOD = 'shipping_method';
 	const ARG_TRACKING_NUMBER = 'tracking_number';
-	const ARG_TRACKING_URL = 'tracking_url';
-	const ARG_SHIPPING_PRICE = 'shipping_price';
-	const ARG_SHIPPING_DATE = 'shipping_date';
-	const ARG_DELIVERY_DATE = 'delivery_date';
+	const ARG_TRACKING_URL    = 'tracking_url';
+	const ARG_SHIPPING_PRICE  = 'shipping_price';
+	const ARG_SHIPPING_DATE   = 'shipping_date';
+	const ARG_DELIVERY_DATE   = 'delivery_date';
 
 	/**
 	 * @var integer max interval time for action synchronisation (3 days)
@@ -90,11 +90,10 @@ class Lengow_Action {
 	/**
 	 * Get Lengow action.
 	 *
-	 * @param array $where a named array of WHERE clauses
+	 * @param array   $where a named array of WHERE clauses
 	 * @param boolean $single get a single result or not
 	 *
 	 * @return false|object[]|object
-	 *
 	 */
 	public static function get( $where = array(), $single = true ) {
 		return Lengow_Crud::read( self::TABLE_ACTION, $where, $single );
@@ -106,7 +105,6 @@ class Lengow_Action {
 	 * @param array $data Lengow action data
 	 *
 	 * @return boolean
-	 *
 	 */
 	public static function create( $data = array() ) {
 		$data[ self::FIELD_CREATED_AT ] = date( Lengow_Main::DATE_FULL );
@@ -119,10 +117,9 @@ class Lengow_Action {
 	 * Update Lengow action.
 	 *
 	 * @param integer $action_id Lengow action id
-	 * @param array $data Lengow action data
+	 * @param array   $data Lengow action data
 	 *
 	 * @return boolean
-	 *
 	 */
 	public static function update( $action_id, $data = array() ) {
 		$data[ self::FIELD_UPDATED_AT ] = date( Lengow_Main::DATE_FULL );
@@ -133,8 +130,8 @@ class Lengow_Action {
 	/**
 	 * Find actions by order id.
 	 *
-	 * @param integer $order_id WooCommerce order id
-	 * @param boolean $only_active get only active actions
+	 * @param integer     $order_id WooCommerce order id
+	 * @param boolean     $only_active get only active actions
 	 * @param string|null $action_type action type (ship or cancel)
 	 *
 	 * @return array|false
@@ -193,7 +190,7 @@ class Lengow_Action {
 	/**
 	 * Removes all actions for one order WooCommerce.
 	 *
-	 * @param integer $order_id WooCommerce order id
+	 * @param integer     $order_id WooCommerce order id
 	 * @param string|null $action_type action type (ship or cancel)
 	 *
 	 * @return boolean
@@ -205,7 +202,7 @@ class Lengow_Action {
 			foreach ( $active_action as $action ) {
 				$result = self::finish_action( $action->{self::FIELD_ID} );
 				if ( $result ) {
-					$update_success ++;
+					++$update_success;
 				}
 			}
 
@@ -218,12 +215,11 @@ class Lengow_Action {
 	/**
 	 * Indicates whether an action can be created if it does not already exist.
 	 *
-	 * @param array $params all available values
+	 * @param array        $params all available values
 	 * @param Lengow_Order $order_lengow Lengow order instance
 	 *
 	 * @return boolean
 	 * @throws Lengow_Exception
-	 *
 	 */
 	public static function can_send_action( $params, $order_lengow ) {
 		// do nothing if the order is closed.
@@ -283,7 +279,7 @@ class Lengow_Action {
 	/**
 	 * Send a new action on the order via the Lengow API.
 	 *
-	 * @param array $params all available values
+	 * @param array        $params all available values
 	 * @param Lengow_Order $order_lengow Lengow order instance
 	 *
 	 * @throws Lengow_Exception
@@ -344,9 +340,9 @@ class Lengow_Action {
 			Lengow_Configuration::LAST_UPDATE_ACTION_SYNCHRONIZATION
 		);
 		if ( $last_action_synchronisation ) {
-			$last_interval_time = time() - (int) $last_action_synchronisation;
+			$last_interval_time  = time() - (int) $last_action_synchronisation;
 			$last_interval_time += self::SECURITY_INTERVAL_TIME;
-			$interval_time      = $last_interval_time > $interval_time ? $interval_time : $last_interval_time;
+			$interval_time       = $last_interval_time > $interval_time ? $interval_time : $last_interval_time;
 		}
 
 		return $interval_time;
@@ -416,7 +412,7 @@ class Lengow_Action {
 					$api_actions[ $action->id ] = $action;
 				}
 			}
-			$page ++;
+			++$page;
 		} while ( null !== $results->next );
 		if ( empty( $api_actions ) ) {
 			return false;
@@ -429,7 +425,7 @@ class Lengow_Action {
 			}
 			$api_action = $api_actions[ $action_id ];
 			if ( isset( $api_action->queued, $api_action->processed, $api_action->errors )
-			     && false == $api_action->queued
+				&& false == $api_action->queued
 			) {
 				// order action is waiting to return from the marketplace.
 				if ( false == $api_action->processed && empty( $api_action->errors ) ) {

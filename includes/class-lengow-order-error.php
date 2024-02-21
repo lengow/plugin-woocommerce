@@ -37,27 +37,26 @@ class Lengow_Order_Error {
 	const TABLE_ORDER_ERROR = 'lengow_order_error';
 
 	/* Order error fields */
-	const FIELD_ID = 'id';
+	const FIELD_ID              = 'id';
 	const FIELD_ORDER_LENGOW_ID = 'order_lengow_id';
-	const FIELD_TYPE = 'type';
-	const FIELD_MESSAGE = 'message';
-	const FIELD_IS_FINISHED = 'is_finished';
-	const FIELD_MAIL = 'mail';
-	const FIELD_CREATED_AT = 'created_at';
-	const FIELD_UPDATED_AT = 'updated_at';
+	const FIELD_TYPE            = 'type';
+	const FIELD_MESSAGE         = 'message';
+	const FIELD_IS_FINISHED     = 'is_finished';
+	const FIELD_MAIL            = 'mail';
+	const FIELD_CREATED_AT      = 'created_at';
+	const FIELD_UPDATED_AT      = 'updated_at';
 
 	/* Order error types */
 	const ERROR_TYPE_IMPORT = 1;
-	const ERROR_TYPE_SEND = 2;
+	const ERROR_TYPE_SEND   = 2;
 
 	/**
 	 * Get Lengow order error.
 	 *
-	 * @param array $where a named array of WHERE clauses
+	 * @param array   $where a named array of WHERE clauses
 	 * @param boolean $single get a single result or not
 	 *
 	 * @return false|object[]|object
-	 *
 	 */
 	public static function get( $where = array(), $single = true ) {
 		return Lengow_Crud::read( self::TABLE_ORDER_ERROR, $where, $single );
@@ -69,7 +68,6 @@ class Lengow_Order_Error {
 	 * @param array $data Lengow order error data
 	 *
 	 * @return boolean
-	 *
 	 */
 	public static function create( $data = array() ) {
 		$data[ self::FIELD_CREATED_AT ] = date( Lengow_Main::DATE_FULL );
@@ -84,10 +82,9 @@ class Lengow_Order_Error {
 	 * Update Lengow order error.
 	 *
 	 * @param integer $order_error_id Lengow order error id
-	 * @param array $data Lengow order data
+	 * @param array   $data Lengow order data
 	 *
 	 * @return boolean
-	 *
 	 */
 	public static function update( $order_error_id, $data = array() ) {
 		$data[ self::FIELD_UPDATED_AT ] = date( Lengow_Main::DATE_FULL );
@@ -98,17 +95,17 @@ class Lengow_Order_Error {
 	/**
 	 * Check if an order has an error.
 	 *
-	 * @param string        $marketplace_sku   Lengow marketplace sku
-	 * @param string        $marketplace_name  Lengow marketpalce name
-	 * @param integer|null  $type              Order error type (import or send)
+	 * @param string       $marketplace_sku   Lengow marketplace sku
+	 * @param string       $marketplace_name  Lengow marketpalce name
+	 * @param integer|null $type              Order error type (import or send)
 	 *
 	 * @return array|false
 	 */
-	public static function order_is_in_error( $marketplace_sku, $marketplace_name, $type = null) {
+	public static function order_is_in_error( $marketplace_sku, $marketplace_name, $type = null ) {
 		global $wpdb;
 
 		$order_error_type = null === $type ? self::ERROR_TYPE_IMPORT : $type;
-		$query = '
+		$query            = '
 			SELECT loe.message, loe.created_at
 			FROM ' . $wpdb->prefix . self::TABLE_ORDER_ERROR . ' loe
                         LEFT JOIN ' . $wpdb->prefix . Lengow_Order::TABLE_ORDER . ' lo ON loe.order_lengow_id = lo.id
@@ -152,7 +149,7 @@ class Lengow_Order_Error {
 	/**
 	 * Finish all order errors.
 	 *
-	 * @param integer $order_lengow_id Lengow order id
+	 * @param integer      $order_lengow_id Lengow order id
 	 * @param integer|null $type order log type (import or send)
 	 *
 	 * @return boolean
@@ -167,7 +164,7 @@ class Lengow_Order_Error {
 		foreach ( $order_errors as $order_error ) {
 			$result = self::update( $order_error->id, array( self::FIELD_IS_FINISHED => 1 ) );
 			if ( $result ) {
-				$update_success ++;
+				++$update_success;
 			}
 		}
 
@@ -177,7 +174,7 @@ class Lengow_Order_Error {
 	/**
 	 * Check if errors already exists for the given order.
 	 *
-	 * @param string $order_lengow_id Lengow order id
+	 * @param string  $order_lengow_id Lengow order id
 	 * @param integer $type order error type (import or send)
 	 * @param boolean $finished error finished (true or false)
 	 *

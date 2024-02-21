@@ -52,7 +52,7 @@ class Lengow_Box_Order_Info {
 			}
 			$locale     = new Lengow_Translation();
 			$debug_mode = Lengow_Configuration::debug_mode_is_active();
-			include_once( 'views/box-order-info/html-order-info.php' );
+			include_once 'views/box-order-info/html-order-info.php';
 		} catch ( Exception $e ) {
 			echo Lengow_Main::decode_log_message( $e->getMessage() );
 		}
@@ -64,7 +64,7 @@ class Lengow_Box_Order_Info {
 	public static function post_process() {
 		$data         = array();
 		$action       = sanitize_text_field( $_POST['do_action'] );
-		$order_lengow = new Lengow_Order( (int) sanitize_text_field($_POST['order_lengow_id']));
+		$order_lengow = new Lengow_Order( (int) sanitize_text_field( $_POST['order_lengow_id'] ) );
 		switch ( $action ) {
 			case 'resend_ship':
 				$data['success'] = $order_lengow->call_action( Lengow_Action::TYPE_SHIP );

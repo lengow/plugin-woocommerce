@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) || ! Lengow_Install::is_installation_in_progress() )
 }
 
 // *********************************************************
-//                         lengow_product
+// lengow_product
 // *********************************************************
 
 // alter product table for old versions.
@@ -43,7 +43,7 @@ if ( Lengow_Install::check_table_exists( $table ) ) {
 }
 
 // *********************************************************
-//                         lengow_orders
+// lengow_orders
 // *********************************************************
 
 // alter order table for old versions.
@@ -115,7 +115,7 @@ Lengow_Install::check_index_and_drop( $table, 'id_order' );
 Lengow_Install::check_index_and_drop( $table, 'id_flux' );
 
 // *********************************************************
-//                  Other install process
+// Other install process
 // *********************************************************
 
 if ( Lengow_Install::$old_version && Lengow_Install::$old_version < '2.0.0' ) {

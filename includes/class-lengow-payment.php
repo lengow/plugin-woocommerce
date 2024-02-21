@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Dependencies for front office.
  */
-include_once( 'class-lengow-translation.php' );
+require_once 'class-lengow-translation.php';
 
 /**
  * Lengow_Payment Class.

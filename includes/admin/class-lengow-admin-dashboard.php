@@ -68,7 +68,7 @@ class Lengow_Admin_Dashboard {
 	 */
 	public static function post_process() {
 		$data   = array();
-		$action = isset( $_POST['do_action'] ) ? sanitize_text_field($_POST['do_action']) : false;
+		$action = isset( $_POST['do_action'] ) ? sanitize_text_field( $_POST['do_action'] ) : false;
 		if ( $action ) {
 			switch ( $action ) {
 				case 'remind_me_later':

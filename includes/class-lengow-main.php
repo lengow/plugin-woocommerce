@@ -32,20 +32,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Main {
 
 	/* Lengow plugin folders */
-	const FOLDER_CONFIG = 'config';
-	const FOLDER_EXPORT = 'export';
-	const FOLDER_LOG = 'logs';
+	const FOLDER_CONFIG      = 'config';
+	const FOLDER_EXPORT      = 'export';
+	const FOLDER_LOG         = 'logs';
 	const FOLDER_TRANSLATION = 'translations';
-	const FOLDER_WEBSERVICE = 'webservice';
+	const FOLDER_WEBSERVICE  = 'webservice';
 
 	/* Lengow webservices */
-	const WEBSERVICE_EXPORT = 'lengow-woocommerce/v2/cron/export';
-	const WEBSERVICE_CRON = 'lengow-woocommerce/v2/cron';
+	const WEBSERVICE_EXPORT  = 'lengow-woocommerce/v2/cron/export';
+	const WEBSERVICE_CRON    = 'lengow-woocommerce/v2/cron';
 	const WEBSERVICE_TOOLBOX = 'lengow-woocommerce/v2/cron/toolbox';
 
 	/* Date formats */
-	const DATE_FULL = 'Y-m-d H:i:s';
-	const DATE_DAY = 'Y-m-d';
+	const DATE_FULL     = 'Y-m-d H:i:s';
+	const DATE_DAY      = 'Y-m-d';
 	const DATE_ISO_8601 = 'c';
 
 	/**
@@ -123,8 +123,8 @@ class Lengow_Main {
 	public static function get_export_url() {
 		$sep = DIRECTORY_SEPARATOR;
 
-		return get_site_url() . $sep .'wp-json'.$sep. self::WEBSERVICE_EXPORT . '?'
-		       . Lengow_Export::PARAM_TOKEN . '=' . self::get_token();
+		return get_site_url() . $sep . 'wp-json' . $sep . self::WEBSERVICE_EXPORT . '?'
+				. Lengow_Export::PARAM_TOKEN . '=' . self::get_token();
 	}
 
 	/**
@@ -135,9 +135,9 @@ class Lengow_Main {
 	public static function get_cron_url() {
 		$sep = DIRECTORY_SEPARATOR;
 
-		return get_site_url() .$sep.'wp-json'.$sep. self::WEBSERVICE_CRON . '?'
-		       . Lengow_Import::PARAM_TOKEN . '=' . self::get_token()
-                       .'&'.Lengow_Import::PARAM_OUTPUT_FORMAT.'=json';
+		return get_site_url() . $sep . 'wp-json' . $sep . self::WEBSERVICE_CRON . '?'
+				. Lengow_Import::PARAM_TOKEN . '=' . self::get_token()
+						. '&' . Lengow_Import::PARAM_OUTPUT_FORMAT . '=json';
 	}
 
 	/**
@@ -148,8 +148,8 @@ class Lengow_Main {
 	public static function get_toolbox_url() {
 		$sep = DIRECTORY_SEPARATOR;
 
-		return get_site_url() . $sep.'wp-json'.$sep. self::WEBSERVICE_TOOLBOX . '?'
-		       . Lengow_Toolbox::PARAM_TOKEN . '=' . self::get_token();
+		return get_site_url() . $sep . 'wp-json' . $sep . self::WEBSERVICE_TOOLBOX . '?'
+				. Lengow_Toolbox::PARAM_TOKEN . '=' . self::get_token();
 	}
 
 	/**
@@ -161,7 +161,7 @@ class Lengow_Main {
 	 */
 	public static function check_webservice_access( $token ) {
 		if ( ! (bool) Lengow_Configuration::get( Lengow_Configuration::AUTHORIZED_IP_ENABLED )
-		     && self::check_token( $token )
+			&& self::check_token( $token )
 		) {
 			return true;
 		}
@@ -181,7 +181,6 @@ class Lengow_Main {
 	 */
 	public static function check_token( $token ) {
 		$storeToken = self::get_token();
-
 
 		return $token === $storeToken;
 	}
@@ -272,9 +271,9 @@ class Lengow_Main {
 	/**
 	 * Writes log.
 	 *
-	 * @param string $category Category log
-	 * @param string $txt log message
-	 * @param boolean $force_output output on screen
+	 * @param string      $category Category log
+	 * @param string      $txt log message
+	 * @param boolean     $force_output output on screen
 	 * @param string|null $marketplace_sku lengow marketplace sku
 	 */
 	public static function log( $category, $txt, $force_output = false, $marketplace_sku = null ) {
@@ -285,9 +284,9 @@ class Lengow_Main {
 	}
 
 
-	public static function get_display_log($format = 'txt') {
+	public static function get_display_log( $format = 'txt' ) {
 		$log = self::get_log_instance();
-                return $log->getFileLogContent($format);
+				return $log->getFileLogContent( $format );
 	}
 
 	/**
@@ -313,7 +312,7 @@ class Lengow_Main {
 	public static function clean_log() {
 		$days   = array();
 		$days[] = 'logs-' . date( self::DATE_DAY ) . '.txt';
-		for ( $i = 1; $i < self::LOG_LIFE; $i ++ ) {
+		for ( $i = 1; $i < self::LOG_LIFE; $i++ ) {
 			$days[] = 'logs-' . date( self::DATE_DAY, strtotime( '-' . $i . 'day' ) ) . '.txt';
 		}
 		/** @var Lengow_File[] $log_files */
@@ -331,7 +330,7 @@ class Lengow_Main {
 	/**
 	 * Set message with params for translation.
 	 *
-	 * @param string $key log key to translate
+	 * @param string     $key log key to translate
 	 * @param array|null $params parameters to display in the translation message
 	 *
 	 * @return string
@@ -352,9 +351,9 @@ class Lengow_Main {
 	/**
 	 * Decode message with params for translation.
 	 *
-	 * @param string $message key to translate
+	 * @param string      $message key to translate
 	 * @param string|null $iso_code language translation iso code
-	 * @param array|null $params parameters to display in the translation message
+	 * @param array|null  $params parameters to display in the translation message
 	 *
 	 * @return string
 	 */
@@ -399,19 +398,34 @@ class Lengow_Main {
 		$timestamp_manual = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_MANUAL_SYNCHRONIZATION );
 		if ( $timestamp_cron && $timestamp_manual ) {
 			if ( (int) $timestamp_cron > (int) $timestamp_manual ) {
-				return array( 'type' => Lengow_Import::TYPE_CRON, 'timestamp' => (int) $timestamp_cron );
+				return array(
+					'type'      => Lengow_Import::TYPE_CRON,
+					'timestamp' => (int) $timestamp_cron,
+				);
 			}
 
-			return array( 'type' => Lengow_Import::TYPE_MANUAL, 'timestamp' => (int) $timestamp_manual );
+			return array(
+				'type'      => Lengow_Import::TYPE_MANUAL,
+				'timestamp' => (int) $timestamp_manual,
+			);
 		}
 		if ( $timestamp_cron && ! $timestamp_manual ) {
-			return array( 'type' => Lengow_Import::TYPE_CRON, 'timestamp' => (int) $timestamp_cron );
+			return array(
+				'type'      => Lengow_Import::TYPE_CRON,
+				'timestamp' => (int) $timestamp_cron,
+			);
 		}
 		if ( $timestamp_manual && ! $timestamp_cron ) {
-			return array( 'type' => Lengow_Import::TYPE_MANUAL, 'timestamp' => (int) $timestamp_manual );
+			return array(
+				'type'      => Lengow_Import::TYPE_MANUAL,
+				'timestamp' => (int) $timestamp_manual,
+			);
 		}
 
-		return array( 'type' => 'none', 'timestamp' => 'none' );
+		return array(
+			'type'      => 'none',
+			'timestamp' => 'none',
+		);
 	}
 
 	/**
@@ -569,13 +583,15 @@ class Lengow_Main {
 	 * @return string
 	 */
 	public static function replace_accented_chars( $str ) {
-		/* One source among others:
+		/*
+		One source among others:
 			http://www.tachyonsoft.com/uc0000.htm
 			http://www.tachyonsoft.com/uc0001.htm
 			http://www.tachyonsoft.com/uc0004.htm
 		*/
 		$patterns = array(
-			/* Lowercase */
+			/*
+			Lowercase */
 			/* a  */
 			'/[\x{00E0}\x{00E1}\x{00E2}\x{00E3}\x{00E4}\x{00E5}\x{0101}\x{0103}\x{0105}\x{0430}\x{00C0}-\x{00C3}\x{1EA0}-\x{1EB7}]/u',
 			/* b  */
@@ -651,7 +667,8 @@ class Lengow_Main {
 			/* zh */
 			'/[\x{0436}]/u',
 
-			/* Uppercase */
+			/*
+			Uppercase */
 			/* A  */
 			'/[\x{0100}\x{0102}\x{0104}\x{00C0}\x{00C1}\x{00C2}\x{00C3}\x{00C4}\x{00C5}\x{0410}]/u',
 			/* B  */
@@ -827,12 +844,12 @@ class Lengow_Main {
 			);
 			$mail_body    = '<h2>' . $subject . '</h2><p><ul>';
 			foreach ( $order_errors as $order_error ) {
-				$order     = self::decode_log_message(
+				$order      = self::decode_log_message(
 					'lengow_log.mail_report.order',
 					null,
 					array( 'marketplace_sku' => $order_error->{Lengow_Order::FIELD_MARKETPLACE_SKU} )
 				);
-				$message   = '' !== $order_error->{Lengow_Order_Error::FIELD_MESSAGE}
+				$message    = '' !== $order_error->{Lengow_Order_Error::FIELD_MESSAGE}
 					? self::decode_log_message( $order_error->{Lengow_Order_Error::FIELD_MESSAGE} )
 					: $support;
 				$mail_body .= '<li>' . $order . ' - ' . $message . '</li>';

@@ -44,7 +44,7 @@ class Lengow_Admin_Connection {
 	public static function post_process() {
 		$locale       = new Lengow_Translation();
 		$plugin_links = Lengow_Sync::get_plugin_links( get_locale() );
-		$action       = isset( $_POST['do_action'] ) ? sanitize_text_field($_POST['do_action']) : false;
+		$action       = isset( $_POST['do_action'] ) ? sanitize_text_field( $_POST['do_action'] ) : false;
 		if ( $action ) {
 			switch ( $action ) {
 				case 'go_to_credentials':
@@ -53,8 +53,8 @@ class Lengow_Admin_Connection {
 				case 'connect_cms':
 					$cms_connected       = false;
 					$has_catalog_to_link = false;
-					$access_token        = isset( $_POST['access_token'] ) ? sanitize_text_field($_POST['access_token']) : '';
-					$secret              = isset( $_POST['secret'] ) ? sanitize_text_field($_POST['secret']) : '';
+					$access_token        = isset( $_POST['access_token'] ) ? sanitize_text_field( $_POST['access_token'] ) : '';
+					$secret              = isset( $_POST['secret'] ) ? sanitize_text_field( $_POST['secret'] ) : '';
 					$credentials_valid   = self::check_api_credentials( $access_token, $secret );
 					if ( $credentials_valid ) {
 						$cms_connected = self::connect_cms();
@@ -74,7 +74,7 @@ class Lengow_Admin_Connection {
 					break;
 				case 'link_catalogs':
 					$catalogs_linked  = true;
-					$catalog_selected = isset( $_POST['catalog_selected'] ) ? sanitize_text_field($_POST['catalog_selected']) : array();
+					$catalog_selected = isset( $_POST['catalog_selected'] ) ? sanitize_text_field( $_POST['catalog_selected'] ) : array();
 					if ( ! empty( $catalog_selected ) ) {
 						$catalogs_linked = self::save_catalogs_linked( $catalog_selected );
 					}

@@ -112,7 +112,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		/**
 		 * Define constant if not already set.
 		 *
-		 * @param string $name constant name
+		 * @param string         $name constant name
 		 * @param string|boolean $value constant value
 		 */
 		private function _define( $name, $value ) {
@@ -126,50 +126,50 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 */
 		public function includes() {
 			if ( is_admin() ) {
-				include_once( 'includes/class-lengow-action.php' );
-				include_once( 'includes/class-lengow-address.php' );
-				include_once( 'includes/class-lengow-catalog.php' );
-				include_once( 'includes/class-lengow-configuration.php' );
-				include_once( 'includes/class-lengow-connector.php' );
-				include_once( 'includes/class-lengow-crud.php' );
-				include_once( 'includes/class-lengow-exception.php' );
-				include_once( 'includes/class-lengow-export.php' );
-				include_once( 'includes/class-lengow-feed.php' );
-				include_once( 'includes/class-lengow-file.php' );
-				include_once( 'includes/class-lengow-import.php' );
-				include_once( 'includes/class-lengow-import-order.php' );
-				include_once( 'includes/class-lengow-install.php' );
-				include_once( 'includes/class-lengow-log.php' );
-				include_once( 'includes/class-lengow-main.php' );
-				include_once( 'includes/class-lengow-marketplace.php' );
-				include_once( 'includes/class-lengow-order.php' );
-				include_once( 'includes/class-lengow-order-error.php' );
-				include_once( 'includes/class-lengow-order-line.php' );
-				include_once( 'includes/class-lengow-product.php' );
-				include_once( 'includes/class-lengow-sync.php' );
-				include_once( 'includes/class-lengow-toolbox.php' );
-				include_once( 'includes/class-lengow-toolbox-element.php' );
-				include_once( 'includes/class-lengow-translation.php' );
-				include_once( 'includes/admin/class-lengow-admin.php' );
-				include_once( 'includes/admin/class-lengow-admin-connection.php' );
-				include_once( 'includes/admin/class-lengow-admin-dashboard.php' );
-				include_once( 'includes/admin/class-lengow-admin-help.php' );
-				include_once( 'includes/admin/class-lengow-admin-legals.php' );
-				include_once( 'includes/admin/class-lengow-admin-order-settings.php' );
-				include_once( 'includes/admin/class-lengow-admin-orders.php' );
-				include_once( 'includes/admin/class-lengow-admin-products.php' );
-				include_once( 'includes/admin/class-lengow-admin-toolbox.php' );
-				include_once( 'includes/admin/class-lengow-admin-main-settings.php' );
-				include_once( 'includes/admin/class-lengow-box-order-info.php' );
-				include_once( 'includes/admin/class-lengow-box-order-shipping.php' );
+				include_once 'includes/class-lengow-action.php';
+				include_once 'includes/class-lengow-address.php';
+				include_once 'includes/class-lengow-catalog.php';
+				include_once 'includes/class-lengow-configuration.php';
+				include_once 'includes/class-lengow-connector.php';
+				include_once 'includes/class-lengow-crud.php';
+				include_once 'includes/class-lengow-exception.php';
+				include_once 'includes/class-lengow-export.php';
+				include_once 'includes/class-lengow-feed.php';
+				include_once 'includes/class-lengow-file.php';
+				include_once 'includes/class-lengow-import.php';
+				include_once 'includes/class-lengow-import-order.php';
+				include_once 'includes/class-lengow-install.php';
+				include_once 'includes/class-lengow-log.php';
+				include_once 'includes/class-lengow-main.php';
+				include_once 'includes/class-lengow-marketplace.php';
+				include_once 'includes/class-lengow-order.php';
+				include_once 'includes/class-lengow-order-error.php';
+				include_once 'includes/class-lengow-order-line.php';
+				include_once 'includes/class-lengow-product.php';
+				include_once 'includes/class-lengow-sync.php';
+				include_once 'includes/class-lengow-toolbox.php';
+				include_once 'includes/class-lengow-toolbox-element.php';
+				include_once 'includes/class-lengow-translation.php';
+				include_once 'includes/admin/class-lengow-admin.php';
+				include_once 'includes/admin/class-lengow-admin-connection.php';
+				include_once 'includes/admin/class-lengow-admin-dashboard.php';
+				include_once 'includes/admin/class-lengow-admin-help.php';
+				include_once 'includes/admin/class-lengow-admin-legals.php';
+				include_once 'includes/admin/class-lengow-admin-order-settings.php';
+				include_once 'includes/admin/class-lengow-admin-orders.php';
+				include_once 'includes/admin/class-lengow-admin-products.php';
+				include_once 'includes/admin/class-lengow-admin-toolbox.php';
+				include_once 'includes/admin/class-lengow-admin-main-settings.php';
+				include_once 'includes/admin/class-lengow-box-order-info.php';
+				include_once 'includes/admin/class-lengow-box-order-shipping.php';
 
 			}
 
-			include_once( 'includes/class-lengow-hook.php' );
-			include_once( 'includes/frontend/class-lengow-tracker.php' );
-                        include_once('includes/class-lengow-cron.php');
-                        include_once('includes/class-lengow-cron-toolbox.php');
-                        include_once('includes/class-lengow-cron-export.php');
+			include_once 'includes/class-lengow-hook.php';
+			include_once 'includes/frontend/class-lengow-tracker.php';
+						include_once 'includes/class-lengow-cron.php';
+						include_once 'includes/class-lengow-cron-toolbox.php';
+						include_once 'includes/class-lengow-cron-export.php';
 		}
 
 		/**
@@ -198,7 +198,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				}
 				switch ( $download ) {
 					case 'download':
-						$date = isset( $_GET[ Lengow_Log::LOG_DATE ] ) ? sanitize_text_field($_GET[ Lengow_Log::LOG_DATE ]) : null;
+						$date = isset( $_GET[ Lengow_Log::LOG_DATE ] ) ? sanitize_text_field( $_GET[ Lengow_Log::LOG_DATE ] ) : null;
 						Lengow_Log::download( $date );
 						break;
 					case 'download_all':
@@ -207,36 +207,57 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				}
 				$this->lengow_admin = new Lengow_Admin();
 			}
-                    add_action( 'rest_api_init', function () {
-                        register_rest_route( 'lengow-woocommerce/v2', '/cron', array(
-                          'methods' => 'GET',
-                          'callback' => [new LengowCron(), 'launch'],
-                          'permission_callback' => '__return_true',
-                        ) );
-                    } );
-                    add_action( 'rest_api_init', function () {
-                        register_rest_route( 'lengow-woocommerce/v2', '/cron/toolbox', array(
-                          'methods' => 'GET',
-                          'callback' => [new LengowCronToolbox(), 'launch'],
-                          'permission_callback' => '__return_true',
-                        ) );
-                    } );
-                    add_action( 'rest_api_init', function () {
-                        register_rest_route( 'lengow-woocommerce/v2', '/cron/export', array(
-                          'methods' => 'GET',
-                          'callback' => [new LengowCronExport(), 'launch'],
-                          'permission_callback' => '__return_true',
-                        ) );
-                    } );
+
+			add_action(
+				'rest_api_init',
+				function () {
+					register_rest_route(
+						'lengow-woocommerce/v2',
+						'/cron',
+						array(
+							'methods'             => 'GET',
+							'callback'            => array( new LengowCron(), 'launch' ),
+							'permission_callback' => '__return_true',
+						)
+					);
+				}
+			);
+			add_action(
+				'rest_api_init',
+				function () {
+					register_rest_route(
+						'lengow-woocommerce/v2',
+						'/cron/toolbox',
+						array(
+							'methods'             => 'GET',
+							'callback'            => array( new LengowCronToolbox(), 'launch' ),
+							'permission_callback' => '__return_true',
+						)
+					);
+				}
+			);
+			add_action(
+				'rest_api_init',
+				function () {
+					register_rest_route(
+						'lengow-woocommerce/v2',
+						'/cron/export',
+						array(
+							'methods'             => 'GET',
+							'callback'            => array( new LengowCronExport(), 'launch' ),
+							'permission_callback' => '__return_true',
+						)
+					);
+				}
+			);
 		}
 
 		/**
 		 * Init the Lengow Payment Method.
-		 *
 		 */
 		public function init_lengow_payment() {
 			add_filter( 'woocommerce_payment_gateways', array( $this, 'add_lengow_gateway_class' ) );
-			include_once( 'includes/class-lengow-payment.php' );
+			include_once 'includes/class-lengow-payment.php';
 		}
 
 		/**
@@ -254,7 +275,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 		/**
 		 * Init the Lengow technical error status.
-		 *
 		 */
 		public function init_lengow_technical_error_status() {
 			$locale = new Lengow_Translation();
@@ -280,7 +300,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 * @return array
 		 */
 		public function add_lengow_technical_error_status( $order_statuses ) {
-			$locale                                               = new Lengow_Translation();
+			$locale = new Lengow_Translation();
 			$order_statuses[ self::STATE_LENGOW_TECHNICAL_ERROR ] = $locale->t( 'module.state_technical_error' );
 
 			return $order_statuses;

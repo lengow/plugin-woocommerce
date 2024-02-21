@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) || ! Lengow_Install::is_installation_in_progress() )
 }
 
 // *********************************************************
-//                         lengow_orders
+// lengow_orders
 // *********************************************************
 
 $table = Lengow_Order::TABLE_ORDER;

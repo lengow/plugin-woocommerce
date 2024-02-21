@@ -20,14 +20,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 		<div class="lgw-module-illu">
 			<img src="/wp-content/plugins/lengow-woocommerce/assets/images/connected-woocommerce.png"
-			     class="lgw-module-illu-module"
-			     alt="woocommerce">
+				class="lgw-module-illu-module"
+				alt="woocommerce">
 			<img src="/wp-content/plugins/lengow-woocommerce/assets/images/connected-lengow.png"
-			     class="lgw-module-illu-lengow"
-			     alt="lengow">
+				class="lgw-module-illu-lengow"
+				alt="lengow">
 			<img src="/wp-content/plugins/lengow-woocommerce/assets/images/plug-grey.png"
-			     class="lgw-module-illu-plug"
-			     alt="plug">
+				class="lgw-module-illu-plug"
+				alt="plug">
 		</div>
 		<p><?php echo esc_html( $locale->t( 'connection.home.description_fourth' ) ); ?></p>
 		<div>
@@ -37,10 +37,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<br/>
 			<p>
 				<?php echo esc_html( $locale->t( 'connection.home.no_account' ) ); ?>
-                <a href="<?php echo esc_url( '//my.' . esc_attr( Lengow_Configuration::get_lengow_url() ) ); ?>" target="_blank">
-                    <?php echo esc_html( $locale->t( 'connection.home.no_account_sign_up' ) ); ?>
-                </a>
-            </p>
+				<a href="<?php echo esc_url( '//my.' . esc_attr( Lengow_Configuration::get_lengow_url() ) ); ?>" target="_blank">
+					<?php echo esc_html( $locale->t( 'connection.home.no_account_sign_up' ) ); ?>
+				</a>
+			</p>
 		</div>
 	</div>
 </div>
