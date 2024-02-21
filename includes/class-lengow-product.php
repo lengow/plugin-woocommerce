@@ -40,6 +40,8 @@ class Lengow_Product {
 	const FIELD_ID = 'id';
 	const FIELD_PRODUCT_ID = 'product_id';
 
+	const TAX_CATEGORY = 'product_cat';
+
 	/**
 	 * @var array default fields for export.
 	 */
@@ -90,6 +92,11 @@ class Lengow_Product {
 		'quantity',
 		'amount',
 	);
+
+	/**
+	 * @var array non-persistent cache for categories
+	 */
+	private static $categories;
 
 	/**
 	 * @var WC_Product WooCommerce product instance.
@@ -803,7 +810,9 @@ class Lengow_Product {
 		if ( ! empty( $gallery_image_ids ) ) {
 			foreach ( $gallery_image_ids as $image_id ) {
 				$image  = wp_get_attachment_image_src( $image_id, 'shop_catalog_image_size' );
-				$urls[] = $image[0];
+				if ( isset( $image[0] ) ) {
+					$urls[] = $image[0];
+				}
 			}
 		}
 		// create image urls array.
@@ -826,15 +835,18 @@ class Lengow_Product {
 	}
 
 	/**
-	 * Returns the category breadcrumb.
+	 * returns product_cat categories
 	 *
-	 * @return string
+	 * @return array
 	 */
-	private function get_categories() {
-		$taxonomy = 'product_cat';
-		// get all terms with id and name.
+	private function get_all_categories()
+	{
+		if ( isset( self::$categories ) ) {
+			return self::$categories;
+		}
+
 		$terms     = array();
-		$all_terms = get_terms( $taxonomy );
+		$all_terms = get_terms( self::TAX_CATEGORY );
 		foreach ( $all_terms as $term ) {
 			$children = array();
 			foreach ( $all_terms as $child ) {
@@ -848,8 +860,21 @@ class Lengow_Product {
 				'child'  => $children,
 			);
 		}
+
+		self::$categories = $terms;
+		return self::$categories;
+	}
+
+	/**
+	 * Returns the category breadcrumb.
+	 *
+	 * @return string
+	 */
+	private function get_categories() {
+		// get all terms with id and name.
+		$terms = $this->get_all_categories();
 		// get product terms.
-		$product_terms = get_the_terms( $this->product_id, $taxonomy );
+		$product_terms = get_the_terms( $this->product_id, self::TAX_CATEGORY );
 		if ( $product_terms && ! is_wp_error( $product_terms ) ) {
 			// get product terms with only term id.
 			$last_id          = false;

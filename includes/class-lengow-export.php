@@ -536,11 +536,11 @@ class Lengow_Export {
 	 *
 	 * @param array $products list of products to be exported
 	 * @param array $fields list of fields
-         *
+	 *
 	 *
 	 * @throws Lengow_Exception Export folder not writable
-         *
-         * @return string
+	 *
+	 * @return string
 	 */
 	private function export( $products, $fields ) {
 		$product_count = 0;
@@ -584,11 +584,7 @@ class Lengow_Export {
 					$this->log_output
 				);
 			}
-			// clean data for next product.
-			unset( $product_data, $product );
-			if ( function_exists( 'gc_collect_cycles' ) ) {
-				gc_collect_cycles();
-			}
+
 			$is_first = false;
 		}
                 $writed .= $feed->write(Lengow_Feed::FOOTER );
@@ -611,7 +607,7 @@ class Lengow_Export {
 				);
 			}
 		}
-                return $writed;
+		return $writed;
 	}
 
 	/**
