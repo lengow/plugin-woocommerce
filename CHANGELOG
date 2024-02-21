@@ -3,6 +3,8 @@ Version 2.5.4
 ========================================================
 
     - BugFix:  Optimise the catalog export time
+    - BufFix:  Update some help center links
+    - BugFix:  Fix broken footer settings url
 
 ========================================================
 Version 2.5.3
