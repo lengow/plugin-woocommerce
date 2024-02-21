@@ -80,7 +80,7 @@ class Lengow_Admin_Dashboard {
 					$data['success'] = false;
 					break;
 			}
-			echo json_encode( $data );
+			echo wp_json_encode( $data );
 			exit();
 		}
 	}

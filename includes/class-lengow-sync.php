@@ -238,7 +238,7 @@ class Lengow_Sync {
 				return false;
 			}
 		}
-		$options = json_encode( self::get_option_data() );
+		$options = wp_json_encode( self::get_option_data() );
 		Lengow_Connector::query_api(
 			Lengow_Connector::PUT,
 			Lengow_Connector::API_CMS,
@@ -282,7 +282,7 @@ class Lengow_Sync {
 				'expired' => (bool) $result->isExpired,
 				'legacy'  => 'v2' === $result->accountVersion,
 			);
-			Lengow_Configuration::update_value( Lengow_Configuration::ACCOUNT_STATUS_DATA, json_encode( $status ) );
+			Lengow_Configuration::update_value( Lengow_Configuration::ACCOUNT_STATUS_DATA, wp_json_encode( $status ) );
 			Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_ACCOUNT_STATUS_DATA, time() );
 
 			return $status;
@@ -334,7 +334,7 @@ class Lengow_Sync {
 					Lengow_Marketplace::FILE_MARKETPLACE,
 					'w+'
 				);
-				$marketplace_file->write( json_encode( $result ) );
+				$marketplace_file->write( wp_json_encode( $result ) );
 				$marketplace_file->close();
 				Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_MARKETPLACE, time() );
 			} catch ( Lengow_Exception $e ) {
@@ -430,7 +430,7 @@ class Lengow_Sync {
 				}
 			}
 			if ( $plugin_data ) {
-				Lengow_Configuration::update_value( Lengow_Configuration::PLUGIN_DATA, json_encode( $plugin_data ) );
+				Lengow_Configuration::update_value( Lengow_Configuration::PLUGIN_DATA, wp_json_encode( $plugin_data ) );
 				Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_PLUGIN_DATA, time() );
 
 				return $plugin_data;

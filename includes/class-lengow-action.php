@@ -269,7 +269,7 @@ class Lengow_Action {
 							self::FIELD_ORDER_LINE_SKU => isset( $params[ self::ARG_LINE ] )
 								? $params[ self::ARG_LINE ]
 								: null,
-							self::FIELD_PARAMETERS     => json_encode( $params ),
+							self::FIELD_PARAMETERS     => wp_json_encode( $params ),
 						)
 					);
 					$send_action = false;
@@ -304,14 +304,14 @@ class Lengow_Action {
 						self::FIELD_ORDER_LINE_SKU => isset( $params[ self::ARG_LINE ] )
 							? $params[ self::ARG_LINE ]
 							: null,
-						self::FIELD_PARAMETERS     => json_encode( $params ),
+						self::FIELD_PARAMETERS     => wp_json_encode( $params ),
 					)
 				);
 			} else {
 				if ( $result ) {
 					$message = Lengow_Main::set_log_message(
 						'lengow_log.exception.action_not_created',
-						array( 'error_message' => json_encode( $result ) )
+						array( 'error_message' => wp_json_encode( $result ) )
 					);
 				} else {
 					// generating a generic error message when the Lengow API is unavailable.

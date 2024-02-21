@@ -79,7 +79,7 @@ class Lengow_Admin_Connection {
 						$catalogs_linked = self::save_catalogs_linked( $catalog_selected );
 					}
 					if ( $catalogs_linked ) {
-						echo json_encode( array( 'success' => true ) );
+						echo wp_json_encode( array( 'success' => true ) );
 					} else {
 						include 'views/connection/html-admin-connection-catalog-failed.php';
 					}
@@ -122,7 +122,7 @@ class Lengow_Admin_Connection {
 		$cms_token     = Lengow_Main::get_token();
 		$cms_connected = Lengow_Sync::sync_catalog( true );
 		if ( ! $cms_connected ) {
-			$sync_data = json_encode( Lengow_Sync::get_sync_data() );
+			$sync_data = wp_json_encode( Lengow_Sync::get_sync_data() );
 			$result    = Lengow_Connector::query_api(
 				Lengow_Connector::POST,
 				Lengow_Connector::API_CMS,

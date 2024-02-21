@@ -595,10 +595,10 @@ class Lengow_Import_Order {
 			Lengow_Order::FIELD_DELIVERY_ADDRESS_ID => $this->delivery_address_id,
 			Lengow_Order::FIELD_ORDER_DATE          => $this->order_date,
 			Lengow_Order::FIELD_ORDER_LENGOW_STATE  => $this->order_state_lengow,
-			Lengow_Order::FIELD_ORDER_TYPES         => json_encode( $this->order_types ),
+			Lengow_Order::FIELD_ORDER_TYPES         => wp_json_encode( $this->order_types ),
 			Lengow_Order::FIELD_CUSTOMER_VAT_NUMBER => $this->get_vat_number_from_order_data(),
 			Lengow_Order::FIELD_MESSAGE             => $this->message,
-			Lengow_Order::FIELD_EXTRA               => json_encode( $this->order_data ),
+			Lengow_Order::FIELD_EXTRA               => wp_json_encode( $this->order_data ),
 			Lengow_Order::FIELD_IS_IN_ERROR         => 1,
 		);
 		$result = Lengow_Order::create( $data );
@@ -709,7 +709,7 @@ class Lengow_Import_Order {
 				Lengow_Order::FIELD_DELIVERY_COUNTRY_ISO =>
 					(string) $this->package_data->delivery->common_country_iso_a2,
 				Lengow_Order::FIELD_ORDER_LENGOW_STATE   => $this->order_state_lengow,
-				Lengow_Order::FIELD_EXTRA                => json_encode( $this->order_data ),
+				Lengow_Order::FIELD_EXTRA                => wp_json_encode( $this->order_data ),
 			)
 		);
 

@@ -101,7 +101,7 @@ class LengowCron
         }
 
         if (isset($_GET[Lengow_Import::PARAM_GET_SYNC]) && '1' === $_GET[Lengow_Import::PARAM_GET_SYNC]) {
-            echo json_encode(Lengow_Sync::get_sync_data());
+            echo wp_json_encode(Lengow_Sync::get_sync_data());
         } else {
             $force = isset($_GET[Lengow_Import::PARAM_FORCE]) && $_GET[Lengow_Import::PARAM_FORCE];
             $log_output = isset($_GET[Lengow_Import::PARAM_LOG_OUTPUT]) && $_GET[Lengow_Import::PARAM_LOG_OUTPUT];

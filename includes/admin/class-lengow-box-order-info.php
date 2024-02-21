@@ -88,7 +88,7 @@ class Lengow_Box_Order_Info {
 				$data['success'] = false;
 				break;
 		}
-		echo json_encode( $data );
+		echo wp_json_encode( $data );
 		exit();
 	}
 }

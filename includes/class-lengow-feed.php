@@ -254,7 +254,7 @@ class Lengow_Feed {
 					$field                = self::format_fields( $field, self::FORMAT_JSON, $this->legacy );
 					$json_array[ $field ] = $value;
 				}
-				$content .= json_encode( $json_array );
+				$content .= wp_json_encode( $json_array );
 
 				return $content;
 			case self::FORMAT_YAML:

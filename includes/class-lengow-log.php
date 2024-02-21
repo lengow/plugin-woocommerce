@@ -188,7 +188,7 @@ class Lengow_Log {
                 $contentLines[] = $logLine;
             }
 
-            return json_encode($contentLines);
+            return wp_json_encode($contentLines);
 
         }
 }

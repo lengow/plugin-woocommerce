@@ -164,7 +164,7 @@ class Lengow_Admin_Orders extends WP_List_Table {
         $data['message']          = implode( '<br/>', $message );
         $data['import_orders']    = $locale->t( 'order.screen.button_update_orders' );
         $data['last_importation'] = $order_collection['last_import_date'];
-        echo json_encode( $data );
+        echo wp_json_encode( $data );
     }
 
     /**

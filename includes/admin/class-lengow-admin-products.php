@@ -96,7 +96,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 							$data['state'] = false;
 						}
 						$result = array_merge( $data, self::_reload_total() );
-						echo json_encode( $result );
+						echo wp_json_encode( $result );
 					}
 					break;
 				case 'select_product':
@@ -104,7 +104,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 					$productId = isset( $_POST['id_product'] ) ? (int) sanitize_text_field($_POST['id_product']) : null;
 					if ( null !== $state ) {
 						Lengow_Product::publish( $productId, $state );
-						echo json_encode( self::_reload_total() );
+						echo wp_json_encode( self::_reload_total() );
 					}
 					break;
 				case 'export_mass_action':
@@ -146,7 +146,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 					} else {
 						$data['message'] = $locale->t( 'product.screen.no_product_selected' );
 					}
-					echo json_encode( $data );
+					echo wp_json_encode( $data );
 					break;
 			}
 			exit();

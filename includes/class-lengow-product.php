@@ -997,7 +997,7 @@ class Lengow_Product {
 					return '';
 				}
 
-				return is_array( $post_meta[0] ) ? json_encode( $post_meta[0] ) : $post_meta[0];
+				return is_array( $post_meta[0] ) ? wp_json_encode( $post_meta[0] ) : $post_meta[0];
 			}
 		}
 

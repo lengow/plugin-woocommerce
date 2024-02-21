@@ -297,7 +297,7 @@ class Lengow_Import {
 			Lengow_Log::CODE_IMPORT,
 			Lengow_Main::set_log_message(
 				'log.import.init_params',
-                                ['init_params' => json_encode($params)]
+                                ['init_params' => wp_json_encode($params)]
 			),
 			$this->log_output
 		);
