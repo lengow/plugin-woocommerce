@@ -11,9 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="lgw-content-section text-center">
         <div id="lgw-footer">
             <p>
-                <a href="<?php echo admin_url( admin_url( 'admin.php?page=lengow&tab=lengow_admin_settings' ) ); ?>"
+                <a href="<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_admin_settings' ); ?>"
                    class="sub-link"
-                   title="<?php echo esc_attr( $locale->t( 'setting.setting' ) ); ?>">
+                   title="<?php echo esc_attr( $locale->t( 'footer.setting' ) ); ?>">
                     <?php echo esc_html( $locale->t( 'footer.setting' ) ); ?>
                 </a>
                 | <a href="<?php echo admin_url( 'admin.php?page=lengow&tab=lengow_admin_toolbox' ); ?>"
