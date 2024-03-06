@@ -489,30 +489,28 @@ class Lengow_Connector {
 	private function make_request( $type, $api, $args, $token, $body, $log_output ) {
 
 		// get default curl options.
-		$opts                      = $this->curl_opts;
-				$curl_error        = '';
-				$curl_error_number = '';
+		$opts              = $this->curl_opts;
+        $curl_error        = '';
+        $curl_error_number = '';
 
 		// get special timeout for specific Lengow API.
 		if ( array_key_exists( $api, $this->lengow_urls ) ) {
-
-						$opts['timeout'] = $this->lengow_urls[ $api ];
+            $opts['timeout'] = $this->lengow_urls[ $api ];
 		}
 		// get base url for a specific environment.
 		$url = Lengow_Configuration::get_lengow_api_url() . $api;
 
-				// exit;
 		$opts['customrequest'] = strtoupper( $type );
 
 		$url = parse_url( $url );
 		if ( isset( $url['port'] ) ) {
 			$opts['port'] = $url['port'];
 		}
-		$opts['header']          = false;
-		$opts['verbose']         = false;
-				$opts['headers'] = array();
+		$opts['header']  = false;
+		$opts['verbose'] = false;
+        $opts['headers'] = array();
 		if ( ! empty( $token ) ) {
-						$opts['headers']['Authorization'] = $token;
+            $opts['headers']['Authorization'] = $token;
 		}
 
 		// get call url with the mandatory parameters.
@@ -523,15 +521,13 @@ class Lengow_Connector {
 		if ( $type !== self::GET ) {
 			if ( ! empty( $body ) ) {
 				// sending data in json format for new APIs.
-
-								$opts['headers']['Content-Type']   = 'application/json';
-								$opts['headers']['Content-Length'] = strlen( $body );
-				$opts['body']                                      = $body;
+                $opts['headers']['Content-Type']   = 'application/json';
+                $opts['headers']['Content-Length'] = strlen( $body );
+				$opts['body']                      = $body;
 			} else {
 				// sending data in string format for legacy APIs.
 				$opts['post'] = count( $args );
 				$opts['body'] = http_build_query( $args );
-
 			}
 		}
 		Lengow_Main::log(
@@ -553,8 +549,8 @@ class Lengow_Connector {
 			$result = wp_remote_post( $opts['url'], $opts );
 		}
 
-		$http_code         = wp_remote_retrieve_response_code( $result );
-				$http_body = wp_remote_retrieve_body( $result );
+		$http_code = wp_remote_retrieve_response_code( $result );
+        $http_body = wp_remote_retrieve_body( $result );
 		if ( $result instanceof WP_Error ) {
 			$curl_error        = $result->get_error_message();
 			$curl_error_number = $result->get_error_code();
