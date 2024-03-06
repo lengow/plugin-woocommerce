@@ -490,12 +490,12 @@ class Lengow_Connector {
 
 		// get default curl options.
 		$opts              = $this->curl_opts;
-        $curl_error        = '';
-        $curl_error_number = '';
+		$curl_error        = '';
+		$curl_error_number = '';
 
 		// get special timeout for specific Lengow API.
 		if ( array_key_exists( $api, $this->lengow_urls ) ) {
-            $opts['timeout'] = $this->lengow_urls[ $api ];
+			$opts['timeout'] = $this->lengow_urls[ $api ];
 		}
 		// get base url for a specific environment.
 		$url = Lengow_Configuration::get_lengow_api_url() . $api;
@@ -508,9 +508,9 @@ class Lengow_Connector {
 		}
 		$opts['header']  = false;
 		$opts['verbose'] = false;
-        $opts['headers'] = array();
+		$opts['headers'] = array();
 		if ( ! empty( $token ) ) {
-            $opts['headers']['Authorization'] = $token;
+			$opts['headers']['Authorization'] = $token;
 		}
 
 		// get call url with the mandatory parameters.
@@ -521,8 +521,8 @@ class Lengow_Connector {
 		if ( $type !== self::GET ) {
 			if ( ! empty( $body ) ) {
 				// sending data in json format for new APIs.
-                $opts['headers']['Content-Type']   = 'application/json';
-                $opts['headers']['Content-Length'] = strlen( $body );
+				$opts['headers']['Content-Type']   = 'application/json';
+				$opts['headers']['Content-Length'] = strlen( $body );
 				$opts['body']                      = $body;
 			} else {
 				// sending data in string format for legacy APIs.
@@ -545,16 +545,14 @@ class Lengow_Connector {
 		if ( $type === self::GET ) {
 			$result = wp_remote_get( $opts['url'], $opts );
 		} else {
-
 			$result = wp_remote_post( $opts['url'], $opts );
 		}
 
 		$http_code = wp_remote_retrieve_response_code( $result );
-        $http_body = wp_remote_retrieve_body( $result );
+		$http_body = wp_remote_retrieve_body( $result );
 		if ( $result instanceof WP_Error ) {
 			$curl_error        = $result->get_error_message();
 			$curl_error_number = $result->get_error_code();
-
 		}
 
 		$this->check_return_request(

@@ -1182,20 +1182,20 @@ class Lengow_Import_Order {
 	private function create_woocommerce_order( $user, $products, $billing_address, $shipping_address ) {
 
 		// create a generic order.
-		$wc_order         = $this->create_generic_woocommerce_order();
-				$order_id = $wc_order->get_id();
+		$wc_order = $this->create_generic_woocommerce_order();
+		$order_id = $wc_order->get_id();
 		// get billing data formatted for WooCommerce address.
 		$billing_data  = $billing_address->get_formatted_data();
 		$shipping_data = $shipping_address->get_formatted_data();
 		// adds shipping and billing addresses to the order.
 
-				$billing = array();
+		$billing = array();
 		foreach ( $billing_data as $key => $field ) {
-					$billingKey             = str_replace( 'billing_', '', $key );
-					$billing[ $billingKey ] = $field;
+			$billingKey             = str_replace( 'billing_', '', $key );
+			$billing[ $billingKey ] = $field;
 		}
 
-				$shipping = array();
+		$shipping = array();
 		foreach ( $shipping_data as $key => $field ) {
 					$shippingKey              = str_replace( 'shipping_', '', $key );
 					$shipping[ $shippingKey ] = $field;
