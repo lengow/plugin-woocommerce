@@ -385,8 +385,8 @@ en:
     lengow_import_in_progress_title: "Import in progress"
     lengow_last_import_manual_title: "Last manual import"
     lengow_last_import_cron_title: "Last Cron import"
-    lengow_return_tracking_title: "Permet d'envoyer le numéro de retour lors de l'expédition"
-    lengow_return_tracking_status: "Activer l'envoi du numéro de retour"
+    lengow_return_tracking_title: "Ability to send a return tracking number"
+    lengow_return_tracking_status: "Enable sending of return tracking number"
   lengow_log:
     error:
       rest_time_to_import: "Please wait %{rest_time} seconds before re-importing orders"
