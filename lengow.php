@@ -162,14 +162,13 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once 'includes/admin/class-lengow-admin-main-settings.php';
 				include_once 'includes/admin/class-lengow-box-order-info.php';
 				include_once 'includes/admin/class-lengow-box-order-shipping.php';
-
 			}
 
 			include_once 'includes/class-lengow-hook.php';
 			include_once 'includes/frontend/class-lengow-tracker.php';
-						include_once 'includes/class-lengow-cron.php';
-						include_once 'includes/class-lengow-cron-toolbox.php';
-						include_once 'includes/class-lengow-cron-export.php';
+			include_once 'includes/class-lengow-cron.php';
+			include_once 'includes/class-lengow-cron-toolbox.php';
+			include_once 'includes/class-lengow-cron-export.php';
 		}
 
 		/**
