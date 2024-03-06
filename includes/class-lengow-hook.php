@@ -130,22 +130,29 @@ class Lengow_Hook {
 			// get new WooCommerce order status.
 			$order_status = sanitize_text_field( $_POST['order_status'] );
 			// get new Lengow shipping data.
-			$carrier         = isset( $_POST['lengow_carrier'] )
+			$carrier                = isset( $_POST['lengow_carrier'] )
 				? sanitize_text_field( $_POST['lengow_carrier'] )
 				: '';
-			$custom_carrier  = isset( $_POST['lengow_custom_carrier'] )
+			$custom_carrier         = isset( $_POST['lengow_custom_carrier'] )
 				? sanitize_text_field( $_POST['lengow_custom_carrier'] )
 				: '';
-			$tracking_number = isset( $_POST['lengow_tracking_number'] )
+			$tracking_number        = isset( $_POST['lengow_tracking_number'] )
 				? sanitize_text_field( $_POST['lengow_tracking_number'] )
 				: '';
-			$tracking_url    = isset( $_POST['lengow_tracking_url'] )
+			$tracking_url           = isset( $_POST['lengow_tracking_url'] )
 				? sanitize_text_field( $_POST['lengow_tracking_url'] )
+				: '';
+			$return_carrier         = isset( $_POST['lengow_return_carrier'] )
+				? sanitize_text_field( $_POST['lengow_return_carrier'] )
+				: '';
+			$return_tracking_number = isset( $_POST['lengow_return_tracking_number'] )
+				? sanitize_text_field( $_POST['lengow_return_tracking_number'] )
 				: '';
 			// save Lengow shipping data.
 
-						$wc_order_carrier        = $wc_order->get_meta( '_lengow_carrier', true );
-						$wc_order_custom_carrier = $wc_order->get_meta( '_lengow_custom_carrier', true );
+			$wc_order_carrier        = $wc_order->get_meta( '_lengow_carrier', true );
+			$wc_order_custom_carrier = $wc_order->get_meta( '_lengow_custom_carrier', true );
+			$wc_order_return_carrier = $wc_order->get_meta( '_lengow_return_carrier', true );
 
 			if ( $carrier && ( $wc_order_carrier !== $carrier ) ) {
 				$wc_order->update_meta_data( '_lengow_carrier', $carrier );
@@ -158,6 +165,12 @@ class Lengow_Hook {
 				$wc_order->update_meta_data( '_lengow_custom_carrier', $custom_carrier );
 				$wc_order->update_meta_data( '_lengow_tracking_number', $tracking_number );
 				$wc_order->update_meta_data( '_lengow_tracking_url', $tracking_url );
+				$wc_order->save();
+			}
+
+			if ( $return_carrier && ( $wc_order_return_carrier !== $return_carrier ) ) {
+				$wc_order->update_meta_data( '_lengow_return_carrier', $return_carrier );
+				$wc_order->update_meta_data( '_lengow_return_tracking_number', $return_tracking_number );
 				$wc_order->save();
 			}
 

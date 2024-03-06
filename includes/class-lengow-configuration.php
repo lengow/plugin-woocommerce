@@ -78,6 +78,7 @@ class Lengow_Configuration {
 	const LAST_UPDATE_PLUGIN_DATA              = 'lengow_plugin_data_update';
 	const LAST_UPDATE_AUTHORIZATION_TOKEN      = 'lengow_last_authorization_token_update';
 	const LAST_UPDATE_PLUGIN_MODAL             = 'lengow_last_plugin_modal';
+	const RETURN_TRACKING                      = 'lengow_return_tracking';
 
 	/* Configuration parameters */
 	const PARAM_DEFAULT_VALUE  = 'default_value';
@@ -421,6 +422,11 @@ class Lengow_Configuration {
 				self::LAST_UPDATE_PLUGIN_MODAL             => array(
 					self::PARAM_GLOBAL => true,
 					self::PARAM_RETURN => self::RETURN_TYPE_INTEGER,
+				),
+				self::RETURN_TRACKING                      => array(
+					self::PARAM_EXPORT_TOOLBOX => false,
+					self::PARAM_LABEL          => $locale->t( 'lengow_settings.lengow_return_tracking_title' ),
+					self::PARAM_RETURN         => self::RETURN_TYPE_BOOLEAN,
 				),
 			);
 		}

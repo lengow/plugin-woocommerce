@@ -254,6 +254,7 @@ en:
       product_types_title: "Product type to export"
       please_choose_log: "Please choose a log file..."
       download_all_files: "Download all files"
+      return_tracking: "Send return tracking number"
   help:
     screen:
       title: "Get a little help from your support team!"
@@ -384,6 +385,8 @@ en:
     lengow_import_in_progress_title: "Import in progress"
     lengow_last_import_manual_title: "Last manual import"
     lengow_last_import_cron_title: "Last Cron import"
+    lengow_return_tracking_title: "Permet d'envoyer le numéro de retour lors de l'expédition"
+    lengow_return_tracking_status: "Activer l'envoi du numéro de retour"
   lengow_log:
     error:
       rest_time_to_import: "Please wait %{rest_time} seconds before re-importing orders"
@@ -461,3 +464,5 @@ en:
       choose_a_carrier: "Select a carrier code..."
       required: "required"
       or_use: "or use..."
+      return_tracking_number: "Return tracking number"
+      return_carrier: "Return carrier"

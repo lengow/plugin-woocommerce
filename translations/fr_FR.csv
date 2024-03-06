@@ -231,6 +231,7 @@ global_setting.screen.export_title|Paramètres d'export
 global_setting.screen.product_types_title|Type de produit à exporter
 global_setting.screen.please_choose_log|Veuillez choisir un fichier de log...
 global_setting.screen.download_all_files|Télécharger tous les fichiers
+global_setting.screen.return_tracking|Envoyer le numéro de retour
 help.screen.title|Demandez de l'aide à notre équipe Support !
 help.screen.contain_text_support|Des questions, un feedback sur Lengow... transmettez vos demandes au
 help.screen.title_lengow_support|support Lengow
@@ -354,6 +355,8 @@ lengow_settings.lengow_debug_enabled_title|Activer le Debug Mode
 lengow_settings.lengow_import_in_progress_title|Import en cours
 lengow_settings.lengow_last_import_manual_title|Dernier import manuel
 lengow_settings.lengow_last_import_cron_title|Dernier import CRON
+lengow_settings.lengow_return_tracking_title|Permet d'envoyer le numéro de retour lors de l'expédition
+lengow_settings.lengow_return_tracking_status|Activer l'envoi du numéro de retour
 lengow_log.error.rest_time_to_import|Attendez %{rest_time}  secondes avant d'importer de nouveau vos commandes
 lengow_log.error.nb_order_imported|%{nb_order} commande(s) importée(s)
 lengow_log.error.nb_order_updated|%{nb_order} commande(s) mise(s) à jour
@@ -423,3 +426,5 @@ meta_box.order_shipping.tracking_url|Url de suivi
 meta_box.order_shipping.choose_a_carrier|Sélectionnez un code transporteur...
 meta_box.order_shipping.required|requis
 meta_box.order_shipping.or_use|ou utiliser...
+meta_box.order_shipping.return_tracking_number|Numéro de suivi pour le retour
+meta_box.order_shipping.return_carrier|Transporteur pour le retour
