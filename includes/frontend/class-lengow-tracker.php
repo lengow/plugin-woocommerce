@@ -42,11 +42,11 @@ class Lengow_Tracker {
 			$amount         = (float) $order->get_total();
 			$currency       = self::get_currency( $order );
 			$payment_method = self::get_payment_method( $order );
-			$cart           = htmlspecialchars( json_encode( self::get_product_cart( $order->get_items() ) ) );
+			$cart           = htmlspecialchars( wp_json_encode( self::get_product_cart( $order->get_items() ) ) );
 			$cart_number    = 0;
 			$newbiz         = 1;
 			$valid          = 1;
-			include_once( 'views/tracker/html-tracker.php' );
+			include_once 'views/tracker/html-tracker.php';
 		} catch ( Exception $e ) {
 			echo '';
 		}

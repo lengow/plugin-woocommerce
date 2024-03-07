@@ -37,19 +37,18 @@ class Lengow_Order_Line {
 	const TABLE_ORDER_LINE = 'lengow_order_line';
 
 	/* Order line fields */
-	const FIELD_ID = 'id';
-	const FIELD_ORDER_ID = 'order_id';
+	const FIELD_ID            = 'id';
+	const FIELD_ORDER_ID      = 'order_id';
 	const FIELD_ORDER_LINE_ID = 'order_line_id';
-	const FIELD_PRODUCT_ID = 'product_id';
+	const FIELD_PRODUCT_ID    = 'product_id';
 
 	/**
 	 * Get Lengow order line.
 	 *
-	 * @param array $where a named array of WHERE clauses
+	 * @param array   $where a named array of WHERE clauses
 	 * @param boolean $single get a single result or not
 	 *
 	 * @return false|object[]|object
-	 *
 	 */
 	public static function get( $where = array(), $single = true ) {
 		return Lengow_Crud::read( self::TABLE_ORDER_LINE, $where, $single );
@@ -61,7 +60,6 @@ class Lengow_Order_Line {
 	 * @param array $data Lengow order line data
 	 *
 	 * @return boolean
-	 *
 	 */
 	public static function create( $data = array() ) {
 		return Lengow_Crud::create( self::TABLE_ORDER_LINE, $data );
@@ -71,7 +69,7 @@ class Lengow_Order_Line {
 	 * Get all order line ids by WooCommerce order id.
 	 *
 	 * @param integer $order_id WooCommerce order id
-	 * @param string $output Optional. Any of ARRAY_A | ARRAY_N | OBJECT | OBJECT_K constants.
+	 * @param string  $output Optional. Any of ARRAY_A | ARRAY_N | OBJECT | OBJECT_K constants.
 	 *
 	 * @return array|false
 	 */

@@ -65,8 +65,8 @@ class Lengow_Translation {
 	/**
 	 * Translate message.
 	 *
-	 * @param string $message localization key
-	 * @param array $args replace word in string
+	 * @param string      $message localization key
+	 * @param array       $args replace word in string
 	 * @param string|null $iso_code iso code
 	 *
 	 * @return string
@@ -98,7 +98,7 @@ class Lengow_Translation {
 	 * Translate string.
 	 *
 	 * @param string $text localization key
-	 * @param array $args replace word in string
+	 * @param array  $args replace word in string
 	 *
 	 * @return string
 	 */

@@ -32,14 +32,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Crud {
 
 	/* Field database actions */
-	const FIELD_REQUIRED = 'required';
+	const FIELD_REQUIRED       = 'required';
 	const FIELD_CAN_BE_UPDATED = 'updated';
-	const FIELD_FORMAT = 'format';
+	const FIELD_FORMAT         = 'format';
 
 	/* Field format types */
-	const FORMAT_STRING = '%s';
+	const FORMAT_STRING  = '%s';
 	const FORMAT_INTEGER = '%d';
-	const FORMAT_FLOAT = '%f';
+	const FORMAT_FLOAT   = '%f';
 
 	/**
 	 * @var array $field_list field list.
@@ -334,7 +334,7 @@ class Lengow_Crud {
 	 * Create a record.
 	 *
 	 * @param string $table table name
-	 * @param array $data data to insert
+	 * @param array  $data data to insert
 	 *
 	 * @return boolean
 	 */
@@ -362,8 +362,8 @@ class Lengow_Crud {
 	/**
 	 * Read a record.
 	 *
-	 * @param string $table table name
-	 * @param array $where a named array of WHERE clauses
+	 * @param string  $table table name
+	 * @param array   $where a named array of WHERE clauses
 	 * @param boolean $single get a single result or not
 	 *
 	 * @return false|object[]|object
@@ -403,8 +403,8 @@ class Lengow_Crud {
 	 * Update a record.
 	 *
 	 * @param string $table table name
-	 * @param array $data data to update
-	 * @param array $where a named array of WHERE clauses
+	 * @param array  $data data to update
+	 * @param array  $where a named array of WHERE clauses
 	 *
 	 * @return boolean
 	 */
@@ -436,7 +436,7 @@ class Lengow_Crud {
 	 * Delete a record.
 	 *
 	 * @param string $table table name
-	 * @param array $where a named array of WHERE clauses
+	 * @param array  $where a named array of WHERE clauses
 	 *
 	 * @return boolean
 	 */

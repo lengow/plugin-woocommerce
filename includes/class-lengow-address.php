@@ -36,7 +36,7 @@ class Lengow_Address {
 	const ISO_A2_IT = 'IT';
 
 	/* Address types */
-	const TYPE_BILLING = 'billing_';
+	const TYPE_BILLING  = 'billing_';
 	const TYPE_SHIPPING = 'shipping_';
 
 	/**
@@ -402,8 +402,8 @@ class Lengow_Address {
 	/**
 	 * Construct.
 	 *
-	 * @param object $data address data from API
-	 * @param string $type address type (billing or shipping)
+	 * @param object      $data address data from API
+	 * @param string      $type address type (billing or shipping)
 	 * @param string|null $relay_id relay id
 	 */
 	public function __construct( $data, $type, $relay_id = null ) {
@@ -496,19 +496,19 @@ class Lengow_Address {
 	 */
 	private function get_names( $address_data ) {
 		$names = array(
-			'firstname' => trim((string) $address_data['first_name'] ),
-			'lastname'  => trim((string) $address_data['last_name'] ),
-			'fullname'  => $this->clean_full_name((string) $address_data['full_name'] ),
+			'firstname' => trim( (string) $address_data['first_name'] ),
+			'lastname'  => trim( (string) $address_data['last_name'] ),
+			'fullname'  => $this->clean_full_name( (string) $address_data['full_name'] ),
 		);
 		if ( empty( $names['firstname'] ) && ! empty( $names['lastname'] ) ) {
-			$names = $this->split_names((string) $names['lastname'] );
+			$names = $this->split_names( (string) $names['lastname'] );
 		}
 		if ( empty( $names['lastname'] ) && ! empty( $names['firstname'] ) ) {
-			$names = $this->split_names((string) $names['firstname'] );
+			$names = $this->split_names( (string) $names['firstname'] );
 		}
 		// check full name if last_name and first_name are empty.
 		if ( empty( $names['lastname'] ) && empty( $names['firstname'] ) ) {
-			$names = $this->split_names((string) $names['fullname'] );
+			$names = $this->split_names( (string) $names['fullname'] );
 		}
 		if ( empty( $names['lastname'] ) ) {
 			$names['lastname'] = '__';
@@ -531,10 +531,10 @@ class Lengow_Address {
 		$split = explode( ' ', $fullname );
 		if ( ! empty( $split ) ) {
 			$fullname    = ( in_array( $split[0], $this->current_male, true )
-			                 || in_array( $split[0], $this->current_female, true )
+							|| in_array( $split[0], $this->current_female, true )
 			) ? '' : $split[0];
 			$count_split = count( $split );
-			for ( $i = 1; $i < $count_split; $i ++ ) {
+			for ( $i = 1; $i < $count_split; $i++ ) {
 				if ( ! empty( $fullname ) ) {
 					$fullname .= ' ';
 				}
@@ -558,7 +558,7 @@ class Lengow_Address {
 			$names['firstname'] = $split[0];
 			$names['lastname']  = '';
 			$count_split        = count( $split );
-			for ( $i = 1; $i < $count_split; $i ++ ) {
+			for ( $i = 1; $i < $count_split; $i++ ) {
 				if ( ! empty( $names['lastname'] ) ) {
 					$names['lastname'] .= ' ';
 				}
@@ -575,15 +575,15 @@ class Lengow_Address {
 	/**
 	 * Get clean address fields.
 	 *
-	 * @param array $address_data API address data
+	 * @param array       $address_data API address data
 	 * @param string|null $relay_id relay id
 	 *
 	 * @return array
 	 */
 	private function get_address_fields( $address_data, $relay_id = null ) {
-		$address_1  = trim((string) $address_data['first_line'] );
-		$address_2  = trim((string) $address_data['second_line'] );
-		$complement = trim((string) $address_data['complement'] );
+		$address_1  = trim( (string) $address_data['first_line'] );
+		$address_2  = trim( (string) $address_data['second_line'] );
+		$complement = trim( (string) $address_data['complement'] );
 		if ( empty( $address_1 ) ) {
 			if ( ! empty( $address_2 ) ) {
 				$address_1 = $address_2;
@@ -598,7 +598,7 @@ class Lengow_Address {
 		}
 		// get relay id for shipping address.
 		if ( null !== $relay_id && self::TYPE_SHIPPING === $this->type ) {
-			$relay_id  = 'Relay id: ' . $relay_id;
+			$relay_id   = 'Relay id: ' . $relay_id;
 			$address_2 .= ! empty( $address_2 ) ? ' - ' . $relay_id : $relay_id;
 		}
 
@@ -663,7 +663,7 @@ class Lengow_Address {
 	 * Get short code from interval postcodes.
 	 *
 	 * @param integer $postcode address postcode
-	 * @param array $interval_postcodes postcode intervals
+	 * @param array   $interval_postcodes postcode intervals
 	 *
 	 * @return string|false
 	 */
@@ -674,7 +674,7 @@ class Lengow_Address {
 				$min_postcode = is_numeric( $interval_postcodes[0] ) ? (int) $interval_postcodes[0] : false;
 				$max_postcode = is_numeric( $interval_postcodes[1] ) ? (int) $interval_postcodes[1] : false;
 				if ( ( $min_postcode && $max_postcode )
-				     && ( $postcode >= $min_postcode && $postcode <= $max_postcode )
+					&& ( $postcode >= $min_postcode && $postcode <= $max_postcode )
 				) {
 					return $state;
 				}
@@ -696,7 +696,7 @@ class Lengow_Address {
 		$state                = '';
 		$wc_countries         = new WC_Countries();
 		$states               = $wc_countries->get_states( $country_iso_a2 );
-		$state_region         = strtoupper(trim((string) $state_region ) );
+		$state_region         = strtoupper( trim( (string) $state_region ) );
 		$state_region_cleaned = $this->clean_string( $state_region );
 		if ( ! empty( $states ) && ! empty( $state_region ) ) {
 			if ( array_key_exists( $state_region, $states ) ) {
@@ -729,7 +729,7 @@ class Lengow_Address {
 	 */
 	private function clean_string( $string ) {
 		$cleanFilters = array( ' ', '-', '_', '.' );
-		$string       = strtolower( str_replace( $cleanFilters, '', trim((string) $string ) ) );
+		$string       = strtolower( str_replace( $cleanFilters, '', trim( (string) $string ) ) );
 
 		return Lengow_Main::replace_accented_chars( html_entity_decode( $string ) );
 	}
@@ -751,6 +751,6 @@ class Lengow_Address {
 			$phone_number = $address_data['phone_office'];
 		}
 
-		return Lengow_Main::clean_phone((string) $phone_number );
+		return Lengow_Main::clean_phone( (string) $phone_number );
 	}
 }

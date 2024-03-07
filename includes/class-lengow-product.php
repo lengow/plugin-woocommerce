@@ -37,7 +37,7 @@ class Lengow_Product {
 	const TABLE_PRODUCT = 'lengow_product';
 
 	/* Product fields */
-	const FIELD_ID = 'id';
+	const FIELD_ID         = 'id';
 	const FIELD_PRODUCT_ID = 'product_id';
 
 	const TAX_CATEGORY = 'product_cat';
@@ -143,7 +143,7 @@ class Lengow_Product {
 	public function __construct( $product_id ) {
 		$this->product = wc_get_product( $product_id );
 		if ( '' === $this->product
-		     || ! in_array( get_post_type( $product_id ), array( 'product', 'product_variation' ) )
+			|| ! in_array( get_post_type( $product_id ), array( 'product', 'product_variation' ) )
 		) {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message(
@@ -163,11 +163,10 @@ class Lengow_Product {
 	/**
 	 * Get Lengow product.
 	 *
-	 * @param array $where a named array of WHERE clauses
+	 * @param array   $where a named array of WHERE clauses
 	 * @param boolean $single get a single result or not
 	 *
 	 * @return false|object[]|object
-	 *
 	 */
 	public static function get( $where = array(), $single = true ) {
 		return Lengow_Crud::read( self::TABLE_PRODUCT, $where, $single );
@@ -179,7 +178,6 @@ class Lengow_Product {
 	 * @param array $data Lengow order data
 	 *
 	 * @return boolean
-	 *
 	 */
 	public static function create( $data = array() ) {
 		return Lengow_Crud::create( self::TABLE_PRODUCT, $data );
@@ -191,7 +189,6 @@ class Lengow_Product {
 	 * @param array $where a named array of WHERE clauses
 	 *
 	 * @return boolean
-	 *
 	 */
 	public static function delete( $where = array() ) {
 		return Lengow_Crud::delete( self::TABLE_PRODUCT, $where );
@@ -343,7 +340,7 @@ class Lengow_Product {
 	 * Get parent product for variation.
 	 *
 	 * @param WC_Product $product WooCommerce product instance
-	 * @param string $product_type WooCommerce product type
+	 * @param string     $product_type WooCommerce product type
 	 *
 	 * @return WC_Product|null
 	 */
@@ -354,9 +351,9 @@ class Lengow_Product {
 	/**
 	 * Get gallery image ids.
 	 *
-	 * @param WC_Product $product WooCommerce product instance
+	 * @param WC_Product      $product WooCommerce product instance
 	 * @param WC_Product|null $product_parent WooCommerce product parent instance
-	 * @param string $product_type WooCommerce product type
+	 * @param string          $product_type WooCommerce product type
 	 *
 	 * @return array
 	 */
@@ -373,9 +370,9 @@ class Lengow_Product {
 	/**
 	 * Get thumbnail id.
 	 *
-	 * @param integer $product_id WooCommerce product id
+	 * @param integer      $product_id WooCommerce product id
 	 * @param integer|null $variation_id WooCommerce's variation id
-	 * @param string $product_type WooCommerce product type
+	 * @param string       $product_type WooCommerce product type
 	 *
 	 * @return integer
 	 */
@@ -387,15 +384,14 @@ class Lengow_Product {
 		}
 
 		return (int) ( $variation_thumbnail_id ?: $thumbnail_id );
-
 	}
 
 	/**
 	 * Get description.
 	 *
-	 * @param WC_Product $product WooCommerce product instance
+	 * @param WC_Product      $product WooCommerce product instance
 	 * @param WC_Product|null $product_parent WooCommerce product parent instance
-	 * @param string $product_type WooCommerce product type
+	 * @param string          $product_type WooCommerce product type
 	 *
 	 * @return string
 	 */
@@ -411,9 +407,9 @@ class Lengow_Product {
 	/**
 	 * Get short description.
 	 *
-	 * @param WC_Product $product WooCommerce product instance
+	 * @param WC_Product      $product WooCommerce product instance
 	 * @param WC_Product|null $product_parent WooCommerce product parent instance
-	 * @param string $product_type WooCommerce product type
+	 * @param string          $product_type WooCommerce product type
 	 *
 	 * @return string
 	 */
@@ -465,7 +461,7 @@ class Lengow_Product {
 		';
 		foreach ( $wpdb->get_results( $sql ) as $result ) {
 			if ( ! in_array( $result->meta_key, self::$excludes, true )
-			     && ! in_array( $result->meta_key, $return, true )
+				&& ! in_array( $result->meta_key, $return, true )
 			) {
 				$return[] = $result->meta_key;
 			}
@@ -494,13 +490,12 @@ class Lengow_Product {
 	/**
 	 * Match product with API data.
 	 *
-	 * @param mixed $product_data all product data
-	 * @param string $marketplace_sku Lengow id of current order
+	 * @param mixed   $product_data all product data
+	 * @param string  $marketplace_sku Lengow id of current order
 	 * @param boolean $log_output see log or not
 	 *
 	 * @return WC_Product|false
 	 * @throws Lengow_Exception If product is a variable
-	 *
 	 */
 	public static function match_product( $product_data, $marketplace_sku, $log_output ) {
 		$product         = false;
@@ -700,7 +695,7 @@ class Lengow_Product {
 	/**
 	 * Returns the price (excluding tax).
 	 *
-	 * @param boolean $including_tax price including tax or not
+	 * @param boolean    $including_tax price including tax or not
 	 * @param float|null $price to calculate, left blank to just use get_price()
 	 *
 	 * @return float
@@ -734,10 +729,10 @@ class Lengow_Product {
 		global $woocommerce;
 		$price_shipping = 0;
 		if ( $this->product->needs_shipping() ) {
-            if (is_null($woocommerce->cart)){
-                $woocommerce->initialize_session();
-                $woocommerce->initialize_cart();
-            }
+			if ( is_null( $woocommerce->cart ) ) {
+				$woocommerce->initialize_session();
+				$woocommerce->initialize_cart();
+			}
 			$woocommerce->cart->empty_cart();
 			$packages                               = array();
 			$packages[0]['contents'][0]             = array(
@@ -809,14 +804,14 @@ class Lengow_Product {
 		);
 		if ( ! empty( $gallery_image_ids ) ) {
 			foreach ( $gallery_image_ids as $image_id ) {
-				$image  = wp_get_attachment_image_src( $image_id, 'shop_catalog_image_size' );
+				$image = wp_get_attachment_image_src( $image_id, 'shop_catalog_image_size' );
 				if ( isset( $image[0] ) ) {
 					$urls[] = $image[0];
 				}
 			}
 		}
 		// create image urls array.
-		for ( $i = 1; $i < 11; $i ++ ) {
+		for ( $i = 1; $i < 11; $i++ ) {
 			$imageUrls[ 'image_url_' . $i ] = '';
 		}
 		// clean $urls array to remove NULL entry
@@ -828,7 +823,7 @@ class Lengow_Product {
 			if ( 10 === $counter ) {
 				break;
 			}
-			$counter ++;
+			++$counter;
 		}
 
 		return $imageUrls;
@@ -839,8 +834,7 @@ class Lengow_Product {
 	 *
 	 * @return array
 	 */
-	private function get_all_categories()
-	{
+	private function get_all_categories() {
 		if ( isset( self::$categories ) ) {
 			return self::$categories;
 		}
@@ -997,7 +991,7 @@ class Lengow_Product {
 					return '';
 				}
 
-				return is_array( $post_meta[0] ) ? json_encode( $post_meta[0] ) : $post_meta[0];
+				return is_array( $post_meta[0] ) ? wp_json_encode( $post_meta[0] ) : $post_meta[0];
 			}
 		}
 

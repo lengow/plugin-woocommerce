@@ -32,24 +32,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Export {
 
 	/* Export GET params */
-	const PARAM_TOKEN = 'token';
-	const PARAM_MODE = 'mode';
-	const PARAM_FORMAT = 'format';
-	const PARAM_STREAM = 'stream';
-	const PARAM_OFFSET = 'offset';
-	const PARAM_LIMIT = 'limit';
-	const PARAM_SELECTION = 'selection';
-	const PARAM_OUT_OF_STOCK = 'out_of_stock';
-	const PARAM_PRODUCT_IDS = 'product_ids';
-	const PARAM_VARIATION = 'variation';
-	const PARAM_PRODUCT_TYPES = 'product_types';
-	const PARAM_LEGACY_FIELDS = 'legacy_fields';
-	const PARAM_LOG_OUTPUT = 'log_output';
+	const PARAM_TOKEN              = 'token';
+	const PARAM_MODE               = 'mode';
+	const PARAM_FORMAT             = 'format';
+	const PARAM_STREAM             = 'stream';
+	const PARAM_OFFSET             = 'offset';
+	const PARAM_LIMIT              = 'limit';
+	const PARAM_SELECTION          = 'selection';
+	const PARAM_OUT_OF_STOCK       = 'out_of_stock';
+	const PARAM_PRODUCT_IDS        = 'product_ids';
+	const PARAM_VARIATION          = 'variation';
+	const PARAM_PRODUCT_TYPES      = 'product_types';
+	const PARAM_LEGACY_FIELDS      = 'legacy_fields';
+	const PARAM_LOG_OUTPUT         = 'log_output';
 	const PARAM_UPDATE_EXPORT_DATE = 'update_export_date';
-	const PARAM_GET_PARAMS = 'get_params';
+	const PARAM_GET_PARAMS         = 'get_params';
 
 	/* Legacy export GET params for old versions */
-	const PARAM_LEGACY_SELECTION = 'all_products';
+	const PARAM_LEGACY_SELECTION     = 'all_products';
 	const PARAM_LEGACY_PRODUCT_TYPES = 'product_type';
 
 	/**
@@ -283,7 +283,7 @@ class Lengow_Export {
 			? $params[ self::PARAM_VARIATION ]
 			: true;
 		$this->update_export_date = ! isset( $params[ self::PARAM_UPDATE_EXPORT_DATE ] )
-		                            || $params[ self::PARAM_UPDATE_EXPORT_DATE ];
+									|| $params[ self::PARAM_UPDATE_EXPORT_DATE ];
 		$this->legacy             = isset( $params[ self::PARAM_LEGACY_FIELDS ] )
 			? $params[ self::PARAM_LEGACY_FIELDS ]
 			: null;
@@ -340,7 +340,7 @@ class Lengow_Export {
 			$error_message = $e->getMessage();
 		} catch ( Exception $e ) {
 			$error_message = '[WooCommerce error]: "' . $e->getMessage()
-			                 . '" in ' . $e->getFile() . ' on line ' . $e->getLine();
+							. '" in ' . $e->getFile() . ' on line ' . $e->getLine();
 		}
 		if ( isset( $error_message ) ) {
 			$decoded_message = Lengow_Main::decode_log_message( $error_message, Lengow_Translation::DEFAULT_ISO_CODE );
@@ -353,12 +353,12 @@ class Lengow_Export {
 				$this->log_output
 			);
 		}
-                if ($this->stream) {
-                    echo wp_kses_post( $exported );
-                    exit();
-                } else {
-                    exit(json_encode([]));
-                }
+		if ( $this->stream ) {
+			echo wp_kses_post( $exported );
+			exit();
+		} else {
+			exit( json_encode( array() ) );
+		}
 	}
 
 	/**
@@ -391,7 +391,7 @@ class Lengow_Export {
 	public function get_total_export_product() {
 		global $wpdb;
 		if ( $this->variation && in_array( 'variable', $this->product_types, true ) ) {
-			$query = ' SELECT COUNT(*) AS total FROM ( ( ';
+			$query  = ' SELECT COUNT(*) AS total FROM ( ( ';
 			$query .= $this->build_total_query();
 			$query .= ' ) UNION ALL ( ';
 			$query .= $this->build_total_query( true );
@@ -537,7 +537,6 @@ class Lengow_Export {
 	 * @param array $products list of products to be exported
 	 * @param array $fields list of fields
 	 *
-	 *
 	 * @throws Lengow_Exception Export folder not writable
 	 *
 	 * @return string
@@ -545,8 +544,8 @@ class Lengow_Export {
 	private function export( $products, $fields ) {
 		$product_count = 0;
 		$feed          = new Lengow_Feed( $this->stream, $this->format, $this->legacy );
-		$writed = $feed->write( Lengow_Feed::HEADER, $fields );
-		$is_first = true;
+		$writed        = $feed->write( Lengow_Feed::HEADER, $fields );
+		$is_first      = true;
 		// get the maximum of character for yaml format.
 		$max_character = 0;
 		foreach ( $fields as $field ) {
@@ -573,7 +572,7 @@ class Lengow_Export {
 			}
 			// write parent product.
 			$writed .= $feed->write( Lengow_Feed::BODY, $product_data, $is_first, $max_character );
-			$product_count ++;
+			++$product_count;
 			if ( $product_count > 0 && 0 === $product_count % 50 ) {
 				Lengow_Main::log(
 					Lengow_Log::CODE_EXPORT,
@@ -587,8 +586,8 @@ class Lengow_Export {
 
 			$is_first = false;
 		}
-                $writed .= $feed->write(Lengow_Feed::FOOTER );
-		$success = $feed->end();
+				$writed .= $feed->write( Lengow_Feed::FOOTER );
+		$success         = $feed->end();
 		if ( ! $success ) {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message( 'log.export.error_folder_not_writable' )
@@ -651,7 +650,7 @@ class Lengow_Export {
 	private function get_export_ids() {
 		global $wpdb;
 		if ( $this->variation && in_array( 'variable', $this->product_types, true ) ) {
-			$query = ' SELECT * FROM ( ( ';
+			$query  = ' SELECT * FROM ( ( ';
 			$query .= $this->build_total_query();
 			$query .= ' ) UNION ALL ( ';
 			$query .= $this->build_total_query( true );

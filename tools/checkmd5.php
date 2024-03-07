@@ -6,8 +6,8 @@
 error_reporting( E_ALL );
 ini_set( 'display_errors', 1 );
 
-$base = dirname( dirname( __FILE__ ) );
-$fp   = fopen( dirname( dirname( __FILE__ ) ) . '/config/checkmd5.csv', 'wb+' );
+$base = dirname( __DIR__ );
+$fp   = fopen( dirname( __DIR__ ) . '/config/checkmd5.csv', 'wb+' );
 
 $list_folders = array(
 	'/assets',
@@ -65,9 +65,9 @@ function explorer( $path ) {
 /**
  * Write csv
  *
- * @param resource $fp
+ * @param resource     $fp
  * @param array|string $text
- * @param array $front_key
+ * @param array        $front_key
  */
 function write_csv( $fp, $text, &$front_key = array() ) {
 	if ( is_array( $text ) ) {

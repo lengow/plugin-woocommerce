@@ -92,7 +92,7 @@ class Lengow_Admin {
 		$plugin_links = Lengow_Sync::get_plugin_links( get_locale() );
 		// display footer or not
 		if ( ! $is_new_merchant
-		     && ! in_array( $this->current_tab, array( $this->default_tab, 'lengow_admin_dashboard' ), true )
+			&& ! in_array( $this->current_tab, array( $this->default_tab, 'lengow_admin_dashboard' ), true )
 		) {
 			$merchant_status     = Lengow_Sync::get_status_account();
 			$total_pending_order = Lengow_Order::count_order_to_be_sent();

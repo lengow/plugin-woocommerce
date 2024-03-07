@@ -37,61 +37,61 @@ class Lengow_Order {
 	const TABLE_ORDER = 'lengow_orders';
 
 	/* Order fields */
-	const FIELD_ID = 'id';
-	const FIELD_ORDER_ID = 'order_id';
-	const FIELD_FEED_ID = 'feed_id';
-	const FIELD_DELIVERY_ADDRESS_ID = 'delivery_address_id';
+	const FIELD_ID                   = 'id';
+	const FIELD_ORDER_ID             = 'order_id';
+	const FIELD_FEED_ID              = 'feed_id';
+	const FIELD_DELIVERY_ADDRESS_ID  = 'delivery_address_id';
 	const FIELD_DELIVERY_COUNTRY_ISO = 'delivery_country_iso';
-	const FIELD_MARKETPLACE_SKU = 'marketplace_sku';
-	const FIELD_MARKETPLACE_NAME = 'marketplace_name';
-	const FIELD_MARKETPLACE_LABEL = 'marketplace_label';
-	const FIELD_ORDER_LENGOW_STATE = 'order_lengow_state';
-	const FIELD_ORDER_PROCESS_STATE = 'order_process_state';
-	const FIELD_ORDER_DATE = 'order_date';
-	const FIELD_ORDER_ITEM = 'order_item';
-	const FIELD_ORDER_TYPES = 'order_types';
-	const FIELD_CURRENCY = 'currency';
-	const FIELD_TOTAL_PAID = 'total_paid';
-	const FIELD_COMMISSION = 'commission';
-	const FIELD_CUSTOMER_NAME = 'customer_name';
-	const FIELD_CUSTOMER_EMAIL = 'customer_email';
-	const FIELD_CUSTOMER_VAT_NUMBER = 'customer_vat_number';
-	const FIELD_CARRIER = 'carrier';
-	const FIELD_CARRIER_METHOD = 'carrier_method';
-	const FIELD_CARRIER_TRACKING = 'carrier_tracking';
-	const FIELD_CARRIER_RELAY_ID = 'carrier_id_relay';
-	const FIELD_SENT_MARKETPLACE = 'sent_marketplace';
-	const FIELD_IS_IN_ERROR = 'is_in_error';
-	const FIELD_IS_REIMPORTED = 'is_reimported';
-	const FIELD_MESSAGE = 'message';
-	const FIELD_CREATED_AT = 'created_at';
-	const FIELD_UPDATED_AT = 'updated_at';
-	const FIELD_EXTRA = 'extra';
+	const FIELD_MARKETPLACE_SKU      = 'marketplace_sku';
+	const FIELD_MARKETPLACE_NAME     = 'marketplace_name';
+	const FIELD_MARKETPLACE_LABEL    = 'marketplace_label';
+	const FIELD_ORDER_LENGOW_STATE   = 'order_lengow_state';
+	const FIELD_ORDER_PROCESS_STATE  = 'order_process_state';
+	const FIELD_ORDER_DATE           = 'order_date';
+	const FIELD_ORDER_ITEM           = 'order_item';
+	const FIELD_ORDER_TYPES          = 'order_types';
+	const FIELD_CURRENCY             = 'currency';
+	const FIELD_TOTAL_PAID           = 'total_paid';
+	const FIELD_COMMISSION           = 'commission';
+	const FIELD_CUSTOMER_NAME        = 'customer_name';
+	const FIELD_CUSTOMER_EMAIL       = 'customer_email';
+	const FIELD_CUSTOMER_VAT_NUMBER  = 'customer_vat_number';
+	const FIELD_CARRIER              = 'carrier';
+	const FIELD_CARRIER_METHOD       = 'carrier_method';
+	const FIELD_CARRIER_TRACKING     = 'carrier_tracking';
+	const FIELD_CARRIER_RELAY_ID     = 'carrier_id_relay';
+	const FIELD_SENT_MARKETPLACE     = 'sent_marketplace';
+	const FIELD_IS_IN_ERROR          = 'is_in_error';
+	const FIELD_IS_REIMPORTED        = 'is_reimported';
+	const FIELD_MESSAGE              = 'message';
+	const FIELD_CREATED_AT           = 'created_at';
+	const FIELD_UPDATED_AT           = 'updated_at';
+	const FIELD_EXTRA                = 'extra';
 
 	/* Order process states */
-	const PROCESS_STATE_NEW = 0;
+	const PROCESS_STATE_NEW    = 0;
 	const PROCESS_STATE_IMPORT = 1;
 	const PROCESS_STATE_FINISH = 2;
 
 	/* Order states */
-	const STATE_ACCEPTED = 'accepted';
-	const STATE_WAITING_SHIPMENT = 'waiting_shipment';
-	const STATE_SHIPPED = 'shipped';
-	const STATE_CLOSED = 'closed';
-	const STATE_REFUSED = 'refused';
-	const STATE_CANCELED = 'canceled';
-	const STATE_REFUNDED = 'refunded';
-        const STATE_PARTIALLY_REFUNDED = 'partial_refunded';
-        const STATE_WC_COMPLETED = 'wc-completed';
-        const STATE_WC_PROCESSING = 'wc-processing';
-        const STATE_WC_CANCELED = 'wc-cancelled';
+	const STATE_ACCEPTED               = 'accepted';
+	const STATE_WAITING_SHIPMENT       = 'waiting_shipment';
+	const STATE_SHIPPED                = 'shipped';
+	const STATE_CLOSED                 = 'closed';
+	const STATE_REFUSED                = 'refused';
+	const STATE_CANCELED               = 'canceled';
+	const STATE_REFUNDED               = 'refunded';
+		const STATE_PARTIALLY_REFUNDED = 'partial_refunded';
+		const STATE_WC_COMPLETED       = 'wc-completed';
+		const STATE_WC_PROCESSING      = 'wc-processing';
+		const STATE_WC_CANCELED        = 'wc-cancelled';
 
 	/* Order types */
-	const TYPE_PRIME = 'is_prime';
-	const TYPE_EXPRESS = 'is_express';
-	const TYPE_BUSINESS = 'is_business';
+	const TYPE_PRIME                    = 'is_prime';
+	const TYPE_EXPRESS                  = 'is_express';
+	const TYPE_BUSINESS                 = 'is_business';
 	const TYPE_DELIVERED_BY_MARKETPLACE = 'is_delivered_by_marketplace';
-        const SYNCHRONIZE_TRIES = 5;
+		const SYNCHRONIZE_TRIES         = 5;
 
 	/**
 	 * @var string label fulfillment for old orders without order type.
@@ -303,11 +303,10 @@ class Lengow_Order {
 	/**
 	 * Get Lengow order.
 	 *
-	 * @param array $where a named array of WHERE clauses
+	 * @param array   $where a named array of WHERE clauses
 	 * @param boolean $single get a single result or not
 	 *
 	 * @return false|object[]|object
-	 *
 	 */
 	public static function get( $where = array(), $single = true ) {
 		return Lengow_Crud::read( self::TABLE_ORDER, $where, $single );
@@ -319,7 +318,6 @@ class Lengow_Order {
 	 * @param array $data Lengow order data
 	 *
 	 * @return boolean
-	 *
 	 */
 	public static function create( $data = array() ) {
 		$data[ self::FIELD_CREATED_AT ] = date( Lengow_Main::DATE_FULL );
@@ -331,10 +329,9 @@ class Lengow_Order {
 	 * Update Lengow order.
 	 *
 	 * @param integer $order_lengow_id Lengow order id
-	 * @param array $data Lengow order data
+	 * @param array   $data Lengow order data
 	 *
 	 * @return boolean
-	 *
 	 */
 	public static function update( $order_lengow_id, $data = array() ) {
 		$data[ self::FIELD_UPDATED_AT ] = date( Lengow_Main::DATE_FULL );
@@ -353,7 +350,7 @@ class Lengow_Order {
 		switch ( $state ) {
 			case self::STATE_ACCEPTED:
 			case self::STATE_WAITING_SHIPMENT:
-                        case self::STATE_PARTIALLY_REFUNDED:
+			case self::STATE_PARTIALLY_REFUNDED:
 			default:
 				return self::PROCESS_STATE_IMPORT;
 			case self::STATE_SHIPPED:
@@ -368,9 +365,9 @@ class Lengow_Order {
 	/**
 	 * Get WooCommerce state id corresponding to the current order state.
 	 *
-	 * @param string $order_state_marketplace order state marketplace
+	 * @param string             $order_state_marketplace order state marketplace
 	 * @param Lengow_Marketplace $marketplace Lengow marketplace instance
-	 * @param boolean $shipped_by_mp order shipped by marketplace
+	 * @param boolean            $shipped_by_mp order shipped by marketplace
 	 *
 	 * @return string
 	 */
@@ -398,18 +395,18 @@ class Lengow_Order {
 		switch ( $state ) {
 			case self::STATE_ACCEPTED:
 			case self::STATE_WAITING_SHIPMENT:
-                        case self::STATE_WC_PROCESSING:
+			case self::STATE_WC_PROCESSING:
 			default:
 				$order_state = Lengow_Configuration::get( Lengow_Configuration::WAITING_SHIPMENT_ORDER_ID );
 				break;
 			case self::STATE_SHIPPED:
 			case self::STATE_CLOSED:
-                        case self::STATE_WC_COMPLETED:
+			case self::STATE_WC_COMPLETED:
 				$order_state = Lengow_Configuration::get( Lengow_Configuration::SHIPPED_ORDER_ID );
 				break;
 			case self::STATE_REFUSED:
 			case self::STATE_CANCELED:
-                        case self::STATE_WC_CANCELED:
+			case self::STATE_WC_CANCELED:
 				$order_state = Lengow_Configuration::get( Lengow_Configuration::CANCELED_ORDER_ID );
 				break;
 			case 'shipped_by_mp':
@@ -434,10 +431,10 @@ class Lengow_Order {
 	/**
 	 * Get order id from lengow orders table.
 	 *
-	 * @param string $marketplace_sku Lengow marketplace sku
-	 * @param string $marketplace_name marketplace name
+	 * @param string  $marketplace_sku Lengow marketplace sku
+	 * @param string  $marketplace_name marketplace name
 	 * @param integer $delivery_address_id delivery address id
-	 * @param string $marketplace_name_legacy old marketplace name for v2 compatibility
+	 * @param string  $marketplace_name_legacy old marketplace name for v2 compatibility
 	 *
 	 * @return integer|false
 	 */
@@ -468,9 +465,7 @@ class Lengow_Order {
 			return false;
 		}
 
-		return (int) reset($results)->order_id;
-
-
+		return (int) reset( $results )->order_id;
 	}
 
 	/**
@@ -502,10 +497,9 @@ class Lengow_Order {
 	 * @param string $marketplace_sku Lengow id
 	 * @param string $marketplace_name marketplace name
 	 *
-	 *
 	 * @return integer|false
 	 */
-	public static function get_id_from_lengow_orders( $marketplace_sku, $marketplace_name) {
+	public static function get_id_from_lengow_orders( $marketplace_sku, $marketplace_name ) {
 		global $wpdb;
 
 		$query           = '
@@ -514,7 +508,7 @@ class Lengow_Order {
 			AND marketplace_name = %s
 		';
 		$order_lengow_id = $wpdb->get_var(
-			$wpdb->prepare( $query, array( $marketplace_sku, $marketplace_name) )
+			$wpdb->prepare( $query, array( $marketplace_sku, $marketplace_name ) )
 		);
 		if ( $order_lengow_id ) {
 			return (int) $order_lengow_id;
@@ -550,9 +544,9 @@ class Lengow_Order {
 	/**
 	 * Get id from Lengow delivery address id.
 	 *
-	 * @param integer   $order_id           WooCommerce order id
-	 * @param string    $marketplace_sku    Marketplace order reference
-         * @param string    $marketplace_name   The name of the marketplace
+	 * @param integer $order_id           WooCommerce order id
+	 * @param string  $marketplace_sku    Marketplace order reference
+	 * @param string  $marketplace_name   The name of the marketplace
 	 *
 	 * @return integer|false
 	 */
@@ -688,7 +682,7 @@ class Lengow_Order {
 	public static function get_unsent_orders() {
 		global $wpdb;
 
-		$query = '
+		$query   = '
 			SELECT lo.id as order_lengow_id, p.ID as order_id, p.post_status as order_status
 			FROM ' . $wpdb->prefix . self::TABLE_ORDER . ' lo
 			LEFT JOIN ' . $wpdb->posts . ' p ON p.ID = lo.order_id
@@ -716,10 +710,10 @@ class Lengow_Order {
 	/**
 	 * Update order state to marketplace state.
 	 *
-	 * @param WC_Order $order WooCommerce order instance
+	 * @param WC_Order     $order WooCommerce order instance
 	 * @param Lengow_Order $order_lengow Lengow order instance
-	 * @param string $order_lengow_state Lengow order status
-	 * @param mixed $package_data package data
+	 * @param string       $order_lengow_state Lengow order status
+	 * @param mixed        $package_data package data
 	 *
 	 * @return string|false
 	 */
@@ -757,14 +751,14 @@ class Lengow_Order {
 		$canceled_state         = self::get_order_state( self::STATE_CANCELED );
 		if ( self::get_order_state( $order_lengow_state ) !== $order_status ) {
 			if ( $order_status === $waiting_shipment_state
-			     && in_array( $order_lengow_state, array( self::STATE_SHIPPED, self::STATE_CLOSED ) )
+				&& in_array( $order_lengow_state, array( self::STATE_SHIPPED, self::STATE_CLOSED ) )
 			) {
 				$order->update_status( $shipped_state );
 
 				return self::STATE_SHIPPED;
 			}
 			if ( ( $order_status === $waiting_shipment_state || $order_status === $shipped_state )
-			     && in_array( $order_lengow_state, array( self::STATE_CANCELED, self::STATE_REFUSED ) )
+				&& in_array( $order_lengow_state, array( self::STATE_CANCELED, self::STATE_REFUSED ) )
 			) {
 				$order->update_status( $canceled_state );
 
@@ -787,11 +781,11 @@ class Lengow_Order {
 		if ( $order_lengow ) {
 			$import = new Lengow_Import(
 				array(
-					Lengow_Import::PARAM_ORDER_LENGOW_ID     => $order_lengow->id,
-					Lengow_Import::PARAM_MARKETPLACE_SKU     => $order_lengow->marketplace_sku,
-					Lengow_Import::PARAM_MARKETPLACE_NAME    => $order_lengow->marketplace_name,
+					Lengow_Import::PARAM_ORDER_LENGOW_ID  => $order_lengow->id,
+					Lengow_Import::PARAM_MARKETPLACE_SKU  => $order_lengow->marketplace_sku,
+					Lengow_Import::PARAM_MARKETPLACE_NAME => $order_lengow->marketplace_name,
 					Lengow_Import::PARAM_DELIVERY_ADDRESS_ID => $order_lengow->delivery_address_id,
-					Lengow_Import::PARAM_LOG_OUTPUT          => false,
+					Lengow_Import::PARAM_LOG_OUTPUT       => false,
 				)
 			);
 
@@ -828,8 +822,8 @@ class Lengow_Order {
 	 * Create an error and update the order in error.
 	 *
 	 * @param integer $order_lengow_id Lengow order id
-	 * @param string $message error message
-	 * @param string $type order error type (import or send)
+	 * @param string  $message error message
+	 * @param string  $type order error type (import or send)
 	 *
 	 * @return boolean
 	 */
@@ -869,7 +863,7 @@ class Lengow_Order {
 	 * Synchronize order with Lengow API.
 	 *
 	 * @param Lengow_Connector|null $connector Lengow connector instance
-	 * @param boolean $log_output see log or not
+	 * @param boolean               $log_output see log or not
 	 *
 	 * @return boolean
 	 */
@@ -892,41 +886,40 @@ class Lengow_Order {
 			if ( null !== $this->feed_id && ! Lengow_Marketplace::marketplace_exist( $this->marketplace_name ) ) {
 				$this->check_and_change_marketplace_name( $connector, $log_output );
 			}
-			$body = array(
+			$body              = array(
 				Lengow_Import::ARG_ACCOUNT_ID           => $account_id,
 				Lengow_Import::ARG_MARKETPLACE_ORDER_ID => $this->marketplace_sku,
 				Lengow_Import::ARG_MARKETPLACE          => $this->marketplace_name,
 				Lengow_Import::ARG_MERCHANT_ORDER_ID    => $woocommerce_order_ids,
 			);
-                        $tries = self::SYNCHRONIZE_TRIES;
-                        do {
-                            try {
-				$return = $connector->patch(
-					Lengow_Connector::API_ORDER_MOI,
-					array(),
-					Lengow_Connector::FORMAT_JSON,
-					json_encode( $body ),
-					$log_output
-				);
-                                return ! ( null === $return
-                                       || ( isset( $return['detail'] ) && 'Pas trouvé.' === $return['detail'] )
-                                       || isset( $return['error'] ) );
-                            } catch ( Exception $e ) {
-                                $tries--;
-                                if ($tries === 0) {
-                                    $message = Lengow_Main::decode_log_message( $e->getMessage(), Lengow_Translation::DEFAULT_ISO_CODE );
-                                    $error   = Lengow_Main::set_log_message(
-                                            'log.connector.error_api',
-                                            array(
-                                                    'error_code'    => $e->getCode(),
-                                                    'error_message' => $message,
-                                            )
-                                    );
-                                    Lengow_Main::log( Lengow_Log::CODE_CONNECTOR, $error, $log_output );
-                                }
-                            }
-
-                        } while($tries > 0);
+						$tries = self::SYNCHRONIZE_TRIES;
+			do {
+				try {
+					$return = $connector->patch(
+						Lengow_Connector::API_ORDER_MOI,
+						array(),
+						Lengow_Connector::FORMAT_JSON,
+						json_encode( $body ),
+						$log_output
+					);
+					return ! ( null === $return
+							|| ( isset( $return['detail'] ) && 'Pas trouvé.' === $return['detail'] )
+							|| isset( $return['error'] ) );
+				} catch ( Exception $e ) {
+					--$tries;
+					if ( $tries === 0 ) {
+						$message = Lengow_Main::decode_log_message( $e->getMessage(), Lengow_Translation::DEFAULT_ISO_CODE );
+						$error   = Lengow_Main::set_log_message(
+							'log.connector.error_api',
+							array(
+								'error_code'    => $e->getCode(),
+								'error_message' => $message,
+							)
+						);
+						Lengow_Main::log( Lengow_Log::CODE_CONNECTOR, $error, $log_output );
+					}
+				}
+			} while ( $tries > 0 );
 
 		}
 
@@ -937,7 +930,7 @@ class Lengow_Order {
 	 * Check and change the name of the marketplace for v3 compatibility.
 	 *
 	 * @param Lengow_Connector|null $connector Lengow connector instance
-	 * @param boolean $log_output see log or not
+	 * @param boolean               $log_output see log or not
 	 *
 	 * @return boolean
 	 */
@@ -955,7 +948,7 @@ class Lengow_Order {
 				Lengow_Connector::API_ORDER,
 				array(
 					Lengow_Import::ARG_MARKETPLACE_ORDER_ID => $this->marketplace_sku,
-					Lengow_Import::ARG_ACCOUNT_ID           => $account_id,
+					Lengow_Import::ARG_ACCOUNT_ID => $account_id,
 				),
 				Lengow_Connector::FORMAT_STREAM,
 				'',
@@ -1050,7 +1043,7 @@ class Lengow_Order {
 		if ( ! $this->is_closed() && ! $this->has_an_action_in_progress() ) {
 			$status = self::get_order_status( $order );
 			if ( self::get_order_state( self::STATE_CANCELED ) === $status ||
-			     self::get_order_state( self::STATE_SHIPPED ) === $status ) {
+				self::get_order_state( self::STATE_SHIPPED ) === $status ) {
 				return true;
 			}
 		}
@@ -1119,7 +1112,7 @@ class Lengow_Order {
 			$error_message = $e->getMessage();
 		} catch ( Exception $e ) {
 			$error_message = '[WooCommerce error]: "' . $e->getMessage()
-			                 . '" in ' . $e->getFile() . ' on line ' . $e->getLine();
+							. '" in ' . $e->getFile() . ' on line ' . $e->getLine();
 		}
 		if ( isset( $error_message ) ) {
 			self::add_order_error( $this->id, $error_message, Lengow_Order_Error::ERROR_TYPE_SEND );

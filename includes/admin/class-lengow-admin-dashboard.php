@@ -51,7 +51,7 @@ class Lengow_Admin_Dashboard {
 	 * Process Get Parameters.
 	 */
 	public static function get_process() {
-		$action = isset( $_GET['do_action'] ) ? $_GET['do_action'] : false;
+		$action = isset( $_GET['do_action'] ) ? sanitize_text_field( $_GET['do_action'] ) : false;
 		if ( $action ) {
 			switch ( $action ) {
 				case 'refresh_status':
@@ -68,7 +68,7 @@ class Lengow_Admin_Dashboard {
 	 */
 	public static function post_process() {
 		$data   = array();
-		$action = isset( $_POST['do_action'] ) ? sanitize_text_field($_POST['do_action']) : false;
+		$action = isset( $_POST['do_action'] ) ? sanitize_text_field( $_POST['do_action'] ) : false;
 		if ( $action ) {
 			switch ( $action ) {
 				case 'remind_me_later':
@@ -80,7 +80,7 @@ class Lengow_Admin_Dashboard {
 					$data['success'] = false;
 					break;
 			}
-			echo json_encode( $data );
+			echo wp_json_encode( $data );
 			exit();
 		}
 	}

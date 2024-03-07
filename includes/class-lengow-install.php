@@ -99,14 +99,17 @@ class Lengow_Install {
 	 */
 	public static function update( $old_version = false ) {
 		global $wpdb;
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		if ( $old_version ) {
 			self::$old_version = $old_version;
 			Lengow_Main::log(
 				Lengow_Log::CODE_INSTALL,
 				Lengow_Main::set_log_message(
 					'log.install.update_start',
-					array( 'old_version' => $old_version, 'new_version' => LENGOW_VERSION )
+					array(
+						'old_version' => $old_version,
+						'new_version' => LENGOW_VERSION,
+					)
 				)
 			);
 		}
@@ -138,7 +141,10 @@ class Lengow_Install {
 				Lengow_Log::CODE_INSTALL,
 				Lengow_Main::set_log_message(
 					'log.install.update_end',
-					array( 'old_version' => $old_version, 'new_version' => LENGOW_VERSION )
+					array(
+						'old_version' => $old_version,
+						'new_version' => LENGOW_VERSION,
+					)
 				)
 			);
 		}

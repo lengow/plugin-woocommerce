@@ -32,13 +32,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Toolbox_Element {
 
 	/* Array data for toolbox content creation */
-	const DATA_HEADER = 'header';
-	const DATA_TITLE = 'title';
-	const DATA_STATE = 'state';
-	const DATA_MESSAGE = 'message';
-	const DATA_SIMPLE = 'simple';
-	const DATA_HELP = 'help';
-	const DATA_HELP_LINK = 'help_link';
+	const DATA_HEADER     = 'header';
+	const DATA_TITLE      = 'title';
+	const DATA_STATE      = 'state';
+	const DATA_MESSAGE    = 'message';
+	const DATA_SIMPLE     = 'simple';
+	const DATA_HELP       = 'help';
+	const DATA_HELP_LINK  = 'help_link';
 	const DATA_HELP_LABEL = 'help_label';
 
 	/**
@@ -83,9 +83,9 @@ class Lengow_Toolbox_Element {
 				self::DATA_STATE      => (int) $checklist_data[ Lengow_Toolbox::CHECKLIST_JSON_ACTIVATED ],
 			),
 			array(
-				self::DATA_TITLE      => $this->locale->t( 'toolbox.screen.checksum_message' ),
-				self::DATA_HELP       => $this->locale->t( 'toolbox.screen.checksum_help' ),
-				self::DATA_STATE      => (int) $checklist_data[ Lengow_Toolbox::CHECKLIST_MD5_SUCCESS ],
+				self::DATA_TITLE => $this->locale->t( 'toolbox.screen.checksum_message' ),
+				self::DATA_HELP  => $this->locale->t( 'toolbox.screen.checksum_help' ),
+				self::DATA_STATE => (int) $checklist_data[ Lengow_Toolbox::CHECKLIST_MD5_SUCCESS ],
 			),
 		);
 
@@ -159,9 +159,7 @@ class Lengow_Toolbox_Element {
 			$last_import_type = $this->locale->t( 'toolbox.screen.last_import_none' );
 		} else {
 			$last_import_date          = Lengow_Main::get_date_in_correct_format( $last_synchronization, true );
-			$last_synchronization_type = $synchronization_data[
-				Lengow_Toolbox::SYNCHRONIZATION_LAST_SYNCHRONIZATION_TYPE
-			];
+			$last_synchronization_type = $synchronization_data[ Lengow_Toolbox::SYNCHRONIZATION_LAST_SYNCHRONIZATION_TYPE ];
 			if ( Lengow_Import::TYPE_CRON === $last_synchronization_type ) {
 				$last_import_type = $this->locale->t( 'toolbox.screen.last_import_cron' );
 			} else {
@@ -192,9 +190,7 @@ class Lengow_Toolbox_Element {
 			),
 			array(
 				self::DATA_TITLE   => $this->locale->t( 'toolbox.screen.nb_order_to_be_sent' ),
-				self::DATA_MESSAGE => $synchronization_data[
-					Lengow_Toolbox::SYNCHRONIZATION_NUMBER_ORDERS_WAITING_SHIPMENT
-				],
+				self::DATA_MESSAGE => $synchronization_data[ Lengow_Toolbox::SYNCHRONIZATION_NUMBER_ORDERS_WAITING_SHIPMENT ],
 			),
 			array(
 				self::DATA_TITLE   => $this->locale->t( 'toolbox.screen.nb_order_with_error' ),
@@ -236,8 +232,8 @@ class Lengow_Toolbox_Element {
 		$checklist             = array(
 			array(
 				self::DATA_HEADER => $data[ Lengow_Toolbox::SHOP_NAME ]
-				                     . ' (' . $data[ Lengow_Toolbox::SHOP_ID ] . ')'
-				                     . ' - ' . $data[ Lengow_Toolbox::SHOP_DOMAIN_URL ],
+									. ' (' . $data[ Lengow_Toolbox::SHOP_ID ] . ')'
+									. ' - ' . $data[ Lengow_Toolbox::SHOP_DOMAIN_URL ],
 			),
 			array(
 				self::DATA_TITLE => $this->locale->t( 'toolbox.screen.shop_active' ),
@@ -305,8 +301,8 @@ class Lengow_Toolbox_Element {
 		$checklist   = array(
 			array(
 				self::DATA_HEADER => $data[ Lengow_Toolbox::SHOP_NAME ]
-				                     . ' (' . $data[ Lengow_Toolbox::SHOP_ID ] . ')'
-				                     . ' - ' . $data[ Lengow_Toolbox::SHOP_DOMAIN_URL ],
+									. ' (' . $data[ Lengow_Toolbox::SHOP_ID ] . ')'
+									. ' - ' . $data[ Lengow_Toolbox::SHOP_DOMAIN_URL ],
 			),
 			array(
 				self::DATA_TITLE   => $this->locale->t( 'toolbox.screen.folder_path' ),
@@ -362,7 +358,7 @@ class Lengow_Toolbox_Element {
 				),
 				self::DATA_STATE => (int) ( $checksum_data[ Lengow_Toolbox::CHECKSUM_NUMBER_FILES_DELETED ] === 0 ),
 			);
-			$html        .= $this->get_content( $checklist );
+			$html       .= $this->get_content( $checklist );
 			if ( ! empty( $checksum_data[ Lengow_Toolbox::CHECKSUM_FILE_MODIFIED ] ) ) {
 				$file_modified = array();
 				foreach ( $checksum_data[ Lengow_Toolbox::CHECKSUM_FILE_MODIFIED ] as $file ) {
@@ -372,7 +368,7 @@ class Lengow_Toolbox_Element {
 					);
 				}
 				$html .= '<h3><i class="fa fa-list"></i> '
-				         . $this->locale->t( 'toolbox.screen.list_modified_file' ) . '</h3>';
+						. $this->locale->t( 'toolbox.screen.list_modified_file' ) . '</h3>';
 				$html .= $this->get_content( $file_modified );
 			}
 			if ( ! empty( $checksum_data[ Lengow_Toolbox::CHECKSUM_FILE_DELETED ] ) ) {
@@ -384,7 +380,7 @@ class Lengow_Toolbox_Element {
 					);
 				}
 				$html .= '<h3><i class="fa fa-list"></i> '
-				         . $this->locale->t( 'toolbox.screen.list_deleted_file' ) . '</h3>';
+						. $this->locale->t( 'toolbox.screen.list_deleted_file' ) . '</h3>';
 				$html .= $this->get_content( $file_deleted );
 			}
 		} else {
@@ -392,7 +388,7 @@ class Lengow_Toolbox_Element {
 				self::DATA_TITLE => $this->locale->t( 'toolbox.screen.file_not_exists' ),
 				self::DATA_STATE => 0,
 			);
-			$html        .= $this->get_content( $checklist );
+			$html       .= $this->get_content( $checklist );
 		}
 
 		return $html;
@@ -414,7 +410,7 @@ class Lengow_Toolbox_Element {
 			$out .= '<tr>';
 			if ( isset( $check[ self::DATA_HEADER ] ) ) {
 				$out .= '<td colspan="2" align="center" style="border:0"><h4>'
-				        . $check[ self::DATA_HEADER ] . '</h4></td>';
+						. $check[ self::DATA_HEADER ] . '</h4></td>';
 			} elseif ( isset( $check[ self::DATA_SIMPLE ] ) ) {
 				$out .= '<td colspan="2" align="center"><h5>' . $check[ self::DATA_SIMPLE ] . '</h5></td>';
 			} else {
@@ -428,10 +424,10 @@ class Lengow_Toolbox_Element {
 					if ( ( 0 === $check[ self::DATA_STATE ] ) && isset( $check[ self::DATA_HELP ] ) ) {
 						$out .= '<tr><td colspan="2"><p>' . $check[ self::DATA_HELP ];
 						if ( array_key_exists( self::DATA_HELP_LINK, $check )
-						     && '' !== $check[ self::DATA_HELP_LINK ]
+							&& '' !== $check[ self::DATA_HELP_LINK ]
 						) {
 							$out .= '<br /><a target="_blank" href="'
-							        . $check[ self::DATA_HELP_LINK ] . '">' . $check[ self::DATA_HELP_LABEL ] . '</a>';
+									. $check[ self::DATA_HELP_LINK ] . '">' . $check[ self::DATA_HELP_LABEL ] . '</a>';
 						}
 						$out .= '</p></td></tr>';
 					}
