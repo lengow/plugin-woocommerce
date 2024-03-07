@@ -286,7 +286,7 @@ class Lengow_Main {
 
 	public static function get_display_log( $format = 'txt' ) {
 		$log = self::get_log_instance();
-				return $log->getFileLogContent( $format );
+		return $log->getFileLogContent( $format );
 	}
 
 	/**
@@ -591,7 +591,8 @@ class Lengow_Main {
 		*/
 		$patterns = array(
 			/*
-			Lowercase */
+			 * Lowercase
+			 */
 			/* a  */
 			'/[\x{00E0}\x{00E1}\x{00E2}\x{00E3}\x{00E4}\x{00E5}\x{0101}\x{0103}\x{0105}\x{0430}\x{00C0}-\x{00C3}\x{1EA0}-\x{1EB7}]/u',
 			/* b  */
@@ -668,7 +669,8 @@ class Lengow_Main {
 			'/[\x{0436}]/u',
 
 			/*
-			Uppercase */
+			 * Uppercase
+			 */
 			/* A  */
 			'/[\x{0100}\x{0102}\x{0104}\x{00C0}\x{00C1}\x{00C2}\x{00C3}\x{00C4}\x{00C5}\x{0410}]/u',
 			/* B  */

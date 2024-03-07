@@ -38,11 +38,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php if ( ! $plugin_is_up_to_date ) : ?>
 		<!-- Modal Update plugin -->
 		<div id="upgrade-plugin"
-			class="lgw-modalbox mod-size-medium 
-			<?php
-			if ( $show_plugin_upgrade_modal ) :
-				?>
-				is-open<?php endif; ?>">
+			class="lgw-modalbox mod-size-medium
+			<?php if ( $show_plugin_upgrade_modal ) : ?>
+				is-open
+			<?php endif; ?>">
 			<div class="lgw-modalbox-content">
 				<span class="lgw-modalbox-close js-upgrade-plugin-modal-close"></span>
 				<div class="lgw-modalbox-body">

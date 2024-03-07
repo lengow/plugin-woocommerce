@@ -49,10 +49,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 								class="js-lengow_switch_option"
 								data-action="change_option_selected"
 								value="1" 
-								<?php
-								if ( $shop['option_selected'] ) :
-									?>
-									checked="checked" <?php endif; ?>>
+								<?php if ( $shop['option_selected'] ) : ?>
+									checked="checked"
+								<?php endif; ?>>
 					</div> <?php echo esc_html( $locale->t( 'product.screen.include_specific_product' ) ); ?>
 				</label>
 			</div>
@@ -67,10 +66,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="lengow_feed_block_footer">
 					<div class="js-lengow_feed_block_footer_content"
 						style="
-						<?php
-						if ( ! $shop['option_selected'] ) :
-							?>
-							display:none;<?php endif; ?>">
+						<?php if ( ! $shop['option_selected'] ) : ?>
+							display:none;
+						<?php endif; ?>">
 						<div class="lengow_table_top">
 							<div id="lgw-product-toolbar" class="js-lengow_toolbar" style="display:none;">
 								<a href="#"
