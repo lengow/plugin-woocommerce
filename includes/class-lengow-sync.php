@@ -433,7 +433,7 @@ class Lengow_Sync {
 				Lengow_Configuration::update_value( Lengow_Configuration::PLUGIN_DATA, json_encode( $plugin_data ) );
 				Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_PLUGIN_DATA, time() );
 
-				return $plugin_data;
+				return json_decode( Lengow_Configuration::get( Lengow_Configuration::PLUGIN_DATA ), true );;
 			}
 		} else if ( Lengow_Configuration::get( Lengow_Configuration::PLUGIN_DATA ) ) {
 			return json_decode( Lengow_Configuration::get( Lengow_Configuration::PLUGIN_DATA ), true );
