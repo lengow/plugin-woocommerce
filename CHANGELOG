@@ -1,4 +1,11 @@
 ========================================================
+Version 2.5.5
+========================================================
+
+    - BugFix:  PHP Fatal error occurring when the plugin checks if there is a new version (and there is one)
+    - BugFix:  Make the plugin compliant with the WordPress coding standard
+
+========================================================
 Version 2.5.4
 ========================================================
 
