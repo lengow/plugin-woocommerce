@@ -199,6 +199,26 @@ $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
 					</div>
 				</div>
 			</div>
+			<div class="lgw-box">
+				<h2><?php echo esc_html( $locale->t( 'global_setting.screen.return_tracking' ) ); ?></h2>
+				<label class="control-label">
+					<?php echo esc_html( $keys[ Lengow_Configuration::RETURN_TRACKING ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
+				</label>
+				<div class="form-group">
+					<div class="lgw-switch <?php echo esc_attr( $values[ Lengow_Configuration::RETURN_TRACKING ] ? 'checked' : '' ); ?>">
+						<label>
+							<div>
+								<span></span>
+								<input type="hidden" name="lengow_return_tracking" value="0">
+								<input name="lengow_return_tracking"
+										type="checkbox"
+									<?php echo esc_attr( $values[ Lengow_Configuration::RETURN_TRACKING ] ? 'checked' : '' ); ?>>
+							</div>
+							<?php echo esc_html( $keys[ Lengow_Configuration::RETURN_TRACKING ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
+						</label>
+					</div>
+				</div>
+			</div>
 			<div class="form-group container">
 				<div class="lengow_main_setting_block_content">
 					<div class="pull-left">
