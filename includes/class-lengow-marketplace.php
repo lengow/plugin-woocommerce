@@ -495,14 +495,14 @@ class Lengow_Marketplace {
 						true
 					);
 					break;
-                case Lengow_Action::ARG_RETURN_TRACKING_NUMBER:
-                    $params[ $arg ] = (string) $wc_order->get_meta(
-                        '_lengow_return_tracking_number',
-                        true
-                    );
-                    break;
+				case Lengow_Action::ARG_RETURN_TRACKING_NUMBER:
+					$params[ $arg ] = (string) $wc_order->get_meta(
+						'_lengow_return_tracking_number',
+						true
+					);
+					break;
 				case Lengow_Action::ARG_CARRIER:
-                case Lengow_Action::ARG_RETURN_CARRIER:
+				case Lengow_Action::ARG_RETURN_CARRIER:
 				case Lengow_Action::ARG_CARRIER_NAME:
 				case Lengow_Action::ARG_SHIPPING_METHOD:
 				case Lengow_Action::ARG_CUSTOM_CARRIER:
