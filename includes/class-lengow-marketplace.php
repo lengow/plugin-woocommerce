@@ -476,8 +476,8 @@ class Lengow_Marketplace {
 		$params           = array();
 		$actions          = $this->get_action( $action );
 		$order_id         = $order_lengow->order_id;
-				$wc_order = new WC_Order( $order_id );
-				$carrier  = (string) $wc_order->get_meta( '_lengow_carrier', true );
+		$wc_order         = new WC_Order( $order_id );
+		$carrier          = (string) $wc_order->get_meta( '_lengow_carrier', true );
 		$custom_carrier   = (string) $wc_order->get_meta( '_lengow_custom_carrier', true );
 
 		if ( null !== $order_lengow->carrier && '' !== $order_lengow->carrier ) {
@@ -501,8 +501,13 @@ class Lengow_Marketplace {
 						true
 					);
 					break;
-				case Lengow_Action::ARG_CARRIER:
 				case Lengow_Action::ARG_RETURN_CARRIER:
+					$params[ $arg ] = (string) $wc_order->get_meta(
+						'_lengow_return_carrier',
+						true
+					);
+					break;
+				case Lengow_Action::ARG_CARRIER:
 				case Lengow_Action::ARG_CARRIER_NAME:
 				case Lengow_Action::ARG_SHIPPING_METHOD:
 				case Lengow_Action::ARG_CUSTOM_CARRIER:

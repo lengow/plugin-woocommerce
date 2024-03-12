@@ -69,7 +69,7 @@ class Lengow_Action {
 	const ARG_SHIPPING_DATE          = 'shipping_date';
 	const ARG_DELIVERY_DATE          = 'delivery_date';
 	const ARG_RETURN_TRACKING_NUMBER = 'return_tracking_number';
-	const ARG_RETURN_CARRIER         = 'return_carrier_name';
+	const ARG_RETURN_CARRIER         = 'return_carrier';
 
 	/**
 	 * @var integer max interval time for action synchronisation (3 days)
