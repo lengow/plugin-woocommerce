@@ -150,27 +150,37 @@ class Lengow_Hook {
 				: '';
 			// save Lengow shipping data.
 
-			$wc_order_carrier        = $wc_order->get_meta( '_lengow_carrier', true );
-			$wc_order_custom_carrier = $wc_order->get_meta( '_lengow_custom_carrier', true );
-			$wc_order_return_carrier = $wc_order->get_meta( '_lengow_return_carrier', true );
+			$wc_order_carrier                = $wc_order->get_meta( '_lengow_carrier', true );
+			$wc_order_custom_carrier         = $wc_order->get_meta( '_lengow_custom_carrier', true );
+			$wc_order_return_carrier         = $wc_order->get_meta( '_lengow_return_carrier', true );
+			$wc_order_return_tracking_number = $wc_order->get_meta( '_lengow_return_tracking_number', true );
 
+			$need_save = false;
 			if ( $carrier && ( $wc_order_carrier !== $carrier ) ) {
 				$wc_order->update_meta_data( '_lengow_carrier', $carrier );
 				$wc_order->update_meta_data( '_lengow_tracking_number', $tracking_number );
 				$wc_order->update_meta_data( '_lengow_tracking_url', $tracking_url );
-				$wc_order->save();
+				$need_save = true;
 			}
 
 			if ( $custom_carrier && ( $wc_order_custom_carrier !== $custom_carrier ) ) {
 				$wc_order->update_meta_data( '_lengow_custom_carrier', $custom_carrier );
 				$wc_order->update_meta_data( '_lengow_tracking_number', $tracking_number );
 				$wc_order->update_meta_data( '_lengow_tracking_url', $tracking_url );
-				$wc_order->save();
+				$need_save = true;
 			}
 
-			if ( $return_carrier && ( $wc_order_return_carrier !== $return_carrier ) ) {
+			if ( $return_carrier && $wc_order_return_carrier !== $return_carrier ) {
 				$wc_order->update_meta_data( '_lengow_return_carrier', $return_carrier );
+				$need_save = true;
+			}
+
+			if ( $return_tracking_number && $wc_order_return_tracking_number !== $return_tracking_number ) {
 				$wc_order->update_meta_data( '_lengow_return_tracking_number', $return_tracking_number );
+				$need_save = true;
+			}
+
+			if ( $need_save ) {
 				$wc_order->save();
 			}
 
@@ -185,8 +195,8 @@ class Lengow_Hook {
 					$order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
 				}
 			}
-			unset( $order_lengow );
 		}
+
 		return $wc_order_id;
 	}
 
