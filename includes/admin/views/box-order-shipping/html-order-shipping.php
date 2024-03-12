@@ -95,8 +95,8 @@ $return_tracking_number = (string) $wc_order->get_meta( '_lengow_return_tracking
 			</li>
 		<?php endif; ?>
 
-		<?php if ( Lengow_Configuration::get( Lengow_Configuration::RETURN_TRACKING ) ) : ?>
-			<?php if ( array_key_exists( Lengow_Action::ARG_TRACKING_NUMBER, $marketplace_arguments ) ) : ?>
+		<?php if ( Lengow_Configuration::get( Lengow_Configuration::RETURN_TRACKING_NUMBER ) ) : ?>
+			<?php // if ( array_key_exists( Lengow_Action::ARG_RETURN_TRACKING_NUMBER, $marketplace_arguments ) ) : ?>
 				<li>
 					<label for="lengow_return_tracking_number">
 						<?php echo esc_html( $locale->t( 'meta_box.order_shipping.return_tracking_number' ) ); ?>
@@ -108,8 +108,10 @@ $return_tracking_number = (string) $wc_order->get_meta( '_lengow_return_tracking
 					<input type="text" name="lengow_return_tracking_number" id="lengow_return_tracking_number"
 							value="<?php echo esc_attr( $return_tracking_number ); ?>"/>
 				</li>
-			<?php endif; ?>
-			<?php if ( ! empty( $carriers ) ) : ?>
+			<?php // endif; ?>
+		<?php endif; ?>
+		<?php if ( Lengow_Configuration::get( Lengow_Configuration::RETURN_CARRIER ) ) : ?>
+			<?php // if ( ! empty( $carriers ) && array_key_exists( Lengow_Action::ARG_RETURN_CARRIER, $marketplace_arguments ) ) : ?>
 				<li>
 					<label for="lengow_return_carrier">
 						<?php echo esc_html( $locale->t( 'meta_box.order_shipping.return_carrier' ) ); ?>
@@ -129,7 +131,7 @@ $return_tracking_number = (string) $wc_order->get_meta( '_lengow_return_tracking
 						<?php endforeach; ?>
 					</select>
 				</li>
-			<?php endif; ?>
+			<?php // endif; ?>
 		<?php endif; ?>
 	</ul>
 </div>

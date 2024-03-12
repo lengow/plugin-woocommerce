@@ -386,6 +386,7 @@ fr:
     lengow_last_import_manual_title: "Dernier import manuel"
     lengow_last_import_cron_title: "Dernier import CRON"
     lengow_return_tracking_title: "Permet d'envoyer le numéro de retour lors de l'expédition"
+    lengow_return_carrier_title: "Permet d'envoyer le transporteur de retour lors de l'expédition"
     lengow_return_tracking_status: "Activer l'envoi du numéro de retour"
   lengow_log:
     error:

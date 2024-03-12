@@ -356,6 +356,7 @@ lengow_settings.lengow_import_in_progress_title|Import en cours
 lengow_settings.lengow_last_import_manual_title|Dernier import manuel
 lengow_settings.lengow_last_import_cron_title|Dernier import CRON
 lengow_settings.lengow_return_tracking_title|Permet d'envoyer le numéro de retour lors de l'expédition
+lengow_settings.lengow_return_carrier_title|Permet d'envoyer le transporteur de retour lors de l'expédition
 lengow_settings.lengow_return_tracking_status|Activer l'envoi du numéro de retour
 lengow_log.error.rest_time_to_import|Attendez %{rest_time}  secondes avant d'importer de nouveau vos commandes
 lengow_log.error.nb_order_imported|%{nb_order} commande(s) importée(s)
