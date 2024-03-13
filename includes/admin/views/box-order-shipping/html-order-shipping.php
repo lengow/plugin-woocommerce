@@ -95,43 +95,39 @@ $return_tracking_number = (string) $wc_order->get_meta( '_lengow_return_tracking
 			</li>
 		<?php endif; ?>
 
-		<?php if ( Lengow_Configuration::get( Lengow_Configuration::RETURN_TRACKING_NUMBER ) ) : ?>
-			<?php // if ( array_key_exists( Lengow_Action::ARG_RETURN_TRACKING_NUMBER, $marketplace_arguments ) ) : ?>
-				<li>
-					<label for="lengow_return_tracking_number">
-						<?php echo esc_html( $locale->t( 'meta_box.order_shipping.return_tracking_number' ) ); ?>
-						<?php if ( $marketplace->argument_is_required( Lengow_Action::ARG_RETURN_TRACKING_NUMBER ) ) : ?>
-							<span class="required">(<?php echo esc_html( $locale->t( 'meta_box.order_shipping.required' ) ); ?>)</span>
-						<?php endif; ?>
-						:
-					</label>
-					<input type="text" name="lengow_return_tracking_number" id="lengow_return_tracking_number"
-							value="<?php echo esc_attr( $return_tracking_number ); ?>"/>
-				</li>
-			<?php // endif; ?>
+		<?php if ( array_key_exists( Lengow_Action::ARG_RETURN_TRACKING_NUMBER, $marketplace_arguments ) ) : ?>
+			<li>
+				<label for="lengow_return_tracking_number">
+					<?php echo esc_html( $locale->t( 'meta_box.order_shipping.return_tracking_number' ) ); ?>
+					<?php if ( $marketplace->argument_is_required( Lengow_Action::ARG_RETURN_TRACKING_NUMBER ) ) : ?>
+						<span class="required">(<?php echo esc_html( $locale->t( 'meta_box.order_shipping.required' ) ); ?>)</span>
+					<?php endif; ?>
+					:
+				</label>
+				<input type="text" name="lengow_return_tracking_number" id="lengow_return_tracking_number"
+						value="<?php echo esc_attr( $return_tracking_number ); ?>"/>
+			</li>
 		<?php endif; ?>
-		<?php if ( Lengow_Configuration::get( Lengow_Configuration::RETURN_CARRIER ) ) : ?>
-			<?php // if ( ! empty( $carriers ) && array_key_exists( Lengow_Action::ARG_RETURN_CARRIER, $marketplace_arguments ) ) : ?>
-				<li>
-					<label for="lengow_return_carrier">
-						<?php echo esc_html( $locale->t( 'meta_box.order_shipping.return_carrier' ) ); ?>
-						<?php if ( $marketplace->argument_is_required( Lengow_Action::ARG_RETURN_CARRIER ) ) : ?>
-							<span class="required">(<?php echo esc_html( $locale->t( 'meta_box.order_shipping.required' ) ); ?>)</span>
-						<?php endif; ?>
-						:
-					</label>
-					<select name="lengow_return_carrier">
-						<option value="">
-							<?php echo esc_html( $locale->t( 'meta_box.order_shipping.choose_a_carrier' ) ); ?>
+		<?php if ( ! empty( $carriers ) && array_key_exists( Lengow_Action::ARG_RETURN_CARRIER, $marketplace_arguments ) ) : ?>
+			<li>
+				<label for="lengow_return_carrier">
+					<?php echo esc_html( $locale->t( 'meta_box.order_shipping.return_carrier' ) ); ?>
+					<?php if ( $marketplace->argument_is_required( Lengow_Action::ARG_RETURN_CARRIER ) ) : ?>
+						<span class="required">(<?php echo esc_html( $locale->t( 'meta_box.order_shipping.required' ) ); ?>)</span>
+					<?php endif; ?>
+					:
+				</label>
+				<select name="lengow_return_carrier">
+					<option value="">
+						<?php echo esc_html( $locale->t( 'meta_box.order_shipping.choose_a_carrier' ) ); ?>
+					</option>
+					<?php foreach ( $carriers as $code => $label ) : ?>
+						<option value="<?php echo esc_attr( $code ); ?>" <?php selected( $return_carrier, $code ); ?>>
+							<?php echo esc_html( $label ); ?>
 						</option>
-						<?php foreach ( $carriers as $code => $label ) : ?>
-							<option value="<?php echo esc_attr( $code ); ?>" <?php selected( $return_carrier, $code ); ?>>
-								<?php echo esc_html( $label ); ?>
-							</option>
-						<?php endforeach; ?>
-					</select>
-				</li>
-			<?php // endif; ?>
+					<?php endforeach; ?>
+				</select>
+			</li>
 		<?php endif; ?>
 	</ul>
 </div>
