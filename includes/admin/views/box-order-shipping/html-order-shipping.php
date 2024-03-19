@@ -55,7 +55,7 @@ $return_tracking_number = (string) $wc_order->get_meta( '_lengow_return_tracking
 					<?php endif; ?>
 					:
 				</label>
-				<select name="lengow_carrier">
+				<select name="lengow_carrier" id="lengow_carrier">
 					<option value="">
 						<?php echo esc_html( $locale->t( 'meta_box.order_shipping.choose_a_carrier' ) ); ?>
 					</option>
@@ -117,17 +117,21 @@ $return_tracking_number = (string) $wc_order->get_meta( '_lengow_return_tracking
 					<?php endif; ?>
 					:
 				</label>
-				<select name="lengow_return_carrier">
-					<option value="">
-						<?php echo esc_html( $locale->t( 'meta_box.order_shipping.choose_a_carrier' ) ); ?>
-					</option>
-					<?php foreach ( $carriers as $code => $label ) : ?>
-						<option value="<?php echo esc_attr( $code ); ?>" <?php selected( $return_carrier, $code ); ?>>
-							<?php echo esc_html( $label ); ?>
-						</option>
-					<?php endforeach; ?>
-				</select>
+                <input type="text" name="lengow_return_carrier" id="lengow_return_carrier"
+                       value="<?php echo esc_attr( $return_carrier ); ?>"/>
 			</li>
+            <?php if ( empty( $return_carrier ) ) : ?>
+            <script type="text/javascript">
+                (function ($) {
+                    $(document).ready(function () {
+                        $('#lengow_carrier, #lengow_custom_carrier').on('change, input', function () {
+                            let el = $('#lengow_return_carrier');
+                            el.val($(this).val());
+                        });
+                    });
+                })(jQuery);
+            </script>
+            <?php endif; ?>
 		<?php endif; ?>
 	</ul>
 </div>
