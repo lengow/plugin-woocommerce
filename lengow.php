@@ -169,6 +169,19 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			include_once 'includes/class-lengow-cron.php';
 			include_once 'includes/class-lengow-cron-toolbox.php';
 			include_once 'includes/class-lengow-cron-export.php';
+
+			$this->init_lengow_factory();
+		}
+
+		public function init_lengow_factory()
+		{
+			include_once 'includes/class-lengow-factory.php';
+			$factory = Lengow_Factory::instance();
+			$factory->bind(Lengow_Configuration::class, Lengow_Configuration::class);
+			$factory->bind(Lengow_Connector::class, function () use ($factory) {
+				list( $account_id, $access_token, $secret ) = $factory->get(Lengow_Configuration::class)::get_access_id();
+				return new Lengow_Connector( $access_token, $secret );
+			});
 		}
 
 		/**
