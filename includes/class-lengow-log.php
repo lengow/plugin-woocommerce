@@ -90,6 +90,10 @@ class Lengow_Log {
 		$this->file->write( $log );
 	}
 
+	public function log_exception( Throwable $e ) {
+		$this->write( 'exception', $e->getMessage() . PHP_EOL . $e->getTraceAsString() );
+	}
+
 	/**
 	 * Get log files.
 	 *

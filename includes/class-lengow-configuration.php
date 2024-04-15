@@ -45,6 +45,7 @@ class Lengow_Configuration {
 	const REPORT_MAIL_ENABLED                  = 'lengow_report_mail_enabled';
 	const REPORT_MAILS                         = 'lengow_report_mail_address';
 	const AUTHORIZATION_TOKEN                  = 'lengow_authorization_token';
+	const AUTHORIZATION_TOKEN_EXPIRE_AT       = 'authorization_token_expire_at';
 	const PLUGIN_DATA                          = 'lengow_plugin_data';
 	const ACCOUNT_STATUS_DATA                  = 'lengow_account_status';
 	const SHOP_TOKEN                           = 'lengow_shop_token';

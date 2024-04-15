@@ -21,6 +21,8 @@
  * @copyright   2017 Lengow SAS
  */
 
+use Lengow\Sdk\Client\Exception\ClientException;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -97,20 +99,21 @@ class Lengow_Admin_Connection {
 	 *
 	 * @return boolean
 	 */
-	private static function check_api_credentials( $access_token, $secret ) {
-		$access_ids_saved = false;
-		$account_id       = Lengow_Connector::get_account_id_by_credentials( $access_token, $secret );
-		if ( $account_id ) {
-			$access_ids_saved = Lengow_Configuration::set_access_ids(
+	private static function check_api_credentials( string $access_token, string $secret ): bool {
+		try {
+			$account = Lengow::sdk()->access()->getToken( $access_token, $secret );
+			return Lengow_Configuration::set_access_ids(
 				array(
-					Lengow_Configuration::ACCOUNT_ID   => $account_id,
+					Lengow_Configuration::ACCOUNT_ID   => $account->account_id,
 					Lengow_Configuration::ACCESS_TOKEN => $access_token,
 					Lengow_Configuration::SECRET       => $secret,
 				)
 			);
+		} catch ( ClientException|Exception $e ) {
+			Lengow_Main::get_log_instance()->log_exception( $e );
 		}
 
-		return $access_ids_saved;
+		return false;
 	}
 
 	/**

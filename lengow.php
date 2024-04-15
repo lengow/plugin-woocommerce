@@ -39,6 +39,8 @@
  */
 
 // prevent direct access.
+use Lengow\Sdk\Sdk;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -176,9 +178,33 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		public function init_lengow_factory()
 		{
 			include_once 'includes/class-lengow-factory.php';
+			include_once 'includes/class-sdk-listener.php';
 			$factory = Lengow_Factory::instance();
 			$factory->bind(Lengow_Configuration::class, Lengow_Configuration::class);
+			$factory->bind( Sdk::class, function () {
+				$client = \Lengow\Sdk\ClientFactory::createClient(
+					Lengow_Configuration::get( Lengow_Configuration::ACCESS_TOKEN ),
+					Lengow_Configuration::get( Lengow_Configuration::SECRET ),
+					Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN ),
+					Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN_EXPIRE_AT ),
+					null,
+					null,
+					null,
+					'preprod' === Lengow_Configuration::get_plugin_environment()
+						? \Lengow\Sdk\ClientFactory::API_URL_PREPROD
+						: \Lengow\Sdk\ClientFactory::API_URL_PROD
+				);
+
+				$listener = new Lengow_Sdk_Listener();
+				$client->addBeforeSendRequestListener($listener)
+					->addAfterSendRequestListener($listener)
+					->getAuthenticator()
+					->addAfterRequestTokenListener($listener);
+
+				return new Lengow\Sdk\Sdk($client);
+			});
 			$factory->bind(Lengow_Connector::class, function () use ($factory) {
+				// TODO replace with the SDK
 				list( $account_id, $access_token, $secret ) = $factory->get(Lengow_Configuration::class)::get_access_id();
 				return new Lengow_Connector( $access_token, $secret );
 			});
@@ -391,6 +417,20 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				'version_checked' => $wp_version,
 			);
 		}
+
+		/**
+		 * @return Sdk
+		 * @throws Exception
+		 */
+		public static function sdk(): Sdk
+		{
+			return Lengow_Factory::instance()->get( Sdk::class);
+		}
+	}
+
+	// if WordPress does not use composer already
+	if (!class_exists('Lengow\Sdk\Sdk')) {
+		require __DIR__ . '/vendor/autoload.php';
 	}
 
 	// start module.
