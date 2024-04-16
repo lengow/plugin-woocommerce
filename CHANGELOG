@@ -1,4 +1,12 @@
 ========================================================
+Version 2.6.0
+========================================================
+
+    - Feature: Return tracking carrier during shipment (Otto)
+    - Feature: Return tracking number during shipment (Zalando)
+    - Feature: Add composer.json to make the plugin composer installable
+
+========================================================
 Version 2.5.5
 ========================================================
 
