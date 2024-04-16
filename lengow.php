@@ -182,19 +182,23 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			$factory = Lengow_Factory::instance();
 			$factory->bind(Lengow_Configuration::class, Lengow_Configuration::class);
 			$factory->bind( Sdk::class, function () {
-				$client = \Lengow\Sdk\ClientFactory::createClient(
-					Lengow_Configuration::get( Lengow_Configuration::ACCESS_TOKEN ),
-					Lengow_Configuration::get( Lengow_Configuration::SECRET ),
-					Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN ),
-					Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN_EXPIRE_AT ),
-					null,
-					null,
-					null,
-					'preprod' === Lengow_Configuration::get_plugin_environment()
-						? \Lengow\Sdk\ClientFactory::API_URL_PREPROD
-						: \Lengow\Sdk\ClientFactory::API_URL_PROD
-				);
+				$apiKey    = Lengow_Configuration::get( Lengow_Configuration::ACCESS_TOKEN );
+				$apiSecret = Lengow_Configuration::get( Lengow_Configuration::SECRET );
+				$authToken = Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN );
+				$expireAt  = Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN_EXPIRE_AT );
+				$factory   = (new \Lengow\Sdk\ClientFactory());
+				if ($apiKey && $apiSecret) {
+					$factory->withCredentials($apiKey, $apiSecret);
+					if ($authToken && $expireAt) {
+						$factory->withAuthorization($authToken, $expireAt);
+					}
+				}
 
+				if ('preprod' === Lengow_Configuration::get_plugin_environment()) {
+					$factory->withApiUrl(\Lengow\Sdk\ClientFactory::API_URL_PREPROD);
+				}
+
+				$client   = $factory->getClient();
 				$listener = new Lengow_Sdk_Listener();
 				$client->addBeforeSendRequestListener($listener)
 					->addAfterSendRequestListener($listener)
@@ -424,7 +428,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 */
 		public static function sdk(): Sdk
 		{
-			return Lengow_Factory::instance()->get( Sdk::class);
+			return Lengow_Factory::instance()->get( Sdk::class );
 		}
 	}
 

@@ -101,14 +101,21 @@ class Lengow_Admin_Connection {
 	 */
 	private static function check_api_credentials( string $access_token, string $secret ): bool {
 		try {
-			$account = Lengow::sdk()->access()->getToken( $access_token, $secret );
-			return Lengow_Configuration::set_access_ids(
+			$access = Lengow::sdk()->access()->getToken( $access_token, $secret );
+			if (Lengow_Configuration::set_access_ids(
 				array(
-					Lengow_Configuration::ACCOUNT_ID   => $account->account_id,
+					Lengow_Configuration::ACCOUNT_ID   => $access->account_id,
 					Lengow_Configuration::ACCESS_TOKEN => $access_token,
 					Lengow_Configuration::SECRET       => $secret,
 				)
-			);
+			)) {
+				Lengow_Configuration::update_value(Lengow_Configuration::AUTHORIZATION_TOKEN, $access->token);
+				Lengow_Configuration::update_value(Lengow_Configuration::AUTHORIZATION_TOKEN_EXPIRE_AT, time() + 3600);
+
+				return true;
+			}
+
+			return false;
 		} catch ( ClientException|Exception $e ) {
 			Lengow_Main::get_log_instance()->log_exception( $e );
 		}
