@@ -461,3 +461,5 @@ en:
       choose_a_carrier: "Select a carrier code..."
       required: "required"
       or_use: "or use..."
+      return_tracking_number: "Return tracking number"
+      return_carrier: "Return carrier"

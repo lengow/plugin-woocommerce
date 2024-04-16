@@ -423,6 +423,8 @@ meta_box.order_shipping.tracking_url|Tracking url
 meta_box.order_shipping.choose_a_carrier|Select a carrier code...
 meta_box.order_shipping.required|required
 meta_box.order_shipping.or_use|or use...
+meta_box.order_shipping.return_tracking_number|Return tracking number
+meta_box.order_shipping.return_carrier|Return carrier
 log.install.install_start|## start install for version %{version} ##
 log.install.install_end|## end install for version %{version} ##
 log.install.table_created|adding table %{name} in database
