@@ -41,10 +41,11 @@ class Lengow_Sdk_Listener implements AfterRequestTokenInterface, BeforeSendReque
 	/**
 	 * @param string $token
 	 * @param int $expireAt
+	 * @param int $accountId
 	 *
 	 * @return void
 	 */
-	public function afterRequestToken( string $token, int $expireAt ): void
+	public function afterRequestToken( string $token, int $expireAt, int $accountId): void
 	{
 		Lengow_Configuration::update_value( Lengow_Configuration::AUTHORIZATION_TOKEN, $token );
 		Lengow_Configuration::update_value( Lengow_Configuration::AUTHORIZATION_TOKEN_EXPIRE_AT, $expireAt );

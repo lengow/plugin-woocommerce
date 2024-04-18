@@ -529,7 +529,8 @@ class Lengow_Configuration {
 	 */
 	public static function reset_authorization_token() {
 		self::update_value( self::AUTHORIZATION_TOKEN, '' );
-		self::update_value( self::LAST_UPDATE_AUTHORIZATION_TOKEN, '' );
+		self::update_value( self::LAST_UPDATE_AUTHORIZATION_TOKEN, '' ); // TODO remove this
+		self::update_value( self::AUTHORIZATION_TOKEN_EXPIRE_AT, '' );
 	}
 
 	/**

@@ -22,6 +22,8 @@
  * @license     https://www.gnu.org/licenses/gpl-3.0 GNU General Public License
  */
 
+use Lengow\Sdk\Client\Exception\ClientException;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -139,11 +141,10 @@ class Lengow_Sync {
 	 * Sync Lengow catalogs for order synchronisation.
 	 *
 	 * @param boolean $force Force cache Update
-	 * @param boolean $log_output see log or not
 	 *
 	 * @return boolean
 	 */
-	public static function sync_catalog( $force = false, $log_output = false ) {
+	public static function sync_catalog( $force = false) {
 		$success         = false;
 		$setting_updated = false;
 		if ( Lengow_Configuration::is_new_merchant() ) {
@@ -157,13 +158,11 @@ class Lengow_Sync {
 				return $success;
 			}
 		}
-		$result = Lengow_Connector::query_api(
-			Lengow_Connector::GET,
-			Lengow_Connector::API_CMS,
-			array(),
-			'',
-			$log_output
-		);
+		try {
+			$result = Lengow::sdk()->cms()->list();
+		} catch ( ClientException|Exception $e ) {
+			Lengow_Main::get_log_instance()->log_exception( $e );
+		}
 		if ( isset( $result->cms ) ) {
 			$cms_token = Lengow_Main::get_token();
 			foreach ( $result->cms as $cms ) {
@@ -255,11 +254,10 @@ class Lengow_Sync {
 	 * Get Status Account.
 	 *
 	 * @param boolean $force Force cache Update
-	 * @param boolean $log_output see log or not
 	 *
 	 * @return array|false
 	 */
-	public static function get_status_account( $force = false, $log_output = false ) {
+	public static function get_status_account( bool $force = false ) {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_ACCOUNT_STATUS_DATA );
 			if ( null !== $updated_at
@@ -268,19 +266,19 @@ class Lengow_Sync {
 				return json_decode( Lengow_Configuration::get( Lengow_Configuration::ACCOUNT_STATUS_DATA ), true );
 			}
 		}
-		$result = Lengow_Connector::query_api(
-			Lengow_Connector::GET,
-			Lengow_Connector::API_PLAN,
-			array(),
-			'',
-			$log_output
-		);
-		if ( isset( $result->isFreeTrial ) ) {
+		try {
+			$plans = Lengow::sdk()->plans()->plans();
+		} catch ( ClientException|Exception $e ) {
+			Lengow_Main::get_log_instance()->log_exception($e);
+			return false;
+		}
+
+		if ( isset( $plans->isFreeTrial ) ) {
 			$status = array(
-				'type'    => $result->isFreeTrial ? 'free_trial' : '',
-				'day'     => (int) $result->leftDaysBeforeExpired < 0 ? 0 : (int) $result->leftDaysBeforeExpired,
-				'expired' => (bool) $result->isExpired,
-				'legacy'  => 'v2' === $result->accountVersion,
+				'type'    => $plans->isFreeTrial ? 'free_trial' : '',
+				'day'     => $plans->leftDaysBeforeExpired < 0 ? 0 : $plans->leftDaysBeforeExpired,
+				'expired' => $plans->isExpired,
+				'legacy'  => 'v2' === $plans->accountVersion,
 			);
 			Lengow_Configuration::update_value( Lengow_Configuration::ACCOUNT_STATUS_DATA, wp_json_encode( $status ) );
 			Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_ACCOUNT_STATUS_DATA, time() );

@@ -182,32 +182,33 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			$factory = Lengow_Factory::instance();
 			$factory->bind(Lengow_Configuration::class, Lengow_Configuration::class);
 			$factory->bind( Sdk::class, function () {
-				$apiKey    = Lengow_Configuration::get( Lengow_Configuration::ACCESS_TOKEN );
-				$apiSecret = Lengow_Configuration::get( Lengow_Configuration::SECRET );
-				$authToken = Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN );
-				$expireAt  = Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN_EXPIRE_AT );
-				$factory   = (new \Lengow\Sdk\ClientFactory());
-				if ($apiKey && $apiSecret) {
-					$factory->withCredentials($apiKey, $apiSecret);
-					if ($authToken && $expireAt) {
-						$factory->withAuthorization($authToken, $expireAt);
+				$api_key    = Lengow_Configuration::get( Lengow_Configuration::ACCESS_TOKEN );
+				$api_secret = Lengow_Configuration::get( Lengow_Configuration::SECRET );
+				$auth_token = Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN );
+				$expire_at  = Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN_EXPIRE_AT );
+				$account_id = Lengow_Configuration::get( Lengow_Configuration::ACCOUNT_ID );
+				$factory    = new \Lengow\Sdk\ClientFactory();
+				if ( $api_key && $api_secret ) {
+					$factory->withCredentials( $api_key, $api_secret );
+					if ( $auth_token && $expire_at && $account_id ) {
+						$factory->withAuthorization( $auth_token, $expire_at, $account_id );
 					}
 				}
 
-				if ('preprod' === Lengow_Configuration::get_plugin_environment()) {
-					$factory->withApiUrl(\Lengow\Sdk\ClientFactory::API_URL_PREPROD);
+				if ( 'preprod' === Lengow_Configuration::get_plugin_environment() ) {
+					$factory->withApiUrl( \Lengow\Sdk\ClientFactory::API_URL_PREPROD );
 				}
 
 				$client   = $factory->getClient();
 				$listener = new Lengow_Sdk_Listener();
-				$client->addBeforeSendRequestListener($listener)
-					->addAfterSendRequestListener($listener)
+				$client->addBeforeSendRequestListener( $listener )
+					->addAfterSendRequestListener( $listener )
 					->getAuthenticator()
-					->addAfterRequestTokenListener($listener);
+					->addAfterRequestTokenListener( $listener );
 
-				return new Lengow\Sdk\Sdk($client);
+				return new Lengow\Sdk\Sdk( $client );
 			});
-			$factory->bind(Lengow_Connector::class, function () use ($factory) {
+			$factory->bind(Lengow_Connector::class, function () use ( $factory ) {
 				// TODO replace with the SDK
 				list( $account_id, $access_token, $secret ) = $factory->get(Lengow_Configuration::class)::get_access_id();
 				return new Lengow_Connector( $access_token, $secret );
@@ -423,11 +424,17 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 
 		/**
+		 * @param bool $reloadCredentials
+		 *
 		 * @return Sdk
 		 * @throws Exception
 		 */
-		public static function sdk(): Sdk
+		public static function sdk( bool $reloadCredentials = false ): Sdk
 		{
+			if ( $reloadCredentials ) {
+				return Lengow_Factory::instance()->make( Sdk::class );
+			}
+
 			return Lengow_Factory::instance()->get( Sdk::class );
 		}
 	}

@@ -132,13 +132,13 @@ class Lengow_Admin_Connection {
 		$cms_token     = Lengow_Main::get_token();
 		$cms_connected = Lengow_Sync::sync_catalog( true );
 		if ( ! $cms_connected ) {
-			$sync_data = wp_json_encode( Lengow_Sync::get_sync_data() );
-			$result    = Lengow_Connector::query_api(
-				Lengow_Connector::POST,
-				Lengow_Connector::API_CMS,
-				array(),
-				$sync_data
-			);
+			$sync_data = Lengow_Sync::get_sync_data();
+			try {
+				$result = Lengow::sdk( true )->cms()->post( $sync_data );
+			} catch ( Exception $e ) {
+				Lengow_Main::get_log_instance()->log_exception( $e );
+			}
+
 			if ( isset( $result->common_account ) ) {
 				$cms_connected = true;
 				$message_key   = 'log.connection.cms_creation_success';
