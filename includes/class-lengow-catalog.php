@@ -22,6 +22,8 @@
  * @license     https://www.gnu.org/licenses/gpl-3.0 GNU General Public License
  */
 
+use Lengow\Sdk\Client\Exception\HttpException;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -37,13 +39,17 @@ class Lengow_Catalog {
 	 * @return boolean
 	 */
 	public static function has_catalog_not_linked() {
-		$lengow_catalogs = Lengow_Connector::query_api(
-			Lengow_Connector::GET,
-			Lengow_Connector::API_CMS_CATALOG
-		);
+		try {
+			$lengow_catalogs = Lengow::sdk()->cms()->catalog()->list();
+		} catch ( HttpException|Exception $e ) {
+			Lengow_Main::get_log_instance()->log_exception( $e );
+			return false;
+		}
+
 		if ( ! $lengow_catalogs ) {
 			return false;
 		}
+
 		foreach ( $lengow_catalogs as $catalog ) {
 			if ( ! is_object( $catalog ) || $catalog->shop ) {
 				continue;
@@ -62,8 +68,14 @@ class Lengow_Catalog {
 	 */
 	public static function get_catalog_list() {
 		$catalog_list    = array();
-		$lengow_catalogs = Lengow_Connector::query_api( Lengow_Connector::GET, Lengow_Connector::API_CMS_CATALOG );
-		if ( ! $lengow_catalogs ) {
+		try {
+			$lengow_catalogs = Lengow::sdk()->cms()->catalog()->list();
+		} catch ( HttpException|Exception $e ) {
+			Lengow_Main::get_log_instance()->log_exception( $e );
+			return $catalog_list;
+		}
+
+		if ( ! isset( $lengow_catalogs ) ) {
 			return $catalog_list;
 		}
 		foreach ( $lengow_catalogs as $catalog ) {
@@ -133,12 +145,12 @@ class Lengow_Catalog {
 			)
 		);
 
-		$result = Lengow_Connector::query_api(
-			Lengow_Connector::POST,
-			Lengow_Connector::API_CMS_MAPPING,
-			array(),
-			json_encode( $link_catalog_data )
-		);
+		try {
+			$result = Lengow::sdk()->cms()->mapping()->post( $link_catalog_data );
+		} catch ( HttpException|Exception $e ) {
+			Lengow_Main::get_log_instance()->log_exception( $e );
+			return false;
+		}
 
 		return isset( $result->cms_token );
 	}

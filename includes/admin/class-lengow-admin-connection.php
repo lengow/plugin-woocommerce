@@ -21,7 +21,7 @@
  * @copyright   2017 Lengow SAS
  */
 
-use Lengow\Sdk\Client\Exception\ClientException;
+use Lengow\Sdk\Client\Exception\HttpException;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -116,7 +116,7 @@ class Lengow_Admin_Connection {
 			}
 
 			return false;
-		} catch ( ClientException|Exception $e ) {
+		} catch ( HttpException|Exception $e ) {
 			Lengow_Main::get_log_instance()->log_exception( $e );
 		}
 

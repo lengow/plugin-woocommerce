@@ -22,6 +22,8 @@
  * @license     https://www.gnu.org/licenses/gpl-3.0 GNU General Public License
  */
 
+use Lengow\Sdk\Client\Exception\HttpException;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -1158,29 +1160,34 @@ class Lengow_Order {
 	 */
 	public function get_order_line_by_api() {
 		$order_lines = array();
-		$results     = Lengow_Connector::query_api(
-			Lengow_Connector::GET,
-			Lengow_Connector::API_ORDER,
-			array(
-				Lengow_Import::ARG_MARKETPLACE_ORDER_ID => $this->marketplace_sku,
-				Lengow_Import::ARG_MARKETPLACE          => $this->marketplace_name,
-			)
-		);
-		if ( ! isset( $results->count ) || 0 === (int) $results->count ) {
+
+		try {
+			$results = Lengow::sdk()->order()->list(
+				array(
+					Lengow_Import::ARG_MARKETPLACE_ORDER_ID => $this->marketplace_sku,
+					Lengow_Import::ARG_MARKETPLACE          => $this->marketplace_name
+				)
+			);
+		} catch ( HttpException|Exception $e ) {
+			Lengow_Main::get_log_instance()->log_exception( $e );
+		}
+
+		if ( ! isset( $results->count ) || 0 === $results->count ) {
 			return false;
 		}
+
 		$order_data = $results->results[0];
 		foreach ( $order_data->packages as $package ) {
 			$product_lines = array();
 			foreach ( $package->cart as $product ) {
 				$product_lines[] = array(
-					Lengow_Order_Line::FIELD_ORDER_LINE_ID => (string) $product->marketplace_order_line_id,
+					Lengow_Order_Line::FIELD_ORDER_LINE_ID => $product->marketplace_order_line_id,
 				);
 			}
 			if ( 0 === $this->delivery_address_id ) {
 				return ! empty( $product_lines ) ? $product_lines : false;
 			}
-			$order_lines[ (int) $package->delivery->id ] = $product_lines;
+			$order_lines[ $package->delivery->id ] = $product_lines;
 		}
 		$return = $order_lines[ $this->delivery_address_id ];
 
