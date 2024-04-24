@@ -201,22 +201,6 @@ class Lengow_Hook {
 	}
 
 	/**
-	 * Adding simple tracker Lengow on footer when order is confirmed.
-	 */
-	public static function render_lengow_tracker() {
-		global $wp;
-
-		if ( isset( $wp->query_vars['order-received'] )
-			&& is_checkout()
-			&& Lengow_Configuration::get( Lengow_Configuration::TRACKING_ENABLED )
-		) {
-			$order_id = (int) $wp->query_vars['order-received'];
-			$order    = new WC_Order( $order_id );
-			Lengow_Tracker::html_display( $order );
-		}
-	}
-
-	/**
 	 * Switch woocommerce tax class for Lengow b2b orders
 	 *
 	 * @param $tax_class string Magento tax class

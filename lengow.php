@@ -95,8 +95,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				add_filter( 'pre_site_transient_update_plugins', array( $this, 'remove_core_updates' ) );
 				add_filter( 'pre_site_transient_update_themes', array( $this, 'remove_core_updates' ) );
 			}
-			// Lengow tracker.
-			add_action( 'wp_footer', array( 'Lengow_Hook', 'render_lengow_tracker' ), 100 );
 		}
 
 		/**
@@ -165,7 +163,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			}
 
 			include_once 'includes/class-lengow-hook.php';
-			include_once 'includes/frontend/class-lengow-tracker.php';
 			include_once 'includes/class-lengow-cron.php';
 			include_once 'includes/class-lengow-cron-toolbox.php';
 			include_once 'includes/class-lengow-cron-export.php';
