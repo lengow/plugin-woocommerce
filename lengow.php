@@ -30,7 +30,7 @@
  * Author: Lengow
  * Author URI: https://www.lengow.com
  * Requires at least: 5.3
- * Tested up to: 6.4
+ * Tested up to: 6.5
  * Requires PHP: 5.5
  * License URI: https://www.gnu.org/licenses/gpl-3.0
  *
