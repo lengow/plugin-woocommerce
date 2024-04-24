@@ -52,6 +52,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<span class="lgw-order-label"><?php echo esc_html( $order_lengow->customer_email ); ?></span>
 		</li>
 		<hr>
+		<?php if ( isset( $phone ) ) : ?>
+		<li>
+			<span class="lgw-order-title"><?php echo esc_html( $locale->t( 'meta_box.order_info.customer_phone' ) ); ?></span>
+			<span class="lgw-order-label"><?php echo esc_html( $phone ); ?></span>
+		</li>
+		<hr>
+		<?php endif; ?>
 		<li>
 			<span class="lgw-order-title"><?php echo esc_html( $locale->t( 'meta_box.order_info.is_express' ) ); ?></span>
 			<span class="lgw-order-label">

@@ -437,6 +437,7 @@ en:
       address_id: "Delivery Address ID"
       customer_name: "Customer name"
       customer_email: "Customer email"
+      customer_phone: "Customer phone"
       message: "Message"
       vat_number: "VAT number"
       no_vat_number: "No VAT number"

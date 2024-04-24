@@ -437,6 +437,7 @@ fr:
       address_id: "ID d'adresse de livraison"
       customer_name: "Nom du client"
       customer_email: "Email client"
+      customer_phone: "Numéro de téléphone client"
       message: "Message"
       imported_date: "Importée le"
       vat_number: "Numéro de TVA"
