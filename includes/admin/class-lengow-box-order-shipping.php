@@ -41,13 +41,13 @@ class Lengow_Box_Order_Shipping {
 			$order_lengow    = new Lengow_Order( $order_lengow_id );
 			// compatibility v2.
 			if ( null !== $order_lengow->feed_id
-			     && ! Lengow_Marketplace::marketplace_exist( $order_lengow->marketplace_name )
+				&& ! Lengow_Marketplace::marketplace_exist( $order_lengow->marketplace_name )
 			) {
 				$order_lengow->check_and_change_marketplace_name();
 			}
 			$marketplace = Lengow_Main::get_marketplace_singleton( $order_lengow->marketplace_name );
 			wp_nonce_field( 'lengow_woocommerce_custom_box', 'lengow_woocommerce_custom_box_nonce' );
-			include_once( 'views/box-order-shipping/html-order-shipping.php' );
+			include_once 'views/box-order-shipping/html-order-shipping.php';
 		} catch ( Exception $e ) {
 			echo Lengow_Main::decode_log_message( $e->getMessage() );
 		}

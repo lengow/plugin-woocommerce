@@ -35,6 +35,7 @@ update.not_working|Not working? Contact our
 update.customer_success_team|Customer Success team
 update.button_download_version|Lengow WooCommerce %{version}
 update.button_remind_me_later|Not now, remind me later
+footer.setting|Settings
 footer.toolbox|Toolbox
 footer.legals|Legal notices
 footer.plugin_lengow|Lengow WooCommerce Plugin
@@ -153,6 +154,7 @@ order.screen.status_closed|Closed
 order.screen.status_refunded|Refunded
 order.screen.status_partialy_refunded|Partially Refunded
 order.screen.status_canceled|Canceled
+order.screen.status_new|New
 order.screen.type_express|Express delivery
 order.screen.type_delivered_by_marketplace|Shipped by Marketplace
 order.screen.type_business|Business
@@ -316,6 +318,8 @@ lengow_settings.lengow_store_active_title|Enable store
 lengow_settings.lengow_account_id_title|Account ID
 lengow_settings.lengow_access_token_title|Access Token
 lengow_settings.lengow_secret_token_title|Secret Token
+lengow_settings.lengow_plugin_env_legend|Connect to the production or pre-production environment
+lengow_settings.lengow_plugin_env_title|Environment
 lengow_settings.lengow_catalog_id_title|Catalogues ID
 lengow_settings.lengow_catalog_id_legend|To add multiple catalog ids, use ";" to separate them
 lengow_settings.lengow_ip_enable_title|Enable authorisation by IP
@@ -419,6 +423,8 @@ meta_box.order_shipping.tracking_url|Tracking url
 meta_box.order_shipping.choose_a_carrier|Select a carrier code...
 meta_box.order_shipping.required|required
 meta_box.order_shipping.or_use|or use...
+meta_box.order_shipping.return_tracking_number|Return tracking number
+meta_box.order_shipping.return_carrier|Return carrier
 log.install.install_start|## start install for version %{version} ##
 log.install.install_end|## end install for version %{version} ##
 log.install.table_created|adding table %{name} in database

@@ -1,6 +1,30 @@
 ========================================================
+Version 2.6.0
+========================================================
+
+    - Feature: Return tracking carrier during shipment (Otto)
+    - Feature: Return tracking number during shipment (Zalando)
+    - Feature: Add composer.json to make the plugin composer installable
+
+========================================================
+Version 2.5.5
+========================================================
+
+    - BugFix:  PHP Fatal error occurring when the plugin checks if there is a new version (and there is one)
+    - BugFix:  Make the plugin compliant with the WordPress coding standard
+
+========================================================
+Version 2.5.4
+========================================================
+
+    - BugFix:  Optimise the catalog export time
+    - BufFix:  Update some help center links
+    - BugFix:  Fix broken footer settings url
+
+========================================================
 Version 2.5.3
 ========================================================
+
     - Feature:  Partially refunded status
     - Feature:  Switch env preprod/prod from config
     - Feature:  Toolbox file details

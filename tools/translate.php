@@ -15,9 +15,9 @@
  */
 
 error_reporting( E_ALL );
-ini_set( "display_errors", 1 );
+ini_set( 'display_errors', 1 );
 
-$directory  = dirname( dirname( __FILE__ ) ) . '/translations/yml/';
+$directory  = dirname( __DIR__ ) . '/translations/yml/';
 $list_files = array_diff( scandir( $directory ), array( '..', '.', 'index.php' ) );
 $list_files = array_diff( $list_files, array( 'en_GB.yml' ) );
 array_unshift( $list_files, 'en_GB.yml' );
@@ -26,9 +26,9 @@ foreach ( $list_files as $list ) {
 	$yml_file = yaml_parse_file( $directory . $list );
 	$locale   = basename( $directory . $list, '.yml' );
 	if ( $list === 'log.yml' ) {
-		$fp = fopen( dirname( dirname( __FILE__ ) ) . '/translations/en_GB.csv', 'a+' );
+		$fp = fopen( dirname( __DIR__ ) . '/translations/en_GB.csv', 'a+' );
 	} else {
-		$fp = fopen( dirname( dirname( __FILE__ ) ) . '/translations/' . $locale . '.csv', 'w+' );
+		$fp = fopen( dirname( __DIR__ ) . '/translations/' . $locale . '.csv', 'w+' );
 	}
 	foreach ( $yml_file as $language => $categories ) {
 		write_csv( $fp, $categories );
@@ -40,8 +40,8 @@ foreach ( $list_files as $list ) {
  * Write csv
  *
  * @param resource $fp
- * @param string $text
- * @param array $front_key
+ * @param string   $text
+ * @param array    $front_key
  */
 function write_csv( $fp, $text, &$front_key = array() ) {
 	if ( is_array( $text ) ) {

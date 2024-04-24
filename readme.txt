@@ -2,9 +2,9 @@
 Contributors: lengowcompany
 Tags: woocommerce, ecommerce, feed, orders, marketplace, amazon, google shopping, facebook, product catalog, feed management, lengow
 Requires at least: 5.3
-Tested up to: 5.8
+Tested up to: 6.5
 Requires PHP: 5.5
-Stable tag: 2.5.3
+Stable tag: 2.6.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -26,11 +26,28 @@ Major features in Lengow include:
 The Lengow plugin for WooCommerce is free to download and it enables you to export your product catalogs and manage your orders. It is compatible only with the new version of our platform.
 A Lengow account is created during the extension installation and you will have free access to our platform for 15 days. To benefit from all the functionalities of Lengow, this requires you to pay for an account on the Lengow platform.
 
+= Use of an external service =
+
+This plugin uses the services of Lengow as a third party for certain functionalities. When using these features, data may be transmitted to Lengow. Please follow the link below to find out how your data is used.
+- [Lengow]: https://www.lengow.com/
+
+Lengow will use too different domains to interact with its solution and those of merchants:
+
+Lengow API: https://api.lengow.io
+Tracking Lengow: https://trk.lgw.io
+Solution documentation: https://help.lengow.com
+
+= Terms of use and privacy policy =
+
+Before using Lengow-related features, please carefully read Lengow's Terms of Use and Privacy Policy:
+- [Terms of use]: https://www.lengow.com/fr/cgu/
+- [Privacy Policy]: https://www.lengow.com/fr/politique-de-confidentialite-clients-et-fournisseurs/
+
 == Frequently Asked Questions ==
 
 = Where can I find Lengow documentation and user guides? =
 
-For help setting up and configuring Lengow plugin please refer to our [user guide](https://help.lengow.com/hc/en-us/articles/360011968912)
+For help setting up and configuring Lengow plugin please refer to our [user guide](https://help.lengow.com/hc/en-us/articles/10059898927388-WooCommerce-Set-up-the-plugin)
 
 = Where can I get support? =
 

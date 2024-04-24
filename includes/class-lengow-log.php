@@ -32,13 +32,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Log {
 
 	/* Log category codes */
-	const CODE_INSTALL = 'Install';
-	const CODE_CONNECTION = 'Connection';
-	const CODE_SETTING = 'Setting';
-	const CODE_CONNECTOR = 'Connector';
-	const CODE_EXPORT = 'Export';
-	const CODE_IMPORT = 'Import';
-	const CODE_ACTION = 'Action';
+	const CODE_INSTALL     = 'Install';
+	const CODE_CONNECTION  = 'Connection';
+	const CODE_SETTING     = 'Setting';
+	const CODE_CONNECTOR   = 'Connector';
+	const CODE_EXPORT      = 'Export';
+	const CODE_IMPORT      = 'Import';
+	const CODE_ACTION      = 'Action';
 	const CODE_MAIL_REPORT = 'Mail Report';
 
 	/* Log params for export */
@@ -50,19 +50,19 @@ class Lengow_Log {
 	 */
 	private $file;
 
-        /**
-         *
-         * @var bool $display
-         */
-        private $display;
+		/**
+		 *
+		 * @var bool $display
+		 */
+		private $display;
 
-        /**
-	 * Construct a new Lengow log.
-	 *
-	 * @param string $file_name log file name
-	 *
-	 * @throws Lengow_Exception
-	 */
+		/**
+		 * Construct a new Lengow log.
+		 *
+		 * @param string $file_name log file name
+		 *
+		 * @throws Lengow_Exception
+		 */
 	public function __construct( $file_name = null ) {
 		if ( empty( $file_name ) ) {
 			$file_name = 'logs-' . date( Lengow_Main::DATE_DAY ) . '.txt';
@@ -73,19 +73,19 @@ class Lengow_Log {
 	/**
 	 * Write log.
 	 *
-	 * @param string $category Category
-	 * @param string $message log message
-	 * @param boolean $display display on screen
+	 * @param string      $category Category
+	 * @param string      $message log message
+	 * @param boolean     $display display on screen
 	 * @param string|null $marketplace_sku lengow order id
 	 */
 	public function write( $category, $message = '', $display = false, $marketplace_sku = null ) {
 		$decoded_message = Lengow_Main::decode_log_message( $message, Lengow_Translation::DEFAULT_ISO_CODE );
 		$log             = get_date_from_gmt( date( Lengow_Main::DATE_FULL ) );
-		$log             .= ' - ' . ( empty( $category ) ? '' : '[' . $category . '] ' );
-		$log             .= empty( $marketplace_sku ) ? '' : 'order ' . $marketplace_sku . ' : ';
-		$log             .= $decoded_message . "\r\n";
+		$log            .= ' - ' . ( empty( $category ) ? '' : '[' . $category . '] ' );
+		$log            .= empty( $marketplace_sku ) ? '' : 'order ' . $marketplace_sku . ' : ';
+		$log            .= $decoded_message . "\r\n";
 		if ( $display ) {
-                    $this->display = true;
+					$this->display = true;
 		}
 		$this->file->write( $log );
 	}
@@ -116,8 +116,8 @@ class Lengow_Log {
 			$logs[] = array(
 				self::LOG_DATE => $date,
 				self::LOG_LINK => Lengow_Main::get_toolbox_url()
-				                  . '&' . Lengow_Toolbox::PARAM_TOOLBOX_ACTION . '=' . Lengow_Toolbox::ACTION_LOG
-				                  . '&' . Lengow_Toolbox::PARAM_DATE . '=' . urlencode( $date ),
+									. '&' . Lengow_Toolbox::PARAM_TOOLBOX_ACTION . '=' . Lengow_Toolbox::ACTION_LOG
+									. '&' . Lengow_Toolbox::PARAM_DATE . '=' . urlencode( $date ),
 			);
 		}
 
@@ -161,34 +161,32 @@ class Lengow_Log {
 		}
 		header( 'Content-type: text/plain' );
 		header( 'Content-Disposition: attachment; filename="' . $file_name . '"' );
-		echo esc_html($contents);
+		echo wp_kses_post( $contents );
 		exit();
 	}
 
-        /**
-         * Returns log content for display
-         *
-         * @return string
-         */
-        public function getFileLogContent($format = 'txt')
-        {
-            if (!$this->display) {
-                return '';
-            }
-            $contentLog = (string) file_get_contents($this->file->get_path());
+		/**
+		 * Returns log content for display
+		 *
+		 * @return string
+		 */
+	public function getFileLogContent( $format = 'txt' ) {
+		if ( ! $this->display ) {
+			return '';
+		}
+		$contentLog = (string) file_get_contents( $this->file->get_path() );
 
-            if ($format === 'txt') {
-                return $contentLog;
-            }
+		if ( $format === 'txt' ) {
+			return $contentLog;
+		}
 
-            $contentLines = [];
-            $explodeLines = explode("\r\n", $contentLog);
-            foreach ($explodeLines as $index => $logLine) {
+		$contentLines = array();
+		$explodeLines = explode( "\r\n", $contentLog );
+		foreach ( $explodeLines as $index => $logLine ) {
 
-                $contentLines[] = $logLine;
-            }
+			$contentLines[] = $logLine;
+		}
 
-            return json_encode($contentLines);
-
-        }
+		return wp_json_encode( $contentLines );
+	}
 }

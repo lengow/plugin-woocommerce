@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( ! class_exists( 'WP_List_Table' ) ) {
-	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
 /**
@@ -78,11 +78,11 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 */
 	public static function post_process() {
 		$locale = new Lengow_Translation();
-		$action = isset( $_POST['do_action'] ) ? sanitize_text_field($_POST['do_action']) : false;
+		$action = isset( $_POST['do_action'] ) ? sanitize_text_field( $_POST['do_action'] ) : false;
 		if ( $action ) {
 			switch ( $action ) {
 				case 'change_option_selected':
-					$state = isset( $_POST['state'] ) ? sanitize_text_field($_POST['state']) : null;
+					$state = isset( $_POST['state'] ) ? sanitize_text_field( $_POST['state'] ) : null;
 					if ( null !== $state ) {
 						Lengow_Configuration::update_value(
 							Lengow_Configuration::SELECTION_ENABLED,
@@ -96,28 +96,29 @@ class Lengow_Admin_Products extends WP_List_Table {
 							$data['state'] = false;
 						}
 						$result = array_merge( $data, self::_reload_total() );
-						echo json_encode( $result );
+						echo wp_json_encode( $result );
 					}
 					break;
 				case 'select_product':
-					$state     = isset( $_POST['state'] ) ? sanitize_text_field($_POST['state']) : null;
-					$productId = isset( $_POST['id_product'] ) ? (int) sanitize_text_field($_POST['id_product']) : null;
+					$state     = isset( $_POST['state'] ) ? sanitize_text_field( $_POST['state'] ) : null;
+					$productId = isset( $_POST['id_product'] ) ? (int) sanitize_text_field( $_POST['id_product'] ) : null;
 					if ( null !== $state ) {
 						Lengow_Product::publish( $productId, $state );
-						echo json_encode( self::_reload_total() );
+						echo wp_json_encode( self::_reload_total() );
 					}
 					break;
 				case 'export_mass_action':
-					$selection     = isset( $_POST['product'] ) ? sanitize_text_field($_POST['product']) : false;
-					$select_all    = isset( $_POST['select_all'] ) ? sanitize_text_field($_POST['select_all']) : null;
-					$export_action = isset( $_POST['export_action'] ) ? sanitize_text_field($_POST['export_action']) : null;
+					$selection     = isset( $_POST['product'] ) ? sanitize_text_field( $_POST['product'] ) : false;
+					$select_all    = isset( $_POST['select_all'] ) ? sanitize_text_field( $_POST['select_all'] ) : null;
+					$export_action = isset( $_POST['export_action'] ) ? sanitize_text_field( $_POST['export_action'] ) : null;
 					$data          = array();
 					if ( 'true' === $select_all ) {
 						$all_products = get_posts(
 							array(
 								'numberposts' => - 1,
 								'post_type'   => 'product',
-							) );
+							)
+						);
 						$all          = array();
 						foreach ( $all_products as $value ) {
 							$all[] = $value->ID;
@@ -146,7 +147,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 					} else {
 						$data['message'] = $locale->t( 'product.screen.no_product_selected' );
 					}
-					echo json_encode( $data );
+					echo wp_json_encode( $data );
 					break;
 			}
 			exit();
@@ -155,7 +156,6 @@ class Lengow_Admin_Products extends WP_List_Table {
 
 	/**
 	 * Display lengow product table.
-	 *
 	 */
 	public static function render_lengow_list() {
 		// need to instantiate a class because this method must be static.
@@ -172,7 +172,6 @@ class Lengow_Admin_Products extends WP_List_Table {
 
 	/**
 	 * Display lengow product data.
-	 *
 	 */
 	public function prepare_items() {
 		$columns = $this->get_columns();
@@ -222,7 +221,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 	/**
 	 * Define all columns for specific method.
 	 *
-	 * @param array $item product data
+	 * @param array  $item product data
 	 * @param string $column_name column name
 	 *
 	 * @return array
@@ -341,11 +340,25 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 * @param string $input_id id for search
 	 */
 	public function search( $text, $input_id ) {
-		echo '<form id="post-filter" method="post">';
+		$allowed_html = array(
+			'form'  => array(
+				'id'     => true,
+				'method' => true,
+			),
+			'input' => array(
+				'type'        => true,
+				'name'        => true,
+				'placeholder' => true,
+				'value'       => true,
+				'class'       => true,
+			),
+		);
+
+		echo wp_kses( '<form id="post-filter" method="post">', $allowed_html );
 		// the hidden element is needed to load the right page.
-		echo '<input type="hidden" name="page" value="lengow_list" />';
-		echo $this->search_box( $text, $input_id );
-		echo '</form>';
+		echo wp_kses( '<input type="hidden" name="page" value="lengow_list" />', $allowed_html );
+		echo wp_kses( $this->search_box( $text, $input_id ), $allowed_html );
+		echo wp_kses( '</form>', $allowed_html );
 	}
 
 	/**
@@ -367,22 +380,25 @@ class Lengow_Admin_Products extends WP_List_Table {
 			'lengow',
 		);
 		// filter by search box.
-		$params = array( 'numberposts' => - 1, 'post_type' => 'product' );
+		$params = array(
+			'numberposts' => - 1,
+			'post_type'   => 'product',
+		);
 		if ( isset( $_POST['s'] ) ) {
-			$params['s'] = $_POST['s'];
+			$params['s'] = sanitize_text_field( $_POST['s'] );
 		}
 		$posts = get_posts( $params );
 		// get product data.
 		foreach ( $keys as $key ) {
 			foreach ( $posts as $post ) {
 				switch ( $key ) {
-					case 'ID' :
+					case 'ID':
 						$products_data = $post->ID;
 						break;
-					case 'image' :
+					case 'image':
 						$products_data = get_the_post_thumbnail( $post->ID, array( 40, 40 ) );
 						break;
-					case 'post_title' :
+					case 'post_title':
 						$products_data = $post->post_title;
 						break;
 					case 'categories':
@@ -400,7 +416,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 					case 'lengow':
 						$products_data = isset( $this->lengow_product_ids[ $post->ID ] ) ? 1 : 0;
 						break;
-					default :
+					default:
 						$products_data = get_post_meta( $post->ID, $key, true );
 						break;
 				}
@@ -421,9 +437,9 @@ class Lengow_Admin_Products extends WP_List_Table {
 	 */
 	private function _usort_reorder( $a, $b ) {
 		// if no sort, default to ID.
-		$order_by = ! empty( $_GET['orderby'] ) ? $_GET['orderby'] : 'ID';
+		$order_by = ! empty( $_GET['orderby'] ) ? sanitize_text_field( $_GET['orderby'] ) : 'ID';
 		// if no order, default to asc.
-		$order = ! empty( $_GET['order'] ) ? $_GET['order'] : 'asc';
+		$order = ! empty( $_GET['order'] ) ? sanitize_text_field( $_GET['order'] ) : 'asc';
 		// determine sort order.
 		$result = strcmp( $a[ $order_by ], $b[ $order_by ] );
 

@@ -37,25 +37,25 @@ class Lengow_Sync {
 	const CMS_TYPE = 'woocommerce';
 
 	/* Sync actions */
-	const SYNC_CATALOG = 'catalog';
-	const SYNC_CMS_OPTION = 'cms_option';
+	const SYNC_CATALOG        = 'catalog';
+	const SYNC_CMS_OPTION     = 'cms_option';
 	const SYNC_STATUS_ACCOUNT = 'status_account';
-	const SYNC_MARKETPLACE = 'marketplace';
-	const SYNC_ORDER = 'order';
-	const SYNC_ACTION = 'action';
-	const SYNC_PLUGIN_DATA = 'plugin';
+	const SYNC_MARKETPLACE    = 'marketplace';
+	const SYNC_ORDER          = 'order';
+	const SYNC_ACTION         = 'action';
+	const SYNC_PLUGIN_DATA    = 'plugin';
 
 	/* Plugin link types */
-	const LINK_TYPE_HELP_CENTER = 'help_center';
-	const LINK_TYPE_CHANGELOG = 'changelog';
+	const LINK_TYPE_HELP_CENTER  = 'help_center';
+	const LINK_TYPE_CHANGELOG    = 'changelog';
 	const LINK_TYPE_UPDATE_GUIDE = 'update_guide';
-	const LINK_TYPE_SUPPORT = 'support';
+	const LINK_TYPE_SUPPORT      = 'support';
 
 	/* Default plugin links */
-	const LINK_HELP_CENTER = 'https://help.lengow.com/hc/en-us/articles/360011968912';
-	const LINK_CHANGELOG = 'https://help.lengow.com/hc/en-us/articles/360011089440';
-	const LINK_UPDATE_GUIDE = 'https://help.lengow.com/hc/en-us/articles/360011968912#2-updating-your-plugin-version';
-	const LINK_SUPPORT = 'https://help.lengow.com/hc/en-us/requests/new';
+	const LINK_HELP_CENTER  = 'https://help.lengow.com/hc/en-us/articles/10059898927388-WooCommerce-Set-up-the-plugin';
+	const LINK_CHANGELOG    = 'https://help.lengow.com/hc/en-us/articles/360011089440-Woocommerce-Lengow-plugin-changelogs';
+	const LINK_UPDATE_GUIDE = 'https://help.lengow.com/hc/en-us/articles/10058794907164-WooCommerce-Update-the-plugin-version';
+	const LINK_SUPPORT      = 'https://help.lengow.com/hc/en-us/requests/new';
 
 	/* Api iso codes */
 	const API_ISO_CODE_EN = 'en';
@@ -152,7 +152,7 @@ class Lengow_Sync {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_CATALOG );
 			if ( null !== $updated_at
-			     && ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_CATALOG ]
+				&& ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_CATALOG ]
 			) {
 				return $success;
 			}
@@ -233,12 +233,12 @@ class Lengow_Sync {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_OPTION_CMS );
 			if ( null !== $updated_at
-			     && ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_CMS_OPTION ]
+				&& ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_CMS_OPTION ]
 			) {
 				return false;
 			}
 		}
-		$options = json_encode( self::get_option_data() );
+		$options = wp_json_encode( self::get_option_data() );
 		Lengow_Connector::query_api(
 			Lengow_Connector::PUT,
 			Lengow_Connector::API_CMS,
@@ -263,7 +263,7 @@ class Lengow_Sync {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_ACCOUNT_STATUS_DATA );
 			if ( null !== $updated_at
-			     && ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_STATUS_ACCOUNT ]
+				&& ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_STATUS_ACCOUNT ]
 			) {
 				return json_decode( Lengow_Configuration::get( Lengow_Configuration::ACCOUNT_STATUS_DATA ), true );
 			}
@@ -282,7 +282,7 @@ class Lengow_Sync {
 				'expired' => (bool) $result->isExpired,
 				'legacy'  => 'v2' === $result->accountVersion,
 			);
-			Lengow_Configuration::update_value( Lengow_Configuration::ACCOUNT_STATUS_DATA, json_encode( $status ) );
+			Lengow_Configuration::update_value( Lengow_Configuration::ACCOUNT_STATUS_DATA, wp_json_encode( $status ) );
 			Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_ACCOUNT_STATUS_DATA, time() );
 
 			return $status;
@@ -307,8 +307,8 @@ class Lengow_Sync {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_MARKETPLACE );
 			if ( null !== $updated_at
-			     && ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_MARKETPLACE ]
-			     && file_exists( $file_path )
+				&& ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_MARKETPLACE ]
+				&& file_exists( $file_path )
 			) {
 				// recovering data with the marketplaces.json file.
 				$marketplaces_data = file_get_contents( $file_path );
@@ -334,7 +334,7 @@ class Lengow_Sync {
 					Lengow_Marketplace::FILE_MARKETPLACE,
 					'w+'
 				);
-				$marketplace_file->write( json_encode( $result ) );
+				$marketplace_file->write( wp_json_encode( $result ) );
 				$marketplace_file->close();
 				Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_MARKETPLACE, time() );
 			} catch ( Lengow_Exception $e ) {
@@ -379,7 +379,7 @@ class Lengow_Sync {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_PLUGIN_DATA );
 			if ( $updated_at !== null
-			     && ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_PLUGIN_DATA ]
+				&& ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_PLUGIN_DATA ]
 			) {
 				return json_decode( Lengow_Configuration::get( Lengow_Configuration::PLUGIN_DATA ), true );
 			}
@@ -411,9 +411,7 @@ class Lengow_Sync {
 					if ( ! empty( $plugin->links ) ) {
 						foreach ( $plugin->links as $link ) {
 							if ( array_key_exists( $link->language->iso_a2, self::$generic_iso_codes ) ) {
-								$generic_iso_code                                      = self::$generic_iso_codes[
-									$link->language->iso_a2
-								];
+								$generic_iso_code                                      = self::$generic_iso_codes[ $link->language->iso_a2 ];
 								$plugin_links[ $generic_iso_code ][ $link->link_type ] = $link->link;
 							}
 						}
@@ -430,12 +428,12 @@ class Lengow_Sync {
 				}
 			}
 			if ( $plugin_data ) {
-				Lengow_Configuration::update_value( Lengow_Configuration::PLUGIN_DATA, json_encode( $plugin_data ) );
+				Lengow_Configuration::update_value( Lengow_Configuration::PLUGIN_DATA, wp_json_encode( $plugin_data ) );
 				Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_PLUGIN_DATA, time() );
 
-				return $plugin_data;
+				return json_decode( Lengow_Configuration::get( Lengow_Configuration::PLUGIN_DATA ), true );
 			}
-		} else if ( Lengow_Configuration::get( Lengow_Configuration::PLUGIN_DATA ) ) {
+		} elseif ( Lengow_Configuration::get( Lengow_Configuration::PLUGIN_DATA ) ) {
 			return json_decode( Lengow_Configuration::get( Lengow_Configuration::PLUGIN_DATA ), true );
 		}
 
@@ -450,30 +448,6 @@ class Lengow_Sync {
 	 * @return array
 	 */
 	public static function get_plugin_links( $iso_code = null ) {
-		$plugin_data = self::get_plugin_data();
-		if ( ! $plugin_data ) {
-			return self::$default_plugin_links;
-		}
-		// check if the links are available in the locale
-		$iso_code             = $iso_code ?: Lengow_Translation::DEFAULT_ISO_CODE;
-		$locale_links         = isset( $plugin_data['links'][ $iso_code ] )
-			? $plugin_data['links'][ $iso_code ]
-			: false;
-		$default_locale_links = isset( $plugin_data['links'][ Lengow_Translation::DEFAULT_ISO_CODE ] )
-			? $plugin_data['links'][ Lengow_Translation::DEFAULT_ISO_CODE ]
-			: false;
-		// for each type of link, we check if the link is translated
-		$plugin_links = array();
-		foreach ( self::$default_plugin_links as $link_type => $default_link ) {
-			if ( $locale_links && isset( $locale_links[ $link_type ] ) ) {
-				$plugin_links[ $link_type ] = $locale_links[ $link_type ];
-			} elseif ( $default_locale_links && isset( $default_locale_links[ $link_type ] ) ) {
-				$plugin_links[ $link_type ] = $default_locale_links[ $link_type ];
-			} else {
-				$plugin_links[ $link_type ] = $default_link;
-			}
-		}
-
-		return $plugin_links;
+		return self::$default_plugin_links;
 	}
 }

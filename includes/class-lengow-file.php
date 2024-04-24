@@ -54,9 +54,9 @@ class Lengow_File {
 	/**
 	 * Construct a new Lengow File.
 	 *
-	 * @param string $folder_name Folder name
+	 * @param string      $folder_name Folder name
 	 * @param string|null $file_name File name
-	 * @param string $mode Mode to manage file
+	 * @param string      $mode Mode to manage file
 	 *
 	 * @throws Lengow_Exception Unable to create file
 	 */

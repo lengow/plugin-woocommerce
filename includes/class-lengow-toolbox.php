@@ -32,168 +32,168 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Toolbox {
 
 	/* Toolbox GET params */
-	const PARAM_CREATED_FROM = 'created_from';
-	const PARAM_CREATED_TO = 'created_to';
-	const PARAM_DATE = 'date';
-	const PARAM_DAYS = 'days';
-	const PARAM_FORCE = 'force';
+	const PARAM_CREATED_FROM     = 'created_from';
+	const PARAM_CREATED_TO       = 'created_to';
+	const PARAM_DATE             = 'date';
+	const PARAM_DAYS             = 'days';
+	const PARAM_FORCE            = 'force';
 	const PARAM_MARKETPLACE_NAME = 'marketplace_name';
-	const PARAM_MARKETPLACE_SKU = 'marketplace_sku';
-	const PARAM_PROCESS = 'process';
-	const PARAM_TOKEN = 'token';
-	const PARAM_TOOLBOX_ACTION = 'toolbox_action';
-	const PARAM_TYPE = 'type';
-        const PARAM_SHORT_PATH = 'short_path';
+	const PARAM_MARKETPLACE_SKU  = 'marketplace_sku';
+	const PARAM_PROCESS          = 'process';
+	const PARAM_TOKEN            = 'token';
+	const PARAM_TOOLBOX_ACTION   = 'toolbox_action';
+	const PARAM_TYPE             = 'type';
+		const PARAM_SHORT_PATH   = 'short_path';
 
 	/* Toolbox Actions */
-	const ACTION_DATA = 'data';
-	const ACTION_LOG = 'log';
+	const ACTION_DATA  = 'data';
+	const ACTION_LOG   = 'log';
 	const ACTION_ORDER = 'order';
 
 	/* Data type */
-	const DATA_TYPE_ACTION = 'action';
-	const DATA_TYPE_ALL = 'all';
-	const DATA_TYPE_CHECKLIST = 'checklist';
-	const DATA_TYPE_CHECKSUM = 'checksum';
-        const DATA_TYPE_MODIFIED_FILES = 'modified_files';
-	const DATA_TYPE_CMS = 'cms';
-	const DATA_TYPE_ERROR = 'error';
-	const DATA_TYPE_EXTRA = 'extra';
-	const DATA_TYPE_LOG = 'log';
-	const DATA_TYPE_PLUGIN = 'plugin';
-	const DATA_TYPE_OPTION = 'option';
-	const DATA_TYPE_ORDER = 'order';
-	const DATA_TYPE_ORDER_STATUS = 'order_status';
-	const DATA_TYPE_SHOP = 'shop';
-	const DATA_TYPE_SYNCHRONIZATION = 'synchronization';
+	const DATA_TYPE_ACTION             = 'action';
+	const DATA_TYPE_ALL                = 'all';
+	const DATA_TYPE_CHECKLIST          = 'checklist';
+	const DATA_TYPE_CHECKSUM           = 'checksum';
+		const DATA_TYPE_MODIFIED_FILES = 'modified_files';
+	const DATA_TYPE_CMS                = 'cms';
+	const DATA_TYPE_ERROR              = 'error';
+	const DATA_TYPE_EXTRA              = 'extra';
+	const DATA_TYPE_LOG                = 'log';
+	const DATA_TYPE_PLUGIN             = 'plugin';
+	const DATA_TYPE_OPTION             = 'option';
+	const DATA_TYPE_ORDER              = 'order';
+	const DATA_TYPE_ORDER_STATUS       = 'order_status';
+	const DATA_TYPE_SHOP               = 'shop';
+	const DATA_TYPE_SYNCHRONIZATION    = 'synchronization';
 
 	/* Toolbox process type */
 	const PROCESS_TYPE_GET_DATA = 'get_data';
-	const PROCESS_TYPE_SYNC = 'sync';
+	const PROCESS_TYPE_SYNC     = 'sync';
 
 	/* Toolbox Data  */
-	const CHECKLIST = 'checklist';
-	const CHECKLIST_CURL_ACTIVATED = 'curl_activated';
-	const CHECKLIST_SIMPLE_XML_ACTIVATED = 'simple_xml_activated';
-	const CHECKLIST_JSON_ACTIVATED = 'json_activated';
-	const CHECKLIST_MD5_SUCCESS = 'md5_success';
-	const PLUGIN = 'plugin';
-	const PLUGIN_CMS_VERSION = 'cms_version';
-	const PLUGIN_VERSION = 'plugin_version';
-	const PLUGIN_PHP_VERSION = 'php_version';
-	const PLUGIN_DEBUG_MODE_DISABLE = 'debug_mode_disable';
-	const PLUGIN_WRITE_PERMISSION = 'write_permission';
-	const PLUGIN_SERVER_IP = 'server_ip';
-	const PLUGIN_AUTHORIZED_IP_ENABLE = 'authorized_ip_enable';
-	const PLUGIN_AUTHORIZED_IPS = 'authorized_ips';
-	const PLUGIN_TOOLBOX_URL = 'toolbox_url';
-	const SYNCHRONIZATION = 'synchronization';
-	const SYNCHRONIZATION_CMS_TOKEN = 'cms_token';
-	const SYNCHRONIZATION_CRON_URL = 'cron_url';
+	const CHECKLIST                              = 'checklist';
+	const CHECKLIST_CURL_ACTIVATED               = 'curl_activated';
+	const CHECKLIST_SIMPLE_XML_ACTIVATED         = 'simple_xml_activated';
+	const CHECKLIST_JSON_ACTIVATED               = 'json_activated';
+	const CHECKLIST_MD5_SUCCESS                  = 'md5_success';
+	const PLUGIN                                 = 'plugin';
+	const PLUGIN_CMS_VERSION                     = 'cms_version';
+	const PLUGIN_VERSION                         = 'plugin_version';
+	const PLUGIN_PHP_VERSION                     = 'php_version';
+	const PLUGIN_DEBUG_MODE_DISABLE              = 'debug_mode_disable';
+	const PLUGIN_WRITE_PERMISSION                = 'write_permission';
+	const PLUGIN_SERVER_IP                       = 'server_ip';
+	const PLUGIN_AUTHORIZED_IP_ENABLE            = 'authorized_ip_enable';
+	const PLUGIN_AUTHORIZED_IPS                  = 'authorized_ips';
+	const PLUGIN_TOOLBOX_URL                     = 'toolbox_url';
+	const SYNCHRONIZATION                        = 'synchronization';
+	const SYNCHRONIZATION_CMS_TOKEN              = 'cms_token';
+	const SYNCHRONIZATION_CRON_URL               = 'cron_url';
 	const SYNCHRONIZATION_NUMBER_ORDERS_IMPORTED = 'number_orders_imported';
 	const SYNCHRONIZATION_NUMBER_ORDERS_WAITING_SHIPMENT = 'number_orders_waiting_shipment';
-	const SYNCHRONIZATION_NUMBER_ORDERS_IN_ERROR = 'number_orders_in_error';
-	const SYNCHRONIZATION_SYNCHRONIZATION_IN_PROGRESS = 'synchronization_in_progress';
-	const SYNCHRONIZATION_LAST_SYNCHRONIZATION = 'last_synchronization';
-	const SYNCHRONIZATION_LAST_SYNCHRONIZATION_TYPE = 'last_synchronization_type';
-	const CMS_OPTIONS = 'cms_options';
-	const SHOPS = 'shops';
-	const SHOP_ID = 'shop_id';
-	const SHOP_NAME = 'shop_name';
-	const SHOP_DOMAIN_URL = 'domain_url';
-	const SHOP_TOKEN = 'shop_token';
-	const SHOP_FEED_URL = 'feed_url';
-	const SHOP_ENABLED = 'enabled';
-	const SHOP_CATALOG_IDS = 'catalog_ids';
+	const SYNCHRONIZATION_NUMBER_ORDERS_IN_ERROR         = 'number_orders_in_error';
+	const SYNCHRONIZATION_SYNCHRONIZATION_IN_PROGRESS    = 'synchronization_in_progress';
+	const SYNCHRONIZATION_LAST_SYNCHRONIZATION           = 'last_synchronization';
+	const SYNCHRONIZATION_LAST_SYNCHRONIZATION_TYPE      = 'last_synchronization_type';
+	const CMS_OPTIONS                                    = 'cms_options';
+	const SHOPS                          = 'shops';
+	const SHOP_ID                        = 'shop_id';
+	const SHOP_NAME                      = 'shop_name';
+	const SHOP_DOMAIN_URL                = 'domain_url';
+	const SHOP_TOKEN                     = 'shop_token';
+	const SHOP_FEED_URL                  = 'feed_url';
+	const SHOP_ENABLED                   = 'enabled';
+	const SHOP_CATALOG_IDS               = 'catalog_ids';
 	const SHOP_NUMBER_PRODUCTS_AVAILABLE = 'number_products_available';
-	const SHOP_NUMBER_PRODUCTS_EXPORTED = 'number_products_exported';
-	const SHOP_LAST_EXPORT = 'last_export';
-	const SHOP_OPTIONS = 'shop_options';
-	const CHECKSUM = 'checksum';
-	const CHECKSUM_AVAILABLE = 'available';
-	const CHECKSUM_SUCCESS = 'success';
-	const CHECKSUM_NUMBER_FILES_CHECKED = 'number_files_checked';
+	const SHOP_NUMBER_PRODUCTS_EXPORTED  = 'number_products_exported';
+	const SHOP_LAST_EXPORT               = 'last_export';
+	const SHOP_OPTIONS                   = 'shop_options';
+	const CHECKSUM                       = 'checksum';
+	const CHECKSUM_AVAILABLE             = 'available';
+	const CHECKSUM_SUCCESS               = 'success';
+	const CHECKSUM_NUMBER_FILES_CHECKED  = 'number_files_checked';
 	const CHECKSUM_NUMBER_FILES_MODIFIED = 'number_files_modified';
-	const CHECKSUM_NUMBER_FILES_DELETED = 'number_files_deleted';
-	const CHECKSUM_FILE_MODIFIED = 'file_modified';
-	const CHECKSUM_FILE_DELETED = 'file_deleted';
-        const CHECKSUM_FILE_DETAILS = 'file_details';
-	const LOGS = 'logs';
+	const CHECKSUM_NUMBER_FILES_DELETED  = 'number_files_deleted';
+	const CHECKSUM_FILE_MODIFIED         = 'file_modified';
+	const CHECKSUM_FILE_DELETED          = 'file_deleted';
+		const CHECKSUM_FILE_DETAILS      = 'file_details';
+	const LOGS                           = 'logs';
 
 	/* Toolbox order data  */
-	const ID = 'id';
-	const ORDERS = 'orders';
-	const ORDER_MARKETPLACE_SKU = 'marketplace_sku';
-	const ORDER_MARKETPLACE_NAME = 'marketplace_name';
-	const ORDER_MARKETPLACE_LABEL = 'marketplace_label';
-	const ORDER_MERCHANT_ORDER_ID = 'merchant_order_id';
-	const ORDER_MERCHANT_ORDER_REFERENCE = 'merchant_order_reference';
-	const ORDER_DELIVERY_ADDRESS_ID = 'delivery_address_id';
-	const ORDER_DELIVERY_COUNTRY_ISO = 'delivery_country_iso';
-	const ORDER_PROCESS_STATE = 'order_process_state';
-	const ORDER_STATUSES = 'order_statuses';
-	const ORDER_STATUS = 'order_status';
-	const ORDER_MERCHANT_ORDER_STATUS = 'merchant_order_status';
-	const ORDER_TOTAL_PAID = 'total_paid';
-	const ORDER_MERCHANT_TOTAL_PAID = 'merchant_total_paid';
-	const ORDER_COMMISSION = 'commission';
-	const ORDER_CURRENCY = 'currency';
-	const ORDER_DATE = 'order_date';
-	const ORDER_ITEMS = 'order_items';
-	const ORDER_IS_REIMPORTED = 'is_reimported';
-	const ORDER_IS_IN_ERROR = 'is_in_error';
-	const ORDER_ACTION_IN_PROGRESS = 'action_in_progress';
-	const CUSTOMER = 'customer';
-	const CUSTOMER_NAME = 'name';
-	const CUSTOMER_EMAIL = 'email';
-	const CUSTOMER_VAT_NUMBER = 'vat_number';
-	const ORDER_TYPES = 'order_types';
-	const ORDER_TYPE_EXPRESS = 'is_express';
-	const ORDER_TYPE_PRIME = 'is_prime';
-	const ORDER_TYPE_BUSINESS = 'is_business';
+	const ID                                  = 'id';
+	const ORDERS                              = 'orders';
+	const ORDER_MARKETPLACE_SKU               = 'marketplace_sku';
+	const ORDER_MARKETPLACE_NAME              = 'marketplace_name';
+	const ORDER_MARKETPLACE_LABEL             = 'marketplace_label';
+	const ORDER_MERCHANT_ORDER_ID             = 'merchant_order_id';
+	const ORDER_MERCHANT_ORDER_REFERENCE      = 'merchant_order_reference';
+	const ORDER_DELIVERY_ADDRESS_ID           = 'delivery_address_id';
+	const ORDER_DELIVERY_COUNTRY_ISO          = 'delivery_country_iso';
+	const ORDER_PROCESS_STATE                 = 'order_process_state';
+	const ORDER_STATUSES                      = 'order_statuses';
+	const ORDER_STATUS                        = 'order_status';
+	const ORDER_MERCHANT_ORDER_STATUS         = 'merchant_order_status';
+	const ORDER_TOTAL_PAID                    = 'total_paid';
+	const ORDER_MERCHANT_TOTAL_PAID           = 'merchant_total_paid';
+	const ORDER_COMMISSION                    = 'commission';
+	const ORDER_CURRENCY                      = 'currency';
+	const ORDER_DATE                          = 'order_date';
+	const ORDER_ITEMS                         = 'order_items';
+	const ORDER_IS_REIMPORTED                 = 'is_reimported';
+	const ORDER_IS_IN_ERROR                   = 'is_in_error';
+	const ORDER_ACTION_IN_PROGRESS            = 'action_in_progress';
+	const CUSTOMER                            = 'customer';
+	const CUSTOMER_NAME                       = 'name';
+	const CUSTOMER_EMAIL                      = 'email';
+	const CUSTOMER_VAT_NUMBER                 = 'vat_number';
+	const ORDER_TYPES                         = 'order_types';
+	const ORDER_TYPE_EXPRESS                  = 'is_express';
+	const ORDER_TYPE_PRIME                    = 'is_prime';
+	const ORDER_TYPE_BUSINESS                 = 'is_business';
 	const ORDER_TYPE_DELIVERED_BY_MARKETPLACE = 'is_delivered_by_marketplace';
-	const TRACKING = 'tracking';
-	const TRACKING_CARRIER = 'carrier';
-	const TRACKING_METHOD = 'method';
-	const TRACKING_NUMBER = 'tracking_number';
-	const TRACKING_RELAY_ID = 'relay_id';
-	const TRACKING_DELIVERED_BY_MARKETPLACE = 'is_delivered_by_marketplace';
-	const TRACKING_MERCHANT_CARRIER = 'merchant_carrier';
-	const TRACKING_MERCHANT_TRACKING_NUMBER = 'merchant_tracking_number';
-	const TRACKING_MERCHANT_TRACKING_URL = 'merchant_tracking_url';
-	const CREATED_AT = 'created_at';
-	const UPDATED_AT = 'updated_at';
-	const IMPORTED_AT = 'imported_at';
-	const ERRORS = 'errors';
-	const ERROR_TYPE = 'type';
-	const ERROR_MESSAGE = 'message';
-	const ERROR_CODE = 'code';
-	const ERROR_FINISHED = 'is_finished';
-	const ERROR_REPORTED = 'is_reported';
-	const ACTIONS = 'actions';
-	const ACTION_ID = 'action_id';
-	const ACTION_PARAMETERS = 'parameters';
-	const ACTION_RETRY = 'retry';
-	const ACTION_FINISH = 'is_finished';
-	const EXTRA_UPDATED_AT = 'extra_updated_at';
+	const TRACKING                            = 'tracking';
+	const TRACKING_CARRIER                    = 'carrier';
+	const TRACKING_METHOD                     = 'method';
+	const TRACKING_NUMBER                     = 'tracking_number';
+	const TRACKING_RELAY_ID                   = 'relay_id';
+	const TRACKING_DELIVERED_BY_MARKETPLACE   = 'is_delivered_by_marketplace';
+	const TRACKING_MERCHANT_CARRIER           = 'merchant_carrier';
+	const TRACKING_MERCHANT_TRACKING_NUMBER   = 'merchant_tracking_number';
+	const TRACKING_MERCHANT_TRACKING_URL      = 'merchant_tracking_url';
+	const CREATED_AT                          = 'created_at';
+	const UPDATED_AT                          = 'updated_at';
+	const IMPORTED_AT                         = 'imported_at';
+	const ERRORS                              = 'errors';
+	const ERROR_TYPE                          = 'type';
+	const ERROR_MESSAGE                       = 'message';
+	const ERROR_CODE                          = 'code';
+	const ERROR_FINISHED                      = 'is_finished';
+	const ERROR_REPORTED                      = 'is_reported';
+	const ACTIONS                             = 'actions';
+	const ACTION_ID                           = 'action_id';
+	const ACTION_PARAMETERS                   = 'parameters';
+	const ACTION_RETRY                        = 'retry';
+	const ACTION_FINISH                       = 'is_finished';
+	const EXTRA_UPDATED_AT                    = 'extra_updated_at';
 
 	/* Process state labels */
-	const PROCESS_STATE_NEW = 'new';
+	const PROCESS_STATE_NEW    = 'new';
 	const PROCESS_STATE_IMPORT = 'import';
 	const PROCESS_STATE_FINISH = 'finish';
 
 	/* Error type labels */
 	const TYPE_ERROR_IMPORT = 'import';
-	const TYPE_ERROR_SEND = 'send';
+	const TYPE_ERROR_SEND   = 'send';
 
 	/* PHP extensions */
-	const PHP_EXTENSION_CURL = 'curl_version';
+	const PHP_EXTENSION_CURL      = 'curl_version';
 	const PHP_EXTENSION_SIMPLEXML = 'simplexml_load_file';
-	const PHP_EXTENSION_JSON = 'json_decode';
+	const PHP_EXTENSION_JSON      = 'json_decode';
 
 	/* Toolbox files */
 	const FILE_CHECKMD5 = 'checkmd5.csv';
-	const FILE_TEST = 'test.txt';
+	const FILE_TEST     = 'test.txt';
 
 	/**
 	 * @var array valid toolbox actions.
@@ -219,9 +219,9 @@ class Lengow_Toolbox {
 				return self::get_checklist_data();
 			case self::DATA_TYPE_CHECKSUM:
 				return self::get_checksum_data();
-                         case self::DATA_TYPE_MODIFIED_FILES:
-                            $short_path_param = (string) isset($_GET[self::PARAM_SHORT_PATH]) ? sanitize_text_field($_GET[self::PARAM_SHORT_PATH]) : '' ;
-                            return self::get_modified_files_data(base64_decode($short_path_param));
+			case self::DATA_TYPE_MODIFIED_FILES:
+				$short_path_param = (string) isset( $_GET[ self::PARAM_SHORT_PATH ] ) ? sanitize_text_field( $_GET[ self::PARAM_SHORT_PATH ] ) : '';
+				return self::get_modified_files_data( base64_decode( $short_path_param ) );
 			case self::DATA_TYPE_LOG:
 				return self::get_log_data();
 			case self::DATA_TYPE_OPTION:
@@ -273,7 +273,7 @@ class Lengow_Toolbox {
 	 *
 	 * @param string|null $marketplace_sku marketplace order reference
 	 * @param string|null $marketplace_name marketplace code
-	 * @param string $type Toolbox order data type
+	 * @param string      $type Toolbox order data type
 	 *
 	 * @return array
 	 */
@@ -400,14 +400,14 @@ class Lengow_Toolbox {
 		$last_synchronization = $last_import['type'] === 'none' ? 0 : $last_import['timestamp'];
 
 		return array(
-			self::SYNCHRONIZATION_CMS_TOKEN                      => Lengow_Main::get_token(),
-			self::SYNCHRONIZATION_CRON_URL                       => Lengow_Main::get_cron_url(),
-			self::SYNCHRONIZATION_NUMBER_ORDERS_IMPORTED         => Lengow_Order::count_order_imported_by_lengow(),
+			self::SYNCHRONIZATION_CMS_TOKEN              => Lengow_Main::get_token(),
+			self::SYNCHRONIZATION_CRON_URL               => Lengow_Main::get_cron_url(),
+			self::SYNCHRONIZATION_NUMBER_ORDERS_IMPORTED => Lengow_Order::count_order_imported_by_lengow(),
 			self::SYNCHRONIZATION_NUMBER_ORDERS_WAITING_SHIPMENT => Lengow_Order::count_order_to_be_sent(),
-			self::SYNCHRONIZATION_NUMBER_ORDERS_IN_ERROR         => Lengow_Order::count_order_with_error(),
-			self::SYNCHRONIZATION_SYNCHRONIZATION_IN_PROGRESS    => Lengow_Import::is_in_process(),
-			self::SYNCHRONIZATION_LAST_SYNCHRONIZATION           => $last_synchronization,
-			self::SYNCHRONIZATION_LAST_SYNCHRONIZATION_TYPE      => $last_import['type'],
+			self::SYNCHRONIZATION_NUMBER_ORDERS_IN_ERROR => Lengow_Order::count_order_with_error(),
+			self::SYNCHRONIZATION_SYNCHRONIZATION_IN_PROGRESS => Lengow_Import::is_in_process(),
+			self::SYNCHRONIZATION_LAST_SYNCHRONIZATION   => $last_synchronization,
+			self::SYNCHRONIZATION_LAST_SYNCHRONIZATION_TYPE => $last_import['type'],
 		);
 	}
 
@@ -466,7 +466,7 @@ class Lengow_Toolbox {
 			$md5_available = true;
 			if ( ( $file = fopen( $file_name, 'rb' ) ) !== false ) {
 				while ( ( $data = fgetcsv( $file, 1000, '|' ) ) !== false ) {
-					$file_counter ++;
+					++$file_counter;
 					$short_path = $data[0];
 					$file_path  = LENGOW_PLUGIN_PATH . $short_path;
 					if ( file_exists( $file_path ) ) {
@@ -495,20 +495,19 @@ class Lengow_Toolbox {
 			self::CHECKSUM_NUMBER_FILES_DELETED  => $file_deleted_counter,
 			self::CHECKSUM_FILE_MODIFIED         => $file_modified,
 			self::CHECKSUM_FILE_DELETED          => $file_deleted,
-                        self::CHECKSUM_FILE_DETAILS          => 1
+			self::CHECKSUM_FILE_DETAILS          => 1,
 		);
 	}
 
-    /**
-     * Get files modified details
-     *
-     * @string $short_path_param the file short path
-     *
-     * @return array
-     */
-    private static function get_modified_files_data($short_path_param)
-    {
-        $file_counter  = 0;
+	/**
+	 * Get files modified details
+	 *
+	 * @string $short_path_param the file short path
+	 *
+	 * @return array
+	 */
+	private static function get_modified_files_data( $short_path_param ) {
+		$file_counter  = 0;
 		$file_modified = array();
 		$file_deleted  = array();
 		$sep           = DIRECTORY_SEPARATOR;
@@ -517,20 +516,20 @@ class Lengow_Toolbox {
 			$md5_available = true;
 			if ( ( $file = fopen( $file_name, 'rb' ) ) !== false ) {
 				while ( ( $data = fgetcsv( $file, 1000, '|' ) ) !== false ) {
-					$file_counter ++;
+					++$file_counter;
 					$short_path = $data[0];
 					$file_path  = LENGOW_PLUGIN_PATH . $short_path;
 					if ( file_exists( $file_path ) ) {
 						$file_md = md5_file( $file_path );
 						if ( $file_md !== $data[1] ) {
-                                                    if ($short_path_param && ($short_path_param !== $short_path)) {
-                                                        continue;
-                                                    }
-                                                    $file_modified[] = [
-                                                        'short_path' => $short_path,
-                                                        'content_encoded' =>  base64_encode(file_get_contents($file_path)),
-                                                        'checksum' => $file_md
-                                                    ];
+							if ( $short_path_param && ( $short_path_param !== $short_path ) ) {
+								continue;
+							}
+													$file_modified[] = array(
+														'short_path' => $short_path,
+														'content_encoded' => base64_encode( file_get_contents( $file_path ) ),
+														'checksum' => $file_md,
+													);
 						}
 					} else {
 						$file_deleted[] = $short_path;
@@ -543,10 +542,10 @@ class Lengow_Toolbox {
 		}
 
 		return array(
-			self::CHECKSUM_FILE_MODIFIED         => $file_modified,
-			self::CHECKSUM_FILE_DELETED          => $file_deleted,
+			self::CHECKSUM_FILE_MODIFIED => $file_modified,
+			self::CHECKSUM_FILE_DELETED  => $file_deleted,
 		);
-    }
+	}
 
 	/**
 	 * Get all log files available.
@@ -559,7 +558,7 @@ class Lengow_Toolbox {
 			$logs[] = array(
 				Lengow_Log::LOG_DATE => null,
 				Lengow_Log::LOG_LINK => Lengow_Main::get_toolbox_url()
-				                        . '&' . self::PARAM_TOOLBOX_ACTION . '=' . self::ACTION_LOG,
+										. '&' . self::PARAM_TOOLBOX_ACTION . '=' . self::ACTION_LOG,
 			);
 		}
 
@@ -637,8 +636,8 @@ class Lengow_Toolbox {
 	/**
 	 * Get array of all the data of the order.
 	 *
-	 * @param string $type Toolbox order data type
-	 * @param Lengow_Order $lengow_order Lengow order instance
+	 * @param string        $type Toolbox order data type
+	 * @param Lengow_Order  $lengow_order Lengow order instance
 	 * @param WC_Order|null $order WooCommerce order instance
 	 *
 	 * @return array
@@ -679,7 +678,7 @@ class Lengow_Toolbox {
 	/**
 	 * Get array of all the data of the order.
 	 *
-	 * @param Lengow_Order $lengow_order Lengow order instance
+	 * @param Lengow_Order  $lengow_order Lengow order instance
 	 * @param WC_Order|null $order WooCommerce order instance
 	 *
 	 * @return array
@@ -687,11 +686,11 @@ class Lengow_Toolbox {
 	private static function get_all_order_data( $lengow_order, $order = null ) {
 		if ( $order ) {
 			$order_id                 = $order->get_id();
-			$carrier                  = $order->get_meta('_lengow_carrier', true );
-			$custom_carrier           = $order->get_meta('_lengow_custom_carrier', true );
+			$carrier                  = $order->get_meta( '_lengow_carrier', true );
+			$custom_carrier           = $order->get_meta( '_lengow_custom_carrier', true );
 			$merchant_carrier         = $carrier ?: $custom_carrier;
-			$merchant_tracking_number = $order->get_meta('_lengow_tracking_number', true );
-			$merchant_tracking_url    = $order->get_meta('_lengow_tracking_url', true );
+			$merchant_tracking_number = $order->get_meta( '_lengow_tracking_number', true );
+			$merchant_tracking_url    = $order->get_meta( '_lengow_tracking_url', true );
 		}
 
 		return array(
@@ -851,29 +850,29 @@ class Lengow_Toolbox {
 			? get_gmt_from_date( $order->get_date_modified()->date( Lengow_Main::DATE_FULL ) )
 			: null;
 		if ( $imported_date ) {
-			$order_statuses[] = [
+			$order_statuses[] = array(
 				self::ORDER_MERCHANT_ORDER_STATUS => Lengow_Order::get_order_state(
 					Lengow_Order::STATE_WAITING_SHIPMENT
 				),
 				self::ORDER_STATUS                => Lengow_Order::STATE_WAITING_SHIPMENT,
 				self::CREATED_AT                  => strtotime( $imported_date ),
-			];
+			);
 		}
 		if ( $completed_date ) {
-			$order_statuses[] = [
+			$order_statuses[] = array(
 				self::ORDER_MERCHANT_ORDER_STATUS => Lengow_Order::get_order_state( Lengow_Order::STATE_SHIPPED ),
 				self::ORDER_STATUS                => Lengow_Order::STATE_SHIPPED,
 				self::CREATED_AT                  => strtotime( $completed_date ),
-			];
+			);
 		}
 		if ( $current_modified_date
-		     && $current_order_status === Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED )
+			&& $current_order_status === Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED )
 		) {
-			$order_statuses[] = [
+			$order_statuses[] = array(
 				self::ORDER_MERCHANT_ORDER_STATUS => Lengow_Order::get_order_state( Lengow_Order::STATE_CANCELED ),
 				self::ORDER_STATUS                => Lengow_Order::STATE_CANCELED,
 				self::CREATED_AT                  => strtotime( $current_modified_date ),
-			];
+			);
 		}
 
 		return $order_statuses;
@@ -882,7 +881,7 @@ class Lengow_Toolbox {
 	/**
 	 * Get all the data of the order at the time of import.
 	 *
-	 * @param Lengow_Order $lengow_order Lengow order instance
+	 * @param Lengow_Order  $lengow_order Lengow order instance
 	 * @param WC_Order|null $order WooCommerce order instance
 	 *
 	 * @return array
@@ -919,7 +918,7 @@ class Lengow_Toolbox {
 	 * Generates an error return for the Toolbox webservice.
 	 *
 	 * @param integer $http_code request http code
-	 * @param string $error error message
+	 * @param string  $error error message
 	 *
 	 * @return array
 	 */

@@ -32,14 +32,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Lengow_Feed {
 
 	/* Feed formats */
-	const FORMAT_CSV = 'csv';
+	const FORMAT_CSV  = 'csv';
 	const FORMAT_YAML = 'yaml';
-	const FORMAT_XML = 'xml';
+	const FORMAT_XML  = 'xml';
 	const FORMAT_JSON = 'json';
 
 	/* Content types */
 	const HEADER = 'header';
-	const BODY = 'body';
+	const BODY   = 'body';
 	const FOOTER = 'footer';
 
 	/**
@@ -96,7 +96,7 @@ class Lengow_Feed {
 	 * Construct a new Lengow feed.
 	 *
 	 * @param boolean $stream feed in file or not
-	 * @param string $format feed format
+	 * @param string  $format feed format
 	 * @param boolean $legacy use legacy fields
 	 *
 	 * @throws Lengow_Exception Unable to create folder
@@ -134,18 +134,18 @@ class Lengow_Feed {
 	/**
 	 * Write feed.
 	 *
-	 * @param string $type (header, body or footer)
-	 * @param array $data export data
+	 * @param string       $type (header, body or footer)
+	 * @param array        $data export data
 	 * @param boolean|null $is_first is first product to export
 	 * @param boolean|null $max_character Max characters for yaml format
-         *
-         * @return string
+	 *
+	 * @return string
 	 */
 	public function write( $type, $data = array(), $is_first = null, $max_character = null ) {
 
-                $header = '';
-                $body   = '';
-                $footer = '';
+				$header = '';
+				$body   = '';
+				$footer = '';
 		switch ( $type ) {
 			case self::HEADER:
 				if ( $this->stream ) {
@@ -164,12 +164,12 @@ class Lengow_Feed {
 				break;
 		}
 
-                if (!$this->stream) {
-                    $this->file->write($header.$body.$footer);
-                    return '';
-                }
+		if ( ! $this->stream ) {
+			$this->file->write( $header . $body . $footer );
+			return '';
+		}
 
-                return $header.$body.$footer;
+				return $header . $body . $footer;
 	}
 
 	/**
@@ -205,13 +205,13 @@ class Lengow_Feed {
 				$header = '';
 				foreach ( $data as $field ) {
 					$header .= self::PROTECTION . self::format_fields( $field, self::FORMAT_CSV, $this->legacy )
-					           . self::PROTECTION . self::CSV_SEPARATOR;
+								. self::PROTECTION . self::CSV_SEPARATOR;
 				}
 
 				return rtrim( $header, self::CSV_SEPARATOR ) . self::EOL;
 			case self::FORMAT_XML:
 				return '<?xml version="1.0" encoding="UTF-8"?>' . self::EOL
-				       . '<catalog>' . self::EOL;
+						. '<catalog>' . self::EOL;
 			case self::FORMAT_JSON:
 				return '{"catalog":[';
 			case self::FORMAT_YAML:
@@ -222,7 +222,7 @@ class Lengow_Feed {
 	/**
 	 * Get feed body.
 	 *
-	 * @param array $data feed data
+	 * @param array   $data feed data
 	 * @param boolean $is_first is first product to export
 	 * @param integer $max_character max characters for yaml format
 	 *
@@ -241,7 +241,7 @@ class Lengow_Feed {
 			case self::FORMAT_XML:
 				$content = '<product>';
 				foreach ( $data as $field => $value ) {
-					$field   = self::format_fields( $field, self::FORMAT_XML, $this->legacy );
+					$field    = self::format_fields( $field, self::FORMAT_XML, $this->legacy );
 					$content .= '<' . $field . '><![CDATA[' . $value . ']]></' . $field . '>' . self::EOL;
 				}
 				$content .= '</product>' . self::EOL;
@@ -254,18 +254,18 @@ class Lengow_Feed {
 					$field                = self::format_fields( $field, self::FORMAT_JSON, $this->legacy );
 					$json_array[ $field ] = $value;
 				}
-				$content .= json_encode( $json_array );
+				$content .= wp_json_encode( $json_array );
 
 				return $content;
 			case self::FORMAT_YAML:
 				if ( 1 === $max_character % 2 ) {
-					++ $max_character;
+					++$max_character;
 				} else {
 					$max_character += 2;
 				}
 				$content = '  ' . self::PROTECTION . 'product' . self::PROTECTION . ':' . self::EOL;
 				foreach ( $data as $field => $value ) {
-					$field   = self::format_fields( $field, self::FORMAT_YAML, $this->legacy );
+					$field    = self::format_fields( $field, self::FORMAT_YAML, $this->legacy );
 					$content .= '    ' . self::PROTECTION . $field . self::PROTECTION . ':';
 					$content .= $this->indent_yaml( $field, $max_character ) . $value . self::EOL;
 				}
@@ -324,8 +324,8 @@ class Lengow_Feed {
 	/**
 	 * Format field names according to the given format.
 	 *
-	 * @param string $str field name
-	 * @param string $format export format
+	 * @param string  $str field name
+	 * @param string  $format export format
 	 * @param boolean $legacy export legacy field or not
 	 *
 	 * @return string
@@ -380,7 +380,7 @@ class Lengow_Feed {
 	private function indent_yaml( $name, $max_size ) {
 		$strlen = strlen( $name );
 		$spaces = '';
-		for ( $i = $strlen; $i < $max_size; $i ++ ) {
+		for ( $i = $strlen; $i < $max_size; $i++ ) {
 			$spaces .= ' ';
 		}
 

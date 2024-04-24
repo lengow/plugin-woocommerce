@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) || ! Lengow_Install::is_installation_in_progress() )
 }
 
 // *********************************************************
-//                         lengow_product
+// lengow_product
 // *********************************************************
 
 $table = Lengow_Product::TABLE_PRODUCT;
