@@ -288,37 +288,30 @@ class Lengow_Action {
 	 */
 	public static function send_action( $params, $order_lengow ) {
 		if ( ! Lengow_Configuration::debug_mode_is_active() ) {
-			$result = Lengow::sdk()->order()->action()->post($params);
-			var_dump($result); die();
-			$result = Lengow_Connector::query_api(
-				Lengow_Connector::POST,
-				Lengow_Connector::API_ORDER_ACTION,
-				$params
-			);
-			if ( isset( $result->id ) ) {
-				self::create(
-					array(
-						self::FIELD_ORDER_ID       => $order_lengow->order_id,
-						self::FIELD_ACTION_TYPE    => $params[ self::ARG_ACTION_TYPE ],
-						self::FIELD_ACTION_ID      => $result->id,
-						self::FIELD_ORDER_LINE_SKU => isset( $params[ self::ARG_LINE ] )
-							? $params[ self::ARG_LINE ]
-							: null,
-						self::FIELD_PARAMETERS     => wp_json_encode( $params ),
-					)
+			try {
+				$result = Lengow::sdk()->order()->action()->post( $params + array(
+					'account_id' => Lengow_Configuration::get( Lengow_Configuration::ACCOUNT_ID ),
+				) );
+			} catch ( HttpException|Exception $e ) {
+				Lengow_Main::get_log_instance()->log_exception( $e );
+				throw new Lengow_Exception(
+					Lengow_Main::set_log_message( 'lengow_log.exception.action_not_created_api' ),
+					0,
+					$e
 				);
-			} else {
-				if ( $result ) {
-					$message = Lengow_Main::set_log_message(
-						'lengow_log.exception.action_not_created',
-						array( 'error_message' => wp_json_encode( $result ) )
-					);
-				} else {
-					// generating a generic error message when the Lengow API is unavailable.
-					$message = Lengow_Main::set_log_message( 'lengow_log.exception.action_not_created_api' );
-				}
-				throw new Lengow_Exception( $message );
 			}
+
+			self::create(
+				array(
+					self::FIELD_ORDER_ID       => $order_lengow->order_id,
+					self::FIELD_ACTION_TYPE    => $params[ self::ARG_ACTION_TYPE ],
+					self::FIELD_ACTION_ID      => $result->id,
+					self::FIELD_ORDER_LINE_SKU => isset( $params[ self::ARG_LINE ] )
+						? $params[ self::ARG_LINE ]
+						: null,
+					self::FIELD_PARAMETERS     => wp_json_encode( $params ),
+				)
+			);
 		}
 		// create log for call action.
 		$param_list = false;

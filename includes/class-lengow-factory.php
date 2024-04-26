@@ -71,7 +71,7 @@ class Lengow_Factory {
 	 */
 	public function make( string $name ) {
 		if ( isset( $this->dependencies[ $name ] ) ) {
-			return $this->resolve( $this->dependencies[ $name ] );
+			return $this->instances[ $name ] = $this->resolve( $this->dependencies[ $name ] );
 		}
 
 		throw new Exception( "Dependency {$name} not found." );

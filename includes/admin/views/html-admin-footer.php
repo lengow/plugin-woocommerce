@@ -107,7 +107,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							</div>
 							<div class="flexbox-vertical-center margin-standard">
 								<a class="lgw-btn lgw-modal-download no-margin-top"
-									href="<?php echo esc_url( '//my.' . Lengow_Connector::LENGOW_URL . $plugin_data['download_link'] ); ?>"
+									href="<?php echo esc_url( '//my.' . Lengow_Configuration::LENGOW_URL . $plugin_data['download_link'] ); ?>"
 									target="_blank">
 									<?php
 									echo esc_html(

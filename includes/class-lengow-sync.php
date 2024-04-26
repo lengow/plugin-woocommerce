@@ -144,18 +144,18 @@ class Lengow_Sync {
 	 *
 	 * @return boolean
 	 */
-	public static function sync_catalog( $force = false) {
+	public static function sync_catalog( bool $force = false): bool {
 		$success         = false;
 		$setting_updated = false;
 		if ( Lengow_Configuration::is_new_merchant() ) {
-			return $success;
+			return false;
 		}
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_CATALOG );
 			if ( null !== $updated_at
 				&& ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_CATALOG ]
 			) {
-				return $success;
+				return false;
 			}
 		}
 		try {

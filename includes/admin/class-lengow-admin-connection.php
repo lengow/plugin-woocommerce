@@ -21,6 +21,7 @@
  * @copyright   2017 Lengow SAS
  */
 
+use Lengow\Sdk\Client\AuthenticatorInterface;
 use Lengow\Sdk\Client\Exception\HttpException;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -109,12 +110,19 @@ class Lengow_Admin_Connection {
 					Lengow_Configuration::SECRET       => $secret,
 				)
 			)) {
-				Lengow_Configuration::update_value(Lengow_Configuration::AUTHORIZATION_TOKEN, $access->token);
-				Lengow_Configuration::update_value(Lengow_Configuration::AUTHORIZATION_TOKEN_EXPIRE_AT, time() + 3600);
+				Lengow_Configuration::update_value( Lengow_Configuration::AUTHORIZATION_TOKEN, $access->token );
+				Lengow_Configuration::update_value( Lengow_Configuration::AUTHORIZATION_TOKEN_EXPIRE_AT, time() + 3600 );
+				Lengow::sdk()->getClient()->getAuthenticator()->setCredentials( $access_token, $secret );
+				Lengow::sdk()->getClient()->getAuthenticator()->setToken(
+					$access->token,
+					time() + AuthenticatorInterface::TOKEN_LIFETIME,
+					$access->account_id
+				);
 
 				return true;
 			}
 
+			Lengow_Main::log( 'Connector', 'Unable to save access IDs' );
 			return false;
 		} catch ( HttpException|Exception $e ) {
 			Lengow_Main::get_log_instance()->log_exception( $e );
@@ -134,7 +142,7 @@ class Lengow_Admin_Connection {
 		if ( ! $cms_connected ) {
 			$sync_data = Lengow_Sync::get_sync_data();
 			try {
-				$result = Lengow::sdk( true )->cms()->post( $sync_data );
+				$result = Lengow::sdk()->cms()->post( $sync_data );
 			} catch ( Exception $e ) {
 				Lengow_Main::get_log_instance()->log_exception( $e );
 			}

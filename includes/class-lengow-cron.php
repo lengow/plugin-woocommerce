@@ -47,7 +47,6 @@ require_once 'class-lengow-action.php';
 require_once 'class-lengow-address.php';
 require_once 'class-lengow-catalog.php';
 require_once 'class-lengow-configuration.php';
-require_once 'class-lengow-connector.php';
 require_once 'class-lengow-crud.php';
 require_once 'class-lengow-exception.php';
 require_once 'class-lengow-export.php';

@@ -132,7 +132,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once 'includes/class-lengow-address.php';
 				include_once 'includes/class-lengow-catalog.php';
 				include_once 'includes/class-lengow-configuration.php';
-				include_once 'includes/class-lengow-connector.php';
 				include_once 'includes/class-lengow-crud.php';
 				include_once 'includes/class-lengow-exception.php';
 				include_once 'includes/class-lengow-export.php';
@@ -207,11 +206,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					->addAfterRequestTokenListener( $listener );
 
 				return new Lengow\Sdk\Sdk( $client );
-			});
-			$factory->bind(Lengow_Connector::class, function () use ( $factory ) {
-				// TODO replace with the SDK
-				list( $account_id, $access_token, $secret ) = $factory->get(Lengow_Configuration::class)::get_access_id();
-				return new Lengow_Connector( $access_token, $secret );
 			});
 		}
 
