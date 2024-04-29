@@ -465,7 +465,11 @@ class Lengow_Address {
 		$fields  = $woocommerce->countries->get_address_fields( $this->country, $this->type );
 		foreach ( $fields as $key => $field ) {
 			$attribute       = str_replace( $this->type, '', $key );
-			$address[ $key ] = isset( $this->{$attribute} ) ? $this->{$attribute} : '';
+			$address[ $key ] = $this->{$attribute} ?? '';
+		}
+
+		if ( 'shipping_' === $this->type ) {
+			$address['phone'] = $this->phone ?? '';
 		}
 
 		return $address;

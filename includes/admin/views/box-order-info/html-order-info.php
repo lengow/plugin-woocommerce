@@ -52,12 +52,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<span class="lgw-order-label"><?php echo esc_html( $order_lengow->customer_email ); ?></span>
 		</li>
 		<hr>
-		<?php if ( isset( $phone ) ) : ?>
+		<?php if ( ! empty( $shipping_phone ) ) : ?>
 		<li>
-			<span class="lgw-order-title"><?php echo esc_html( $locale->t( 'meta_box.order_info.customer_phone' ) ); ?></span>
-			<span class="lgw-order-label"><?php echo esc_html( $phone ); ?></span>
+			<span class="lgw-order-title"><?php echo esc_html( $locale->t( 'meta_box.order_info.customer_shipping_phone' ) ); ?></span>
+			<span class="lgw-order-label"><?php echo esc_html( $shipping_phone ); ?></span>
 		</li>
 		<hr>
+		<?php endif; ?>
+		<?php if ( ! empty( $billing_phone ) && $billing_phone !== ($shipping_phone ?? null) ) : ?>
+            <li>
+                <span class="lgw-order-title"><?php echo esc_html( $locale->t( 'meta_box.order_info.customer_billing_phone' ) ); ?></span>
+                <span class="lgw-order-label"><?php echo esc_html( $billing_phone ); ?></span>
+            </li>
+            <hr>
 		<?php endif; ?>
 		<li>
 			<span class="lgw-order-title"><?php echo esc_html( $locale->t( 'meta_box.order_info.is_express' ) ); ?></span>

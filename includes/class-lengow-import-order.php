@@ -1197,14 +1197,14 @@ class Lengow_Import_Order {
 
 		$shipping = array();
 		foreach ( $shipping_data as $key => $field ) {
-					$shippingKey              = str_replace( 'shipping_', '', $key );
-					$shipping[ $shippingKey ] = $field;
+			$shippingKey              = str_replace( 'shipping_', '', $key );
+			$shipping[ $shippingKey ] = $field;
 		}
-				$wc_order->set_address( $billing, 'billing' );
-				$wc_order->set_address( $shipping, 'shipping' );
+		$wc_order->set_address( $billing, 'billing' );
+		$wc_order->set_address( $shipping, 'shipping' );
 
-				$wc_order->set_customer_id( absint( $user->ID ) );
-				$wc_order->save();
+		$wc_order->set_customer_id( absint( $user->ID ) );
+		$wc_order->save();
 
 		// load WooCommerce customer.
 		$customer = new WC_Customer( $user->ID );

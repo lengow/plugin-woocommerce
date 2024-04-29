@@ -55,22 +55,13 @@ class Lengow_Box_Order_Info {
 
 			if ( ! empty( $order_lengow->extra ) ) {
 				try {
-					$decoded = json_decode( $order_lengow->extra, true, 512, JSON_THROW_ON_ERROR );
-					$phone   = $decoded['packages'][0]['delivery']['phone_mobile']
-						?? $decoded['billing_address']['phone_mobile']
-						?? null;
-
-					if ( ! $phone ) {
-						$phone = $decoded['packages'][0]['delivery']['phone_home']
-							?? $decoded['billing_address']['phone_home']
-							?? null;
-					}
-
-					if ( ! $phone ) {
-						$phone = $decoded['packages'][0]['delivery']['phone_office']
-							?? $decoded['billing_address']['phone_office']
-							?? null;
-					}
+					$decoded        = json_decode( $order_lengow->extra, true, 512, JSON_THROW_ON_ERROR );
+					$shipping_phone = $decoded['packages'][0]['delivery']['phone_mobile']
+						?? $decoded['packages'][0]['delivery']['phone_home']
+						?? $decoded['packages'][0]['delivery']['phone_office'];
+					$billing_phone  = $decoded['billing_address']['phone_mobile']
+						?? $decoded['billing_address']['phone_home']
+						?? $decoded['billing_address']['phone_office'];
 				} catch ( JsonException $e ) {
 				}
 			}

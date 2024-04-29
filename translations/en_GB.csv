@@ -400,7 +400,8 @@ meta_box.order_info.commission|Commission
 meta_box.order_info.address_id|Delivery Address ID
 meta_box.order_info.customer_name|Customer name
 meta_box.order_info.customer_email|Customer email
-meta_box.order_info.customer_phone|Customer phone
+meta_box.order_info.customer_shipping_phone|Customer shipping phone
+meta_box.order_info.customer_billing_phone|Customer billing phone
 meta_box.order_info.message|Message
 meta_box.order_info.vat_number|VAT number
 meta_box.order_info.no_vat_number|No VAT number
