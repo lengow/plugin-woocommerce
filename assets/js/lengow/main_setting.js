@@ -73,21 +73,6 @@
         }
 
         /**
-         * Enable tracking ip.
-         */
-        $('input[name="lengow_tracking_enabled"]').change(function() {
-            displayTrackingIdMode();
-        });
-
-        function displayTrackingIdMode() {
-            if ($('input[name="lengow_tracking_enabled"][type="checkbox"]').prop('checked')) {
-                $('#lengow_wrapper_tracking_id').slideDown(150);
-            } else {
-                $('#lengow_wrapper_tracking_id').slideUp(150);
-            }
-        }
-
-        /**
          * Enable shop management.
          */
         $('input[name="lengow_store_enabled"]').change(function() {

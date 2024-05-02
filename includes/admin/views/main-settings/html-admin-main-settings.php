@@ -107,45 +107,6 @@ $list_file = Lengow_Log::get_paths();
 			</div>
 		</div>
 		<div class="lgw-box">
-			<h2><?php echo esc_html( $locale->t( 'global_setting.screen.tracker_title' ) ); ?></h2>
-			<p><?php echo esc_html( $locale->t( 'global_setting.screen.tracker_description' ) ); ?></p>
-			<div class="form-group">
-				<div class="lgw-switch <?php echo esc_attr( $values[ Lengow_Configuration::TRACKING_ENABLED ] ? 'checked' : '' ); ?>">
-					<label>
-						<div>
-							<span></span>
-							<input type="hidden" name="lengow_tracking_enabled" value="0">
-							<input name="lengow_tracking_enabled"
-									type="checkbox"
-								<?php echo esc_attr( $values[ Lengow_Configuration::TRACKING_ENABLED ] ? 'checked' : '' ); ?>>
-						</div>
-						<?php echo esc_html( $keys[ Lengow_Configuration::TRACKING_ENABLED ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
-					</label>
-				</div>
-			</div>
-			<div id="lengow_wrapper_tracking_id"
-				<?php echo esc_attr( (bool) $values[ Lengow_Configuration::TRACKING_ENABLED ] ? '' : 'hidden' ); ?>>
-				<div class="grey-frame">
-					<div class="form-group">
-						<label class="control-label">
-							<?php echo esc_html( $keys[ Lengow_Configuration::TRACKING_ID ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
-						</label>
-						<select class="js-select lengow_select" name="lengow_tracking_id">
-							<?php foreach ( Lengow_Main::$tracker_choice_id as $id => $label ) : ?>
-								<option value="<?php echo esc_attr( $id ); ?>"
-									<?php echo esc_attr( $values[ Lengow_Configuration::TRACKING_ID ] === $id ? 'selected' : '' ); ?>>
-									<?php echo esc_html( $label ); ?>
-								</option>
-							<?php endforeach; ?>
-						</select>
-						<span class="legend blue-frame" style="display:block;">
-							<?php echo esc_html( $keys[ Lengow_Configuration::TRACKING_ID ][ Lengow_Configuration::PARAM_LEGEND ] ); ?>
-						</span>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="lgw-box">
 			<h2><?php echo esc_html( $locale->t( 'global_setting.screen.shop_title' ) ); ?></h2>
 			<p><?php echo esc_html( $locale->t( 'global_setting.screen.shop_description' ) ); ?></p>
 			<div class="form-group">

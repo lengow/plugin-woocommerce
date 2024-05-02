@@ -238,8 +238,6 @@ en:
     screen:
       notification_alert_title: "Notifications & alerts"
       security_title: "Security"
-      tracker_title: "Lengow tracker"
-      tracker_description: "This tracker allows you to retrieve order statistics generated on your site directly in Lengow."
       shop_title: "Store management"
       shop_description: "Link your WooCommerce store to Lengow in order to import your orders. This part is automatically completed and activated when connecting with Lengow. However you can add catalog ids in the corresponding fields"
       debug_mode_title: "Debug Mode"
@@ -356,9 +354,6 @@ en:
     lengow_ip_enable_legend: "Enable this option if you want your export to be secured by IP. By default, your export is secured by a unique key."
     lengow_authorized_ip_title: "Authorised IPs"
     lengow_authorized_ip_legend: "Authorise IP to get access to your export feed.\nSeparate them \";\""
-    lengow_tracking_enabled_title: "Activate Lengow tracking"
-    lengow_tracking_id_title: "Lengow Tracking ID"
-    lengow_tracking_id_legend: "The name of the unique identifier entered in the Lengow"
     lengow_selection_enabled_title: "Export the selection only"
     lengow_selection_enabled_legend: "Activate this option if you do not want to export all available products. Then, select only the products you want to export"
     lengow_product_types_title: "Product type to export"

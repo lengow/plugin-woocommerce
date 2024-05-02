@@ -215,8 +215,6 @@ order_setting.screen.import_b2b_without_tax_description|Activate this option to 
 order_setting.screen.anonymize_email|Anonymize customer's emails addresses
 global_setting.screen.notification_alert_title|Notifications & alerts
 global_setting.screen.security_title|Security
-global_setting.screen.tracker_title|Lengow tracker
-global_setting.screen.tracker_description|This tracker allows you to retrieve order statistics generated on your site directly in Lengow.
 global_setting.screen.shop_title|Store management
 global_setting.screen.shop_description|Link your WooCommerce store to Lengow in order to import your orders. This part is automatically completed and activated when connecting with Lengow. However you can add catalog ids in the corresponding fields
 global_setting.screen.debug_mode_title|Debug Mode
@@ -326,9 +324,6 @@ lengow_settings.lengow_ip_enable_title|Enable authorisation by IP
 lengow_settings.lengow_ip_enable_legend|Enable this option if you want your export to be secured by IP. By default, your export is secured by a unique key.
 lengow_settings.lengow_authorized_ip_title|Authorised IPs
 lengow_settings.lengow_authorized_ip_legend|Authorise IP to get access to your export feed.<br />Separate them ";"
-lengow_settings.lengow_tracking_enabled_title|Activate Lengow tracking
-lengow_settings.lengow_tracking_id_title|Lengow Tracking ID
-lengow_settings.lengow_tracking_id_legend|The name of the unique identifier entered in the Lengow
 lengow_settings.lengow_selection_enabled_title|Export the selection only
 lengow_settings.lengow_selection_enabled_legend|Activate this option if you do not want to export all available products. Then, select only the products you want to export
 lengow_settings.lengow_product_types_title|Product type to export

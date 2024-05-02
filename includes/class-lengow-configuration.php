@@ -39,8 +39,6 @@ class Lengow_Configuration {
 	const CMS_TOKEN                            = 'lengow_token';
 	const AUTHORIZED_IP_ENABLED                = 'lengow_ip_enabled';
 	const AUTHORIZED_IPS                       = 'lengow_authorized_ip';
-	const TRACKING_ENABLED                     = 'lengow_tracking_enabled';
-	const TRACKING_ID                          = 'lengow_tracking_id';
 	const DEBUG_MODE_ENABLED                   = 'lengow_debug_enabled';
 	const REPORT_MAIL_ENABLED                  = 'lengow_report_mail_enabled';
 	const REPORT_MAILS                         = 'lengow_report_mail_address';
@@ -112,8 +110,6 @@ class Lengow_Configuration {
 		self::CMS_TOKEN                            => 'cms_token',
 		self::AUTHORIZED_IP_ENABLED                => 'authorized_ip_enabled',
 		self::AUTHORIZED_IPS                       => 'authorized_ips',
-		self::TRACKING_ENABLED                     => 'tracking_enabled',
-		self::TRACKING_ID                          => 'tracking_id',
 		self::DEBUG_MODE_ENABLED                   => 'debug_mode_enabled',
 		self::REPORT_MAIL_ENABLED                  => 'report_mail_enabled',
 		self::REPORT_MAILS                         => 'report_mails',
@@ -212,18 +208,6 @@ class Lengow_Configuration {
 					self::PARAM_LABEL          => $locale->t( 'lengow_settings.lengow_authorized_ip_title' ),
 					self::PARAM_LEGEND         => $locale->t( 'lengow_settings.lengow_authorized_ip_legend' ),
 					self::PARAM_RETURN         => self::RETURN_TYPE_ARRAY,
-				),
-				self::TRACKING_ENABLED                     => array(
-					self::PARAM_GLOBAL        => true,
-					self::PARAM_LABEL         => $locale->t( 'lengow_settings.lengow_tracking_enabled_title' ),
-					self::PARAM_DEFAULT_VALUE => 0,
-					self::PARAM_RETURN        => self::RETURN_TYPE_BOOLEAN,
-				),
-				self::TRACKING_ID                          => array(
-					self::PARAM_GLOBAL        => true,
-					self::PARAM_LABEL         => $locale->t( 'lengow_settings.lengow_tracking_id_title' ),
-					self::PARAM_LEGEND        => $locale->t( 'lengow_settings.lengow_tracking_id_legend' ),
-					self::PARAM_DEFAULT_VALUE => 'id',
 				),
 				self::DEBUG_MODE_ENABLED                   => array(
 					self::PARAM_GLOBAL         => true,
