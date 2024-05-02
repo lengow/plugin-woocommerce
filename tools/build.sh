@@ -158,6 +158,8 @@ echo -e "- Build archive : ${VERT}DONE${NORMAL}"
 if [ -d  "~/Bureau" ]
 then
     mv $ARCHIVE_NAME ~/Bureau
+    echo -e "~/Bureau/$ARCHIVE_NAME"
 else
     mv $ARCHIVE_NAME ~/shared
+    echo -e "~/shared/$ARCHIVE_NAME"
 fi

@@ -1,4 +1,12 @@
 ========================================================
+Version 2.6.1
+========================================================
+
+    - Feature: Add phone number to the order information in the “Lengow“ tab
+    - BugFix:  Add missing shipping phone in the woocommerce order shipping address
+    - Feature: Remove deprecated tracking option
+
+========================================================
 Version 2.6.0
 ========================================================
 
