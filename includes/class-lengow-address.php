@@ -411,8 +411,8 @@ class Lengow_Address {
 		$address_data     = $this->extract_address_data_from_api( $data );
 		$names            = $this->get_names( $address_data );
 		$address_fields   = $this->get_address_fields( $address_data, $relay_id );
-		$state            = $this->get_state( $address_data );
-		$phone_number     = $this->get_phone_number( $address_data );
+		$this->state      = $this->get_state( $address_data );
+		$this->phone      = $this->get_phone_number( $address_data );
 		$this->type       = $type;
 		$this->first_name = ucfirst( strtolower( $names['firstname'] ) );
 		$this->last_name  = ucfirst( strtolower( $names['lastname'] ) );
@@ -421,10 +421,8 @@ class Lengow_Address {
 		$this->address_2  = strtolower( $address_fields['address_2'] );
 		$this->postcode   = $address_data['zipcode'];
 		$this->city       = ucfirst( strtolower( preg_replace( '/[!<>?=+@{}_$%]/sim', '', $address_data['city'] ) ) );
-		$this->state      = $state;
 		$this->country    = $address_data['common_country_iso_a2'];
 		$this->email      = $address_data['email'];
-		$this->phone      = $phone_number;
 	}
 
 	/**
@@ -465,7 +463,11 @@ class Lengow_Address {
 		$fields  = $woocommerce->countries->get_address_fields( $this->country, $this->type );
 		foreach ( $fields as $key => $field ) {
 			$attribute       = str_replace( $this->type, '', $key );
-			$address[ $key ] = isset( $this->{$attribute} ) ? $this->{$attribute} : '';
+			$address[ $key ] = $this->{$attribute} ?? '';
+		}
+
+		if ( 'shipping_' === $this->type ) {
+			$address['phone'] = $this->phone ?? '';
 		}
 
 		return $address;
@@ -743,10 +745,10 @@ class Lengow_Address {
 	 */
 	private function get_phone_number( $address_data = array() ) {
 		$phone_number = '';
-		if ( ! empty( $address_data['phone_home'] ) ) {
-			$phone_number = $address_data['phone_home'];
-		} elseif ( ! empty( $address_data['phone_mobile'] ) ) {
+		if ( ! empty( $address_data['phone_mobile'] ) ) {
 			$phone_number = $address_data['phone_mobile'];
+		} elseif ( ! empty( $address_data['phone_home'] ) ) {
+			$phone_number = $address_data['phone_home'];
 		} elseif ( ! empty( $address_data['phone_office'] ) ) {
 			$phone_number = $address_data['phone_office'];
 		}

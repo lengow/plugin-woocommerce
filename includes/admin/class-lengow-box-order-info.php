@@ -52,6 +52,20 @@ class Lengow_Box_Order_Info {
 			}
 			$locale     = new Lengow_Translation();
 			$debug_mode = Lengow_Configuration::debug_mode_is_active();
+
+			if ( ! empty( $order_lengow->extra ) ) {
+				try {
+					$decoded        = json_decode( $order_lengow->extra, true, 512, JSON_THROW_ON_ERROR );
+					$shipping_phone = $decoded['packages'][0]['delivery']['phone_mobile']
+						?? $decoded['packages'][0]['delivery']['phone_home']
+						?? $decoded['packages'][0]['delivery']['phone_office'];
+					$billing_phone  = $decoded['billing_address']['phone_mobile']
+						?? $decoded['billing_address']['phone_home']
+						?? $decoded['billing_address']['phone_office'];
+				} catch ( JsonException $e ) {
+				}
+			}
+
 			include_once 'views/box-order-info/html-order-info.php';
 		} catch ( Exception $e ) {
 			echo Lengow_Main::decode_log_message( $e->getMessage() );
