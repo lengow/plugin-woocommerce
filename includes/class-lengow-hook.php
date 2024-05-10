@@ -71,6 +71,40 @@ class Lengow_Hook {
 		}
 	}
 
+    /**
+     * Add meta box for orders created by Lengow.
+     * Compatibility mode if woocommerce is using old storing engine with WP_Post.
+     * see option woocommerce_custom_orders_table_enabled.
+     */
+    public static function adding_shop_order_meta_boxes_compat() {
+        $post = get_post();
+        if ( empty( $post->ID ) ) {
+            return;
+        }
+
+        $lengow_order = Lengow_Order::get_id_from_order_id( $post->ID );
+        if ( ! $lengow_order ) {
+            return;
+        }
+
+        $locale = new Lengow_Translation();
+        add_meta_box(
+            'lengow-order-infos',
+            $locale->t( 'meta_box.order_info.box_title' ),
+            array( 'Lengow_Box_Order_Info', 'html_display' ),
+            'shop_order',
+            'normal'
+        );
+        add_meta_box(
+            'lengow-shipping-infos',
+            $locale->t( 'meta_box.order_shipping.box_title' ),
+            array( 'Lengow_Box_Order_Shipping', 'html_display' ),
+            'shop_order',
+            'side',
+            'default'
+        );
+    }
+
 	/**
 	 * Disable all customer mails if order came from Lengow.
 	 *
