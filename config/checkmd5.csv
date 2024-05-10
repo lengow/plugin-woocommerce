@@ -1,4 +1,4 @@
-/lengow.php|890c61448fdb174c10bc844119b2d9df
+/lengow.php|e6142e52b84bc1c859aac04712cc285c
 /config/index.php|d41d8cd98f00b204e9800998ecf8427e
 /translations/en_GB.csv|5c4d369d95d1741470593bc30f319d9c
 /translations/fr_FR.csv|756040b44f93d088145cfb84206618e9
@@ -301,7 +301,7 @@
 /assets/css/lengow-pages.css|39e072db82f9b9d48c4130502fbd4fda
 /includes/class-lengow-translation.php|734ddf7aefdd97209e655367b2d640ef
 /includes/class-lengow-marketplace.php|7b9fc260a40a9ae85ae999a3ff669a83
-/includes/admin/class-lengow-box-order-shipping.php|4c8e757962465ddd75694ad4b2c86bab
+/includes/admin/class-lengow-box-order-shipping.php|5705756df3f87cc222aa9cd7803dfaa1
 /includes/admin/class-lengow-admin-main-settings.php|1d63fb35869e813afef107832b2e1cbe
 /includes/admin/class-lengow-admin-help.php|c3eeede9ec341fa22695179bcb265073
 /includes/admin/class-lengow-admin-toolbox.php|f76cf77e0f3399df6c1d36b22567b37f
@@ -329,7 +329,7 @@
 /includes/admin/class-lengow-admin-orders.php|5852dd667a3c71915c2faa174b898ee3
 /includes/admin/class-lengow-admin.php|0f9d99dd80bccb7aea714e2d47427a05
 /includes/admin/class-lengow-admin-connection.php|3b014029f99e15c4d34055909349347f
-/includes/admin/class-lengow-box-order-info.php|877b0196e9ddc9b4e539f9dcf3c2c57f
+/includes/admin/class-lengow-box-order-info.php|83dc39a34d3bea1e03b559edee0845d6
 /includes/admin/class-lengow-admin-dashboard.php|951b8149f35121babff50bd78b58282f
 /includes/admin/class-lengow-admin-order-settings.php|b6bd5898c900a968abfa78bc44d6df85
 /includes/class-lengow-install.php|524a41bfb5bdfbd2a8462a38dcd09d45
@@ -349,7 +349,7 @@
 /includes/class-lengow-toolbox-element.php|d92f0c0e11905101a16b12881879f14f
 /includes/class-lengow-feed.php|62b756b7119114aae30e803746f72a82
 /includes/class-lengow-crud.php|4e5cc7a1f173eb66e2624d6931e5b662
-/includes/class-lengow-hook.php|cb2279f2bfc488fcf92073f9c9e742f9
+/includes/class-lengow-hook.php|93331daa92b82b5877f8eb7e52457fdc
 /includes/class-lengow-order-line.php|1c708088c6c05d25ee32320b3ab30b0c
 /includes/class-lengow-file.php|280d1fbe67c1935d989dc7047f6dd90b
 /includes/class-lengow-address.php|a7cba4a1317d295a12b126403ecb76e7

@@ -37,18 +37,18 @@ class Lengow_Box_Order_Shipping {
 	 */
 	public static function html_display( $order ) {
 		try {
-            $order_id = null;
-            if ( $order instanceof WC_Order ) {
-                $order_id = $order->get_id();
-            } elseif ( $order instanceof WP_Post ) {
-                // retro compatibility
-                // see option woocommerce_custom_orders_table_enabled
-                $order_id = $order->ID;
-            }
+			$order_id = null;
+			if ( $order instanceof WC_Order ) {
+				$order_id = $order->get_id();
+			} elseif ( $order instanceof WP_Post ) {
+				// retro compatibility
+				// see option woocommerce_custom_orders_table_enabled
+				$order_id = $order->ID;
+			}
 
-            if ( ! $order_id ) {
-                return;
-            }
+			if ( ! $order_id ) {
+				return;
+			}
 
 			$order_lengow_id = Lengow_Order::get_id_from_order_id( $order_id );
 			$order_lengow    = new Lengow_Order( $order_lengow_id );
