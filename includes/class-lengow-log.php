@@ -201,11 +201,28 @@ class Lengow_Log {
 			function () {
 				$error = error_get_last();
 				if ( $error ) {
-						Lengow_Main::log(
-							'Error',
-							$error['type'] . ': ' . $error['message']
-							. PHP_EOL . 'in ' . $error['file'] . ' on line ' . $error['line']
-						);
+					$labels = array(
+						E_ERROR             => 'E_ERROR',
+						E_WARNING           => 'E_WARNING',
+						E_PARSE             => 'E_PARSE',
+						E_NOTICE            => 'E_NOTICE',
+						E_CORE_ERROR        => 'E_CORE_ERROR',
+						E_CORE_WARNING      => 'E_CORE_WARNING',
+						E_COMPILE_ERROR     => 'E_COMPILE_ERROR',
+						E_COMPILE_WARNING   => 'E_COMPILE_WARNING',
+						E_USER_ERROR        => 'E_USER_ERROR',
+						E_USER_WARNING      => 'E_USER_WARNING',
+						E_USER_NOTICE       => 'E_USER_NOTICE',
+						E_STRICT            => 'E_STRICT',
+						E_RECOVERABLE_ERROR => 'E_RECOVERABLE_ERROR',
+						E_DEPRECATED        => 'E_DEPRECATED',
+						E_USER_DEPRECATED   => 'E_USER_DEPRECATED',
+						E_ALL               => 'E_ALL',
+					);
+					Lengow_Main::log(
+						$labels[ $error['type'] ] ?? 'PHP',
+						$error['message'] . PHP_EOL . 'in ' . $error['file'] . ' on line ' . $error['line']
+					);
 				}
 			}
 		);
