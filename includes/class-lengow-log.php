@@ -189,4 +189,25 @@ class Lengow_Log {
 
 		return wp_json_encode( $contentLines );
 	}
+
+	/**
+	 * Log PHP errors
+	 *
+	 * @return void
+	 */
+	public static function register_shutdown_function(): void {
+		ini_set( 'log_errors_max_len', 10240 );
+		register_shutdown_function(
+			function () {
+				$error = error_get_last();
+				if ( $error ) {
+						Lengow_Main::log(
+							'Error',
+							$error['type'] . ': ' . $error['message']
+							. PHP_EOL . 'in ' . $error['file'] . ' on line ' . $error['line']
+						);
+				}
+			}
+		);
+	}
 }

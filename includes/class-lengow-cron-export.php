@@ -73,8 +73,13 @@ class LengowCronExport {
 
 
 	public function launch() {
+		Lengow_Log::register_shutdown_function();
 		@set_time_limit( 0 );
 		@ini_set( 'memory_limit', '1024M' );
+
+		// compatibility with some plugins
+		WC()->frontend_includes();
+
 		// check if WooCommerce plugin is activated.
 		$woocommercePlugin = 'woocommerce/woocommerce.php';
 		if ( ! in_array( $woocommercePlugin, apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
