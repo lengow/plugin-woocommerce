@@ -3,6 +3,8 @@ Version 2.6.2
 ========================================================
 
     - BugFix:  Meta box not showing up in order edit page when using the old woocommerce storing engine
+    - BugFix:  Fix a crash that could occur in a specific case when exporting a catalogue
+    - BugFix:  Fix some characters that shouldn't be escaped in the catalogue export
 
 ========================================================
 Version 2.6.1
