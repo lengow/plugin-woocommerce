@@ -72,6 +72,7 @@ class LengowCron {
 
 
 	public function launch() {
+		Lengow_Log::register_shutdown_function();
 		@set_time_limit( 0 );
 		@ini_set( 'memory_limit', '1024M' );
 		// check if WooCommerce plugin is activated.

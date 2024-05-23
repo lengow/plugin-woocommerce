@@ -26,11 +26,11 @@
  * Plugin Name: Lengow for WooCommerce
  * Plugin URI: https://www.lengow.com/integrations/woocommerce/
  * Description: Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
- * Version: 2.5.5
+ * Version: 2.6.2
  * Author: Lengow
  * Author URI: https://www.lengow.com
  * Requires at least: 5.3
- * Tested up to: 6.4
+ * Tested up to: 6.5
  * Requires PHP: 5.5
  * License URI: https://www.gnu.org/licenses/gpl-3.0
  *
@@ -63,7 +63,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		/**
 		 * @var string current version of plugin.
 		 */
-		public $version = '2.5.5';
+		public $version = '2.6.2';
 
 		/**
 		 * @var string plugin name.
@@ -97,8 +97,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				add_filter( 'pre_site_transient_update_plugins', array( $this, 'remove_core_updates' ) );
 				add_filter( 'pre_site_transient_update_themes', array( $this, 'remove_core_updates' ) );
 			}
-			// Lengow tracker.
-			add_action( 'wp_footer', array( 'Lengow_Hook', 'render_lengow_tracker' ), 100 );
 		}
 
 		/**
@@ -166,7 +164,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			}
 
 			include_once 'includes/class-lengow-hook.php';
-			include_once 'includes/frontend/class-lengow-tracker.php';
 			include_once 'includes/class-lengow-cron.php';
 			include_once 'includes/class-lengow-cron-toolbox.php';
 			include_once 'includes/class-lengow-cron-export.php';
@@ -226,6 +223,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				add_action( 'woocommerce_after_order_object_save', array( 'Lengow_Hook', 'save_lengow_shipping' ) );
 				add_action( 'woocommerce_email', array( 'Lengow_Hook', 'unhook_woocommerce_mail' ) );
 				add_action( 'add_meta_boxes_woocommerce_page_wc-orders', array( 'Lengow_Hook', 'adding_shop_order_meta_boxes' ) );
+				add_action( 'add_meta_boxes', array( 'Lengow_Hook', 'adding_shop_order_meta_boxes_compat' ) );
 				// init lengow technical error status.
 				$this->init_lengow_technical_error_status();
 				// check logs download to prevent the occurrence of the WordPress html header.

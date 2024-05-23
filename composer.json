@@ -1,4 +1,10 @@
 {
+  "name": "lengow/lengow-woocommerce",
+  "description": "Lengow is the e-commerce automation solution that helps brands and distributors improve their performance, automate their business processes, and grow internationally.",
+  "keywords": ["wordpress", "plugin", "lengow"],
+  "homepage": "https://www.lengow.com",
+  "license": "GPLv3",
+  "type": "wordpress-plugin",
   "repositories": [
     {
       "type": "path",
@@ -8,7 +14,9 @@
   "require": {
     "lengow/php-sdk": "dev-main",
     "symfony/http-client": "^5.4",
-    "nyholm/psr7": "^1.8"
+    "nyholm/psr7": "^1.8",
+    "composer/installers": "*",
+    "php": ">=7.4"
   },
   "config": {
     "allow-plugins": {

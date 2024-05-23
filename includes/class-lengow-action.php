@@ -59,17 +59,19 @@ class Lengow_Action {
 	const TYPE_CANCEL = 'cancel';
 
 	/* Action API arguments */
-	const ARG_ACTION_TYPE     = 'action_type';
-	const ARG_LINE            = 'line';
-	const ARG_CARRIER         = 'carrier';
-	const ARG_CARRIER_NAME    = 'carrier_name';
-	const ARG_CUSTOM_CARRIER  = 'custom_carrier';
-	const ARG_SHIPPING_METHOD = 'shipping_method';
-	const ARG_TRACKING_NUMBER = 'tracking_number';
-	const ARG_TRACKING_URL    = 'tracking_url';
-	const ARG_SHIPPING_PRICE  = 'shipping_price';
-	const ARG_SHIPPING_DATE   = 'shipping_date';
-	const ARG_DELIVERY_DATE   = 'delivery_date';
+	const ARG_ACTION_TYPE            = 'action_type';
+	const ARG_LINE                   = 'line';
+	const ARG_CARRIER                = 'carrier';
+	const ARG_CARRIER_NAME           = 'carrier_name';
+	const ARG_CUSTOM_CARRIER         = 'custom_carrier';
+	const ARG_SHIPPING_METHOD        = 'shipping_method';
+	const ARG_TRACKING_NUMBER        = 'tracking_number';
+	const ARG_TRACKING_URL           = 'tracking_url';
+	const ARG_SHIPPING_PRICE         = 'shipping_price';
+	const ARG_SHIPPING_DATE          = 'shipping_date';
+	const ARG_DELIVERY_DATE          = 'delivery_date';
+	const ARG_RETURN_TRACKING_NUMBER = 'return_tracking_number';
+	const ARG_RETURN_CARRIER         = 'return_carrier';
 
 	/**
 	 * @var integer max interval time for action synchronisation (3 days)

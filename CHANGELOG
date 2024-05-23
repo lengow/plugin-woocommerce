@@ -1,4 +1,28 @@
 ========================================================
+Version 2.6.2
+========================================================
+
+    - BugFix:  Meta box not showing up in order edit page when using the old woocommerce storing engine
+    - BugFix:  Fix a crash that could occur in a specific case when exporting a catalogue
+    - BugFix:  Fix some characters that shouldn't be escaped in the catalogue export
+
+========================================================
+Version 2.6.1
+========================================================
+
+    - Feature: Add phone number to the order information in the “Lengow“ tab
+    - BugFix:  Add missing shipping phone in the woocommerce order shipping address
+    - Feature: Remove deprecated tracking option
+
+========================================================
+Version 2.6.0
+========================================================
+
+    - Feature: Return tracking carrier during shipment (Otto)
+    - Feature: Return tracking number during shipment (Zalando)
+    - Feature: Add composer.json to make the plugin composer installable
+
+========================================================
 Version 2.5.5
 ========================================================
 

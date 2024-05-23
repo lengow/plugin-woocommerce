@@ -79,7 +79,7 @@ DEPLOY_ENV=$2
 echo
 echo "#####################################################"
 echo "##                                                 ##"
-echo -e "##       "${BLEU}Lengow WooCommerce${NORMAL}" - Build Module             ##"
+echo -e "##       "${BLEU}Lengow WooCommerce${NORMAL}" - Build Module         ##"
 echo "##                                                 ##"
 echo "#####################################################"
 echo
@@ -91,7 +91,7 @@ if [ ! -d "$FOLDER" ]; then
 	echo
 	exit 0
 fi
-PHP=$(which php8.1)
+PHP=$(which php)
 echo ${PHP}
 
 # Change config for preprod
@@ -158,6 +158,8 @@ echo -e "- Build archive : ${VERT}DONE${NORMAL}"
 if [ -d  "~/Bureau" ]
 then
     mv $ARCHIVE_NAME ~/Bureau
+    echo -e "~/Bureau/$ARCHIVE_NAME"
 else
     mv $ARCHIVE_NAME ~/shared
+    echo -e "~/shared/$ARCHIVE_NAME"
 fi

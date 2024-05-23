@@ -866,7 +866,8 @@ class Lengow_Product {
 	 */
 	private function get_categories() {
 		// get all terms with id and name.
-		$terms = $this->get_all_categories();
+		$terms    = $this->get_all_categories();
+		$nb_terms = count( $terms );
 		// get product terms.
 		$product_terms = get_the_terms( $this->product_id, self::TAX_CATEGORY );
 		if ( $product_terms && ! is_wp_error( $product_terms ) ) {
@@ -896,12 +897,17 @@ class Lengow_Product {
 				$term_ids   = array();
 				$term_ids[] = $terms[ $last_id ]['name'];
 				$parent_id  = (int) $last_id;
+				$iteration  = 0;
 				do {
 					$parent_id = $terms[ $parent_id ]['parent'];
 					if ( $parent_id !== 0 ) {
+						if ( empty( $terms[ $parent_id ]['name'] ) ) {
+							continue;
+						}
+
 						$term_ids[] = $terms[ $parent_id ]['name'];
 					}
-				} while ( $parent_id !== 0 );
+				} while ( $parent_id !== 0 && ++$iteration < $nb_terms );
 
 				return implode( ' > ', array_reverse( $term_ids ) );
 			}

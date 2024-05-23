@@ -33,11 +33,24 @@ class Lengow_Box_Order_Info {
 	/**
 	 * Display Lengow Box Order infos.
 	 *
-	 * @param WC_Order $wc_order WC_Order instance from woocommerce
+	 * @param WC_Order|WP_Post $order Order instance from woocommerce
 	 */
-	public static function html_display( $wc_order ) {
+	public static function html_display( $order ) {
 		try {
-			$order_lengow_id = Lengow_Order::get_id_from_order_id( $wc_order->get_id() );
+			$order_id = null;
+			if ( $order instanceof WC_Order ) {
+				$order_id = $order->get_id();
+			} elseif ( $order instanceof WP_Post ) {
+				// retro compatibility
+				// see option woocommerce_custom_orders_table_enabled
+				$order_id = $order->ID;
+			}
+
+			if ( ! $order_id ) {
+				return;
+			}
+
+			$order_lengow_id = Lengow_Order::get_id_from_order_id( $order_id );
 			$order_lengow    = new Lengow_Order( $order_lengow_id );
 			$can_send_action = $order_lengow->can_resend_action();
 			$imported_at     = Lengow_Order::get_date_imported( $order_lengow->order_id );
@@ -52,6 +65,20 @@ class Lengow_Box_Order_Info {
 			}
 			$locale     = new Lengow_Translation();
 			$debug_mode = Lengow_Configuration::debug_mode_is_active();
+
+			if ( ! empty( $order_lengow->extra ) ) {
+				try {
+					$decoded        = json_decode( $order_lengow->extra, true, 512, JSON_THROW_ON_ERROR );
+					$shipping_phone = $decoded['packages'][0]['delivery']['phone_mobile']
+						?? $decoded['packages'][0]['delivery']['phone_home']
+						?? $decoded['packages'][0]['delivery']['phone_office'];
+					$billing_phone  = $decoded['billing_address']['phone_mobile']
+						?? $decoded['billing_address']['phone_home']
+						?? $decoded['billing_address']['phone_office'];
+				} catch ( JsonException $e ) {
+				}
+			}
+
 			include_once 'views/box-order-info/html-order-info.php';
 		} catch ( Exception $e ) {
 			echo Lengow_Main::decode_log_message( $e->getMessage() );

@@ -72,6 +72,40 @@ class Lengow_Hook {
 	}
 
 	/**
+	 * Add meta box for orders created by Lengow.
+	 * Compatibility mode if woocommerce is using old storing engine with WP_Post.
+	 * see option woocommerce_custom_orders_table_enabled.
+	 */
+	public static function adding_shop_order_meta_boxes_compat() {
+		$post = get_post();
+		if ( empty( $post->ID ) ) {
+			return;
+		}
+
+		$lengow_order = Lengow_Order::get_id_from_order_id( $post->ID );
+		if ( ! $lengow_order ) {
+			return;
+		}
+
+		$locale = new Lengow_Translation();
+		add_meta_box(
+			'lengow-order-infos',
+			$locale->t( 'meta_box.order_info.box_title' ),
+			array( 'Lengow_Box_Order_Info', 'html_display' ),
+			'shop_order',
+			'normal'
+		);
+		add_meta_box(
+			'lengow-shipping-infos',
+			$locale->t( 'meta_box.order_shipping.box_title' ),
+			array( 'Lengow_Box_Order_Shipping', 'html_display' ),
+			'shop_order',
+			'side',
+			'default'
+		);
+	}
+
+	/**
 	 * Disable all customer mails if order came from Lengow.
 	 *
 	 * @param WC_Emails $email_class WooCommerce email instance
@@ -130,34 +164,57 @@ class Lengow_Hook {
 			// get new WooCommerce order status.
 			$order_status = sanitize_text_field( $_POST['order_status'] );
 			// get new Lengow shipping data.
-			$carrier         = isset( $_POST['lengow_carrier'] )
+			$carrier                = isset( $_POST['lengow_carrier'] )
 				? sanitize_text_field( $_POST['lengow_carrier'] )
 				: '';
-			$custom_carrier  = isset( $_POST['lengow_custom_carrier'] )
+			$custom_carrier         = isset( $_POST['lengow_custom_carrier'] )
 				? sanitize_text_field( $_POST['lengow_custom_carrier'] )
 				: '';
-			$tracking_number = isset( $_POST['lengow_tracking_number'] )
+			$tracking_number        = isset( $_POST['lengow_tracking_number'] )
 				? sanitize_text_field( $_POST['lengow_tracking_number'] )
 				: '';
-			$tracking_url    = isset( $_POST['lengow_tracking_url'] )
+			$tracking_url           = isset( $_POST['lengow_tracking_url'] )
 				? sanitize_text_field( $_POST['lengow_tracking_url'] )
+				: '';
+			$return_carrier         = isset( $_POST['lengow_return_carrier'] )
+				? sanitize_text_field( $_POST['lengow_return_carrier'] )
+				: '';
+			$return_tracking_number = isset( $_POST['lengow_return_tracking_number'] )
+				? sanitize_text_field( $_POST['lengow_return_tracking_number'] )
 				: '';
 			// save Lengow shipping data.
 
-						$wc_order_carrier        = $wc_order->get_meta( '_lengow_carrier', true );
-						$wc_order_custom_carrier = $wc_order->get_meta( '_lengow_custom_carrier', true );
+			$wc_order_carrier                = $wc_order->get_meta( '_lengow_carrier', true );
+			$wc_order_custom_carrier         = $wc_order->get_meta( '_lengow_custom_carrier', true );
+			$wc_order_return_carrier         = $wc_order->get_meta( '_lengow_return_carrier', true );
+			$wc_order_return_tracking_number = $wc_order->get_meta( '_lengow_return_tracking_number', true );
 
+			$need_save = false;
 			if ( $carrier && ( $wc_order_carrier !== $carrier ) ) {
 				$wc_order->update_meta_data( '_lengow_carrier', $carrier );
 				$wc_order->update_meta_data( '_lengow_tracking_number', $tracking_number );
 				$wc_order->update_meta_data( '_lengow_tracking_url', $tracking_url );
-				$wc_order->save();
+				$need_save = true;
 			}
 
 			if ( $custom_carrier && ( $wc_order_custom_carrier !== $custom_carrier ) ) {
 				$wc_order->update_meta_data( '_lengow_custom_carrier', $custom_carrier );
 				$wc_order->update_meta_data( '_lengow_tracking_number', $tracking_number );
 				$wc_order->update_meta_data( '_lengow_tracking_url', $tracking_url );
+				$need_save = true;
+			}
+
+			if ( $return_carrier && $wc_order_return_carrier !== $return_carrier ) {
+				$wc_order->update_meta_data( '_lengow_return_carrier', $return_carrier );
+				$need_save = true;
+			}
+
+			if ( $return_tracking_number && $wc_order_return_tracking_number !== $return_tracking_number ) {
+				$wc_order->update_meta_data( '_lengow_return_tracking_number', $return_tracking_number );
+				$need_save = true;
+			}
+
+			if ( $need_save ) {
 				$wc_order->save();
 			}
 
@@ -172,25 +229,9 @@ class Lengow_Hook {
 					$order_lengow->call_action( Lengow_Action::TYPE_CANCEL );
 				}
 			}
-			unset( $order_lengow );
 		}
+
 		return $wc_order_id;
-	}
-
-	/**
-	 * Adding simple tracker Lengow on footer when order is confirmed.
-	 */
-	public static function render_lengow_tracker() {
-		global $wp;
-
-		if ( isset( $wp->query_vars['order-received'] )
-			&& is_checkout()
-			&& Lengow_Configuration::get( Lengow_Configuration::TRACKING_ENABLED )
-		) {
-			$order_id = (int) $wp->query_vars['order-received'];
-			$order    = new WC_Order( $order_id );
-			Lengow_Tracker::html_display( $order );
-		}
 	}
 
 	/**
