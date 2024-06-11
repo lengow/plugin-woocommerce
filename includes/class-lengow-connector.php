@@ -60,7 +60,7 @@ class Lengow_Connector {
 	const API_ORDER_MOI    = '/v3.0/orders/moi/';
 	const API_ORDER_ACTION = '/v3.0/orders/actions/';
 	const API_MARKETPLACE  = '/v3.0/marketplaces';
-	const API_PLAN         = '/v3.0/plans';
+	const API_RESTRICTIONS = '/v1.0/restrictions';
 	const API_CMS          = '/v3.1/cms';
 	const API_CMS_CATALOG  = '/v3.1/cms/catalogs/';
 	const API_CMS_MAPPING  = '/v3.1/cms/mapping/';
@@ -139,7 +139,7 @@ class Lengow_Connector {
 		self::API_ORDER_MOI    => 10,
 		self::API_ORDER_ACTION => 15,
 		self::API_MARKETPLACE  => 15,
-		self::API_PLAN         => 5,
+		self::API_RESTRICTIONS => 5,
 		self::API_CMS          => 5,
 		self::API_CMS_CATALOG  => 10,
 		self::API_CMS_MAPPING  => 10,
