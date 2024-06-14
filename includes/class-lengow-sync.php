@@ -270,7 +270,7 @@ class Lengow_Sync {
 		}
 		$result = Lengow_Connector::query_api(
 			Lengow_Connector::GET,
-			Lengow_Connector::API_PLAN,
+			Lengow_Connector::API_RESTRICTIONS,
 			array(),
 			'',
 			$log_output
