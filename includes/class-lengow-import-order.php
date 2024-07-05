@@ -1212,9 +1212,9 @@ class Lengow_Import_Order {
 		if ( $billing ) {
 			foreach ( $billing as $key => $billingData ) {
 				$method = 'set_billing_' . $key;
-                if (!method_exists($customer, $method)) {
-                    continue;
-                }
+				if ( ! method_exists( $customer, $method ) ) {
+					continue;
+				}
 
 				$customer->{$method}( $billingData );
 			}
@@ -1224,9 +1224,9 @@ class Lengow_Import_Order {
 		if ( $shipping ) {
 			foreach ( $shipping as $key => $shippingData ) {
 				$method = 'set_shipping_' . $key;
-                if (!method_exists($customer, $method)) {
-                    continue;
-                }
+				if ( ! method_exists( $customer, $method ) ) {
+					continue;
+				}
 
 				$customer->{$method}( $shippingData );
 			}
