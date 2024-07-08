@@ -235,6 +235,9 @@ en:
       import_b2b_without_tax_label: "Enable import of B2B orders without tax"
       import_b2b_without_tax_description: "Activate this option to import B2B orders without tax"
       anonymize_email: "Anonymize customer's emails addresses"
+      type_anonymize_email_label: "Choose the type of anonymization"
+      type_anonymize_email_encrypted: "Encrypted, example: 1ec4a32af2ebee7db7ffa687e0271e39@lengow.com"
+      type_anonymize_email_not_encrypted: "Plaintext, example:123456789-amazon_fr@lengow.com"
   global_setting:
     screen:
       notification_alert_title: "Notifications & alerts"

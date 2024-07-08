@@ -18,6 +18,7 @@
 
 (function ($) {
     $(document).ready(function () {
+        displayTypeOfAnonymizationEmail();
         /**
          * Submit form.
          */
@@ -40,6 +41,9 @@
         $("input[name='lengow_import_ship_mp_enabled']").on('change', function () {
             displayStockMP();
         });
+        $("input[name='lengow_anonymize_email']").change(function() {
+            setTimeout(function() { displayTypeOfAnonymizationEmail(); }, 500);
+        });
 
         function displayStockMP() {
             var selector = $('.lengow_import_stock_ship_mp');
@@ -52,6 +56,18 @@
                 selector.slideUp(150);
                 selector.next('.legend').hide();
             }
+        }
+        function displayTypeOfAnonymizationEmail() {
+
+            var selector = $('.form-group.lengow_type_anonymize_email');
+            var parentElement = $("input[name='lengow_anonymize_email']").parent().parent().parent();
+            if (parentElement.hasClass('checked')) {
+                selector.slideDown(150);
+            } else {
+                selector.slideUp(150);
+            }
+
+
         }
     });
 

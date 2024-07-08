@@ -3,3 +3,4 @@ logs/*.txt
 export/*
 !export/index.php
 config/marketplaces.json
+nbproject/*
