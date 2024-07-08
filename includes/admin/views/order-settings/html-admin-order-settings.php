@@ -151,10 +151,10 @@ $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
 					<select class="js-select lengow_select" name="<?php echo Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ?>">
 						<option value="0"
 							<?php echo esc_attr( (int) $values[ Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ] === 0 ? 'selected' : '' ); ?>>
-							<?php echo esc_html( $locale->t( 'order_setting.screen.anonymize_email_type_encrypted' ) ); ?>
+							<?php echo esc_html( $locale->t( 'order_setting.screen.type_anonymize_email_encrypted' ) ); ?>
 						<option value="1"
 							<?php echo esc_attr(  (int) $values[ Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ] === 1 ? 'selected' : '' ); ?>>
-							<?php echo esc_html( $locale->t( 'order_setting.screen.anonymize_email_type_not_encrypted' ) ); ?>
+							<?php echo esc_html( $locale->t( 'order_setting.screen.type_anonymize_email_not_encrypted' ) ); ?>
 					</select>
 				</div>
 				<div class="form-group lengow_import_stock_ship_mp" <?php echo esc_attr( $values[ Lengow_Configuration::SHIPPED_BY_MARKETPLACE_ENABLED ] ? '' : 'hidden' ); ?>>

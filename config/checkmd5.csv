@@ -1,4 +1,4 @@
-/lengow.php|e6142e52b84bc1c859aac04712cc285c
+/lengow.php|ffa48b6271f9781d2bbf51b089d23324
 /config/index.php|d41d8cd98f00b204e9800998ecf8427e
 /translations/en_GB.csv|0f3721dd19011040aff173d8b51f0658
 /translations/fr_FR.csv|4413cd1446783cfab67f65b548a2dc98
@@ -331,7 +331,7 @@
 /includes/admin/views/box-order-info/html-order-info.php|7659f65a14081d9ba7e2a3375f2fa6ee
 /includes/admin/views/html-admin-header-order.php|78f0e982eabb89322786e8f8021c149d
 /includes/admin/views/products/html-admin-products.php|0afe3b45f8e20871007397fdde76eec2
-/includes/admin/views/order-settings/html-admin-order-settings.php|8e9d8f94120a033994ae2adce0b562a4
+/includes/admin/views/order-settings/html-admin-order-settings.php|c9fa97ef159b33ec07d82ba4d61e07d5
 /includes/admin/views/help/html-admin-help.php|294a5db6acaf365ba94593e8e3d38d4a
 /includes/admin/views/html-admin-footer.php|033a0688fdf639fe2b99537ca2a0c9f2
 /includes/admin/views/legals/html-admin-legals.php|a2352b874f5f091d57c2689fe3eb14d5
