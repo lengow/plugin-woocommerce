@@ -197,6 +197,7 @@ en:
       synchronize_action_success: "Synchronize success"
       synchronize_action_error: "Synchronize failed"
       check_resend_action: "Do you really want to %{action} the order?"
+      not_provided: "Not provided by the marketplace"
     table:
       button_search: "Search"
       id: "ID"
