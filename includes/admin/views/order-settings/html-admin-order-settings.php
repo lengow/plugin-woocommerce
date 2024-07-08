@@ -135,7 +135,7 @@ $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
 						<label>
 							<div>
 								<span></span>
-								<input type="hidden" name="lengow_anonymize_email" value="0">
+								<input type="hidden" name="<?php echo Lengow_Configuration::ANONYMIZE_EMAIL ?>" value="0">
 								<input name="lengow_anonymize_email"
 										type="checkbox"
 									<?php echo esc_attr( $values[ Lengow_Configuration::ANONYMIZE_EMAIL ] ? 'checked' : '' ); ?>/>
@@ -148,12 +148,12 @@ $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
 					<label>
 						<?php echo esc_html( $keys[ Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
 					</label>
-					<select class="js-select lengow_select" name="lengow_lengow_type_anonymize_email">
+					<select class="js-select lengow_select" name="<?php echo Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ?>">
 						<option value="0"
-							<?php echo esc_attr( $values[ Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ] === 0 ? 'selected' : '' ); ?>>
+							<?php echo esc_attr( (int) $values[ Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ] === 0 ? 'selected' : '' ); ?>>
 							<?php echo esc_html( $locale->t( 'order_setting.screen.anonymize_email_type_encrypted' ) ); ?>
 						<option value="1"
-							<?php echo esc_attr( $values[ Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ] === 1 ? 'selected' : '' ); ?>>
+							<?php echo esc_attr(  (int) $values[ Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ] === 1 ? 'selected' : '' ); ?>>
 							<?php echo esc_html( $locale->t( 'order_setting.screen.anonymize_email_type_not_encrypted' ) ); ?>
 					</select>
 				</div>
@@ -236,3 +236,4 @@ $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
 		</form>
 	</div>
 </div>
+
