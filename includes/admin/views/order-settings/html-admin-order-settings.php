@@ -130,6 +130,33 @@ $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
 						</label>
 					</div>
 				</div>
+				<div class="form-group lengow_anonymize_email">
+					<div class="lgw-switch <?php echo esc_attr( $values[ Lengow_Configuration::ANONYMIZE_EMAIL ] ? 'checked' : '' ); ?>">
+						<label>
+							<div>
+								<span></span>
+								<input type="hidden" name="lengow_anonymize_email" value="0">
+								<input name="lengow_anonymize_email"
+										type="checkbox"
+									<?php echo esc_attr( $values[ Lengow_Configuration::ANONYMIZE_EMAIL ] ? 'checked' : '' ); ?>/>
+							</div>
+							<?php echo esc_html( $keys[ Lengow_Configuration::ANONYMIZE_EMAIL ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
+						</label>
+					</div>
+				</div>
+				<div class="form-group lengow_type_anonymize_email">
+					<label>
+						<?php echo esc_html( $keys[ Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
+					</label>
+					<select class="js-select lengow_select" name="lengow_lengow_type_anonymize_email">
+						<option value="0"
+							<?php echo esc_attr( $values[ Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ] === 0 ? 'selected' : '' ); ?>>
+							<?php echo esc_html( $locale->t( 'order_setting.screen.anonymize_email_type_encrypted' ) ); ?>
+						<option value="1"
+							<?php echo esc_attr( $values[ Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ] === 1 ? 'selected' : '' ); ?>>
+							<?php echo esc_html( $locale->t( 'order_setting.screen.anonymize_email_type_not_encrypted' ) ); ?>
+					</select>
+				</div>
 				<div class="form-group lengow_import_stock_ship_mp" <?php echo esc_attr( $values[ Lengow_Configuration::SHIPPED_BY_MARKETPLACE_ENABLED ] ? '' : 'hidden' ); ?>>
 					<div class="lgw-switch <?php echo esc_attr( $values[ Lengow_Configuration::SHIPPED_BY_MARKETPLACE_STOCK_ENABLED ] ? 'checked' : '' ); ?>">
 						<label>
@@ -165,20 +192,7 @@ $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
 						</label>
 					</div>
 				</div>
-				<div class="form-group lengow_anonymize_email">
-					<div class="lgw-switch <?php echo esc_attr( $values[ Lengow_Configuration::ANONYMIZE_EMAIL ] ? 'checked' : '' ); ?>">
-						<label>
-							<div>
-								<span></span>
-								<input type="hidden" name="lengow_anonymize_email" value="0">
-								<input name="lengow_anonymize_email"
-										type="checkbox"
-									<?php echo esc_attr( $values[ Lengow_Configuration::ANONYMIZE_EMAIL ] ? 'checked' : '' ); ?>/>
-							</div>
-							<?php echo esc_html( $keys[ Lengow_Configuration::ANONYMIZE_EMAIL ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
-						</label>
-					</div>
-				</div>
+
 			</div>
 			<div class="lgw-box">
 				<h2><?php echo esc_html( $locale->t( 'order_setting.screen.import_b2b_without_tax_title' ) ); ?></h2>

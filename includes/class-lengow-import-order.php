@@ -1069,15 +1069,18 @@ class Lengow_Import_Order {
 	private function get_user_email() {
 		$domain = implode( '.', array_slice( explode( '.', parse_url( get_site_url(), PHP_URL_HOST ) ), - 2 ) );
 		$domain = preg_match( '`^([\w]+)\.([a-z]+)$`', $domain ) ? $domain : 'lengow.com';
-		$email  = md5( $this->marketplace_sku . '-' . $this->marketplace->name ) . '@' . $domain;
+		$email  =  $this->marketplace_sku . '-' . $this->marketplace->name . '@' . $domain;
+		$encrypted_email = md5($email).'@'.$domain;
 		Lengow_Main::log(
 			Lengow_Log::CODE_IMPORT,
 			Lengow_Main::set_log_message( 'log.import.generate_unique_email', array( 'email' => $email ) ),
 			$this->log_output,
 			$this->marketplace_sku
 		);
+		$typeReturn = (int) Lengow_Configuration::get( Lengow_Configuration::TYPE_ANONYMIZE_EMAIL );
 
-		return $email;
+
+		return ($typeReturn === 0) ? $encrypted_email : $email;
 	}
 
 	/**
