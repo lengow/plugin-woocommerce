@@ -901,12 +901,20 @@ class Lengow_Import_Order {
 			// search and get all products.
 			$products = $this->get_products();
 			// get billing and shipping addresses for the user and the order.
+                        $billing_address_api = $this->hydrate_address(
+                            $this->order_data,
+                            $this->order_data->billing_address
+                        );
 			$billing_address        = new Lengow_Address(
-				$this->order_data->billing_address,
+				$billing_address_api,
 				Lengow_Address::TYPE_BILLING
 			);
+                        $shipping_address_api = $this->hydrate_address(
+                            $this->order_data,
+                            $this->package_data->delivery
+                        );
 			$shipping_address       = new Lengow_Address(
-				$this->package_data->delivery,
+				$shipping_address_api,
 				Lengow_Address::TYPE_SHIPPING,
 				$this->carrier_id_relay
 			);
@@ -985,7 +993,62 @@ class Lengow_Import_Order {
 		return false;
 	}
 
-	/**
+        /**
+         * hydrates address data
+         *
+         * @param Object $order_data
+         * @param Object $address
+         *
+         * @return Object $address
+         */
+        private function hydrate_address($order_data, $address)
+        {
+            $locale = new Lengow_Translation();
+            $notProvided = $locale->t('order.screen.not_provided');
+
+            $notPhone = '0000000000';
+            $status = (string) $order_data->lengow_status;
+            $isDeliveredByMp = false;
+
+            if ($status !== Lengow_Order::STATE_SHIPPED) {
+                return $address;
+            }
+            $types = $order_data->order_types;
+
+            foreach ($types as $orderType) {
+                if ($orderType->type === Lengow_Order::TYPE_DELIVERED_BY_MARKETPLACE) {
+                    $isDeliveredByMp = true;
+                }
+            }
+
+            if (!$isDeliveredByMp) {
+                return $address;
+            }
+
+            if (is_null($address->first_name)
+                    && is_null($address->last_name)
+                    && is_null($address->full_name)) {
+                $address->first_name = $notProvided;
+                $address->last_name = $notProvided;
+                $address->full_name = $notProvided;
+            }
+
+            if (is_null($address->first_line)
+                    && is_null($address->full_address)) {
+                $address->first_line = $notProvided;
+                $address->full_address = $notProvided;
+            }
+
+            if (is_null($address->phone_home)
+                    && is_null($address->phone_mobile)) {
+                $address->phone_home = $notPhone;
+                $address->phone_mobile = $notPhone;
+            }
+
+            return $address;
+        }
+
+        /**
 	 * Get products from the API and check that they exist in WooCommerce database.
 	 *
 	 * @return array
@@ -1069,15 +1132,18 @@ class Lengow_Import_Order {
 	private function get_user_email() {
 		$domain = implode( '.', array_slice( explode( '.', parse_url( get_site_url(), PHP_URL_HOST ) ), - 2 ) );
 		$domain = preg_match( '`^([\w]+)\.([a-z]+)$`', $domain ) ? $domain : 'lengow.com';
-		$email  = md5( $this->marketplace_sku . '-' . $this->marketplace->name ) . '@' . $domain;
+		$email  =  $this->marketplace_sku . '-' . $this->marketplace->name . '@' . $domain;
+		$encrypted_email = md5($email).'@'.$domain;
 		Lengow_Main::log(
 			Lengow_Log::CODE_IMPORT,
 			Lengow_Main::set_log_message( 'log.import.generate_unique_email', array( 'email' => $email ) ),
 			$this->log_output,
 			$this->marketplace_sku
 		);
+		$typeReturn = (int) Lengow_Configuration::get( Lengow_Configuration::TYPE_ANONYMIZE_EMAIL );
 
-		return $email;
+
+		return ($typeReturn === 0) ? $encrypted_email : $email;
 	}
 
 	/**
@@ -1212,6 +1278,10 @@ class Lengow_Import_Order {
 		if ( $billing ) {
 			foreach ( $billing as $key => $billingData ) {
 				$method = 'set_billing_' . $key;
+				if ( ! method_exists( $customer, $method ) ) {
+					continue;
+				}
+
 				$customer->{$method}( $billingData );
 			}
 			$customer->save();
@@ -1220,6 +1290,10 @@ class Lengow_Import_Order {
 		if ( $shipping ) {
 			foreach ( $shipping as $key => $shippingData ) {
 				$method = 'set_shipping_' . $key;
+				if ( ! method_exists( $customer, $method ) ) {
+					continue;
+				}
+
 				$customer->{$method}( $shippingData );
 			}
 			$customer->save();

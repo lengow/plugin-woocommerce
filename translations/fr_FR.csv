@@ -179,6 +179,7 @@ order.screen.resend_action_error|L'envoi de l'action a échoué
 order.screen.synchronize_action_success|La synchronisation a marché
 order.screen.synchronize_action_error|La synchronisation a échoué
 order.screen.check_resend_action|Voulez vous vraiment envoyer une action %{action} ?
+order.screen.not_provided|Non fourni par la marketplace
 order.table.button_search|Rechercher
 order.table.id|ID
 order.table.action|Action
@@ -213,6 +214,9 @@ order_setting.screen.import_b2b_without_tax_title|Commandes B2B
 order_setting.screen.import_b2b_without_tax_label|Activer l'import des commandes B2B sans taxes
 order_setting.screen.import_b2b_without_tax_description|Activer cette option pour importer les commandes B2B sans taxes
 order_setting.screen.anonymize_email|Anonymiser les adresses e-mails des clients
+order_setting.screen.type_anonymize_email_label|Type d'anonymisation des e-mails
+order_setting.screen.type_anonymize_email_encrypted|Chiffré, exemple: 1ec4a32af2ebee7db7ffa687e0271e39@lengow.com
+order_setting.screen.type_anonymize_email_not_encrypted|En clair, exemple:123456789-amazon_fr@lengow.com
 global_setting.screen.notification_alert_title|Notifications & alertes
 global_setting.screen.security_title|Sécurité
 global_setting.screen.shop_title|Gestion de la boutique

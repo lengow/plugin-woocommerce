@@ -1,4 +1,13 @@
 ========================================================
+Version 2.6.3
+========================================================
+
+    - Feature: Change route api plan to restriction
+    - Feature: E-mail anonyzation choice md5() or plaintext
+    - BugFix: Hydrate address for FBA orders (amazon_us)
+    - BugFix: WooCommerce compatibility
+
+========================================================
 Version 2.6.2
 ========================================================
 
