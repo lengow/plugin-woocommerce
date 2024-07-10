@@ -1323,7 +1323,7 @@ class Lengow_Import_Order {
 		$wc_order->update_status( $order_state );
 		// add quantity back for re-import order and order shipped by marketplace.
 		$this->add_quantity_back( $wc_order );
-				$wc_order->save();
+		$wc_order->save();
 
 		return $wc_order;
 	}
