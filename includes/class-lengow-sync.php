@@ -265,18 +265,18 @@ class Lengow_Sync {
 			}
 		}
 		try {
-			$plan = Lengow::sdk()->plan()->plans();
+			$restrictions = Lengow::sdk()->restriction()->restrictions();
 		} catch ( HttpException|Exception $e ) {
 			Lengow_Main::get_log_instance()->log_exception($e);
 			return false;
 		}
 
-		if ( isset( $plan->isFreeTrial ) ) {
+		if ( isset( $restrictions->isFreeTrial ) ) {
 			$status = array(
-				'type'    => $plan->isFreeTrial ? 'free_trial' : '',
-				'day'     => $plan->leftDaysBeforeExpired < 0 ? 0 : $plan->leftDaysBeforeExpired,
-				'expired' => $plan->isExpired,
-				'legacy'  => 'v2' === $plan->accountVersion,
+				'type'    => $restrictions->isFreeTrial ? 'free_trial' : '',
+				'day'     => $restrictions->leftDaysBeforeExpired < 0 ? 0 : $restrictions->leftDaysBeforeExpired,
+				'expired' => $restrictions->isExpired,
+				'legacy'  => 'v2' === $restrictions->accountVersion,
 			);
 			Lengow_Configuration::update_value( Lengow_Configuration::ACCOUNT_STATUS_DATA, wp_json_encode( $status ) );
 			Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_ACCOUNT_STATUS_DATA, time() );
