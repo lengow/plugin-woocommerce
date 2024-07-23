@@ -93,6 +93,7 @@ if [ ! -d "$FOLDER" ]; then
 fi
 PHP=$(which php)
 echo ${PHP}
+sleep 3
 
 # Change config for preprod
 if [ ! -z "${DEPLOY_ENV}" ] && [ "${DEPLOY_ENV}" == "preprod" ]; then
@@ -113,6 +114,8 @@ echo -e "- Create files checksum : ${VERT}DONE${NORMAL}"
 remove_directory $FOLDER_TMP
 #copy files
 cp -rRp $FOLDER $FOLDER_TMP
+
+sleep 3
 
 # Remove dod
 remove_files $FOLDER_TMP "dod.md"
@@ -150,6 +153,7 @@ echo -e "- Remove Translation yml folder : ${VERT}DONE${NORMAL}"
 #remove TMP FOLDER_NBPROJECT
 remove_directory $FOLDER_NBPROJECT
 echo -e "- Remove Translation nbproject folder : ${VERT}DONE${NORMAL}"
+sleep 3
 
 # Make zip
 cd /tmp
@@ -163,3 +167,4 @@ else
     mv $ARCHIVE_NAME ~/shared
     echo -e "~/shared/$ARCHIVE_NAME"
 fi
+echo "End of build archive for Woocommerce plugin"

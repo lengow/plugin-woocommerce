@@ -265,7 +265,7 @@ class Lengow_Sync {
 			}
 		}
 		try {
-			$plan = Lengow::sdk()->plan()->me();
+			$plan = Lengow::sdk()->plan()->plans();
 		} catch ( HttpException|Exception $e ) {
 			Lengow_Main::get_log_instance()->log_exception($e);
 			return false;
