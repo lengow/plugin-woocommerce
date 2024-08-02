@@ -22,6 +22,8 @@
  * @license     https://www.gnu.org/licenses/gpl-3.0 GNU General Public License
  */
 
+use Lengow\Sdk\Client\Exception\HttpException;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -738,7 +740,7 @@ class Lengow_Import {
 						)
 					) );
 				}
-			} catch ( Exception $e ) {
+			} catch ( HttpException $e ) {
 				throw new Lengow_Exception(
 					Lengow_Main::set_log_message(
 						'lengow_log.exception.error_lengow_webservice',

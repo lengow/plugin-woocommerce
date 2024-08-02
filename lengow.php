@@ -176,6 +176,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			include_once 'includes/class-lengow-factory.php';
 			include_once 'includes/class-sdk-listener.php';
 			$factory = Lengow_Factory::instance();
+			$factory->bind(Lengow_Log::class, Lengow_Log::class);
 			$factory->bind(Lengow_Configuration::class, Lengow_Configuration::class);
 			$factory->bind( Sdk::class, function () {
 				$api_key    = Lengow_Configuration::get( Lengow_Configuration::ACCESS_TOKEN );
@@ -416,23 +417,31 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 
 		/**
-		 * @param bool $reloadCredentials
+		 * @param bool $reload_credentials
 		 *
 		 * @return Sdk
-		 * @throws Exception
 		 */
-		public static function sdk( bool $reloadCredentials = false ): Sdk
-		{
-			if ( $reloadCredentials ) {
+		public static function sdk( bool $reload_credentials = false ): Sdk {
+			if ( $reload_credentials ) {
 				return Lengow_Factory::instance()->make( Sdk::class );
 			}
 
 			return Lengow_Factory::instance()->get( Sdk::class );
 		}
+
+		/** @return Lengow_Configuration */
+		public static function configuration(): Lengow_Configuration {
+			return Lengow_Factory::instance()->get( Lengow_Configuration::class );
+		}
+
+		/** @return Lengow_Log */
+		public static function logger(): Lengow_Log {
+			return Lengow_Factory::instance()->get( Lengow_Log::class );
+		}
 	}
 
 	// if WordPress does not use composer already
-	if (!class_exists('Lengow\Sdk\Sdk')) {
+	if ( ! class_exists( 'Lengow\Sdk\Sdk' ) ) {
 		require __DIR__ . '/vendor/autoload.php';
 	}
 

@@ -887,7 +887,7 @@ class Lengow_Order {
 			do {
 				try {
 					Lengow::sdk()->order()->moi( $body );
-				} catch ( Exception $e ) {
+				} catch ( HttpException $e ) {
 					--$tries;
 					if ( $tries === 0 ) {
 						$message = Lengow_Main::decode_log_message( $e->getMessage(), Lengow_Translation::DEFAULT_ISO_CODE );
@@ -920,7 +920,7 @@ class Lengow_Order {
 					Lengow_Import::ARG_MARKETPLACE_ORDER_ID => $this->marketplace_sku
 				)
 			);
-		} catch ( HttpException|Exception $e ) {
+		} catch ( HttpException $e ) {
 			$message = Lengow_Main::decode_log_message( $e->getMessage(), Lengow_Translation::DEFAULT_ISO_CODE );
 			$error   = Lengow_Main::set_log_message(
 				'log.connector.error_api',
@@ -1125,8 +1125,8 @@ class Lengow_Order {
 					Lengow_Import::ARG_MARKETPLACE          => $this->marketplace_name
 				)
 			);
-		} catch ( HttpException|Exception $e ) {
-			Lengow_Main::get_log_instance()->log_exception( $e );
+		} catch ( HttpException $e ) {
+			Lengow::logger()->log_exception( $e );
 		}
 
 		if ( ! isset( $results->count ) || 0 === $results->count ) {

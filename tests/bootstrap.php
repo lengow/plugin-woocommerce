@@ -5,6 +5,9 @@
  * @package Lengow_Woocommerce
  */
 
+use Http\Discovery\ClassDiscovery;
+use Http\Discovery\Strategy\MockClientStrategy;
+
 require_once __DIR__ . '/../../../../vendor/autoload.php';
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
@@ -45,3 +48,5 @@ tests_add_filter( 'active_plugins', '_manualy_active_plugins');
 
 // Start up the WP testing environment.
 require "{$_tests_dir}/includes/bootstrap.php";
+
+ClassDiscovery::prependStrategy(MockClientStrategy::class);

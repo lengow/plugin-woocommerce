@@ -54,11 +54,17 @@ class Lengow_Factory {
 
 	/**
 	 * @param string $name
-	 * @param mixed  $concrete
+	 * @param mixed $concrete
+	 * @param bool $unset_instance
+	 *
 	 * @return $this
 	 */
-	public function bind( string $name, $concrete ): self {
+	public function bind( string $name, $concrete, bool $unset_instance = false ): self {
 		$this->dependencies[ $name ] = $concrete;
+		if ( $unset_instance && isset( $this->instances[ $name ] ) ) {
+			unset( $this->instances[ $name ] );
+		}
+
 		return $this;
 	}
 
@@ -67,14 +73,14 @@ class Lengow_Factory {
 	 *
 	 * @param string $name
 	 * @return mixed
-	 * @throws Exception if $name does not exist in the dependencies
+	 * @throws RuntimeException if $name does not exist in the dependencies
 	 */
 	public function make( string $name ) {
 		if ( isset( $this->dependencies[ $name ] ) ) {
 			return $this->instances[ $name ] = $this->resolve( $this->dependencies[ $name ] );
 		}
 
-		throw new Exception( "Dependency {$name} not found." );
+		throw new RuntimeException( "Dependency {$name} not found." );
 	}
 
 	/**
@@ -82,7 +88,7 @@ class Lengow_Factory {
 	 *
 	 * @param string $name
 	 * @return mixed
-	 * @throws Exception if $name does not exist in the dependencies
+	 * @throws RuntimeException if $name does not exist in the dependencies
 	 */
 	public function get( string $name ) {
 		return $this->instances[ $name ] ?? $this->instances[ $name ] = $this->make( $name );

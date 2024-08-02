@@ -160,8 +160,8 @@ class Lengow_Sync {
 		}
 		try {
 			$result = Lengow::sdk()->cms()->list();
-		} catch ( HttpException|Exception $e ) {
-			Lengow_Main::get_log_instance()->log_exception( $e );
+		} catch ( HttpException $e ) {
+			Lengow::logger()->log_exception( $e );
 		}
 		if ( isset( $result->cms ) ) {
 			$cms_token = Lengow_Main::get_token();
@@ -239,8 +239,8 @@ class Lengow_Sync {
 		$options = self::get_option_data();
 		try {
 			Lengow::sdk()->cms()->put( $options );
-		} catch ( HttpException|Exception $e ) {
-			Lengow_Main::get_log_instance()->log_exception( $e );
+		} catch ( HttpException $e ) {
+			Lengow::logger()->log_exception( $e );
 			return false;
 		}
 
@@ -266,8 +266,8 @@ class Lengow_Sync {
 		}
 		try {
 			$restrictions = Lengow::sdk()->restriction()->restrictions();
-		} catch ( HttpException|Exception $e ) {
-			Lengow_Main::get_log_instance()->log_exception($e);
+		} catch ( HttpException $e ) {
+			Lengow::logger()->log_exception($e);
 			return false;
 		}
 
@@ -317,8 +317,8 @@ class Lengow_Sync {
 
 		try {
 			$result = (object) Lengow::sdk()->marketplace()->list();
-		} catch ( HttpException|Exception $e ) {
-			Lengow_Main::get_log_instance()->log_exception( $e );
+		} catch ( HttpException $e ) {
+			Lengow::logger()->log_exception( $e );
 		}
 
 		if ( isset( $result ) ) {
@@ -380,8 +380,8 @@ class Lengow_Sync {
 
 		try {
 			$plugins = Lengow::sdk()->plugin()->list();
-		} catch ( HttpException|Exception $e ) {
-			Lengow_Main::get_log_instance()->log_exception($e);
+		} catch ( HttpException $e ) {
+			Lengow::logger()->log_exception($e);
 			return false;
 		}
 

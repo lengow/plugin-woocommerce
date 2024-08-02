@@ -45,7 +45,7 @@ class Lengow_Sdk_Listener implements AfterRequestTokenInterface, BeforeSendReque
 	 *
 	 * @return void
 	 */
-	public function afterRequestToken( string $token, int $expireAt, int $accountId): void
+	public function afterRequestToken( string $token, int $expireAt, int $accountId ): void
 	{
 		Lengow_Configuration::update_value( Lengow_Configuration::AUTHORIZATION_TOKEN, $token );
 		Lengow_Configuration::update_value( Lengow_Configuration::AUTHORIZATION_TOKEN_EXPIRE_AT, $expireAt );
@@ -58,10 +58,10 @@ class Lengow_Sdk_Listener implements AfterRequestTokenInterface, BeforeSendReque
 	 */
 	public function afterSendRequest( ResponseInterface $response ): ResponseInterface
 	{
-		$logger = Lengow_Main::get_log_instance();
+		$logger = Lengow::logger();
 		$logger->write(
 			'sdk.response',
-			$response->getStatusCode() . ' ' . $this->anonymize((string)$response->getBody())
+			$response->getStatusCode() . ' ' . $this->anonymize( (string) $response->getBody() )
 		);
 
 		return $response;
@@ -74,10 +74,10 @@ class Lengow_Sdk_Listener implements AfterRequestTokenInterface, BeforeSendReque
 	 */
 	public function beforeSendRequest( RequestInterface $request ): RequestInterface
 	{
-		$logger = Lengow_Main::get_log_instance();
+		$logger = Lengow::logger();
 		$logger->write(
 			'sdk.request',
-			$request->getMethod() . ' ' . $request->getUri() . ' ' . $this->anonymize((string)$request->getBody())
+			$request->getMethod() . ' ' . $request->getUri() . ' ' . $this->anonymize( (string) $request->getBody() )
 		);
 
 		return $request;

@@ -53,7 +53,21 @@ class TestLengowFactory extends WP_UnitTestCase
 		$main = $factory->get('Test_Factory');
 		$this->assertInstanceOf('Lengow_Main', $main);
 
-		$main2 = $factory->get('Test_Factory');
-		$this->assertTrue($main === $main2, 'Instances should be the same');
+		$main_cp = $factory->get('Test_Factory');
+		$this->assertTrue($main === $main_cp, 'Instances should be the same');
+
+		$factory->bind('Test_Factory', function () {
+			return new Lengow_Main();
+		} );
+
+		$main_cp = $factory->get('Test_Factory');
+		$this->assertTrue($main === $main_cp, 'Instances should be the same');
+
+		$factory->bind('Test_Factory', function () {
+			return new Lengow_Main();
+		}, true );
+
+		$main_cp = $factory->get('Test_Factory');
+		$this->assertFalse($main === $main_cp, 'Instances should not be the same');
 	}
 }

@@ -8,11 +8,11 @@
   "repositories": [
     {
       "type": "path",
-      "url": "~/vhosts/lengow-sdk"
+      "url": "~/vhosts/api-php-sdk"
     }
   ],
   "require": {
-    "lengow/php-sdk": "dev-main",
+    "lengow/api-php-sdk": "dev-main",
     "symfony/http-client": "^5.4",
     "nyholm/psr7": "^1.8",
     "composer/installers": "*",
@@ -20,7 +20,18 @@
   },
   "config": {
     "allow-plugins": {
-      "php-http/discovery": true
+      "php-http/discovery": true,
+      "composer/installers": true
     }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.6",
+    "guzzlehttp/guzzle": "^7.8",
+    "php-http/mock-client": "^1.6"
+  },
+  "autoload-dev": {
+    "classmap": [
+      "tests/MockClientTrait.php"
+    ]
   }
 }

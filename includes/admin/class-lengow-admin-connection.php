@@ -124,8 +124,8 @@ class Lengow_Admin_Connection {
 
 			Lengow_Main::log( 'Connector', 'Unable to save access IDs' );
 			return false;
-		} catch ( HttpException|Exception $e ) {
-			Lengow_Main::get_log_instance()->log_exception( $e );
+		} catch ( HttpException $e ) {
+			Lengow::logger()->log_exception( $e );
 		}
 
 		return false;
@@ -143,8 +143,8 @@ class Lengow_Admin_Connection {
 			$sync_data = Lengow_Sync::get_sync_data();
 			try {
 				$result = Lengow::sdk()->cms()->post( $sync_data );
-			} catch ( Exception $e ) {
-				Lengow_Main::get_log_instance()->log_exception( $e );
+			} catch ( HttpException $e ) {
+				Lengow::logger()->log_exception( $e );
 			}
 
 			if ( isset( $result->common_account ) ) {
