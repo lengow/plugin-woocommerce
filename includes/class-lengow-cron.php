@@ -24,7 +24,7 @@
 /**
  * List params
  * string  sync                Data type to synchronize
- * integer days                Synchronization interval time
+ * float days                Synchronization interval time
  * integer limit               Maximum number of new orders created
  * string  marketplace_sku     Lengow marketplace order id to synchronize
  * string  marketplace_name    Lengow marketplace name to synchronize
@@ -126,7 +126,7 @@ class LengowCron {
 					$params[ Lengow_Import::PARAM_DEBUG_MODE ] = (bool) sanitize_text_field( $_GET[ Lengow_Import::PARAM_DEBUG_MODE ] );
 				}
 				if ( isset( $_GET[ Lengow_Import::PARAM_DAYS ] ) ) {
-					$params[ Lengow_Import::PARAM_DAYS ] = (int) sanitize_text_field( $_GET[ Lengow_Import::PARAM_DAYS ] );
+					$params[ Lengow_Import::PARAM_DAYS ] = (float) sanitize_text_field( $_GET[ Lengow_Import::PARAM_DAYS ] );
 				}
 				if ( isset( $_GET[ Lengow_Import::PARAM_CREATED_FROM ] ) ) {
 					$params[ Lengow_Import::PARAM_CREATED_FROM ] = (string) sanitize_text_field( $_GET[ Lengow_Import::PARAM_CREATED_FROM ] );

@@ -545,7 +545,8 @@ class Lengow_Connector {
 		if ( $type === self::GET ) {
 			$result = wp_remote_get( $opts['url'], $opts );
 		} else {
-			$result = wp_remote_post( $opts['url'], $opts );
+			$opts['method'] = $type;
+			$result = wp_remote_request( $opts['url'], $opts );
 		}
 
 		$http_code = wp_remote_retrieve_response_code( $result );
