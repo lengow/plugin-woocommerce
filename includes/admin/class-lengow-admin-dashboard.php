@@ -36,7 +36,8 @@ class Lengow_Admin_Dashboard {
 	public static function display() {
 		$locale          = new Lengow_Translation();
 		$merchant_status = Lengow_Sync::get_status_account();
-		if ( 'free_trial' === $merchant_status['type'] && $merchant_status['expired'] ) {
+		// @TODO if $merchant_status is false ?
+		if ( false !== $merchant_status && 'free_trial' === $merchant_status['type'] && $merchant_status['expired'] ) {
 			$refresh_status = admin_url( 'admin.php?action=dashboard_get_process&do_action=refresh_status' );
 			include_once 'views/dashboard/html-admin-status.php';
 		} else {

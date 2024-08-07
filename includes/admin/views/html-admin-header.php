@@ -53,7 +53,7 @@ if ( isset( $_GET['tab'] ) ) {
 			<?php echo esc_html( $locale->t( 'menu.jump_to_lengow' ) ); ?>
 		</a>
 	</li>
-	<?php if ( 'free_trial' === $merchant_status['type'] && ! $merchant_status['expired'] ) : ?>
+	<?php if ( false !== $merchant_status && 'free_trial' === $merchant_status['type'] && ! $merchant_status['expired'] ) : ?>
 		<li class="lengow_float_right" id="menucountertrial">
 			<div class="lgw-block">
 				<?php echo esc_html( $locale->t( 'menu.counter', array( 'counter' => $merchant_status['day'] ) ) ); ?>

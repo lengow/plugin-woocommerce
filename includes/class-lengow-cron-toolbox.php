@@ -43,7 +43,6 @@ require_once 'class-lengow-action.php';
 require_once 'class-lengow-address.php';
 require_once 'class-lengow-catalog.php';
 require_once 'class-lengow-configuration.php';
-require_once 'class-lengow-connector.php';
 require_once 'class-lengow-crud.php';
 require_once 'class-lengow-exception.php';
 require_once 'class-lengow-export.php';
@@ -131,7 +130,7 @@ class LengowCronToolbox {
 				}
 				if ( isset( $result[ Lengow_Toolbox::ERRORS ][ Lengow_Toolbox::ERROR_CODE ] ) ) {
 					$error = true;
-					if ( $result[ Lengow_Toolbox::ERRORS ][ Lengow_Toolbox::ERROR_CODE ] === Lengow_Connector::CODE_404 ) {
+					if ( $result[ Lengow_Toolbox::ERRORS ][ Lengow_Toolbox::ERROR_CODE ] === 404 ) {
 						header( 'HTTP/1.1 404 Not Found' );
 					} else {
 						header( 'HTTP/1.1 403 Forbidden' );

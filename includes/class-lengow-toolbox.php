@@ -261,7 +261,7 @@ class Lengow_Toolbox {
 		$result = $import->exec();
 		// if global error return error message and request http code.
 		if ( isset( $result[ Lengow_Import::ERRORS ][0] ) ) {
-			return self::generate_error_return( Lengow_Connector::CODE_403, $result[ Lengow_Import::ERRORS ][0] );
+			return self::generate_error_return( 403, $result[ Lengow_Import::ERRORS ][0] );
 		}
 		unset( $result[ Lengow_Import::ERRORS ] );
 
@@ -288,7 +288,7 @@ class Lengow_Toolbox {
 		// if no reference is found, process is blocked.
 		if ( empty( $lengow_orders ) ) {
 			return self::generate_error_return(
-				Lengow_Connector::CODE_404,
+				404,
 				Lengow_Main::set_log_message( 'log.import.unable_find_order' )
 			);
 		}

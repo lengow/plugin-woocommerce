@@ -39,6 +39,8 @@
  */
 
 // prevent direct access.
+use Lengow\Sdk\Sdk;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -128,7 +130,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				include_once 'includes/class-lengow-address.php';
 				include_once 'includes/class-lengow-catalog.php';
 				include_once 'includes/class-lengow-configuration.php';
-				include_once 'includes/class-lengow-connector.php';
 				include_once 'includes/class-lengow-crud.php';
 				include_once 'includes/class-lengow-exception.php';
 				include_once 'includes/class-lengow-export.php';
@@ -166,6 +167,44 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			include_once 'includes/class-lengow-cron.php';
 			include_once 'includes/class-lengow-cron-toolbox.php';
 			include_once 'includes/class-lengow-cron-export.php';
+
+			$this->init_lengow_factory();
+		}
+
+		public function init_lengow_factory()
+		{
+			include_once 'includes/class-lengow-factory.php';
+			include_once 'includes/class-sdk-listener.php';
+			$factory = Lengow_Factory::instance();
+			$factory->bind(Lengow_Log::class, Lengow_Log::class);
+			$factory->bind(Lengow_Configuration::class, Lengow_Configuration::class);
+			$factory->bind( Sdk::class, function () {
+				$api_key    = Lengow_Configuration::get( Lengow_Configuration::ACCESS_TOKEN );
+				$api_secret = Lengow_Configuration::get( Lengow_Configuration::SECRET );
+				$auth_token = Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN );
+				$expire_at  = Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN_EXPIRE_AT );
+				$account_id = Lengow_Configuration::get( Lengow_Configuration::ACCOUNT_ID );
+				$factory    = new \Lengow\Sdk\ClientFactory();
+				if ( $api_key && $api_secret ) {
+					$factory->withCredentials( $api_key, $api_secret );
+					if ( $auth_token && $expire_at && $account_id ) {
+						$factory->withAuthorization( $auth_token, $expire_at, $account_id );
+					}
+				}
+
+				if ( 'preprod' === Lengow_Configuration::get_plugin_environment() ) {
+					$factory->withApiUrl( \Lengow\Sdk\ClientFactory::API_URL_PREPROD );
+				}
+
+				$client   = $factory->getClient();
+				$listener = new Lengow_Sdk_Listener();
+				$client->addBeforeSendRequestListener( $listener )
+					->addAfterSendRequestListener( $listener )
+					->getAuthenticator()
+					->addAfterRequestTokenListener( $listener );
+
+				return new Lengow\Sdk\Sdk( $client );
+			});
 		}
 
 		/**
@@ -376,6 +415,34 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				'version_checked' => $wp_version,
 			);
 		}
+
+		/**
+		 * @param bool $reload_credentials
+		 *
+		 * @return Sdk
+		 */
+		public static function sdk( bool $reload_credentials = false ): Sdk {
+			if ( $reload_credentials ) {
+				return Lengow_Factory::instance()->make( Sdk::class );
+			}
+
+			return Lengow_Factory::instance()->get( Sdk::class );
+		}
+
+		/** @return Lengow_Configuration */
+		public static function configuration(): Lengow_Configuration {
+			return Lengow_Factory::instance()->get( Lengow_Configuration::class );
+		}
+
+		/** @return Lengow_Log */
+		public static function logger(): Lengow_Log {
+			return Lengow_Factory::instance()->get( Lengow_Log::class );
+		}
+	}
+
+	// if WordPress does not use composer already
+	if ( ! class_exists( 'Lengow\Sdk\Sdk' ) ) {
+		require __DIR__ . '/vendor/autoload.php';
 	}
 
 	// start module.
