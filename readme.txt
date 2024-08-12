@@ -4,7 +4,7 @@ Tags: woocommerce, ecommerce, feed, orders, marketplace, amazon, google shopping
 Requires at least: 5.3
 Tested up to: 6.5
 Requires PHP: 5.5
-Stable tag: 2.6.2
+Stable tag: 2.6.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
