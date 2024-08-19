@@ -5,6 +5,8 @@
  * @package Lengow_Woocommerce
  */
 
+declare(strict_types=1);
+
 use Http\Discovery\ClassDiscovery;
 use Http\Discovery\Strategy\MockClientStrategy;
 
@@ -34,19 +36,39 @@ require_once "{$_tests_dir}/includes/functions.php";
  * Manually load the plugin being tested.
  */
 function _manually_load_plugin() {
-	require dirname( dirname( dirname( __FILE__ ) ) ) . '/woocommerce/woocommerce.php';
-	require dirname( dirname( __FILE__ ) ) . '/lengow.php';
+	require dirname( __FILE__, 3 ) . '/woocommerce/woocommerce.php';
+	require dirname( __FILE__, 2 ) . '/lengow.php';
+
+	$wc_data = get_plugin_data( dirname( __FILE__, 3 ) . '/woocommerce/woocommerce.php' );
+	$lgw_data = get_plugin_data( dirname( __FILE__, 2 ) . '/lengow.php' );
+	$wordpress_version = get_bloginfo('version');
+	echo 'Testing v' . $lgw_data['Version'] . ' against WooCommerce ' . $wc_data['Version']
+	     . ' and WordPress: ' . $wordpress_version . PHP_EOL;
 }
 
-function _manualy_active_plugins( $plugins ) {
-	$plugins[] = 'woocommerce/woocommerce.php';
+function _manually_active_plugins( $plugins ): array {
+	$plugins = array(
+		'woocommerce/woocommerce.php',
+		'lengow-woocommerce/lengow.php',
+	);
+
+	foreach ( $plugins as $plugin ) {
+		$plugins[] = $plugin;
+		do_action( 'activate_plugin', $plugin );
+		do_action( 'activate_' . $plugin );
+		do_action( 'activated_plugin', $plugin );
+	}
+
 	return $plugins;
 }
 
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
-tests_add_filter( 'active_plugins', '_manualy_active_plugins');
+tests_add_filter( 'active_plugins', '_manually_active_plugins' );
+
+const WP_ADMIN = true;
 
 // Start up the WP testing environment.
 require "{$_tests_dir}/includes/bootstrap.php";
 
+Lengow_Install::install();
 ClassDiscovery::prependStrategy(MockClientStrategy::class);

@@ -333,7 +333,9 @@ class Lengow_Main {
 		}
 		$all_params = array();
 		foreach ( $params as $param => $value ) {
-			$value        = str_replace( array( '|', '==' ), array( '', '' ), $value );
+			if ( null !== $value ) {
+				$value = str_replace( array( '|', '==' ), array( '', '' ), $value );
+			}
 			$all_params[] = $param . '==' . $value;
 		}
 

@@ -1,21 +1,10 @@
 <?php
-/**
- * Class TestLengowFactory
- *
- * @package Lengow_Woocommerce
- */
+declare(strict_types=1);
 
-/**
- * Sample test case.
- */
-class TestLengowFactory extends WP_UnitTestCase
+class Test_Lengow_Container extends WP_UnitTestCase
 {
-
-	/**
-	 * @throws Exception
-	 */
 	function test_make_instance() {
-		$factory = Lengow_Factory::instance();
+		$factory = Lengow_Container::instance();
 		$factory->bind('Lengow_Main', 'Lengow_Main' );
 
 		$main = $factory->get('Lengow_Main');
@@ -27,11 +16,11 @@ class TestLengowFactory extends WP_UnitTestCase
 		$main3 = $factory->make('Lengow_Main');
 		$this->assertFalse($main === $main3, 'Instances should not be the same');
 
-		$this->assertTrue(Lengow_Factory::instance() === $factory, 'Instances should be the same');
+		$this->assertTrue( Lengow_Container::instance() === $factory, 'Instances should be the same');
 	}
 
 	function test_make_instance_will_fail() {
-		$factory = Lengow_Factory::instance();
+		$factory = Lengow_Container::instance();
 		$factory->bind('Lengow_Main2', 'Lengow_Main' );
 
 		$this->expectException(Exception::class);
@@ -41,11 +30,8 @@ class TestLengowFactory extends WP_UnitTestCase
 		$factory->make('Class_Unknown');
 	}
 
-	/**
-	 * @throws Exception
-	 */
 	function test_factory() {
-		$factory = Lengow_Factory::instance();
+		$factory = Lengow_Container::instance();
 		$factory->bind('Test_Factory', function () {
 			return new Lengow_Main();
 		} );

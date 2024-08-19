@@ -58,7 +58,7 @@ class Lengow_Sdk_Listener implements AfterRequestTokenInterface, BeforeSendReque
 	 */
 	public function afterSendRequest( ResponseInterface $response ): ResponseInterface
 	{
-		$logger = Lengow::logger();
+		$logger = Lengow_Main::get_log_instance();
 		$logger->write(
 			'sdk.response',
 			$response->getStatusCode() . ' ' . $this->anonymize( (string) $response->getBody() )
@@ -74,7 +74,7 @@ class Lengow_Sdk_Listener implements AfterRequestTokenInterface, BeforeSendReque
 	 */
 	public function beforeSendRequest( RequestInterface $request ): RequestInterface
 	{
-		$logger = Lengow::logger();
+		$logger = Lengow_Main::get_log_instance();
 		$logger->write(
 			'sdk.request',
 			$request->getMethod() . ' ' . $request->getUri() . ' ' . $this->anonymize( (string) $request->getBody() )
@@ -84,7 +84,7 @@ class Lengow_Sdk_Listener implements AfterRequestTokenInterface, BeforeSendReque
 	}
 
 	/**
-	 * Anonymize sensible data such as access keys
+	 * Anonymize sensible data such as access keys.
 	 *
 	 * @param string $str
 	 *

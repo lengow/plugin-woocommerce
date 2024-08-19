@@ -68,7 +68,7 @@ require_once 'class-lengow-toolbox.php';
 require_once 'class-lengow-toolbox-element.php';
 require_once 'class-lengow-translation.php';
 
-class LengowCron {
+class Lengow_Cron {
 
 
 	public function launch() {

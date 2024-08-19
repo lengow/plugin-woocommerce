@@ -883,26 +883,19 @@ class Lengow_Order {
 				Lengow_Import::ARG_MARKETPLACE          => $this->marketplace_name,
 				Lengow_Import::ARG_MERCHANT_ORDER_ID    => $woocommerce_order_ids,
 			);
-			$tries = self::SYNCHRONIZE_TRIES; // why is this needed ?
-			do {
-				try {
-					Lengow::sdk()->order()->moi( $body );
-				} catch ( HttpException $e ) {
-					--$tries;
-					if ( $tries === 0 ) {
-						$message = Lengow_Main::decode_log_message( $e->getMessage(), Lengow_Translation::DEFAULT_ISO_CODE );
-						$error   = Lengow_Main::set_log_message(
-							'log.connector.error_api',
-							array(
-								'error_code'    => $e->getCode(),
-								'error_message' => $message,
-							)
-						);
-						Lengow_Main::log( Lengow_Log::CODE_CONNECTOR, $error );
-					}
-				}
-			} while ( $tries > 0 );
-
+			try {
+				Lengow::sdk()->order()->moi( $body );
+			} catch ( HttpException $e ) {
+				$message = Lengow_Main::decode_log_message( $e->getMessage(), Lengow_Translation::DEFAULT_ISO_CODE );
+				$error   = Lengow_Main::set_log_message(
+					'log.connector.error_api',
+					array(
+						'error_code'    => $e->getCode(),
+						'error_message' => $message,
+					)
+				);
+				Lengow_Main::log( Lengow_Log::CODE_CONNECTOR, $error );
+			}
 		}
 
 		return false;
@@ -1126,7 +1119,7 @@ class Lengow_Order {
 				)
 			);
 		} catch ( HttpException $e ) {
-			Lengow::logger()->log_exception( $e );
+			Lengow_Main::get_log_instance()->log_exception( $e );
 		}
 
 		if ( ! isset( $results->count ) || 0 === $results->count ) {

@@ -31,7 +31,8 @@
   },
   "autoload-dev": {
     "classmap": [
-      "tests/MockClientTrait.php"
+      "tests/integration/trait-mock-client.php",
+      "tests/integration/trait-fixtures.php"
     ]
   }
 }

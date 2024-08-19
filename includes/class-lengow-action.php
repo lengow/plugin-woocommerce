@@ -243,7 +243,7 @@ class Lengow_Action {
 		try {
 			$result = Lengow::sdk()->order()->action()->list( $get_params );
 		} catch ( HttpException $e ) {
-			Lengow::logger()->log_exception( $e );
+			Lengow_Main::get_log_instance()->log_exception( $e );
 			throw new Lengow_Exception( $e->getMessage(), $e->getCode(), $e );
 		}
 
@@ -295,7 +295,7 @@ class Lengow_Action {
 					'account_id' => Lengow_Configuration::get( Lengow_Configuration::ACCOUNT_ID ),
 				) );
 			} catch ( HttpException $e ) {
-				Lengow::logger()->log_exception( $e );
+				Lengow_Main::get_log_instance()->log_exception( $e );
 				throw new Lengow_Exception(
 					Lengow_Main::set_log_message( 'lengow_log.exception.action_not_created_api' ),
 					0,
@@ -401,7 +401,7 @@ class Lengow_Action {
 					)
 				);
 			} catch ( HttpException $e ) {
-				Lengow::logger()->log_exception( $e );
+				Lengow_Main::get_log_instance()->log_exception( $e );
 				break;
 			}
 

@@ -8,9 +8,10 @@ use Lengow\Sdk\ClientFactory;
 use Lengow\Sdk\Resource\Api;
 use Lengow\Sdk\Sdk;
 
-trait MockClientTrait
+trait Trait_Mock_Client
 {
-	public string $mock_dir = __DIR__ . '/../vendor/lengow/api-php-sdk/tests/Resource/mock/';
+	public string $sdk_mock_dir = __DIR__ . '/../../vendor/lengow/api-php-sdk/tests/Resource/mock/';
+	public string $mock_dir = __DIR__ . '/../mock/';
 
 	protected Client $mock_client;
 
@@ -25,7 +26,7 @@ trait MockClientTrait
 			Lengow_Configuration::update_value( Lengow_Configuration::AUTHORIZATION_TOKEN_EXPIRE_AT, null );
 		}
 
-		$factory = Lengow_Factory::instance();
+		$factory = Lengow_Container::instance();
 		$factory->bind( Sdk::class, function () {
 			$api_key    = Lengow_Configuration::get( Lengow_Configuration::ACCESS_TOKEN );
 			$api_secret = Lengow_Configuration::get( Lengow_Configuration::SECRET );
@@ -59,7 +60,7 @@ trait MockClientTrait
 		$this->mock_client->on(
 			new RequestMatcher( Api\Access::API ),
 			new Response( 200, [], file_get_contents(
-				$this->mock_dir . 'access-gettoken.json'
+				$this->sdk_mock_dir . 'access-gettoken.json'
 			) )
 		);
 	}

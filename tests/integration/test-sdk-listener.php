@@ -1,18 +1,13 @@
 <?php
+declare(strict_types=1);
 
 use GuzzleHttp\Psr7\Response;
 use Http\Message\RequestMatcher\RequestMatcher;
 use Lengow\Sdk\Resource\Api;
 
-/**
- * Class TestSdkListener
- *
- * @package Lengow_Woocommerce
- */
-
-class TestSdkListener extends WP_UnitTestCase
+class Test_Sdk_Listener extends WP_UnitTestCase
 {
-	use MockClientTrait;
+	use Trait_Mock_Client;
 
 	/**
 	 * @throws Exception
@@ -24,21 +19,22 @@ class TestSdkListener extends WP_UnitTestCase
 		$this->mock_client->on(
 			new RequestMatcher( Api\Cms::API ),
 			new Response( 200, [], file_get_contents(
-				$this->mock_dir . 'cms-list.json'
+				$this->sdk_mock_dir . 'cms-list.json'
 			) )
 		);
 
 		$this->mock_client->on(
 			new RequestMatcher( Api\Restriction::API ),
 			new Response( 200, [], file_get_contents(
-				$this->mock_dir . 'restriction-restrictions.json'
+				$this->sdk_mock_dir . 'restriction-restrictions.json'
 			) )
 		);
 
 		$token_before = Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN );
+		$sdk = Lengow_Container::instance()->get( Lengow\Sdk\Sdk::class );
 
-		Lengow::sdk()->restriction()->restrictions();
-		Lengow::sdk()->cms()->list();
+		$sdk->restriction()->restrictions();
+		$sdk->cms()->list();
 
 		$token_after = Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN );
 		$token_expire_at = Lengow_Configuration::get( Lengow_Configuration::AUTHORIZATION_TOKEN_EXPIRE_AT );
@@ -53,9 +49,9 @@ class TestSdkListener extends WP_UnitTestCase
 		$this->mock_client->on(
 			new RequestMatcher( Api\Restriction::API ),
 			new Response( 200, [], file_get_contents(
-				$this->mock_dir . 'restriction-restrictions.json'
+				$this->sdk_mock_dir . 'restriction-restrictions.json'
 			) )
 		);
-		Lengow::sdk()->restriction()->restrictions();
+		$sdk->restriction()->restrictions();
 	}
 }

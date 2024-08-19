@@ -381,7 +381,7 @@ class Lengow_Toolbox {
 			self::PLUGIN_PHP_VERSION          => PHP_VERSION,
 			self::PLUGIN_DEBUG_MODE_DISABLE   => ! Lengow_Configuration::debug_mode_is_active(),
 			self::PLUGIN_WRITE_PERMISSION     => self::test_write_permission(),
-			self::PLUGIN_SERVER_IP            => $_SERVER['SERVER_ADDR'],
+			self::PLUGIN_SERVER_IP            => $_SERVER['SERVER_ADDR'] ?? null,
 			self::PLUGIN_AUTHORIZED_IP_ENABLE => (bool) Lengow_Configuration::get(
 				Lengow_Configuration::AUTHORIZED_IP_ENABLED
 			),

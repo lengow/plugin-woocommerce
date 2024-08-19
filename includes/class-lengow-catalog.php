@@ -42,7 +42,7 @@ class Lengow_Catalog {
 		try {
 			$lengow_catalogs = Lengow::sdk()->cms()->catalog()->list();
 		} catch ( HttpException $e ) {
-			Lengow::logger()->log_exception( $e );
+			Lengow_Main::get_log_instance()->log_exception( $e );
 			return false;
 		}
 
@@ -71,7 +71,7 @@ class Lengow_Catalog {
 		try {
 			$lengow_catalogs = Lengow::sdk()->cms()->catalog()->list();
 		} catch ( HttpException $e ) {
-			Lengow::logger()->log_exception( $e );
+			Lengow_Main::get_log_instance()->log_exception( $e );
 			return $catalog_list;
 		}
 
@@ -148,7 +148,7 @@ class Lengow_Catalog {
 		try {
 			$result = Lengow::sdk()->cms()->mapping()->post( $link_catalog_data );
 		} catch ( HttpException $e ) {
-			Lengow::logger()->log_exception( $e );
+			Lengow_Main::get_log_instance()->log_exception( $e );
 			return false;
 		}
 
