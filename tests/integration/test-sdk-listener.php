@@ -12,7 +12,7 @@ class Test_Sdk_Listener extends WP_UnitTestCase
 	/**
 	 * @throws Exception
 	 */
-	function test_will_save_token() {
+	public function test_will_save_token() {
 		$this->init_with_mock_client();
 		$this->mock_on_access_token();
 

@@ -168,6 +168,8 @@ class Lengow {
 					Lengow_Log::download();
 					break;
 			}
+
+			new Lengow_Admin();
 		}
 
 		add_action(

@@ -33,7 +33,7 @@ class Test_Cron extends WP_UnitTestCase
 		), true );
 
 		$json['results'][0]['marketplace_order_date'] = date( 'Y-m-d\TH:i:s\Z' );
-		$json['results'][0]['packages'][0]['cart'][0]['merchant_product_id']['id'] = $this->create_simple_product();
+		$json['results'][0]['packages'][0]['cart'][0]['merchant_product_id']['id'] = $this->create_simple_product()->get_id();
 
 		$this->order = $json['results'][0];
 		$this->mock_client->on(
@@ -45,7 +45,7 @@ class Test_Cron extends WP_UnitTestCase
 	/**
 	 * @throws Exception
 	 */
-	function test_import_order() {
+	public function test_import_order() {
 		$this->init_with_mock_client();
 		$this->mock_on_access_token();
 		$this->mock_marketplace();
@@ -62,7 +62,7 @@ class Test_Cron extends WP_UnitTestCase
 			}
 		);
 
-		if ( is_null( WC()->session ) ) {
+		if ( is_null( WC()->session ) || ! function_exists( 'wc_get_chosen_shipping_method_ids' ) ) {
 			WC()->frontend_includes();
 			WC()->init();
 			WC()->initialize_session();

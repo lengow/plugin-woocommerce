@@ -14,20 +14,11 @@ use Lengow\Sdk\Resource\Api;
 class Test_Connect_Cms extends WP_UnitTestCase
 {
 	use Trait_Mock_Client;
-	use Trait_Fixtures;
-
-	/**
-	 * Set up the test environment.
-	 */
-	protected function setUp(): void {
-		parent::setUp();
-		$this->load_products();
-	}
 
 	/**
 	 * @throws Exception
 	 */
-	function test() {
+	public function test_will_connect() {
 		$this->init_with_mock_client();
 		$this->mock_on_access_token();
 		$this->mock_client->on(
