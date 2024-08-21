@@ -15,15 +15,22 @@ trait Trait_Mock_Client
 
 	protected Client $mock_client;
 
-	public function init_with_mock_client( bool $without_token = true ): void {
+	public function init_with_mock_client( bool $without_token = true, bool $without_access_ids = false ): void {
 		$this->mock_client = new Client();
 
-		Lengow_Configuration::update_value( Lengow_Configuration::ACCESS_TOKEN, '***' );
-		Lengow_Configuration::update_value( Lengow_Configuration::SECRET, '***' );
-		Lengow_Configuration::update_value( Lengow_Configuration::ACCOUNT_ID, '123' );
+		if ( ! $without_access_ids ) {
+			Lengow_Configuration::update_value( Lengow_Configuration::ACCESS_TOKEN, '***' );
+			Lengow_Configuration::update_value( Lengow_Configuration::SECRET, '***' );
+			Lengow_Configuration::update_value( Lengow_Configuration::ACCOUNT_ID, '123' );
+		} else {
+			Lengow_Configuration::update_value( Lengow_Configuration::ACCESS_TOKEN, '' );
+			Lengow_Configuration::update_value( Lengow_Configuration::SECRET, '' );
+			Lengow_Configuration::update_value( Lengow_Configuration::ACCOUNT_ID, '' );
+		}
+
 		if ( $without_token ) {
-			Lengow_Configuration::update_value( Lengow_Configuration::AUTHORIZATION_TOKEN, null );
-			Lengow_Configuration::update_value( Lengow_Configuration::AUTHORIZATION_TOKEN_EXPIRE_AT, null );
+			Lengow_Configuration::update_value( Lengow_Configuration::AUTHORIZATION_TOKEN, '' );
+			Lengow_Configuration::update_value( Lengow_Configuration::AUTHORIZATION_TOKEN_EXPIRE_AT, '' );
 		}
 
 		$factory = Lengow_Container::instance();
@@ -62,6 +69,18 @@ trait Trait_Mock_Client
 			new Response( 200, [], file_get_contents(
 				$this->sdk_mock_dir . 'access-gettoken.json'
 			) )
+		);
+	}
+
+	public function mock_on_access_token_fail() {
+		$this->mock_client->on(
+			new RequestMatcher( Api\Access::API ),
+			new Response( 403, [], '{
+    "error": {
+        "message": "Authentication error - Access Token is not found",
+        "code": 400
+    }
+}' )
 		);
 	}
 }
