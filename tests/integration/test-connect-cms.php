@@ -1,12 +1,8 @@
 <?php
 declare(strict_types=1);
 
-use GuzzleHttp\Psr7\Response;
-use Http\Message\RequestMatcher\RequestMatcher;
-use Lengow\Sdk\Resource\Api;
-
 /**
- * Class TestConnectCms
+ * Class Test_Connect_Cms
  *
  * @package Lengow_Woocommerce
  */
@@ -18,26 +14,7 @@ class Test_Connect_Cms extends WP_UnitTestCase
 	public function test_will_connect() {
 		$this->init_with_mock_client();
 		$this->mock_on_access_token();
-		$this->mock_client->on(
-			new RequestMatcher( Api\Cms::API, null, [ 'GET' ] ),
-			new Response( 200, [], file_get_contents(
-				$this->sdk_mock_dir . 'cms-list.json'
-			) )
-		);
-
-		$this->mock_client->on(
-			new RequestMatcher( Api\Cms::API, null, [ 'PUT', 'POST' ] ),
-			new Response( 200, [], file_get_contents(
-				$this->sdk_mock_dir . 'cms.json'
-			) )
-		);
-
-		$this->mock_client->on(
-			new RequestMatcher( Api\Restriction::API ),
-			new Response( 200, [], file_get_contents(
-				$this->sdk_mock_dir . 'restriction-restrictions.json'
-			) )
-		);
+		$this->mock_basic_stuff();
 
 		$post_data = [
 			'do_action' => 'connect_cms',

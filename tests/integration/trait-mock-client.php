@@ -63,6 +63,29 @@ trait Trait_Mock_Client
 		}, true);
 	}
 
+	public function mock_basic_stuff() {
+		$this->mock_client->on(
+			new RequestMatcher( Api\Cms::API, null, [ 'GET' ] ),
+			new Response( 200, [], file_get_contents(
+				$this->sdk_mock_dir . 'cms-list.json'
+			) )
+		);
+
+		$this->mock_client->on(
+			new RequestMatcher( Api\Cms::API, null, [ 'PUT', 'POST' ] ),
+			new Response( 200, [], file_get_contents(
+				$this->sdk_mock_dir . 'cms.json'
+			) )
+		);
+
+		$this->mock_client->on(
+			new RequestMatcher( Api\Restriction::API ),
+			new Response( 200, [], file_get_contents(
+				$this->sdk_mock_dir . 'restriction-restrictions.json'
+			) )
+		);
+	}
+
 	public function mock_on_access_token() {
 		$this->mock_client->on(
 			new RequestMatcher( Api\Access::API ),

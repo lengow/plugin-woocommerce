@@ -34,4 +34,11 @@ trait Trait_Fixtures
 
 		return $products;
 	}
+
+	/**
+	 * @return array<WC_Product>
+	 */
+	public function create_default_products(): array {
+		return $this->create_products( [ 'simple' => 10 ] );
+	}
 }
