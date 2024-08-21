@@ -1,6 +1,10 @@
 <?php
 declare( strict_types=1 );
 
+use GuzzleHttp\Psr7\Response;
+use Http\Message\RequestMatcher\RequestMatcher;
+use Lengow\Sdk\Resource\Api;
+
 trait Trait_Fixtures
 {
 	protected static int $n = 0;
@@ -40,5 +44,20 @@ trait Trait_Fixtures
 	 */
 	public function create_default_products(): array {
 		return $this->create_products( [ 'simple' => 10 ] );
+	}
+
+	public function mock_order_list() {
+		$json = json_decode( file_get_contents(
+			$this->mock_dir . 'order-sample.json'
+		), true );
+
+		$json['results'][0]['marketplace_order_date'] = date( 'Y-m-d\TH:i:s\Z' );
+		$json['results'][0]['packages'][0]['cart'][0]['merchant_product_id']['id'] = $this->create_simple_product()->get_id();
+
+		$this->order = $json['results'][0];
+		$this->mock_client->on(
+			new RequestMatcher( Api\Order::API, null, [ 'GET' ] ),
+			new Response( 200, [], json_encode( $json ) )
+		);
 	}
 }

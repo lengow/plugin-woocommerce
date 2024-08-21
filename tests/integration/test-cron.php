@@ -27,21 +27,6 @@ class Test_Cron extends WP_UnitTestCase
 		);
 	}
 
-	protected function mock_order_list() {
-		$json = json_decode( file_get_contents(
-			$this->mock_dir . 'order-sample.json'
-		), true );
-
-		$json['results'][0]['marketplace_order_date'] = date( 'Y-m-d\TH:i:s\Z' );
-		$json['results'][0]['packages'][0]['cart'][0]['merchant_product_id']['id'] = $this->create_simple_product()->get_id();
-
-		$this->order = $json['results'][0];
-		$this->mock_client->on(
-			new RequestMatcher( Api\Order::API, null, [ 'GET' ] ),
-			new Response( 200, [], json_encode( $json ) )
-		);
-	}
-
 	/**
 	 * @throws Exception
 	 */
@@ -101,5 +86,26 @@ class Test_Cron extends WP_UnitTestCase
 		$this->assertEquals( $wc_order->get_id(), $updatedBody['merchant_order_id'][0] );
 
 		$this->assertEquals( 1, $updated, 'Order should be updated once on lengow' );
+
+		// testing order page
+		// simpler to test here while the order exists
+
+		$admin = new Lengow_Admin();
+		$admin->current_tab = 'lengow_admin_orders';
+		ob_start();
+		$admin->lengow_display();
+		$output = ob_get_clean();
+
+		$expected = [
+			preg_quote( '4UT0-000001' ) // Order ID in the mock order list
+		];
+
+		foreach ( $expected as $expr ) {
+			$this->assertMatchesRegularExpression(
+				'/' . $expr . '/',
+				$output,
+				'Output should contain message: ' . $expr
+			);
+		}
 	}
 }

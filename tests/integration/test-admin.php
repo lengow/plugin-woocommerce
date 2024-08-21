@@ -104,4 +104,90 @@ class Test_Admin extends WP_UnitTestCase
 			);
 		}
 	}
+
+	public function test_admin_order_settings() {
+		$this->init_with_mock_client();
+		$this->mock_on_access_token();
+		$this->mock_basic_stuff();
+
+		$admin = new Lengow_Admin();
+		$admin->current_tab = 'lengow_admin_order_settings';
+		ob_start();
+		$admin->lengow_display();
+		$output = ob_get_clean();
+
+		$expected = [
+			preg_quote( esc_html( ( new Lengow_Translation() )->t( 'order_setting.screen.default_shipping_method_title' ) ) ),
+			preg_quote( esc_html( ( new Lengow_Translation() )->t( 'order_setting.screen.order_status_title' ) ) ),
+			preg_quote( esc_html( ( new Lengow_Translation() )->t( 'order_setting.screen.import_setting_title' ) ) ),
+			preg_quote( esc_html( ( new Lengow_Translation() )->t( 'order_setting.screen.currency_conversion_title' ) ) ),
+			preg_quote( esc_html( ( new Lengow_Translation() )->t( 'order_setting.screen.import_b2b_without_tax_title' ) ) )
+		];
+
+		foreach ( $expected as $expr ) {
+			$this->assertMatchesRegularExpression(
+				'/' . $expr . '/',
+				$output,
+				'Output should contain message: ' . $expr
+			);
+		}
+	}
+
+	public function test_admin_order_settings_post_process() {
+		$post_data = [
+			'action' => 'process',
+			'lengow_import_default_shipping_method' => 'flat_rate',
+			'lengow_id_waiting_shipment' => 'wc-on-hold',
+			'lengow_id_shipped' => 'wc-completed',
+			'lengow_id_cancel' => 'wc-cancelled',
+			'lengow_id_shipped_by_mp' => 'wc-completed',
+			'lengow_import_days' => 3,
+			'lengow_import_ship_mp_enabled' => 0,
+			'lengow_anonymize_email' => 'on',
+			'lengow_type_anonymize_email' => 0,
+			'lengow_import_stock_ship_mp' => 0,
+			'lengow_currency_conversion' => 'on',
+			'lengow_import_b2b_without_tax' => 'on', // changed this one
+		];
+
+		foreach ( $post_data as $k => $v ) {
+			$_POST[ $k ] = $v;
+		}
+
+		$val = Lengow_Configuration::get( 'lengow_import_b2b_without_tax' );
+		$this->assertEquals( '', $val );
+
+		Lengow_Admin_Order_Settings::post_process();
+
+		foreach ( $post_data as $k => $v ) {
+			unset( $_POST[ $k ] );
+		}
+
+		$val = Lengow_Configuration::get( 'lengow_import_b2b_without_tax' );
+		$this->assertEquals( '1', $val );
+	}
+
+	public function test_admin_help() {
+		$this->init_with_mock_client();
+		$this->mock_on_access_token();
+		$this->mock_basic_stuff();
+
+		$admin = new Lengow_Admin();
+		$admin->current_tab = 'lengow_admin_help';
+		ob_start();
+		$admin->lengow_display();
+		$output = ob_get_clean();
+
+		$expected = [
+			preg_quote( esc_html( ( new Lengow_Translation() )->t( 'help.screen.title' ) ) ),
+		];
+
+		foreach ( $expected as $expr ) {
+			$this->assertMatchesRegularExpression(
+				'/' . $expr . '/',
+				$output,
+				'Output should contain message: ' . $expr
+			);
+		}
+	}
 }
