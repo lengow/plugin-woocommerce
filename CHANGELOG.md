@@ -1,5 +1,11 @@
 # Changelog
 
+========================================================
+Version 2.6.4
+========================================================
+
+    - Feature: Support for fractional days in order import url in days parameter
+    - BugFix: Fix a bug where the connector is unable to update internal order IDs on lengow
 
 ========================================================
 Version 2.6.3
