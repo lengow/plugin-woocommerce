@@ -43,6 +43,11 @@ class Lengow_Connector {
 	const LENGOW_API_URL = 'https://api.lengow.io';
 
 	/**
+	 * @var string url of the Lengow API.
+	 */
+	const LENGOW_API_URL_DEV = 'https://my.test.aws.lgw.io';
+
+	/**
 	 * @var string suffix for prod
 	 */
 	const LIVE_SUFFIX = '.io';

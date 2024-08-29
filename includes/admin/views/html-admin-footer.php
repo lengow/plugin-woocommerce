@@ -27,7 +27,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php echo esc_html( $locale->t( 'footer.legals' ) ); ?>
 				</a>
 				| <?php echo esc_html( $locale->t( 'footer.plugin_lengow' ) ); ?> - v.<?php echo esc_html( LENGOW_VERSION ); ?>
-				<?php if ( 'lengow.net' === Lengow_Configuration::get_lengow_url() ) : ?>
+				<?php if ( Lengow_Configuration::is_developer_mode() ) : ?>
+					<span class="lgw-label-preprod">dev mode</span>
+				<?php elseif ( 'lengow.net' === Lengow_Configuration::get_lengow_url() ) : ?>
 					<span class="lgw-label-preprod">preprod</span>
 				<?php endif; ?>
 				| copyright © <?php echo esc_html( date( 'Y' ) ); ?> <a href="http://www.lengow.com" target="_blank"

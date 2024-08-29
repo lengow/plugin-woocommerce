@@ -40,6 +40,7 @@ class Lengow_Configuration {
 	const AUTHORIZED_IP_ENABLED                = 'lengow_ip_enabled';
 	const AUTHORIZED_IPS                       = 'lengow_authorized_ip';
 	const DEBUG_MODE_ENABLED                   = 'lengow_debug_enabled';
+	const DEVELOPER_MODE                       = 'lengow_developer_mode';
 	const REPORT_MAIL_ENABLED                  = 'lengow_report_mail_enabled';
 	const REPORT_MAILS                         = 'lengow_report_mail_address';
 	const AUTHORIZATION_TOKEN                  = 'lengow_authorization_token';
@@ -112,6 +113,7 @@ class Lengow_Configuration {
 		self::AUTHORIZED_IP_ENABLED                => 'authorized_ip_enabled',
 		self::AUTHORIZED_IPS                       => 'authorized_ips',
 		self::DEBUG_MODE_ENABLED                   => 'debug_mode_enabled',
+		self::DEVELOPER_MODE                       => 'developer_mode',
 		self::REPORT_MAIL_ENABLED                  => 'report_mail_enabled',
 		self::REPORT_MAILS                         => 'report_mails',
 		self::AUTHORIZATION_TOKEN                  => 'authorization_token',
@@ -215,6 +217,13 @@ class Lengow_Configuration {
 					self::PARAM_GLOBAL         => true,
 					self::PARAM_EXPORT_TOOLBOX => false,
 					self::PARAM_LABEL          => $locale->t( 'lengow_settings.lengow_debug_enabled_title' ),
+					self::PARAM_DEFAULT_VALUE  => 0,
+					self::PARAM_RETURN         => self::RETURN_TYPE_BOOLEAN,
+				),
+				self::DEVELOPER_MODE                       => array(
+					self::PARAM_GLOBAL         => true,
+					self::PARAM_EXPORT_TOOLBOX => false,
+					self::PARAM_LABEL          => '',
 					self::PARAM_DEFAULT_VALUE  => 0,
 					self::PARAM_RETURN         => self::RETURN_TYPE_BOOLEAN,
 				),
@@ -840,7 +849,11 @@ class Lengow_Configuration {
 	 *
 	 * @return string
 	 */
-	public static function get_lengow_api_url() {
+	public static function get_lengow_api_url(): string {
+		if ( self::is_developer_mode() ) {
+			return Lengow_Connector::LENGOW_API_URL_DEV;
+		}
+
 		$url = Lengow_Connector::LENGOW_API_URL;
 		if ( self::is_production_mode() ) {
 			$url = str_replace(
@@ -880,6 +893,13 @@ class Lengow_Configuration {
 	 */
 	public static function is_production_mode() {
 		return ( self::get_plugin_environment() === 'prod' );
+	}
+
+	/**
+	 * @return bool
+	 */
+	public static function is_developer_mode(): bool {
+		return 1 === (int) self::get( self::DEVELOPER_MODE );
 	}
 
 	/**

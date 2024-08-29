@@ -165,7 +165,7 @@ $list_file = Lengow_Log::get_paths();
 						<label class="control-label">
 							<?php echo esc_html( $keys[ Lengow_Configuration::PLUGIN_ENV ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
 						</label>
-						<select class="form-control " name="lengow_plugin_env" style="font-size: 13px; text-transform: uppercase;">
+						<select class="form-control " name="lengow_plugin_env" style="font-size: 13px; text-transform: uppercase;"<?php Lengow_Configuration::is_developer_mode() && print ' disabled="disabled"'; ?>>
 							<?php foreach ( Lengow_Configuration::ENVIRONMENTS as $env ) : ?>
 							<option value="<?php echo esc_attr( $env ); ?>"
 								<?php
@@ -177,7 +177,11 @@ $list_file = Lengow_Log::get_paths();
 							<?php endforeach; ?>
 						</select>
 						<span class="legend blue-frame" style="display:block;">
-							<?php echo esc_html( $keys[ Lengow_Configuration::PLUGIN_ENV ][ Lengow_Configuration::PARAM_LEGEND ] ); ?>
+							<?php if ( Lengow_Configuration::is_developer_mode() ) : ?>
+								<?php echo 'This field is disable because the plugin is in developer mode'; ?>
+							<?php else : ?>
+								<?php echo esc_html( $keys[ Lengow_Configuration::PLUGIN_ENV ][ Lengow_Configuration::PARAM_LEGEND ] ); ?>
+							<?php endif; ?>
 						</span>
 					</div>
 					<div class="form-group">
