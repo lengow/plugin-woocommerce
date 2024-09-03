@@ -289,7 +289,7 @@ class Lengow_Import {
 		} else {
 			// set the time interval.
 			$this->set_interval_time(
-				isset( $params[ self::PARAM_DAYS ] ) ? (int) $params[ self::PARAM_DAYS ] : null,
+				isset( $params[ self::PARAM_DAYS ] ) ? (float) $params[ self::PARAM_DAYS ] : null,
 				isset( $params[ self::PARAM_CREATED_FROM ] ) ? $params[ self::PARAM_CREATED_FROM ] : null,
 				isset( $params[ self::PARAM_CREATED_TO ] ) ? $params[ self::PARAM_CREATED_TO ] : null
 			);
@@ -419,7 +419,12 @@ class Lengow_Import {
 		if ( $created_from && $created_to ) {
 			// retrieval of orders created from ... until ...
 			$created_from_timestamp = strtotime( get_gmt_from_date( $created_from ) );
-			$created_to_timestamp   = strtotime( get_gmt_from_date( $created_to ) ) + 86399;
+			if ($created_from === $created_to) {
+				$created_to_timestamp = strtotime( get_gmt_from_date( $created_to ) ) + self::MIN_INTERVAL_TIME -1;
+			} else {
+				$created_to_timestamp = strtotime( get_gmt_from_date( $created_to ) );
+			}
+
 			$interval_time          = $created_to_timestamp - $created_from_timestamp;
 			$this->created_from     = $created_from_timestamp;
 			$this->created_to       = $interval_time > self::MAX_INTERVAL_TIME
@@ -429,12 +434,12 @@ class Lengow_Import {
 			return;
 		}
 		if ( $days ) {
-			$interval_time = $days * 86400;
+			$interval_time = floor($days * self::MIN_INTERVAL_TIME);
 			$interval_time = $interval_time > self::MAX_INTERVAL_TIME ? self::MAX_INTERVAL_TIME : $interval_time;
 		} else {
 			// order recovery updated since ... days.
-			$import_days   = (int) Lengow_Configuration::get( Lengow_Configuration::SYNCHRONIZATION_DAY_INTERVAL );
-			$interval_time = $import_days * 86400;
+			$import_days   = (float) Lengow_Configuration::get( Lengow_Configuration::SYNCHRONIZATION_DAY_INTERVAL );
+			$interval_time = floor($import_days * self::MIN_INTERVAL_TIME);
 			// add security for older versions of the plugin.
 			$interval_time = $interval_time < self::MIN_INTERVAL_TIME ? self::MIN_INTERVAL_TIME : $interval_time;
 			$interval_time = $interval_time > self::MAX_INTERVAL_TIME ? self::MAX_INTERVAL_TIME : $interval_time;
