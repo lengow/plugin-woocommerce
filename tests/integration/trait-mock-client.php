@@ -63,27 +63,50 @@ trait Trait_Mock_Client
 		}, true);
 	}
 
-	public function mock_basic_stuff() {
-		$this->mock_client->on(
-			new RequestMatcher( Api\Cms::API, null, [ 'GET' ] ),
-			new Response( 200, [], file_get_contents(
-				$this->sdk_mock_dir . 'cms-list.json'
-			) )
-		);
+	public function mock_basic_stuff( array $exclude = [], array $include = [] ) {
 
-		$this->mock_client->on(
-			new RequestMatcher( Api\Cms::API, null, [ 'PUT', 'POST' ] ),
-			new Response( 200, [], file_get_contents(
-				$this->sdk_mock_dir . 'cms.json'
-			) )
-		);
+		if (
+			! in_array( Api\Cms::API, $exclude )
+			&& ( empty( $include ) || in_array( Api\Cms::API, $include ) )
+		) {
+			$this->mock_client->on(
+				new RequestMatcher( Api\Cms::API, null, [ 'GET' ] ),
+				new Response( 200, [], file_get_contents(
+					$this->sdk_mock_dir . 'cms-list.json'
+				) )
+			);
 
-		$this->mock_client->on(
-			new RequestMatcher( Api\Restriction::API ),
-			new Response( 200, [], file_get_contents(
-				$this->sdk_mock_dir . 'restriction-restrictions.json'
-			) )
-		);
+			$this->mock_client->on(
+				new RequestMatcher( Api\Cms::API, null, [ 'PUT', 'POST' ] ),
+				new Response( 200, [], file_get_contents(
+					$this->sdk_mock_dir . 'cms.json'
+				) )
+			);
+		}
+
+		if (
+			! in_array( Api\Restriction::API, $exclude )
+			&& ( empty( $include ) || in_array( Api\Restriction::API, $include ) )
+		) {
+			$this->mock_client->on(
+				new RequestMatcher( Api\Restriction::API ),
+				new Response( 200, [], file_get_contents(
+					$this->sdk_mock_dir . 'restriction-restrictions.json'
+				) )
+			);
+		}
+
+		if (
+			! in_array( Api\Plugin::API, $exclude )
+			&& ( empty( $include ) || in_array( Api\Plugin::API, $include ) )
+		) {
+			$this->mock_client->on(
+				new RequestMatcher( Api\Plugin::API, null, [ 'GET' ] ),
+				new Response( 200, [], file_get_contents(
+					$this->sdk_mock_dir . 'plugin-list.json'
+				) )
+			);
+		}
 	}
 
 	public function mock_on_access_token() {

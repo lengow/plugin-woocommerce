@@ -67,6 +67,18 @@ tests_add_filter( 'active_plugins', '_manually_active_plugins' );
 
 const WP_ADMIN = true;
 
+if ( file_exists( $file = dirname( __FILE__, 2 ) . '/config/marketplaces.json' ) ) {
+	if ( ! unlink( $file ) ) {
+		echo 'Fail to remove file marketplaces.json' . PHP_EOL;
+	}
+}
+
+if ( file_exists( $file = dirname( __FILE__, 2 ) . '/export/flux.csv' ) ) {
+	if ( ! unlink( $file ) ) {
+		echo 'Fail to remove file flux.csv' . PHP_EOL;
+	}
+}
+
 // Start up the WP testing environment.
 require "{$_tests_dir}/includes/bootstrap.php";
 

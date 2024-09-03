@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use Lengow\Sdk\Resource\Api;
+
 /**
  * Class Test_Connect_Cms
  *
@@ -50,6 +52,7 @@ class Test_Connect_Cms extends WP_UnitTestCase
 	public function test_will_fail() {
 		$this->init_with_mock_client( true, true );
 		$this->mock_on_access_token_fail();
+		$this->mock_basic_stuff( [], [ Api\Plugin::API ] );
 
 		$post_data = [
 			'do_action' => 'connect_cms',

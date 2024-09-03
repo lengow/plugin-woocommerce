@@ -46,6 +46,7 @@ class Test_Admin extends WP_UnitTestCase
 	public function test_admin_dashboard_end_free_trial() {
 		$this->init_with_mock_client();
 		$this->mock_on_access_token();
+		$this->mock_basic_stuff( [ Api\Restriction::API ] );
 
 		$json = json_decode( file_get_contents(
 			$this->sdk_mock_dir . 'restriction-restrictions.json'

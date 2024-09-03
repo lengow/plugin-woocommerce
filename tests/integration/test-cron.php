@@ -33,6 +33,7 @@ class Test_Cron extends WP_UnitTestCase
 	public function test_import_order() {
 		$this->init_with_mock_client();
 		$this->mock_on_access_token();
+		$this->mock_basic_stuff();
 		$this->mock_marketplace();
 		$this->mock_order_list();
 
