@@ -27,6 +27,21 @@ class Test_Cron extends WP_UnitTestCase
 		);
 	}
 
+	public function mock_order_list( array $rewrite = [] ) {
+		$json = json_decode( file_get_contents(
+			$this->mock_dir . 'order-sample.json'
+		), true );
+
+		$json['results'][0]['marketplace_order_date'] = date( 'Y-m-d\TH:i:s\Z' );
+		$json['results'][0]['packages'][0]['cart'][0]['merchant_product_id']['id'] = $this->create_simple_product()->get_id();
+		$json['results'][0] = array_replace_recursive( $json['results'][0], $rewrite );
+		$this->order = $json['results'][0];
+		$this->mock_client->on(
+			new RequestMatcher( Api\Order::API, null, [ 'GET' ] ),
+			new Response( 200, [], json_encode( $json ) )
+		);
+	}
+
 	/**
 	 * @throws Exception
 	 */
@@ -108,5 +123,48 @@ class Test_Cron extends WP_UnitTestCase
 				'Output should contain message: ' . $expr
 			);
 		}
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public function test_import_order_invalid_product_id() {
+		$this->init_with_mock_client();
+		$this->mock_on_access_token();
+		$this->mock_basic_stuff();
+		$this->mock_marketplace();
+
+		$rewrite = [];
+		$rewrite['packages'][0]['cart'][0]['merchant_product_id']['id'] = 12345; // non existent product_id
+		$this->mock_order_list( $rewrite );
+
+		$updated = 0;
+		$updatedBody = null;
+		$this->mock_client->on(
+			new RequestMatcher( Api\Order::API_MOI, null, [ 'PATCH' ] ),
+			function ( $request ) use ( &$updated, &$updatedBody ) {
+				$updatedBody = json_decode( (string) $request->getBody(), true );
+				$updated++;
+				return new Response( 200, [], '{}' );
+			}
+		);
+
+		if ( is_null( WC()->session ) || ! function_exists( 'wc_get_chosen_shipping_method_ids' ) ) {
+			WC()->frontend_includes();
+			WC()->init();
+			WC()->initialize_session();
+		}
+		$import = new Lengow_Import( [
+			Lengow_Import::PARAM_TYPE => Lengow_Import::TYPE_CRON,
+			Lengow_Import::PARAM_LOG_OUTPUT => true,
+		] );
+		$results = $import->exec();
+
+		$this->assertCount( 0, $results['orders_created'] );
+		$this->assertCount( 1, $results['orders_failed'] );
+
+		$lwg_order = new Lengow_Order( $results['orders_failed'][0]['lengow_order_id'] );
+		$this->assertNull($lwg_order->order_id);
+		$this->assertEquals('product ID 12345 could not be found', $results['orders_failed'][0]['errors'][0]);
 	}
 }

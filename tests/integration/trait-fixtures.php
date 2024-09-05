@@ -13,11 +13,33 @@ trait Trait_Fixtures
 		$product = new WC_Product_Simple();
 		$product->set_name( 'Test product ' . ++self::$n );
 		$product->set_slug( 'test-product-' . self::$n );
-		$product->set_regular_price( rand(10, 100) );
+		$product->set_regular_price( rand( 10, 100 ) );
 		$product->set_short_description( '<p>Custom description</p>' );
 		$product->save();
 
 		return $product;
+	}
+
+	public function create_variation_product(): array {
+		$product = new WC_Product_Variable();
+		$product->set_name( 'Test product ' . ++self::$n );
+		$product->set_slug( 'test-product-' . self::$n );
+		$product->set_regular_price( rand(10, 100) );
+		$product->set_short_description( '<p>Custom description</p>' );
+		$product->save();
+
+		$variations = [ $product ];
+		$count = 3; // rand(1, 20);
+		for ( $i = 0; $i < $count; $i++ ) {
+			$variation = new WC_Product_Variation();
+			$variation->set_parent_id( $product->get_id() );
+			$variation->set_regular_price( rand( 10, 100 ) );
+			$variation->set_attributes( [ 'size' => 'M' ] );
+			$variation->save();
+			$variations[] = $variation;
+		}
+
+		return $variations;
 	}
 
 	/**
@@ -32,6 +54,11 @@ trait Trait_Fixtures
 				if ( 'simple' === $type ) {
 					$product = $this->create_simple_product();
 					$products[ $product->get_id() ] = $product;
+				} elseif ( 'variable' === $type ) {
+					$variables = $this->create_variation_product();
+					foreach ( $variables as $product ) {
+						$products[ $product->get_id() ] = $product;
+					}
 				}
 			}
 		}
@@ -43,21 +70,6 @@ trait Trait_Fixtures
 	 * @return array<WC_Product>
 	 */
 	public function create_default_products(): array {
-		return $this->create_products( [ 'simple' => 10 ] );
-	}
-
-	public function mock_order_list() {
-		$json = json_decode( file_get_contents(
-			$this->mock_dir . 'order-sample.json'
-		), true );
-
-		$json['results'][0]['marketplace_order_date'] = date( 'Y-m-d\TH:i:s\Z' );
-		$json['results'][0]['packages'][0]['cart'][0]['merchant_product_id']['id'] = $this->create_simple_product()->get_id();
-
-		$this->order = $json['results'][0];
-		$this->mock_client->on(
-			new RequestMatcher( Api\Order::API, null, [ 'GET' ] ),
-			new Response( 200, [], json_encode( $json ) )
-		);
+		return $this->create_products( [ 'simple' => 2, 'variable' => 2 ] );
 	}
 }
