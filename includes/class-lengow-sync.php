@@ -22,6 +22,8 @@
  * @license     https://www.gnu.org/licenses/gpl-3.0 GNU General Public License
  */
 
+use Lengow\Sdk\Client\Exception\HttpException;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -139,31 +141,28 @@ class Lengow_Sync {
 	 * Sync Lengow catalogs for order synchronisation.
 	 *
 	 * @param boolean $force Force cache Update
-	 * @param boolean $log_output see log or not
 	 *
 	 * @return boolean
 	 */
-	public static function sync_catalog( $force = false, $log_output = false ) {
+	public static function sync_catalog( bool $force = false): bool {
 		$success         = false;
 		$setting_updated = false;
 		if ( Lengow_Configuration::is_new_merchant() ) {
-			return $success;
+			return false;
 		}
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_CATALOG );
 			if ( null !== $updated_at
 				&& ( time() - (int) $updated_at ) < self::$cache_times[ self::SYNC_CATALOG ]
 			) {
-				return $success;
+				return false;
 			}
 		}
-		$result = Lengow_Connector::query_api(
-			Lengow_Connector::GET,
-			Lengow_Connector::API_CMS,
-			array(),
-			'',
-			$log_output
-		);
+		try {
+			$result = Lengow::sdk()->cms()->list();
+		} catch ( HttpException $e ) {
+			Lengow_Main::get_log_instance()->log_exception( $e );
+		}
 		if ( isset( $result->cms ) ) {
 			$cms_token = Lengow_Main::get_token();
 			foreach ( $result->cms as $cms ) {
@@ -222,11 +221,10 @@ class Lengow_Sync {
 	 * Set CMS options.
 	 *
 	 * @param boolean $force Force cache Update
-	 * @param boolean $log_output see log or not
 	 *
 	 * @return boolean
 	 */
-	public static function set_cms_option( $force = false, $log_output = false ) {
+	public static function set_cms_option( $force = false ) {
 		if ( Lengow_Configuration::is_new_merchant() || Lengow_Configuration::debug_mode_is_active() ) {
 			return false;
 		}
@@ -238,16 +236,15 @@ class Lengow_Sync {
 				return false;
 			}
 		}
-		$options = wp_json_encode( self::get_option_data() );
-		Lengow_Connector::query_api(
-			Lengow_Connector::PUT,
-			Lengow_Connector::API_CMS,
-			array(),
-			$options,
-			$log_output
-		);
-		Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_OPTION_CMS, time() );
+		$options = self::get_option_data();
+		try {
+			Lengow::sdk()->cms()->put( $options );
+		} catch ( HttpException $e ) {
+			Lengow_Main::get_log_instance()->log_exception( $e );
+			return false;
+		}
 
+		Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_OPTION_CMS, time() );
 		return true;
 	}
 
@@ -255,11 +252,10 @@ class Lengow_Sync {
 	 * Get Status Account.
 	 *
 	 * @param boolean $force Force cache Update
-	 * @param boolean $log_output see log or not
 	 *
 	 * @return array|false
 	 */
-	public static function get_status_account( $force = false, $log_output = false ) {
+	public static function get_status_account( bool $force = false ) {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_ACCOUNT_STATUS_DATA );
 			if ( null !== $updated_at
@@ -268,19 +264,19 @@ class Lengow_Sync {
 				return json_decode( Lengow_Configuration::get( Lengow_Configuration::ACCOUNT_STATUS_DATA ), true );
 			}
 		}
-		$result = Lengow_Connector::query_api(
-			Lengow_Connector::GET,
-			Lengow_Connector::API_RESTRICTIONS,
-			array(),
-			'',
-			$log_output
-		);
-		if ( isset( $result->isFreeTrial ) ) {
+		try {
+			$restrictions = Lengow::sdk()->restriction()->restrictions();
+		} catch ( HttpException $e ) {
+			Lengow_Main::get_log_instance()->log_exception($e);
+			return false;
+		}
+
+		if ( isset( $restrictions->isFreeTrial ) ) {
 			$status = array(
-				'type'    => $result->isFreeTrial ? 'free_trial' : '',
-				'day'     => (int) $result->leftDaysBeforeExpired < 0 ? 0 : (int) $result->leftDaysBeforeExpired,
-				'expired' => (bool) $result->isExpired,
-				'legacy'  => 'v2' === $result->accountVersion,
+				'type'    => $restrictions->isFreeTrial ? 'free_trial' : '',
+				'day'     => $restrictions->leftDaysBeforeExpired < 0 ? 0 : $restrictions->leftDaysBeforeExpired,
+				'expired' => $restrictions->isExpired,
+				'legacy'  => 'v2' === $restrictions->accountVersion,
 			);
 			Lengow_Configuration::update_value( Lengow_Configuration::ACCOUNT_STATUS_DATA, wp_json_encode( $status ) );
 			Lengow_Configuration::update_value( Lengow_Configuration::LAST_UPDATE_ACCOUNT_STATUS_DATA, time() );
@@ -298,11 +294,10 @@ class Lengow_Sync {
 	 * Get marketplace data.
 	 *
 	 * @param boolean $force force cache update
-	 * @param boolean $log_output see log or not
 	 *
 	 * @return array|false
 	 */
-	public static function get_marketplaces( $force = false, $log_output = false ) {
+	public static function get_marketplaces( $force = false ) {
 		$file_path = Lengow_Marketplace::get_file_path();
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_MARKETPLACE );
@@ -319,14 +314,14 @@ class Lengow_Sync {
 			}
 		}
 		// recovering data with the API.
-		$result = Lengow_Connector::query_api(
-			Lengow_Connector::GET,
-			Lengow_Connector::API_MARKETPLACE,
-			array(),
-			'',
-			$log_output
-		);
-		if ( $result && is_object( $result ) && ! isset( $result->error ) ) {
+
+		try {
+			$result = (object) Lengow::sdk()->marketplace()->list();
+		} catch ( HttpException $e ) {
+			Lengow_Main::get_log_instance()->log_exception( $e );
+		}
+
+		if ( isset( $result ) ) {
 			// updated marketplaces.json file.
 			try {
 				$marketplace_file = new Lengow_File(
@@ -349,7 +344,6 @@ class Lengow_Sync {
 							),
 						)
 					),
-					$log_output
 				);
 			}
 
@@ -371,11 +365,10 @@ class Lengow_Sync {
 	 * Get Lengow plugin data (last version and download link)
 	 *
 	 * @param boolean $force force cache update
-	 * @param boolean $log_output see log or not
 	 *
 	 * @return array|false
 	 */
-	public static function get_plugin_data( $force = false, $log_output = false ) {
+	public static function get_plugin_data( $force = false ) {
 		if ( ! $force ) {
 			$updated_at = Lengow_Configuration::get( Lengow_Configuration::LAST_UPDATE_PLUGIN_DATA );
 			if ( $updated_at !== null
@@ -384,13 +377,14 @@ class Lengow_Sync {
 				return json_decode( Lengow_Configuration::get( Lengow_Configuration::PLUGIN_DATA ), true );
 			}
 		}
-		$plugins = Lengow_Connector::query_api(
-			Lengow_Connector::GET,
-			Lengow_Connector::API_PLUGIN,
-			array(),
-			'',
-			$log_output
-		);
+
+		try {
+			$plugins = Lengow::sdk()->plugin()->list();
+		} catch ( HttpException $e ) {
+			Lengow_Main::get_log_instance()->log_exception($e);
+			return false;
+		}
+
 		if ( $plugins ) {
 			$plugin_data = false;
 			foreach ( $plugins as $plugin ) {

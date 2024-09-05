@@ -38,39 +38,7 @@
  * boolean get_sync            See synchronization parameters in json format (1) or not (0)
  */
 
-
-
-require_once __DIR__ . '/../../woocommerce/woocommerce.php';
-
-// dependencies.
-require_once 'class-lengow-action.php';
-require_once 'class-lengow-address.php';
-require_once 'class-lengow-catalog.php';
-require_once 'class-lengow-configuration.php';
-require_once 'class-lengow-connector.php';
-require_once 'class-lengow-crud.php';
-require_once 'class-lengow-exception.php';
-require_once 'class-lengow-export.php';
-require_once 'class-lengow-feed.php';
-require_once 'class-lengow-file.php';
-require_once 'class-lengow-hook.php';
-require_once 'class-lengow-import.php';
-require_once 'class-lengow-import-order.php';
-require_once 'class-lengow-install.php';
-require_once 'class-lengow-log.php';
-require_once 'class-lengow-main.php';
-require_once 'class-lengow-marketplace.php';
-require_once 'class-lengow-order.php';
-require_once 'class-lengow-order-error.php';
-require_once 'class-lengow-order-line.php';
-require_once 'class-lengow-product.php';
-require_once 'class-lengow-sync.php';
-require_once 'class-lengow-toolbox.php';
-require_once 'class-lengow-toolbox-element.php';
-require_once 'class-lengow-translation.php';
-
-class LengowCron {
-
+class Lengow_Cron {
 
 	public function launch() {
 		Lengow_Log::register_shutdown_function();
@@ -149,7 +117,7 @@ class LengowCron {
 				if ( isset( $_GET[ Lengow_Import::PARAM_OUTPUT_FORMAT ] ) ) {
 					$params[ Lengow_Import::PARAM_OUTPUT_FORMAT ] = (string) sanitize_text_field( $_GET[ Lengow_Import::PARAM_OUTPUT_FORMAT ] );
 				}
-				if ( is_null( WC()->session ) ) {
+				if ( is_null( WC()->session ) || ! function_exists( 'wc_get_chosen_shipping_method_ids' ) ) {
 					WC()->frontend_includes();
 					WC()->init();
 					WC()->initialize_session();

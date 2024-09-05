@@ -22,6 +22,8 @@
  * @license     https://www.gnu.org/licenses/gpl-3.0 GNU General Public License
  */
 
+use Lengow\Sdk\Client\Exception\HttpException;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -237,14 +239,14 @@ class Lengow_Action {
 				unset( $get_params[ $param ] );
 			}
 		}
-		$result = Lengow_Connector::query_api(
-			Lengow_Connector::GET,
-			Lengow_Connector::API_ORDER_ACTION,
-			$get_params
-		);
-		if ( isset( $result->error, $result->error->message ) ) {
-			throw new Lengow_Exception( $result->error->message );
+
+		try {
+			$result = Lengow::sdk()->order()->action()->list( $get_params );
+		} catch ( HttpException $e ) {
+			Lengow_Main::get_log_instance()->log_exception( $e );
+			throw new Lengow_Exception( $e->getMessage(), $e->getCode(), $e );
 		}
+
 		if ( isset( $result->count ) && $result->count > 0 ) {
 			foreach ( $result->results as $row ) {
 				$action = self::get( array( self::FIELD_ACTION_ID => (int) $row->id ) );
@@ -288,35 +290,30 @@ class Lengow_Action {
 	 */
 	public static function send_action( $params, $order_lengow ) {
 		if ( ! Lengow_Configuration::debug_mode_is_active() ) {
-			$result = Lengow_Connector::query_api(
-				Lengow_Connector::POST,
-				Lengow_Connector::API_ORDER_ACTION,
-				$params
-			);
-			if ( isset( $result->id ) ) {
-				self::create(
-					array(
-						self::FIELD_ORDER_ID       => $order_lengow->order_id,
-						self::FIELD_ACTION_TYPE    => $params[ self::ARG_ACTION_TYPE ],
-						self::FIELD_ACTION_ID      => $result->id,
-						self::FIELD_ORDER_LINE_SKU => isset( $params[ self::ARG_LINE ] )
-							? $params[ self::ARG_LINE ]
-							: null,
-						self::FIELD_PARAMETERS     => wp_json_encode( $params ),
-					)
+			try {
+				$result = Lengow::sdk()->order()->action()->post( $params + array(
+					'account_id' => Lengow_Configuration::get( Lengow_Configuration::ACCOUNT_ID ),
+				) );
+			} catch ( HttpException $e ) {
+				Lengow_Main::get_log_instance()->log_exception( $e );
+				throw new Lengow_Exception(
+					Lengow_Main::set_log_message( 'lengow_log.exception.action_not_created_api' ),
+					0,
+					$e
 				);
-			} else {
-				if ( $result ) {
-					$message = Lengow_Main::set_log_message(
-						'lengow_log.exception.action_not_created',
-						array( 'error_message' => wp_json_encode( $result ) )
-					);
-				} else {
-					// generating a generic error message when the Lengow API is unavailable.
-					$message = Lengow_Main::set_log_message( 'lengow_log.exception.action_not_created_api' );
-				}
-				throw new Lengow_Exception( $message );
 			}
+
+			self::create(
+				array(
+					self::FIELD_ORDER_ID       => $order_lengow->order_id,
+					self::FIELD_ACTION_TYPE    => $params[ self::ARG_ACTION_TYPE ],
+					self::FIELD_ACTION_ID      => $result->id,
+					self::FIELD_ORDER_LINE_SKU => isset( $params[ self::ARG_LINE ] )
+						? $params[ self::ARG_LINE ]
+						: null,
+					self::FIELD_PARAMETERS     => wp_json_encode( $params ),
+				)
+			);
 		}
 		// create log for call action.
 		$param_list = false;
@@ -388,26 +385,26 @@ class Lengow_Action {
 			$log_output
 		);
 		do {
-			$results = Lengow_Connector::query_api(
-				Lengow_Connector::GET,
-				Lengow_Connector::API_ORDER_ACTION,
-				array(
-					Lengow_Import::ARG_UPDATED_FROM => get_date_from_gmt(
-						date( Lengow_Main::DATE_FULL, $date_from ),
-						Lengow_Main::DATE_ISO_8601
-					),
-					Lengow_Import::ARG_UPDATED_TO   => get_date_from_gmt(
-						date( Lengow_Main::DATE_FULL, $date_to ),
-						Lengow_Main::DATE_ISO_8601
-					),
-					Lengow_Import::ARG_PAGE         => $page,
-				),
-				'',
-				$log_output
-			);
-			if ( ! is_object( $results ) || isset( $results->error ) ) {
+
+			try {
+				$results = Lengow::sdk()->order()->action()->list(
+					array(
+						Lengow_Import::ARG_UPDATED_FROM => get_date_from_gmt(
+							date( Lengow_Main::DATE_FULL, $date_from ),
+							Lengow_Main::DATE_ISO_8601
+						),
+						Lengow_Import::ARG_UPDATED_TO   => get_date_from_gmt(
+							date( Lengow_Main::DATE_FULL, $date_to ),
+							Lengow_Main::DATE_ISO_8601
+						),
+						Lengow_Import::ARG_PAGE         => $page,
+					)
+				);
+			} catch ( HttpException $e ) {
+				Lengow_Main::get_log_instance()->log_exception( $e );
 				break;
 			}
+
 			// construct array actions.
 			foreach ( $results->results as $action ) {
 				if ( isset( $action->id ) ) {

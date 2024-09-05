@@ -22,6 +22,8 @@
  * @license     https://www.gnu.org/licenses/gpl-3.0 GNU General Public License
  */
 
+use Lengow\Sdk\Client\Exception\HttpException;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -519,11 +521,9 @@ class Lengow_Import {
 	 *
 	 * @return boolean
 	 */
-	private function check_credentials() {
-		if ( Lengow_Connector::is_valid_auth( $this->log_output ) ) {
-			list( $this->account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
-			$this->connector                                        = new Lengow_Connector( $access_token, $secret_token );
-
+	private function check_credentials(): bool {
+		list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
+		if ( $account_id > 0 && ! empty( $access_token ) && ! empty( $secret_token ) ) {
 			return true;
 		}
 
@@ -706,19 +706,12 @@ class Lengow_Import {
 		do {
 			try {
 				if ( $this->import_one_order ) {
-					$results = $this->connector->get(
-						Lengow_Connector::API_ORDER,
-						array(
-							self::ARG_MARKETPLACE_ORDER_ID => $this->marketplace_sku,
-							self::ARG_MARKETPLACE          => $this->marketplace_name,
-							self::ARG_ACCOUNT_ID           => $this->account_id,
-							self::ARG_PAGE                 => $page,
-							self::ARG_NO_CURRENCY_CONVERSION => $currency_conversion,
-						),
-						Lengow_Connector::FORMAT_STREAM,
-						'',
-						$this->log_output
-					);
+					$results = Lengow::sdk()->order()->list( array(
+						self::ARG_MARKETPLACE_ORDER_ID => $this->marketplace_sku,
+						self::ARG_MARKETPLACE          => $this->marketplace_name,
+						self::ARG_PAGE                 => $page,
+						self::ARG_NO_CURRENCY_CONVERSION => $currency_conversion,
+					) );
 				} else {
 					if ( $this->created_from && $this->created_to ) {
 						$time_params = array(
@@ -743,23 +736,16 @@ class Lengow_Import {
 							),
 						);
 					}
-					$results = $this->connector->get(
-						Lengow_Connector::API_ORDER,
-						array_merge(
-							$time_params,
-							array(
-								self::ARG_CATALOG_IDS => implode( ',', $this->shop_catalog_ids ),
-								self::ARG_ACCOUNT_ID  => $this->account_id,
-								self::ARG_PAGE        => $page,
-								self::ARG_NO_CURRENCY_CONVERSION => $currency_conversion,
-							)
-						),
-						Lengow_Connector::FORMAT_STREAM,
-						'',
-						$this->log_output
-					);
+					$results = Lengow::sdk()->order()->list( array_merge(
+						$time_params,
+						array(
+							self::ARG_CATALOG_IDS => implode( ',', $this->shop_catalog_ids ),
+							self::ARG_PAGE        => $page,
+							self::ARG_NO_CURRENCY_CONVERSION => $currency_conversion,
+						)
+					) );
 				}
-			} catch ( Exception $e ) {
+			} catch ( HttpException $e ) {
 				throw new Lengow_Exception(
 					Lengow_Main::set_log_message(
 						'lengow_log.exception.error_lengow_webservice',
@@ -770,21 +756,12 @@ class Lengow_Import {
 								Lengow_Translation::DEFAULT_ISO_CODE
 							),
 						)
-					)
+					),
+					0,
+					$e
 				);
 			}
-			if ( null === $results ) {
-				throw new Lengow_Exception(
-					Lengow_Main::set_log_message( 'lengow_log.exception.no_connection_webservice' )
-				);
-			}
-			// don't decode into array as we use the result as an object.
-			$results = json_decode( $results );
-			if ( ! is_object( $results ) ) {
-				throw new Lengow_Exception(
-					Lengow_Main::set_log_message( 'lengow_log.exception.no_connection_webservice' )
-				);
-			}
+
 			// construct array orders.
 			foreach ( $results->results as $order ) {
 				$orders[] = $order;

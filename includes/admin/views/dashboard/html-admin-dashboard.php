@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php endif; ?>
 		</div>
 		<div class="text-right lgw-col-6" id="alert-counter-trial">
-			<?php if ( 'free_trial' === $merchant_status['type'] && ! $merchant_status['expired'] ) : ?>
+			<?php if ( false !== $merchant_status && 'free_trial' === $merchant_status['type'] && ! $merchant_status['expired'] ) : ?>
 				<?php echo esc_html( $locale->t( 'menu.counter', array( 'counter' => $merchant_status['day'] ) ) ); ?>
 				<a href="<?php echo esc_url( '//my.' . Lengow_Configuration::get_lengow_url() ); ?>" target="_blank">
 					<?php echo esc_html( $locale->t( 'menu.upgrade_account' ) ); ?>

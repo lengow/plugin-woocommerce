@@ -261,7 +261,7 @@ class Lengow_Toolbox {
 		$result = $import->exec();
 		// if global error return error message and request http code.
 		if ( isset( $result[ Lengow_Import::ERRORS ][0] ) ) {
-			return self::generate_error_return( Lengow_Connector::CODE_403, $result[ Lengow_Import::ERRORS ][0] );
+			return self::generate_error_return( 403, $result[ Lengow_Import::ERRORS ][0] );
 		}
 		unset( $result[ Lengow_Import::ERRORS ] );
 
@@ -288,7 +288,7 @@ class Lengow_Toolbox {
 		// if no reference is found, process is blocked.
 		if ( empty( $lengow_orders ) ) {
 			return self::generate_error_return(
-				Lengow_Connector::CODE_404,
+				404,
 				Lengow_Main::set_log_message( 'log.import.unable_find_order' )
 			);
 		}
@@ -381,7 +381,7 @@ class Lengow_Toolbox {
 			self::PLUGIN_PHP_VERSION          => PHP_VERSION,
 			self::PLUGIN_DEBUG_MODE_DISABLE   => ! Lengow_Configuration::debug_mode_is_active(),
 			self::PLUGIN_WRITE_PERMISSION     => self::test_write_permission(),
-			self::PLUGIN_SERVER_IP            => $_SERVER['SERVER_ADDR'],
+			self::PLUGIN_SERVER_IP            => $_SERVER['SERVER_ADDR'] ?? null,
 			self::PLUGIN_AUTHORIZED_IP_ENABLE => (bool) Lengow_Configuration::get(
 				Lengow_Configuration::AUTHORIZED_IP_ENABLED
 			),

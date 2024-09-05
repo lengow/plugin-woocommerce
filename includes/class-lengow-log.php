@@ -90,6 +90,15 @@ class Lengow_Log {
 		$this->file->write( $log );
 	}
 
+	public function log_exception( Throwable $e ) {
+		$exception_message = $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+		while ( $e = $e->getPrevious() ) {
+			$exception_message .= PHP_EOL . 'Caused by: ' . $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+		}
+
+		$this->write( 'exception', $exception_message );
+	}
+
 	/**
 	 * Get log files.
 	 *

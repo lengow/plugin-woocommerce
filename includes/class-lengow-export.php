@@ -354,10 +354,7 @@ class Lengow_Export {
 			);
 		}
 		if ( $this->stream ) {
-			echo $exported;
-			exit();
-		} else {
-			exit( json_encode( array() ) );
+			echo $exported ?? '';
 		}
 	}
 

@@ -1495,7 +1495,6 @@ class Lengow_Import_Order {
 						$wc_shipping_item->set_instance_id( $shipping_method->instance_id );
 						$wc_shipping_item->add_meta_data( 'Articles', implode( ', ', $articles ) );
 						$wc_shipping_item->add_meta_data( 'cost', $amount );
-						$wc_shipping_item->add_meta_data( 'total_tax', $tax_amount );
 						$wc_order->add_item( $wc_shipping_item );
 						$wc_order->save();
 

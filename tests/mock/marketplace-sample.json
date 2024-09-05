@@ -1,0 +1,191 @@
+{
+  "zalando": {
+    "logo": null,
+    "name": "Zalando",
+    "orders": {
+      "status": {
+        "new": [
+          "NEW",
+          "New",
+          "initial"
+        ],
+        "shipped": [
+          "SHIPPED",
+          "fulfilled"
+        ],
+        "canceled": [
+          "CANCELED",
+          "ZALANDO_CANCELED",
+          "canceled"
+        ],
+        "refunded": [
+          "RETURNED",
+          "refunded",
+          "returned"
+        ],
+        "waiting_shipment": [
+          "exported"
+        ],
+        "waiting_acceptance": [
+          "Approved",
+          "approved"
+        ]
+      },
+      "actions": {
+        "ship": {
+          "args": [
+            "carrier",
+            "tracking_number"
+          ],
+          "status": [
+            "waiting_shipment"
+          ],
+          "optional_args": [
+            "line",
+            "return_tracking_number"
+          ],
+          "args_description": {
+            "line": {
+              "type": "line_number",
+              "depends_on": null,
+              "valid_values": {},
+              "default_value": null,
+              "accept_free_values": true
+            },
+            "carrier": {
+              "type": "string",
+              "depends_on": null,
+              "valid_values": {
+                "4PX": {
+                  "label": "4PX"
+                }
+              },
+              "default_value": null,
+              "accept_free_values": true
+            },
+            "tracking_number": {
+              "type": "string",
+              "depends_on": null,
+              "valid_values": {},
+              "default_value": null,
+              "accept_free_values": true
+            },
+            "return_tracking_number": {
+              "type": "string",
+              "depends_on": null,
+              "valid_values": {},
+              "default_value": null,
+              "accept_free_values": true
+            }
+          }
+        },
+        "accept": {
+          "args": [],
+          "status": [
+            "waiting_acceptance"
+          ],
+          "optional_args": [],
+          "args_description": {}
+        },
+        "cancel": {
+          "args": [],
+          "status": [
+            "waiting_shipment"
+          ],
+          "optional_args": [
+            "cancel_quantity",
+            "line"
+          ],
+          "args_description": {
+            "line": {
+              "type": "line_number",
+              "depends_on": null,
+              "valid_values": {},
+              "default_value": null,
+              "accept_free_values": true
+            },
+            "cancel_quantity": {
+              "type": "quantity",
+              "depends_on": null,
+              "valid_values": {},
+              "default_value": null,
+              "accept_free_values": true
+            }
+          }
+        },
+        "refund": {
+          "args": [
+            "refund_reason"
+          ],
+          "status": [
+            "shipped"
+          ],
+          "optional_args": [
+            "line",
+            "refund_quantity"
+          ],
+          "args_description": {
+            "line": {
+              "type": "line_number",
+              "depends_on": null,
+              "valid_values": {},
+              "default_value": null,
+              "accept_free_values": true
+            },
+            "refund_reason": {
+              "type": "list",
+              "depends_on": null,
+              "valid_values": {
+                "1": {
+                  "label": "Dislike"
+                },
+                "2": {
+                  "label": "Article size to big"
+                },
+                "3": {
+                  "label": "Article size to small"
+                },
+                "4": {
+                  "label": "Value for money"
+                },
+                "5": {
+                  "label": "Delivery too late"
+                },
+                "6": {
+                  "label": "Not like imagined"
+                },
+                "9": {
+                  "label": "Article wrong"
+                },
+                "10": {
+                  "label": "Article defective"
+                }
+              },
+              "default_value": "1",
+              "accept_free_values": false
+            },
+            "refund_quantity": {
+              "type": "quantity",
+              "depends_on": null,
+              "valid_values": {},
+              "default_value": null,
+              "accept_free_values": true
+            }
+          }
+        }
+      },
+      "carriers": {
+        "4PX": {
+          "label": "4PX"
+        }
+      },
+      "shipping_methods": {}
+    },
+    "country": "AAA",
+    "package": "mp_zalando",
+    "homepage": null,
+    "description": null,
+    "legacy_code": null,
+    "country_iso_a2": "AA"
+  }
+}

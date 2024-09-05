@@ -357,7 +357,7 @@ class Lengow_Admin_Products extends WP_List_Table {
 		echo wp_kses( '<form id="post-filter" method="post">', $allowed_html );
 		// the hidden element is needed to load the right page.
 		echo wp_kses( '<input type="hidden" name="page" value="lengow_list" />', $allowed_html );
-		echo wp_kses( $this->search_box( $text, $input_id ), $allowed_html );
+		$this->search_box( $text, $input_id );
 		echo wp_kses( '</form>', $allowed_html );
 	}
 

@@ -36,37 +36,7 @@
  * integer days             Synchronization interval time
  */
 
-
-
-// dependencies.
-require_once 'class-lengow-action.php';
-require_once 'class-lengow-address.php';
-require_once 'class-lengow-catalog.php';
-require_once 'class-lengow-configuration.php';
-require_once 'class-lengow-connector.php';
-require_once 'class-lengow-crud.php';
-require_once 'class-lengow-exception.php';
-require_once 'class-lengow-export.php';
-require_once 'class-lengow-feed.php';
-require_once 'class-lengow-file.php';
-require_once 'class-lengow-hook.php';
-require_once 'class-lengow-import.php';
-require_once 'class-lengow-import-order.php';
-require_once 'class-lengow-install.php';
-require_once 'class-lengow-log.php';
-require_once 'class-lengow-main.php';
-require_once 'class-lengow-marketplace.php';
-require_once 'class-lengow-order.php';
-require_once 'class-lengow-order-error.php';
-require_once 'class-lengow-order-line.php';
-require_once 'class-lengow-product.php';
-require_once 'class-lengow-sync.php';
-require_once 'class-lengow-toolbox.php';
-require_once 'class-lengow-toolbox-element.php';
-require_once 'class-lengow-translation.php';
-
-class LengowCronToolbox {
-
+class Lengow_Cron_Toolbox {
 
 	public function launch() {
 		Lengow_Log::register_shutdown_function();
@@ -131,7 +101,7 @@ class LengowCronToolbox {
 				}
 				if ( isset( $result[ Lengow_Toolbox::ERRORS ][ Lengow_Toolbox::ERROR_CODE ] ) ) {
 					$error = true;
-					if ( $result[ Lengow_Toolbox::ERRORS ][ Lengow_Toolbox::ERROR_CODE ] === Lengow_Connector::CODE_404 ) {
+					if ( $result[ Lengow_Toolbox::ERRORS ][ Lengow_Toolbox::ERROR_CODE ] === 404 ) {
 						header( 'HTTP/1.1 404 Not Found' );
 					} else {
 						header( 'HTTP/1.1 403 Forbidden' );

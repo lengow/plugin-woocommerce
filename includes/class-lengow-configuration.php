@@ -43,6 +43,7 @@ class Lengow_Configuration {
 	const REPORT_MAIL_ENABLED                  = 'lengow_report_mail_enabled';
 	const REPORT_MAILS                         = 'lengow_report_mail_address';
 	const AUTHORIZATION_TOKEN                  = 'lengow_authorization_token';
+	const AUTHORIZATION_TOKEN_EXPIRE_AT       = 'authorization_token_expire_at';
 	const PLUGIN_DATA                          = 'lengow_plugin_data';
 	const ACCOUNT_STATUS_DATA                  = 'lengow_account_status';
 	const SHOP_TOKEN                           = 'lengow_shop_token';
@@ -150,6 +151,9 @@ class Lengow_Configuration {
 		self::LAST_UPDATE_AUTHORIZATION_TOKEN      => 'last_update_authorization_token',
 		self::LAST_UPDATE_PLUGIN_MODAL             => 'last_update_plugin_modal',
 	);
+
+	const LENGOW_URL = 'lengow.io';
+	const LENGOW_URL_PREPROD = 'lengow.net';
 
 	/**
 	 * Get all Lengow configuration keys.
@@ -520,7 +524,8 @@ class Lengow_Configuration {
 	 */
 	public static function reset_authorization_token() {
 		self::update_value( self::AUTHORIZATION_TOKEN, '' );
-		self::update_value( self::LAST_UPDATE_AUTHORIZATION_TOKEN, '' );
+		self::update_value( self::LAST_UPDATE_AUTHORIZATION_TOKEN, '' ); // TODO remove this
+		self::update_value( self::AUTHORIZATION_TOKEN_EXPIRE_AT, '' );
 	}
 
 	/**
@@ -817,46 +822,13 @@ class Lengow_Configuration {
 	 *
 	 * @return string
 	 */
-	public static function get_lengow_url() {
-		$url = Lengow_Connector::LENGOW_URL;
-		if ( self::is_production_mode() ) {
-			$url = str_replace(
-				Lengow_Connector::TEST_SUFFIX,
-				Lengow_Connector::LIVE_SUFFIX,
-				$url
-			);
-		} else {
-			$url = str_replace(
-				Lengow_Connector::LIVE_SUFFIX,
-				Lengow_Connector::TEST_SUFFIX,
-				$url
-			);
-		}
-		return $url;
-	}
-
-	/**
-	 * Returns the lengow url for API
-	 *
-	 * @return string
-	 */
-	public static function get_lengow_api_url() {
-		$url = Lengow_Connector::LENGOW_API_URL;
-		if ( self::is_production_mode() ) {
-			$url = str_replace(
-				Lengow_Connector::TEST_SUFFIX,
-				Lengow_Connector::LIVE_SUFFIX,
-				$url
-			);
-		} else {
-			$url = str_replace(
-				Lengow_Connector::LIVE_SUFFIX,
-				Lengow_Connector::TEST_SUFFIX,
-				$url
-			);
+	public static function get_lengow_url(): string {
+		$env = self::get_plugin_environment();
+		if ( 'preprod' === $env ) {
+			return self::LENGOW_URL_PREPROD;
 		}
 
-		return $url;
+		return self::LENGOW_URL;
 	}
 
 	/**

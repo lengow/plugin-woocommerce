@@ -22,6 +22,8 @@
  * @license     https://www.gnu.org/licenses/gpl-3.0 GNU General Public License
  */
 
+use Lengow\Sdk\Client\Exception\HttpException;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -862,65 +864,38 @@ class Lengow_Order {
 	/**
 	 * Synchronize order with Lengow API.
 	 *
-	 * @param Lengow_Connector|null $connector Lengow connector instance
-	 * @param boolean               $log_output see log or not
-	 *
 	 * @return boolean
 	 */
-	public function synchronize_order( $connector = null, $log_output = false ) {
-		list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
-		if ( null === $connector ) {
-			if ( Lengow_Connector::is_valid_auth( $log_output ) ) {
-				$connector = new Lengow_Connector( $access_token, $secret_token );
-			} else {
-				return false;
-			}
-		}
+	public function synchronize_order() {
 		$results = self::get_all_order_id_from_lengow_orders( $this->marketplace_sku, $this->marketplace_name );
-		if ( $results ) {
+		if ( ! empty( $results ) ) {
 			$woocommerce_order_ids = array();
 			foreach ( $results as $result ) {
 				$woocommerce_order_ids[] = $result->order_id;
 			}
 			// compatibility v2.
 			if ( null !== $this->feed_id && ! Lengow_Marketplace::marketplace_exist( $this->marketplace_name ) ) {
-				$this->check_and_change_marketplace_name( $connector, $log_output );
+				$this->check_and_change_marketplace_name();
 			}
 			$body              = array(
-				Lengow_Import::ARG_ACCOUNT_ID           => $account_id,
+				Lengow_Import::ARG_ACCOUNT_ID           => Lengow_Configuration::get( Lengow_Configuration::ACCOUNT_ID ),
 				Lengow_Import::ARG_MARKETPLACE_ORDER_ID => $this->marketplace_sku,
 				Lengow_Import::ARG_MARKETPLACE          => $this->marketplace_name,
 				Lengow_Import::ARG_MERCHANT_ORDER_ID    => $woocommerce_order_ids,
 			);
-						$tries = self::SYNCHRONIZE_TRIES;
-			do {
-				try {
-					$return = $connector->patch(
-						Lengow_Connector::API_ORDER_MOI,
-						array(),
-						Lengow_Connector::FORMAT_JSON,
-						json_encode( $body ),
-						$log_output
-					);
-					return ! ( null === $return
-							|| ( isset( $return['detail'] ) && 'Pas trouvé.' === $return['detail'] )
-							|| isset( $return['error'] ) );
-				} catch ( Exception $e ) {
-					--$tries;
-					if ( $tries === 0 ) {
-						$message = Lengow_Main::decode_log_message( $e->getMessage(), Lengow_Translation::DEFAULT_ISO_CODE );
-						$error   = Lengow_Main::set_log_message(
-							'log.connector.error_api',
-							array(
-								'error_code'    => $e->getCode(),
-								'error_message' => $message,
-							)
-						);
-						Lengow_Main::log( Lengow_Log::CODE_CONNECTOR, $error, $log_output );
-					}
-				}
-			} while ( $tries > 0 );
-
+			try {
+				Lengow::sdk()->order()->moi( $body );
+			} catch ( HttpException $e ) {
+				$message = Lengow_Main::decode_log_message( $e->getMessage(), Lengow_Translation::DEFAULT_ISO_CODE );
+				$error   = Lengow_Main::set_log_message(
+					'log.connector.error_api',
+					array(
+						'error_code'    => $e->getCode(),
+						'error_message' => $message,
+					)
+				);
+				Lengow_Main::log( Lengow_Log::CODE_CONNECTOR, $error );
+			}
 		}
 
 		return false;
@@ -929,32 +904,16 @@ class Lengow_Order {
 	/**
 	 * Check and change the name of the marketplace for v3 compatibility.
 	 *
-	 * @param Lengow_Connector|null $connector Lengow connector instance
-	 * @param boolean               $log_output see log or not
-	 *
 	 * @return boolean
 	 */
-	public function check_and_change_marketplace_name( $connector = null, $log_output = false ) {
-		list( $account_id, $access_token, $secret_token ) = Lengow_Configuration::get_access_id();
-		if ( null === $connector ) {
-			if ( Lengow_Connector::is_valid_auth( $log_output ) ) {
-				$connector = new Lengow_Connector( $access_token, $secret_token );
-			} else {
-				return false;
-			}
-		}
+	public function check_and_change_marketplace_name(): bool {
 		try {
-			$return = $connector->get(
-				Lengow_Connector::API_ORDER,
+			$results = Lengow::sdk()->order()->list(
 				array(
-					Lengow_Import::ARG_MARKETPLACE_ORDER_ID => $this->marketplace_sku,
-					Lengow_Import::ARG_ACCOUNT_ID => $account_id,
-				),
-				Lengow_Connector::FORMAT_STREAM,
-				'',
-				$log_output
+					Lengow_Import::ARG_MARKETPLACE_ORDER_ID => $this->marketplace_sku
+				)
 			);
-		} catch ( Exception $e ) {
+		} catch ( HttpException $e ) {
 			$message = Lengow_Main::decode_log_message( $e->getMessage(), Lengow_Translation::DEFAULT_ISO_CODE );
 			$error   = Lengow_Main::set_log_message(
 				'log.connector.error_api',
@@ -963,20 +922,13 @@ class Lengow_Order {
 					'error_message' => $message,
 				)
 			);
-			Lengow_Main::log( Lengow_Log::CODE_CONNECTOR, $error, $log_output );
+			Lengow_Main::log( 'sdk', $error );
 
 			return false;
 		}
-		if ( null === $return ) {
-			return false;
-		}
-		// don't decode into array as we use the result as an object.
-		$results = json_decode( $return );
-		if ( isset( $results->error ) ) {
-			return false;
-		}
+
 		foreach ( $results->results as $order ) {
-			$new_marketplace_name = (string) $order->marketplace;
+			$new_marketplace_name = $order->marketplace;
 			if ( $new_marketplace_name !== $this->marketplace_name ) {
 				self::update( $this->id, array( self::FIELD_MARKETPLACE_NAME => $new_marketplace_name ) );
 				$this->marketplace_name = $new_marketplace_name;
@@ -1158,29 +1110,34 @@ class Lengow_Order {
 	 */
 	public function get_order_line_by_api() {
 		$order_lines = array();
-		$results     = Lengow_Connector::query_api(
-			Lengow_Connector::GET,
-			Lengow_Connector::API_ORDER,
-			array(
-				Lengow_Import::ARG_MARKETPLACE_ORDER_ID => $this->marketplace_sku,
-				Lengow_Import::ARG_MARKETPLACE          => $this->marketplace_name,
-			)
-		);
-		if ( ! isset( $results->count ) || 0 === (int) $results->count ) {
+
+		try {
+			$results = Lengow::sdk()->order()->list(
+				array(
+					Lengow_Import::ARG_MARKETPLACE_ORDER_ID => $this->marketplace_sku,
+					Lengow_Import::ARG_MARKETPLACE          => $this->marketplace_name
+				)
+			);
+		} catch ( HttpException $e ) {
+			Lengow_Main::get_log_instance()->log_exception( $e );
+		}
+
+		if ( ! isset( $results->count ) || 0 === $results->count ) {
 			return false;
 		}
+
 		$order_data = $results->results[0];
 		foreach ( $order_data->packages as $package ) {
 			$product_lines = array();
 			foreach ( $package->cart as $product ) {
 				$product_lines[] = array(
-					Lengow_Order_Line::FIELD_ORDER_LINE_ID => (string) $product->marketplace_order_line_id,
+					Lengow_Order_Line::FIELD_ORDER_LINE_ID => $product->marketplace_order_line_id,
 				);
 			}
 			if ( 0 === $this->delivery_address_id ) {
 				return ! empty( $product_lines ) ? $product_lines : false;
 			}
-			$order_lines[ (int) $package->delivery->id ] = $product_lines;
+			$order_lines[ $package->delivery->id ] = $product_lines;
 		}
 		$return = $order_lines[ $this->delivery_address_id ];
 

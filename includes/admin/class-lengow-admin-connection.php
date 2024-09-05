@@ -21,6 +21,9 @@
  * @copyright   2017 Lengow SAS
  */
 
+use Lengow\Sdk\Client\AuthenticatorInterface;
+use Lengow\Sdk\Client\Exception\HttpException;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -85,7 +88,6 @@ class Lengow_Admin_Connection {
 					}
 					break;
 			}
-			exit();
 		}
 	}
 
@@ -97,20 +99,35 @@ class Lengow_Admin_Connection {
 	 *
 	 * @return boolean
 	 */
-	private static function check_api_credentials( $access_token, $secret ) {
-		$access_ids_saved = false;
-		$account_id       = Lengow_Connector::get_account_id_by_credentials( $access_token, $secret );
-		if ( $account_id ) {
-			$access_ids_saved = Lengow_Configuration::set_access_ids(
+	private static function check_api_credentials( string $access_token, string $secret ): bool {
+		try {
+			$access = Lengow::sdk()->access()->getToken( $access_token, $secret );
+			if (Lengow_Configuration::set_access_ids(
 				array(
-					Lengow_Configuration::ACCOUNT_ID   => $account_id,
+					Lengow_Configuration::ACCOUNT_ID   => $access->account_id,
 					Lengow_Configuration::ACCESS_TOKEN => $access_token,
 					Lengow_Configuration::SECRET       => $secret,
 				)
-			);
+			)) {
+				Lengow_Configuration::update_value( Lengow_Configuration::AUTHORIZATION_TOKEN, $access->token );
+				Lengow_Configuration::update_value( Lengow_Configuration::AUTHORIZATION_TOKEN_EXPIRE_AT, time() + 3600 );
+				Lengow::sdk()->getClient()->getAuthenticator()->setCredentials( $access_token, $secret );
+				Lengow::sdk()->getClient()->getAuthenticator()->setToken(
+					$access->token,
+					time() + AuthenticatorInterface::TOKEN_LIFETIME,
+					$access->account_id
+				);
+
+				return true;
+			}
+
+			Lengow_Main::log( 'Connector', 'Unable to save access IDs' );
+			return false;
+		} catch ( HttpException $e ) {
+			Lengow_Main::get_log_instance()->log_exception( $e );
 		}
 
-		return $access_ids_saved;
+		return false;
 	}
 
 	/**
@@ -122,13 +139,13 @@ class Lengow_Admin_Connection {
 		$cms_token     = Lengow_Main::get_token();
 		$cms_connected = Lengow_Sync::sync_catalog( true );
 		if ( ! $cms_connected ) {
-			$sync_data = wp_json_encode( Lengow_Sync::get_sync_data() );
-			$result    = Lengow_Connector::query_api(
-				Lengow_Connector::POST,
-				Lengow_Connector::API_CMS,
-				array(),
-				$sync_data
-			);
+			$sync_data = Lengow_Sync::get_sync_data();
+			try {
+				$result = Lengow::sdk()->cms()->post( $sync_data );
+			} catch ( HttpException $e ) {
+				Lengow_Main::get_log_instance()->log_exception( $e );
+			}
+
 			if ( isset( $result->common_account ) ) {
 				$cms_connected = true;
 				$message_key   = 'log.connection.cms_creation_success';
