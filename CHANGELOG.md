@@ -3,11 +3,6 @@
 ## [2.6.4](https://github.com/lengow/plugin-woocommerce/compare/v2.6.3...v2.6.4) (2024-08-22)
 
 
-### wip
-
-* release 2.6.4 ([1fbdd77](https://github.com/lengow/plugin-woocommerce/commit/1fbdd77e6f5a363babb29f3b6cd7a9c94c54bf86))
-
-
 ### Features
 
 * **cicd:** Add a besic CI to the project ([#6](https://github.com/lengow/plugin-woocommerce/issues/6)) ([a1a6cc8](https://github.com/lengow/plugin-woocommerce/commit/a1a6cc8669074e2d2d235f698f6323ffee864bba))
