@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.6.4](https://github.com/lengow/plugin-woocommerce/compare/v2.6.3...v2.6.4) (2024-08-22)
+
+
+### Features
+
+* **cicd:** Add a besic CI to the project ([#6](https://github.com/lengow/plugin-woocommerce/issues/6)) ([a1a6cc8](https://github.com/lengow/plugin-woocommerce/commit/a1a6cc8669074e2d2d235f698f6323ffee864bba))
+
+
+### Miscellaneous
+
+* add plugin version in composer.json, remove unusued readme.txt ([#9](https://github.com/lengow/plugin-woocommerce/issues/9)) ([a908fe2](https://github.com/lengow/plugin-woocommerce/commit/a908fe2f8aaae5e0d605ed4f013ba005e5370621))
+* **clean:** Remove obsolete files ([a1a6cc8](https://github.com/lengow/plugin-woocommerce/commit/a1a6cc8669074e2d2d235f698f6323ffee864bba))
+* Correct Changelog ([#8](https://github.com/lengow/plugin-woocommerce/issues/8)) ([95b257b](https://github.com/lengow/plugin-woocommerce/commit/95b257b7661d8ce2e552c788818208f1e103b97c))
+* **docs:** Precise Changelog file type ([a1a6cc8](https://github.com/lengow/plugin-woocommerce/commit/a1a6cc8669074e2d2d235f698f6323ffee864bba))
+
+## Changelog
+
 ========================================================
 Version 2.6.3
 ========================================================
