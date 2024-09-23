@@ -63,3 +63,10 @@ jobs:
           extra-files: |
             lengow.php
             README.md
+      - name: MD5 Hash
+        run: php tools/checkmd5.php
+      - name: Create Release
+        run: |
+          git add config/checkmd5.csv
+          git commit -m "chore(main): update md5 hashes"
+          git push
