@@ -63,9 +63,9 @@ jobs:
           extra-files: |
             lengow.php
             README.md
-      - name: MD5 Hash
+      - name: Generate MD5 Hashes
         run: php tools/checkmd5.php
-      - name: Create Release
+      - name: Commit MD5 Hashes
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
