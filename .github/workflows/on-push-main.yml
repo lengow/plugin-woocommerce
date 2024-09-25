@@ -64,13 +64,12 @@ jobs:
             lengow.php
             README.md
       - name: Debug outputs
-        run: echo ${{ toJson(steps.release-please.outputs.pr) }}
+        run: echo ${{ steps.release-please.outputs.pr }}
       - name: Checkout appropriate branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-#          ref: ${{ steps.release-please.outputs.pr.headBranchName }}
-          ref: release-please--branches--main--components--plugin-woocommerce
+          ref: ${{ steps.release-please.outputs.pr.headBranchName }}
       - name: Generate MD5 Hashes
         run: php tools/checkmd5.php
       - name: Commit MD5 Hashes
