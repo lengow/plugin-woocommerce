@@ -63,8 +63,6 @@ jobs:
           extra-files: |
             lengow.php
             README.md
-      - name: Debug outputs
-        run: echo "${{ toJson(steps.release-please.outputs.pr) }}"
       - name: Checkout appropriate branch
         uses: actions/checkout@v4
         with:
