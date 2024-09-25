@@ -64,14 +64,16 @@ jobs:
             lengow.php
             README.md
       - name: Checkout appropriate branch
-        if:
+        if: ${{ !startsWith(github.head_ref, 'release-please') }}
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: release-please--branches--main--components--plugin-woocommerce
       - name: Generate MD5 Hashes
+        if: ${{ !startsWith(github.head_ref, 'release-please') }}
         run: php tools/checkmd5.php
       - name: Commit MD5 Hashes
+        if: ${{ !startsWith(github.head_ref, 'release-please') }}
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
