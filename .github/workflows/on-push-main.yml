@@ -63,10 +63,12 @@ jobs:
           extra-files: |
             lengow.php
             README.md
+      - name: Debug outputs
+        run: echo "${{ toJson(steps.release-please.outputs.pr) }}"
       - name: Checkout appropriate branch
         uses: actions/checkout@v4
         with:
-          fetch-depts: 0
+          fetch-depth: 0
           ref: ${{ steps.release-please.outputs.pr.headBranchName }}
       - name: Generate MD5 Hashes
         run: php tools/checkmd5.php
