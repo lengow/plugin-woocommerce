@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.6.5](https://github.com/lengow/plugin-woocommerce/compare/v2.6.4...v2.6.5) (2024-09-25)
+
+
+### Bug Fixes
+
+* **cicd:** Add a job to generate plugin checksums ([#13](https://github.com/lengow/plugin-woocommerce/issues/13)) ([daf2fce](https://github.com/lengow/plugin-woocommerce/commit/daf2fcea16de73d2a0d092ef37c6380ca1c6066f))
+* **cicd:** Correct the checksums generation ([#19](https://github.com/lengow/plugin-woocommerce/issues/19)) ([f07bac9](https://github.com/lengow/plugin-woocommerce/commit/f07bac91467a572a2e2fbe90fe18b4ab54facb34))
+* **lengow:** [ECP-109] Change lengow's logo for the new logo ([#10](https://github.com/lengow/plugin-woocommerce/issues/10)) ([b26c799](https://github.com/lengow/plugin-woocommerce/commit/b26c7993a92e030e2421068f83d86ee769978ed3))
+
+
+### Miscellaneous
+
+* **ci-cd:** automatically update release-please version in files ([#12](https://github.com/lengow/plugin-woocommerce/issues/12)) ([5fa8a77](https://github.com/lengow/plugin-woocommerce/commit/5fa8a770c7dec41136cd6d0b0f64799294d4a606))
+
 ## [2.6.4](https://github.com/lengow/plugin-woocommerce/compare/v2.6.3...v2.6.4) (2024-08-22)
 
 
