@@ -472,18 +472,18 @@ class Lengow_Connector {
      */
     private function get_wait_limit_order_requests(): ?int
     {
-        static $nbRequest = 0;
-        static $timeStart = null;
-        if (is_null($timeStart)) {
-            $timeStart = time();
+        static $nb_request = 0;
+        static $time_start = null;
+        if (is_null($time_start)) {
+            $time_start = time();
         }
-        $nbRequest++;
-        if ($nbRequest >= self::REQUEST_LIMIT) {
-            $timeDiff = time() - $timeStart;
-            $nbRequest = 0;
-            $timeStart = time();
-            if ($timeDiff < 60) {
-                return (60 - $timeDiff);
+        $nb_request++;
+        if ($nb_request >= self::REQUEST_LIMIT) {
+            $time_diff = time() - $time_start;
+            $nb_request = 0;
+            $time_start = time();
+            if ($time_diff < 60) {
+                return (60 - $time_diff);
             }
         }
 
@@ -495,18 +495,18 @@ class Lengow_Connector {
      */
     private function get_wait_limit_action_requests(): ?int
     {
-        static $nbRequest = 0;
-        static $timeStart = null;
-        if (is_null($timeStart)) {
-            $timeStart = time();
+        static $nb_request = 0;
+        static $time_start = null;
+        if (is_null($time_start)) {
+            $time_start = time();
         }
-        $nbRequest++;
-        if ($nbRequest >= self::REQUEST_LIMIT) {
-            $timeDiff = time() - $timeStart;
-            $nbRequest = 0;
-            $timeStart = time();
-            if ($timeDiff < 60) {
-                return (60 - $timeDiff);
+        $nb_request++;
+        if ($nb_request >= self::REQUEST_LIMIT) {
+            $time_diff = time() - $time_start;
+            $nb_request = 0;
+            $time_start = time();
+            if ($time_diff < 60) {
+                return (60 - $time_diff);
             }
         }
 
