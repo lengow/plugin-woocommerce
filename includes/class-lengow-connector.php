@@ -84,6 +84,8 @@ class Lengow_Connector {
 	const CODE_404 = 404;
 	const CODE_500 = 500;
 	const CODE_504 = 504;
+	const REQUEST_LIMIT = 500;
+
 
 	/**
 	 * @var array success HTTP codes for request.
@@ -429,10 +431,87 @@ class Lengow_Connector {
 	 * @throws Lengow_Exception
 	 */
 	private function call_action( $api, $args, $type, $format, $body, $log_output ) {
+		$this->rate_limiting_requests($api);
 		$result = $this->make_request( $type, $api, $args, $this->token, $body, $log_output );
 
 		return $this->format( $result, $format );
 	}
+
+	/**
+     * Rate limiting for Lengow API
+     */
+    private function rate_limiting_requests(string $api): void
+    {
+
+        switch($api) {
+            case self::API_ORDER:
+                $wait = $this->get_wait_limit_order_requests();
+                break;
+            case self::API_ORDER_ACTION:
+                $wait = $this->get_wait_limit_action_requests();
+                break;
+            case self::API_ORDER_MOI:
+                $wait = $this->get_wait_limit_order_requests();
+                break;
+            default:
+                $wait = null;
+                break;
+        }
+
+        if (!is_null($wait) && $wait > 0) {
+            Lengow_Main::log(
+                Lengow_Log::CODE_CONNECTOR,
+                Lengow_Main::set_log_message('API call blocked due to rate limiting - wait %1 seconds', [$wait])
+            );
+            sleep($wait);
+        }
+    }
+
+    /**
+     * Limit the number of order requests
+     */
+    private function get_wait_limit_order_requests(): ?int
+    {
+        static $nbRequest = 0;
+        static $timeStart = null;
+        if (is_null($timeStart)) {
+            $timeStart = time();
+        }
+        $nbRequest++;
+        if ($nbRequest >= self::REQUEST_LIMIT) {
+            $timeDiff = time() - $timeStart;
+            $nbRequest = 0;
+            $timeStart = time();
+            if ($timeDiff < 60) {
+                return (60 - $timeDiff);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Limit the number of action requests
+     */
+    private function get_wait_limit_action_requests(): ?int
+    {
+        static $nbRequest = 0;
+        static $timeStart = null;
+        if (is_null($timeStart)) {
+            $timeStart = time();
+        }
+        $nbRequest++;
+        if ($nbRequest >= self::REQUEST_LIMIT) {
+            $timeDiff = time() - $timeStart;
+            $nbRequest = 0;
+            $timeStart = time();
+            if ($timeDiff < 60) {
+                return (60 - $timeDiff);
+            }
+        }
+
+        return null;
+    }
 
 	/**
 	 * Get authorization token from Middleware.
