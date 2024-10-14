@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.6.6](https://github.com/lengow/plugin-woocommerce/compare/v2.6.5...v2.6.6) (2024-10-14)
+
+
+### Bug Fixes
+
+* **connector:** [ECP-113] rate limit request for woo commerce ([#23](https://github.com/lengow/plugin-woocommerce/issues/23)) ([67de112](https://github.com/lengow/plugin-woocommerce/commit/67de1125d398270d8776ec8c3636c4ed7c5ee76a))
+
 ## [2.6.5](https://github.com/lengow/plugin-woocommerce/compare/v2.6.4...v2.6.5) (2024-09-25)
 
 
