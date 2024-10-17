@@ -127,6 +127,12 @@ remove_files $FOLDER_TMP "CHANGELOG"
 remove_files $FOLDER_TMP ".gitignore"
 # Remove .git
 remove_files $FOLDER_TMP ".git"
+# Remove .github
+rm -Rf $FOLDER_TMP/.github
+# Remove logs
+rm -Rf $FOLDER_TMP/logs/*.txt
+# remove exports
+rm -Rf $FOLDER_TMP/export/*.csv
 # Remove .DS_Store
 remove_files $FOLDER_TMP ".DS_Store"
 # Remove .idea
