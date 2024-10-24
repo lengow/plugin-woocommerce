@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</a>
 				| <?php echo esc_html( $locale->t( 'footer.plugin_lengow' ) ); ?> - v.<?php echo esc_html( LENGOW_VERSION ); ?>
 				<?php if ( 'lengow.net' === Lengow_Configuration::get_lengow_url() ) : ?>
-					<span class="lgw-label-preprod">preprod</span>
+					<span class="lgw-label-preprod">sandbox</span>
 				<?php endif; ?>
 				| copyright © <?php echo esc_html( date( 'Y' ) ); ?> <a href="http://www.lengow.com" target="_blank"
 															class="sub-link" title="Lengow.com">Lengow</a>
