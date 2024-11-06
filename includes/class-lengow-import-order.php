@@ -901,29 +901,29 @@ class Lengow_Import_Order {
 			// search and get all products.
 			$products = $this->get_products();
 			// get billing and shipping addresses for the user and the order.
-                        $billing_address_api = $this->hydrate_address(
-                            $this->order_data,
-                            $this->order_data->billing_address
-                        );
-			$billing_address        = new Lengow_Address(
+			$billing_address_api  = $this->hydrate_address(
+				$this->order_data,
+				$this->order_data->billing_address
+			);
+			$billing_address      = new Lengow_Address(
 				$billing_address_api,
 				Lengow_Address::TYPE_BILLING
 			);
-                        $shipping_address_api = $this->hydrate_address(
-                            $this->order_data,
-                            $this->package_data->delivery
-                        );
-			$shipping_address       = new Lengow_Address(
+			$shipping_address_api = $this->hydrate_address(
+				$this->order_data,
+				$this->package_data->delivery
+			);
+			$shipping_address     = new Lengow_Address(
 				$shipping_address_api,
 				Lengow_Address::TYPE_SHIPPING,
 				$this->carrier_id_relay
 			);
-			$billing_email          = $billing_address->get_data( 'email' );
-						$user_email = $billing_email;
+			$billing_email        = $billing_address->get_data( 'email' );
+			$user_email           = $billing_email;
 			if ( empty( $billing_email ) ) {
 				$shipping_email = $shipping_address->get_data( 'email' );
 				$billing_address->set_data( 'email', $shipping_email );
-								$user_email = $shipping_email;
+				$user_email = $shipping_email;
 			}
 			$billing_phone = $billing_address->get_data( 'phone' );
 			if ( empty( $billing_phone ) ) {
@@ -993,62 +993,67 @@ class Lengow_Import_Order {
 		return false;
 	}
 
-        /**
-         * hydrates address data
-         *
-         * @param Object $order_data
-         * @param Object $address
-         *
-         * @return Object $address
-         */
-        private function hydrate_address($order_data, $address)
-        {
-            $locale = new Lengow_Translation();
-            $notProvided = $locale->t('order.screen.not_provided');
+	/**
+	 * hydrates address data
+	 *
+	 * @param Object $order_data
+	 * @param Object $address
+	 *
+	 * @return Object $address
+	 */
+	private function hydrate_address( $order_data, $address ) {
+		$locale      = new Lengow_Translation();
+		$notProvided = $locale->t( 'order.screen.not_provided' );
 
-            $notPhone = '0000000000';
-            $status = (string) $order_data->lengow_status;
-            $isDeliveredByMp = false;
+		$notPhone        = '0000000000';
+		$status          = (string) $order_data->lengow_status;
+		$isDeliveredByMp = false;
 
-            if ($status !== Lengow_Order::STATE_SHIPPED) {
-                return $address;
-            }
-            $types = $order_data->order_types;
+		if ( $status !== Lengow_Order::STATE_SHIPPED ) {
+			return $address;
+		}
+		$types = $order_data->order_types;
 
-            foreach ($types as $orderType) {
-                if ($orderType->type === Lengow_Order::TYPE_DELIVERED_BY_MARKETPLACE) {
-                    $isDeliveredByMp = true;
-                }
-            }
+		foreach ( $types as $orderType ) {
+			if ( $orderType->type === Lengow_Order::TYPE_DELIVERED_BY_MARKETPLACE ) {
+				$isDeliveredByMp = true;
+			}
+		}
 
-            if (!$isDeliveredByMp) {
-                return $address;
-            }
+		if ( ! $isDeliveredByMp ) {
+			return $address;
+		}
 
-            if (is_null($address->first_name)
-                    && is_null($address->last_name)
-                    && is_null($address->full_name)) {
-                $address->first_name = $notProvided;
-                $address->last_name = $notProvided;
-                $address->full_name = $notProvided;
-            }
+		if (
+			is_null( $address->first_name )
+			&& is_null( $address->last_name )
+			&& is_null( $address->full_name )
+		) {
+			$address->first_name = $notProvided;
+			$address->last_name  = $notProvided;
+			$address->full_name  = $notProvided;
+		}
 
-            if (is_null($address->first_line)
-                    && is_null($address->full_address)) {
-                $address->first_line = $notProvided;
-                $address->full_address = $notProvided;
-            }
+		if (
+			is_null( $address->first_line )
+			&& is_null( $address->full_address )
+		) {
+			$address->first_line   = $notProvided;
+			$address->full_address = $notProvided;
+		}
 
-            if (is_null($address->phone_home)
-                    && is_null($address->phone_mobile)) {
-                $address->phone_home = $notPhone;
-                $address->phone_mobile = $notPhone;
-            }
+		if (
+			is_null( $address->phone_home )
+			&& is_null( $address->phone_mobile )
+		) {
+			$address->phone_home   = $notPhone;
+			$address->phone_mobile = $notPhone;
+		}
 
-            return $address;
-        }
+		return $address;
+	}
 
-        /**
+	/**
 	 * Get products from the API and check that they exist in WooCommerce database.
 	 *
 	 * @return array
@@ -1130,10 +1135,10 @@ class Lengow_Import_Order {
 	 * @return string
 	 */
 	private function get_user_email() {
-		$domain = implode( '.', array_slice( explode( '.', parse_url( get_site_url(), PHP_URL_HOST ) ), - 2 ) );
-		$domain = preg_match( '`^([\w]+)\.([a-z]+)$`', $domain ) ? $domain : 'lengow.com';
-		$email  =  $this->marketplace_sku . '-' . $this->marketplace->name . '@' . $domain;
-		$encrypted_email = md5($email).'@'.$domain;
+		$domain          = implode( '.', array_slice( explode( '.', parse_url( get_site_url(), PHP_URL_HOST ) ), - 2 ) );
+		$domain          = preg_match( '`^([\w]+)\.([a-z]+)$`', $domain ) ? $domain : 'lengow.com';
+		$email           = $this->marketplace_sku . '-' . $this->marketplace->name . '@' . $domain;
+		$encrypted_email = md5( $email ) . '@' . $domain;
 		Lengow_Main::log(
 			Lengow_Log::CODE_IMPORT,
 			Lengow_Main::set_log_message( 'log.import.generate_unique_email', array( 'email' => $email ) ),
@@ -1142,8 +1147,7 @@ class Lengow_Import_Order {
 		);
 		$typeReturn = (int) Lengow_Configuration::get( Lengow_Configuration::TYPE_ANONYMIZE_EMAIL );
 
-
-		return ($typeReturn === 0) ? $encrypted_email : $email;
+		return ( $typeReturn === 0 ) ? $encrypted_email : $email;
 	}
 
 	/**
@@ -1467,37 +1471,65 @@ class Lengow_Import_Order {
 		$tax_amount = ( ! $no_tax && $tax_id ) ? $taxes[ $tax_id ] : 0;
 		$amount     = $shipping - $tax_amount;
 		// get default shipping method.
-		$wc_shipping             = new WC_Shipping();
-		$shipping_methods        = $wc_shipping->load_shipping_methods();
-		$default_shipping_method = Lengow_Configuration::get( Lengow_Configuration::DEFAULT_IMPORT_CARRIER_ID );
-		$shipping_method         = array_key_exists( $default_shipping_method, $shipping_methods )
-			? $shipping_methods[ $default_shipping_method ]
-			: current( $shipping_methods );
-		$shipping_method_title   = $shipping_method->get_method_title();
-				$wc_order        = new WC_Order( $order_id );
-		try {
-			$new_shipping_data = array(
-				'order_item_name' => $shipping_method_title,
-				'order_item_type' => 'shipping',
+		$wc_shipping                  = new WC_Shipping();
+		$shipping_methods             = $wc_shipping->load_shipping_methods();
+		$marketplace_shipping_methods = Lengow_Configuration::get( Lengow_Configuration::IMPORT_SHIPPING_METHODS );
+		$shipping_method_code         = Lengow_Configuration::get( Lengow_Configuration::DEFAULT_IMPORT_CARRIER_ID );
+		if (
+			!empty($marketplace_shipping_methods[$this->marketplace->name][$this->carrier_method])
+			&& array_key_exists(
+				$marketplace_shipping_methods[$this->marketplace->name][$this->carrier_method],
+				$shipping_methods
+			)
+		) {
+			// config exists for the order's marketplace & shipping method
+			$shipping_method_code = $marketplace_shipping_methods[$this->marketplace->name][$this->carrier_method];
+		} elseif (
+			!empty($marketplace_shipping_methods[$this->marketplace->name]['__default'])
+			&& array_key_exists(
+				$marketplace_shipping_methods[$this->marketplace->name]['__default'],
+				$shipping_methods
+			)
+		) {
+			// fallback to the configured order's marketplace default shipping method
+			$shipping_method_code = $marketplace_shipping_methods[$this->marketplace->name]['__default'];
+		} elseif (!array_key_exists( $shipping_method_code, $shipping_methods )) {
+			// fallback to the first available shipping method if the global default is not available
+			$shipping_method_code = key( $shipping_methods );
+		}
+
+		$new_shipping_method_code = apply_filters('lengow_woocommerce_import_order_shipping_method', $shipping_method_code, $this->order_data);
+		if ($new_shipping_method_code !== $shipping_method_code) {
+			$shipping_method_code = $new_shipping_method_code;
+			Lengow_Main::log(
+				Lengow_Log::CODE_IMPORT,
+				'Shipping method changed by filters',
+				$this->log_output,
+				$this->marketplace_sku
 			);
-			// $item_id           = wc_add_order_item( $order_id, $new_shipping_data );
+		}
+
+		$shipping_method       = $shipping_methods[ $shipping_method_code ];
+		$shipping_method_title = $shipping_method->get_method_title();
+		$wc_order              = new WC_Order( $order_id );
+		try {
 			// add line item meta for shipping.
 			$articles = array();
 			foreach ( $products as $product ) {
 				$articles[] = $product['name'] . ' &times; ' . $product['quantity'];
 			}
 
-						$wc_shipping_item = new WC_Order_Item_Shipping();
-						$wc_shipping_item->set_method_id( $shipping_method->id );
-						$wc_shipping_item->set_method_title( $shipping_method_title );
-						$wc_shipping_item->set_taxes( array( 'total' => array( $tax_id => $tax_amount ) ) );
-						$wc_shipping_item->set_total( $amount );
-						$wc_shipping_item->set_instance_id( $shipping_method->instance_id );
-						$wc_shipping_item->add_meta_data( 'Articles', implode( ', ', $articles ) );
-						$wc_shipping_item->add_meta_data( 'cost', $amount );
-						$wc_shipping_item->add_meta_data( 'total_tax', $tax_amount );
-						$wc_order->add_item( $wc_shipping_item );
-						$wc_order->save();
+			$wc_shipping_item = new WC_Order_Item_Shipping();
+			$wc_shipping_item->set_method_id( $shipping_method->id );
+			$wc_shipping_item->set_method_title( $shipping_method_title );
+			$wc_shipping_item->set_taxes( array( 'total' => array( $tax_id => $tax_amount ) ) );
+			$wc_shipping_item->set_total( $amount );
+			$wc_shipping_item->set_instance_id( $shipping_method->instance_id );
+			$wc_shipping_item->add_meta_data( 'Articles', implode( ', ', $articles ) );
+			$wc_shipping_item->add_meta_data( 'cost', $amount );
+			$wc_shipping_item->add_meta_data( 'total_tax', $tax_amount );
+			$wc_order->add_item( $wc_shipping_item );
+			$wc_order->save();
 
 		} catch ( Exception $e ) {
 			Lengow_Main::log(

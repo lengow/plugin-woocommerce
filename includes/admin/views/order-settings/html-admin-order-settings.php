@@ -12,6 +12,22 @@ $order_statuses   = Lengow_Main::get_order_statuses();
 $shipping_methods = Lengow_Main::get_shipping_methods();
 $min_import_days  = Lengow_Import::MIN_INTERVAL_TIME / 86400;
 $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
+
+Lengow_Marketplace::load_api_marketplace();
+$marketplaces                 = Lengow_Marketplace::$marketplaces;
+$marketplace_shipping_methods = Lengow_Configuration::get( Lengow_Configuration::IMPORT_SHIPPING_METHODS );
+
+function lgw_print_shipping_method_options( array $shipping_methods, ?string $selected = null, bool $allowNull = false ): void {
+	if ( $allowNull ) {
+		echo '<option value=""' . esc_attr( empty( $selected ) ? 'selected' : '' ) . '></option>';
+	}
+
+	foreach ( $shipping_methods as $shipping_method => $label ) {
+		echo '<option value="' . esc_attr( $shipping_method ) . '"'
+			. esc_attr( $selected === $shipping_method ? 'selected' : '' ) . '>'
+			. esc_html( $label ) . '</option>';
+	}
+}
 ?>
 <div id="lengow_order_setting_wrapper">
 	<div class="lgw-container">
@@ -31,13 +47,58 @@ $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
 						<?php echo esc_html( $keys[ Lengow_Configuration::DEFAULT_IMPORT_CARRIER_ID ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
 					</label>
 					<select class="js-select lengow_select" name="lengow_import_default_shipping_method">
-						<?php foreach ( $shipping_methods as $shipping_method => $label ) : ?>
-							<option value="<?php echo esc_attr( $shipping_method ); ?>"
-								<?php echo esc_attr( $values[ Lengow_Configuration::DEFAULT_IMPORT_CARRIER_ID ] === $shipping_method ? 'selected' : '' ); ?>>
-								<?php echo esc_html( $label ); ?>
-							</option>
-						<?php endforeach; ?>
+						<?php lgw_print_shipping_method_options( $shipping_methods, $values[ Lengow_Configuration::DEFAULT_IMPORT_CARRIER_ID ] ); ?>
 					</select>
+				</div>
+				<div class="form-group lengow_import_shipping_methods">
+					<label>
+						<?php echo esc_html( $keys[ Lengow_Configuration::IMPORT_SHIPPING_METHODS ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
+					</label>
+					<div class="accordion" id="marketplaceAccordion">
+						<?php foreach ( $marketplaces as $marketplace_code => $marketplace ) : ?>
+							<div class="accordion-item">
+								<h2 class="accordion-header" id="heading<?php echo esc_attr( $marketplace_code ); ?>">
+									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo esc_attr( $marketplace_code ); ?>" aria-expanded="false" aria-controls="collapse<?php echo esc_attr( $marketplace_code ); ?>">
+										<?php echo esc_html( $marketplace->name ); ?>
+									</button>
+								</h2>
+								<div id="collapse<?php echo esc_attr( $marketplace_code ); ?>" class="accordion-collapse collapse" aria-labelledby="heading<?php echo esc_attr( $marketplace_code ); ?>" data-bs-parent="#marketplaceAccordion">
+									<div class="accordion-body">
+										<div class="form-group">
+											<label>
+												<?php echo esc_html( $keys[ Lengow_Configuration::IMPORT_SHIPPING_METHODS ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
+											</label>
+											<select class="js-select lengow_select" name="<?php echo Lengow_Configuration::IMPORT_SHIPPING_METHODS; ?>[<?php echo esc_attr( $marketplace_code ); ?>][__default]">
+												<?php
+												lgw_print_shipping_method_options(
+													$shipping_methods,
+													$marketplace_shipping_methods[ $marketplace_code ]['__default'] ?? null,
+													true
+												);
+												?>
+											</select>
+										</div>
+										<?php foreach ( $marketplace->orders->shipping_methods as $shipping_code => $shipping_method ) : ?>
+											<div class="form-group">
+												<label>
+													<?php echo esc_html( $shipping_method->label ); ?>
+												</label>
+												<select class="js-select lengow_select" name="<?php echo Lengow_Configuration::IMPORT_SHIPPING_METHODS; ?>[<?php echo esc_attr( $marketplace_code ); ?>][<?php echo esc_attr( $shipping_code ); ?>]">
+													<?php
+													lgw_print_shipping_method_options(
+														$shipping_methods,
+														$marketplace_shipping_methods[ $marketplace_code ][ $shipping_code ] ?? null,
+														true
+													);
+													?>
+												</select>
+											</div>
+										<?php endforeach; ?>
+									</div>
+								</div>
+							</div>
+						<?php endforeach; ?>
+					</div>
 				</div>
 			</div>
 			<div class="lgw-box">
@@ -135,7 +196,7 @@ $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
 						<label>
 							<div>
 								<span></span>
-								<input type="hidden" name="<?php echo Lengow_Configuration::ANONYMIZE_EMAIL ?>" value="0">
+								<input type="hidden" name="<?php echo Lengow_Configuration::ANONYMIZE_EMAIL; ?>" value="0">
 								<input name="lengow_anonymize_email"
 										type="checkbox"
 									<?php echo esc_attr( $values[ Lengow_Configuration::ANONYMIZE_EMAIL ] ? 'checked' : '' ); ?>/>
@@ -148,12 +209,12 @@ $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
 					<label>
 						<?php echo esc_html( $keys[ Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
 					</label>
-					<select class="js-select lengow_select" name="<?php echo Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ?>">
+					<select class="js-select lengow_select" name="<?php echo Lengow_Configuration::TYPE_ANONYMIZE_EMAIL; ?>">
 						<option value="0"
 							<?php echo esc_attr( (int) $values[ Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ] === 0 ? 'selected' : '' ); ?>>
 							<?php echo esc_html( $locale->t( 'order_setting.screen.type_anonymize_email_encrypted' ) ); ?>
 						<option value="1"
-							<?php echo esc_attr(  (int) $values[ Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ] === 1 ? 'selected' : '' ); ?>>
+							<?php echo esc_attr( (int) $values[ Lengow_Configuration::TYPE_ANONYMIZE_EMAIL ] === 1 ? 'selected' : '' ); ?>>
 							<?php echo esc_html( $locale->t( 'order_setting.screen.type_anonymize_email_not_encrypted' ) ); ?>
 					</select>
 				</div>
