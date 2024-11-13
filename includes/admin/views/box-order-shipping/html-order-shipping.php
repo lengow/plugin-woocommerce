@@ -26,6 +26,17 @@ $tracking_number        = strlen( $tracking_number ) > 0 ? (string) $tracking_nu
 $tracking_url           = (string) $wc_order->get_meta( '_lengow_tracking_url', true );
 $return_carrier         = (string) $wc_order->get_meta( '_lengow_return_carrier', true );
 $return_tracking_number = (string) $wc_order->get_meta( '_lengow_return_tracking_number', true );
+$order_shipping_methods = $wc_order->get_shipping_methods();
+$order_shipping_method  = current( $order_shipping_methods );
+
+if ( empty( $carrier ) && $order_shipping_method ) {
+	$marketplace_carriers = Lengow_Configuration::get( Lengow_Configuration::SHIPPING_METHOD_CARRIERS );
+	if ( isset( $marketplace_carriers[ $marketplace->name ][ $order_shipping_method->get_method_id() ] ) ) {
+		$carrier = $marketplace_carriers[ $marketplace->name ][ $order_shipping_method->get_method_id() ];
+	} elseif ( isset( $marketplace_carriers[ $marketplace->name ]['__default'] ) ) {
+		$carrier = $marketplace_carriers[ $marketplace->name ]['__default'];
+	}
+}
 ?>
 
 <style>

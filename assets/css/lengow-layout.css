@@ -557,3 +557,51 @@ body.page-sidebar-closed .lengow-nav-bottom {
   margin: 120px auto;
   padding: 15px;
 }
+
+/*************************************************/
+/*                     ACCORDION                 */
+/*************************************************/
+
+#marketplaceAccordion .accordion-header {
+  background-color: #f7f7f7;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+#marketplaceAccordion .accordion-button {
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+  width: 100%;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+#marketplaceAccordion .accordion-button:focus {
+  outline: none;
+}
+
+#marketplaceAccordion .accordion-button[aria-expanded="true"] {
+  color: #00aeef;
+}
+
+#marketplaceAccordion .accordion-collapse {
+  border-top: 1px solid #ddd;
+}
+
+#marketplaceAccordion .accordion-body {
+  padding: 15px;
+  background-color: #fff;
+}
+
+.accordion-collapse {
+  display: none;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+.accordion-collapse.show {
+  display: block;
+}

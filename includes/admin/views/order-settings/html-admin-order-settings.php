@@ -16,6 +16,7 @@ $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
 Lengow_Marketplace::load_api_marketplace();
 $marketplaces                 = Lengow_Marketplace::$marketplaces;
 $marketplace_shipping_methods = Lengow_Configuration::get( Lengow_Configuration::IMPORT_SHIPPING_METHODS );
+$shipping_method_carriers     = Lengow_Configuration::get( Lengow_Configuration::SHIPPING_METHOD_CARRIERS );
 
 function lgw_print_shipping_method_options( array $shipping_methods, ?string $selected = null, bool $allowNull = false ): void {
 	if ( $allowNull ) {
@@ -26,6 +27,18 @@ function lgw_print_shipping_method_options( array $shipping_methods, ?string $se
 		echo '<option value="' . esc_attr( $shipping_method ) . '"'
 			. esc_attr( $selected === $shipping_method ? 'selected' : '' ) . '>'
 			. esc_html( $label ) . '</option>';
+	}
+}
+
+function lgw_print_carrier_options( array $carriers, ?string $selected = null, bool $allowNull = false ): void {
+	if ( $allowNull ) {
+		echo '<option value=""' . esc_attr( empty( $selected ) ? 'selected' : '' ) . '></option>';
+	}
+
+	foreach ( $carriers as $code => $carrier ) {
+		echo '<option value="' . esc_attr( $code ) . '"'
+		     . esc_attr( $selected === $code ? 'selected' : '' ) . '>'
+		     . esc_html( $carrier->label ) . '</option>';
 	}
 }
 ?>
@@ -54,7 +67,7 @@ function lgw_print_shipping_method_options( array $shipping_methods, ?string $se
 					<label>
 						<?php echo esc_html( $keys[ Lengow_Configuration::IMPORT_SHIPPING_METHODS ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
 					</label>
-					<div class="accordion" id="marketplaceAccordion">
+					<div id="marketplaceAccordion">
 						<?php foreach ( $marketplaces as $marketplace_code => $marketplace ) : ?>
 							<div class="accordion-item">
 								<h2 class="accordion-header" id="heading<?php echo esc_attr( $marketplace_code ); ?>">
@@ -64,6 +77,7 @@ function lgw_print_shipping_method_options( array $shipping_methods, ?string $se
 								</h2>
 								<div id="collapse<?php echo esc_attr( $marketplace_code ); ?>" class="accordion-collapse collapse" aria-labelledby="heading<?php echo esc_attr( $marketplace_code ); ?>" data-bs-parent="#marketplaceAccordion">
 									<div class="accordion-body">
+                                        <?php /* DEFAULT WOOCOMMERCE SHIPPING METHOD */ ?>
 										<div class="form-group">
 											<label>
 												<?php echo esc_html( $keys[ Lengow_Configuration::IMPORT_SHIPPING_METHODS ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
@@ -78,22 +92,63 @@ function lgw_print_shipping_method_options( array $shipping_methods, ?string $se
 												?>
 											</select>
 										</div>
-										<?php foreach ( $marketplace->orders->shipping_methods as $shipping_code => $shipping_method ) : ?>
-											<div class="form-group">
-												<label>
-													<?php echo esc_html( $shipping_method->label ); ?>
-												</label>
-												<select class="js-select lengow_select" name="<?php echo Lengow_Configuration::IMPORT_SHIPPING_METHODS; ?>[<?php echo esc_attr( $marketplace_code ); ?>][<?php echo esc_attr( $shipping_code ); ?>]">
-													<?php
-													lgw_print_shipping_method_options(
-														$shipping_methods,
-														$marketplace_shipping_methods[ $marketplace_code ][ $shipping_code ] ?? null,
-														true
-													);
-													?>
-												</select>
-											</div>
-										<?php endforeach; ?>
+                                        <?php if (!empty((array)$marketplace->orders->carriers)) : ?>
+                                            <?php // DEFAULT MARKETPLACE CARRIER ?>
+                                            <div class="form-group">
+                                                <label>
+                                                    <?php echo esc_html( sprintf( $keys[ Lengow_Configuration::SHIPPING_METHOD_CARRIERS ][ Lengow_Configuration::PARAM_LABEL ], esc_html( $marketplace->name ) ) ); ?>
+                                                </label>
+                                                <select class="js-select lengow_select" name="<?php echo Lengow_Configuration::SHIPPING_METHOD_CARRIERS; ?>[<?php echo esc_attr( $marketplace_code ); ?>][__default]">
+                                                    <?php
+                                                    lgw_print_carrier_options(
+	                                                    (array)$marketplace->orders->carriers,
+                                                        $shipping_method_carriers[ $marketplace_code ]['__default'] ?? null,
+                                                        true
+                                                    );
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        <?php endif;?>
+                                        <?php /* WOOCOMMERCE SHIPPING METHOD BY MARKETPLACE */ ?>
+                                        <h3><?php echo esc_html( sprintf( $locale->t( 'lengow_settings.lengow_import_shipping_methods_title' ), $marketplace->name ) ); ?></h3>
+										<?php if (!empty((array)$marketplace->orders->shipping_methods)) : ?>
+										    <?php foreach ( $marketplace->orders->shipping_methods as $shipping_code => $shipping_method ) : ?>
+                                                <div class="form-group">
+                                                    <label>
+                                                        <?php echo esc_html( $shipping_method->label ); ?>
+                                                    </label>
+                                                    <select class="js-select lengow_select" name="<?php echo Lengow_Configuration::IMPORT_SHIPPING_METHODS; ?>[<?php echo esc_attr( $marketplace_code ); ?>][<?php echo esc_attr( $shipping_code ); ?>]">
+                                                        <?php
+                                                        lgw_print_shipping_method_options(
+                                                            $shipping_methods,
+                                                            $marketplace_shipping_methods[ $marketplace_code ][ $shipping_code ] ?? null,
+                                                            true
+                                                        );
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                        <?php /* MARKETPLACE CARRIER BY WOOCOMMERCE SHIPPING METHOD */ ?>
+                                        <h3><?php echo esc_html( sprintf( $locale->t( 'lengow_settings.lengow_shipping_method_carriers_title' ), $marketplace->name ) ); ?></h3>
+										<?php if (!empty((array)$marketplace->orders->carriers)) : ?>
+                                            <?php foreach ( $shipping_methods as $shipping_code => $shipping_method ) : ?>
+                                                <div class="form-group">
+                                                    <label>
+                                                        <?php echo esc_html( $shipping_method ); ?>
+                                                    </label>
+                                                    <select class="js-select lengow_select" name="<?php echo Lengow_Configuration::SHIPPING_METHOD_CARRIERS; ?>[<?php echo esc_attr( $marketplace_code ); ?>][<?php echo esc_attr( $shipping_code ); ?>]">
+                                                        <?php
+                                                        lgw_print_carrier_options(
+                                                            (array)$marketplace->orders->carriers,
+                                                            $shipping_method_carriers[ $marketplace_code ][ $shipping_code ] ?? null,
+                                                            true
+                                                        );
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
 									</div>
 								</div>
 							</div>
@@ -298,3 +353,23 @@ function lgw_print_shipping_method_options( array $shipping_methods, ?string $se
 	</div>
 </div>
 
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    let buttons = document.querySelectorAll('.accordion-button');
+
+    buttons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            let target = document.querySelector(button.getAttribute('data-bs-target'));
+            let isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+            if (isExpanded) {
+                target.classList.remove('show');
+                button.setAttribute('aria-expanded', 'false');
+            } else {
+                target.classList.add('show');
+                button.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+});
+</script>

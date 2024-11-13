@@ -383,6 +383,10 @@ en:
     lengow_import_in_progress_title: "Import in progress"
     lengow_last_import_manual_title: "Last manual import"
     lengow_last_import_cron_title: "Last Cron import"
+    lengow_import_shipping_methods_default_title: "Default woocommerce shipping method"
+    lengow_shipping_method_carriers_default_title: "Default %s carrier"
+    lengow_import_shipping_methods_title: "Map the %s delivery methods with WooCommerce shipping methods"
+    lengow_shipping_method_carriers_title: "Map WooCommerce shipping methods with %s carriers"
   lengow_log:
     error:
       rest_time_to_import: "Please wait %{rest_time} seconds before re-importing orders"

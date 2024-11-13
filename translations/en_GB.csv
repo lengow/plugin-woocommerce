@@ -353,6 +353,10 @@ lengow_settings.lengow_debug_enabled_title|Activate Debug Mode
 lengow_settings.lengow_import_in_progress_title|Import in progress
 lengow_settings.lengow_last_import_manual_title|Last manual import
 lengow_settings.lengow_last_import_cron_title|Last Cron import
+lengow_settings.lengow_import_shipping_methods_default_title|Default woocommerce shipping method
+lengow_settings.lengow_shipping_method_carriers_default_title|Default %s carrier
+lengow_settings.lengow_import_shipping_methods_title|Map the %s delivery methods with WooCommerce shipping methods
+lengow_settings.lengow_shipping_method_carriers_title|Map WooCommerce shipping methods with %s carriers
 lengow_log.error.rest_time_to_import|Please wait %{rest_time} seconds before re-importing orders
 lengow_log.error.nb_order_imported|%{nb_order} order(s) imported
 lengow_log.error.nb_order_updated|%{nb_order} order(s) updated

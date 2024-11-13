@@ -59,6 +59,7 @@ class Lengow_Configuration {
 	const SYNCHRONIZATION_DAY_INTERVAL         = 'lengow_import_days';
 	const DEFAULT_IMPORT_CARRIER_ID            = 'lengow_import_default_shipping_method';
 	const IMPORT_SHIPPING_METHODS              = 'lengow_import_shipping_methods';
+	const SHIPPING_METHOD_CARRIERS             = 'lengow_shipping_method_carriers';
 	const CURRENCY_CONVERSION_ENABLED          = 'lengow_currency_conversion';
 	const ANONYMIZE_EMAIL                      = 'lengow_anonymize_email';
 	const TYPE_ANONYMIZE_EMAIL 				   = 'lengow_type_anonymize_email';
@@ -132,6 +133,7 @@ class Lengow_Configuration {
 		self::SYNCHRONIZATION_DAY_INTERVAL         => 'synchronization_day_interval',
 		self::DEFAULT_IMPORT_CARRIER_ID            => 'default_import_carrier_id',
 		self::IMPORT_SHIPPING_METHODS              => 'import_shipping_methods',
+		self::SHIPPING_METHOD_CARRIERS             => 'shipping_method_carriers',
 		self::CURRENCY_CONVERSION_ENABLED          => 'currency_conversion_enabled',
 		self::ANONYMIZE_EMAIL                      => 'anonyze_customers_email',
 		self::TYPE_ANONYMIZE_EMAIL				   => 'type_anonymize_email',
@@ -322,8 +324,13 @@ class Lengow_Configuration {
 				),
 				self::IMPORT_SHIPPING_METHODS              => array(
 					self::PARAM_GLOBAL        => true,
-					self::PARAM_LABEL         => $locale->t( 'lengow_settings.lengow_import_shipping_methods_title' ),
-					self::PARAM_LEGEND        => $locale->t( 'lengow_settings.lengow_import_shipping_methods_legend' ),
+					self::PARAM_LABEL         => $locale->t( 'lengow_settings.lengow_import_shipping_methods_default_title' ),
+					self::PARAM_DEFAULT_VALUE => '',
+					self::PARAM_RETURN        => self::RETURN_TYPE_ARRAY,
+				),
+				self::SHIPPING_METHOD_CARRIERS             => array(
+					self::PARAM_GLOBAL        => true,
+					self::PARAM_LABEL         => $locale->t( 'lengow_settings.lengow_shipping_method_carriers_default_title' ),
 					self::PARAM_DEFAULT_VALUE => '',
 					self::PARAM_RETURN        => self::RETURN_TYPE_ARRAY,
 				),
