@@ -597,19 +597,18 @@ body.page-sidebar-closed .lengow-nav-bottom {
   transition: all 0.2s ease;
 }
 
-.accordion-collapse {
-  max-height: 0;
-  transform: scaleY(0);
+#marketplaceAccordion  .accordion-collapse {
+  display: none;
 }
 
 #marketplaceAccordion .accordion-body {
   padding: 15px;
-  background-color: #fff;
 }
 
-.accordion-collapse.show {
-  max-height: fit-content;
-  transform: scaleY(1);
-  transform-origin: top;
-  transition: transform 0.2s ease;
+#marketplaceAccordion .accordion-body h3 {
+  padding-top: 30px;
+}
+
+#marketplaceAccordion .accordion-collapse.show {
+  display: block;
 }
