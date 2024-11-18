@@ -587,8 +587,19 @@ body.page-sidebar-closed .lengow-nav-bottom {
   color: #00aeef;
 }
 
-#marketplaceAccordion .accordion-collapse {
-  border-top: 1px solid #ddd;
+#marketplaceAccordion .accordion-button[aria-expanded="true"] .dashicons {
+  transform: rotate(0.5turn);
+  transition: all 0.2s ease;
+}
+
+#marketplaceAccordion .accordion-button[aria-expanded="false"] .dashicons {
+  transform: rotate(0turn);
+  transition: all 0.2s ease;
+}
+
+.accordion-collapse {
+  max-height: 0;
+  transform: scaleY(0);
 }
 
 #marketplaceAccordion .accordion-body {
@@ -596,12 +607,9 @@ body.page-sidebar-closed .lengow-nav-bottom {
   background-color: #fff;
 }
 
-.accordion-collapse {
-  display: none;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-}
-
 .accordion-collapse.show {
-  display: block;
+  max-height: fit-content;
+  transform: scaleY(1);
+  transform-origin: top;
+  transition: transform 0.2s ease;
 }

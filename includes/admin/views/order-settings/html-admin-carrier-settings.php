@@ -61,7 +61,7 @@ function lgw_print_carrier_options( array $carriers, ?string $selected = null, b
 							<div class="accordion-item">
 								<h2 class="accordion-header" id="heading<?php echo esc_attr( $marketplace_code ); ?>">
 									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo esc_attr( $marketplace_code ); ?>" aria-expanded="false" aria-controls="collapse<?php echo esc_attr( $marketplace_code ); ?>">
-										<?php echo esc_html( $marketplace->name ); ?>
+                                        <span class="dashicons dashicons-arrow-down-alt2"></span> <?php echo esc_html( $marketplace->name ); ?>
 									</button>
 								</h2>
 								<div id="collapse<?php echo esc_attr( $marketplace_code ); ?>" class="accordion-collapse collapse" aria-labelledby="heading<?php echo esc_attr( $marketplace_code ); ?>" data-bs-parent="#marketplaceAccordion">
