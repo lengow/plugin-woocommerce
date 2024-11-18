@@ -111,6 +111,9 @@ class Lengow_Admin {
 			case 'lengow_admin_order_settings':
 				Lengow_Admin_Order_Settings::display();
 				break;
+			case 'lengow_admin_carrier_settings':
+				Lengow_Admin_Carrier_Settings::display();
+				break;
 			case 'lengow_admin_help':
 				Lengow_Admin_Help::display();
 				break;

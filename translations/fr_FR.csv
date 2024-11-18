@@ -17,6 +17,7 @@ menu.counter|Période d'essai : %{counter} jours restants
 menu.upgrade_account|Souscrire
 menu.order_overview|Vue d'ensemble
 menu.order_parameter|Paramètres des commandes
+menu.carrier_parameter|Paramètres des transporteurs
 menu.help|Aide
 menu.global_parameter|Paramètres principaux
 menu.new_version_available|La nouvelle version %{version} est disponible !

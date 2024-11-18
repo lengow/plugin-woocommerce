@@ -17,6 +17,7 @@ menu.counter|Trial period: %{counter} day(s) left.
 menu.upgrade_account|Subscribe
 menu.order_overview|Overview
 menu.order_parameter|Settings
+menu.carrier_parameter|Carrier settings
 menu.help|Help
 menu.global_parameter|General settings
 menu.new_version_available|A new version %{version} is available!
@@ -217,6 +218,8 @@ order_setting.screen.anonymize_email|Anonymize customer's emails addresses
 order_setting.screen.type_anonymize_email_label|Choose the type of anonymization
 order_setting.screen.type_anonymize_email_encrypted|Encrypted, example: 1ec4a32af2ebee7db7ffa687e0271e39@lengow.com
 order_setting.screen.type_anonymize_email_not_encrypted|Plaintext, example:123456789-amazon_fr@lengow.com
+carrier_setting.screen.title|Manage carriers by marketplace
+carrier_setting.screen.description|Match your marketplace carriers with your WooCommerce carriers
 global_setting.screen.notification_alert_title|Notifications & alerts
 global_setting.screen.security_title|Security
 global_setting.screen.shop_title|Store management
@@ -353,7 +356,7 @@ lengow_settings.lengow_debug_enabled_title|Activate Debug Mode
 lengow_settings.lengow_import_in_progress_title|Import in progress
 lengow_settings.lengow_last_import_manual_title|Last manual import
 lengow_settings.lengow_last_import_cron_title|Last Cron import
-lengow_settings.lengow_import_shipping_methods_default_title|Default woocommerce shipping method
+lengow_settings.lengow_import_shipping_methods_default_title|Default WooCommerce shipping method
 lengow_settings.lengow_shipping_method_carriers_default_title|Default %s carrier
 lengow_settings.lengow_import_shipping_methods_title|Map the %s delivery methods with WooCommerce shipping methods
 lengow_settings.lengow_shipping_method_carriers_title|Map WooCommerce shipping methods with %s carriers

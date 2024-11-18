@@ -20,6 +20,7 @@ en:
     upgrade_account: "Subscribe"
     order_overview: "Overview"
     order_parameter: "Settings"
+    carrier_parameter: "Carrier settings"
     help: "Help"
     global_parameter: "General settings"
     new_version_available: "A new version %{version} is available!"
@@ -238,6 +239,10 @@ en:
       type_anonymize_email_label: "Choose the type of anonymization"
       type_anonymize_email_encrypted: "Encrypted, example: 1ec4a32af2ebee7db7ffa687e0271e39@lengow.com"
       type_anonymize_email_not_encrypted: "Plaintext, example:123456789-amazon_fr@lengow.com"
+  carrier_setting:
+    screen:
+      title: "Manage carriers by marketplace"
+      description: "Match your marketplace carriers with your WooCommerce carriers"
   global_setting:
     screen:
       notification_alert_title: "Notifications & alerts"
@@ -383,7 +388,7 @@ en:
     lengow_import_in_progress_title: "Import in progress"
     lengow_last_import_manual_title: "Last manual import"
     lengow_last_import_cron_title: "Last Cron import"
-    lengow_import_shipping_methods_default_title: "Default woocommerce shipping method"
+    lengow_import_shipping_methods_default_title: "Default WooCommerce shipping method"
     lengow_shipping_method_carriers_default_title: "Default %s carrier"
     lengow_import_shipping_methods_title: "Map the %s delivery methods with WooCommerce shipping methods"
     lengow_shipping_method_carriers_title: "Map WooCommerce shipping methods with %s carriers"

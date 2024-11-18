@@ -20,6 +20,7 @@ fr:
     upgrade_account: "Souscrire"
     order_overview: "Vue d'ensemble"
     order_parameter: "Paramètres des commandes"
+    carrier_parameter: "Paramètres des transporteurs"
     help: "Aide"
     global_parameter: "Paramètres principaux"
     new_version_available: "La nouvelle version %{version} est disponible !"
