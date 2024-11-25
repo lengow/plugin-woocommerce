@@ -99,9 +99,9 @@ function lgw_print_carrier_options( array $carriers, ?string $selected = null, b
                                             </div>
                                         <?php endif;?>
                                         <?php /* WOOCOMMERCE SHIPPING METHOD BY MARKETPLACE */ ?>
-                                        <h3><?php echo esc_html( sprintf( $locale->t( 'lengow_settings.lengow_import_shipping_methods_title' ), $marketplace->name ) ); ?></h3>
-										<?php if (!empty((array)$marketplace->orders->shipping_methods)) : ?>
-										    <?php foreach ( $marketplace->orders->shipping_methods as $shipping_code => $shipping_method ) : ?>
+                                        <?php if (count((array)$marketplace->orders->shipping_methods) > 1) : ?>
+                                            <h3><?php echo esc_html( sprintf( $locale->t( 'lengow_settings.lengow_import_shipping_methods_title' ), $marketplace->name ) ); ?></h3>
+	                                        <?php foreach ( $marketplace->orders->shipping_methods as $shipping_code => $shipping_method ) : ?>
                                                 <div class="form-group">
                                                     <label>
                                                         <?php echo esc_html( $shipping_method->label ); ?>
@@ -119,9 +119,9 @@ function lgw_print_carrier_options( array $carriers, ?string $selected = null, b
                                             <?php endforeach; ?>
                                         <?php endif; ?>
                                         <?php /* MARKETPLACE CARRIER BY WOOCOMMERCE SHIPPING METHOD */ ?>
-                                        <h3><?php echo esc_html( sprintf( $locale->t( 'lengow_settings.lengow_shipping_method_carriers_title' ), $marketplace->name ) ); ?></h3>
-										<?php if (!empty((array)$marketplace->orders->carriers)) : ?>
-                                            <?php foreach ( $shipping_methods as $shipping_code => $shipping_method ) : ?>
+                                        <?php if (count((array)$marketplace->orders->carriers) > 1) : ?>
+                                            <h3><?php echo esc_html( sprintf( $locale->t( 'lengow_settings.lengow_shipping_method_carriers_title' ), $marketplace->name ) ); ?></h3>
+	                                        <?php foreach ( $shipping_methods as $shipping_code => $shipping_method ) : ?>
                                                 <div class="form-group">
                                                     <label>
                                                         <?php echo esc_html( $shipping_method ); ?>

@@ -242,7 +242,7 @@ en:
   carrier_setting:
     screen:
       title: "Manage carriers by marketplace"
-      description: "Match your marketplace carriers with your WooCommerce carriers"
+      description: "Map your marketplace carriers with your WooCommerce carriers"
   global_setting:
     screen:
       notification_alert_title: "Notifications & alerts"
