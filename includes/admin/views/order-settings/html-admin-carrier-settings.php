@@ -51,9 +51,48 @@ function lgw_print_carrier_options( array $carriers, ?string $selected = null, b
 		<?php endif; ?>
 		<form class="lengow_form" method="POST">
 			<input type="hidden" name="action" value="process">
+            <div class="lgw-box">
+                <h2><?php echo esc_html( $locale->t( 'carrier_setting.screen.default_shipping_method_title' ) ); ?></h2>
+                <p><?php echo esc_html( $locale->t( 'carrier_setting.screen.default_shipping_method_description' ) ); ?></p>
+                <br/>
+                <div class="form-group lengow_import_default_shipping_method">
+                    <label>
+						<?php echo esc_html( $keys[ Lengow_Configuration::DEFAULT_IMPORT_CARRIER_ID ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
+                    </label>
+                    <select class="js-select lengow_select" name="lengow_import_default_shipping_method">
+						<?php lgw_print_shipping_method_options( $shipping_methods, $values[ Lengow_Configuration::DEFAULT_IMPORT_CARRIER_ID ] ); ?>
+                    </select>
+                </div>
+                <div class="lengow_main_setting_block_content">
+                    <div class="pull-left">
+                        <button type="submit" class="lgw-btn lgw-btn-progression lengow_submit_main_setting">
+                            <div class="btn-inner">
+                                <div class="btn-step default">
+						            <?php echo esc_html( $locale->t( 'global_setting.screen.button_save' ) ); ?>
+                                </div>
+                                <div class="btn-step loading">
+						            <?php echo esc_html( $locale->t( 'global_setting.screen.setting_saving' ) ); ?>
+                                </div>
+                                <div class="btn-step done" data-success="Saved!" data-error="Error">
+						            <?php echo esc_html( $locale->t( 'global_setting.screen.setting_saved' ) ); ?>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
 			<div class="lgw-box">
 				<h2><?php echo esc_html( $locale->t( 'carrier_setting.screen.title' ) ); ?></h2>
 				<p><?php echo esc_html( $locale->t( 'carrier_setting.screen.description' ) ); ?></p>
+                <span class="legend blue-frame" style="display:block;">
+                    <?php echo esc_html( $locale->t( 'carrier_setting.screen.shipping_method_mapping_help' ) ); ?>
+                    <ul>
+                        <li>- <?php echo esc_html( $locale->t( 'carrier_setting.screen.shipping_method_mapping_help_1' ) ); ?></li>
+                        <li>- <?php echo esc_html( $locale->t( 'carrier_setting.screen.shipping_method_mapping_help_2' ) ); ?></li>
+                        <li>- <?php echo esc_html( $locale->t( 'carrier_setting.screen.shipping_method_mapping_help_3' ) ); ?></li>
+                    </ul>
+                </span>
 				<br/>
 				<div class="form-group lengow_import_shipping_methods">
 					<div id="marketplaceAccordion">
@@ -66,10 +105,11 @@ function lgw_print_carrier_options( array $carriers, ?string $selected = null, b
 								</h2>
 								<div id="collapse<?php echo esc_attr( $marketplace_code ); ?>" class="accordion-collapse collapse" aria-labelledby="heading<?php echo esc_attr( $marketplace_code ); ?>" data-bs-parent="#marketplaceAccordion">
 									<div class="accordion-body">
+                                        <?php if (count((array)$marketplace->orders->shipping_methods) !== 1) : ?>
                                         <?php /* DEFAULT WOOCOMMERCE SHIPPING METHOD */ ?>
 										<div class="form-group">
 											<label>
-												<?php echo esc_html( $keys[ Lengow_Configuration::IMPORT_SHIPPING_METHODS ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
+												<?php echo esc_html( sprintf( $keys[ Lengow_Configuration::IMPORT_SHIPPING_METHODS ][ Lengow_Configuration::PARAM_LABEL ], $marketplace->name ) ); ?>
 											</label>
 											<select class="js-select lengow_select" name="<?php echo Lengow_Configuration::IMPORT_SHIPPING_METHODS; ?>[<?php echo esc_attr( $marketplace_code ); ?>][__default]">
 												<?php
@@ -81,11 +121,12 @@ function lgw_print_carrier_options( array $carriers, ?string $selected = null, b
 												?>
 											</select>
 										</div>
-                                        <?php if (!empty((array)$marketplace->orders->carriers)) : ?>
+                                        <?php endif; ?>
+                                        <?php if (!empty((array)$marketplace->orders->carriers) && count((array)$marketplace->orders->carriers) !== 1 && count($shipping_methods) !== 1) : ?>
                                             <?php // DEFAULT MARKETPLACE CARRIER ?>
                                             <div class="form-group">
                                                 <label>
-                                                    <?php echo esc_html( sprintf( $keys[ Lengow_Configuration::SHIPPING_METHOD_CARRIERS ][ Lengow_Configuration::PARAM_LABEL ], esc_html( $marketplace->name ) ) ); ?>
+                                                    <?php echo esc_html( sprintf( $keys[ Lengow_Configuration::SHIPPING_METHOD_CARRIERS ][ Lengow_Configuration::PARAM_LABEL ], $marketplace->name ) ); ?>
                                                 </label>
                                                 <select class="js-select lengow_select" name="<?php echo Lengow_Configuration::SHIPPING_METHOD_CARRIERS; ?>[<?php echo esc_attr( $marketplace_code ); ?>][__default]">
                                                     <?php
@@ -99,7 +140,7 @@ function lgw_print_carrier_options( array $carriers, ?string $selected = null, b
                                             </div>
                                         <?php endif;?>
                                         <?php /* WOOCOMMERCE SHIPPING METHOD BY MARKETPLACE */ ?>
-                                        <?php if (count((array)$marketplace->orders->shipping_methods) > 1) : ?>
+                                        <?php if (count((array)$marketplace->orders->shipping_methods) > 0) : ?>
                                             <h3><?php echo esc_html( sprintf( $locale->t( 'lengow_settings.lengow_import_shipping_methods_title' ), $marketplace->name ) ); ?></h3>
 	                                        <?php foreach ( $marketplace->orders->shipping_methods as $shipping_code => $shipping_method ) : ?>
                                                 <div class="form-group">

@@ -201,8 +201,6 @@ order.table.not_imported|pas importée
 order.table.not_sent|pas envoyée
 order.table.action_sent|action %{action_type} envoyée
 order.table.action_waiting_return|Action envoyée, en attente d'une réponse
-order_setting.screen.default_shipping_method_title|Gérez les méthodes de livraison
-order_setting.screen.default_shipping_method_description|Sélectionnez la méthode de livraison par défaut à appliquer à vos commandes
 order_setting.screen.order_status_title|Statut des commandes
 order_setting.screen.order_status_description|Attribuez des statuts Lengow à vos commandes pour les retrouver facilement parmi l'ensemble de vos commandes
 order_setting.screen.import_setting_title|Import des commandes
@@ -218,6 +216,14 @@ order_setting.screen.anonymize_email|Anonymiser les adresses e-mails des clients
 order_setting.screen.type_anonymize_email_label|Type d'anonymisation des e-mails
 order_setting.screen.type_anonymize_email_encrypted|Chiffré, exemple: 1ec4a32af2ebee7db7ffa687e0271e39@lengow.com
 order_setting.screen.type_anonymize_email_not_encrypted|En clair, exemple:123456789-amazon_fr@lengow.com
+carrier_setting.screen.default_shipping_method_title|Gérez les méthodes de livraison
+carrier_setting.screen.default_shipping_method_description|Sélectionnez une méthode de livraison par défaut à appliquer à vos commandes
+carrier_setting.screen.shipping_method_mapping_help|Le choix de la méthode de livraison est choisie comme suit :
+carrier_setting.screen.shipping_method_mapping_help_1|Si une méthode est définie pour la méthode de livraison du marketplace, elle sera utilisée.
+carrier_setting.screen.shipping_method_mapping_help_2|Si une méthode est définie pour la méthode de livraison par défaut du marketplace, elle sera utilisée.
+carrier_setting.screen.shipping_method_mapping_help_3|Sinon, la méthode de livraison définie par défaut sera utilisée.
+carrier_setting.screen.title|Gérez les méthodes de livraison par marketplace
+carrier_setting.screen.description|Choisissez ici les différentes méthodes de livraison à attribuer à chacune de vos commandes. Vous pouvez le faire pour les différentes marketplaces activées dans votre compte.
 global_setting.screen.notification_alert_title|Notifications & alertes
 global_setting.screen.security_title|Sécurité
 global_setting.screen.shop_title|Gestion de la boutique
@@ -354,10 +360,10 @@ lengow_settings.lengow_debug_enabled_title|Activer le Debug Mode
 lengow_settings.lengow_import_in_progress_title|Import en cours
 lengow_settings.lengow_last_import_manual_title|Dernier import manuel
 lengow_settings.lengow_last_import_cron_title|Dernier import CRON
-lengow_settings.lengow_import_shipping_methods_default_title|Méthode de livraison WooCommerce par défaut
-lengow_settings.lengow_shipping_method_carriers_default_title|Transporteur %s par défaut
-lengow_settings.lengow_import_shipping_methods_title|Mappez les méthodes de livraisons %s avec les transporteurs WooCommerce
-lengow_settings.lengow_shipping_method_carriers_title|Mappez les méthodes de livraisons WooCommerce avec les transporteur %s
+lengow_settings.lengow_import_shipping_methods_default_title|Méthode de livraison WooCommerce par défaut pour %s
+lengow_settings.lengow_shipping_method_carriers_default_title|Transporteur par défaut pour %s
+lengow_settings.lengow_import_shipping_methods_title|Mappez les méthodes de livraisons %s avec vos méthodes de livraison WooCommerce
+lengow_settings.lengow_shipping_method_carriers_title|Mappez vos méthodes de livraisons WooCommerce avec les transporteur %s
 lengow_log.error.rest_time_to_import|Attendez %{rest_time}  secondes avant d'importer de nouveau vos commandes
 lengow_log.error.nb_order_imported|%{nb_order} commande(s) importée(s)
 lengow_log.error.nb_order_updated|%{nb_order} commande(s) mise(s) à jour

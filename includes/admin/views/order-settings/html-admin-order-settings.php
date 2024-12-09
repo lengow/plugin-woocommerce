@@ -12,22 +12,6 @@ $order_statuses   = Lengow_Main::get_order_statuses();
 $shipping_methods = Lengow_Main::get_shipping_methods();
 $min_import_days  = Lengow_Import::MIN_INTERVAL_TIME / 86400;
 $max_import_days  = Lengow_Import::MAX_INTERVAL_TIME / 86400;
-
-Lengow_Marketplace::load_api_marketplace();
-$marketplaces                 = Lengow_Marketplace::$marketplaces;
-$marketplace_shipping_methods = Lengow_Configuration::get( Lengow_Configuration::IMPORT_SHIPPING_METHODS );
-
-function lgw_print_shipping_method_options( array $shipping_methods, ?string $selected = null, bool $allowNull = false ): void {
-	if ( $allowNull ) {
-		echo '<option value=""' . esc_attr( empty( $selected ) ? 'selected' : '' ) . '></option>';
-	}
-
-	foreach ( $shipping_methods as $shipping_method => $label ) {
-		echo '<option value="' . esc_attr( $shipping_method ) . '"'
-			. esc_attr( $selected === $shipping_method ? 'selected' : '' ) . '>'
-			. esc_html( $label ) . '</option>';
-	}
-}
 ?>
 <div id="lengow_order_setting_wrapper">
 	<div class="lgw-container">
@@ -38,19 +22,6 @@ function lgw_print_shipping_method_options( array $shipping_methods, ?string $se
 		<?php endif; ?>
 		<form class="lengow_form" method="POST">
 			<input type="hidden" name="action" value="process">
-			<div class="lgw-box">
-				<h2><?php echo esc_html( $locale->t( 'order_setting.screen.default_shipping_method_title' ) ); ?></h2>
-				<p><?php echo esc_html( $locale->t( 'order_setting.screen.default_shipping_method_description' ) ); ?></p>
-				<br/>
-				<div class="form-group lengow_import_default_shipping_method">
-					<label>
-						<?php echo esc_html( $keys[ Lengow_Configuration::DEFAULT_IMPORT_CARRIER_ID ][ Lengow_Configuration::PARAM_LABEL ] ); ?>
-					</label>
-					<select class="js-select lengow_select" name="lengow_import_default_shipping_method">
-						<?php lgw_print_shipping_method_options( $shipping_methods, $values[ Lengow_Configuration::DEFAULT_IMPORT_CARRIER_ID ] ); ?>
-					</select>
-				</div>
-			</div>
 			<div class="lgw-box">
 				<h2><?php echo esc_html( $locale->t( 'order_setting.screen.order_status_title' ) ); ?></h2>
 				<p><?php echo esc_html( $locale->t( 'order_setting.screen.order_status_description' ) ); ?></p>
