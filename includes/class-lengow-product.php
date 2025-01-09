@@ -882,7 +882,7 @@ class Lengow_Product {
 				if (!isset($terms[ $product_term_id ])) {
 					continue;
 				}
-				$term_children = $terms[ $product_term_id ]['child']; // warning
+				$term_children = $terms[ $product_term_id ]['child'];
 				if ( ! empty( $term_children ) ) {
 					foreach ( $term_children as $term_child ) {
 						if ( ! in_array( $term_child, $product_term_ids, true ) ) {
@@ -898,7 +898,7 @@ class Lengow_Product {
 			// construct breadcrumb with all term names.
 			if ( $last_id ) {
 				$term_ids   = array();
-				$term_ids[] = $terms[ $last_id ]['name'] ?? ''; //warining
+				$term_ids[] = $terms[ $last_id ]['name'] ?? '';
 				$parent_id  = (int) $last_id;
 				$iteration  = 0;
 				do {
@@ -906,7 +906,7 @@ class Lengow_Product {
 						$parent_id = 0;
 						continue;
 					}
-					$parent_id = $terms[ $parent_id ]['parent'] ; // warning
+					$parent_id = $terms[ $parent_id ]['parent'];
 					if ( $parent_id !== 0 ) {
 						if ( empty( $terms[ $parent_id ]['name'] ) ) {
 							continue;
