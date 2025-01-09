@@ -578,14 +578,14 @@ class Lengow_Product {
 				break;
 			case 'sku':
 				$sql        = '
-				  	SELECT post_id FROM ' . $wpdb->postmeta . ' 
+				  	SELECT post_id FROM ' . $wpdb->postmeta . '
 				  	WHERE meta_key = \'_sku\' AND meta_value = \'%s\' LIMIT 1
 				';
 				$product_id = $wpdb->get_var( $wpdb->prepare( $sql, $attribute_value ) );
 				break;
 			default:
 				$sql        = '
-					SELECT post_id FROM ' . $wpdb->postmeta . ' 
+					SELECT post_id FROM ' . $wpdb->postmeta . '
 					WHERE meta_key = \'%s\' AND meta_value = \'%s\' LIMIT 1
 				';
 				$product_id = $wpdb->get_var( $wpdb->prepare( $sql, array( $type, $attribute_value ) ) );
@@ -879,7 +879,10 @@ class Lengow_Product {
 			}
 			// get the id at the last term.
 			foreach ( $product_term_ids as $product_term_id ) {
-				$term_children = $terms[ $product_term_id ]['child'];
+				if (!isset($terms[ $product_term_id ])) {
+					continue;
+				}
+				$term_children = $terms[ $product_term_id ]['child']; // warning
 				if ( ! empty( $term_children ) ) {
 					foreach ( $term_children as $term_child ) {
 						if ( ! in_array( $term_child, $product_term_ids, true ) ) {
@@ -895,11 +898,15 @@ class Lengow_Product {
 			// construct breadcrumb with all term names.
 			if ( $last_id ) {
 				$term_ids   = array();
-				$term_ids[] = $terms[ $last_id ]['name'];
+				$term_ids[] = $terms[ $last_id ]['name'] ?? ''; //warining
 				$parent_id  = (int) $last_id;
 				$iteration  = 0;
 				do {
-					$parent_id = $terms[ $parent_id ]['parent'];
+					if (!isset($terms[ $parent_id ])) {
+						$parent_id = 0;
+						continue;
+					}
+					$parent_id = $terms[ $parent_id ]['parent'] ; // warning
 					if ( $parent_id !== 0 ) {
 						if ( empty( $terms[ $parent_id ]['name'] ) ) {
 							continue;
