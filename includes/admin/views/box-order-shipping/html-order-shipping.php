@@ -31,9 +31,9 @@ $order_shipping_method  = current( $order_shipping_methods );
 
 if ( empty( $carrier ) && $order_shipping_method ) {
 	$marketplace_carriers = Lengow_Configuration::get( Lengow_Configuration::SHIPPING_METHOD_CARRIERS );
-	if ( isset( $marketplace_carriers[ $marketplace->name ][ $order_shipping_method->get_method_id() ] ) ) {
+	if ( !empty( $marketplace_carriers[ $marketplace->name ][ $order_shipping_method->get_method_id() ] ) ) {
 		$carrier = $marketplace_carriers[ $marketplace->name ][ $order_shipping_method->get_method_id() ];
-	} elseif ( isset( $marketplace_carriers[ $marketplace->name ]['__default'] ) ) {
+	} elseif ( !empty( $marketplace_carriers[ $marketplace->name ]['__default'] ) ) {
 		$carrier = $marketplace_carriers[ $marketplace->name ]['__default'];
 	}
 }
