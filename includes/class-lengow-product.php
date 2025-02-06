@@ -879,9 +879,10 @@ class Lengow_Product {
 			}
 			// get the id at the last term.
 			foreach ( $product_term_ids as $product_term_id ) {
-				if (!isset($terms[ $product_term_id ])) {
+				if ( ! isset( $terms[ $product_term_id ] ) ) {
 					continue;
 				}
+
 				$term_children = $terms[ $product_term_id ]['child'];
 				if ( ! empty( $term_children ) ) {
 					foreach ( $term_children as $term_child ) {
@@ -896,16 +897,12 @@ class Lengow_Product {
 				}
 			}
 			// construct breadcrumb with all term names.
-			if ( $last_id ) {
+			if ( $last_id && isset( $terms[ $last_id ] ) ) {
 				$term_ids   = array();
 				$term_ids[] = $terms[ $last_id ]['name'] ?? '';
 				$parent_id  = (int) $last_id;
 				$iteration  = 0;
 				do {
-					if (!isset($terms[ $parent_id ])) {
-						$parent_id = 0;
-						continue;
-					}
 					$parent_id = $terms[ $parent_id ]['parent'];
 					if ( $parent_id !== 0 ) {
 						if ( empty( $terms[ $parent_id ]['name'] ) ) {
