@@ -20,6 +20,7 @@ en:
     upgrade_account: "Subscribe"
     order_overview: "Overview"
     order_parameter: "Settings"
+    carrier_parameter: "Carrier settings"
     help: "Help"
     global_parameter: "General settings"
     new_version_available: "A new version %{version} is available!"
@@ -221,8 +222,6 @@ en:
       action_waiting_return: "Action sent, waiting for response"
   order_setting:
     screen:
-      default_shipping_method_title: "Manage shipping methods"
-      default_shipping_method_description: "Select the default shipping method that you would like to apply to your orders"
       order_status_title: "Order Status"
       order_status_description: "Match your Lengow order status to retrieve them in your orders easily"
       import_setting_title: "Order import"
@@ -238,6 +237,16 @@ en:
       type_anonymize_email_label: "Choose the type of anonymization"
       type_anonymize_email_encrypted: "Encrypted, example: 1ec4a32af2ebee7db7ffa687e0271e39@lengow.com"
       type_anonymize_email_not_encrypted: "Plaintext, example:123456789-amazon_fr@lengow.com"
+  carrier_setting:
+    screen:
+      default_shipping_method_title: "Manage shipping methods"
+      default_shipping_method_description: "Select a default shipping method to apply to your orders"
+      shipping_method_mapping_help: "The choice of the shipping method is made as follows:"
+      shipping_method_mapping_help_1: "If a method is defined for the marketplace shipping method, it will be used."
+      shipping_method_mapping_help_2: "If a method is defined for the default marketplace shipping method, it will be used."
+      shipping_method_mapping_help_3: "Otherwise, the default shipping method will be used."
+      title: "Manage shipping methods by marketplace"
+      description: "Choose the different shipping methods to assign to each of your orders here. You can do this for the different marketplaces activated in your account."
   global_setting:
     screen:
       notification_alert_title: "Notifications & alerts"
@@ -383,6 +392,10 @@ en:
     lengow_import_in_progress_title: "Import in progress"
     lengow_last_import_manual_title: "Last manual import"
     lengow_last_import_cron_title: "Last Cron import"
+    lengow_import_shipping_methods_default_title: "Default WooCommerce shipping method for %s"
+    lengow_shipping_method_carriers_default_title: "Default carrier for %s"
+    lengow_import_shipping_methods_title: "Map the %s shipping methods with your WooCommerce shipping methods"
+    lengow_shipping_method_carriers_title: "Map your WooCommerce shipping methods with %s carriers"
   lengow_log:
     error:
       rest_time_to_import: "Please wait %{rest_time} seconds before re-importing orders"

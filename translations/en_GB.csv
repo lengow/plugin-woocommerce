@@ -17,6 +17,7 @@ menu.counter|Trial period: %{counter} day(s) left.
 menu.upgrade_account|Subscribe
 menu.order_overview|Overview
 menu.order_parameter|Settings
+menu.carrier_parameter|Carrier settings
 menu.help|Help
 menu.global_parameter|General settings
 menu.new_version_available|A new version %{version} is available!
@@ -200,8 +201,6 @@ order.table.not_imported|not imported
 order.table.not_sent|not sent
 order.table.action_sent|action %{action_type} sent
 order.table.action_waiting_return|Action sent, waiting for response
-order_setting.screen.default_shipping_method_title|Manage shipping methods
-order_setting.screen.default_shipping_method_description|Select the default shipping method that you would like to apply to your orders
 order_setting.screen.order_status_title|Order Status
 order_setting.screen.order_status_description|Match your Lengow order status to retrieve them in your orders easily
 order_setting.screen.import_setting_title|Order import
@@ -217,6 +216,14 @@ order_setting.screen.anonymize_email|Anonymize customer's emails addresses
 order_setting.screen.type_anonymize_email_label|Choose the type of anonymization
 order_setting.screen.type_anonymize_email_encrypted|Encrypted, example: 1ec4a32af2ebee7db7ffa687e0271e39@lengow.com
 order_setting.screen.type_anonymize_email_not_encrypted|Plaintext, example:123456789-amazon_fr@lengow.com
+carrier_setting.screen.default_shipping_method_title|Manage shipping methods
+carrier_setting.screen.default_shipping_method_description|Select a default shipping method to apply to your orders
+carrier_setting.screen.shipping_method_mapping_help|The choice of the shipping method is made as follows:
+carrier_setting.screen.shipping_method_mapping_help_1|If a method is defined for the marketplace shipping method, it will be used.
+carrier_setting.screen.shipping_method_mapping_help_2|If a method is defined for the default marketplace shipping method, it will be used.
+carrier_setting.screen.shipping_method_mapping_help_3|Otherwise, the default shipping method will be used.
+carrier_setting.screen.title|Manage shipping methods by marketplace
+carrier_setting.screen.description|Choose the different shipping methods to assign to each of your orders here. You can do this for the different marketplaces activated in your account.
 global_setting.screen.notification_alert_title|Notifications & alerts
 global_setting.screen.security_title|Security
 global_setting.screen.shop_title|Store management
@@ -353,6 +360,10 @@ lengow_settings.lengow_debug_enabled_title|Activate Debug Mode
 lengow_settings.lengow_import_in_progress_title|Import in progress
 lengow_settings.lengow_last_import_manual_title|Last manual import
 lengow_settings.lengow_last_import_cron_title|Last Cron import
+lengow_settings.lengow_import_shipping_methods_default_title|Default WooCommerce shipping method for %s
+lengow_settings.lengow_shipping_method_carriers_default_title|Default carrier for %s
+lengow_settings.lengow_import_shipping_methods_title|Map the %s shipping methods with your WooCommerce shipping methods
+lengow_settings.lengow_shipping_method_carriers_title|Map your WooCommerce shipping methods with %s carriers
 lengow_log.error.rest_time_to_import|Please wait %{rest_time} seconds before re-importing orders
 lengow_log.error.nb_order_imported|%{nb_order} order(s) imported
 lengow_log.error.nb_order_updated|%{nb_order} order(s) updated
