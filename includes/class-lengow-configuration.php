@@ -97,7 +97,7 @@ class Lengow_Configuration {
 	const RETURN_TYPE_INTEGER = 'integer';
 	const RETURN_TYPE_ARRAY   = 'array';
 	const RETURN_TYPE_STRING  = 'string';
-	const ENVIRONMENTS        = array( 'prod', 'preprod' );
+	const ENVIRONMENTS        = array( 'prod', 'sandbox' );
 	const PRODUCT_TYPES       = array( 'simple', 'variable', 'external', 'grouped' );
 
 	/**
