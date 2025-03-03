@@ -279,7 +279,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 * Init the Lengow technical error status.
 		 */
 		public function init_lengow_technical_error_status() {
-			$locale = new Lengow_Translation();
+			$locale      = new Lengow_Translation();
+			$translation = $locale->t( 'module.state_technical_error' ) . ' <span class="count">(%s)</span>';
 			register_post_status(
 				self::STATE_LENGOW_TECHNICAL_ERROR,
 				array(
@@ -288,7 +289,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					'exclude_from_search'       => false,
 					'show_in_admin_all_list'    => true,
 					'show_in_admin_status_list' => true,
-					'label_count'               => $locale->t( 'module.state_technical_error' ) . ' <span class="count">(%s)</span>',
+					'label_count'               => _n_noop( $translation, $translation ),
 				)
 			);
 			add_filter( 'wc_order_statuses', array( $this, 'add_lengow_technical_error_status' ) );
