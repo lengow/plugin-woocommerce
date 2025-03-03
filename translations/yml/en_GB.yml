@@ -239,14 +239,18 @@ en:
       type_anonymize_email_not_encrypted: "Plaintext, example:123456789-amazon_fr@lengow.com"
   carrier_setting:
     screen:
-      default_shipping_method_title: "Manage shipping methods"
-      default_shipping_method_description: "Select a default shipping method to apply to your orders"
-      shipping_method_mapping_help: "The choice of the shipping method is made as follows:"
-      shipping_method_mapping_help_1: "If a method is defined for the marketplace shipping method, it will be used."
-      shipping_method_mapping_help_2: "If a method is defined for the default marketplace shipping method, it will be used."
-      shipping_method_mapping_help_3: "Otherwise, the default shipping method will be used."
-      title: "Manage shipping methods by marketplace"
-      description: "Choose the different shipping methods to assign to each of your orders here. You can do this for the different marketplaces activated in your account."
+      default_shipping_method_title: "Default shipping method definition"
+      default_shipping_method_description: "Select a default shipping method to apply to all your orders, regardless of the marketplace."
+      shipping_method_mapping_help: "When an order is imported, the shipping method is applied in the following order:"
+      shipping_method_mapping_help_1: "Shipping methods defined by marketplace. If a match is defined, it is used as a priority."
+      shipping_method_mapping_help_2: "Otherwise, the default shipping method of the marketplace is applied."
+      shipping_method_mapping_help_3: "If no specific configuration exists, the default method for all orders is used."
+      title: "Mapping of Delivery Methods by Marketplaces"
+      tooltip: "This step ensures the automatic assignment of the correct shipping method for each order imported into WooCommerce."
+      description: "Map the delivery methods of the marketplaces to your own WooCommerce delivery methods."
+      carrier_title: "Mapping of Carriers by Marketplaces"
+      carrier_tooltip: "When you ship an order in WooCommerce, the carrier must match the format expected by the marketplace to avoid any rejection."
+      carrier_description: "Map your WooCommerce shipping methods to the carriers expected by the marketplaces"
   global_setting:
     screen:
       notification_alert_title: "Notifications & alerts"
@@ -392,10 +396,10 @@ en:
     lengow_import_in_progress_title: "Import in progress"
     lengow_last_import_manual_title: "Last manual import"
     lengow_last_import_cron_title: "Last Cron import"
-    lengow_import_shipping_methods_default_title: "Default WooCommerce shipping method for %s"
-    lengow_shipping_method_carriers_default_title: "Default carrier for %s"
-    lengow_import_shipping_methods_title: "Map the %s shipping methods with your WooCommerce shipping methods"
-    lengow_shipping_method_carriers_title: "Map your WooCommerce shipping methods with %s carriers"
+    lengow_import_shipping_methods_default_title: "Default mapping of the shipping method"
+    lengow_shipping_method_carriers_default_title: "Default mapping of the carrier"
+    lengow_import_shipping_methods_title: "Advanced mapping of shipping methods"
+    lengow_shipping_method_carriers_title: "Advanced mapping of carriers"
   lengow_log:
     error:
       rest_time_to_import: "Please wait %{rest_time} seconds before re-importing orders"
