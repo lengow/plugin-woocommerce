@@ -562,13 +562,13 @@ body.page-sidebar-closed .lengow-nav-bottom {
 /*                     ACCORDION                 */
 /*************************************************/
 
-#marketplaceAccordion .accordion-header {
+.marketplace-accordion .accordion-header {
   background-color: #f7f7f7;
   padding: 10px 15px;
   cursor: pointer;
 }
 
-#marketplaceAccordion .accordion-button {
+.marketplace-accordion .accordion-button {
   background-color: transparent;
   border: none;
   font-size: 16px;
@@ -579,36 +579,69 @@ body.page-sidebar-closed .lengow-nav-bottom {
   cursor: pointer;
 }
 
-#marketplaceAccordion .accordion-button:focus {
+.marketplace-accordion .accordion-button:focus {
   outline: none;
 }
 
-#marketplaceAccordion .accordion-button[aria-expanded="true"] {
+.marketplace-accordion .accordion-button[aria-expanded="true"] {
   color: #00aeef;
 }
 
-#marketplaceAccordion .accordion-button[aria-expanded="true"] .dashicons {
+.marketplace-accordion .accordion-button[aria-expanded="true"] .dashicons {
   transform: rotate(0.5turn);
   transition: all 0.2s ease;
 }
 
-#marketplaceAccordion .accordion-button[aria-expanded="false"] .dashicons {
+.marketplace-accordion .accordion-button[aria-expanded="false"] .dashicons {
   transform: rotate(0turn);
   transition: all 0.2s ease;
 }
 
-#marketplaceAccordion  .accordion-collapse {
+.marketplace-accordion  .accordion-collapse {
   display: none;
 }
 
-#marketplaceAccordion .accordion-body {
+.marketplace-accordion .accordion-body {
   padding: 15px;
 }
 
-#marketplaceAccordion .accordion-body h3 {
+.marketplace-accordion .accordion-body h3 {
   padding-top: 30px;
 }
 
-#marketplaceAccordion .accordion-collapse.show {
+.marketplace-accordion .accordion-collapse.show {
   display: block;
+}
+
+.tooltip-trigger {
+  display: inline-block;
+  margin-left: 5px;
+  cursor: pointer;
+  position: relative;
+  font-size: 30px;
+  color: #2e6592;
+  margin-top: -5px;
+}
+
+.tooltip-trigger::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
+  background-color: #cdf1ff;
+  color: #2e6592;
+  padding: 5px 5px 10px;
+  border-radius: 3px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s;
+  white-space: normal;
+  font-size: 15px;
+  width: 600px;
+}
+
+.tooltip-trigger:hover::after {
+  opacity: 1;
+  visibility: visible;
 }

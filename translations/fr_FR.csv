@@ -216,14 +216,18 @@ order_setting.screen.anonymize_email|Anonymiser les adresses e-mails des clients
 order_setting.screen.type_anonymize_email_label|Type d'anonymisation des e-mails
 order_setting.screen.type_anonymize_email_encrypted|Chiffré, exemple: 1ec4a32af2ebee7db7ffa687e0271e39@lengow.com
 order_setting.screen.type_anonymize_email_not_encrypted|En clair, exemple:123456789-amazon_fr@lengow.com
-carrier_setting.screen.default_shipping_method_title|Gérez les méthodes de livraison
-carrier_setting.screen.default_shipping_method_description|Sélectionnez une méthode de livraison par défaut à appliquer à vos commandes
-carrier_setting.screen.shipping_method_mapping_help|Le choix de la méthode de livraison est choisie comme suit :
-carrier_setting.screen.shipping_method_mapping_help_1|Si une méthode est définie pour la méthode de livraison du marketplace, elle sera utilisée.
-carrier_setting.screen.shipping_method_mapping_help_2|Si une méthode est définie pour la méthode de livraison par défaut du marketplace, elle sera utilisée.
-carrier_setting.screen.shipping_method_mapping_help_3|Sinon, la méthode de livraison définie par défaut sera utilisée.
-carrier_setting.screen.title|Gérez les méthodes de livraison par marketplace
-carrier_setting.screen.description|Choisissez ici les différentes méthodes de livraison à attribuer à chacune de vos commandes. Vous pouvez le faire pour les différentes marketplaces activées dans votre compte.
+carrier_setting.screen.default_shipping_method_title|Définition de la méthode de livraison par défaut
+carrier_setting.screen.default_shipping_method_description|Sélectionnez une méthode de livraison par défaut à appliquer à toutes vos commandes, quel que soit la marketplace
+carrier_setting.screen.shipping_method_mapping_help|Lorsqu’une commande est importée, la méthode de livraison est appliquée selon cet ordre :
+carrier_setting.screen.shipping_method_mapping_help_1|Méthodes de livraison définie par marketplace. Si une correspondance est définie, elle est utilisée en priorité.
+carrier_setting.screen.shipping_method_mapping_help_2|Sinon, la méthode de livraison par défaut de la marketplace est appliquée.
+carrier_setting.screen.shipping_method_mapping_help_3|Si aucune configuration spécifique n’existe, la méthode par défaut pour toutes les commandes est utilisée.
+carrier_setting.screen.title|Mapping des Méthodes de Livraison par Marketplaces
+carrier_setting.screen.tooltip|Cette étape garantit l’attribution automatique de la bonne méthode de livraison pour chaque commande importée dans WooCommerce.
+carrier_setting.screen.description|Associez les méthodes de livraison des marketplaces à vos propres méthodes de livraison WooCommerce
+carrier_setting.screen.carrier_title|Mapping des Transporteurs par Marketplaces
+carrier_setting.screen.carrier_tooltip|Lorsque vous expédiez une commande dans WooCommerce, le transporteur doit correspondre au format attendu par la marketplace pour éviter tout rejet.
+carrier_setting.screen.carrier_description|Associez vos méthodes de livraison WooCommerce aux transporteurs attendus par les marketplaces
 global_setting.screen.notification_alert_title|Notifications & alertes
 global_setting.screen.security_title|Sécurité
 global_setting.screen.shop_title|Gestion de la boutique
@@ -360,10 +364,10 @@ lengow_settings.lengow_debug_enabled_title|Activer le Debug Mode
 lengow_settings.lengow_import_in_progress_title|Import en cours
 lengow_settings.lengow_last_import_manual_title|Dernier import manuel
 lengow_settings.lengow_last_import_cron_title|Dernier import CRON
-lengow_settings.lengow_import_shipping_methods_default_title|Méthode de livraison WooCommerce par défaut pour %s
-lengow_settings.lengow_shipping_method_carriers_default_title|Transporteur par défaut pour %s
-lengow_settings.lengow_import_shipping_methods_title|Mappez les méthodes de livraisons %s avec vos méthodes de livraison WooCommerce
-lengow_settings.lengow_shipping_method_carriers_title|Mappez vos méthodes de livraisons WooCommerce avec les transporteur %s
+lengow_settings.lengow_import_shipping_methods_default_title|Mapping par défaut de la méthode de livraison
+lengow_settings.lengow_shipping_method_carriers_default_title|Mapping par défaut du transporteur
+lengow_settings.lengow_import_shipping_methods_title|Mapping avancé des méthodes de livraison
+lengow_settings.lengow_shipping_method_carriers_title|Mapping avancé des transporteurs
 lengow_log.error.rest_time_to_import|Attendez %{rest_time}  secondes avant d'importer de nouveau vos commandes
 lengow_log.error.nb_order_imported|%{nb_order} commande(s) importée(s)
 lengow_log.error.nb_order_updated|%{nb_order} commande(s) mise(s) à jour

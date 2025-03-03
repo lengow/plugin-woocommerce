@@ -239,14 +239,18 @@ fr:
       type_anonymize_email_not_encrypted: "En clair, exemple:123456789-amazon_fr@lengow.com"
   carrier_setting:
     screen:
-      default_shipping_method_title: "Gérez les méthodes de livraison"
-      default_shipping_method_description: "Sélectionnez une méthode de livraison par défaut à appliquer à vos commandes"
-      shipping_method_mapping_help: "Le choix de la méthode de livraison est choisie comme suit :"
-      shipping_method_mapping_help_1: "Si une méthode est définie pour la méthode de livraison du marketplace, elle sera utilisée."
-      shipping_method_mapping_help_2: "Si une méthode est définie pour la méthode de livraison par défaut du marketplace, elle sera utilisée."
-      shipping_method_mapping_help_3: "Sinon, la méthode de livraison définie par défaut sera utilisée."
-      title: "Gérez les méthodes de livraison par marketplace"
-      description: "Choisissez ici les différentes méthodes de livraison à attribuer à chacune de vos commandes. Vous pouvez le faire pour les différentes marketplaces activées dans votre compte."
+      default_shipping_method_title: "Définition de la méthode de livraison par défaut"
+      default_shipping_method_description: "Sélectionnez une méthode de livraison par défaut à appliquer à toutes vos commandes, quel que soit la marketplace"
+      shipping_method_mapping_help: "Lorsqu’une commande est importée, la méthode de livraison est appliquée selon cet ordre :"
+      shipping_method_mapping_help_1: "Méthodes de livraison définie par marketplace. Si une correspondance est définie, elle est utilisée en priorité."
+      shipping_method_mapping_help_2: "Sinon, la méthode de livraison par défaut de la marketplace est appliquée."
+      shipping_method_mapping_help_3: "Si aucune configuration spécifique n’existe, la méthode par défaut pour toutes les commandes est utilisée."
+      title: "Mapping des Méthodes de Livraison par Marketplaces"
+      tooltip: "Cette étape garantit l’attribution automatique de la bonne méthode de livraison pour chaque commande importée dans WooCommerce."
+      description: "Associez les méthodes de livraison des marketplaces à vos propres méthodes de livraison WooCommerce"
+      carrier_title: "Mapping des Transporteurs par Marketplaces"
+      carrier_tooltip: "Lorsque vous expédiez une commande dans WooCommerce, le transporteur doit correspondre au format attendu par la marketplace pour éviter tout rejet."
+      carrier_description: "Associez vos méthodes de livraison WooCommerce aux transporteurs attendus par les marketplaces"
   global_setting:
     screen:
       notification_alert_title: "Notifications & alertes"
@@ -392,10 +396,10 @@ fr:
     lengow_import_in_progress_title: "Import en cours"
     lengow_last_import_manual_title: "Dernier import manuel"
     lengow_last_import_cron_title: "Dernier import CRON"
-    lengow_import_shipping_methods_default_title: "Méthode de livraison WooCommerce par défaut pour %s"
-    lengow_shipping_method_carriers_default_title: "Transporteur par défaut pour %s"
-    lengow_import_shipping_methods_title: "Mappez les méthodes de livraisons %s avec vos méthodes de livraison WooCommerce"
-    lengow_shipping_method_carriers_title: "Mappez vos méthodes de livraisons WooCommerce avec les transporteur %s"
+    lengow_import_shipping_methods_default_title: "Mapping par défaut de la méthode de livraison"
+    lengow_shipping_method_carriers_default_title: "Mapping par défaut du transporteur"
+    lengow_import_shipping_methods_title: "Mapping avancé des méthodes de livraison"
+    lengow_shipping_method_carriers_title: "Mapping avancé des transporteurs"
   lengow_log:
     error:
       rest_time_to_import: "Attendez %{rest_time}  secondes avant d'importer de nouveau vos commandes"
