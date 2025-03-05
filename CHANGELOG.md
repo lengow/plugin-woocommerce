@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.7.0](https://github.com/lengow/plugin-woocommerce/compare/v2.6.6...v2.7.0) (2025-03-03)
+
+
+### Features
+
+* **carrier-matching:** import order with a mapped shipping method ([#26](https://github.com/lengow/plugin-woocommerce/issues/26)) ([dd2476d](https://github.com/lengow/plugin-woocommerce/commit/dd2476dc1504cd82e80bec194cf34933975ca419))
+* **carrier-matching:** re-organize admin settings ([#30](https://github.com/lengow/plugin-woocommerce/issues/30)) ([45a0c9d](https://github.com/lengow/plugin-woocommerce/commit/45a0c9d2f3ad087c206d910b4b4ab4a9b515344d))
+
+
+### Bug Fixes
+
+* **eport:** [PST-22214] woo commerce catalogue is blocked because of error in the export file ([#27](https://github.com/lengow/plugin-woocommerce/issues/27)) ([0b26377](https://github.com/lengow/plugin-woocommerce/commit/0b263772405013bb95cab643635a168b5df252ef))
+* **order:** [TSB-1276] fix incorrect technical error order state translation ([#29](https://github.com/lengow/plugin-woocommerce/issues/29)) ([d84e07a](https://github.com/lengow/plugin-woocommerce/commit/d84e07a6483de2a19f54fcef8dbb23a3b3fc7b05))
+* **settings:** [PST-21910] change preprod to sandbox word ([#25](https://github.com/lengow/plugin-woocommerce/issues/25)) ([0b46855](https://github.com/lengow/plugin-woocommerce/commit/0b46855ab9583bcccdee496530fb8431c2971fe9))
+
 ## [2.6.6](https://github.com/lengow/plugin-woocommerce/compare/v2.6.5...v2.6.6) (2024-10-14)
 
 
