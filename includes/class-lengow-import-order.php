@@ -952,6 +952,8 @@ class Lengow_Import_Order {
 			$this->order_reference = (string) $order_id;
 			// save order line id in lengow_order_line table.
 			$this->save_lengow_order_lines( $order, $products );
+			// trigger action after order creation.
+			do_action( 'woocommerce_new_order', $order->get_id(), $order );
 			Lengow_Main::log(
 				Lengow_Log::CODE_IMPORT,
 				Lengow_Main::set_log_message(
@@ -1340,14 +1342,12 @@ class Lengow_Import_Order {
 	 */
 	private function create_generic_woocommerce_order() {
 
-				$wc_order = wc_create_order();
+		$wc_order = wc_create_order();
 		if ( is_wp_error( $wc_order->get_id() ) ) {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message( 'lengow_log.exception.woocommerce_order_not_saved' )
 			);
 		}
-
-		do_action( 'woocommerce_new_order', $wc_order->get_id(), $wc_order );
 		// update lengow_orders table directly after creating the WooCommerce order.
 		$success = Lengow_Order::update(
 			$this->order_lengow_id,
