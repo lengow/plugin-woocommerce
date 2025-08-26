@@ -1357,7 +1357,7 @@ class Lengow_Import_Order {
 	private function notify_customer_received_order( $order_id ) {
 		$mailer = WC()->mailer();
 		$mails  = $mailer->get_emails();
-		if ( ! empty( $mails['WC_Email_Customer_Processing_Order'] ) ) {
+		if ( ! empty( $mails['WC_Email_Customer_On_Hold_Order'] ) ) {
 			$mails['WC_Email_Customer_On_Hold_Order']->trigger( $order_id );
 		}
 	}
