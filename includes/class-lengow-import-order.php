@@ -1252,6 +1252,8 @@ class Lengow_Import_Order {
 	private function create_woocommerce_order( $user, $products, $billing_address, $shipping_address ) {
 
 		// create a generic order.
+		add_filter( 'woocommerce_email_enabled_new_order', '__return_false' );
+		add_filter('woocommerce_email_enabled_customer_on_hold_order', '__return_false');
 		$wc_order = $this->create_generic_woocommerce_order();
 		$order_id = $wc_order->get_id();
 		// get billing data formatted for WooCommerce address.
@@ -1327,9 +1329,37 @@ class Lengow_Import_Order {
 		$wc_order->update_status( $order_state );
 		// add quantity back for re-import order and order shipped by marketplace.
 		$this->add_quantity_back( $wc_order );
+		remove_filter( 'woocommerce_email_enabled_new_order', '__return_false' );
+		remove_filter('woocommerce_email_enabled_customer_on_hold_order', '__return_false');
 		$wc_order->save();
+		do_action( 'woocommerce_new_order', $wc_order->get_id(), $wc_order );
+		$this->notify_admin_new_order( $wc_order->get_id() );
+		$this->notify_customer_received_order( $wc_order->get_id() );
+
 
 		return $wc_order;
+	}
+
+	/**
+	 * Notify admin of new order
+	 */
+	private function notify_admin_new_order( $order_id ) {
+		$mailer = WC()->mailer();
+		$mails  = $mailer->get_emails();
+		if ( ! empty( $mails['WC_Email_New_Order'] ) ) {
+			$mails['WC_Email_New_Order']->trigger( $order_id );
+		}
+	}
+
+	/**
+	 * Notify customer of received order
+	 */
+	private function notify_customer_received_order( $order_id ) {
+		$mailer = WC()->mailer();
+		$mails  = $mailer->get_emails();
+		if ( ! empty( $mails['WC_Email_Customer_On_Hold_Order'] ) ) {
+			$mails['WC_Email_Customer_On_Hold_Order']->trigger( $order_id );
+		}
 	}
 
 	/**
@@ -1340,14 +1370,14 @@ class Lengow_Import_Order {
 	 */
 	private function create_generic_woocommerce_order() {
 
-				$wc_order = wc_create_order();
+		$wc_order = wc_create_order();
 		if ( is_wp_error( $wc_order->get_id() ) ) {
 			throw new Lengow_Exception(
 				Lengow_Main::set_log_message( 'lengow_log.exception.woocommerce_order_not_saved' )
 			);
 		}
 
-		do_action( 'woocommerce_new_order', $wc_order->get_id(), $wc_order );
+
 		// update lengow_orders table directly after creating the WooCommerce order.
 		$success = Lengow_Order::update(
 			$this->order_lengow_id,
@@ -1376,6 +1406,7 @@ class Lengow_Import_Order {
 				$this->marketplace_sku
 			);
 		}
+
 
 		return $wc_order;
 	}
@@ -1730,3 +1761,4 @@ class Lengow_Import_Order {
 		}
 	}
 }
+
