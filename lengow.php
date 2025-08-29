@@ -28,7 +28,7 @@
  * Description: Lengow allows you to easily export your product catalogue from your WooCommerce store and sell on Amazon, Cdiscount, Google Shopping, Criteo, LeGuide.com, Ebay, Bing,... Choose from our 1,800 available marketing channels!
  *
  * x-release-please-start-version
- * Version: 2.7.0
+ * Version: 2.7.1
  * x-release-please-end
  *
  * Author: Lengow
@@ -65,7 +65,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		/**
 		 * @var string current version of plugin.
 		 */
-		public $version = '2.7.0'; # x-release-please-version
+		public $version = '2.7.1'; # x-release-please-version
 
 		/**
 		 * @var string plugin name.

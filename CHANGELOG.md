@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.1](https://github.com/lengow/plugin-woocommerce/compare/v2.7.0...v2.7.1) (2025-08-27)
+
+
+### Bug Fixes
+
+* **orders:** [PCMT-776] Prevent order resume email from being sent wh… ([#31](https://github.com/lengow/plugin-woocommerce/issues/31)) ([de35533](https://github.com/lengow/plugin-woocommerce/commit/de35533577dee99a3ffca2221bd9288c33da3fb5))
+
 ## [2.7.0](https://github.com/lengow/plugin-woocommerce/compare/v2.6.6...v2.7.0) (2025-03-03)
 
 
