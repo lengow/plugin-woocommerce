@@ -897,6 +897,11 @@ class Lengow_Import_Order {
 	 * @return boolean
 	 */
 	private function create_order() {
+		global $wpdb;
+
+		$wpdb->query( 'SET TRANSACTION ISOLATION LEVEL READ COMMITTED' ); // optional
+		$wpdb->query( 'START TRANSACTION' );
+
 		try {
 			// search and get all products.
 			$products = $this->get_products();
@@ -961,15 +966,25 @@ class Lengow_Import_Order {
 				$this->log_output,
 				$this->marketplace_sku
 			);
+
+			$wpdb->query( 'COMMIT' );
+
+			do_action( 'woocommerce_new_order', $order->get_id(), $order );
+			$this->notify_admin_new_order( $order->get_id() );
+			$this->notify_customer_received_order( $order->get_id() );
 		} catch ( Lengow_Exception $e ) {
+			$wpdb->query( 'ROLLBACK' );
 			$error_message = $e->getMessage();
 		} catch ( Exception $e ) {
+			$wpdb->query( 'ROLLBACK' );
 			$error_message = '[WooCommerce error]: "' . $e->getMessage()
 							. '" in ' . $e->getFile() . ' on line ' . $e->getLine();
 		}
+
 		if ( ! isset( $error_message ) ) {
 			return true;
 		}
+
 		Lengow_Order::add_order_error( $this->order_lengow_id, $error_message );
 		$decoded_message = Lengow_Main::decode_log_message( $error_message, Lengow_Translation::DEFAULT_ISO_CODE );
 		$this->errors[]  = $decoded_message;
@@ -1253,7 +1268,7 @@ class Lengow_Import_Order {
 
 		// create a generic order.
 		add_filter( 'woocommerce_email_enabled_new_order', '__return_false' );
-		add_filter('woocommerce_email_enabled_customer_on_hold_order', '__return_false');
+		add_filter( 'woocommerce_email_enabled_customer_on_hold_order', '__return_false' );
 		$wc_order = $this->create_generic_woocommerce_order();
 		$order_id = $wc_order->get_id();
 		// get billing data formatted for WooCommerce address.
@@ -1330,12 +1345,8 @@ class Lengow_Import_Order {
 		// add quantity back for re-import order and order shipped by marketplace.
 		$this->add_quantity_back( $wc_order );
 		remove_filter( 'woocommerce_email_enabled_new_order', '__return_false' );
-		remove_filter('woocommerce_email_enabled_customer_on_hold_order', '__return_false');
+		remove_filter( 'woocommerce_email_enabled_customer_on_hold_order', '__return_false' );
 		$wc_order->save();
-		do_action( 'woocommerce_new_order', $wc_order->get_id(), $wc_order );
-		$this->notify_admin_new_order( $wc_order->get_id() );
-		$this->notify_customer_received_order( $wc_order->get_id() );
-
 
 		return $wc_order;
 	}
