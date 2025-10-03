@@ -117,11 +117,6 @@ class Lengow_Import {
 	);
 
 	/**
-	 * @var boolean import is processing.
-	 */
-	public static $processing;
-
-	/**
 	 * @var string|null marketplace order sku.
 	 */
 	private $marketplace_sku;
@@ -243,6 +238,21 @@ class Lengow_Import {
 	private $errors = array();
 
 	/**
+	 * @var string|null DB lock name
+	 */
+	private $db_lock_name = null;
+
+	/**
+	 * @var int seconds to wait to acquire DB lock
+	 */
+	private $db_lock_wait = 5;
+
+	/**
+	 * @var bool whether we acquired the DB lock
+	 */
+	private $db_lock_acquired = false;
+
+	/**
 	 * Construct the import manager.
 	 *
 	 * @param $params array Optional options
@@ -309,42 +319,74 @@ class Lengow_Import {
 	 * @return array
 	 */
 	public function exec() {
+		global $wpdb;
+
 		$sync_ok = true;
-		// checks if a synchronization is not already in progress.
-		if ( ! $this->can_execute_synchronization() ) {
+
+		$site_id = function_exists( 'get_current_blog_id' ) ? get_current_blog_id() : 0;
+		if ( $this->import_one_order && ! empty( $this->marketplace_sku ) ) {
+			$lock_name = sprintf( 'lengow_import_%d_order_%s', $site_id, $this->marketplace_sku );
+		} else {
+			$lock_name = sprintf( 'lengow_import_%d_global', $site_id );
+		}
+		$this->db_lock_name = $lock_name;
+
+		$wait = $this->db_lock_wait;
+		$got = (int) $wpdb->get_var( $wpdb->prepare( "SELECT GET_LOCK(%s, %d)", $lock_name, $wait ) );
+
+		if ( $got !== 1 ) {
+			$message = Lengow_Main::set_log_message(
+				'lengow_log.error.rest_time_to_import',
+				array( 'rest_time' => $wait )
+			);
+			Lengow_Main::log( Lengow_Log::CODE_IMPORT, $message, $this->log_output );
 			return $this->get_result();
 		}
-		// starts some processes necessary for synchronization.
-		$this->setup_synchronization();
-		// synchronize all orders for a specific shop
-		if ( Lengow_Configuration::get( Lengow_Configuration::SHOP_ACTIVE ) && ! $this->synchronize_orders_by_shop() ) {
-			$sync_ok = false;
-		}
-		// get order synchronization result
-		$result = $this->get_result();
-		Lengow_Main::log(
-			Lengow_Log::CODE_IMPORT,
-			Lengow_Main::set_log_message(
-				'log.import.sync_result',
-				array(
-					'number_orders_processed'     => $result[ self::NUMBER_ORDERS_PROCESSED ],
-					'number_orders_created'       => $result[ self::NUMBER_ORDERS_CREATED ],
-					'number_orders_updated'       => $result[ self::NUMBER_ORDERS_UPDATED ],
-					'number_orders_failed'        => $result[ self::NUMBER_ORDERS_FAILED ],
-					'number_orders_ignored'       => $result[ self::NUMBER_ORDERS_IGNORED ],
-					'number_orders_not_formatted' => $result[ self::NUMBER_ORDERS_NOT_FORMATTED ],
-				)
-			),
-			$this->log_output
-		);
-		// update last synchronization date only if importation succeeded.
-		if ( ! $this->import_one_order && $sync_ok ) {
-			Lengow_Main::update_date_import( $this->type_import );
-		}
-		// complete synchronization and start all necessary processes.
-		$this->finish_synchronization();
 
-		return $result;
+		$this->db_lock_acquired = true;
+
+		try {
+			if ( ! $this->can_execute_synchronization() ) {
+				return $this->get_result();
+			}
+			// starts some processes necessary for synchronization.
+			$this->setup_synchronization();
+			// synchronize all orders for a specific shop
+			if ( Lengow_Configuration::get( Lengow_Configuration::SHOP_ACTIVE ) && ! $this->synchronize_orders_by_shop() ) {
+				$sync_ok = false;
+			}
+			// get order synchronization result
+			$result = $this->get_result();
+			Lengow_Main::log(
+				Lengow_Log::CODE_IMPORT,
+				Lengow_Main::set_log_message(
+					'log.import.sync_result',
+					array(
+						'number_orders_processed'     => $result[ self::NUMBER_ORDERS_PROCESSED ],
+						'number_orders_created'       => $result[ self::NUMBER_ORDERS_CREATED ],
+						'number_orders_updated'       => $result[ self::NUMBER_ORDERS_UPDATED ],
+						'number_orders_failed'        => $result[ self::NUMBER_ORDERS_FAILED ],
+						'number_orders_ignored'       => $result[ self::NUMBER_ORDERS_IGNORED ],
+						'number_orders_not_formatted' => $result[ self::NUMBER_ORDERS_NOT_FORMATTED ],
+					)
+				),
+				$this->log_output
+			);
+			// update last synchronization date only if importation succeeded.
+			if ( ! $this->import_one_order && $sync_ok ) {
+				Lengow_Main::update_date_import( $this->type_import );
+			}
+			// complete synchronization and start all necessary processes.
+			$this->finish_synchronization();
+
+			return $result;
+		} finally {
+			if ( $this->db_lock_acquired && ! empty( $this->db_lock_name ) ) {
+				$wpdb->get_var( $wpdb->prepare( "SELECT RELEASE_LOCK(%s)", $this->db_lock_name ) );
+				$this->db_lock_acquired = false;
+				$this->db_lock_name     = null;
+			}
+		}
 	}
 
 	public function getLogsDisplay() {
@@ -374,18 +416,27 @@ class Lengow_Import {
 	/**
 	 * Check if order synchronization is already in process.
 	 *
+	 * @param string|null $marketplace_sku Optional marketplace SKU to check a per-order lock.
+	 *
 	 * @return boolean
 	 */
-	public static function is_in_process() {
-		$timestamp = (int) Lengow_Configuration::get( Lengow_Configuration::SYNCHRONIZATION_IN_PROGRESS );
-		if ( $timestamp > 0 ) {
-			// security check: if last import is more than 60 seconds old => authorize new import to be launched.
-			if ( ( $timestamp + ( 60 * self::MINUTE_INTERVAL_TIME ) ) < time() ) {
-				self::set_end();
+	public static function is_in_process( $marketplace_sku = null ) {
+		global $wpdb;
 
-				return false;
-			}
+		$site_id = function_exists( 'get_current_blog_id' ) ? get_current_blog_id() : 0;
+		if ( ! empty( $marketplace_sku ) ) {
+			$lock_name = sprintf( 'lengow_import_%d_order_%s', $site_id, $marketplace_sku );
+		} else {
+			$lock_name = sprintf( 'lengow_import_%d_global', $site_id );
+		}
 
+		try {
+			$owner = $wpdb->get_var( $wpdb->prepare( "SELECT IS_USED_LOCK(%s)", $lock_name ) );
+		} catch ( Throwable $e ) {
+			$owner = null;
+		}
+
+		if ( $owner !== null ) {
 			return true;
 		}
 
@@ -395,12 +446,28 @@ class Lengow_Import {
 	/**
 	 * Get Rest time to make a new order synchronization.
 	 *
+	 * @param string|null $marketplace_sku Optional marketplace SKU to check per-order lock
+	 *
 	 * @return integer
 	 */
-	public static function rest_time_to_import() {
-		$timestamp = (int) Lengow_Configuration::get( Lengow_Configuration::SYNCHRONIZATION_IN_PROGRESS );
-		if ( $timestamp > 0 ) {
-			return $timestamp + ( 60 * self::MINUTE_INTERVAL_TIME ) - time();
+	public static function rest_time_to_import( $marketplace_sku = null ) {
+		global $wpdb;
+
+		$site_id = function_exists( 'get_current_blog_id' ) ? get_current_blog_id() : 0;
+		if ( ! empty( $marketplace_sku ) ) {
+			$lock_name = sprintf( 'lengow_import_%d_order_%s', $site_id, $marketplace_sku );
+		} else {
+			$lock_name = sprintf( 'lengow_import_%d_global', $site_id );
+		}
+
+		try {
+			$owner = $wpdb->get_var( $wpdb->prepare( "SELECT IS_USED_LOCK(%s)", $lock_name ) );
+		} catch ( Throwable $e ) {
+			$owner = null;
+		}
+
+		if ( $owner !== null ) {
+			return 60; // factice value
 		}
 
 		return 0;
@@ -463,13 +530,7 @@ class Lengow_Import {
 	 */
 	private function can_execute_synchronization() {
 		$global_error = false;
-		if ( ! $this->debug_mode && ! $this->import_one_order && self::is_in_process() ) {
-			$global_error = Lengow_Main::set_log_message(
-				'lengow_log.error.rest_time_to_import',
-				array( 'rest_time' => self::rest_time_to_import() )
-			);
-			Lengow_Main::log( Lengow_Log::CODE_IMPORT, $global_error, $this->log_output );
-		} elseif ( ! $this->check_credentials() ) {
+		if ( ! $this->check_credentials() ) {
 			$global_error = Lengow_Main::set_log_message( 'lengow_log.error.credentials_not_valid' );
 			Lengow_Main::log( Lengow_Log::CODE_IMPORT, $global_error, $this->log_output );
 		}
@@ -493,9 +554,6 @@ class Lengow_Import {
 	private function setup_synchronization() {
 		// suppress log files when too old.
 		Lengow_Main::clean_log();
-		if ( ! $this->import_one_order ) {
-			self::set_in_process();
-		}
 		// check Lengow catalogs for order synchronisation.
 		if ( ! $this->import_one_order && self::TYPE_MANUAL === $this->type_import ) {
 			Lengow_Sync::sync_catalog();
@@ -804,9 +862,6 @@ class Lengow_Import {
 	private function import_orders( $orders ) {
 		$import_finished = false;
 		foreach ( $orders as $order_data ) {
-			if ( ! $this->import_one_order ) {
-				self::set_in_process();
-			}
 			$nb_package      = 0;
 			$marketplace_sku = (string) $order_data->marketplace_order_id;
 			if ( $this->debug_mode ) {
@@ -971,7 +1026,6 @@ class Lengow_Import {
 	 */
 	private function finish_synchronization() {
 		// finish synchronization process.
-		self::set_end();
 		Lengow_Main::log(
 			Lengow_Log::CODE_IMPORT,
 			Lengow_Main::set_log_message( 'log.import.end', array( 'type' => $this->type_import ) ),
@@ -990,21 +1044,5 @@ class Lengow_Import {
 		) {
 			Lengow_Main::send_mail_alert( $this->log_output );
 		}
-	}
-
-	/**
-	 * Set import to "in process" state.
-	 */
-	private static function set_in_process() {
-		self::$processing = true;
-		Lengow_Configuration::update_value( Lengow_Configuration::SYNCHRONIZATION_IN_PROGRESS, time() );
-	}
-
-	/**
-	 * Set import to finished.
-	 */
-	private static function set_end() {
-		self::$processing = false;
-		Lengow_Configuration::update_value( Lengow_Configuration::SYNCHRONIZATION_IN_PROGRESS, - 1 );
 	}
 }
