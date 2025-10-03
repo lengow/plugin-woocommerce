@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.2](https://github.com/lengow/plugin-woocommerce/compare/v2.7.1...v2.7.2) (2025-10-03)
+
+
+### Bug Fixes
+
+* **import:** add mysql lock, add transaction in order creation ([#34](https://github.com/lengow/plugin-woocommerce/issues/34)) ([bd7ac36](https://github.com/lengow/plugin-woocommerce/commit/bd7ac369c682478c66685fdb9bdeaf3dc6cb70f1))
+
 ## [2.7.1](https://github.com/lengow/plugin-woocommerce/compare/v2.7.0...v2.7.1) (2025-08-27)
 
 
