@@ -1,4 +1,4 @@
-/lengow.php|800276b3a2e5a1d27c1219df5b8bc1af
+/lengow.php|35e522e6f0bb3e5bac9155cc94599fb0
 /config/index.php|d41d8cd98f00b204e9800998ecf8427e
 /translations/en_GB.csv|eabc4d2e35cddc7756bdf2a6a280176d
 /translations/fr_FR.csv|bf26f9ab1132f01a1786b209601848a7
@@ -349,7 +349,7 @@
 /includes/class-lengow-cron-export.php|85237a15150a433a4db3cd4f75a8c197
 /includes/class-lengow-marketplace.php|7b9fc260a40a9ae85ae999a3ff669a83
 /includes/class-lengow-export.php|318a1a91e213e5f37d86cdd0aa894535
-/includes/class-lengow-import.php|54d44cf86756722b65811a41131aaf18
+/includes/class-lengow-import.php|5b74527276be9757ee71b4c88fd468fa
 /includes/class-lengow-address.php|a7cba4a1317d295a12b126403ecb76e7
 /includes/class-lengow-main.php|bd498b940cd4d3bc09e7d23ba6274536
 /includes/class-lengow-translation.php|734ddf7aefdd97209e655367b2d640ef
@@ -360,7 +360,7 @@
 /includes/class-lengow-toolbox.php|83c5a02235840bae9f888df020e76103
 /includes/class-lengow-order-line.php|1c708088c6c05d25ee32320b3ab30b0c
 /includes/class-lengow-configuration.php|e89c030ead56fa0de941d3f9631b2d6e
-/includes/class-lengow-cron.php|7610dcd455d93499193841bf23c3db29
+/includes/class-lengow-cron.php|54e9d2ff84e43bd785b4449e9eb0c0f2
 /languages/lengow-fr_FR.mo|c159535a9cf5b734a8bdb2d450e0971b
 /languages/lengow-fr_FR.po|13425fbae772302a0ff936850bfa658e
 /upgrade/update_2.3.2.php|bcd43b3e9ced52f06d7a9727d2f132ac

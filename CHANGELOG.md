@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.0](https://github.com/lengow/plugin-woocommerce/compare/v2.7.2...v2.8.0) (2025-10-07)
+
+
+### Features
+
+* **fast-orders:** add minutes param ([#33](https://github.com/lengow/plugin-woocommerce/issues/33)) ([4b0ced0](https://github.com/lengow/plugin-woocommerce/commit/4b0ced07f5d456d5deb69ecdeaa55f8ab05feb20))
+
 ## [2.7.2](https://github.com/lengow/plugin-woocommerce/compare/v2.7.1...v2.7.2) (2025-10-03)
 
 
