@@ -38,6 +38,7 @@ class Lengow_Import {
 	const PARAM_MARKETPLACE_NAME    = 'marketplace_name';
 	const PARAM_DELIVERY_ADDRESS_ID = 'delivery_address_id';
 	const PARAM_DAYS                = 'days';
+	const PARAM_MINUTES             = 'minutes';
 	const PARAM_CREATED_FROM        = 'created_from';
 	const PARAM_CREATED_TO          = 'created_to';
 	const PARAM_ORDER_LENGOW_ID     = 'order_lengow_id';
@@ -298,19 +299,21 @@ class Lengow_Import {
 			// set the time interval.
 			$this->set_interval_time(
 				isset( $params[ self::PARAM_DAYS ] ) ? (float) $params[ self::PARAM_DAYS ] : null,
-				isset( $params[ self::PARAM_CREATED_FROM ] ) ? $params[ self::PARAM_CREATED_FROM ] : null,
-				isset( $params[ self::PARAM_CREATED_TO ] ) ? $params[ self::PARAM_CREATED_TO ] : null
+				isset( $params[ self::PARAM_MINUTES ] ) ? (float) $params[ self::PARAM_MINUTES ] : null,
+				$params[ self::PARAM_CREATED_FROM ] ?? null,
+				$params[ self::PARAM_CREATED_TO ] ?? null
 			);
-			$this->limit = isset( $params[ self::PARAM_LIMIT ] ) ? $params[ self::PARAM_LIMIT ] : 0;
+			$this->limit = $params[ self::PARAM_LIMIT ] ?? 0;
 		}
-				Lengow_Main::log(
-					Lengow_Log::CODE_IMPORT,
-					Lengow_Main::set_log_message(
-						'log.import.init_params',
-						array( 'init_params' => wp_json_encode( $params ) )
-					),
-					$this->log_output
-				);
+
+		Lengow_Main::log(
+			Lengow_Log::CODE_IMPORT,
+			Lengow_Main::set_log_message(
+				'log.import.init_params',
+				array( 'init_params' => wp_json_encode( $params ) )
+			),
+			$this->log_output
+		);
 	}
 
 	/**
@@ -477,10 +480,11 @@ class Lengow_Import {
 	 * Set interval time for order synchronisation.
 	 *
 	 * @param integer|null $days Import period
+	 * @param integer|null $minutes Import period in minutes
 	 * @param string|null  $created_from Import of orders since
 	 * @param string|null  $created_to Import of orders until
 	 */
-	private function set_interval_time( $days = null, $created_from = null, $created_to = null ) {
+	private function set_interval_time( $days = null, $minutes = null, $created_from = null, $created_to = null ) {
 		if ( $created_from && $created_to ) {
 			// retrieval of orders created from ... until ...
 			$created_from_timestamp = strtotime( get_gmt_from_date( $created_from ) );
@@ -498,7 +502,11 @@ class Lengow_Import {
 
 			return;
 		}
-		if ( $days ) {
+
+		if ( $minutes ) {
+			$interval_time = floor($minutes * 60);
+			$interval_time = $interval_time > self::MAX_INTERVAL_TIME ? self::MAX_INTERVAL_TIME : $interval_time;
+		} elseif ( $days ) {
 			$interval_time = floor($days * self::MIN_INTERVAL_TIME);
 			$interval_time = $interval_time > self::MAX_INTERVAL_TIME ? self::MAX_INTERVAL_TIME : $interval_time;
 		} else {

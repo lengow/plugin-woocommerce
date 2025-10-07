@@ -128,6 +128,9 @@ class LengowCron {
 				if ( isset( $_GET[ Lengow_Import::PARAM_DAYS ] ) ) {
 					$params[ Lengow_Import::PARAM_DAYS ] = (float) sanitize_text_field( $_GET[ Lengow_Import::PARAM_DAYS ] );
 				}
+				if ( isset( $_GET[ Lengow_Import::PARAM_MINUTES ] ) ) {
+					$params[ Lengow_Import::PARAM_MINUTES ] = (float) sanitize_text_field( $_GET[ Lengow_Import::PARAM_MINUTES ] );
+				}
 				if ( isset( $_GET[ Lengow_Import::PARAM_CREATED_FROM ] ) ) {
 					$params[ Lengow_Import::PARAM_CREATED_FROM ] = (string) sanitize_text_field( $_GET[ Lengow_Import::PARAM_CREATED_FROM ] );
 				}
@@ -156,6 +159,10 @@ class LengowCron {
 				}
 				$import = new Lengow_Import( $params );
 				$import->exec();
+
+				if ( isset( $params[ Lengow_Import::PARAM_LOG_OUTPUT ] ) ) {
+					echo $import->getLogsDisplay();
+				}
 			}
 			// sync actions between Lengow and WooCommerce.
 			if ( ! $sync || Lengow_Sync::SYNC_ACTION === $sync ) {
@@ -182,11 +189,6 @@ class LengowCron {
 			// sync option is not valid.
 			if ( $sync && ! in_array( $sync, Lengow_Sync::$sync_actions, true ) ) {
 				wp_die( 'Action: ' . $sync . ' is not a valid action', '', array( 'response' => 400 ) );
-			}
-
-			if ( isset( $params[ Lengow_Import::PARAM_LOG_OUTPUT ] ) ) {
-				echo( esc_html( $import->getLogsDisplay() ) );
-				exit;
 			}
 		}
 	}
