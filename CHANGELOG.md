@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.1](https://github.com/lengow/plugin-woocommerce/compare/v2.8.0...v2.8.1) (2025-10-22)
+
+
+### Bug Fixes
+
+* **cicd:** Upgrade release please ([#37](https://github.com/lengow/plugin-woocommerce/issues/37)) ([84f9f29](https://github.com/lengow/plugin-woocommerce/commit/84f9f297e792f8ed6f7f73991f154c1cad670829))
+
 ## [2.8.0](https://github.com/lengow/plugin-woocommerce/compare/v2.7.2...v2.8.0) (2025-10-07)
 
 
