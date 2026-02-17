@@ -202,13 +202,18 @@ class Lengow_Feed {
 		switch ( $this->format ) {
 			case self::FORMAT_CSV:
 			default:
-				$header = '';
+				$formatted_data = array();
 				foreach ( $data as $field ) {
-					$header .= self::PROTECTION . self::format_fields( $field, self::FORMAT_CSV, $this->legacy )
-								. self::PROTECTION . self::CSV_SEPARATOR;
+					$formatted_data[] = self::format_fields( $field, self::FORMAT_CSV, $this->legacy );
 				}
 
-				return rtrim( $header, self::CSV_SEPARATOR ) . self::EOL;
+				$handle = fopen( 'php://memory', 'r+' );
+				fputcsv( $handle, $formatted_data, self::CSV_SEPARATOR, self::PROTECTION );
+				rewind( $handle );
+				$header = stream_get_contents( $handle );
+				fclose( $handle );
+
+				return rtrim( $header ) . self::EOL;
 			case self::FORMAT_XML:
 				return '<?xml version="1.0" encoding="UTF-8"?>' . self::EOL
 						. '<catalog>' . self::EOL;
@@ -232,12 +237,13 @@ class Lengow_Feed {
 		switch ( $this->format ) {
 			case self::FORMAT_CSV:
 			default:
-				$content = '';
-				foreach ( $data as $value ) {
-					$content .= self::PROTECTION . $value . self::PROTECTION . self::CSV_SEPARATOR;
-				}
+				$handle = fopen( 'php://memory', 'r+' );
+				fputcsv( $handle, $data, self::CSV_SEPARATOR, self::PROTECTION );
+				rewind( $handle );
+				$content = stream_get_contents( $handle );
+				fclose( $handle );
 
-				return rtrim( $content, self::CSV_SEPARATOR ) . self::EOL;
+				return rtrim( $content ) . self::EOL;
 			case self::FORMAT_XML:
 				$content = '<product>';
 				foreach ( $data as $field => $value ) {
