@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.8.1](https://github.com/lengow/plugin-woocommerce/compare/v2.8.0...v2.8.1) (2026-02-17)
+
+
+### Bug Fixes
+
+* **cicd:** Upgrade release please ([#37](https://github.com/lengow/plugin-woocommerce/issues/37)) ([84f9f29](https://github.com/lengow/plugin-woocommerce/commit/84f9f297e792f8ed6f7f73991f154c1cad670829))
+* **export:** use built in fputcsv function to export csv rows ([#39](https://github.com/lengow/plugin-woocommerce/issues/39)) ([fff7a47](https://github.com/lengow/plugin-woocommerce/commit/fff7a47963e669cc54a88a9ab0d228cfc258c488))
+
 ## [2.8.0](https://github.com/lengow/plugin-woocommerce/compare/v2.7.2...v2.8.0) (2025-10-07)
 
 
