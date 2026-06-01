@@ -40,7 +40,12 @@
 
 
 
-require_once __DIR__ . '/../../woocommerce/woocommerce.php';
+if ( ! class_exists( 'WooCommerce' ) ) {
+	$wc_main = defined( 'WP_PLUGIN_DIR' ) ? WP_PLUGIN_DIR . '/woocommerce/woocommerce.php' : ABSPATH . 'wp-content/plugins/woocommerce/woocommerce.php';
+	if ( file_exists( $wc_main ) ) {
+		include_once $wc_main;
+	}
+}
 
 // dependencies.
 require_once 'class-lengow-action.php';
