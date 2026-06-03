@@ -1192,7 +1192,7 @@ class Lengow_Import_Order {
 			);
 		}
 		$user = get_user_by( 'id', $user_id );
-		do_action( 'woocommerce_created_customer', $user_id );
+		do_action( 'woocommerce_created_customer', $user_id, $new_customer_data );
 		// get billing data formatted for WooCommerce address.
 		$billing_data  = $billing_address->get_formatted_data();
 		$shipping_data = $shipping_address->get_formatted_data();
