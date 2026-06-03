@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.8.2](https://github.com/lengow/plugin-woocommerce/compare/v2.8.1...v2.8.2) (2026-06-03)
+
+
+### Bug Fixes
+
+* **export:** include WooCommerce brand taxonomy terms in catalog feeds ([#40](https://github.com/lengow/plugin-woocommerce/issues/40)) ([e0ada30](https://github.com/lengow/plugin-woocommerce/commit/e0ada3064468d10b3bd80ccabbe19ef400933746))
+* fatal error occuring when the plugin is symkinked ([#41](https://github.com/lengow/plugin-woocommerce/issues/41)) ([473171f](https://github.com/lengow/plugin-woocommerce/commit/473171f30c19b9fcaa98e8fecbdb011b55907416))
+* **import:** fix a fatal error on the woocommerce_created_customer hook since woocommerce 10.8 ([#42](https://github.com/lengow/plugin-woocommerce/issues/42)) ([8c8b8f8](https://github.com/lengow/plugin-woocommerce/commit/8c8b8f82cb1ff5d83c289e16d60f85017268c6de))
+
 ## [2.8.1](https://github.com/lengow/plugin-woocommerce/compare/v2.8.0...v2.8.1) (2026-02-17)
 
 
