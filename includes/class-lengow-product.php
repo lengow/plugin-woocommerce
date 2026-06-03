@@ -41,6 +41,7 @@ class Lengow_Product {
 	const FIELD_PRODUCT_ID = 'product_id';
 
 	const TAX_CATEGORY = 'product_cat';
+	const TAX_BRAND    = 'product_brand';
 
 	/**
 	 * @var array default fields for export.
@@ -235,6 +236,19 @@ class Lengow_Product {
 				return $this->product->get_rating_count();
 			case 'category':
 				return $this->get_categories();
+			case 'brand':
+				$brand = $this->get_brand_list();
+				if ( '' !== $brand ) {
+					return $brand;
+				}
+				if ( in_array( 'brand', Lengow_Export::$attributes, true ) ) {
+					return Lengow_Main::clean_data( $this->get_attribute_data( 'brand' ) );
+				}
+				if ( in_array( 'brand', Lengow_Export::$post_metas, true ) ) {
+					return Lengow_Main::clean_data( $this->get_post_meta_data( 'brand' ) );
+				}
+
+				return '';
 			case 'status':
 				return $this->product->is_purchasable() ? 'Enabled' : 'Disabled';
 			case 'url':
@@ -778,6 +792,34 @@ class Lengow_Product {
 		}
 
 		return $shipping_class_name;
+	}
+
+	/**
+	 * Returns the brand list.
+	 *
+	 * @return string
+	 */
+	private function get_brand_list() {
+		$taxonomies = array( self::TAX_BRAND, 'brand', 'pwb-brand' );
+		foreach ( $taxonomies as $taxonomy ) {
+			$product_terms = get_the_terms( $this->product_id, $taxonomy );
+			if ( empty( $product_terms ) || is_wp_error( $product_terms ) ) {
+				continue;
+			}
+
+			$brand_names = array();
+			foreach ( $product_terms as $brand_term ) {
+				if ( isset( $brand_term->name ) ) {
+					$brand_names[] = $brand_term->name;
+				}
+			}
+
+			if ( ! empty( $brand_names ) ) {
+				return implode( ', ', $brand_names );
+			}
+		}
+
+		return '';
 	}
 
 	/**
