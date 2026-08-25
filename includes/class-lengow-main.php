@@ -64,6 +64,11 @@ class Lengow_Main {
 	public static $log;
 
 	/**
+	 * @var array Shipping method zones indexed by shipping method code.
+	 */
+	private static $shipping_method_zones = array();
+
+	/**
 	 * @var array WooCommerce product types.
 	 */
 	public static $product_types = array(
@@ -453,13 +458,115 @@ class Lengow_Main {
 	 * @return array
 	 */
 	public static function get_shipping_methods() {
-		$wc_shipping = new WC_Shipping();
-		$return      = array();
-		foreach ( $wc_shipping->load_shipping_methods() as $key => $shipping ) {
-			$return[ $key ] = $shipping->method_title;
+		$return = array();
+		foreach ( self::get_shipping_method_objects() as $key => $shipping ) {
+			$label = isset( $shipping->method_title ) ? (string) $shipping->method_title : '';
+			if ( isset( $shipping->instance_id ) && (int) $shipping->instance_id > 0 ) {
+				$label = self::get_shipping_method_instance_title( $shipping );
+				if ( ! empty( self::$shipping_method_zones[ $key ] ) ) {
+					$label .= ' (' . self::$shipping_method_zones[ $key ] . ')';
+				}
+			}
+			if ( empty( $label ) ) {
+				$label = (string) $key;
+			}
+			$return[ $key ] = $label;
 		}
 
 		return $return;
+	}
+
+	/**
+	 * Get list of shipping methods objects for mapping.
+	 *
+	 * @return array
+	 */
+	public static function get_shipping_method_objects() {
+		static $shipping_methods = null;
+
+		if ( null !== $shipping_methods ) {
+			return $shipping_methods;
+		}
+
+		$shipping_methods = array();
+		self::$shipping_method_zones = array();
+		$wc_shipping      = new WC_Shipping();
+		foreach ( $wc_shipping->load_shipping_methods() as $key => $shipping ) {
+			$shipping_methods[ $key ] = $shipping;
+		}
+
+		if ( ! class_exists( 'WC_Shipping_Zones' ) || ! method_exists( 'WC_Shipping_Zones', 'get_zones' ) ) {
+			return $shipping_methods;
+		}
+
+		try {
+			$zones = WC_Shipping_Zones::get_zones();
+		} catch ( Exception $e ) {
+			return $shipping_methods;
+		}
+
+		if ( ! is_array( $zones ) ) {
+			return $shipping_methods;
+		}
+
+		foreach ( $zones as $zone ) {
+			$zone_shipping_methods = array();
+			$zone_name = isset( $zone['zone_name'] ) ? (string) $zone['zone_name'] : '';
+			if ( ! empty( $zone['shipping_methods'] ) && is_array( $zone['shipping_methods'] ) ) {
+				$zone_shipping_methods = $zone['shipping_methods'];
+			} elseif ( class_exists( 'WC_Shipping_Zone' ) && isset( $zone['zone_id'] ) ) {
+				try {
+					$wc_shipping_zone = new WC_Shipping_Zone( (int) $zone['zone_id'] );
+					if ( method_exists( $wc_shipping_zone, 'get_shipping_methods' ) ) {
+						$zone_shipping_methods = $wc_shipping_zone->get_shipping_methods();
+					}
+				} catch ( Exception $e ) {
+					$zone_shipping_methods = array();
+				}
+			}
+
+			if ( empty( $zone_shipping_methods ) || ! is_array( $zone_shipping_methods ) ) {
+				continue;
+			}
+
+			foreach ( $zone_shipping_methods as $zone_shipping_method ) {
+				if ( empty( $zone_shipping_method->id ) || ! isset( $zone_shipping_method->instance_id ) ) {
+					continue;
+				}
+				$shipping_method_id = $zone_shipping_method->id . ':' . (int) $zone_shipping_method->instance_id;
+				if ( ! array_key_exists( $shipping_method_id, $shipping_methods ) ) {
+					$shipping_methods[ $shipping_method_id ] = $zone_shipping_method;
+					self::$shipping_method_zones[ $shipping_method_id ] = $zone_name;
+				}
+			}
+		}
+
+		return $shipping_methods;
+	}
+
+	/**
+	 * Get shipping method instance title.
+	 *
+	 * @param object $shipping_method shipping method
+	 *
+	 * @return string
+	 */
+	private static function get_shipping_method_instance_title( $shipping_method ) {
+		if ( is_object( $shipping_method ) && method_exists( $shipping_method, 'get_title' ) ) {
+			$title = (string) $shipping_method->get_title();
+			if ( ! empty( $title ) ) {
+				return $title;
+			}
+		}
+
+		if ( isset( $shipping_method->title ) ) {
+			$title = (string) $shipping_method->title;
+			if ( ! empty( $title ) ) {
+				return $title;
+			}
+		}
+
+		return isset( $shipping_method->method_title ) ? (string) $shipping_method->method_title : '';
 	}
 
 	/**
