@@ -31,7 +31,11 @@ $order_shipping_method  = current( $order_shipping_methods );
 
 if ( empty( $carrier ) && $order_shipping_method ) {
 	$marketplace_carriers = Lengow_Configuration::get( Lengow_Configuration::SHIPPING_METHOD_CARRIERS );
-	if ( !empty( $marketplace_carriers[ $marketplace->name ][ $order_shipping_method->get_method_id() ] ) ) {
+	// a zone instance is mapped with its composite code, fall back on the legacy global code.
+	$shipping_method_code = Lengow_Main::get_shipping_method_code( $order_shipping_method );
+	if ( !empty( $marketplace_carriers[ $marketplace->name ][ $shipping_method_code ] ) ) {
+		$carrier = $marketplace_carriers[ $marketplace->name ][ $shipping_method_code ];
+	} elseif ( !empty( $marketplace_carriers[ $marketplace->name ][ $order_shipping_method->get_method_id() ] ) ) {
 		$carrier = $marketplace_carriers[ $marketplace->name ][ $order_shipping_method->get_method_id() ];
 	} elseif ( !empty( $marketplace_carriers[ $marketplace->name ]['__default'] ) ) {
 		$carrier = $marketplace_carriers[ $marketplace->name ]['__default'];
