@@ -529,15 +529,24 @@ class Lengow_Main {
 				continue;
 			}
 
-			foreach ( $zone_shipping_methods as $zone_shipping_method ) {
-				if ( empty( $zone_shipping_method->id ) || ! isset( $zone_shipping_method->instance_id ) ) {
-					continue;
+			self::add_zone_shipping_methods( $shipping_methods, $zone_shipping_methods, $zone_name );
+		}
+
+		if ( class_exists( 'WC_Shipping_Zone' ) ) {
+			try {
+				$rest_of_world_zone = new WC_Shipping_Zone( 0 );
+				if ( method_exists( $rest_of_world_zone, 'get_shipping_methods' ) ) {
+					$zone_name = method_exists( $rest_of_world_zone, 'get_zone_name' )
+						? (string) $rest_of_world_zone->get_zone_name()
+						: '';
+					self::add_zone_shipping_methods(
+						$shipping_methods,
+						$rest_of_world_zone->get_shipping_methods(),
+						$zone_name
+					);
 				}
-				$shipping_method_id = $zone_shipping_method->id . ':' . (int) $zone_shipping_method->instance_id;
-				if ( ! array_key_exists( $shipping_method_id, $shipping_methods ) ) {
-					$shipping_methods[ $shipping_method_id ] = $zone_shipping_method;
-					self::$shipping_method_zones[ $shipping_method_id ] = $zone_name;
-				}
+			} catch ( Exception $e ) {
+				// fallback to global shipping methods only.
 			}
 		}
 
@@ -567,6 +576,26 @@ class Lengow_Main {
 		}
 
 		return isset( $shipping_method->method_title ) ? (string) $shipping_method->method_title : '';
+	}
+
+	/**
+	 * Add zone shipping methods to mapping list.
+	 *
+	 * @param array  $shipping_methods all shipping methods
+	 * @param array  $zone_shipping_methods zone shipping methods
+	 * @param string $zone_name zone name
+	 */
+	private static function add_zone_shipping_methods( array &$shipping_methods, array $zone_shipping_methods, $zone_name = '' ) {
+		foreach ( $zone_shipping_methods as $zone_shipping_method ) {
+			if ( empty( $zone_shipping_method->id ) || ! isset( $zone_shipping_method->instance_id ) ) {
+				continue;
+			}
+			$shipping_method_id = $zone_shipping_method->id . ':' . (int) $zone_shipping_method->instance_id;
+			if ( ! array_key_exists( $shipping_method_id, $shipping_methods ) ) {
+				$shipping_methods[ $shipping_method_id ] = $zone_shipping_method;
+				self::$shipping_method_zones[ $shipping_method_id ] = $zone_name;
+			}
+		}
 	}
 
 	/**
