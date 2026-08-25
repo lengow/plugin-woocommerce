@@ -816,13 +816,19 @@ class Lengow_Import_Order {
 	 * Load tracking data for order creation.
 	 */
 	private function load_tracking_data() {
-		$tracks = $this->package_data->delivery->trackings;
+		$tracks = array();
+		if ( isset( $this->package_data->delivery->trackings ) && is_array( $this->package_data->delivery->trackings ) ) {
+			$tracks = $this->package_data->delivery->trackings;
+		} elseif ( isset( $this->package_data->delivery->tracking ) && is_object( $this->package_data->delivery->tracking ) ) {
+			$tracks = array( $this->package_data->delivery->tracking );
+		}
+
 		if ( ! empty( $tracks ) ) {
 			$tracking               = $tracks[0];
-			$this->carrier          = $tracking->carrier;
-			$this->carrier_method   = $tracking->method;
-			$this->carrier_tracking = $tracking->number;
-			$this->carrier_id_relay = $tracking->relay->id;
+			$this->carrier          = isset( $tracking->carrier ) ? (string) $tracking->carrier : '';
+			$this->carrier_method   = isset( $tracking->method ) ? (string) $tracking->method : '';
+			$this->carrier_tracking = isset( $tracking->number ) ? (string) $tracking->number : '';
+			$this->carrier_id_relay = isset( $tracking->relay->id ) ? (string) $tracking->relay->id : '';
 		}
 	}
 
