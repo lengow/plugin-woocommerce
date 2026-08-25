@@ -1513,8 +1513,7 @@ class Lengow_Import_Order {
 		$tax_amount = ( ! $no_tax && $tax_id ) ? $taxes[ $tax_id ] : 0;
 		$amount     = $shipping - $tax_amount;
 		// get default shipping method.
-		$wc_shipping                  = new WC_Shipping();
-		$shipping_methods             = $wc_shipping->load_shipping_methods();
+		$shipping_methods             = Lengow_Main::get_shipping_method_objects();
 		$marketplace_shipping_methods = Lengow_Configuration::get( Lengow_Configuration::IMPORT_SHIPPING_METHODS );
 		$shipping_method_code         = Lengow_Configuration::get( Lengow_Configuration::DEFAULT_IMPORT_CARRIER_ID );
 		if (
@@ -1552,7 +1551,7 @@ class Lengow_Import_Order {
 		}
 
 		$shipping_method       = $shipping_methods[ $shipping_method_code ];
-		$shipping_method_title = $shipping_method->get_method_title();
+		$shipping_method_title = Lengow_Main::get_shipping_method_title( $shipping_method );
 		$wc_order              = new WC_Order( $order_id );
 		try {
 			// add line item meta for shipping.
@@ -1566,7 +1565,7 @@ class Lengow_Import_Order {
 			$wc_shipping_item->set_method_title( $shipping_method_title );
 			$wc_shipping_item->set_taxes( array( 'total' => array( $tax_id => $tax_amount ) ) );
 			$wc_shipping_item->set_total( $amount );
-			$wc_shipping_item->set_instance_id( $shipping_method->instance_id );
+			$wc_shipping_item->set_instance_id( (int) $shipping_method->instance_id );
 			$wc_shipping_item->add_meta_data( 'Articles', implode( ', ', $articles ) );
 			$wc_shipping_item->add_meta_data( 'cost', $amount );
 			$wc_shipping_item->add_meta_data( 'total_tax', $tax_amount );

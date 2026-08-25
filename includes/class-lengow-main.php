@@ -54,6 +54,11 @@ class Lengow_Main {
 	const LOG_LIFE = 20;
 
 	/**
+	 * @var string separator between a shipping method id and its zone instance id.
+	 */
+	const SHIPPING_METHOD_SEPARATOR = ':';
+
+	/**
 	 * @var array Marketplaces collection.
 	 */
 	public static $registers = array();
@@ -62,6 +67,16 @@ class Lengow_Main {
 	 * @var Lengow_Log Lengow log file instance.
 	 */
 	public static $log;
+
+	/**
+	 * @var array|null mappable shipping methods indexed by shipping method code.
+	 */
+	private static $shipping_methods;
+
+	/**
+	 * @var array zone names indexed by shipping method code.
+	 */
+	private static $shipping_method_zones = array();
 
 	/**
 	 * @var array WooCommerce product types.
@@ -453,13 +468,118 @@ class Lengow_Main {
 	 * @return array
 	 */
 	public static function get_shipping_methods() {
-		$wc_shipping = new WC_Shipping();
-		$return      = array();
-		foreach ( $wc_shipping->load_shipping_methods() as $key => $shipping ) {
-			$return[ $key ] = $shipping->method_title;
+		$return = array();
+		foreach ( self::get_shipping_method_objects() as $code => $shipping_method ) {
+			$label = self::get_shipping_method_title( $shipping_method );
+			if ( isset( self::$shipping_method_zones[ $code ] ) ) {
+				$label .= ' (' . self::$shipping_method_zones[ $code ] . ')';
+			}
+			$return[ $code ] = '' !== $label ? $label : $code;
 		}
 
 		return $return;
+	}
+
+	/**
+	 * Get all mappable shipping methods, indexed by Lengow shipping method code.
+	 *
+	 * Global shipping methods keep their historical code (ex: flat_rate) so that carrier
+	 * mappings saved by previous versions stay valid. Shipping methods configured inside a
+	 * WooCommerce shipping zone are added with a composite code (ex: flat_rate:12) so that
+	 * every zone instance can be mapped to its own marketplace carrier.
+	 *
+	 * @return array
+	 */
+	public static function get_shipping_method_objects() {
+		if ( null !== self::$shipping_methods ) {
+			return self::$shipping_methods;
+		}
+
+		$wc_shipping                 = new WC_Shipping();
+		$shipping_methods            = $wc_shipping->load_shipping_methods();
+		self::$shipping_method_zones = array();
+
+		foreach ( self::get_shipping_zones() as $zone ) {
+			$zone_name = $zone->get_zone_name();
+			foreach ( $zone->get_shipping_methods() as $shipping_method ) {
+				if ( empty( $shipping_method->id ) || empty( $shipping_method->instance_id ) ) {
+					continue;
+				}
+				$code                                 = $shipping_method->id . self::SHIPPING_METHOD_SEPARATOR
+					. (int) $shipping_method->instance_id;
+				$shipping_methods[ $code ]            = $shipping_method;
+				self::$shipping_method_zones[ $code ] = $zone_name;
+			}
+		}
+		self::$shipping_methods = $shipping_methods;
+
+		return self::$shipping_methods;
+	}
+
+	/**
+	 * Get the shipping method code used for carrier mapping.
+	 *
+	 * @param WC_Shipping_Method|WC_Order_Item_Shipping $shipping_method shipping method or order shipping line
+	 *
+	 * @return string
+	 */
+	public static function get_shipping_method_code( $shipping_method ) {
+		if ( $shipping_method instanceof WC_Order_Item_Shipping ) {
+			$method_id   = (string) $shipping_method->get_method_id();
+			$instance_id = (int) $shipping_method->get_instance_id();
+		} else {
+			$method_id   = (string) $shipping_method->id;
+			$instance_id = (int) $shipping_method->instance_id;
+		}
+
+		return $instance_id > 0 ? $method_id . self::SHIPPING_METHOD_SEPARATOR . $instance_id : $method_id;
+	}
+
+	/**
+	 * Get the displayable title of a shipping method.
+	 *
+	 * Zone instances are named by the merchant (ex: Colissimo), global methods only have
+	 * their generic WooCommerce title (ex: Flat rate).
+	 *
+	 * @param WC_Shipping_Method $shipping_method shipping method
+	 *
+	 * @return string
+	 */
+	public static function get_shipping_method_title( $shipping_method ) {
+		if ( (int) $shipping_method->instance_id > 0 ) {
+			$title = (string) $shipping_method->get_title();
+			if ( '' !== $title ) {
+				return $title;
+			}
+		}
+
+		return (string) $shipping_method->method_title;
+	}
+
+	/**
+	 * Get all WooCommerce shipping zones, including the "rest of the world" zone.
+	 *
+	 * @return array
+	 */
+	private static function get_shipping_zones() {
+		if ( ! class_exists( 'WC_Shipping_Zones' ) ) {
+			return array();
+		}
+
+		$zones = array();
+		foreach ( WC_Shipping_Zones::get_zones() as $zone_data ) {
+			$zone = WC_Shipping_Zones::get_zone( (int) $zone_data['zone_id'] );
+			if ( $zone ) {
+				$zones[] = $zone;
+			}
+		}
+		// the "rest of the world" zone (id 0) is never returned by WC_Shipping_Zones::get_zones().
+		$rest_of_the_world = WC_Shipping_Zones::get_zone( 0 );
+		if ( $rest_of_the_world ) {
+			$zones[] = $rest_of_the_world;
+		}
+
+		return $zones;
 	}
 
 	/**
